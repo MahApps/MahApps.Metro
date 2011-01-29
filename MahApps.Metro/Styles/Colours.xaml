@@ -190,8 +190,8 @@
 
     <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource Gray1}" />
     <SolidColorBrush x:Key="ControlBorderBrush" Color="{StaticResource Gray1}" />
-    <SolidColorBrush x:Key="TextBoxMouseOverBorderBrush" Color="{StaticResource HighlightDarkColor}" />
-    <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush" Color="{StaticResource HighlightLightColor}" />
+    <SolidColorBrush x:Key="TextBoxMouseOverBorderBrush" Color="{DynamicResource HighlightDarkColor}" />
+    <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush" Color="{DynamicResource HighlightLightColor}" />
 
     <SolidColorBrush x:Key="CheckBoxBrush" Color="{StaticResource Gray2}" />
     <SolidColorBrush x:Key="CheckBoxMouseOverBrush" Color="{StaticResource Gray3}" />
