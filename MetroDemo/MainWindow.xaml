@@ -70,6 +70,21 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <Button Content="oh hai" Width="50" Height="50" />
+        <StackPanel Margin="10,50,10,10" HorizontalAlignment="Left">
+        <Button Content="Right Click Me" Width="108" Height="30" ToolTip="This is a tooltip">
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Test" />
+                    <MenuItem Header="Test" />
+                    <MenuItem Header="Test" />
+                    <Separator />
+                    <MenuItem Header="Test" />
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+        
+        <PasswordBox Width="210" Height="30" />
+
+        </StackPanel>
     </Grid>
 </Window>
