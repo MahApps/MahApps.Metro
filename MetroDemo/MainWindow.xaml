@@ -7,6 +7,69 @@
     </i:Interaction.Behaviors>
 
     <Grid>
+        <Grid x:Name="grdOwner" Height="40" VerticalAlignment="Top" Background="#FF086F9E">
+            <StackPanel Panel.ZIndex="1" Height="20" VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Right" Width="66">
+                <Button x:Name="btnMin" Click="BtnMinClick" Margin="2,0,0,0" Width="20" Height="20" Style="{DynamicResource ChromelessButtonStyle}" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Padding="0" ToolTip="Minimise" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                    <Rectangle Fill="White" Height="4" VerticalAlignment="Bottom" Width="20"/>
+                </Button>
+                <Button x:Name="btnMax" Click="BtnMaxClick"  Margin="2,0,0,0" Width="20" Height="20" Style="{DynamicResource ChromelessButtonStyle}" VerticalContentAlignment="Bottom" Padding="0" ToolTip="Maximise" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                    <Grid Width="20" Height="20">
+                        <Rectangle Fill="White" Height="4" VerticalAlignment="Bottom"/>
+                        <Rectangle Fill="White" Height="4" VerticalAlignment="Top" Margin="0,4.687,0,0"/>
+                        <Rectangle Fill="White" Width="4" HorizontalAlignment="Left" Margin="0,4.687,0,0"/>
+                        <Rectangle Fill="White" Width="4" HorizontalAlignment="Right" Margin="0,4.687,0,0"/>
+                    </Grid>
+                </Button>
+                <Button x:Name="btnClose" Click="BtnCloseClick" Margin="2,0,0,0" Width="20" Height="20" Style="{DynamicResource ChromelessButtonStyle}" ToolTip="Close" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                    <Grid Width="19" Height="19" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,0,-5">
+                        <Rectangle Fill="White" RenderTransformOrigin="0.5,0.5" Margin="-0.677,7.542,0.677,7.458" UseLayoutRounding="False">
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="-45"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                        <Rectangle Fill="White" RenderTransformOrigin="0.5,0.5" Margin="-0.771,7.542,0.771,7.458" UseLayoutRounding="False">
+                            <Rectangle.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="45"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Grid>
         <Button Content="oh hai" Width="50" Height="50" />
     </Grid>
 </Window>
