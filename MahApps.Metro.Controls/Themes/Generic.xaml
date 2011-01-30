@@ -4,7 +4,7 @@
     <Style TargetType="{x:Type Controls:ToggleSwitchButton}">
         <!--<Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}"/>-->
         <Setter Property="IsTabStop" Value="False"/>
-        <!--<Setter Property="SwitchForeground" Value="{StaticResource PhoneAccentBrush}"/>-->
+        <Setter Property="SwitchForeground" Value="{DynamicResource HighlightLightBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:ToggleSwitchButton">
@@ -126,6 +126,7 @@
 
     <Style TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="SwitchForeground" Value="{DynamicResource HighlightLightBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
         <Setter Property="Template">

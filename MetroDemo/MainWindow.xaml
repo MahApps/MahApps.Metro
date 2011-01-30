@@ -1,9 +1,10 @@
-﻿<Window x:Class="MetroDemo.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro.Controls"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MetroDemo.MainWindow"
         Title="MainWindow"
         Height="350"
         Width="525"
@@ -77,30 +78,39 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <StackPanel Margin="10,50,10,10" HorizontalAlignment="Left">
-                <Button Content="Right Click Me" Width="108" Height="30" ToolTip="This is a tooltip">
-                    <Button.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Header="Test" />
-                            <MenuItem Header="Test" />
-                            <MenuItem Header="Test" />
-                            <Separator />
-                            <MenuItem Header="Test" />
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                </Button>
-                <PasswordBox Width="210" Height="30" />
-                <CheckBox Content="CheckBox"/>
-                <RadioButton Content="Radio Button 1" />
-                <TextBox Text="This is a textbox" />
-                <ComboBox Width="120">
-                    <ComboBoxItem Content="ComboBoxItem"/>
-                    <ComboBoxItem Content="ComboBoxItem"/>
-                    <ComboBoxItem Content="ComboBoxItem"/>
-                </ComboBox>
-
-                <ProgressBar Value="50" IsIndeterminate="true" />
-            </StackPanel>
+            <Grid Margin="17.306,56,236.999,23.24">
+            	<Button Content="Right Click Me" Height="30" ToolTip="This is a tooltip" Margin="88.694,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108">
+            		<Button.ContextMenu>
+            			<ContextMenu>
+            				<MenuItem Header="Test" />
+            				<MenuItem Header="Test" />
+            				<MenuItem Header="Test" />
+            				<Separator />
+            				<MenuItem Header="Test" />
+            			</ContextMenu>
+            		</Button.ContextMenu>
+            	</Button>
+            	<PasswordBox Margin="88.695,66.96,0,0" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154.001" />
+            	<CheckBox Content="CheckBox" Margin="88.695,100.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            	<RadioButton Content="Radio Button 1" Margin="88.291,134.92,0,0" VerticalAlignment="Top" GroupName="test" HorizontalAlignment="Left" />
+            	<TextBox Text="This is a textbox" Margin="88.694,36.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            	<ComboBox Margin="88.292,176.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
+            		<ComboBoxItem Content="ComboBoxItem"/>
+            		<ComboBoxItem Content="ComboBoxItem"/>
+            		<ComboBoxItem Content="ComboBoxItem"/>
+            	</ComboBox>
+            	<ProgressBar Value="50" IsIndeterminate="true" Margin="88.696,216.8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" />
+            	<Label Content="Button" VerticalAlignment="Top" Margin="39.07,0,0,0" HorizontalAlignment="Left"/>
+            	<Label Content="Passwordbox" Margin="5.147,71,0,0" RenderTransformOrigin="0.535,-0.381" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            	<Label Content="Checkbox" Margin="23.1,100.96,0,105.84" d:LayoutOverrides="Height" HorizontalAlignment="Left"/>
+            	<Label Content="Radio Buttons" VerticalAlignment="Top" Margin="0,130.92,0,0" HorizontalAlignment="Left"/>
+            	<Label Content="TextBox" VerticalAlignment="Top" Margin="33.14,37,0,0" HorizontalAlignment="Left"/>
+            	<Label Content="Combobox" VerticalAlignment="Top" Margin="16.224,176.84,0,0" HorizontalAlignment="Left"/>
+            	<RadioButton Content="Radio Button 2" Margin="88.695,155.88,0,0" VerticalAlignment="Top" GroupName="test" HorizontalAlignment="Left" />
+            	<Label Content="Progress Bar" VerticalAlignment="Bottom" Margin="5.147,0,0,0" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>
+            </Grid>
+            <Controls:ToggleSwitch HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,44,8,0" />
+            <Label Content="Toggle Switch" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,56,148.725,0"/>
         </Grid>
     </Controls:MetroContentControl>
 </Window>

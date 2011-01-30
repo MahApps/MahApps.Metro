@@ -45,8 +45,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the Header DependencyProperty.
         /// </summary>
-        public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.Register("Header", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the header.
@@ -60,8 +59,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the HeaderTemplate DependencyProperty.
         /// </summary>
-        public static readonly DependencyProperty HeaderTemplateProperty =
-            DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
 
         /// <summary>
         /// Gets or sets the template used to display the control's header.
@@ -75,16 +73,18 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Identifies the SwitchForeground DependencyProperty.
         /// </summary>
-        public static readonly DependencyProperty SwitchForegroundProperty =
-            DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), null);
-
+        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), null);
+        
         /// <summary>
         /// Gets or sets the switch foreground.
         /// </summary>
         public Brush SwitchForeground
         {
             get { return (Brush)GetValue(SwitchForegroundProperty); }
-            set { SetValue(SwitchForegroundProperty, value); }
+            set
+            {
+                SetValue(SwitchForegroundProperty, value);
+            }
         }
 
         /// <summary>
