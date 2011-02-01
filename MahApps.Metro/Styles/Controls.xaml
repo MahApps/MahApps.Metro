@@ -56,7 +56,7 @@
     
     <!-- style for WP7/Circle button -->
     <Style x:Key="MetroCircleButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <!--<Setter Property="FocusVisualStyle" Value="{x:Null}"/>-->
         <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -106,7 +106,7 @@
 
     <!-- "Chromeless" style for buttons -->
     <Style x:Key="ChromelessButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>
+        <!--<Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>-->
         <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -1299,11 +1299,11 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="Base" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="1" Fill="{StaticResource ControlBackgroundBrush}" />
+                        <Rectangle x:Name="Base" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="1" Fill="{TemplateBinding Background}" />
                         <Rectangle x:Name="FocusRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" />
                         <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Margin="1" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" />
                         <Grid Margin="0,1,0,0">
-                            <Border x:Name="ReadOnlyVisualElement" Background="{StaticResource ReadOnlyBrush}" Opacity="0"/>
+                            <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0"/>
                             <Grid >
                                 <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="4,0,2,2" VerticalAlignment="Center" Background="{x:Null}"/>
                             </Grid>
