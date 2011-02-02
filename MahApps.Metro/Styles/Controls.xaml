@@ -43,13 +43,13 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <Border Background="{StaticResource ValidationBrush1}" CornerRadius="5" Margin="4,4,-4,-4"/>
-            <Border Background="{StaticResource ValidationBrush2}" CornerRadius="4" Margin="3,3,-3,-3"/>
-            <Border Background="{StaticResource ValidationBrush3}" CornerRadius="3" Margin="2,2,-2,-2"/>
-            <Border Background="{StaticResource ValidationBrush4}" CornerRadius="2" Margin="1,1,-1,-1"/>
-            <Border Background="{StaticResource ValidationBrush5}" CornerRadius="2"/>
+            <Border Background="{DynamicResource ValidationBrush1}" CornerRadius="5" Margin="4,4,-4,-4"/>
+            <Border Background="{DynamicResource ValidationBrush2}" CornerRadius="4" Margin="3,3,-3,-3"/>
+            <Border Background="{DynamicResource ValidationBrush3}" CornerRadius="3" Margin="2,2,-2,-2"/>
+            <Border Background="{DynamicResource ValidationBrush4}" CornerRadius="2" Margin="1,1,-1,-1"/>
+            <Border Background="{DynamicResource ValidationBrush5}" CornerRadius="2"/>
             <Border CornerRadius="2">
-                <TextBlock Foreground="{StaticResource WhiteColorBrush}" MaxWidth="250" Margin="8,4,8,4" TextWrapping="Wrap" Text="{Binding (Validation.Errors)[0].ErrorContent}" UseLayoutRounding="false"/>
+                <TextBlock Foreground="{DynamicResource WhiteColorBrush}" MaxWidth="250" Margin="8,4,8,4" TextWrapping="Wrap" Text="{Binding (Validation.Errors)[0].ErrorContent}" UseLayoutRounding="false"/>
             </Border>
         </Grid>
     </ControlTemplate>
@@ -57,8 +57,8 @@
     <!-- style for WP7/Circle button -->
     <Style x:Key="MetroCircleButtonStyle" TargetType="{x:Type Button}">
         <!--<Setter Property="FocusVisualStyle" Value="{x:Null}"/>-->
-        <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
+        <Setter Property="Background" Value="{DynamicResource ButtonNormalBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ButtonNormalBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -106,9 +106,9 @@
 
     <!-- "Chromeless" style for buttons -->
     <Style x:Key="ChromelessButtonStyle" TargetType="{x:Type Button}">
-        <!--<Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}"/>-->
-        <Setter Property="Background" Value="{StaticResource ButtonNormalBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ButtonNormalBorder}"/>
+        <!--<Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}"/>-->
+        <Setter Property="Background" Value="{DynamicResource ButtonNormalBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ButtonNormalBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -158,10 +158,10 @@
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="10" />
-        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
-        <Setter Property="Background" Value="{StaticResource GrayBrush7}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
+        <Setter Property="Background" Value="{DynamicResource GrayBrush7}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="Padding" Value="5,6"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
@@ -212,11 +212,11 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="Background" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3"/>
-                        <Rectangle x:Name="DisabledVisualElement" Fill="{StaticResource ControlsDisabledBrush}" IsHitTestVisible="false" Opacity="0" RadiusY="3" RadiusX="3"/>
-                        <Border x:Name="MouseOverBorder" Background="{StaticResource GrayBrush8}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
-                        <Border x:Name="PressedBorder" Background="{StaticResource GrayBrush5}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
-                        <Rectangle x:Name="FocusRectangle" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" RadiusY="4" RadiusX="4" Margin="-1" Opacity="0" />
-                        <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" RadiusX="3" RadiusY="3" Opacity="0" />
+                        <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource ControlsDisabledBrush}" IsHitTestVisible="false" Opacity="0" RadiusY="3" RadiusX="3"/>
+                        <Border x:Name="MouseOverBorder" Background="{DynamicResource GrayBrush8}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
+                        <Border x:Name="PressedBorder" Background="{DynamicResource GrayBrush5}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
+                        <Rectangle x:Name="FocusRectangle" Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" RadiusY="4" RadiusX="4" Margin="-1" Opacity="0" />
+                        <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{DynamicResource TextBoxMouseOverBorderBrush}" RadiusX="3" RadiusY="3" Opacity="0" />
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                 </ControlTemplate>
@@ -267,12 +267,12 @@
                         </VisualStateManager.VisualStateGroups>
                         <Path Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z " Height="6" Stretch="Uniform" Width="4">
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource Gray2}"/>
+                                <SolidColorBrush Color="{DynamicResource Gray2}"/>
                             </Path.Fill>
                         </Path>
                         <Path x:Name="HoverPath" Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z " Height="6" Stretch="Uniform" Width="4" UseLayoutRounding="False" Opacity="0" Margin="1,1,0,0">
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource BlackColor}"/>
+                                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Path.Fill>
                         </Path>
                         <Path x:Name="Blur" Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z " Height="6" Stretch="Uniform" Width="4" UseLayoutRounding="False" Opacity="0" Margin="1,1,0,0">
@@ -280,10 +280,10 @@
                                 <BlurEffect/>
                             </Path.Effect>
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource BlackColor}"/>
+                                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Path.Fill>
                         </Path>
-                        <Rectangle x:Name="DisabledElement" Fill="{StaticResource WhiteColorBrush}" Opacity="0" RadiusY="2" RadiusX="2"/>
+                        <Rectangle x:Name="DisabledElement" Fill="{DynamicResource WhiteColorBrush}" Opacity="0" RadiusY="2" RadiusX="2"/>
                     </Grid>
                 </ControlTemplate>
                 <ControlTemplate x:Key="HorizontalDecrementTemplate" TargetType="RepeatButton">
@@ -315,12 +315,12 @@
                         </VisualStateManager.VisualStateGroups>
                         <Path Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z " Height="6" Stretch="Uniform" Width="4">
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource Gray2}"/>
+                                <SolidColorBrush Color="{DynamicResource Gray2}"/>
                             </Path.Fill>
                         </Path>
                         <Path x:Name="HoverPath" Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z " Height="6" Stretch="Uniform" Width="4" UseLayoutRounding="False" Opacity="0" Margin="0,1,0,0">
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource BlackColor}"/>
+                                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Path.Fill>
                         </Path>
                         <Path x:Name="Blur" Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z " Height="6" Stretch="Uniform" Width="4" UseLayoutRounding="False" Opacity="0" Margin="0,1,0,0">
@@ -328,7 +328,7 @@
                                 <BlurEffect/>
                             </Path.Effect>
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource BlackColor}"/>
+                                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Path.Fill>
                         </Path>
                     </Grid>
@@ -362,9 +362,9 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="ThumbVisual" Margin="0,1,0,1">
-                            <Rectangle x:Name="Background" StrokeThickness="1" Fill="{StaticResource ThumbBrush}" />
-                            <Rectangle x:Name="MouseOverRectangle" StrokeThickness="1" Opacity="0" Fill="{StaticResource BlackBrush}" />
-                            <Rectangle x:Name="PressedRectangle" StrokeThickness="1" Opacity="0" Fill="{StaticResource BlackBrush}" />
+                            <Rectangle x:Name="Background" StrokeThickness="1" Fill="{DynamicResource ThumbBrush}" />
+                            <Rectangle x:Name="MouseOverRectangle" StrokeThickness="1" Opacity="0" Fill="{DynamicResource BlackBrush}" />
+                            <Rectangle x:Name="PressedRectangle" StrokeThickness="1" Opacity="0" Fill="{DynamicResource BlackBrush}" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -390,10 +390,10 @@
                 </Grid.ColumnDefinitions>
                 <Border BorderThickness="0,0,0,1" Grid.RowSpan="1" Margin="0,0,0,-1" Grid.ColumnSpan="5" Visibility="Collapsed" >
                     <Border.BorderBrush>
-                        <SolidColorBrush Color="{StaticResource Gray4}"/>
+                        <SolidColorBrush Color="{DynamicResource Gray4}"/>
                     </Border.BorderBrush>
                 </Border>
-                <RepeatButton x:Name="HorizontalSmallDecrease" Command="ScrollBar.LineLeftCommand" Width="16" IsTabStop="False" Interval="50" Margin="1" Grid.Column="0" Template="{StaticResource HorizontalDecrementTemplate}"/>
+                <RepeatButton x:Name="HorizontalSmallDecrease" Command="ScrollBar.LineLeftCommand" Width="16" IsTabStop="False" Interval="50" Margin="1" Grid.Column="0" Template="{DynamicResource HorizontalDecrementTemplate}"/>
                 <Track x:Name="PART_Track" MinWidth="60" IsDirectionReversed="False" Grid.Column="1">
                     <Track.Resources>
                         <System:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">
@@ -401,16 +401,16 @@
                         </System:Double>
                     </Track.Resources>
                     <Track.DecreaseRepeatButton>
-                        <RepeatButton x:Name="HorizontalLargeDecrease" Command="ScrollBar.PageLeftCommand" IsTabStop="False" Interval="50" Template="{StaticResource RepeatButtonTemplate}"/>
+                        <RepeatButton x:Name="HorizontalLargeDecrease" Command="ScrollBar.PageLeftCommand" IsTabStop="False" Interval="50" Template="{DynamicResource RepeatButtonTemplate}"/>
                     </Track.DecreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb MinWidth="60" Template="{StaticResource HorizontalThumbTemplate}"/>
+                        <Thumb MinWidth="60" Template="{DynamicResource HorizontalThumbTemplate}"/>
                     </Track.Thumb>
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton x:Name="HorizontalLargeIncrease" Command="ScrollBar.PageRightCommand" IsTabStop="False" Interval="50" Template="{StaticResource RepeatButtonTemplate}"/>
+                        <RepeatButton x:Name="HorizontalLargeIncrease" Command="ScrollBar.PageRightCommand" IsTabStop="False" Interval="50" Template="{DynamicResource RepeatButtonTemplate}"/>
                     </Track.IncreaseRepeatButton>
                 </Track>
-                <RepeatButton x:Name="HorizontalSmallIncrease" Command="ScrollBar.LineRightCommand" Width="16" IsTabStop="False" Interval="50" Margin="1" Grid.Column="2" Template="{StaticResource HorizontalIncrementTemplate}"/>
+                <RepeatButton x:Name="HorizontalSmallIncrease" Command="ScrollBar.LineRightCommand" Width="16" IsTabStop="False" Interval="50" Margin="1" Grid.Column="2" Template="{DynamicResource HorizontalIncrementTemplate}"/>
             </Grid>
         </Grid>
     </ControlTemplate>
@@ -455,12 +455,12 @@
                         </VisualStateManager.VisualStateGroups>
                         <Path Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z " Height="4" Stretch="Uniform" Width="6">
                             <Path.Fill>
-                                <SolidColorBrush x:Name="ButtonColor" Color="{StaticResource Gray3}"/>
+                                <SolidColorBrush x:Name="ButtonColor" Color="{DynamicResource Gray3}"/>
                             </Path.Fill>
                         </Path>
                         <Path x:Name="HoverPath" Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z " Height="4" Stretch="Uniform" Width="6" UseLayoutRounding="False" Opacity="0" Margin="1,0,0,0">
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource BlackColor}"/>
+                                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Path.Fill>
                         </Path>
                         <Path x:Name="Blur" Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z " Height="4" Stretch="Uniform" Width="6" UseLayoutRounding="False" Opacity="0" Margin="1,0,0,0">
@@ -468,10 +468,10 @@
                                 <BlurEffect/>
                             </Path.Effect>
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource BlackColor}"/>
+                                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Path.Fill>
                         </Path>
-                        <Rectangle x:Name="DisabledElement" Fill="{StaticResource WhiteColorBrush}" Opacity="0" RadiusY="2" RadiusX="2"/>
+                        <Rectangle x:Name="DisabledElement" Fill="{DynamicResource WhiteColorBrush}" Opacity="0" RadiusY="2" RadiusX="2"/>
                     </Grid>
                 </ControlTemplate>
                 <ControlTemplate x:Key="VerticalDecrementTemplate" TargetType="RepeatButton">
@@ -501,19 +501,19 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="Background" Fill="{StaticResource ControlBackgroundBrush}" Opacity="0" RadiusY="2" RadiusX="2" StrokeThickness="1"/>
-                        <Rectangle x:Name="BackgroundMouseOver" Fill="{StaticResource HighlightBrush}" Opacity="0" RadiusY="2" RadiusX="2" />
-                        <Rectangle x:Name="BackgroundPressed" Fill="{StaticResource HighlightBrush}" Opacity="0" RadiusY="2" RadiusX="2" />
-                        <Rectangle x:Name="BackgroundGradient" Fill="{StaticResource TransparentWhiteBrush}" Margin="1" Opacity="0" RadiusY="1" RadiusX="1" Stroke="{StaticResource ControlBackgroundBrush}" StrokeThickness="1"/>
-                        <Rectangle x:Name="Highlight" IsHitTestVisible="false" Margin="1" Opacity="0" RadiusY="1" RadiusX="1" Stroke="{StaticResource HighlightBrush}" StrokeThickness="1"/>
+                        <Rectangle x:Name="Background" Fill="{DynamicResource ControlBackgroundBrush}" Opacity="0" RadiusY="2" RadiusX="2" StrokeThickness="1"/>
+                        <Rectangle x:Name="BackgroundMouseOver" Fill="{DynamicResource HighlightBrush}" Opacity="0" RadiusY="2" RadiusX="2" />
+                        <Rectangle x:Name="BackgroundPressed" Fill="{DynamicResource HighlightBrush}" Opacity="0" RadiusY="2" RadiusX="2" />
+                        <Rectangle x:Name="BackgroundGradient" Fill="{DynamicResource TransparentWhiteBrush}" Margin="1" Opacity="0" RadiusY="1" RadiusX="1" Stroke="{DynamicResource ControlBackgroundBrush}" StrokeThickness="1"/>
+                        <Rectangle x:Name="Highlight" IsHitTestVisible="false" Margin="1" Opacity="0" RadiusY="1" RadiusX="1" Stroke="{DynamicResource HighlightBrush}" StrokeThickness="1"/>
                         <Path Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z " Height="4" Stretch="Uniform" Width="6">
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource Gray2}"/>
+                                <SolidColorBrush Color="{DynamicResource Gray2}"/>
                             </Path.Fill>
                         </Path>
                         <Path x:Name="HoverPath" Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z " Height="4" Stretch="Uniform" Width="6" UseLayoutRounding="False" Opacity="0" Margin="1,0,0,0">
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource BlackColor}"/>
+                                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Path.Fill>
                         </Path>
                         <Path x:Name="Blur" Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z " Height="4" Stretch="Uniform" Width="6" UseLayoutRounding="False" Opacity="0" Margin="1,0,0,0">
@@ -521,7 +521,7 @@
                                 <BlurEffect/>
                             </Path.Effect>
                             <Path.Fill>
-                                <SolidColorBrush Color="{StaticResource BlackColor}"/>
+                                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Path.Fill>
                         </Path>
                     </Grid>
@@ -556,9 +556,9 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="ThumbVisual" Margin="1,0,1,0">
-                            <Rectangle x:Name="Background" StrokeThickness="1" Fill="{StaticResource ThumbBrush}" />
-                            <Rectangle x:Name="MouseOverRectangle" StrokeThickness="1" Opacity="0" Fill="{StaticResource BlackBrush}" />
-                            <Rectangle x:Name="PressedRectangle" StrokeThickness="1" Opacity="0" Fill="{StaticResource BlackBrush}" />
+                            <Rectangle x:Name="Background" StrokeThickness="1" Fill="{DynamicResource ThumbBrush}" />
+                            <Rectangle x:Name="MouseOverRectangle" StrokeThickness="1" Opacity="0" Fill="{DynamicResource BlackBrush}" />
+                            <Rectangle x:Name="PressedRectangle" StrokeThickness="1" Opacity="0" Fill="{DynamicResource BlackBrush}" />
                         </Grid>
                     </Grid>
                 </ControlTemplate>
@@ -584,10 +584,10 @@
                 </Grid.RowDefinitions>
                 <Border BorderThickness="0,0,1,0" Margin="0,0,-1,0" Grid.RowSpan="5" Visibility="Collapsed" >
                     <Border.BorderBrush>
-                        <SolidColorBrush Color="{StaticResource Gray4}"/>
+                        <SolidColorBrush Color="{DynamicResource Gray4}"/>
                     </Border.BorderBrush>
                 </Border>
-                <RepeatButton x:Name="VerticalSmallDecrease" Command="ScrollBar.LineUpCommand" Height="16" IsTabStop="False" Interval="50" Margin="1" Grid.Row="0" Template="{StaticResource VerticalDecrementTemplate}"/>
+                <RepeatButton x:Name="VerticalSmallDecrease" Command="ScrollBar.LineUpCommand" Height="16" IsTabStop="False" Interval="50" Margin="1" Grid.Row="0" Template="{DynamicResource VerticalDecrementTemplate}"/>
                 <Track x:Name="PART_Track" MinHeight="60" IsDirectionReversed="true" Grid.Row="1">
                     <Track.Resources>
                         <System:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">
@@ -595,16 +595,16 @@
                         </System:Double>
                     </Track.Resources>
                     <Track.DecreaseRepeatButton>
-                        <RepeatButton x:Name="VerticalLargeDecrease" Command="ScrollBar.PageUpCommand" IsTabStop="False" Interval="50" Template="{StaticResource RepeatButtonTemplate}"/>
+                        <RepeatButton x:Name="VerticalLargeDecrease" Command="ScrollBar.PageUpCommand" IsTabStop="False" Interval="50" Template="{DynamicResource RepeatButtonTemplate}"/>
                     </Track.DecreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb MinHeight="60" Template="{StaticResource VerticalThumbTemplate}"/>
+                        <Thumb MinHeight="60" Template="{DynamicResource VerticalThumbTemplate}"/>
                     </Track.Thumb>
                     <Track.IncreaseRepeatButton>
-                        <RepeatButton x:Name="VerticalLargeIncrease" Command="ScrollBar.PageDownCommand" IsTabStop="False" Interval="50" Template="{StaticResource RepeatButtonTemplate}"/>
+                        <RepeatButton x:Name="VerticalLargeIncrease" Command="ScrollBar.PageDownCommand" IsTabStop="False" Interval="50" Template="{DynamicResource RepeatButtonTemplate}"/>
                     </Track.IncreaseRepeatButton>
                 </Track>
-                <RepeatButton x:Name="VerticalSmallIncrease" Command="ScrollBar.LineDownCommand" Height="16" IsTabStop="False" Interval="50" Margin="1" Grid.Row="2" Template="{StaticResource VerticalIncrementTemplate}"/>
+                <RepeatButton x:Name="VerticalSmallIncrease" Command="ScrollBar.LineDownCommand" Height="16" IsTabStop="False" Interval="50" Margin="1" Grid.Row="2" Template="{DynamicResource VerticalIncrementTemplate}"/>
             </Grid>
         </Grid>
     </ControlTemplate>
@@ -618,13 +618,13 @@
                 <Setter Property="Width" Value="Auto"/>
                 <Setter Property="Height" Value="8" />
                 <Setter Property="Template"
-						Value="{StaticResource HorizontalScrollBar}" />
+						Value="{DynamicResource HorizontalScrollBar}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
                 <Setter Property="Width" Value="12"/>
                 <Setter Property="Height" Value="Auto" />
                 <Setter Property="Template"
-						Value="{StaticResource VerticalScrollBar}" />
+						Value="{DynamicResource VerticalScrollBar}" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -749,15 +749,15 @@
 
     <!--Tooltip Style-->
     <Style TargetType="ToolTip">
-        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}"/>
         <Setter Property="Padding" Value="3,0,3,0"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ItemSelectedBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ItemSelectedBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToolTip">
-                    <Border x:Name="Root" BorderThickness="{TemplateBinding BorderThickness}" Background="{StaticResource BlackBrush}" Effect="{StaticResource DropShadowBrush}" Opacity="0">
+                    <Border x:Name="Root" BorderThickness="{TemplateBinding BorderThickness}" Background="{DynamicResource BlackBrush}" Effect="{DynamicResource DropShadowBrush}" Opacity="0">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>
@@ -785,7 +785,7 @@
                                 <Storyboard x:Key="Normal State"/>
                             </Border.Resources>
                             <Border.Background>
-                                <StaticResource ResourceKey="BlackBrush"/>
+                                <DynamicResource ResourceKey="BlackBrush"/>
                             </Border.Background>
                             <ContentPresenter Cursor="{TemplateBinding Cursor}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"/>
                         </Border>
@@ -797,18 +797,18 @@
     
     <!-- Password box style -->
     <Style TargetType="PasswordBox">
-        <Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
-        <Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}"/>
+        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="MinHeight" Value="26"/>
-        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}"/>
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="{StaticResource TextBoxText}" />
+                <SolidColorBrush Color="{DynamicResource TextBoxText}" />
             </Setter.Value>
         </Setter>
         <Setter Property="Padding" Value="2"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="PasswordBox">
@@ -878,14 +878,14 @@
                         <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Opacity="1">
                             <Border x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" Padding="4,0,3,2" VerticalAlignment="Center"/>
                         </Border>
-                        <Border x:Name="DisabledVisualElement" BorderBrush="{StaticResource ControlsDisabledBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{StaticResource ControlsDisabledBrush}" IsHitTestVisible="False" Opacity="0"/>
-                        <Border x:Name="MouseOverBorder" BorderBrush="{StaticResource TextBoxMouseOverBorderBrush}" BorderThickness="1" Opacity="0"/>
-                        <Border x:Name="FocusVisualElement" BorderBrush="{StaticResource TextBoxMouseOverBorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" IsHitTestVisible="False" Opacity="0">
-                            <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" />
+                        <Border x:Name="DisabledVisualElement" BorderBrush="{DynamicResource ControlsDisabledBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{DynamicResource ControlsDisabledBrush}" IsHitTestVisible="False" Opacity="0"/>
+                        <Border x:Name="MouseOverBorder" BorderBrush="{DynamicResource TextBoxMouseOverBorderBrush}" BorderThickness="1" Opacity="0"/>
+                        <Border x:Name="FocusVisualElement" BorderBrush="{DynamicResource TextBoxMouseOverBorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" IsHitTestVisible="False" Opacity="0">
+                            <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" />
                         </Border>
-                        <Border x:Name="ValidationErrorElement" BorderBrush="{StaticResource ControlsValidationBrush}" BorderThickness="1" CornerRadius="1" Visibility="Collapsed">
+                        <Border x:Name="ValidationErrorElement" BorderBrush="{DynamicResource ControlsValidationBrush}" BorderThickness="1" CornerRadius="1" Visibility="Collapsed">
                             <ToolTipService.ToolTip>
-                                <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{StaticResource ValidationToolTipTemplate}">
+                                <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{DynamicResource ValidationToolTipTemplate}">
                                     <ToolTip.Triggers>
                                         <EventTrigger RoutedEvent="Canvas.Loaded">
                                             <BeginStoryboard>
@@ -904,8 +904,8 @@
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                             <Grid Background="Transparent" HorizontalAlignment="Right" Height="12" Margin="1,-4,-4,0" VerticalAlignment="Top" Width="12">
-                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z" Fill="{StaticResource ValidationBrush5}" Margin="1,3,0,0"/>
-                                <Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="{StaticResource WhiteColorBrush}" Margin="1,3,0,0"/>
+                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z" Fill="{DynamicResource ValidationBrush5}" Margin="1,3,0,0"/>
+                                <Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="{DynamicResource WhiteColorBrush}" Margin="1,3,0,0"/>
                             </Grid>
                         </Border>
                     </Grid>
@@ -916,16 +916,16 @@
 
     <!--CheckBox Style-->
     <Style TargetType="CheckBox">
-        <Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
-        <Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
-        <Setter Property="Background" Value="{StaticResource CheckBoxBackgroundBrush}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}"/>
+        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}"/>
+        <Setter Property="Background" Value="{DynamicResource CheckBoxBackgroundBrush}"/>
         <Setter Property="MinWidth" Value="100"/>
-        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
         <Setter Property="Padding" Value="4,1,0,0"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
@@ -939,7 +939,7 @@
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterWrapperColor" Storyboard.TargetProperty="Color">
-                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource Gray2}"/>
+                                            <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource Gray2}"/>
                                         </ColorAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
@@ -1027,19 +1027,19 @@
                         <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
                             <Grid x:Name="grid" Height="14" Width="14" Opacity="0.7">
                                 <Rectangle x:Name="Background" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}" />
-                                <Rectangle x:Name="MouseOverRectangle" Stroke="{StaticResource CheckBoxMouseOverBrush}" Opacity="0" />
-                                <Rectangle x:Name="PressedRectangle" Stroke="{StaticResource BlackBrush}" Opacity="0" />
+                                <Rectangle x:Name="MouseOverRectangle" Stroke="{DynamicResource CheckBoxMouseOverBrush}" Opacity="0" />
+                                <Rectangle x:Name="PressedRectangle" Stroke="{DynamicResource BlackBrush}" Opacity="0" />
                                 <Path Opacity="0" x:Name="CheckIcon" Data="M49.4375,110.4375 L51.4995,112.812 L56.3745,107.24883" HorizontalAlignment="Center" Height="7.6" Stretch="Fill" Stroke="Black" UseLayoutRounding="False" VerticalAlignment="Center" Width="8.9" StrokeStartLineCap="Triangle" StrokeEndLineCap="Triangle" StrokeThickness="2"/>
                                 <Rectangle x:Name="IndeterminateIcon" Height="8" Width="8" Opacity="0">
                                     <Rectangle.Fill>
-                                        <SolidColorBrush Color="{StaticResource Gray3}"/>
+                                        <SolidColorBrush Color="{DynamicResource Gray3}"/>
                                     </Rectangle.Fill>
                                 </Rectangle>
-                                <Rectangle x:Name="DisabledVisualElement" Fill="{StaticResource DisabledWhiteColorBrush}" Opacity="0" RadiusY="1" RadiusX="1" />
+                                <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource DisabledWhiteColorBrush}" Opacity="0" RadiusY="1" RadiusX="1" />
                             </Grid>
-                            <Border x:Name="ValidationErrorElement" BorderBrush="{StaticResource ControlsValidationBrush}" BorderThickness="1" CornerRadius="1" Margin="1" ToolTipService.PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Visibility="Collapsed">
+                            <Border x:Name="ValidationErrorElement" BorderBrush="{DynamicResource ControlsValidationBrush}" BorderThickness="1" CornerRadius="1" Margin="1" ToolTipService.PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Visibility="Collapsed">
                                 <ToolTipService.ToolTip>
-                                    <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{StaticResource ValidationToolTipTemplate}">
+                                    <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{DynamicResource ValidationToolTipTemplate}">
                                         <ToolTip.Triggers>
                                             <EventTrigger RoutedEvent="Canvas.Loaded">
                                                 <BeginStoryboard>
@@ -1058,14 +1058,14 @@
                                     </ToolTip>
                                 </ToolTipService.ToolTip>
                                 <Grid Background="Transparent" HorizontalAlignment="Right" Height="10" Margin="0,-4,-4,0" VerticalAlignment="Top" Width="10">
-                                    <Path Data="M 1,0 L5,0 A 2,2 90 0 1 7,2 L7,6 z" Fill="{StaticResource ValidationBrush5}" Margin="0,3,0,0"/>
-                                    <Path Data="M 0,0 L2,0 L 7,5 L7,7" Fill="{StaticResource WhiteColorBrush}" Margin="0,3,0,0"/>
+                                    <Path Data="M 1,0 L5,0 A 2,2 90 0 1 7,2 L7,6 z" Fill="{DynamicResource ValidationBrush5}" Margin="0,3,0,0"/>
+                                    <Path Data="M 0,0 L2,0 L 7,5 L7,7" Fill="{DynamicResource WhiteColorBrush}" Margin="0,3,0,0"/>
                                 </Grid>
                             </Border>
                         </Grid>
                         <ContentControl Grid.Column="1">
                             <ContentControl.Foreground>
-                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{StaticResource BlackColor}" />
+                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{DynamicResource BlackColor}" />
                             </ContentControl.Foreground>
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </ContentControl>
@@ -1077,15 +1077,15 @@
 
     <!--RadioButton Style-->
     <Style TargetType="RadioButton">
-        <Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
-        <Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
-        <Setter Property="Background" Value="{StaticResource CheckBoxBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}"/>
+        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}"/>
+        <Setter Property="Background" Value="{DynamicResource CheckBoxBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
         <Setter Property="Padding" Value="4,1,0,0"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{StaticResource CheckBoxBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
@@ -1099,7 +1099,7 @@
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
                                         </DoubleAnimationUsingKeyFrames>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterWrapperColor" Storyboard.TargetProperty="Color">
-                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource Gray2}"/>
+                                            <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource Gray2}"/>
                                         </ColorAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
@@ -1176,13 +1176,13 @@
                         <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
                             <Grid x:Name="grid" Height="15" Width="15" Opacity="0.7">
                                 <Ellipse x:Name="Background" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" Margin="1" StrokeThickness="{TemplateBinding BorderThickness}" />
-                                <Ellipse x:Name="MouseOverEllipse" Stroke="{StaticResource CheckBoxMouseOverBrush}" Margin="1" Opacity="0" />
-                                <Ellipse x:Name="PressedEllipse" Stroke="{StaticResource BlackBrush}" Margin="1" Opacity="0" />
-                                <Ellipse x:Name="CheckIcon" Fill="{StaticResource BlackBrush}" Height="7" Opacity="0" Width="7"/>
-                                <Ellipse x:Name="DisabledVisualElement" Fill="{StaticResource DisabledWhiteColorBrush}"  Opacity="0" />
+                                <Ellipse x:Name="MouseOverEllipse" Stroke="{DynamicResource CheckBoxMouseOverBrush}" Margin="1" Opacity="0" />
+                                <Ellipse x:Name="PressedEllipse" Stroke="{DynamicResource BlackBrush}" Margin="1" Opacity="0" />
+                                <Ellipse x:Name="CheckIcon" Fill="{DynamicResource BlackBrush}" Height="7" Opacity="0" Width="7"/>
+                                <Ellipse x:Name="DisabledVisualElement" Fill="{DynamicResource DisabledWhiteColorBrush}"  Opacity="0" />
                                 <Grid x:Name="ValidationErrorElement" ToolTipService.PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Visibility="Collapsed">
                                     <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{StaticResource ValidationToolTipTemplate}">
+                                        <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{DynamicResource ValidationToolTipTemplate}">
                                             <ToolTip.Triggers>
                                                 <EventTrigger RoutedEvent="Canvas.Loaded">
                                                     <BeginStoryboard>
@@ -1200,15 +1200,15 @@
                                             </ToolTip.Triggers>
                                         </ToolTip>
                                     </ToolTipService.ToolTip>
-                                    <Ellipse Height="14" Stroke="{StaticResource ControlsValidationBrush}" StrokeThickness="1" Width="14"/>
-                                    <Ellipse Fill="{StaticResource ControlsValidationBrush}" HorizontalAlignment="Right" Height="4" Margin="0,-2,-1,0" VerticalAlignment="Top" Width="4"/>
+                                    <Ellipse Height="14" Stroke="{DynamicResource ControlsValidationBrush}" StrokeThickness="1" Width="14"/>
+                                    <Ellipse Fill="{DynamicResource ControlsValidationBrush}" HorizontalAlignment="Right" Height="4" Margin="0,-2,-1,0" VerticalAlignment="Top" Width="4"/>
                                     <Ellipse Fill="Transparent" HorizontalAlignment="Right" Height="10" Margin="0,-5,-4,0" VerticalAlignment="Top" Width="10"/>
                                 </Grid>
                             </Grid>
                         </Grid>
                         <ContentControl Grid.Column="1">
                             <ContentControl.Foreground>
-                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{StaticResource BlackColor}" />
+                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{DynamicResource BlackColor}" />
                             </ContentControl.Foreground>
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </ContentControl>
@@ -1220,14 +1220,14 @@
 
     <!--TextBox Style-->
     <Style TargetType="{x:Type TextBox}">
-        <Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
-        <Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}"/>
+        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="MinHeight" Value="26"/>
-        <Setter Property="Background" Value="{StaticResource ControlBackgroundBrush}"/>
-        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="Padding" Value="0"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
@@ -1300,18 +1300,18 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Rectangle x:Name="Base" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="1" Fill="{TemplateBinding Background}" />
-                        <Rectangle x:Name="FocusRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" />
-                        <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Margin="1" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" />
+                        <Rectangle x:Name="FocusRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{DynamicResource TextBoxMouseOverBorderBrush}" />
+                        <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Margin="1" Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" />
                         <Grid Margin="0,1,0,0">
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0"/>
                             <Grid >
                                 <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="4,0,2,2" VerticalAlignment="Center" Background="{x:Null}"/>
                             </Grid>
                         </Grid>
-                        <Rectangle x:Name="DisabledVisualElement" Stroke="{StaticResource ControlsDisabledBrush}" StrokeThickness="{TemplateBinding BorderThickness}" Fill="{StaticResource ControlsDisabledBrush}" IsHitTestVisible="False" Opacity="0"/>
-                        <Border x:Name="ValidationErrorElement" BorderBrush="{StaticResource ControlsValidationBrush}" BorderThickness="1" Visibility="Collapsed">
+                        <Rectangle x:Name="DisabledVisualElement" Stroke="{DynamicResource ControlsDisabledBrush}" StrokeThickness="{TemplateBinding BorderThickness}" Fill="{DynamicResource ControlsDisabledBrush}" IsHitTestVisible="False" Opacity="0"/>
+                        <Border x:Name="ValidationErrorElement" BorderBrush="{DynamicResource ControlsValidationBrush}" BorderThickness="1" Visibility="Collapsed">
                             <ToolTipService.ToolTip>
-                                <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{StaticResource ValidationToolTipTemplate}">
+                                <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{DynamicResource ValidationToolTipTemplate}">
                                     <ToolTip.Triggers>
                                         <EventTrigger RoutedEvent="Canvas.Loaded">
                                             <BeginStoryboard>
@@ -1330,8 +1330,8 @@
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                             <Grid Background="Transparent" HorizontalAlignment="Right" Height="12" Margin="1,-4,-4,0" VerticalAlignment="Top" Width="12">
-                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z" Fill="{StaticResource ValidationBrush5}" Margin="1,3,0,0"/>
-                                <Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="{StaticResource WhiteColorBrush}" Margin="1,3,0,0"/>
+                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z" Fill="{DynamicResource ValidationBrush5}" Margin="1,3,0,0"/>
+                                <Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="{DynamicResource WhiteColorBrush}" Margin="1,3,0,0"/>
                             </Grid>
                         </Border>
                     </Grid>
@@ -1343,27 +1343,26 @@
     <!--ComboBox Style-->
     <Style TargetType="{x:Type ComboBox}">
         <Setter Property="Padding" Value="6,4,25,4"/>
-        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-        <Setter Property="TextOptions.TextHintingMode" Value="Animated"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="{StaticResource Gray7}" />
+                <SolidColorBrush Color="{DynamicResource Gray7}" />
             </Setter.Value>
         </Setter>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
                     <Grid>
                         <Grid.Resources>
                             <Style x:Key="comboToggleStyle" TargetType="{x:Type ToggleButton}">
-                                <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
-                                <Setter Property="Background" Value="{StaticResource GrayBrush7}"/>
-                                <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
+                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+                                <Setter Property="Background" Value="{DynamicResource GrayBrush7}"/>
+                                <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}"/>
                                 <Setter Property="BorderThickness" Value="1"/>
                                 <Setter Property="Padding" Value="3"/>
                                 <Setter Property="Template">
@@ -1417,14 +1416,14 @@
                                                     </VisualStateGroup>
                                                 </VisualStateManager.VisualStateGroups>
                                                 <Border x:Name="Background" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="3"/>
-                                                <Rectangle x:Name="DisabledVisualElement" Fill="{StaticResource WhiteBrush}" IsHitTestVisible="false" Opacity="0" RadiusY="3" RadiusX="3"/>
-                                                <Border x:Name="MouseOverBorder" Background="{StaticResource GrayBrush8}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
-                                                <Border x:Name="PressedBorder" Background="{StaticResource GrayBrush5}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
-                                                <Rectangle x:Name="FocusRectangle" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" RadiusY="4" RadiusX="4" Margin="-1" Opacity="0" />
-                                                <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" RadiusX="3" RadiusY="3" Opacity="0" />
-                                                <Rectangle x:Name="CheckedRectangle" StrokeThickness="{TemplateBinding BorderThickness}" RadiusY="4" RadiusX="4" Opacity="0" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" />
-                                                <Rectangle x:Name="CheckedInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" RadiusY="4" RadiusX="4" Opacity="0" Margin="1" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" />
-                                                <Rectangle x:Name="FocusVisualElement" IsHitTestVisible="false" Margin="1" RadiusY="3.5" RadiusX="3.5" Stroke="{StaticResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed"/>
+                                                <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource WhiteBrush}" IsHitTestVisible="false" Opacity="0" RadiusY="3" RadiusX="3"/>
+                                                <Border x:Name="MouseOverBorder" Background="{DynamicResource GrayBrush8}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
+                                                <Border x:Name="PressedBorder" Background="{DynamicResource GrayBrush5}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3.5" Opacity="0"/>
+                                                <Rectangle x:Name="FocusRectangle" Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" RadiusY="4" RadiusX="4" Margin="-1" Opacity="0" />
+                                                <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{DynamicResource TextBoxMouseOverBorderBrush}" RadiusX="3" RadiusY="3" Opacity="0" />
+                                                <Rectangle x:Name="CheckedRectangle" StrokeThickness="{TemplateBinding BorderThickness}" RadiusY="4" RadiusX="4" Opacity="0" Stroke="{DynamicResource TextBoxMouseOverBorderBrush}" />
+                                                <Rectangle x:Name="CheckedInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" RadiusY="4" RadiusX="4" Opacity="0" Margin="1" Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" />
+                                                <Rectangle x:Name="FocusVisualElement" IsHitTestVisible="false" Margin="1" RadiusY="3.5" RadiusX="3.5" Stroke="{DynamicResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed"/>
 
                                                 <ContentPresenter  
 													HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
@@ -1509,22 +1508,22 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="ContentPresenterBorder">
                             <Grid>
-                                <ToggleButton x:Name="DropDownToggle" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="0" Style="{StaticResource comboToggleStyle}" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Stretch">
+                                <ToggleButton x:Name="DropDownToggle" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Right" Margin="0" Style="{DynamicResource comboToggleStyle}" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Stretch">
                                     <Path x:Name="BtnArrow" Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z " HorizontalAlignment="Right" Height="4" Margin="0,0,6,0" Stretch="Uniform" Width="8">
                                         <Path.Fill>
-                                            <SolidColorBrush x:Name="BtnArrowColor" Color="{StaticResource Gray3}"/>
+                                            <SolidColorBrush x:Name="BtnArrowColor" Color="{DynamicResource Gray3}"/>
                                         </Path.Fill>
                                     </Path>
                                 </ToggleButton>
                                 <ContentPresenter ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="6,2,6,2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Grid>
                         </Border>
-                        <Rectangle x:Name="FocusRectangle" Stroke="{StaticResource TextBoxMouseOverInnerBorderBrush}" RadiusY="4" RadiusX="4" Margin="-1" Opacity="0" />
-                        <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{StaticResource TextBoxMouseOverBorderBrush}" RadiusX="3" RadiusY="3" Opacity="0" />
-                        <Rectangle x:Name="DisabledVisualElement" Fill="{StaticResource DisabledWhiteColorBrush}" IsHitTestVisible="false" RadiusX="3" RadiusY="3" Opacity="0"/>
-                        <Border x:Name="ValidationErrorElement" BorderBrush="{StaticResource ControlsValidationBrush}" BorderThickness="1" CornerRadius="3" Visibility="Collapsed">
+                        <Rectangle x:Name="FocusRectangle" Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" RadiusY="4" RadiusX="4" Margin="-1" Opacity="0" />
+                        <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{DynamicResource TextBoxMouseOverBorderBrush}" RadiusX="3" RadiusY="3" Opacity="0" />
+                        <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource DisabledWhiteColorBrush}" IsHitTestVisible="false" RadiusX="3" RadiusY="3" Opacity="0"/>
+                        <Border x:Name="ValidationErrorElement" BorderBrush="{DynamicResource ControlsValidationBrush}" BorderThickness="1" CornerRadius="3" Visibility="Collapsed">
                             <ToolTipService.ToolTip>
-                                <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{StaticResource ValidationToolTipTemplate}">
+                                <ToolTip x:Name="validationTooltip" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Template="{DynamicResource ValidationToolTipTemplate}">
                                     <ToolTip.Triggers>
                                         <EventTrigger RoutedEvent="Canvas.Loaded">
                                             <BeginStoryboard>
@@ -1543,12 +1542,12 @@
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                             <Grid Background="Transparent" HorizontalAlignment="Right" Height="12" Margin="1,-4,-4,0" VerticalAlignment="Top" Width="12">
-                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z" Fill="{StaticResource ValidationBrush5}" Margin="1,3,0,0"/>
-                                <Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="{StaticResource WhiteColorBrush}" Margin="1,3,0,0"/>
+                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z" Fill="{DynamicResource ValidationBrush5}" Margin="1,3,0,0"/>
+                                <Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="{DynamicResource WhiteColorBrush}" Margin="1,3,0,0"/>
                             </Grid>
                         </Border>
                         <Popup x:Name="PART_Popup" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
-                            <Border Effect="{StaticResource DropShadowBrush}" x:Name="PopupBorder" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" Height="Auto" BorderBrush="{StaticResource ComboBoxPopupBrush}" Background="{StaticResource WhiteBrush}">
+                            <Border Effect="{DynamicResource DropShadowBrush}" x:Name="PopupBorder" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" Height="Auto" BorderBrush="{DynamicResource ComboBoxPopupBrush}" Background="{DynamicResource WhiteBrush}">
                                 <ScrollViewer x:Name="DropDownScrollViewer" BorderThickness="0" Padding="1">
                                     <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
@@ -1562,11 +1561,11 @@
 
     <!--ComboBoxItem Style-->
     <Style TargetType="ComboBoxItem">
-        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="Padding" Value="3"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
-        <Setter Property="Background" Value="{StaticResource TransparentWhiteBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -1580,9 +1579,9 @@
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MouseOverRectangle">
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value=".65"/>
                                         </DoubleAnimationUsingKeyFrames>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterWrapperColor" Storyboard.TargetProperty="Color">
-                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource HoverForegroundColor}"/>
-                                        </ColorAnimationUsingKeyFrames>
+                                        <!--<ColorAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterWrapperColor" Storyboard.TargetProperty="Color">
+                                            <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource HoverForegroundColor}"/>
+                                        </ColorAnimationUsingKeyFrames>-->
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
@@ -1600,9 +1599,9 @@
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SelectedRectangle">
                                             <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
                                         </DoubleAnimationUsingKeyFrames>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterWrapperColor" Storyboard.TargetProperty="Color">
-                                            <EasingColorKeyFrame KeyTime="0" Value="{StaticResource HoverForegroundColor}"/>
-                                        </ColorAnimationUsingKeyFrames>
+                                        <!--<ColorAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterWrapperColor" Storyboard.TargetProperty="Color">
+                                            <EasingColorKeyFrame KeyTime="0" Value="{DynamicResource HoverForegroundColor}"/>
+                                        </ColorAnimationUsingKeyFrames>-->
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -1613,15 +1612,15 @@
                                 <VisualState x:Name="Unfocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="SelectedRectangle" IsHitTestVisible="False" Opacity="0" Fill="{StaticResource HighlightBrush}"/>
-                        <Rectangle x:Name="MouseOverRectangle" IsHitTestVisible="False" Opacity="0" Fill="{StaticResource HighlightBrush}"/>
+                        <Rectangle x:Name="SelectedRectangle" IsHitTestVisible="False" Opacity="0" Fill="{DynamicResource HighlightBrush}"/>
+                        <Rectangle x:Name="MouseOverRectangle" IsHitTestVisible="False" Opacity="0" Fill="{DynamicResource HighlightBrush}"/>
                         <ContentControl >
                             <ContentControl.Foreground>
-                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{StaticResource NormalForegroundColor}" />
+                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{DynamicResource NormalForegroundColor}" />
                             </ContentControl.Foreground>
                             <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}"/>
                         </ContentControl>
-                        <Rectangle x:Name="FocusVisualElement" RadiusY="1" RadiusX="1" Stroke="{StaticResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed"/>
+                        <Rectangle x:Name="FocusVisualElement" RadiusY="1" RadiusX="1" Stroke="{DynamicResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -1630,12 +1629,12 @@
 
     <!--ProgressBar Style-->
     <Style TargetType="ProgressBar">
-        <Setter Property="Foreground" Value="{StaticResource HighlightBrush}"/>
-        <Setter Property="Background" Value="{StaticResource GrayBrush4}"/>
+        <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource GrayBrush4}"/>
         <Setter Property="Maximum" Value="100"/>
         <Setter Property="Height" Value="10"/>
         <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TextBoxBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ProgressBar">
@@ -1670,7 +1669,7 @@
                         <Border x:Name="PART_Track" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"/>
                         <Grid x:Name="ProgressBarRootGrid">
                             <Grid x:Name="IndeterminateRoot" Visibility="Collapsed">
-                                <Rectangle x:Name="IndeterminateSolidFill" Margin="{TemplateBinding BorderThickness}" Opacity="1" RenderTransformOrigin="0.5,0.5" StrokeThickness="0" Fill="{StaticResource BrandingBrush}"/>
+                                <Rectangle x:Name="IndeterminateSolidFill" Margin="{TemplateBinding BorderThickness}" Opacity="1" RenderTransformOrigin="0.5,0.5" StrokeThickness="0" Fill="{DynamicResource BrandingBrush}"/>
                                 <Rectangle x:Name="IndeterminateGradientFill" Margin="{TemplateBinding BorderThickness}" Opacity="0.7" StrokeThickness="1">
                                     <Rectangle.Fill>
                                         <LinearGradientBrush EndPoint="0,1" MappingMode="Absolute" SpreadMethod="Repeat" StartPoint="20,1">
@@ -1680,16 +1679,16 @@
                                                     <SkewTransform AngleX="-30"/>
                                                 </TransformGroup>
                                             </LinearGradientBrush.Transform>
-                                            <GradientStop Color="{StaticResource ProgressIndeterminateColor1}" Offset="0"/>
-                                            <GradientStop Color="{StaticResource ProgressIndeterminateColor2}" Offset="0.651"/>
-                                            <GradientStop Color="{StaticResource ProgressIndeterminateColor3}" Offset="0.093"/>
-                                            <GradientStop Color="{StaticResource ProgressIndeterminateColor4}" Offset="0.548"/>
+                                            <GradientStop Color="{DynamicResource ProgressIndeterminateColor1}" Offset="0"/>
+                                            <GradientStop Color="{DynamicResource ProgressIndeterminateColor2}" Offset="0.651"/>
+                                            <GradientStop Color="{DynamicResource ProgressIndeterminateColor3}" Offset="0.093"/>
+                                            <GradientStop Color="{DynamicResource ProgressIndeterminateColor4}" Offset="0.548"/>
                                         </LinearGradientBrush>
                                     </Rectangle.Fill>
                                 </Rectangle>
                             </Grid>
                             <Grid x:Name="DeterminateRoot" Margin="1">
-                                <Border x:Name="ProgressBarIndicator" Background="{StaticResource BrandingBrush}" HorizontalAlignment="Left" Margin="-1">
+                                <Border x:Name="ProgressBarIndicator" Background="{DynamicResource BrandingBrush}" HorizontalAlignment="Left" Margin="-1">
                                     <Rectangle x:Name="GradientFill" Opacity="0.7" Visibility="Collapsed">
                                         <Rectangle.Fill>
                                             <LinearGradientBrush EndPoint="0,1" MappingMode="Absolute" SpreadMethod="Repeat" StartPoint="20,1">
@@ -1699,10 +1698,10 @@
                                                         <SkewTransform AngleX="-30"/>
                                                     </TransformGroup>
                                                 </LinearGradientBrush.Transform>
-                                                <GradientStop Color="{StaticResource ProgressIndeterminateColor1}" Offset="0"/>
-                                                <GradientStop Color="{StaticResource ProgressIndeterminateColor2}" Offset="0.651"/>
-                                                <GradientStop Color="{StaticResource ProgressIndeterminateColor3}" Offset="0.093"/>
-                                                <GradientStop Color="{StaticResource ProgressIndeterminateColor4}" Offset="0.548"/>
+                                                <GradientStop Color="{DynamicResource ProgressIndeterminateColor1}" Offset="0"/>
+                                                <GradientStop Color="{DynamicResource ProgressIndeterminateColor2}" Offset="0.651"/>
+                                                <GradientStop Color="{DynamicResource ProgressIndeterminateColor3}" Offset="0.093"/>
+                                                <GradientStop Color="{DynamicResource ProgressIndeterminateColor4}" Offset="0.548"/>
                                             </LinearGradientBrush>
                                         </Rectangle.Fill>
                                     </Rectangle>
@@ -1733,22 +1732,22 @@
     </Style>
     <!--<Style x:Key="ProgressBarStyle1" TargetType="{x:Type ProgressBar}">
         <Setter Property="Foreground" Value="#01D328"/>
-        <Setter Property="Background" Value="{StaticResource ProgressBarBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource ProgressBarBorderBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ProgressBarBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ProgressBarBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ProgressBar}">
                     <Grid x:Name="TemplateRoot" SnapsToDevicePixels="true">
                         <Rectangle Fill="{TemplateBinding Background}" RadiusY="2" RadiusX="2"/>
-                        <Border Background="{StaticResource ProgressBarGlassyHighlight}" CornerRadius="2" Margin="1"/>
-                        <Border BorderBrush="#80FFFFFF" BorderThickness="1,0,1,1" Background="{StaticResource ProgressBarTopHighlight}" Margin="1"/>
+                        <Border Background="{DynamicResource ProgressBarGlassyHighlight}" CornerRadius="2" Margin="1"/>
+                        <Border BorderBrush="#80FFFFFF" BorderThickness="1,0,1,1" Background="{DynamicResource ProgressBarTopHighlight}" Margin="1"/>
                         <Rectangle x:Name="PART_Track" Margin="1"/>
                         <Decorator x:Name="PART_Indicator" HorizontalAlignment="Left" Margin="1">
                             <Grid x:Name="Foreground">
                                 <Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}"/>
                                 <Grid x:Name="Animation" ClipToBounds="true">
-                                    <Rectangle x:Name="PART_GlowRect" Fill="{StaticResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="100"/>
+                                    <Rectangle x:Name="PART_GlowRect" Fill="{DynamicResource ProgressBarIndicatorAnimatedFill}" HorizontalAlignment="Left" Margin="-100,0,0,0" Width="100"/>
                                 </Grid>
                                 <Grid x:Name="Overlay">
                                     <Grid.ColumnDefinitions>
@@ -1760,13 +1759,13 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <Rectangle x:Name="LeftDark" Fill="{StaticResource ProgressBarIndicatorDarkEdgeLeft}" Margin="1,1,0,1" RadiusY="1" RadiusX="1" Grid.RowSpan="2"/>
-                                    <Rectangle x:Name="RightDark" Grid.Column="2" Fill="{StaticResource ProgressBarIndicatorDarkEdgeRight}" Margin="0,1,1,1" RadiusY="1" RadiusX="1" Grid.RowSpan="2"/>
-                                    <Rectangle x:Name="LeftLight" Grid.Column="0" Fill="{StaticResource ProgressBarIndicatorLightingEffectLeft}" Grid.Row="2"/>
-                                    <Rectangle x:Name="CenterLight" Grid.Column="1" Fill="{StaticResource ProgressBarIndicatorLightingEffect}" Grid.Row="2"/>
-                                    <Rectangle x:Name="RightLight" Grid.Column="2" Fill="{StaticResource ProgressBarIndicatorLightingEffectRight}" Grid.Row="2"/>
-                                    <Border x:Name="Highlight1" Background="{StaticResource ProgressBarIndicatorGlassyHighlight}" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
-                                    <Border x:Name="Highlight2" Background="{StaticResource ProgressBarTopHighlight}" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+                                    <Rectangle x:Name="LeftDark" Fill="{DynamicResource ProgressBarIndicatorDarkEdgeLeft}" Margin="1,1,0,1" RadiusY="1" RadiusX="1" Grid.RowSpan="2"/>
+                                    <Rectangle x:Name="RightDark" Grid.Column="2" Fill="{DynamicResource ProgressBarIndicatorDarkEdgeRight}" Margin="0,1,1,1" RadiusY="1" RadiusX="1" Grid.RowSpan="2"/>
+                                    <Rectangle x:Name="LeftLight" Grid.Column="0" Fill="{DynamicResource ProgressBarIndicatorLightingEffectLeft}" Grid.Row="2"/>
+                                    <Rectangle x:Name="CenterLight" Grid.Column="1" Fill="{DynamicResource ProgressBarIndicatorLightingEffect}" Grid.Row="2"/>
+                                    <Rectangle x:Name="RightLight" Grid.Column="2" Fill="{DynamicResource ProgressBarIndicatorLightingEffectRight}" Grid.Row="2"/>
+                                    <Border x:Name="Highlight1" Background="{DynamicResource ProgressBarIndicatorGlassyHighlight}" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
+                                    <Border x:Name="Highlight2" Background="{DynamicResource ProgressBarTopHighlight}" Grid.ColumnSpan="3" Grid.RowSpan="2"/>
                                 </Grid>
                             </Grid>
                         </Decorator>

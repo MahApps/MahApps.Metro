@@ -9,13 +9,30 @@
         Height="350"
         Width="525"
         MouseDown="WindowMouseDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
+
+                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/DarkRed.xaml"/>-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
     <i:Interaction.Behaviors>
         <behaviours:BorderlessWindowBehavior/>
     </i:Interaction.Behaviors>
+    
+
 
     <Controls:MetroContentControl>
         <Grid>
-            <Grid x:Name="grdOwner" Height="40" VerticalAlignment="Top" Background="{DynamicResource HighlightLightBrush}">
+            <Grid x:Name="grdOwner" Height="40" VerticalAlignment="Top">
+                <Grid.Background>
+                    <SolidColorBrush Color="{DynamicResource HighlightDarkColor}" />
+                </Grid.Background>
                 <StackPanel Panel.ZIndex="1" Height="20" VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Right" Width="66">
                     <Button x:Name="btnMin" Click="BtnMinClick" Margin="2,0,0,0" Width="20" Height="20" Style="{DynamicResource ChromelessButtonStyle}" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Padding="0" ToolTip="Minimise" RenderTransformOrigin="0.5,0.5" Opacity="0.8">
                         <Button.RenderTransform>
@@ -82,9 +99,8 @@
             	<Button Content="Right Click Me" Height="30" ToolTip="This is a tooltip" Margin="88.694,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108">
             		<Button.ContextMenu>
             			<ContextMenu>
-            				<MenuItem Header="Test" />
-            				<MenuItem Header="Test" />
-            				<MenuItem Header="Test" />
+            				<MenuItem Header="Dark Red" Click="MiDarkRed" />
+            				<MenuItem Header="Light Green" Click="MiLightGreen"/>
             				<Separator />
             				<MenuItem Header="Test" />
             			</ContextMenu>
