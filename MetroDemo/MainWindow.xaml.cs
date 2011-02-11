@@ -73,5 +73,88 @@ namespace MetroDemo
                 Resources.Add(r.Key, r.Value);
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            pb.IsIndeterminate = !pb.IsIndeterminate;
+        }
+
+        private void MiLightRed(object sender, RoutedEventArgs e)
+        {
+            var accentRd = new ResourceDictionary();
+            var themeRd = new ResourceDictionary();
+
+            accentRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Red.xaml");
+            themeRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml");
+
+
+            ApplyResourceDictionary(accentRd);
+            ApplyResourceDictionary(themeRd);
+        }
+
+        private void MiLightBlue(object sender, RoutedEventArgs e)
+        {
+            var accentRd = new ResourceDictionary();
+            var themeRd = new ResourceDictionary();
+
+            accentRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml");
+            themeRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml");
+
+
+            ApplyResourceDictionary(accentRd);
+            ApplyResourceDictionary(themeRd);
+        }
+
+        private void MiLightPurple(object sender, RoutedEventArgs e)
+        {
+            var accentRd = new ResourceDictionary();
+            var themeRd = new ResourceDictionary();
+
+            accentRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Purple.xaml");
+            themeRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml");
+
+
+            ApplyResourceDictionary(accentRd);
+            ApplyResourceDictionary(themeRd);
+        }
+
+        private void MiDarkBlue(object sender, RoutedEventArgs e)
+        {
+            var accentRd = new ResourceDictionary();
+            var themeRd = new ResourceDictionary();
+
+            accentRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml");
+            themeRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml");
+
+
+            ApplyResourceDictionary(accentRd);
+            ApplyResourceDictionary(themeRd);
+        }
+
+        private void MiDarkGreen(object sender, RoutedEventArgs e)
+        {
+            var accentRd = new ResourceDictionary();
+            var themeRd = new ResourceDictionary();
+
+            accentRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml");
+            themeRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml");
+
+
+            ApplyResourceDictionary(accentRd);
+            ApplyResourceDictionary(themeRd);
+        }
+
+        private void MiDarkPurple(object sender, RoutedEventArgs e)
+        {
+            var accentRd = new ResourceDictionary();
+            var themeRd = new ResourceDictionary();
+
+            accentRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Purple.xaml");
+            themeRd.Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml");
+
+
+            ApplyResourceDictionary(accentRd);
+            ApplyResourceDictionary(themeRd);
+        }
     }
 }

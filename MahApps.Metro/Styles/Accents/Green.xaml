@@ -10,4 +10,9 @@
     <Color x:Key="AccentColor3">#6648cb00</Color>
     <!--20%-->
     <Color x:Key="AccentColor4">#3348cb00</Color>
+
+    <LinearGradientBrush x:Key="BrandingBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5">
+        <GradientStop Color="{DynamicResource HighlightDarkColor}" Offset="0"/>
+        <GradientStop Color="#FF98370F" Offset="1"/>
+    </LinearGradientBrush>
 </ResourceDictionary>

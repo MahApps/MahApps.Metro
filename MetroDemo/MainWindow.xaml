@@ -9,6 +9,10 @@
         Height="350"
         Width="525"
         MouseDown="WindowMouseDown">
+    <Window.Background>
+        <SolidColorBrush Color="{DynamicResource WhiteColor}" />
+    </Window.Background>
+    
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,7 +20,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
 
-                <!--<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/DarkRed.xaml"/>-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -96,14 +99,19 @@
                 </StackPanel>
             </Grid>
             <Grid Margin="17.306,56,236.999,23.24">
-            	<Button Content="Right Click Me" Height="30" ToolTip="This is a tooltip" Margin="88.694,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108">
+            	<Button Content="Right Click Me" Click="Button_Click" Height="30" ToolTip="This is a tooltip" Margin="88.694,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108">
             		<Button.ContextMenu>
             			<ContextMenu>
-            				<MenuItem Header="Dark Red" Click="MiDarkRed" />
+                            <MenuItem Header="Light Red" Click="MiLightRed" />
             				<MenuItem Header="Light Green" Click="MiLightGreen"/>
+                            <MenuItem Header="Light Blue" Click="MiLightBlue"/>
+                            <MenuItem Header="Light Purple" Click="MiLightPurple"/>
             				<Separator />
-            				<MenuItem Header="Test" />
-            			</ContextMenu>
+                            <MenuItem Header="Dark Red" Click="MiDarkRed" />
+                            <MenuItem Header="Dark Green" Click="MiDarkGreen"/>
+                            <MenuItem Header="Dark Blue" Click="MiDarkBlue"/>
+                            <MenuItem Header="Dark Purple" Click="MiDarkPurple"/>
+                        </ContextMenu>
             		</Button.ContextMenu>
             	</Button>
             	<PasswordBox Margin="88.695,66.96,0,0" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154.001" />
@@ -115,7 +123,7 @@
             		<ComboBoxItem Content="ComboBoxItem"/>
             		<ComboBoxItem Content="ComboBoxItem"/>
             	</ComboBox>
-            	<ProgressBar Value="50" IsIndeterminate="true" Margin="88.696,216.8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" />
+            	<ProgressBar x:Name="pb" Value="{Binding Value, ElementName=slider1}" IsIndeterminate="False" Margin="88.696,216.8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" />
             	<Label Content="Button" VerticalAlignment="Top" Margin="39.07,0,0,0" HorizontalAlignment="Left"/>
             	<Label Content="Passwordbox" Margin="5.147,71,0,0" RenderTransformOrigin="0.535,-0.381" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             	<Label Content="Checkbox" Margin="23.1,100.96,0,105.84" d:LayoutOverrides="Height" HorizontalAlignment="Left"/>
@@ -127,6 +135,8 @@
             </Grid>
             <Controls:ToggleSwitch HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,44,8,0" />
             <Label Content="Toggle Switch" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,56,148.725,0"/>
+            <Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />
+            <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding Value, ElementName=slider1}" Margin="0,142,18,154.04" d:LayoutOverrides="Height" RenderTransformOrigin="26.277,-1.472"/>
         </Grid>
     </Controls:MetroContentControl>
 </Window>
