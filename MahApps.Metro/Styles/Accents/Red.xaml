@@ -16,5 +16,9 @@
         <GradientStop Color="#FFD4D115" Offset="1"/>
     </LinearGradientBrush>
 
+    <SolidColorBrush x:Key="AccentColorBrush"
+                     Color="{DynamicResource AccentColor}" />
+
+
 
 </ResourceDictionary>
