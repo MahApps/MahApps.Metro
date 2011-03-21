@@ -60,7 +60,6 @@
         <Setter Property="Background" Value="{DynamicResource ButtonNormalBackground}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource ButtonNormalBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Padding" Value="1"/>
@@ -83,7 +82,7 @@
                         <Grid.Effect>
                             <DropShadowEffect ShadowDepth="0" Color="White" Opacity="0" RenderingBias="Performance"/>
                         </Grid.Effect>
-                        <Ellipse x:Name="ellipse" Margin="4" Stroke="White" StrokeThickness="2" VerticalAlignment="Stretch"/>
+                        <Ellipse x:Name="ellipse" Margin="4" Stroke="{TemplateBinding Foreground}" StrokeThickness="2" VerticalAlignment="Stretch"/>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>

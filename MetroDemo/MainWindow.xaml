@@ -25,7 +25,7 @@
     </Window.Resources>
     
     <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior/>
+        <behaviours:BorderlessWindowBehavior ResizeWithGrip="False" />
     </i:Interaction.Behaviors>
     
 

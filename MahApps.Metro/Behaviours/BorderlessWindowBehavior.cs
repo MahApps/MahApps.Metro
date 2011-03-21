@@ -228,6 +228,14 @@ namespace MahApps.Metro.Behaviours
         private HwndSource m_hwndSource;
         private IntPtr m_hwnd;
 
+        public static DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
+
+        public bool ResizeWithGrip
+        {
+            get { return (bool)GetValue(ResizeWithGripProperty); }
+            set { SetValue(ResizeWithGripProperty, value); }
+        }
+
         protected override void OnAttached()
         {
             if (AssociatedObject.IsInitialized)
@@ -236,7 +244,8 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
             AssociatedObject.WindowStyle = WindowStyle.None;
-            AssociatedObject.ResizeMode = ResizeMode.CanResizeWithGrip;
+            AssociatedObject.ResizeMode = ResizeWithGrip ? ResizeMode.CanResizeWithGrip : ResizeMode.CanResize;
+
             base.OnAttached();
         }
 
