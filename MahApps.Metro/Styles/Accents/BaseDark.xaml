@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Color x:Key="BlackColor">#FFFFFFFF</Color>
-    <Color x:Key="WhiteColor">#FF000000</Color>
+    <Color x:Key="WhiteColor">#FF252525</Color>
 
     <Color x:Key="NormalForegroundColor">#FFFFFFFF</Color>
     <Color x:Key="HoverForegroundColor">#FF000000</Color>

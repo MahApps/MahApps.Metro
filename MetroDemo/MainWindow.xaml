@@ -20,6 +20,9 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
 
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"/>
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
@@ -135,8 +138,10 @@
             </Grid>
             <Controls:ToggleSwitch HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,44,8,0" />
             <Label Content="Toggle Switch" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,56,148.725,0"/>
-            <Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />
+            <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
             <TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding Value, ElementName=slider1}" Margin="0,142,18,154.04" d:LayoutOverrides="Height" RenderTransformOrigin="26.277,-1.472"/>
+
+            <Controls:ProgressIndicator Margin="337,136,0,145" ProgressColour="{StaticResource AccentColorBrush}" />
         </Grid>
     </Controls:MetroContentControl>
 </Window>

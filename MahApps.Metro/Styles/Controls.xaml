@@ -119,19 +119,19 @@
                     <ControlTemplate.Resources>
                         <Storyboard x:Key="OnMouseEnter1">
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.45"/>
+                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.75"/>
                                 <SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="1"/>
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                         <Storyboard x:Key="OnMouseLeave1">
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)">
                                 <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-                                <SplineDoubleKeyFrame KeyTime="00:00:00.5000000" Value="0.45" KeySpline="1,0,1,1"/>
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.5000000" Value="0.75" KeySpline="1,0,1,1"/>
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid Background="#02FFFFFF">
-                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True" Opacity="0.45"/>
+                        <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True" Opacity="0.75"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <EventTrigger RoutedEvent="Mouse.MouseLeave">
@@ -1304,7 +1304,7 @@
                         <Grid Margin="0,1,0,0">
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0"/>
                             <Grid >
-                                <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="4,0,2,2" VerticalAlignment="Center" Background="{x:Null}"/>
+                                <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="4,0,2,2" VerticalAlignment="Stretch" Background="{x:Null}"/>
                             </Grid>
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement" Stroke="{DynamicResource ControlsDisabledBrush}" StrokeThickness="{TemplateBinding BorderThickness}" Fill="{DynamicResource ControlsDisabledBrush}" IsHitTestVisible="False" Opacity="0"/>
