@@ -66,32 +66,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <ControlTemplate.Resources>
-                        <Storyboard x:Key="OnMouseEnter1">
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)" Storyboard.TargetName="grid">
-                                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                        <Storyboard x:Key="OnMouseLeave1">
-                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)" Storyboard.TargetName="grid">
-                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </ControlTemplate.Resources>
-                    <Grid x:Name="grid">
-                        <Grid.Effect>
-                            <DropShadowEffect ShadowDepth="0" Color="White" Opacity="0" RenderingBias="Performance"/>
-                        </Grid.Effect>
+                    <Grid x:Name="grid"  Background="#02FFFFFF">
                         <Ellipse x:Name="ellipse" Margin="4" Stroke="{TemplateBinding Foreground}" StrokeThickness="2" VerticalAlignment="Stretch"/>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
-                            <BeginStoryboard Storyboard="{StaticResource OnMouseLeave1}"/>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
-                            <BeginStoryboard Storyboard="{StaticResource OnMouseEnter1}"/>
-                        </EventTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ellipse" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="ellipse" Property="Opacity" Value=".5" />
+                        </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="true"/>
                         <Trigger Property="ToggleButton.IsChecked" Value="true"/>
                         <Trigger Property="IsEnabled" Value="false">
@@ -116,30 +101,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <ControlTemplate.Resources>
-                        <Storyboard x:Key="OnMouseEnter1">
-                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0.75"/>
-                                <SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="1"/>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                        <Storyboard x:Key="OnMouseLeave1">
-                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="contentPresenter" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
-                                <SplineDoubleKeyFrame KeyTime="00:00:00.5000000" Value="0.75" KeySpline="1,0,1,1"/>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </ControlTemplate.Resources>
                     <Grid Background="#02FFFFFF">
                         <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True" Opacity="0.75"/>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
-                            <BeginStoryboard x:Name="OnMouseLeave1_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave1}"/>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
-                            <BeginStoryboard Storyboard="{StaticResource OnMouseEnter1}"/>
-                        </EventTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value=".5" />
+                        </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="true"/>
                         <Trigger Property="ToggleButton.IsChecked" Value="true"/>
                         <Trigger Property="IsEnabled" Value="false">
@@ -1304,7 +1275,7 @@
                         <Grid Margin="0,1,0,0">
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0"/>
                             <Grid >
-                                <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="4,0,2,2" VerticalAlignment="Stretch" Background="{x:Null}"/>
+                                <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="4,2,2,2" VerticalAlignment="Stretch" Background="{x:Null}"/>
                             </Grid>
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement" Stroke="{DynamicResource ControlsDisabledBrush}" StrokeThickness="{TemplateBinding BorderThickness}" Fill="{DynamicResource ControlsDisabledBrush}" IsHitTestVisible="False" Opacity="0"/>
