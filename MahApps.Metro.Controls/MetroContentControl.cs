@@ -14,6 +14,16 @@ namespace MahApps.Metro.Controls
 
             Loaded += MetroContentControlLoaded;
             Unloaded += MetroContentControlUnloaded;
+
+            IsVisibleChanged += MetroContentControlIsVisibleChanged;
+        }
+
+        void MetroContentControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!IsVisible)
+                VisualStateManager.GoToState(this, "AfterUnLoaded", false);
+            else
+                VisualStateManager.GoToState(this, "AfterLoaded", true);
         }
 
         private void MetroContentControlUnloaded(object sender, RoutedEventArgs e)
