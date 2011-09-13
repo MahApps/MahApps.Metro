@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>MahApps.Metro</id>
+    <version>0.2</version>
+    <title>MahApps.Metro</title>
+    <authors>Paul Jenkins</authors>
+    <owners />
+    <licenseUrl>http://www.opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://bitbucket.org/aeoth/mahapps.metro/wiki/Home</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>The goal of MahApps.Metro is to allow devs to quickly and easily cobble togther a "Metro" UI for their WPF4+ apps, with minimal effort.</description>
+    <summary>The goal of MahApps.Metro is to allow devs to quickly and easily cobble togther a "Metro" UI for their WPF4+ apps, with minimal effort.</summary>
+    <releaseNotes>Added tab item styling.</releaseNotes>
+  </metadata>
+  <files>
+    <file src="lib\net40\MahApps.Metro.Controls.dll" target="lib\net40\MahApps.Metro.Controls.dll" />
+    <file src="lib\net40\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />
+    <file src="lib\net40\System.Windows.Interactivity.dll" target="lib\net40\System.Windows.Interactivity.dll" />
+  </files>
+</package>
