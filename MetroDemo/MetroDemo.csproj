@@ -113,6 +113,10 @@
       <Project>{0AB53160-F9D7-4A86-BEE7-EC8F971C79A8}</Project>
       <Name>MahApps.Metro.Controls</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MahApps.Metro.Icons\MahApps.Metro.Icons.csproj">
+      <Project>{D7C4AC2C-5F0D-48E9-AC42-59DF57C23CD0}</Project>
+      <Name>MahApps.Metro.Icons</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj">
       <Project>{5B1710D2-5DC8-4754-91B2-19165DE49B3D}</Project>
       <Name>MahApps.Metro</Name>
