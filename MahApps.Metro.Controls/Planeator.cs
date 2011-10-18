@@ -239,7 +239,5 @@ namespace MahApps.Metro.Controls
             _rotationTransform.CenterX = w / 2;
             _rotationTransform.CenterY = h / 2;
         }
-
-
     }
 }

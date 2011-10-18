@@ -55,6 +55,7 @@
     <Compile Include="Behaviours\TiltBehavior.cs" />
     <Compile Include="LayoutInvalidationCatcher.cs" />
     <Compile Include="MetroContentControl.cs" />
+    <Compile Include="MetroImage.cs" />
     <Compile Include="Panorama.cs" />
     <Compile Include="PanoramaItem.cs" />
     <Compile Include="Planeator.cs" />
@@ -77,6 +78,8 @@
     <Compile Include="RevealImage.xaml.cs">
       <DependentUpon>RevealImage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tile.cs" />
+    <Compile Include="TiltBehavior.cs" />
     <Compile Include="ToggleSwitch.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

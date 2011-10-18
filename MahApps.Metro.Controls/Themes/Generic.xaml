@@ -50,9 +50,9 @@
 
     
     <Style TargetType="{x:Type Controls:ToggleSwitchButton}">
-        <!--<Setter Property="Background" Value="{DynamicResource PhoneBackgroundBrush}"/>-->
         <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="SwitchForeground" Value="{DynamicResource HighlightLightBrush}"/>
+        <Setter Property="SwitchForeground"
+                Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:ToggleSwitchButton">
@@ -120,6 +120,10 @@
                                             Storyboard.TargetProperty="(TranslateTransform.X)"
                                             Duration="0"
                                             To="0"/>
+                                        <ColorAnimation Storyboard.TargetName="SwitchBottom"
+                                                        Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)"
+                                                        Duration="0"
+                                                        To="White" />
                                         <DoubleAnimation
                                             Storyboard.TargetName="ThumbTranslation"
                                             Storyboard.TargetProperty="(TranslateTransform.X)"
@@ -134,7 +138,7 @@
                                 <Grid x:Name="SwitchBottom" Background="{TemplateBinding SwitchForeground}" Height="32">
                                     <Rectangle
                                         x:Name="SwitchBackground"
-                                        Fill="{TemplateBinding Background}"
+                                               Fill="{TemplateBinding SwitchForeground}"
                                         Width="76"
                                         Height="20"
                                         HorizontalAlignment="Center"
@@ -174,7 +178,8 @@
 
     <Style TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="IsTabStop" Value="False"/>
-        <Setter Property="SwitchForeground" Value="{DynamicResource HighlightLightBrush}"/>
+        <Setter Property="SwitchForeground"
+                Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
         <Setter Property="Template">
@@ -318,5 +323,68 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style TargetType="Controls:Tile">
+        <Setter Property="Width"
+                Value="140" />
+        <Setter Property="Height"
+                Value="140" />
+        <Setter Property="Margin"
+                Value="3" />
+        <Setter Property="Foreground"
+                Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Controls:Tile">
+                    <Grid>
+                        <Grid.Background>
+                            <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                        </Grid.Background>
+
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Orientation="Horizontal">
+                            <ContentPresenter />
+
+                            <TextBlock Text="{TemplateBinding Count}"
+                                       FontSize="28"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+
+                        <TextBlock Text="{TemplateBinding Title}"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"
+                                   TextWrapping="Wrap"
+                                   FontSize="16"
+                                   Grid.ColumnSpan="2"
+                                   Margin="3" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Controls:MetroImage">
+        <Setter Property="Width"
+                Value="48" />
+        <Setter Property="Height"
+                Value="48" />
+        <Setter Property="Foreground"
+                Value="White" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Controls:MetroImage">
+                    <Rectangle Width="{TemplateBinding Width}"
+                               Height="{TemplateBinding Height}"
+                               Fill="{TemplateBinding Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Visual="{Binding Source, RelativeSource={RelativeSource TemplatedParent}}"
+                                         Stretch="Fill" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

@@ -193,7 +193,12 @@
             			<Controls:ToggleSwitch HorizontalAlignment="Left" Margin="0,10,0,0" />
             			<Slider Margin="0,10,0,0" HorizontalAlignment="Left" Width="261.667" Value="5" SmallChange="0.5"/>
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
-            		</StackPanel>
+
+                        <Controls:Tile Title="My Cupcakes"
+                                       Count="23">
+                            <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
+                        </Controls:Tile>
+                    </StackPanel>
             	</TabItem>
             </TabControl>
                     
