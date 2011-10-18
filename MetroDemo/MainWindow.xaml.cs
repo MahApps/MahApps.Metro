@@ -156,5 +156,10 @@ namespace MetroDemo
             ApplyResourceDictionary(accentRd);
             ApplyResourceDictionary(themeRd);
         }
+
+        private void BtnPanoramaClick(object sender, RoutedEventArgs e)
+        {
+            new PanoramaDemo().Show();
+        }
     }
 }

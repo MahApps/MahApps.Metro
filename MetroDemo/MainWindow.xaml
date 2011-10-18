@@ -8,7 +8,7 @@
         Title="MainWindow"
         Height="439"
         Width="585"
-        MouseDown="WindowMouseDown">
+>
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource WhiteColor}" />
     </Window.Background>
@@ -28,14 +28,14 @@
     </Window.Resources>
     
     <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior ResizeWithGrip="False" />
+        <behaviours:BorderlessWindowBehavior />
     </i:Interaction.Behaviors>
     
 
 
     <Controls:MetroContentControl>
         <Grid>
-            <Grid x:Name="grdOwner" Height="40" VerticalAlignment="Top">
+            <Grid x:Name="grdOwner" Height="40" VerticalAlignment="Top"  MouseDown="WindowMouseDown">
                 <Grid.Background>
                     <SolidColorBrush Color="{DynamicResource HighlightDarkColor}" />
                 </Grid.Background>
@@ -103,52 +103,57 @@
             </Grid>
             <TabControl Margin="0,40,0,0" Background="{x:Null}" BorderBrush="{x:Null}">
             	<TabItem Header="First Tab Item">
-            		<Grid>
-            			<Grid Margin="0,0,226.999,-48.72">
-            				<Button Content="Right Click Me" Click="Button_Click" Height="30" ToolTip="This is a tooltip" Margin="88.694,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108">
-            					<Button.ContextMenu>
-            						<ContextMenu>
-            							<MenuItem Header="Light Red" Click="MiLightRed" />
-            							<MenuItem Header="Light Green" Click="MiLightGreen"/>
-            							<MenuItem Header="Light Blue" Click="MiLightBlue"/>
-            							<MenuItem Header="Light Purple" Click="MiLightPurple"/>
-            							<Separator />
-            							<MenuItem Header="Dark Red" Click="MiDarkRed" />
-            							<MenuItem Header="Dark Green" Click="MiDarkGreen"/>
-            							<MenuItem Header="Dark Blue" Click="MiDarkBlue"/>
-            							<MenuItem Header="Dark Purple" Click="MiDarkPurple"/>
-            						</ContextMenu>
-            					</Button.ContextMenu>
-            				</Button>
-            				<PasswordBox Margin="88.695,66.96,0,0" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154.001" />
-            				<CheckBox Content="CheckBox" Margin="88.695,100.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-            				<RadioButton Content="Radio Button 1" Margin="88.291,134.92,0,0" VerticalAlignment="Top" GroupName="test" HorizontalAlignment="Left" />
-            				<TextBox Text="This is a textbox" Margin="88.694,36.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-            				<ComboBox Margin="88.292,176.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
-            					<ComboBoxItem Content="ComboBoxItem"/>
-            					<ComboBoxItem Content="ComboBoxItem"/>
-            					<ComboBoxItem Content="ComboBoxItem"/>
-            				</ComboBox>
-            				<ProgressBar x:Name="pb" Value="{Binding Value, ElementName=slider1}" IsIndeterminate="False" Margin="88.696,216.8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" />
-            				<Label Content="Button" VerticalAlignment="Top" Margin="39.07,0,0,0" HorizontalAlignment="Left"/>
-            				<Label Content="Passwordbox" Margin="5.147,71,0,0" RenderTransformOrigin="0.535,-0.381" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-            				<Label Content="Checkbox" Margin="23.1,100.96,0,105.84" d:LayoutOverrides="Height" HorizontalAlignment="Left"/>
-            				<Label Content="Radio Buttons" VerticalAlignment="Top" Margin="0,130.92,0,0" HorizontalAlignment="Left"/>
-            				<Label Content="TextBox" VerticalAlignment="Top" Margin="33.14,37,0,0" HorizontalAlignment="Left"/>
-            				<Label Content="Combobox" VerticalAlignment="Top" Margin="16.224,176.84,0,0" HorizontalAlignment="Left"/>
-            				<RadioButton Content="Radio Button 2" Margin="88.695,155.88,0,0" VerticalAlignment="Top" GroupName="test" HorizontalAlignment="Left" />
-            				<Label Content="Progress Bar" VerticalAlignment="Bottom" Margin="5.147,0,0,0" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>
-            			</Grid>
-            			<Controls:ToggleSwitch HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,-2,0" />
-            			<Label Content="Toggle Switch" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,138.725,0"/>
-            <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
-            			<TextBlock HorizontalAlignment="Right" TextWrapping="Wrap" Text="{Binding Value, ElementName=slider1}" Margin="0,0,8,82.08" RenderTransformOrigin="26.277,-1.472" VerticalAlignment="Bottom"/>
-
-            			<Controls:ProgressIndicator Margin="319,83,8,0" ProgressColour="{StaticResource AccentColorBrush}" Height="6" VerticalAlignment="Top" />
-            		</Grid>
+            
+                    <Grid>
+                        <Grid Margin="0,0,226.999,-48.72">
+                            <Button Content="Right Click Me" Click="Button_Click" Height="30" ToolTip="This is a tooltip" Margin="88.694,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108">
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Light Red" Click="MiLightRed" />
+                                        <MenuItem Header="Light Green" Click="MiLightGreen"/>
+                                        <MenuItem Header="Light Blue" Click="MiLightBlue"/>
+                                        <MenuItem Header="Light Purple" Click="MiLightPurple"/>
+                                        <Separator />
+                                        <MenuItem Header="Dark Red" Click="MiDarkRed" />
+                                        <MenuItem Header="Dark Green" Click="MiDarkGreen"/>
+                                        <MenuItem Header="Dark Blue" Click="MiDarkBlue"/>
+                                        <MenuItem Header="Dark Purple" Click="MiDarkPurple"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
+                            <PasswordBox Margin="88.695,66.96,0,0" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154.001" />
+                            <CheckBox Content="CheckBox" Margin="88.695,100.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <RadioButton Content="Radio Button 1" Margin="88.291,134.92,0,0" VerticalAlignment="Top" GroupName="test" HorizontalAlignment="Left" />
+                            <TextBox Text="This is a textbox" Margin="88.694,36.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                            <ComboBox Margin="88.292,176.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="120">
+                                <ComboBoxItem Content="ComboBoxItem"/>
+                                <ComboBoxItem Content="ComboBoxItem"/>
+                                <ComboBoxItem Content="ComboBoxItem"/>
+                            </ComboBox>
+                            <ProgressBar x:Name="pb" Value="{Binding Value, ElementName=slider1}" IsIndeterminate="False" Margin="88.696,216.8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" />
+                            <Label Content="Button" VerticalAlignment="Top" Margin="39.07,0,0,0" HorizontalAlignment="Left"/>
+                            <Label Content="Passwordbox" Margin="5.147,71,0,0" RenderTransformOrigin="0.535,-0.381" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <Label Content="Checkbox" Margin="23.1,100.96,0,105.84" d:LayoutOverrides="Height" HorizontalAlignment="Left"/>
+                            <Label Content="Radio Buttons" VerticalAlignment="Top" Margin="0,130.92,0,0" HorizontalAlignment="Left"/>
+                            <Label Content="TextBox" VerticalAlignment="Top" Margin="33.14,37,0,0" HorizontalAlignment="Left"/>
+                            <Label Content="Combobox" VerticalAlignment="Top" Margin="16.224,176.84,0,0" HorizontalAlignment="Left"/>
+                            <RadioButton Content="Radio Button 2" Margin="88.695,155.88,0,0" VerticalAlignment="Top" GroupName="test" HorizontalAlignment="Left" />
+                            <Label Content="Progress Bar" VerticalAlignment="Bottom" Margin="5.147,0,0,0" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>
+                            <Button Content="Launch Panorama" Click="BtnPanoramaClick" VerticalAlignment="Bottom" Margin="88.696,0,89.305,94.42"/>
+                        </Grid>
+                        <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
+                    </Grid>
             	</TabItem>
-            	<TabItem Header="Another Item"/>
+            	<TabItem Header="More Controls Here!">
+            		<StackPanel>
+            			<Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}" Height="6" Width="600" />
+            			<Controls:ToggleSwitch HorizontalAlignment="Left" Margin="0,10,0,0" />
+            			<Slider Margin="0,10,0,0" HorizontalAlignment="Left" Width="261.667"/>
+                        <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
+            		</StackPanel>
+            	</TabItem>
             </TabControl>
+                    
             <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
         </Grid>
     </Controls:MetroContentControl>

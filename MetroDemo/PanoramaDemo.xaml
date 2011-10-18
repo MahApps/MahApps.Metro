@@ -1,0 +1,19 @@
+﻿<Window x:Class="MetroDemo.PanoramaDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro.Controls"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro" Title="PanoramaDemo" Height="500" Width="700">
+    <i:Interaction.Behaviors>
+        <behaviours:BorderlessWindowBehavior ResizeWithGrip="False" />
+    </i:Interaction.Behaviors>
+    <Grid>
+        <Controls:Panorama x:Name="MainPanorama" VerticalAlignment="Stretch" Margin="0">
+            <Controls:PanoramaItem  Header="Welcome"  x:Name="panoramaItem1"  >
+            </Controls:PanoramaItem>
+            <Controls:PanoramaItem  Header="Programs"  x:Name="panoramaItem2">
+                <Rectangle Fill="Red" />
+            </Controls:PanoramaItem>
+        </Controls:Panorama>
+    </Grid>
+</Window>
