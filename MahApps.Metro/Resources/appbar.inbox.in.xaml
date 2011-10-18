@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="inbox_in" Width="64" Height="64" Clip="F1 M 0,0L 64,0L 64,64L 0,64L 0,0">
+	<Path Width="32" Height="29" Canvas.Left="16" Canvas.Top="16" Stretch="Fill" Fill="#FF000000" Data="F1 M 31.5,36L 24,27L 28,27L 28,16L 36,16L 36,27L 40,27L 32.5,36L 31.5,36 Z M 16,32L 20,23L 25,23L 25,25L 22.1111,25L 19,32L 26,32C 26,35.3137 28.6863,38 32,38C 35.3137,38 38,35.3137 38,32L 45,32L 41.8889,25L 39,25L 39,23L 44,23L 48,32L 48,45L 16,45L 16,32 Z "/>
+</Canvas>

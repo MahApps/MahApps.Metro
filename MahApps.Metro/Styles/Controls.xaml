@@ -67,22 +67,27 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid x:Name="grid"  Background="#02FFFFFF">
+                    	<Ellipse x:Name="ellipsebg" Margin="4" Stroke="{TemplateBinding Foreground}" StrokeThickness="0" VerticalAlignment="Stretch"/>
                         <Ellipse x:Name="ellipse" Margin="4" Stroke="{TemplateBinding Foreground}" StrokeThickness="2" VerticalAlignment="Stretch"/>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ellipse" Property="Opacity" Value="1" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="ellipse" Property="Opacity" Value=".5" />
-                        </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="true"/>
-                        <Trigger Property="ToggleButton.IsChecked" Value="true"/>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="#ADADAD"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
+                		<Trigger Property="IsPressed" Value="True">
+                			<Setter TargetName="ellipsebg" Property="Fill" Value="{DynamicResource BlackBrush}"/>
+							<Setter TargetName="ellipsebg" Property="Opacity" Value="0.2" />
+                		</Trigger>
+                		<Trigger Property="IsMouseOver" Value="True">
+                			<Setter TargetName="ellipse" Property="Opacity" Value="1" />
+                		</Trigger>
+                		<Trigger Property="IsMouseOver" Value="False">
+                			<Setter TargetName="ellipse" Property="Opacity" Value=".5" />
+                		</Trigger>
+                		<Trigger Property="IsKeyboardFocused" Value="true"/>
+                		<Trigger Property="ToggleButton.IsChecked" Value="true"/>
+                		<Trigger Property="IsEnabled" Value="false">
+                			<Setter Property="Foreground" Value="#ADADAD"/>
+                		</Trigger>
+                	</ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
