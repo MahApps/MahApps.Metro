@@ -161,5 +161,10 @@ namespace MetroDemo
         {
             new PanoramaDemo().Show();
         }
+
+        private void Reload(object sender, RoutedEventArgs e)
+        {
+            metroContent.Reload();
+        }
     }
 }

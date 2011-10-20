@@ -102,9 +102,9 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <TabControl Margin="0,40,0,0" Background="{x:Null}" BorderBrush="{x:Null}">
-            	<TabItem Header="First set of controls">
-            
+            <TabControl Margin="0,40,0,0">
+            	<TabItem Header="_First set of controls">
+                    <Controls:MetroContentControl x:Name="metroContent">
                     <Grid>
                         <Grid Margin="0,0,226.999,8">
                             <Button Content="Right Click Me" Click="Button_Click" Height="30" ToolTip="This is a tooltip" Margin="88.694,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154.002">
@@ -140,7 +140,11 @@
                             <Label Content="Combobox" VerticalAlignment="Top" Margin="16.224,170.84,0,0" HorizontalAlignment="Left"/>
                             <RadioButton Content="Radio Button 2" Margin="88.695,155.88,0,0" VerticalAlignment="Top" GroupName="test" HorizontalAlignment="Left" />
                             <Label Content="Progress Bar" VerticalAlignment="Top" Margin="8.216,206.8,0,0" HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment"/>
-                            <Button Content="Launch Panorama" Click="BtnPanoramaClick" VerticalAlignment="Top" Margin="88.696,234,89.305,0"/>
+                                <Button Content="Launch Panorama"
+                                        Click="BtnPanoramaClick"
+                                        VerticalAlignment="Top"
+                                        Margin="88.696,234,89.305,0" />
+                                <Button Content="Reload Content" Click="Reload" VerticalAlignment="Top" Margin="88.696,270,89.305,0"/>
                         </Grid>
                         <StackPanel Margin="332.001,0,0,8">
                         	<Button Style="{DynamicResource MetroCircleButtonStyle}" Height="55" Width="55" HorizontalAlignment="Left" VerticalAlignment="Top">
@@ -186,8 +190,9 @@
                         </StackPanel>
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                     </Grid>
+                        </Controls:MetroContentControl>
             	</TabItem>
-            	<TabItem Header="More Controls Here!">
+            	<TabItem Header="_More Controls Here!">
             		<StackPanel>
             			<Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}" Height="6" Width="600" />
             			<Controls:ToggleSwitch HorizontalAlignment="Left" Margin="0,10,0,0" />

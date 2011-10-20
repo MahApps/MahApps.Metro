@@ -246,4 +246,22 @@ http://templarian.com/ admin@templarian.com
   <Canvas  x:Name="appbar_camera_film" Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" x:Key="appbar_camera_film">
     <Path Width="24" Height="19" Canvas.Left="12" Canvas.Top="14" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 12,22L 14,22L 14,27L 12,27L 12,22 Z M 14.5,21.5L 31.25,21.5L 31.25,24L 32,24L 36,20L 36,33L 32,29L 31.25,29L 31.25,33L 14.5,33L 14.5,21.5 Z M 18.5,14C 20.433,14 22,15.567 22,17.5C 22,19.433 20.433,21 18.5,21C 16.567,21 15,19.433 15,17.5C 15,15.567 16.567,14 18.5,14 Z M 26.5,14C 28.433,14 30,15.567 30,17.5C 30,19.433 28.433,21 26.5,21C 24.567,21 23,19.433 23,17.5C 23,15.567 24.567,14 26.5,14 Z " />
   </Canvas>
+    <Canvas x:Key="appbar_left"
+            Width="48"
+            Height="48"
+            Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
+        <Canvas Width="48"
+                Height="48"
+                Canvas.Left="0"
+                Canvas.Top="0">
+            <Path Width="25"
+                  Height="18"
+                  Canvas.Left="11"
+                  Canvas.Top="15"
+                  Stretch="Fill"
+                  Fill="#FF000000"
+                  Data="F1 M 36,22L 36,26L 19.75,26L 27,33L 20.5,33L 11,24L 20.5,15L 27,15L 19.75,22L 36,22 Z " />
+        </Canvas>
+    </Canvas>
+
 </ResourceDictionary>

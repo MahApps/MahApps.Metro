@@ -35,5 +35,11 @@ namespace MahApps.Metro.Controls
         {
             VisualStateManager.GoToState(this, "AfterLoaded", true);
         }
+
+        public void Reload()
+        {
+            VisualStateManager.GoToState(this, "BeforeLoaded", true);
+            VisualStateManager.GoToState(this, "AfterLoaded", true);            
+        }
     }
 }

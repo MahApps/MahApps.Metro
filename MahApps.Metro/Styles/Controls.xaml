@@ -1405,7 +1405,7 @@
 													IsHitTestVisible="false"
 													Margin="{TemplateBinding Padding}"
 													SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-													VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+													VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                                             </Grid>
                                         </ControlTemplate>
                                     </Setter.Value>
@@ -2156,6 +2156,13 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
     </Style>
 
+    <Style TargetType="{x:Type TabControl}">
+        <Setter Property="Background"
+                Value="{x:Null}" />
+        <Setter Property="BorderBrush"
+                Value="{x:Null}" />
+    </Style>
+
     <Style TargetType="TabItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="IsTabStop" Value="False"/>
@@ -2165,25 +2172,31 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="MinWidth" Value="5"/>
         <Setter Property="MinHeight" Value="5"/>
+        <Setter Property="Background"
+                Value="White" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
-                    <Grid x:Name="root" Height="36" Margin="0,0,15,0">
-                        <TextBlock x:Name="unselected" Margin="0" TextWrapping="Wrap" Text="{TemplateBinding Header}" FontSize="26.667">
-                            <TextBlock.Foreground>
+                    <Grid x:Name="root" Margin="0,0,15,0">
+                        <Label x:Name="unselected" Margin="0" Content="{TemplateBinding Header}" FontSize="26.667">
+                            <Label.Foreground>
                                 <SolidColorBrush Color="{DynamicResource Gray11}" />
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                        <TextBlock x:Name="selected" Margin="0" TextWrapping="Wrap" Text="{TemplateBinding Header}" FontSize="26.667" Opacity="0">
-                             <TextBlock.Foreground>
+                            </Label.Foreground>
+                        </Label>
+                        <Label x:Name="selected"
+                               Margin="0"
+                               Content="{TemplateBinding Header}" FontSize="26.667" Opacity="0">
+                            <Label.Foreground>
                                 <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                            </TextBlock.Foreground>
-                        </TextBlock>
-                        <TextBlock x:Name="hover" Margin="0" TextWrapping="Wrap" Text="{TemplateBinding Header}" FontSize="26.667" Opacity="0">
-                            <TextBlock.Foreground>
+                            </Label.Foreground>
+                        </Label>
+                        <Label x:Name="hover"
+                               Margin="0"
+                               Content="{TemplateBinding Header}" FontSize="26.667" Opacity="0">
+                            <Label.Foreground>
                                 <SolidColorBrush Color="{DynamicResource Gray3}" />
-                            </TextBlock.Foreground>
-                        </TextBlock>
+                            </Label.Foreground>
+                        </Label>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
@@ -2205,6 +2218,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
     </Style>
 </ResourceDictionary>
