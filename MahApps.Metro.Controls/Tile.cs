@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
+using MahApps.Metro.Controls.Behaviours;
 
 namespace MahApps.Metro.Controls
 {
@@ -14,8 +15,8 @@ namespace MahApps.Metro.Controls
 
         void TileLoaded(object sender, RoutedEventArgs e)
         {
-            var behaviours = Interaction.GetBehaviors(this);
-            behaviours.Add(new TiltBehavior { TiltFactor = 5 });
+            //var behaviours = Interaction.GetBehaviors(this);
+            //behaviours.Add(new TiltBehavior { TiltFactor = 5 });
         }
 
         #region public string Title
