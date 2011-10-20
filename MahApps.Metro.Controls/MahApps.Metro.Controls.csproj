@@ -79,7 +79,6 @@
       <DependentUpon>RevealImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tile.cs" />
-    <Compile Include="TiltBehavior.cs" />
     <Compile Include="ToggleSwitch.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -46,9 +46,22 @@ namespace MahApps.Metro.Controls.Behaviours
         protected override void OnAttached()
         {
             attachedElement = AssociatedObject;
-
+            if (attachedElement is ListBox)
+            {
+                var l = (ListBox) attachedElement;
+                l.Items.CurrentChanging += (s, e) =>
+                {
+                    Console.WriteLine("foo");
+                };
+                return;
+            }
             if (attachedElement as Panel != null)
             {
+                var y = (attachedElement as ItemsControl);
+                y.Items.CurrentChanging += (s, e) =>
+                                               {
+                                                   Console.WriteLine("foo");
+                                               };
                 (attachedElement as Panel).Loaded += (sl, el) =>
                                                          {
                                                              List<UIElement> elements = new List<UIElement>();
@@ -71,7 +84,8 @@ namespace MahApps.Metro.Controls.Behaviours
                 return;
             }
 
-            OriginalPanel = attachedElement.Parent as Panel;
+            OriginalPanel = attachedElement.Parent as Panel ?? GetParentPanel(attachedElement);
+
             OriginalMargin = attachedElement.Margin;
             OriginalSize = new Size(attachedElement.Width, attachedElement.Height);
             double left = Canvas.GetLeft(attachedElement);
@@ -167,5 +181,15 @@ namespace MahApps.Metro.Controls.Behaviours
                 }
             }
         }
+
+        private static Panel GetParentPanel(DependencyObject element)
+        {
+            var parent = VisualTreeHelper.GetParent(element);
+            if (parent is Panel)
+                return (Panel)parent;
+            return parent == null ? null : GetParentPanel(parent);
+        }
     }
+
+
 }

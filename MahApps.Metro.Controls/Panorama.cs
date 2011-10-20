@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,29 +17,29 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight", typeof(double), typeof(Panorama), new PropertyMetadata(Double.NaN));
 
         private double _currentWidth = -1;
-        private Action<String> _goToState;
         private double _increment;
         private bool _mouseCaptured;
 
+        private double GetWidths()
+        {
+            return Items.Cast<PanoramaItem>().Sum(i => i.ActualWidth);
+        }
+
         public Panorama()
         {
-
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Panorama), new FrameworkPropertyMetadata(typeof(Panorama)));
-
+            DefaultStyleKey = typeof(Panorama);
             Loaded += (s, e) =>
             {
                 foreach (var ob in Items)
                 {
                     var panoramaItem = ob as PanoramaItem;
-                    if (panoramaItem != null)
-                    {
-                        panoramaItem.RenderTransform = new TranslateTransform();
-                        SetOpacity(panoramaItem);
-                    }
+                    if (panoramaItem == null)
+                        continue;
+
+                    panoramaItem.RenderTransform = new TranslateTransform();
                 }
             };
 
-            _goToState = (s) => VisualStateManager.GoToElementState(this, s, true);
             var c = 0;
             CompositionTarget.Rendering += (s, e) =>
             {
@@ -46,7 +47,7 @@ namespace MahApps.Metro.Controls
                 {
                     _mouseCaptured = false;
                     _currentWidth = -1;
-                    var w = -1 * ((Double.IsNaN(ItemWidth)) ? ActualWidth : ItemWidth);
+                    var w = -1 * GetWidths();
 
                     if (Traslation < (Items.Count - 1) * w)
                     {
@@ -54,19 +55,17 @@ namespace MahApps.Metro.Controls
                     }
                     else if (Traslation < 0)
                     {
-                        if (Math.Abs(Traslation) + c * w > 20)
+                        if (Math.Abs(Traslation) + c * -ActualWidth > 20)
                             c += 1;
-                        else if (Math.Abs(Traslation) + c * w < -20)
+                        else if (Math.Abs(Traslation) + c * -ActualWidth < -20)
                             c -= 1;
-
-                        c = c > Items.Count - 1 ? Items.Count - 1 : c;
                     }
                     else
                     {
                         c = 0;
                     }
 
-                    Animate(Traslation, Math.Min(0, c * w));
+                    Animate(Traslation, Math.Min(0, c * -ActualWidth) + 100);
                     return;
                 }
 
@@ -129,7 +128,6 @@ namespace MahApps.Metro.Controls
                     {
                         var currentpanorama = (ob as PanoramaItem);
                         ((TranslateTransform)(currentpanorama.RenderTransform)).X = value;
-                        SetOpacity(currentpanorama);
                     }
                 }
             }
@@ -143,19 +141,6 @@ namespace MahApps.Metro.Controls
 
             panoramaItem.Width = ItemWidth;
             panoramaItem.Height = ItemHeight;
-        }
-
-
-        private void SetOpacity(PanoramaItem item)
-        {
-            double t = Math.Abs(((TranslateTransform)(item.RenderTransform)).X);
-            double w = ((Double.IsNaN(ItemWidth)) ? ActualWidth : ItemWidth);
-            double op = t / w + 1;
-            double idx = Items.IndexOf(item);
-            op = op - idx;
-            op = op > 1 ? 1 : op;
-            op = op < 0.5 ? 0 : op;
-            item.HeaderOpacity = op;
         }
 
         private bool MouseOver()
@@ -172,13 +157,6 @@ namespace MahApps.Metro.Controls
         private void Animate(double begin, double end)
         {
             var da = new DoubleAnimationUsingKeyFrames();
-            da.CurrentTimeInvalidated += (s, e) =>
-            {
-                foreach (PanoramaItem ob in Items)
-                {
-                    SetOpacity(ob);
-                }
-            };
             da.Completed += (s, e) =>
             {
                 foreach (object ob in Items)

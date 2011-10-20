@@ -11,8 +11,7 @@ namespace MahApps.Metro.Controls
             DefaultStyleKey = typeof(MetroImage);
         }
 
-        public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(Visual), typeof(MetroImage), new PropertyMetadata(default(Visual)));
+        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(Visual), typeof(MetroImage), new PropertyMetadata(default(Visual)));
 
         public Visual Source
         {
