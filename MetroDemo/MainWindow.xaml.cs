@@ -9,6 +9,7 @@ namespace MetroDemo
     {
         public MainWindow()
         {
+            DataContext = new MainWindowViewModel(Dispatcher);
             InitializeComponent();
         }
 
@@ -73,7 +74,7 @@ namespace MetroDemo
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonClick(object sender, RoutedEventArgs e)
         {
             pb.IsIndeterminate = !pb.IsIndeterminate;
         }
@@ -159,11 +160,6 @@ namespace MetroDemo
         private void BtnPanoramaClick(object sender, RoutedEventArgs e)
         {
             new PanoramaDemo().Show();
-        }
-
-        private void Reload(object sender, RoutedEventArgs e)
-        {
-            metroContent.Reload();
         }
     }
 }

@@ -53,6 +53,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
+    <Compile Include="Behaviours\Reload.cs" />
+    <Compile Include="Behaviours\TiltBehavior.cs" />
+    <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
+    <Compile Include="Controls\MetroContentControl.cs" />
+    <Compile Include="Controls\MetroImage.cs" />
+    <Compile Include="Controls\Panorama.cs" />
+    <Compile Include="Controls\PanoramaItem.cs" />
+    <Compile Include="Controls\Planeator.cs" />
+    <Compile Include="Controls\ProgressIndicator.xaml.cs">
+      <DependentUpon>ProgressIndicator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RevealImage.xaml.cs">
+      <DependentUpon>RevealImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Tile.cs" />
+    <Compile Include="Controls\ToggleSwitch.cs" />
     <Compile Include="Converters\ToUpperConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -76,8 +92,28 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <Page Include="Styles\Controls.AnimatedTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Controls.ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\ProgressIndicator.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\RevealImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Icons\MergedResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Accents\BaseDark.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,9 +150,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\FlatButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Fonts.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
