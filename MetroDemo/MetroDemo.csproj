@@ -65,8 +65,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MainWindowViewModel.xaml.cs" />
-    <Compile Include="Wrapper.xaml.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Models\Wrapper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -75,9 +75,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Artist.xaml.cs" />
-    <Compile Include="Artists.xaml.cs" />
-    <Compile Include="Image.xaml.cs" />
+    <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\Artists.cs" />
+    <Compile Include="Models\Image.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

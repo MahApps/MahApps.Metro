@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace MetroDemo
+namespace MetroDemo.Models
 {
     public class Image
     {

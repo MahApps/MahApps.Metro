@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace MetroDemo
+namespace MetroDemo.Models
 {
     public class Artist
     {
