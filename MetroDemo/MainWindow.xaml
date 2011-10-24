@@ -388,14 +388,11 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         
-                        <ListView ItemsSource="{Binding Artists}"
-                                  >
+                        <ListView ItemsSource="{Binding Artists}" BorderThickness="0">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="artist"
-                                                    DisplayMemberBinding="{Binding name}" />
-                                    <GridViewColumn Header="url"
-                                                    DisplayMemberBinding="{Binding url}" />
+                                    <GridViewColumn Header="artist" DisplayMemberBinding="{Binding name}" />
+                                    <GridViewColumn Header="url" DisplayMemberBinding="{Binding url}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>

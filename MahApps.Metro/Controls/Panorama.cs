@@ -65,7 +65,7 @@ namespace MahApps.Metro.Controls
                         c = 0;
                     }
 
-                    Animate(Traslation, Math.Min(0, c * -ActualWidth) + 100);
+                    Animate(Traslation, Math.Min(0, c * -ActualWidth));
                     return;
                 }
 
