@@ -39,44 +39,44 @@ namespace MetroDemo
             pb.IsIndeterminate = !pb.IsIndeterminate;
         }
 
+        private void MiLightRed(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Red"), Theme.Light);
+        }
+
         private void MiDarkRed(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.Where(a => a.Name == "Red").First() , Theme.Dark);
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Red"), Theme.Dark);
         }
 
         private void MiLightGreen(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.Where(a => a.Name == "Green").First(), Theme.Light);
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Light);
         }
-
-        private void MiLightRed(object sender, RoutedEventArgs e)
+        
+        private void MiDarkGreen(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.Where(a => a.Name == "Red").First(), Theme.Light);
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Dark);
         }
-
+        
         private void MiLightBlue(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.Where(a => a.Name == "Blue").First(), Theme.Light);
-        }
-
-        private void MiLightPurple(object sender, RoutedEventArgs e)
-        {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.Where(a => a.Name == "Purple").First(), Theme.Light);
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), Theme.Light);
         }
 
         private void MiDarkBlue(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.Where(a => a.Name == "Blue").First(), Theme.Dark);
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), Theme.Dark);
         }
 
-        private void MiDarkGreen(object sender, RoutedEventArgs e)
+        private void MiLightPurple(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.Where(a => a.Name == "Green").First(), Theme.Dark);
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), Theme.Light);
         }
 
         private void MiDarkPurple(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.Where(a => a.Name == "Purple").First(), Theme.Dark);
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), Theme.Dark);
         }
 
         private void BtnPanoramaClick(object sender, RoutedEventArgs e)

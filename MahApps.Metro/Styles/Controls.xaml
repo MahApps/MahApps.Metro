@@ -1006,7 +1006,7 @@
                                 <Rectangle x:Name="Background" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}" />
                                 <Rectangle x:Name="MouseOverRectangle" Stroke="{DynamicResource CheckBoxMouseOverBrush}" Opacity="0" />
                                 <Rectangle x:Name="PressedRectangle" Stroke="{DynamicResource BlackBrush}" Opacity="0" />
-                                <Path Opacity="0" x:Name="CheckIcon" Data="M49.4375,110.4375 L51.4995,112.812 L56.3745,107.24883" HorizontalAlignment="Center" Height="7.6" Stretch="Fill" Stroke="Black" UseLayoutRounding="False" VerticalAlignment="Center" Width="8.9" StrokeStartLineCap="Triangle" StrokeEndLineCap="Triangle" StrokeThickness="2"/>
+                                <Path Opacity="0" x:Name="CheckIcon" Data="M49.4375,110.4375 L51.4995,112.812 L56.3745,107.24883" HorizontalAlignment="Center" Height="7.6" Stretch="Fill" Stroke="{DynamicResource BlackBrush}" UseLayoutRounding="False" VerticalAlignment="Center" Width="8.9" StrokeStartLineCap="Triangle" StrokeEndLineCap="Triangle" StrokeThickness="2"/>
                                 <Rectangle x:Name="IndeterminateIcon" Height="8" Width="8" Opacity="0">
                                     <Rectangle.Fill>
                                         <SolidColorBrush Color="{DynamicResource Gray3}"/>
