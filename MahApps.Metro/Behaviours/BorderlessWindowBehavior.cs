@@ -226,17 +226,26 @@ namespace MahApps.Metro.Behaviours
         private const int WM_NCPAINT = 0x85;
         private const int WM_NCACTIVATE = 0x86;
         private const int WM_GETMINMAXINFO = 0x24;
+        private const int WM_CREATE = 0x1;
 
         private HwndSource m_hwndSource;
         private IntPtr m_hwnd;
 
         public static DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
+        public static DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
 
         public bool ResizeWithGrip
         {
             get { return (bool)GetValue(ResizeWithGripProperty); }
             set { SetValue(ResizeWithGripProperty, value); }
         }
+
+        public bool AutoSizeToContent
+        {
+            get { return (bool)GetValue(AutoSizeToContentProperty); }
+            set { SetValue(AutoSizeToContentProperty, value); }
+        }
+
 
         protected override void OnAttached()
         {
@@ -247,6 +256,16 @@ namespace MahApps.Metro.Behaviours
 
             AssociatedObject.WindowStyle = WindowStyle.None;
             AssociatedObject.ResizeMode = ResizeWithGrip ? ResizeMode.CanResizeWithGrip : ResizeMode.CanResize;
+
+            if (AutoSizeToContent)
+                AssociatedObject.Loaded += (s, e) =>
+                                               {
+                                                   //Temp fix, thanks @lynnx
+                                                   AssociatedObject.SizeToContent = SizeToContent.Height;
+                                                   AssociatedObject.SizeToContent = AutoSizeToContent
+                                                                                        ? SizeToContent.WidthAndHeight
+                                                                                        : SizeToContent.Manual;
+                                               };
 
             base.OnAttached();
         }
@@ -280,6 +299,10 @@ namespace MahApps.Metro.Behaviours
             IntPtr returnval = IntPtr.Zero;
             switch (message)
             {
+                case WM_CREATE:
+                    handled = true;
+                    break;
+
                 case WM_NCCALCSIZE:
                     /* Hides the border */
                     handled = true;
