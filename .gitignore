@@ -41,3 +41,5 @@ _ReSharper*/
 
 # Office Temp Files
 ~$*
+
+MetroDemo/publish/*
