@@ -387,4 +387,94 @@
         </Setter>
     </Style>
 
+    <Style TargetType="Controls:AppBarButton">
+        <Setter Property="Background"
+                Value="{DynamicResource ButtonNormalBackground}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource ButtonNormalBorder}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="1" />
+        <Setter Property="FontSize"
+                Value="12" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:AppBarButton}">
+                    <Grid x:Name="grid"
+                          Background="#02FFFFFF"
+                          Margin="{TemplateBinding Padding}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Ellipse x:Name="ellipsebg"
+                                 Margin="4"
+                                 Stroke="{TemplateBinding Foreground}"
+                                 StrokeThickness="0"
+                                 VerticalAlignment="Stretch"
+                                 Width="48"
+                                 Height="48"/>
+                        <Ellipse x:Name="ellipse"
+                                 Margin="4"
+                                 Stroke="{TemplateBinding Foreground}"
+                                 StrokeThickness="2"
+                                 VerticalAlignment="Stretch"
+                                 Width="48"
+                                 Height="48" />
+                        <Controls:MetroImage HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                             Source="{TemplateBinding MetroImageSource}"
+                                             Foreground="{TemplateBinding Foreground}"
+                                             Width="32"
+                                             Height="32"/>
+                        
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          Grid.Row="1" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="ellipsebg"
+                                    Property="Fill"
+                                    Value="{DynamicResource BlackBrush}" />
+                            <Setter TargetName="ellipsebg"
+                                    Property="Opacity"
+                                    Value="0.2" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="ellipse"
+                                    Property="Opacity"
+                                    Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="False">
+                            <Setter TargetName="ellipse"
+                                    Property="Opacity"
+                                    Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused"
+                                 Value="true" />
+                        <Trigger Property="ToggleButton.IsChecked"
+                                 Value="true" />
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="#ADADAD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style> 
+
 </ResourceDictionary>

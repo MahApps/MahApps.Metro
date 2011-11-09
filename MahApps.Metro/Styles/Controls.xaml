@@ -59,7 +59,6 @@
     
     <!-- style for WP7/Circle button -->
     <Style x:Key="MetroCircleButtonStyle" TargetType="{x:Type Button}">
-        <!--<Setter Property="FocusVisualStyle" Value="{x:Null}"/>-->
         <Setter Property="Background" Value="{DynamicResource ButtonNormalBackground}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource ButtonNormalBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>

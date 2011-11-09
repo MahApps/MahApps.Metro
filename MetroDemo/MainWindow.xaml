@@ -275,21 +275,11 @@
                                         Margin="88.696,234,89.305,0" />
                             </Grid>
                             <StackPanel Margin="332.001,0,0,8">
-                                <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                                        Height="55"
-                                        Width="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top">
-                                    <Rectangle Width="20"
-                                               Height="20">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill"
-                                                         Visual="{StaticResource appbar_bus}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-
-                                </Button>
-                                <Button Style="{DynamicResource MetroCircleButtonStyle}"
+                            <Controls:AppBarButton HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   MetroImageSource="{StaticResource appbar_bus}"
+                                                   Content="bus" />
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
                                         Height="55"
                                         Width="55"
                                         HorizontalAlignment="Left"
