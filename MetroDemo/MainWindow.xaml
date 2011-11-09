@@ -157,8 +157,9 @@
                             <StackPanel Margin="332.001,0,0,8">
                             <Controls:AppBarButton HorizontalAlignment="Left"
                                                    VerticalAlignment="Top"
-                                                   MetroImageSource="{StaticResource appbar_bus}"
-                                                   Content="bus" />
+                                                   MetroImageSource="{StaticResource appbar_barcode}"
+                                                   Foreground="Black"
+                                                   Content="scan" />
                             <Button Style="{DynamicResource MetroCircleButtonStyle}"
                                         Height="55"
                                         Width="55"
