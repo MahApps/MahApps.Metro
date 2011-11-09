@@ -5,8 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 using System.Windows.Media;
+using MahApps.Metro.Controls;
 
-namespace MahApps.Metro.Controls.Behaviours
+namespace MahApps.Metro.Behaviours
 {
     public class TiltBehavior : Behavior<FrameworkElement>
     {

@@ -4,9 +4,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
         xmlns:effect="clr-namespace:GrayscaleEffect;assembly=GrayscaleEffect"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        xmlns:Behaviours="clr-namespace:MahApps.Metro.Controls.Behaviours;assembly=MahApps.Metro"
-        x:Class="MetroDemo.PanoramaDemo"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" x:Class="MetroDemo.PanoramaDemo"
 		Background="Black"
         Title="PanoramaDemo" Height="600" Width="900">
     <Window.Resources>
@@ -53,9 +51,9 @@
         
         <Controls:Panorama x:Name="MainPanorama" VerticalAlignment="Stretch" Margin="0,25,25,25" HeaderOffset="0">
             <Controls:PanoramaItem  Header="trending"  x:Name="panoramaItem1" Foreground="White" FontFamily="Segoe UI Light" >
-                <ListBox x:Name="lbArtists" Height="500" BorderBrush="{x:Null}"  ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}">
+                <ListBox x:Name="lbArtists" Height="500" BorderBrush="{x:Null}" ItemsSource="{Binding Artists}" ScrollViewer.VerticalScrollBarVisibility="Disabled" Background="{x:Null}">
                     <i:Interaction.Behaviors>
-                        <Behaviours:TiltBehavior KeepDragging="False"/>
+                        <behaviours:TiltBehavior KeepDragging="False"/>
                     </i:Interaction.Behaviors>
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>

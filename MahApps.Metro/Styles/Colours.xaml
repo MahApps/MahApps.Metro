@@ -196,7 +196,7 @@
     <SolidColorBrush x:Key="CheckBoxBrush" Color="{DynamicResource Gray2}" />
     <SolidColorBrush x:Key="CheckBoxMouseOverBrush" Color="{DynamicResource Gray3}" />
     <LinearGradientBrush x:Key="CheckBoxBackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="#FFE5E5E5" Offset="0"/>
+        <GradientStop Color="{DynamicResource Gray5}" Offset="0"/>
         <GradientStop Color="{DynamicResource WhiteColor}" Offset="1"/>
     </LinearGradientBrush>
 

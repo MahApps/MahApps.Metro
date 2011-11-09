@@ -1,4 +1,4 @@
-namespace MetroDemo
+namespace MetroDemo.Models
 {
     public class Wrapper
     {

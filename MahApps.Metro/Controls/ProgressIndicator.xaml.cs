@@ -11,7 +11,7 @@ namespace MahApps.Metro.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var percentage = Double.Parse(parameter.ToString());
+            var percentage = Double.Parse(parameter.ToString(), new CultureInfo("en-US"));
             return ((double) value)*percentage;
         }
 

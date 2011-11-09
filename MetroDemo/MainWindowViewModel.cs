@@ -2,6 +2,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Windows.Threading;
+using MetroDemo.Models;
 using Newtonsoft.Json;
 
 namespace MetroDemo

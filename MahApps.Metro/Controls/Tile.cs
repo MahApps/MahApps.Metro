@@ -1,7 +1,5 @@
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interactivity;
-using MahApps.Metro.Controls.Behaviours;
 
 namespace MahApps.Metro.Controls
 {
