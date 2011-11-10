@@ -668,7 +668,6 @@
 
                             <ContentPresenter
 								x:Name="Presenter"
-								MinWidth="120"
 								Opacity=".7"
 								Content="{TemplateBinding Header}"
 								ContentTemplate="{TemplateBinding HeaderTemplate}"
