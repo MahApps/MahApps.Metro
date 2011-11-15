@@ -346,29 +346,34 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:Tile">
-                    <Grid>
-                        <Grid.Background>
-                            <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                        </Grid.Background>
+                    <Controls:Planerator Width="{TemplateBinding Width}"
+                                         Height="{TemplateBinding Height}"
+                                         x:Name="planerator">
+                        <Grid>
+                            <Grid.Background>
+                                <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                            </Grid.Background>
 
-                        <StackPanel VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    Orientation="Horizontal">
-                            <ContentPresenter />
+                            <StackPanel VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        Orientation="Horizontal">
+                                <ContentPresenter />
 
-                            <TextBlock Text="{TemplateBinding Count}"
-                                       FontSize="28"
-                                       VerticalAlignment="Center" />
-                        </StackPanel>
+                                <TextBlock Text="{TemplateBinding Count}"
+                                           FontSize="28"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
 
-                        <TextBlock Text="{TemplateBinding Title}"
-                                   HorizontalAlignment="Left"
-                                   VerticalAlignment="Bottom"
-                                   TextWrapping="Wrap"
-                                   FontSize="16"
-                                   Grid.ColumnSpan="2"
-                                   Margin="3" />
-                    </Grid>
+                            <TextBlock Text="{TemplateBinding Title}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Bottom"
+                                       TextWrapping="Wrap"
+                                       FontSize="16"
+                                       Grid.ColumnSpan="2"
+                                       Margin="3" />
+                        </Grid>
+                    </Controls:Planerator>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
