@@ -1059,4 +1059,28 @@ http://templarian.com/ admin@templarian.com
         </Canvas>
     </Canvas>
 
+    <Canvas x:Key="appbar_arrow_right_left"
+            Width="48"
+            Height="48"
+            Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
+        <Canvas Width="48"
+                Height="48"
+                Canvas.Left="0"
+                Canvas.Top="0">
+            <Path Width="25"
+                  Height="14"
+                  Canvas.Left="14"
+                  Canvas.Top="11"
+                  Stretch="Fill"
+                  Fill="#FF000000"
+                  Data="F1 M 14,16L 14,20L 30.75,20L 25,25L 31.5,25L 39,18L 31.5,11L 25,11L 30.75,16L 14,16 Z " />
+            <Path Width="25"
+                  Height="14"
+                  Canvas.Left="9"
+                  Canvas.Top="23"
+                  Stretch="Fill"
+                  Fill="#FF000000"
+                  Data="F1 M 34,27.9999L 34,31.9999L 17.25,32L 23,37L 16.5,37L 9,29.9999L 16.5,23L 23,23L 17.25,28L 34,27.9999 Z " />
+        </Canvas>
+    </Canvas>
 </ResourceDictionary>
