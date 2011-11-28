@@ -1434,7 +1434,7 @@
     </Style>
 
     <!--ComboBoxItem Style-->
-    <!--<Style TargetType="ComboBoxItem">
+    <Style TargetType="ComboBoxItem">
         <Setter Property="Foreground"
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding"
@@ -1507,14 +1507,12 @@
                                                  Color="{DynamicResource NormalForegroundColor}" />
                             </ContentControl.Foreground>
                             <ContentPresenter x:Name="contentPresenter"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              Margin="{TemplateBinding Padding}"
                                               Content="{TemplateBinding Content}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Margin="{TemplateBinding Padding}" />
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </ContentControl>
                         <Rectangle x:Name="FocusVisualElement"
-                                   RadiusY="1"
-                                   RadiusX="1"
                                    Stroke="{DynamicResource HighlightBrush}"
                                    StrokeThickness="1"
                                    Visibility="Collapsed" />
@@ -1522,7 +1520,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
+    </Style>
 
     <!--ProgressBar Style-->
     <Style TargetType="ProgressBar">
