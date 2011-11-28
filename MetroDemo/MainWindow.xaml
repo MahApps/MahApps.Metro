@@ -162,6 +162,14 @@
                                                    MetroImageSource="{StaticResource appbar_barcode}"
                                                    Foreground="Black"
                                                    Content="scan" />
+
+                            <Controls:AppBarButton HorizontalAlignment="Left"
+                                                   VerticalAlignment="Top"
+                                                   MetroImageSource="{StaticResource appbar_barcode}"
+                                                   Foreground="Black"
+                                                   Content="scan"
+                                                   Width="48"
+                                                   Height="48"/>
                             <Button Style="{DynamicResource MetroCircleButtonStyle}"
                                         Height="55"
                                         Width="55"

@@ -417,6 +417,10 @@
                 Value="1" />
         <Setter Property="FontSize"
                 Value="12" />
+        <Setter Property="Width"
+                Value="80" />
+        <Setter Property="Height"
+                Value="80" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:AppBarButton}">
@@ -424,32 +428,33 @@
                           Background="#02FFFFFF"
                           Margin="{TemplateBinding Padding}">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Ellipse x:Name="ellipsebg"
-                                 Margin="4"
-                                 Stroke="{TemplateBinding Foreground}"
-                                 StrokeThickness="0"
-                                 VerticalAlignment="Stretch"
-                                 Width="48"
-                                 Height="48" />
-                        <Ellipse x:Name="ellipse"
-                                 Margin="4"
-                                 Stroke="{TemplateBinding Foreground}"
-                                 StrokeThickness="2"
-                                 VerticalAlignment="Stretch"
-                                 Width="48"
-                                 Height="48" />
-                        <Rectangle Width="28"
-                                   Height="28"
-                                   Fill="{TemplateBinding Foreground}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Visual="{Binding MetroImageSource, RelativeSource={RelativeSource TemplatedParent}}"
-                                             Stretch="Fill" />
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-
+                        <Viewbox>
+                            <Grid>
+                                <Ellipse x:Name="ellipsebg"
+                                         Stroke="{TemplateBinding Foreground}"
+                                         StrokeThickness="0"
+                                         VerticalAlignment="Stretch"
+                                         Width="48"
+                                         Height="48" />
+                                <Ellipse x:Name="ellipse"
+                                         Stroke="{TemplateBinding Foreground}"
+                                         StrokeThickness="2"
+                                         VerticalAlignment="Stretch"
+                                         Width="48"
+                                         Height="48" />
+                                <Rectangle Width="28"
+                                           Height="28"
+                                           Fill="{TemplateBinding Foreground}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Visual="{Binding MetroImageSource, RelativeSource={RelativeSource TemplatedParent}}"
+                                                     Stretch="Fill" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Grid>
+                        </Viewbox>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           RecognizesAccessKey="True"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
