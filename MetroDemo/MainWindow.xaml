@@ -4,11 +4,13 @@
         xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" mc:Ignorable="d"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:MetroDemo="clr-namespace:MetroDemo" mc:Ignorable="d"
         x:Class="MetroDemo.MainWindow"
         Title="MainWindow"
         Height="439"
-        Width="585">
+        Width="585"
+        d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource WhiteColor}" />
     </Window.Background>
