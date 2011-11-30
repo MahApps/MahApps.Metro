@@ -6,7 +6,7 @@ namespace MahApps.Metro
     public class Accent
     {
         public ResourceDictionary Resources;
-        public string Name;
+        public string Name { get; set; }
 
         public Accent()
         {
