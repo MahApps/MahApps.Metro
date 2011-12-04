@@ -19,21 +19,6 @@ namespace MetroDemo
                 DragMove();
         }
 
-        private void BtnMinClick(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
-        }
-
-        private void BtnCloseClick(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        private void BtnMaxClick(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
-        }
-
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
             pb.IsIndeterminate = !pb.IsIndeterminate;
