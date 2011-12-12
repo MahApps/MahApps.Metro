@@ -365,13 +365,13 @@
                                            VerticalAlignment="Center" />
                             </StackPanel>
 
-                            <TextBlock Text="{TemplateBinding Title}"
-                                       HorizontalAlignment="Left"
-                                       VerticalAlignment="Bottom"
-                                       TextWrapping="Wrap"
-                                       FontSize="16"
-                                       Grid.ColumnSpan="2"
-                                       Margin="3" />
+                            <AccessText Text="{TemplateBinding Title}"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Bottom"
+                                        TextWrapping="Wrap"
+                                        FontSize="16"
+                                        Grid.ColumnSpan="2"
+                                        Margin="3" />
                         </Grid>
                     </Controls:Planerator>
 
