@@ -81,13 +81,8 @@
     <!-- "Chromeless" style for buttons -->
     <Style x:Key="ChromelessButtonStyle"
            TargetType="{x:Type Button}">
-        <!--<Setter Property="FocusVisualStyle" Value="{DynamicResource ButtonFocusVisual}"/>-->
         <Setter Property="Background"
-                Value="{DynamicResource ButtonNormalBackground}" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource ButtonNormalBorder}" />
-        <Setter Property="BorderThickness"
-                Value="1" />
+                Value="#02FFFFFF" />
         <Setter Property="Foreground"
                 Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="HorizontalContentAlignment"
@@ -99,7 +94,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Background="#02FFFFFF">
+                    <Grid Background="{TemplateBinding Background}">
                         <ContentPresenter x:Name="contentPresenter"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
