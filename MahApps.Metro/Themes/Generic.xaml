@@ -24,7 +24,8 @@
                                         HorizontalAlignment="Left"
                                         Margin="10,-2,0,26">
                         </ContentControl>
-                        <ContentPresenter Content="{TemplateBinding Content}"
+                        <ContentPresenter RecognizesAccessKey="True"
+                                          Content="{TemplateBinding Content}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
                                           Grid.Row="1"
