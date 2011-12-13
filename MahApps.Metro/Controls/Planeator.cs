@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -55,7 +57,56 @@ namespace MahApps.Metro.Controls
         private FrameworkElement _originalChild;
         private Viewport3D _viewport3d;
         private FrameworkElement _visualChild;
+        private const int WM_UPDATEUISTATE = 0x0128;
+        private const int WM_CHANGEUISTATE = 0x0127;
 
+        public Planerator()
+        {
+            Loaded += new RoutedEventHandler(PlaneratorLoaded);
+        }
+
+        void PlaneratorLoaded(object sender, RoutedEventArgs e)
+        {
+            //var app = Application.Current;
+            //if (app == null)
+            //    return;
+
+            //var window = app.MainWindow;
+
+            //if (window == null)
+            //    return;
+
+            //window.KeyDown += window_KeyDown;
+            //var source = PresentationSource.FromVisual(window) as HwndSource;
+            //if (source != null) source.AddHook(WndProc);
+        }
+
+        void window_KeyDown(object sender, KeyEventArgs e)
+        {
+            //if (e.SystemKey == Key.LeftAlt || e.SystemKey == Key.RightAlt)
+            //{
+            //    _originalChild.InvalidateArrange();
+            //}
+            //if (e.Key == Key.LeftAlt || e.Key == Key.RightAlt)
+            //{
+            //    InvalidateVisual();
+
+            //}
+        }
+
+        //private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam, ref bool handled)
+        //{
+        //    if (msg == WM_UPDATEUISTATE)
+        //    {
+        //        InvalidateVisual();
+        //    }
+        //    if (msg == WM_CHANGEUISTATE)
+        //    {
+        //        InvalidateVisual();
+        //    }
+
+        //    return IntPtr.Zero;
+        //}
 
         public double RotationX
         {
