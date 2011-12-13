@@ -266,13 +266,13 @@
                             <Controls:AppBarButton HorizontalAlignment="Left"
                                                    VerticalAlignment="Top"
                                                    MetroImageSource="{StaticResource appbar_barcode}"
-                                                   Foreground="Black"
+                                                   Foreground="{DynamicResource BlackBrush}"
                                                    Content="scan" />
 
                             <Controls:AppBarButton HorizontalAlignment="Left"
                                                    VerticalAlignment="Top"
                                                    MetroImageSource="{StaticResource appbar_barcode}"
-                                                   Foreground="Black"
+                                                   Foreground="{DynamicResource BlackBrush}"
                                                    Content="scan"
                                                    Width="48"
                                                    Height="48"/>
@@ -350,7 +350,7 @@
                                 SmallChange="0.5" />
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
 
-                        <Controls:Tile Title="My Cupcakes"
+                        <Controls:Tile Title="My _Cupcakes"
                                        Count="23">
                             <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
                         </Controls:Tile>

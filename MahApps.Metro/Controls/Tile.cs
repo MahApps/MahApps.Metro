@@ -15,7 +15,7 @@ namespace MahApps.Metro.Controls
 
         public Tile()
         {
-            DefaultStyleKey = typeof(Tile);
+            DefaultStyleKey = typeof (Tile);
             CompositionTarget.Rendering += CompositionTargetRendering;
         }
 

@@ -347,34 +347,43 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:Tile">
-                    <Controls:Planerator Width="{TemplateBinding Width}"
-                                         Height="{TemplateBinding Height}"
-                                         x:Name="planerator">
-                        <Grid>
-                            <Grid.Background>
-                                <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                            </Grid.Background>
+                    <Grid>
+                        <Grid.Background>
+                            <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                        </Grid.Background>
 
-                            <StackPanel VerticalAlignment="Center"
-                                        HorizontalAlignment="Center"
-                                        Orientation="Horizontal">
-                                <ContentPresenter />
+                        <StackPanel VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Orientation="Horizontal">
+                            <ContentPresenter RecognizesAccessKey="True" />
 
-                                <TextBlock Text="{TemplateBinding Count}"
-                                           FontSize="28"
-                                           VerticalAlignment="Center" />
-                            </StackPanel>
+                            <TextBlock Text="{TemplateBinding Count}"
+                                       FontSize="28"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
 
-                            <AccessText Text="{TemplateBinding Title}"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Bottom"
+                        <Label Grid.ColumnSpan="2"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Bottom">
+                            <AccessText Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
                                         TextWrapping="Wrap"
                                         FontSize="16"
-                                        Grid.ColumnSpan="2"
                                         Margin="3" />
-                        </Grid>
-                    </Controls:Planerator>
-
+                        </Label>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Button.IsPressed"
+                                 Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.98"
+                                                    ScaleY="0.98"
+                                                    CenterX="0.5"
+                                                    CenterY="0.5" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -422,6 +431,8 @@
                 Value="80" />
         <Setter Property="Height"
                 Value="80" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:AppBarButton}">
@@ -456,8 +467,8 @@
                                 </Rectangle>
                             </Grid>
                         </Viewbox>
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          RecognizesAccessKey="True"
+                        <ContentPresenter RecognizesAccessKey="True"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           Grid.Row="1" />

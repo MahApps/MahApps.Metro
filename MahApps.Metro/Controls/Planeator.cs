@@ -32,30 +32,30 @@ namespace MahApps.Metro.Controls
                                                                (d, val) => Math.Min(Math.Max((double)val, 0.5), 179.9)));
         // clamp to a meaningful range
 
-        private static readonly Point3D[] _mesh = new[]
+        private static readonly Point3D[] Mesh = new[]
                                                       {
                                                           new Point3D(0, 0, 0), new Point3D(0, 1, 0), new Point3D(1, 1, 0),
                                                           new Point3D(1, 0, 0)
                                                       };
 
-        private static readonly Point[] _texCoords = new[]
+        private static readonly Point[] TexCoords = new[]
                                                          {
                                                              new Point(0, 1), new Point(0, 0), new Point(1, 0),
                                                              new Point(1, 1)
                                                          };
 
-        private static readonly int[] _indices = new[] { 0, 2, 1, 0, 3, 2 };
-        private static readonly Vector3D _xAxis = new Vector3D(1, 0, 0);
-        private static readonly Vector3D _yAxis = new Vector3D(0, 1, 0);
-        private static readonly Vector3D _zAxis = new Vector3D(0, 0, 1);
+        private static readonly int[] Indices = new[] { 0, 2, 1, 0, 3, 2 };
+        private static readonly Vector3D XAxis = new Vector3D(1, 0, 0);
+        private static readonly Vector3D YAxis = new Vector3D(0, 1, 0);
+        private static readonly Vector3D ZAxis = new Vector3D(0, 0, 1);
         private readonly QuaternionRotation3D _quaternionRotation = new QuaternionRotation3D();
         private readonly RotateTransform3D _rotationTransform = new RotateTransform3D();
         private readonly ScaleTransform3D _scaleTransform = new ScaleTransform3D();
         private FrameworkElement _logicalChild;
         private FrameworkElement _originalChild;
-        private Viewport3D _viewport3d;
+        private Viewport3D _viewport3D;
         private FrameworkElement _visualChild;
-
+        private Viewport2DVisual3D _frontModel;
 
         public double RotationX
         {
@@ -148,9 +148,9 @@ namespace MahApps.Metro.Controls
         {
             var simpleQuad = new MeshGeometry3D
             {
-                Positions = new Point3DCollection(_mesh),
-                TextureCoordinates = new PointCollection(_texCoords),
-                TriangleIndices = new Int32Collection(_indices)
+                Positions = new Point3DCollection(Mesh),
+                TextureCoordinates = new PointCollection(TexCoords),
+                TriangleIndices = new Int32Collection(Indices)
             };
 
             // Front material is interactive, back material is not.
@@ -178,8 +178,11 @@ namespace MahApps.Metro.Controls
             // Non-interactive Visual3D consisting of the backside, and two lights.
             ModelVisual3D mv3d = new ModelVisual3D { Content = m3dGroup };
 
+            if (_frontModel != null)
+                _frontModel.Visual = null;
+
             // Interactive frontside Visual3D
-            Viewport2DVisual3D frontModel = new Viewport2DVisual3D
+            _frontModel = new Viewport2DVisual3D
             {
                 Geometry = simpleQuad,
                 Visual = _logicalChild,
@@ -188,14 +191,14 @@ namespace MahApps.Metro.Controls
             };
 
             // Cache the brush in the VP2V3 by setting caching on it.  Big perf wins.
-            SetCachingForObject(frontModel);
+            SetCachingForObject(_frontModel);
 
             // Scene consists of both the above Visual3D's.
-            _viewport3d = new Viewport3D { ClipToBounds = false, Children = { mv3d, frontModel } };
+            _viewport3D = new Viewport3D { ClipToBounds = false, Children = { mv3d, _frontModel } };
 
             UpdateRotation();
 
-            return _viewport3d;
+            return _viewport3D;
         }
 
         private void SetCachingForObject(DependencyObject d)
@@ -207,9 +210,9 @@ namespace MahApps.Metro.Controls
 
         private void UpdateRotation()
         {
-            Quaternion qx = new Quaternion(_xAxis, RotationX);
-            Quaternion qy = new Quaternion(_yAxis, RotationY);
-            Quaternion qz = new Quaternion(_zAxis, RotationZ);
+            var qx = new Quaternion(XAxis, RotationX);
+            var qy = new Quaternion(YAxis, RotationY);
+            var qz = new Quaternion(ZAxis, RotationZ);
 
             _quaternionRotation.Quaternion = qx * qy * qz;
         }
@@ -228,9 +231,9 @@ namespace MahApps.Metro.Controls
             // for derivation of this camera.
             double fovInRadians = FieldOfView * (Math.PI / 180);
             double zValue = w / Math.Tan(fovInRadians / 2) / 2;
-            _viewport3d.Camera = new PerspectiveCamera(new Point3D(w / 2, h / 2, zValue),
-                                                       -_zAxis,
-                                                       _yAxis,
+            _viewport3D.Camera = new PerspectiveCamera(new Point3D(w / 2, h / 2, zValue),
+                                                       -ZAxis,
+                                                       YAxis,
                                                        FieldOfView);
 
 
