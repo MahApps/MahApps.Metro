@@ -364,8 +364,10 @@
 
                         <Label Grid.ColumnSpan="2"
                                HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom">
+                               VerticalAlignment="Bottom"
+                               Foreground="{TemplateBinding Foreground}">
                             <AccessText Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Foreground="{TemplateBinding Foreground}"
                                         TextWrapping="Wrap"
                                         FontSize="16"
                                         Margin="3" />
