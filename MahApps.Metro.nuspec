@@ -29,7 +29,7 @@
 	* Fixed Localisation issue</releaseNotes>
   </metadata>
   <files>
-    <file src="lib\net40\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />
-    <file src="lib\net40\System.Windows.Interactivity.dll" target="lib\net40\System.Windows.Interactivity.dll" />
+    <file src="MahApps.Metro\bin\Release\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />
+    <file src="MahApps.Metro\bin\Release\System.Windows.Interactivity.dll" target="lib\net40\System.Windows.Interactivity.dll" />
   </files>
 </package>
