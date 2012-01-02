@@ -4,9 +4,9 @@ using System.Windows.Data;
 
 namespace MahApps.Metro.Converters
 {
-    public class ToUpperConverter : IValueConverter
+    public class ToUpperConverter : MarkupConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string)
                 return ((string)value).ToUpper();
@@ -14,15 +14,15 @@ namespace MahApps.Metro.Converters
             return value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Binding.DoNothing;
         }
     }
 
-    public class ToLowerConverter : IValueConverter
+    public class ToLowerConverter : MarkupConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string)
                 return ((string)value).ToLower();
@@ -30,7 +30,7 @@ namespace MahApps.Metro.Converters
             return value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        protected override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Binding.DoNothing;
         }

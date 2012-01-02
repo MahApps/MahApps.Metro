@@ -74,6 +74,7 @@
     <Compile Include="Controls\WindowCommands.xaml.cs">
       <DependentUpon>WindowCommands.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\MarkupConverter.cs" />
     <Compile Include="Converters\ToUpperConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
