@@ -55,11 +55,13 @@
     <Compile Include="Accent.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
     <Compile Include="Behaviours\Reload.cs" />
+    <Compile Include="Behaviours\StylizedBehaviors.cs" />
     <Compile Include="Behaviours\TiltBehavior.cs" />
     <Compile Include="Controls\AppBarButton.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroContentControl.cs" />
     <Compile Include="Controls\MetroImage.cs" />
+    <Compile Include="Controls\MetroWindow.cs" />
     <Compile Include="Controls\Panorama.cs" />
     <Compile Include="Controls\PanoramaItem.cs" />
     <Compile Include="Controls\Planeator.cs" />
@@ -182,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Fonts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\MetroStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
