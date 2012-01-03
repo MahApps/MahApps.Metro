@@ -1,4 +1,4 @@
-﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Controls:MetroWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
@@ -11,22 +11,9 @@
         Height="439"
         Width="585"
         d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
-    <Window.Background>
-        <SolidColorBrush Color="{DynamicResource WhiteColor}" />
-    </Window.Background>
 
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Icons/MergedResources.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-            </ResourceDictionary.MergedDictionaries>
         	<Style x:Key="SquareButtonStyle" TargetType="{x:Type Button}">
         		<Setter Property="MinHeight" Value="25" />
         		<Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
@@ -135,273 +122,254 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior />
-    </i:Interaction.Behaviors>
-
-    <Controls:MetroContentControl>
-        <Grid>
-            <Grid x:Name="grdOwner"
-                  Height="40"
-                  VerticalAlignment="Top"
-                  MouseDown="WindowMouseDown">
-                <Grid.Background>
-                    <SolidColorBrush Color="{DynamicResource HighlightDarkColor}" />
-                </Grid.Background>
-                <Controls:WindowCommands Panel.ZIndex="1"
-                                         VerticalAlignment="Top"
-                                         HorizontalAlignment="Right"/>
-            </Grid>
-            <TabControl Margin="0,40,0,0">
-                <TabItem Header="_First set of controls">
-                        <Grid>
-                            <Grid Margin="0,0,226.999,8">
-                                <Button Content="Right Click Me"
-                                        Click="ButtonClick"
-                                        Height="30"
-                                        ToolTip="This is a tooltip"
-                                        Margin="88.694,0,0,0"
-                                        VerticalAlignment="Top"
-                                        HorizontalAlignment="Left"
-                                        Width="154.002">
-                                    <Button.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="Light Red"
-                                                      Click="MiLightRed" />
-                                            <MenuItem Header="Light Green"
-                                                      Click="MiLightGreen" />
-                                            <MenuItem Header="Light Blue"
-                                                      Click="MiLightBlue" />
-                                            <MenuItem Header="Light Purple"
-                                                      Click="MiLightPurple" />
-                                            <Separator />
-                                            <MenuItem Header="Dark Red"
-                                                      Click="MiDarkRed" />
-                                            <MenuItem Header="Dark Green"
-                                                      Click="MiDarkGreen" />
-                                            <MenuItem Header="Dark Blue"
-                                                      Click="MiDarkBlue" />
-                                            <MenuItem Header="Dark Purple"
-                                                      Click="MiDarkPurple" />
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
-                                </Button>
-                                <PasswordBox Margin="88.695,66.96,0,0"
-                                             Height="30"
-                                             VerticalAlignment="Top"
-                                             HorizontalAlignment="Left"
-                                             Width="154.001" />
-                                <CheckBox Content="CheckBox"
-                                          Margin="88.695,100.96,0,0"
-                                          VerticalAlignment="Top"
-                                          HorizontalAlignment="Left" />
-                                <RadioButton Content="Radio Button 1"
-                                             Margin="88.291,134.92,0,0"
-                                             VerticalAlignment="Top"
-                                             GroupName="test"
-                                             HorizontalAlignment="Left" />
-                                <TextBox Text="This is a textbox"
-                                         Margin="88.694,36.96,0,0"
-                                         VerticalAlignment="Top"
-                                         HorizontalAlignment="Left"
-                                         Width="154.002" />
-                                <ComboBox Margin="88.292,176.84,0,0"
-                                          VerticalAlignment="Top"
-                                          HorizontalAlignment="Left"
-                                          Width="154.404">
-                                    <ComboBoxItem Content="ComboBoxItem" />
-                                    <ComboBoxItem Content="ComboBoxItem" />
-                                    <ComboBoxItem Content="ComboBoxItem" />
-                                </ComboBox>
-                                <ProgressBar x:Name="pb"
-                                             Value="{Binding Value, ElementName=slider1}"
-                                             IsIndeterminate="False"
-                                             Margin="88.696,216.8,0,0"
-                                             VerticalAlignment="Top"
-                                             HorizontalAlignment="Left"
-                                             Width="154" />
-                                <Label Content="Button"
-                                       VerticalAlignment="Top"
-                                       Margin="39.07,0,0,0"
-                                       HorizontalAlignment="Left" />
-                                <Label Content="Passwordbox"
-                                       Margin="5.147,71,0,0"
-                                       RenderTransformOrigin="0.535,-0.381"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Left" />
-                                <Label Content="Checkbox"
-                                       Margin="23.1,96.96,0,0"
-                                       HorizontalAlignment="Left"
-                                       Height="25.96"
-                                       VerticalAlignment="Top" />
-                                <Label Content="Radio Buttons"
-                                       VerticalAlignment="Top"
-                                       Margin="0.404,126.92,0,0"
-                                       HorizontalAlignment="Left" />
-                                <Label Content="TextBox"
-                                       VerticalAlignment="Top"
-                                       Margin="33.14,37,0,0"
-                                       HorizontalAlignment="Left" />
-                                <Label Content="Combobox"
-                                       VerticalAlignment="Top"
-                                       Margin="16.224,170.84,0,0"
-                                       HorizontalAlignment="Left" />
-                                <RadioButton Content="Radio Button 2"
-                                             Margin="88.695,155.88,0,0"
-                                             VerticalAlignment="Top"
-                                             GroupName="test"
-                                             HorizontalAlignment="Left" />
-                                <Label Content="Progress Bar"
-                                       VerticalAlignment="Top"
-                                       Margin="8.216,206.8,0,0"
-                                       HorizontalAlignment="Left"
-                                       d:LayoutOverrides="HorizontalAlignment" />
-                                <Button Content="Launch Panorama"
-                                        Click="BtnPanoramaClick"
-                                        VerticalAlignment="Top"
-                                        Margin="88.696,234,89.305,0" />
-                                <Button Content="Button" VerticalAlignment="Bottom" Margin="88.696,0,91.305,8" Style="{DynamicResource SquareButtonStyle}"/>
-                            </Grid>
-                            <StackPanel Margin="332.001,0,0,8">
-                            <Controls:AppBarButton HorizontalAlignment="Left"
-                                                   VerticalAlignment="Top"
-                                                   MetroImageSource="{StaticResource appbar_barcode}"
-                                                   Foreground="{DynamicResource BlackBrush}"
-                                                   Content="scan" />
-
-                            <Controls:AppBarButton HorizontalAlignment="Left"
-                                                   VerticalAlignment="Top"
-                                                   MetroImageSource="{StaticResource appbar_barcode}"
-                                                   Foreground="{DynamicResource BlackBrush}"
-                                                   Content="scan"
-                                                   Width="48"
-                                                   Height="48"/>
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                                        Height="55"
-                                        Width="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top">
-                                    <Rectangle Width="20"
-                                               Height="20">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill"
-                                                         Visual="{StaticResource appbar_city}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-
-                                </Button>
-                                <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                                        Height="55"
-                                        Width="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top">
-                                    <Rectangle Width="20"
-                                               Height="20">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill"
-                                                         Visual="{StaticResource appbar_barcode}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-
-                                </Button>
-                                <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                                        Height="55"
-                                        Width="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top">
-                                    <Rectangle Width="28"
-                                               Height="17.25">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill"
-                                                         Visual="{StaticResource appbar_cloud_download}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-
-                                </Button>
-                                <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                                        Height="55"
-                                        Width="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top">
-                                    <Rectangle Width="20"
-                                               Height="20">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill"
-                                                         Visual="{StaticResource appbar_cupcake}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
-
-                                </Button>
-                            </StackPanel>
-                            <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
-                        </Grid>
-                </TabItem>
-                <TabItem Header="_More Controls Here!">
-                    <StackPanel>
-                        <Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}"
-                                                    Height="6"
-                                                    Width="600" />
-                        <Controls:ToggleSwitch HorizontalAlignment="Left"
-                                               Margin="0,10,0,0" />
-                        <Slider Margin="0,10,0,0"
+    <TabControl Margin="0,40,0,0">
+        <TabItem Header="_First set of controls">
+                <Grid>
+                    <Grid Margin="0,0,226.999,8">
+                        <Button Content="Right Click Me"
+                                Click="ButtonClick"
+                                Height="30"
+                                ToolTip="This is a tooltip"
+                                Margin="88.694,0,0,0"
+                                VerticalAlignment="Top"
                                 HorizontalAlignment="Left"
-                                Width="261.667"
-                                Value="5"
-                                SmallChange="0.5" />
-                        <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
-
-                        <Controls:Tile Title="My _Cupcakes"
-                                       Count="23">
-                            <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
-                        </Controls:Tile>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="More again">
-                    <TabItem.Resources>
-                        <ResourceDictionary>
-                            <ResourceDictionary.MergedDictionaries>
-                                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
-                            </ResourceDictionary.MergedDictionaries>
-                        </ResourceDictionary>
-                    </TabItem.Resources>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        
-                        <ListView ItemsSource="{Binding Artists}" BorderThickness="0">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="artist" DisplayMemberBinding="{Binding name}" />
-                                    <GridViewColumn Header="url" DisplayMemberBinding="{Binding url}" />
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="1">
-
-                            <Button Content="Flat Button" />
-                            <Button Content="Disabled Button"
-                                    IsEnabled="False" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="2"
-                                    Grid.Column="1"
-                                    Orientation="Horizontal">
-                            <Button Content="Ok"
-                                    Style="{StaticResource OkButton}" />
-                            <Button Content="Cancel"
-                                    Style="{StaticResource CancelButton}" />
-                        </StackPanel>
+                                Width="154.002">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Light Red"
+                                                Click="MiLightRed" />
+                                    <MenuItem Header="Light Green"
+                                                Click="MiLightGreen" />
+                                    <MenuItem Header="Light Blue"
+                                                Click="MiLightBlue" />
+                                    <MenuItem Header="Light Purple"
+                                                Click="MiLightPurple" />
+                                    <Separator />
+                                    <MenuItem Header="Dark Red"
+                                                Click="MiDarkRed" />
+                                    <MenuItem Header="Dark Green"
+                                                Click="MiDarkGreen" />
+                                    <MenuItem Header="Dark Blue"
+                                                Click="MiDarkBlue" />
+                                    <MenuItem Header="Dark Purple"
+                                                Click="MiDarkPurple" />
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <PasswordBox Margin="88.695,66.96,0,0"
+                                        Height="30"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Left"
+                                        Width="154.001" />
+                        <CheckBox Content="CheckBox"
+                                    Margin="88.695,100.96,0,0"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left" />
+                        <RadioButton Content="Radio Button 1"
+                                        Margin="88.291,134.92,0,0"
+                                        VerticalAlignment="Top"
+                                        GroupName="test"
+                                        HorizontalAlignment="Left" />
+                        <TextBox Text="This is a textbox"
+                                    Margin="88.694,36.96,0,0"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Width="154.002" />
+                        <ComboBox Margin="88.292,176.84,0,0"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Left"
+                                    Width="154.404">
+                            <ComboBoxItem Content="ComboBoxItem" />
+                            <ComboBoxItem Content="ComboBoxItem" />
+                            <ComboBoxItem Content="ComboBoxItem" />
+                        </ComboBox>
+                        <ProgressBar x:Name="pb"
+                                        Value="{Binding Value, ElementName=slider1}"
+                                        IsIndeterminate="False"
+                                        Margin="88.696,216.8,0,0"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Left"
+                                        Width="154" />
+                        <Label Content="Button"
+                                VerticalAlignment="Top"
+                                Margin="39.07,0,0,0"
+                                HorizontalAlignment="Left" />
+                        <Label Content="Passwordbox"
+                                Margin="5.147,71,0,0"
+                                RenderTransformOrigin="0.535,-0.381"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Left" />
+                        <Label Content="Checkbox"
+                                Margin="23.1,96.96,0,0"
+                                HorizontalAlignment="Left"
+                                Height="25.96"
+                                VerticalAlignment="Top" />
+                        <Label Content="Radio Buttons"
+                                VerticalAlignment="Top"
+                                Margin="0.404,126.92,0,0"
+                                HorizontalAlignment="Left" />
+                        <Label Content="TextBox"
+                                VerticalAlignment="Top"
+                                Margin="33.14,37,0,0"
+                                HorizontalAlignment="Left" />
+                        <Label Content="Combobox"
+                                VerticalAlignment="Top"
+                                Margin="16.224,170.84,0,0"
+                                HorizontalAlignment="Left" />
+                        <RadioButton Content="Radio Button 2"
+                                        Margin="88.695,155.88,0,0"
+                                        VerticalAlignment="Top"
+                                        GroupName="test"
+                                        HorizontalAlignment="Left" />
+                        <Label Content="Progress Bar"
+                                VerticalAlignment="Top"
+                                Margin="8.216,206.8,0,0"
+                                HorizontalAlignment="Left"
+                                d:LayoutOverrides="HorizontalAlignment" />
+                        <Button Content="Launch Panorama"
+                                Click="BtnPanoramaClick"
+                                VerticalAlignment="Top"
+                                Margin="88.696,234,89.305,0" />
+                        <Button Content="Button" VerticalAlignment="Bottom" Margin="88.696,0,91.305,8" Style="{DynamicResource SquareButtonStyle}"/>
                     </Grid>
-                </TabItem>
-            </TabControl>
-        </Grid>
-    </Controls:MetroContentControl>
-</Window>
+                    <StackPanel Margin="332.001,0,0,8">
+                    <Controls:AppBarButton HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            MetroImageSource="{StaticResource appbar_barcode}"
+                                            Foreground="{DynamicResource BlackBrush}"
+                                            Content="scan" />
+
+                    <Controls:AppBarButton HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            MetroImageSource="{StaticResource appbar_barcode}"
+                                            Foreground="{DynamicResource BlackBrush}"
+                                            Content="scan"
+                                            Width="48"
+                                            Height="48"/>
+                    <Button Style="{DynamicResource MetroCircleButtonStyle}"
+                                Height="55"
+                                Width="55"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">
+                            <Rectangle Width="20"
+                                        Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill"
+                                                    Visual="{StaticResource appbar_city}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+
+                        </Button>
+                        <Button Style="{DynamicResource MetroCircleButtonStyle}"
+                                Height="55"
+                                Width="55"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">
+                            <Rectangle Width="20"
+                                        Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill"
+                                                    Visual="{StaticResource appbar_barcode}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+
+                        </Button>
+                        <Button Style="{DynamicResource MetroCircleButtonStyle}"
+                                Height="55"
+                                Width="55"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">
+                            <Rectangle Width="28"
+                                        Height="17.25">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill"
+                                                    Visual="{StaticResource appbar_cloud_download}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+
+                        </Button>
+                        <Button Style="{DynamicResource MetroCircleButtonStyle}"
+                                Height="55"
+                                Width="55"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">
+                            <Rectangle Width="20"
+                                        Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill"
+                                                    Visual="{StaticResource appbar_cupcake}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+
+                        </Button>
+                    </StackPanel>
+                    <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
+                </Grid>
+        </TabItem>
+        <TabItem Header="_More Controls Here!">
+            <StackPanel>
+                <Controls:ProgressIndicator ProgressColour="{DynamicResource AccentColorBrush}"
+                                            Height="6"
+                                            Width="600" />
+                <Controls:ToggleSwitch HorizontalAlignment="Left"
+                                        Margin="0,10,0,0" />
+                <Slider Margin="0,10,0,0"
+                        HorizontalAlignment="Left"
+                        Width="261.667"
+                        Value="5"
+                        SmallChange="0.5" />
+                <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
+
+                <Controls:Tile Title="My _Cupcakes"
+                                Count="23">
+                    <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
+                </Controls:Tile>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="More again">
+            <TabItem.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </TabItem.Resources>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                        
+                <ListView ItemsSource="{Binding Artists}" BorderThickness="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="artist" DisplayMemberBinding="{Binding name}" />
+                            <GridViewColumn Header="url" DisplayMemberBinding="{Binding url}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <StackPanel Grid.Row="1"
+                            Grid.Column="1">
+
+                    <Button Content="Flat Button" />
+                    <Button Content="Disabled Button"
+                            IsEnabled="False" />
+                </StackPanel>
+                <StackPanel Grid.Row="2"
+                            Grid.Column="1"
+                            Orientation="Horizontal">
+                    <Button Content="Ok"
+                            Style="{StaticResource OkButton}" />
+                    <Button Content="Cancel"
+                            Style="{StaticResource CancelButton}" />
+                </StackPanel>
+            </Grid>
+        </TabItem>
+    </TabControl>
+</Controls:MetroWindow>

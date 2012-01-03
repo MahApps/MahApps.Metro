@@ -38,12 +38,12 @@ namespace MetroDemo
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Light);
         }
-        
+
         private void MiDarkGreen(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Dark);
         }
-        
+
         private void MiLightBlue(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), Theme.Light);
