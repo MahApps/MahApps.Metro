@@ -2024,10 +2024,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Label x:Name="root" FontSize="26.67">
-                        <ContentPresenter ContentSource="Header" />
-                        <Label.Triggers>
-                            
-                        </Label.Triggers>
+                        <ContentPresenter ContentSource="Header"  RecognizesAccessKey="True" />
                     </Label>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">

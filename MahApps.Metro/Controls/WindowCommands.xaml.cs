@@ -33,7 +33,16 @@ namespace MahApps.Metro.Controls
             var parentWindow = GetParentWindow();
             if (parentWindow != null)
             {
-                parentWindow.WindowState = parentWindow.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+                if (parentWindow.WindowState == WindowState.Maximized)
+                {
+                    parentWindow.WindowState = WindowState.Normal;
+                    btnMax.Content = "1";
+                }
+                else
+                {
+                    parentWindow.WindowState = WindowState.Maximized;
+                    btnMax.Content = "2";
+                }
             }
         }
 

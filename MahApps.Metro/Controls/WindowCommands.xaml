@@ -14,74 +14,27 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel Height="20"
-                Orientation="Horizontal"
-                Width="66">
+    <StackPanel Height="20" Margin="0,5,5,0" Orientation="Horizontal" Width="66">
         <Button x:Name="btnMin"
                 Click="MinimiseClick"
                 Margin="2,0,0,0"
                 Width="20"
                 Height="20"
                 Style="{DynamicResource ChromelessButtonStyle}"
-                VerticalAlignment="Bottom"
-                VerticalContentAlignment="Bottom"
                 Padding="0"
                 ToolTip="Minimise"
-                RenderTransformOrigin="0.5,0.5"
-                Opacity="0.8">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="0.8"
-                                    ScaleY="0.8" />
-                    <SkewTransform />
-                    <RotateTransform />
-                    <TranslateTransform />
-                </TransformGroup>
-            </Button.RenderTransform>
-            <Rectangle Fill="{Binding Foreground, ElementName=windowCommands}"
-                       Height="4"
-                       VerticalAlignment="Bottom"
-                       Width="20" />
-        </Button>
+                FontFamily="Marlett"
+                Opacity="0.8" Content="0" />
         <Button x:Name="btnMax"
                 Click="MaximiseClick"
                 Margin="2,0,0,0"
                 Width="20"
                 Height="20"
                 Style="{DynamicResource ChromelessButtonStyle}"
-                VerticalContentAlignment="Bottom"
                 Padding="0"
                 ToolTip="Maximise"
-                RenderTransformOrigin="0.5,0.5"
-                Opacity="0.8">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="0.8"
-                                    ScaleY="0.8" />
-                    <SkewTransform />
-                    <RotateTransform />
-                    <TranslateTransform />
-                </TransformGroup>
-            </Button.RenderTransform>
-            <Grid Width="20"
-                  Height="20">
-                <Rectangle Fill="{Binding Foreground, ElementName=windowCommands}"
-                           Height="4"
-                           VerticalAlignment="Bottom" />
-                <Rectangle Fill="{Binding Foreground, ElementName=windowCommands}"
-                           Height="4"
-                           VerticalAlignment="Top"
-                           Margin="0,4.687,0,0" />
-                <Rectangle Fill="{Binding Foreground, ElementName=windowCommands}"
-                           Width="4"
-                           HorizontalAlignment="Left"
-                           Margin="0,4.687,0,0" />
-                <Rectangle Fill="{Binding Foreground, ElementName=windowCommands}"
-                           Width="4"
-                           HorizontalAlignment="Right"
-                           Margin="0,4.687,0,0" />
-            </Grid>
-        </Button>
+                Opacity="0.8" FontFamily="Marlett"
+                Content="1" />
         <Button x:Name="btnClose"
                 Click="CloseClick"
                 Margin="2,0,0,0"
@@ -89,49 +42,7 @@
                 Height="20"
                 Style="{DynamicResource ChromelessButtonStyle}"
                 ToolTip="Close"
-                RenderTransformOrigin="0.5,0.5"
-                Opacity="0.8">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="0.8"
-                                    ScaleY="0.8" />
-                    <SkewTransform />
-                    <RotateTransform />
-                    <TranslateTransform />
-                </TransformGroup>
-            </Button.RenderTransform>
-            <Grid Width="19"
-                  Height="19"
-                  VerticalAlignment="Center"
-                  HorizontalAlignment="Left"
-                  Margin="0,0,0,-5">
-                <Rectangle Fill="{Binding Foreground, ElementName=windowCommands}"
-                           RenderTransformOrigin="0.5,0.5"
-                           Margin="-0.677,7.542,0.677,7.458"
-                           UseLayoutRounding="False">
-                    <Rectangle.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform />
-                            <SkewTransform />
-                            <RotateTransform Angle="-45" />
-                            <TranslateTransform />
-                        </TransformGroup>
-                    </Rectangle.RenderTransform>
-                </Rectangle>
-                <Rectangle Fill="{Binding Foreground, ElementName=windowCommands}"
-                           RenderTransformOrigin="0.5,0.5"
-                           Margin="-0.771,7.542,0.771,7.458"
-                           UseLayoutRounding="False">
-                    <Rectangle.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform />
-                            <SkewTransform />
-                            <RotateTransform Angle="45" />
-                            <TranslateTransform />
-                        </TransformGroup>
-                    </Rectangle.RenderTransform>
-                </Rectangle>
-            </Grid>
-        </Button>
+                Opacity="0.8" FontFamily="Marlett"
+                Content="r" />
     </StackPanel>
 </UserControl>

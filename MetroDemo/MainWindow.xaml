@@ -141,18 +141,10 @@
 
     <Controls:MetroContentControl>
         <Grid>
-            <Grid x:Name="grdOwner"
-                  Height="40"
-                  VerticalAlignment="Top"
-                  MouseDown="WindowMouseDown">
-                <Grid.Background>
-                    <SolidColorBrush Color="{DynamicResource HighlightDarkColor}" />
-                </Grid.Background>
-                <Controls:WindowCommands Panel.ZIndex="1"
-                                         VerticalAlignment="Top"
-                                         HorizontalAlignment="Right"/>
-            </Grid>
-            <TabControl Margin="0,40,0,0">
+            <Controls:WindowCommands Panel.ZIndex="1"
+        		VerticalAlignment="Top"
+        		HorizontalAlignment="Right" d:LayoutOverrides="VerticalAlignment"/>
+            <TabControl Margin="0,8,0,0">
                 <TabItem Header="_First set of controls">
                         <Grid>
                             <Grid Margin="0,0,226.999,8">
@@ -262,77 +254,73 @@
                                         Margin="88.696,234,89.305,0" />
                                 <Button Content="Button" VerticalAlignment="Bottom" Margin="88.696,0,91.305,8" Style="{DynamicResource SquareButtonStyle}"/>
                             </Grid>
-                            <StackPanel Margin="332.001,0,0,8">
-                            <Controls:AppBarButton HorizontalAlignment="Left"
-                                                   VerticalAlignment="Top"
-                                                   MetroImageSource="{StaticResource appbar_barcode}"
-                                                   Foreground="{DynamicResource BlackBrush}"
-                                                   Content="scan" />
+                            <WrapPanel Margin="332.001,0,0,8">
+                            	<Controls:AppBarButton
+                            		VerticalAlignment="Top"
+                            		MetroImageSource="{StaticResource appbar_barcode}"
+                            		Foreground="{DynamicResource BlackBrush}"
+                            		Content="scan" />
 
-                            <Controls:AppBarButton HorizontalAlignment="Left"
-                                                   VerticalAlignment="Top"
-                                                   MetroImageSource="{StaticResource appbar_barcode}"
-                                                   Foreground="{DynamicResource BlackBrush}"
-                                                   Content="scan"
-                                                   Width="48"
-                                                   Height="48"/>
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                                        Height="55"
-                                        Width="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top">
-                                    <Rectangle Width="20"
-                                               Height="20">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill"
-                                                         Visual="{StaticResource appbar_city}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
+                            	<Controls:AppBarButton
+                            		VerticalAlignment="Top"
+                            		MetroImageSource="{StaticResource appbar_barcode}"
+                            		Foreground="{DynamicResource BlackBrush}"
+                            		Content="scan"
+                            		Width="48"
+                            		Height="48"/>
+                            	<Button Style="{DynamicResource MetroCircleButtonStyle}"
+                            		Height="55"
+                            		Width="55"
+                            		VerticalAlignment="Top">
+                            		<Rectangle Width="20"
+                            			Height="20">
+                            			<Rectangle.Fill>
+                            				<VisualBrush Stretch="Fill"
+                            					Visual="{StaticResource appbar_city}" />
+                            			</Rectangle.Fill>
+                            		</Rectangle>
 
-                                </Button>
-                                <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                                        Height="55"
-                                        Width="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top">
-                                    <Rectangle Width="20"
-                                               Height="20">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill"
-                                                         Visual="{StaticResource appbar_barcode}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
+                            	</Button>
+                            	<Button Style="{DynamicResource MetroCircleButtonStyle}"
+                            		Height="55"
+                            		Width="55"
+                            		VerticalAlignment="Top">
+                            		<Rectangle Width="20"
+                            			Height="20">
+                            			<Rectangle.Fill>
+                            				<VisualBrush Stretch="Fill"
+                            					Visual="{StaticResource appbar_barcode}" />
+                            			</Rectangle.Fill>
+                            		</Rectangle>
 
-                                </Button>
-                                <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                                        Height="55"
-                                        Width="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top">
-                                    <Rectangle Width="28"
-                                               Height="17.25">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill"
-                                                         Visual="{StaticResource appbar_cloud_download}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
+                            	</Button>
+                            	<Button Style="{DynamicResource MetroCircleButtonStyle}"
+                            		Height="55"
+                            		Width="55"
+                            		VerticalAlignment="Top">
+                            		<Rectangle Width="28"
+                            			Height="17.25">
+                            			<Rectangle.Fill>
+                            				<VisualBrush Stretch="Fill"
+                            					Visual="{StaticResource appbar_cloud_download}" />
+                            			</Rectangle.Fill>
+                            		</Rectangle>
 
-                                </Button>
-                                <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                                        Height="55"
-                                        Width="55"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Top">
-                                    <Rectangle Width="20"
-                                               Height="20">
-                                        <Rectangle.Fill>
-                                            <VisualBrush Stretch="Fill"
-                                                         Visual="{StaticResource appbar_cupcake}" />
-                                        </Rectangle.Fill>
-                                    </Rectangle>
+                            	</Button>
+                            	<Button Style="{DynamicResource MetroCircleButtonStyle}"
+                            		Height="55"
+                            		Width="55"
+                            		VerticalAlignment="Top">
+                            		<Rectangle Width="20"
+                            			Height="20">
+                            			<Rectangle.Fill>
+                            				<VisualBrush Stretch="Fill"
+                            					Visual="{StaticResource appbar_cupcake}" />
+                            			</Rectangle.Fill>
+                            		</Rectangle>
 
-                                </Button>
-                            </StackPanel>
+                            	</Button>
+                            </WrapPanel>
                             <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                         </Grid>
                 </TabItem>
@@ -402,6 +390,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="8,3.75,0,0" FontWeight="Bold" FontSize="10.667"><Run Language="en-au" Text="MAHAPPS.METRO"/></TextBlock>
         </Grid>
     </Controls:MetroContentControl>
 </Window>
