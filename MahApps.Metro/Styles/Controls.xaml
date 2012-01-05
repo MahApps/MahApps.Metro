@@ -1114,7 +1114,7 @@
     </Style>
 
     <!--ComboBox Style-->
-    <!--<Style TargetType="{x:Type ComboBox}">
+    <Style TargetType="{x:Type ComboBox}">
         <Setter Property="MinHeight"
                 Value="26" />
         <Setter Property="Foreground"
@@ -1431,10 +1431,10 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
+    </Style>
 
     <!--ComboBoxItem Style-->
-    <!--<Style TargetType="ComboBoxItem">
+    <Style TargetType="ComboBoxItem">
         <Setter Property="Foreground"
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding"
@@ -1506,11 +1506,11 @@
                                 <SolidColorBrush x:Name="ContentPresenterWrapperColor"
                                                  Color="{DynamicResource NormalForegroundColor}" />
                             </ContentControl.Foreground>
-                            <ContentControl x:Name="contentPresenter"
-                                            Margin="{TemplateBinding Padding}"
-                                            Content="{TemplateBinding Content}"
-                                            ContentTemplate="{TemplateBinding ContentTemplate}"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                            <ContentPresenter x:Name="contentPresenter"
+                                              Margin="{TemplateBinding Padding}"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </ContentControl>
                         <Rectangle x:Name="FocusVisualElement"
                                    Stroke="{DynamicResource HighlightBrush}"
@@ -1520,7 +1520,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>-->
+    </Style>
 
     <!--ProgressBar Style-->
     <Style TargetType="ProgressBar">
