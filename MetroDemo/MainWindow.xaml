@@ -7,9 +7,11 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:MetroDemo="clr-namespace:MetroDemo" mc:Ignorable="d"
         x:Class="MetroDemo.MainWindow"
-        Title="MainWindow"
+        Title="MahApps.Metro.Demo"
         Height="439"
         Width="585"
+        MouseLeftButtonDown="WindowMouseDown"
+        Icon="mahapps.metro.logo2.ico"
         d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
     <Window.Background>
         <SolidColorBrush Color="{DynamicResource WhiteColor}" />
@@ -22,116 +24,10 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Icons/MergedResources.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        	<Style x:Key="SquareButtonStyle" TargetType="{x:Type Button}">
-        		<Setter Property="MinHeight" Value="25" />
-        		<Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
-        		<Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
-        		<Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
-        		<Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-        		<Setter Property="Padding" Value="5,6" />
-        		<Setter Property="BorderThickness" Value="1" />
-        		<Setter Property="Template">
-        			<Setter.Value>
-        				<ControlTemplate TargetType="{x:Type Button}">
-        					<Grid>
-        						<VisualStateManager.VisualStateGroups>
-        							<VisualStateGroup x:Name="CommonStates">
-        								<VisualState x:Name="Normal" />
-        								<VisualState x:Name="MouseOver">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MouseOverBorder">
-        											<EasingDoubleKeyFrame KeyTime="0" Value="1" />
-        										</DoubleAnimationUsingKeyFrames>
-        										<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderThickness)" Storyboard.TargetName="MouseOverBorder">
-        											<EasingThicknessKeyFrame KeyTime="0" Value="2"/>
-        										</ThicknessAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualState>
-        								<VisualState x:Name="Pressed">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-        											Storyboard.TargetName="PressedBorder">
-        											<EasingDoubleKeyFrame KeyTime="0"
-        												Value="1" />
-        										</DoubleAnimationUsingKeyFrames>
-        										<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderThickness)" Storyboard.TargetName="MouseOverBorder">
-        											<EasingThicknessKeyFrame KeyTime="0" Value="0"/>
-        										</ThicknessAnimationUsingKeyFrames>
-        										<ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="(Border.BorderThickness)" Storyboard.TargetName="PressedBorder">
-        											<EasingThicknessKeyFrame KeyTime="0" Value="2"/>
-        										</ThicknessAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualState>
-        								<VisualState x:Name="Disabled">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
-        											Storyboard.TargetName="DisabledVisualElement">
-        											<SplineDoubleKeyFrame KeyTime="0"
-        												Value="0.7" />
-        										</DoubleAnimationUsingKeyFrames>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-        											Storyboard.TargetName="contentPresenter">
-        											<EasingDoubleKeyFrame KeyTime="0"
-        												Value="0.3" />
-        										</DoubleAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualState>
-        							</VisualStateGroup>
-        							<VisualStateGroup x:Name="FocusStates">
-        								<VisualState x:Name="Focused">
-        									<Storyboard>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-        											Storyboard.TargetName="FocusRectangle">
-        											<EasingDoubleKeyFrame KeyTime="0"
-        												Value="1" />
-        										</DoubleAnimationUsingKeyFrames>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-        											Storyboard.TargetName="FocusInnerRectangle">
-        											<EasingDoubleKeyFrame KeyTime="0"
-        												Value="1" />
-        										</DoubleAnimationUsingKeyFrames>
-        										<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.StrokeThickness)" Storyboard.TargetName="FocusRectangle">
-        											<EasingDoubleKeyFrame KeyTime="0" Value="2"/>
-        										</DoubleAnimationUsingKeyFrames>
-        									</Storyboard>
-        								</VisualState>
-        								<VisualState x:Name="Unfocused" />
-        							</VisualStateGroup>
-        						</VisualStateManager.VisualStateGroups>
-        						<Border x:Name="Background" BorderBrush="{DynamicResource BlackBrush}" BorderThickness="2" Background="{DynamicResource WhiteColorBrush}" />
-        						<Rectangle x:Name="DisabledVisualElement"
-        							Fill="{DynamicResource ControlsDisabledBrush}"
-        							IsHitTestVisible="false"
-        							Opacity="0" />
-        						<Border x:Name="MouseOverBorder"
-        							Background="{DynamicResource GrayBrush8}"
-        							Opacity="0" />
-        						<Border x:Name="PressedBorder"
-        							Background="{DynamicResource BlackBrush}"
-        							Opacity="0" BorderBrush="{DynamicResource WhiteBrush}" />
-        						<Rectangle x:Name="FocusRectangle"
-        							Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}"
-        							Opacity="0" />
-        						<Rectangle x:Name="FocusInnerRectangle"
-        							StrokeThickness="{TemplateBinding BorderThickness}"
-        							Stroke="{DynamicResource TextBoxMouseOverBorderBrush}"
-        							Opacity="0" />
-        						<ContentPresenter x:Name="contentPresenter"
-        							ContentTemplate="{TemplateBinding ContentTemplate}"
-        							Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"
-        							HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-        							Margin="{TemplateBinding Padding}"
-        							VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-        					</Grid>
-        				</ControlTemplate>
-        			</Setter.Value>
-        		</Setter>
-        	</Style>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -143,6 +39,7 @@
         <Grid>
             <Controls:WindowCommands Panel.ZIndex="1"
         		VerticalAlignment="Top"
+                Foreground="{DynamicResource BlackBrush}"
         		HorizontalAlignment="Right" d:LayoutOverrides="VerticalAlignment"/>
             <TabControl Margin="0,8,0,0">
                 <TabItem Header="_First set of controls">
@@ -390,7 +287,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="8,3.75,0,0" FontWeight="Bold" FontSize="10.667"><Run Language="en-au" Text="MAHAPPS.METRO"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="8,3.75,0,0" FontWeight="Bold" FontSize="10.667" Foreground="{DynamicResource BlackBrush}"><Run Language="en-au" Text="MAHAPPS.METRO"/></TextBlock>
         </Grid>
     </Controls:MetroContentControl>
 </Window>
