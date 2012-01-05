@@ -1,7 +1,5 @@
-﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Controls:MetroWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -10,12 +8,8 @@
         Title="MahApps.Metro.Demo"
         Height="439"
         Width="585"
-        MouseLeftButtonDown="WindowMouseDown"
         Icon="mahapps.metro.logo2.ico"
         d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
-    <Window.Background>
-        <SolidColorBrush Color="{DynamicResource WhiteColor}" />
-    </Window.Background>
 
     <Window.Resources>
         <ResourceDictionary>
@@ -31,16 +25,8 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior />
-    </i:Interaction.Behaviors>
-
     <Controls:MetroContentControl>
         <Grid>
-            <Controls:WindowCommands Panel.ZIndex="1"
-        		VerticalAlignment="Top"
-                Foreground="{DynamicResource BlackBrush}"
-        		HorizontalAlignment="Right" d:LayoutOverrides="VerticalAlignment"/>
             <TabControl Margin="0,8,0,0">
                 <TabItem Header="_First set of controls">
                         <Grid>
@@ -290,4 +276,4 @@
             <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="8,3.75,0,0" FontWeight="Bold" FontSize="10.667" Foreground="{DynamicResource BlackBrush}"><Run Language="en-au" Text="MAHAPPS.METRO"/></TextBlock>
         </Grid>
     </Controls:MetroContentControl>
-</Window>
+</Controls:MetroWindow>

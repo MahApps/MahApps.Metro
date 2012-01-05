@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interactivity;
@@ -8,7 +6,6 @@ using System.Windows.Interop;
 
 namespace MahApps.Metro.Behaviours
 {
-
     /// <summary>
     /// http://gallery.expression.microsoft.com/ZuneWindowBehavior/
     /// Published: 10/18/2010
@@ -249,7 +246,7 @@ namespace MahApps.Metro.Behaviours
 
         protected override void OnAttached()
         {
-            if (AssociatedObject.IsInitialized)
+            if (HwndSource.FromVisual(AssociatedObject) != null)
                 AddHwndHook();
             else
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;

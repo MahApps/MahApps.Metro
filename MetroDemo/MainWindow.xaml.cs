@@ -13,12 +13,6 @@ namespace MetroDemo
             InitializeComponent();
         }
 
-        private void WindowMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed)
-                DragMove();
-        }
-
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
             pb.IsIndeterminate = !pb.IsIndeterminate;
@@ -38,12 +32,12 @@ namespace MetroDemo
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Light);
         }
-        
+
         private void MiDarkGreen(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Dark);
         }
-        
+
         private void MiLightBlue(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), Theme.Light);
