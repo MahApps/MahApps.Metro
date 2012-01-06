@@ -220,7 +220,18 @@
                                 Value="5"
                                 SmallChange="0.5" />
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
+                        <TextBlock Text="ComboBox Binding scenario" />
+                        <ComboBox ItemsSource="{Binding Artists}"
+                                  DisplayMemberPath="name" />
 
+                        <TextBlock Text="Items specified in xaml scenario" />
+                        <ComboBox>
+                            <ComboBox.Items>
+                                <ComboBoxItem Content="Test" />
+                                <ComboBoxItem Content="Test 2" />
+                                <ComboBoxItem Content="Test 3" />
+                            </ComboBox.Items>
+                        </ComboBox>
                         <Controls:Tile Title="My _Cupcakes"
                                        Count="23">
                             <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />

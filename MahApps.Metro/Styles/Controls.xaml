@@ -1500,8 +1500,7 @@
                             </ContentControl.Foreground>
                             <ContentPresenter x:Name="contentPresenter"
                                               Margin="{TemplateBinding Padding}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                             
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </ContentControl>
                         <Rectangle x:Name="FocusVisualElement"
