@@ -1,9 +1,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours">
+                    xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
+                    xmlns:conv="clr-namespace:MahApps.Metro.Converters">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="{x:Type Controls:PanoramaItem}">
@@ -523,11 +525,25 @@
                 <AdornerDecorator>
                     <Controls:MetroContentControl>
                         <Grid>
-                            <Controls:WindowCommands Panel.ZIndex="1"
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Column="1" Background="{DynamicResource AccentColorBrush}">
+                                <TextBlock                                                                     
+                                    Text="{TemplateBinding Title, Converter={conv:ToUpperConverter}}"
+                                    HorizontalAlignment="Left" 
+                                    TextWrapping="Wrap" 
+                                    VerticalAlignment="Center" 
+                                    Margin="8 0 0 0" 
+                                    FontSize="16" 
+                                    FontFamily="{DynamicResource HeaderFontFamily}"
+                                    Foreground="White"/>
+                                <Controls:WindowCommands Panel.ZIndex="1"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Right"/>
-
-                            <ContentPresenter/>
+                            </Grid>
+                            <ContentPresenter Grid.Row="1"/>
                         </Grid>
                     </Controls:MetroContentControl>
                 </AdornerDecorator>
