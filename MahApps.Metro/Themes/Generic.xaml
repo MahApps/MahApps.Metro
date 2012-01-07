@@ -529,7 +529,7 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Grid Grid.Column="1" Background="{DynamicResource AccentColorBrush}">
+                            <Grid x:Name="PART_TitleBar" Grid.Column="1" Background="{DynamicResource AccentColorBrush}">
                                 <TextBlock                                                                     
                                     Text="{TemplateBinding Title, Converter={conv:ToUpperConverter}}"
                                     HorizontalAlignment="Left" 
