@@ -563,26 +563,6 @@
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Controls:MetroWindow}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-                        <AdornerDecorator>
-                            <Controls:MetroContentControl>
-                                <Grid>
-                                    <Controls:WindowCommands Panel.ZIndex="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                                    <ContentPresenter/>
-                                </Grid>
-                            </Controls:MetroContentControl>
-                        </AdornerDecorator>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
-                <Setter Property="Template" Value="{StaticResource WindowTemplateKey}"/>
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Template" Value="{StaticResource WindowTemplateKey}"/>
     </Style>
 </ResourceDictionary>
