@@ -9,6 +9,7 @@
         Height="439"
         Width="585"
         Icon="mahapps.metro.logo2.ico"
+        ShowIconOnTitleBar="false"
         d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <Window.Resources>

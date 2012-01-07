@@ -8,6 +8,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
     <Style TargetType="{x:Type Controls:PanoramaItem}">
         <Setter Property="HorizontalContentAlignment"
                 Value="Stretch" />
@@ -529,19 +531,28 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Grid x:Name="PART_TitleBar" Grid.Column="1" Background="{DynamicResource AccentColorBrush}">
-                                <TextBlock                                                                     
+                            <Grid x:Name="PART_TitleBar" Background="{DynamicResource AccentColorBrush}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image
+                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Source="{TemplateBinding Icon}"/>
+                                <TextBlock
+                                    Grid.Column="1"
                                     Text="{TemplateBinding Title, Converter={conv:ToUpperConverter}}"
                                     HorizontalAlignment="Left" 
-                                    TextWrapping="Wrap" 
+                                    TextTrimming="CharacterEllipsis"
                                     VerticalAlignment="Center" 
                                     Margin="8 0 0 0" 
                                     FontSize="16" 
                                     FontFamily="{DynamicResource HeaderFontFamily}"
                                     Foreground="White"/>
-                                <Controls:WindowCommands Panel.ZIndex="1"
-                                         VerticalAlignment="Top"
-                                         HorizontalAlignment="Right"/>
+                                <Controls:WindowCommands 
+                                    Grid.Column="2"
+                                    VerticalAlignment="Top"/>
                             </Grid>
                             <ContentPresenter Grid.Row="1"/>
                         </Grid>

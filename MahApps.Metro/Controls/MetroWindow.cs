@@ -8,9 +8,17 @@ namespace MahApps.Metro.Controls
     {
         private const string PART_TitleBar = "PART_TitleBar";
 
+        public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
         static MetroWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
+        }
+
+        public bool ShowIconOnTitleBar
+        {
+            get { return (bool) GetValue(ShowIconOnTitleBarProperty); }
+            set { SetValue(ShowIconOnTitleBarProperty, value); }
         }
 
         public override void OnApplyTemplate()
