@@ -9,6 +9,7 @@
         Height="439"
         Width="585"
         Icon="mahapps.metro.logo2.ico"
+        ShowIconOnTitleBar="false"
         d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <Window.Resources>
@@ -27,7 +28,7 @@
 
     <Controls:MetroContentControl>
         <Grid>
-            <TabControl Margin="0,8,0,0">
+            <TabControl>
                 <TabItem Header="_First set of controls">
                         <Grid>
                             <Grid Margin="0,0,226.999,8">
@@ -284,7 +285,6 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="8,3.75,0,0" FontWeight="Bold" FontSize="10.667" Foreground="{DynamicResource BlackBrush}"><Run Language="en-au" Text="MAHAPPS.METRO"/></TextBlock>
         </Grid>
     </Controls:MetroContentControl>
 </Controls:MetroWindow>
