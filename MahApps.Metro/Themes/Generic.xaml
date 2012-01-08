@@ -528,17 +528,16 @@
                     <Controls:MetroContentControl>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Grid x:Name="PART_TitleBar">
+                            <Grid x:Name="PART_TitleBar" Height="30" Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.Background>
                                     <SolidColorBrush Color="{DynamicResource AccentColor}"/>
                                 </Grid.Background>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Image
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -553,10 +552,12 @@
                                     FontSize="16" 
                                     FontFamily="{DynamicResource HeaderFontFamily}"
                                     Foreground="White"/>
-                                <Controls:WindowCommands 
-                                    Grid.Column="2"
-                                    VerticalAlignment="Top"/>
                             </Grid>
+                            <Controls:WindowCommands 
+                                Panel.ZIndex="1"
+                                Grid.RowSpan="2"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"/>
                             <ContentPresenter Grid.Row="1"/>
                         </Grid>
                     </Controls:MetroContentControl>
