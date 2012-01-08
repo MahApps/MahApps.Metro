@@ -531,7 +531,10 @@
                                 <RowDefinition Height="30"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Grid x:Name="PART_TitleBar" Background="{DynamicResource AccentColorBrush}">
+                            <Grid x:Name="PART_TitleBar">
+                                <Grid.Background>
+                                    <SolidColorBrush Color="{DynamicResource AccentColor}"/>
+                                </Grid.Background>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
