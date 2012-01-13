@@ -124,6 +124,12 @@ namespace MahApps.Metro.Behaviours
             CompositionTarget.Rendering += CompositionTargetRendering;
         }
 
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+            CompositionTarget.Rendering -= CompositionTargetRendering;
+        }
+
         private void CompositionTargetRendering(object sender, EventArgs e)
         {
             if (KeepDragging)

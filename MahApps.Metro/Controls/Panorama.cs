@@ -30,59 +30,56 @@ namespace MahApps.Metro.Controls
             DefaultStyleKey = typeof(Panorama);
             Loaded += (s, e) =>
             {
-                foreach (var ob in Items)
+                foreach (var panoramaItem in Items.OfType<PanoramaItem>())
                 {
-                    var panoramaItem = ob as PanoramaItem;
-                    if (panoramaItem == null)
-                        continue;
-
                     panoramaItem.RenderTransform = new TranslateTransform();
                 }
+                CompositionTarget.Rendering += CompositionTargetOnRendering;
             };
+            Unloaded += (s, e) => CompositionTarget.Rendering -= CompositionTargetOnRendering;
+        }
 
+        private void CompositionTargetOnRendering(object sender, EventArgs eventArgs)
+        {
             var c = 0;
-            CompositionTarget.Rendering += (s, e) =>
+            if (_mouseCaptured && Mouse.LeftButton == MouseButtonState.Released)
             {
-                if (_mouseCaptured && Mouse.LeftButton == MouseButtonState.Released)
+                _mouseCaptured = false;
+                _currentWidth = -1;
+                var w = -1 * GetWidths();
+
+                if (Traslation < (Items.Count - 1) * w)
                 {
-                    _mouseCaptured = false;
-                    _currentWidth = -1;
-                    var w = -1 * GetWidths();
-
-                    if (Traslation < (Items.Count - 1) * w)
-                    {
-                        c = Items.Count - 1;
-                    }
-                    else if (Traslation < 0)
-                    {
-                        if (Math.Abs(Traslation) + c * -ActualWidth > 20)
-                            c += 1;
-                        else if (Math.Abs(Traslation) + c * -ActualWidth < -20)
-                            c -= 1;
-                    }
-                    else
-                    {
-                        c = 0;
-                    }
-
-                    Animate(Traslation, Math.Min(0, c * -ActualWidth));
-                    return;
+                    c = Items.Count - 1;
+                }
+                else if (Traslation < 0)
+                {
+                    if (Math.Abs(Traslation) + c * -ActualWidth > 20)
+                        c += 1;
+                    else if (Math.Abs(Traslation) + c * -ActualWidth < -20)
+                        c -= 1;
+                }
+                else
+                {
+                    c = 0;
                 }
 
-                if (!_mouseCaptured && Mouse.LeftButton == MouseButtonState.Pressed && MouseOver())
-                {
-                    _mouseCaptured = true;
-                    _currentWidth = Mouse.GetPosition(Items[0] as PanoramaItem).X;
-                    return;
-                }
+                Animate(Traslation, Math.Min(0, c * -ActualWidth));
+                return;
+            }
 
-                if (_mouseCaptured && Mouse.LeftButton == MouseButtonState.Pressed && MouseOver())
-                {
-                    _increment = Mouse.GetPosition(Items[0] as PanoramaItem).X;
-                    Traslation += _increment - _currentWidth;
-                }
+            if (!_mouseCaptured && Mouse.LeftButton == MouseButtonState.Pressed && MouseOver())
+            {
+                _mouseCaptured = true;
+                _currentWidth = Mouse.GetPosition(Items[0] as PanoramaItem).X;
+                return;
+            }
 
-            };
+            if (_mouseCaptured && Mouse.LeftButton == MouseButtonState.Pressed && MouseOver())
+            {
+                _increment = Mouse.GetPosition(Items[0] as PanoramaItem).X;
+                Traslation += _increment - _currentWidth;
+            }
         }
 
         public double HeaderOffset
