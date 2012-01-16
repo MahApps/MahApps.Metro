@@ -1323,7 +1323,11 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="ContentPresenterBorder">
                             <Grid>
-                                <ToggleButton x:Name="DropDownToggle"
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton x:Name="DropDownToggle" Grid.Column="1"
                                               BorderBrush="{TemplateBinding BorderBrush}"
                                               BorderThickness="{TemplateBinding BorderThickness}"
                                               Background="{TemplateBinding Background}"
