@@ -36,10 +36,12 @@ namespace MahApps.Metro.Controls
             if (titleBar != null)
             {
                 titleBar.MouseDown += TitleBarMouseDown;
+                titleBar.MouseMove += TitleBarMouseMove;
             }
             else
             {
                 MouseDown += TitleBarMouseDown;
+                MouseMove += TitleBarMouseMove;
             }
         }
 
@@ -47,6 +49,18 @@ namespace MahApps.Metro.Controls
         {
             if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed && e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
+        }
+
+        private void TitleBarMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed && e.LeftButton == MouseButtonState.Pressed && this.WindowState == WindowState.Maximized)
+            {
+                // restore window to normal state
+                WindowState = WindowState.Normal;
+                Top = 0;
+                Left = Mouse.GetPosition(this).X - Width/2;
+                DragMove();
+            }
         }
     }
 }
