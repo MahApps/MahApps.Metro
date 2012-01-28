@@ -34,14 +34,32 @@ namespace MahApps.Metro.Controls
             if (parentWindow != null)
             {
                 if (parentWindow.WindowState == WindowState.Maximized)
-                {
                     parentWindow.WindowState = WindowState.Normal;
+                else
+                    parentWindow.WindowState = WindowState.Maximized;
+
+                RefreshMaximiseIconState(parentWindow);
+            }
+        }
+
+        public void RefreshMaximiseIconState()
+        {
+            RefreshMaximiseIconState(GetParentWindow());
+        }
+
+        private void RefreshMaximiseIconState(Window parentWindow)
+        {
+            if (parentWindow != null)
+            {
+                if (parentWindow.WindowState == WindowState.Normal)
+                {
                     btnMax.Content = "1";
+                    btnMax.SetResourceReference(System.Windows.Controls.Button.ToolTipProperty, "WindowCommandsMaximiseToolTip");
                 }
                 else
                 {
-                    parentWindow.WindowState = WindowState.Maximized;
                     btnMax.Content = "2";
+                    btnMax.SetResourceReference(System.Windows.Controls.Button.ToolTipProperty, "WindowCommandsRestoreToolTip");
                 }
             }
         }

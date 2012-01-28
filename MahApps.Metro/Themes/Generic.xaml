@@ -554,6 +554,7 @@
                                     Foreground="White"/>
                             </Grid>
                             <Controls:WindowCommands 
+                                x:Name="PART_WindowCommands"
                                 Panel.ZIndex="1"
                                 Grid.RowSpan="2"
                                 VerticalAlignment="Top"
