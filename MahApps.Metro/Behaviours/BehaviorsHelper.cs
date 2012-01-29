@@ -11,6 +11,8 @@
         {
             if (element == null)
                 throw new ArgumentNullException("element");
+            if (behavior == null)
+                throw new ArgumentNullException("behavior");
 
             BehaviorCollection behaviors = Interaction.GetBehaviors(element);
 
