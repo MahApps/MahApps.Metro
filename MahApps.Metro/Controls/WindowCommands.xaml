@@ -3,8 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              x:Name="windowCommands">
+    <UserControl.Resources>
+        <sys:String x:Key="WindowCommandsMinimiseToolTip">Minimise</sys:String>
+        <sys:String x:Key="WindowCommandsMaximiseToolTip">Maximise</sys:String>
+        <sys:String x:Key="WindowCommandsRestoreToolTip">Restore</sys:String>
+        <sys:String x:Key="WindowCommandsCloseToolTip">Close</sys:String>
+    </UserControl.Resources>
     <StackPanel Height="20" Margin="0,5,5,0" Orientation="Horizontal" Width="66">
         <Button x:Name="btnMin"
                 Click="MinimiseClick"
@@ -13,7 +20,7 @@
                 Height="20"
                 Style="{DynamicResource ChromelessButtonStyle}"
                 Padding="0"
-                ToolTip="Minimise"
+                ToolTip="{DynamicResource WindowCommandsMinimiseToolTip}"
                 FontFamily="Marlett"
                 Opacity="0.8" Content="0" />
         <Button x:Name="btnMax"
@@ -23,7 +30,7 @@
                 Height="20"
                 Style="{DynamicResource ChromelessButtonStyle}"
                 Padding="0"
-                ToolTip="Maximise"
+                ToolTip="{DynamicResource WindowCommandsMaximiseToolTip}"
                 Opacity="0.8" FontFamily="Marlett"
                 Content="1" />
         <Button x:Name="btnClose"
@@ -32,7 +39,7 @@
                 Width="20"
                 Height="20"
                 Style="{DynamicResource ChromelessButtonStyle}"
-                ToolTip="Close"
+                ToolTip="{DynamicResource WindowCommandsCloseToolTip}"
                 Opacity="0.8" FontFamily="Marlett"
                 Content="r" />
     </StackPanel>
