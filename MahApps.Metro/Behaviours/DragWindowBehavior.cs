@@ -5,6 +5,9 @@ namespace MahApps.Metro.Behaviours
     using System.Windows.Input;
     using System.Windows.Interactivity;
 
+    /// <summary>
+    /// Drag window behavior adds dragging parent window behavior to any UIElement within window's visual tree.
+    /// </summary>
     public class DragWindowBehavior : Behavior<UIElement>
     {
         private Window _window;
@@ -40,10 +43,20 @@ namespace MahApps.Metro.Behaviours
             if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed
                 && e.LeftButton == MouseButtonState.Pressed && _window.WindowState == WindowState.Maximized)
             {
-                // restore window to normal state
-                _window.WindowState = WindowState.Normal;
+                // Calcualting correct left coordinate for multi-screen system.
+                double virtualScreenWidth = SystemParameters.VirtualScreenWidth;
+                double mouseX = _window.PointToScreen(Mouse.GetPosition(_window)).X;
+                double left = mouseX - _window.Width / 2;
+                // Aligning window's position to fit the screen.
+                left = left < 0 ? 0 : left;
+                left = left + _window.Width > virtualScreenWidth ? virtualScreenWidth - _window.Width : left;
+                
                 _window.Top = 0;
-                _window.Left = Mouse.GetPosition(_window).X - _window.Width / 2;
+                _window.Left = left;
+
+                // Restore window to normal state.
+                _window.WindowState = WindowState.Normal;
+
                 _window.DragMove();
             }
         }

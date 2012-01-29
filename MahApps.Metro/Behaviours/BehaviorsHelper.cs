@@ -4,7 +4,7 @@
     using System.Windows;
     using System.Windows.Interactivity;
 
-    public static class BehaviorHelpers
+    public static class BehaviorsHelper
     {
         public static void AddBehavior<TElement>(this TElement element, Behavior<TElement> behavior)
             where TElement : DependencyObject

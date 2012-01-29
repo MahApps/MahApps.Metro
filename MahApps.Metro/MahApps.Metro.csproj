@@ -60,7 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accent.cs" />
-    <Compile Include="Behaviours\BehaviorHelpers.cs" />
+    <Compile Include="Behaviours\BehaviorsHelper.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
     <Compile Include="Behaviours\DragWindowBehavior.cs" />
     <Compile Include="Behaviours\Reload.cs" />
