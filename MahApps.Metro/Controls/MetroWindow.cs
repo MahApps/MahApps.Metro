@@ -47,8 +47,12 @@
                 if (_titleBar != null)
                     _titleBar.RemoveBehavior(_dragWindowBehavior);
                 _titleBar = value;
+
+                // Add dragging behavior to title bar if it is no null, otherwise to current window.
                 if (_titleBar != null)
                     _titleBar.AddBehavior(_dragWindowBehavior);
+                else
+                    this.AddBehavior(_dragWindowBehavior);
             }
         }
 
