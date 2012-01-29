@@ -9,8 +9,25 @@
 
         public WindowCommands()
         {
-            Loaded += (sender, args) => _parentWindow = Window.GetWindow(this);
+            Loaded += (sender, args) =>
+            {
+                _parentWindow = Window.GetWindow(this);
+                if (_parentWindow != null)
+                    _parentWindow.StateChanged += OnParentWindowStateChanged;
+            };
+            Unloaded += (sender, args) =>
+            {
+                if (_parentWindow != null)
+                    _parentWindow.StateChanged -= OnParentWindowStateChanged;
+                _parentWindow = null;
+            };
+
             InitializeComponent();
+        }
+
+        private void OnParentWindowStateChanged(object o, EventArgs eventArgs)
+        {
+            RefreshMaximiseIconState();
         }
 
         public event EventHandler<ClosingWindowEventHandlerArgs> ClosingWindow;
