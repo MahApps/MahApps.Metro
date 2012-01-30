@@ -1,66 +1,81 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Media;
-
-namespace MahApps.Metro.Controls
+﻿namespace MahApps.Metro.Controls
 {
+    using System;
+    using System.Windows;
+
     public partial class WindowCommands
     {
+        private Window _parentWindow;
+
         public WindowCommands()
         {
+            Loaded += (sender, args) =>
+            {
+                _parentWindow = Window.GetWindow(this);
+                if (_parentWindow != null)
+                    _parentWindow.StateChanged += OnParentWindowStateChanged;
+            };
+            Unloaded += (sender, args) =>
+            {
+                if (_parentWindow != null)
+                    _parentWindow.StateChanged -= OnParentWindowStateChanged;
+                _parentWindow = null;
+            };
+
             InitializeComponent();
         }
 
-        public event ClosingWindowEventHandler ClosingWindow;
+        private void OnParentWindowStateChanged(object o, EventArgs eventArgs)
+        {
+            RefreshMaximiseIconState();
+        }
+
+        public event EventHandler<ClosingWindowEventHandlerArgs> ClosingWindow;
 
         protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
         {
-            var handler = ClosingWindow;
-            if (handler != null) handler(this, args);
+            EventHandler<ClosingWindowEventHandlerArgs> handler = ClosingWindow;
+            if (handler != null)
+                handler(this, args);
         }
 
         private void MinimiseClick(object sender, RoutedEventArgs e)
         {
-            var parentWindow = GetParentWindow();
-            if (parentWindow != null)
-            {
-                parentWindow.WindowState = WindowState.Minimized;
-            }
+            if (_parentWindow != null)
+                _parentWindow.WindowState = WindowState.Minimized;
         }
 
         private void MaximiseClick(object sender, RoutedEventArgs e)
         {
-            var parentWindow = GetParentWindow();
-            if (parentWindow != null)
-            {
-                if (parentWindow.WindowState == WindowState.Maximized)
-                    parentWindow.WindowState = WindowState.Normal;
-                else
-                    parentWindow.WindowState = WindowState.Maximized;
+            if (_parentWindow == null)
+                return;
 
-                RefreshMaximiseIconState(parentWindow);
-            }
+            _parentWindow.WindowState = _parentWindow.WindowState == WindowState.Maximized
+                ? WindowState.Normal
+                : WindowState.Maximized;
+
+            RefreshMaximiseIconState(_parentWindow);
         }
 
         public void RefreshMaximiseIconState()
         {
-            RefreshMaximiseIconState(GetParentWindow());
+            RefreshMaximiseIconState(_parentWindow);
         }
 
         private void RefreshMaximiseIconState(Window parentWindow)
         {
-            if (parentWindow != null)
+            if (parentWindow == null)
+                return;
+
+            if (parentWindow.WindowState == WindowState.Normal)
             {
-                if (parentWindow.WindowState == WindowState.Normal)
-                {
-                    btnMax.Content = "1";
-                    btnMax.SetResourceReference(System.Windows.Controls.Button.ToolTipProperty, "WindowCommandsMaximiseToolTip");
-                }
-                else
-                {
-                    btnMax.Content = "2";
-                    btnMax.SetResourceReference(System.Windows.Controls.Button.ToolTipProperty, "WindowCommandsRestoreToolTip");
-                }
+                btnMax.Content = "1";
+                btnMax.SetResourceReference(ToolTipProperty, "WindowCommandsMaximiseToolTip");
+            }
+            else
+            {
+                btnMax.Content = "2";
+                btnMax.SetResourceReference(ToolTipProperty, "WindowCommandsRestoreToolTip");
             }
         }
 
@@ -69,33 +84,16 @@ namespace MahApps.Metro.Controls
             var closingWindowEventHandlerArgs = new ClosingWindowEventHandlerArgs();
             OnClosingWindow(closingWindowEventHandlerArgs);
 
-            if (closingWindowEventHandlerArgs.Cancelled) return;
+            if (closingWindowEventHandlerArgs.Cancelled)
+                return;
 
-            var parentWindow = GetParentWindow();
-            if (parentWindow != null)
-            {
-                parentWindow.Close();
-            }
+            if (_parentWindow != null)
+                _parentWindow.Close();
         }
+    }
 
-        private Window GetParentWindow()
-        {
-            var parent = VisualTreeHelper.GetParent(this);
-
-            while (parent != null && !(parent is Window))
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
-
-            var parentWindow = parent as Window;
-            return parentWindow;
-        }
-
-        public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
-
-        public class ClosingWindowEventHandlerArgs : EventArgs
-        {
-            public bool Cancelled { get; set; }
-        }
+    public class ClosingWindowEventHandlerArgs : EventArgs
+    {
+        public bool Cancelled { get; set; }
     }
 }
