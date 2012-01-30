@@ -77,12 +77,25 @@ namespace MahApps.Metro.Controls
 
         private void TitleBarMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed && e.LeftButton == MouseButtonState.Pressed && this.WindowState == WindowState.Maximized)
+            if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed
+                && e.LeftButton == MouseButtonState.Pressed && WindowState == WindowState.Maximized)
             {
-                // restore window to normal state
-                WindowState = WindowState.Normal;
+                // Calcualting correct left coordinate for multi-screen system.
+                double mouseX = PointToScreen(Mouse.GetPosition(this)).X;
+                double width = RestoreBounds.Width;
+                double left = mouseX - width / 2;
+
+                // Aligning window's position to fit the screen.
+                double virtualScreenWidth = SystemParameters.VirtualScreenWidth;
+                left = left < 0 ? 0 : left;
+                left = left + width > virtualScreenWidth ? virtualScreenWidth - width : left;
+
                 Top = 0;
-                Left = Mouse.GetPosition(this).X - Width/2;
+                Left = left;
+
+                // Restore window to normal state.
+                WindowState = WindowState.Normal;
+
                 DragMove();
             }
         }
