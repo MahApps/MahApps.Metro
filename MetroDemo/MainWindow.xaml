@@ -84,7 +84,7 @@
                                 <ComboBox Margin="88.292,176.84,0,0"
                                           VerticalAlignment="Top"
                                           HorizontalAlignment="Left"
-                                          Width="154.404">
+                                          SelectedIndex="0">
                                     <ComboBoxItem Content="ComboBoxItem" />
                                     <ComboBoxItem Content="ComboBoxItem" />
                                     <ComboBoxItem Content="ComboBoxItem" />
