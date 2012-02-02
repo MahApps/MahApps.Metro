@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
-             x:Name="windowCommands">
+             x:Name="windowCommands" Loaded="WindowCommandsLoaded">
     <UserControl.Resources>
         <sys:String x:Key="WindowCommandsMinimiseToolTip">Minimise</sys:String>
         <sys:String x:Key="WindowCommandsMaximiseToolTip">Maximise</sys:String>
         <sys:String x:Key="WindowCommandsRestoreToolTip">Restore</sys:String>
         <sys:String x:Key="WindowCommandsCloseToolTip">Close</sys:String>
     </UserControl.Resources>
-    <StackPanel Height="20" Margin="0,5,5,0" Orientation="Horizontal" Width="66">
+    <StackPanel Height="20" Margin="0,5,5,0" Orientation="Horizontal" Width="Auto">
         <Button x:Name="btnMin"
                 Click="MinimiseClick"
                 Margin="2,0,0,0"

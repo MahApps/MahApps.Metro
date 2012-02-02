@@ -252,8 +252,10 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
             AssociatedObject.WindowStyle = WindowStyle.None;
-            AssociatedObject.ResizeMode = ResizeWithGrip ? ResizeMode.CanResizeWithGrip : ResizeMode.CanResize;
-
+            if (AssociatedObject.ResizeMode != ResizeMode.NoResize) {
+                AssociatedObject.ResizeMode = ResizeWithGrip ? ResizeMode.CanResizeWithGrip : ResizeMode.CanResize;
+            }
+            
             if (AutoSizeToContent)
                 AssociatedObject.Loaded += (s, e) =>
                                                {

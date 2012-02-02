@@ -66,7 +66,7 @@ namespace MahApps.Metro.Controls
             if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed && e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
 
-            if (e.ClickCount == 2)
+            if (e.ClickCount == 2 && ResizeMode != ResizeMode.NoResize)
             {
                 if (WindowState == WindowState.Maximized)
                     WindowState = WindowState.Normal;

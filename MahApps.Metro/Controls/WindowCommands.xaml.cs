@@ -97,5 +97,20 @@ namespace MahApps.Metro.Controls
         {
             public bool Cancelled { get; set; }
         }
+
+        private void WindowCommandsLoaded(object sender, RoutedEventArgs e)
+        {
+            Window parentWindow = GetParentWindow();
+            if (parentWindow == null) 
+            {
+                return;
+            }
+
+            if (parentWindow.ResizeMode == ResizeMode.NoResize)
+            {
+                btnMin.Visibility = Visibility.Collapsed;
+                btnMax.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }
