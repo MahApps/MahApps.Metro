@@ -567,6 +567,9 @@
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
+            <Trigger Property="ResizeMode" Value="NoResize">
+                <Setter TargetName="WindowResizeGrip" Property="Visibility" Value="Collapsed" />
+            </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="ResizeMode" Value="CanResizeWithGrip"/>
