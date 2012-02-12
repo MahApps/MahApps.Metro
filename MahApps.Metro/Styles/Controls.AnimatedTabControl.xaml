@@ -14,9 +14,10 @@
                           SnapsToDevicePixels="True"
                           KeyboardNavigation.TabNavigation="Local">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="ColumnDefinition0" />
+                            <ColumnDefinition x:Name="ColumnDefinition0" 
+                                              Width="Auto" />
                             <ColumnDefinition x:Name="ColumnDefinition1"
-                                              Width="0" />
+                                              Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition x:Name="RowDefinition0"
@@ -36,6 +37,7 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}"
                                 Grid.Column="0"
+                                Grid.ColumnSpan="2"
                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                 Grid.Row="1"
                                 KeyboardNavigation.TabIndex="2"
@@ -78,10 +80,16 @@
                             <Setter Property="Grid.Row"
                                     TargetName="ContentPanel"
                                     Value="0" />
+                            <Setter Property="Grid.RowSpan"
+                                    TargetName="ContentPanel"
+                                    Value="2" />
                             <Setter Property="Grid.Column"
                                     TargetName="HeaderPanel"
                                     Value="0" />
                             <Setter Property="Grid.Column"
+                                    TargetName="ContentPanel"
+                                    Value="1" />
+                            <Setter Property="Grid.ColumnSpan"
                                     TargetName="ContentPanel"
                                     Value="1" />
                             <Setter Property="Width"
@@ -92,10 +100,10 @@
                                     Value="*" />
                             <Setter Property="Height"
                                     TargetName="RowDefinition0"
-                                    Value="*" />
+                                    Value="Auto" />
                             <Setter Property="Height"
                                     TargetName="RowDefinition1"
-                                    Value="0" />
+                                    Value="*" />
                             <Setter Property="Margin"
                                     TargetName="HeaderPanel"
                                     Value="2,2,0,2" />
@@ -108,12 +116,18 @@
                             <Setter Property="Grid.Row"
                                     TargetName="ContentPanel"
                                     Value="0" />
+                            <Setter Property="Grid.RowSpan"
+                                    TargetName="ContentPanel"
+                                    Value="2" />
                             <Setter Property="Grid.Column"
                                     TargetName="HeaderPanel"
                                     Value="1" />
                             <Setter Property="Grid.Column"
                                     TargetName="ContentPanel"
                                     Value="0" />
+                            <Setter Property="Grid.ColumnSpan"
+                                    TargetName="ContentPanel"
+                                    Value="1" />
                             <Setter Property="Width"
                                     TargetName="ColumnDefinition0"
                                     Value="*" />
@@ -122,10 +136,10 @@
                                     Value="Auto" />
                             <Setter Property="Height"
                                     TargetName="RowDefinition0"
-                                    Value="*" />
+                                    Value="Auto" />
                             <Setter Property="Height"
                                     TargetName="RowDefinition1"
-                                    Value="0" />
+                                    Value="*" />
                             <Setter Property="Margin"
                                     TargetName="HeaderPanel"
                                     Value="0,2,2,2" />
