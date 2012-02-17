@@ -22,7 +22,7 @@
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
     </Style>
 
-    
+
     <Style TargetType="{x:Type ListViewItem}">
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -35,9 +35,15 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
                     <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                        <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <Grid>
+                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+                            <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible"/>
+                        </Trigger>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
                             <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
