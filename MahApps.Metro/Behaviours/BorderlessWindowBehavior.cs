@@ -326,7 +326,10 @@ namespace MahApps.Metro.Behaviours
                     /* From Lester's Blog (thanks @aeoth):  
                      * http://blogs.msdn.com/b/llobo/archive/2006/08/01/maximizing-window-_2800_with-windowstyle_3d00_none_2900_-considering-taskbar.aspx */
                     WmGetMinMaxInfo(hWnd, lParam);
-                    handled = true;
+                    
+                    /* Setting handled to false enables the application to process iz's own Min/Max requirements,
+                     * as mentioned by jason.bullard (comment from September 22, 2011) on http://gallery.expression.microsoft.com/ZuneWindowBehavior/ */
+                    handled = false;
                     break;
             }
 
