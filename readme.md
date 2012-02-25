@@ -166,7 +166,7 @@ References
   [12]: http://somerandomdude.com/projects/iconic/
   [13]: http://yankoa.deviantart.com/#/d312tty
   [14]: http://www.windowswiki.info/2010/03/29/metro-icon-pack-windows-phone-7-icons/
-  [15]: http://www.opensource.org/licenses/ms-pl.html959595
+  [15]: http://www.opensource.org/licenses/ms-pl.html
   [16]: http://xamlcoder.com/blog/2010/11/04/creating-a-metro-ui-style-control/
   [17]: http://timheuer.com/blog/archive/2010/05/03/new-silverlight-4-themes-available-for-download.aspx
   [18]: http://connect.microsoft.com/VisualStudio/feedback/details/520516/wpf-textbox-contextmenus-dont-inherit-the-implicit-contextmenu-style-for-your-application
