@@ -3,33 +3,15 @@ using System.Windows.Interactivity;
 
 namespace MahApps.Metro.Behaviours
 {
-    public class StylizedBehaviorCollection : FreezableCollection<Behavior>
-    {
-        #region Methods (protected)
-        protected override Freezable CreateInstanceCore()
-        {
-            return new StylizedBehaviorCollection();
-        }
-        #endregion
-    }
-
     public class StylizedBehaviors
     {
-        #region Fields (private)
-        private static readonly DependencyProperty OriginalBehaviorProperty =
-            DependencyProperty.RegisterAttached(
-                @"OriginalBehaviorInternal", typeof(Behavior), typeof(StylizedBehaviors), new UIPropertyMetadata(null));
-        #endregion
+        private static readonly DependencyProperty OriginalBehaviorProperty = DependencyProperty.RegisterAttached(@"OriginalBehaviorInternal", typeof(Behavior), typeof(StylizedBehaviors), new UIPropertyMetadata(null));
 
-        #region Fields (public)
         public static readonly DependencyProperty BehaviorsProperty = DependencyProperty.RegisterAttached(
             @"Behaviors",
             typeof(StylizedBehaviorCollection),
             typeof(StylizedBehaviors),
             new FrameworkPropertyMetadata(null, OnPropertyChanged));
-        #endregion
-
-        #region Static Methods (public)
         public static StylizedBehaviorCollection GetBehaviors(DependencyObject uie)
         {
             return (StylizedBehaviorCollection)uie.GetValue(BehaviorsProperty);
@@ -39,9 +21,6 @@ namespace MahApps.Metro.Behaviours
         {
             uie.SetValue(BehaviorsProperty, value);
         }
-        #endregion
-
-        #region Static Methods (private)
         private static Behavior GetOriginalBehavior(DependencyObject obj)
         {
             return obj.GetValue(OriginalBehaviorProperty) as Behavior;
@@ -129,6 +108,5 @@ namespace MahApps.Metro.Behaviours
         {
             obj.SetValue(OriginalBehaviorProperty, value);
         }
-        #endregion
     }
 }

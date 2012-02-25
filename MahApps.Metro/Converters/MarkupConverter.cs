@@ -17,8 +17,6 @@ namespace MahApps.Metro.Converters
         protected abstract object Convert(object value, Type targetType, object parameter, CultureInfo culture);
         protected abstract object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture);
 
-        #region IValueConverter Members
-
         object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             try
@@ -42,7 +40,5 @@ namespace MahApps.Metro.Converters
                 return DependencyProperty.UnsetValue;
             }
         }
-
-        #endregion
     }
 }

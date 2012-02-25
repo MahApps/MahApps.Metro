@@ -11,40 +11,30 @@ namespace MahApps.Metro.Controls
             DefaultStyleKey = typeof (Tile);
         }
 
-        #region public string Title
-        public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register("Title", typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
 
         public string Title
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
         }
-        #endregion
 
-        #region public string Count
-        public static readonly DependencyProperty CountProperty =
-            DependencyProperty.Register("Count", typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty CountProperty = DependencyProperty.Register("Count", typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
 
         public string Count
         {
             get { return (string)GetValue(CountProperty); }
             set { SetValue(CountProperty, value); }
         }
-        #endregion
 
-        #region public bool KeepDragging
-        public static readonly DependencyProperty KeepDraggingProperty =
-            DependencyProperty.Register("KeepDragging", typeof(bool), typeof(Tile), new PropertyMetadata(true));
+        public static readonly DependencyProperty KeepDraggingProperty = DependencyProperty.Register("KeepDragging", typeof(bool), typeof(Tile), new PropertyMetadata(true));
 
         public bool KeepDragging
         {
             get { return (bool)GetValue(KeepDraggingProperty); }
             set { SetValue(KeepDraggingProperty, value); }
         }
-        #endregion
-
-        #region public int TiltFactor
+        
         public static readonly DependencyProperty TiltFactorProperty =
             DependencyProperty.Register("TiltFactor", typeof(int), typeof(Tile), new PropertyMetadata(5));
 
@@ -53,6 +43,5 @@ namespace MahApps.Metro.Controls
             get { return (Int32)GetValue(TiltFactorProperty); }
             set { SetValue(TiltFactorProperty, value); }
         }
-        #endregion
     }
 }

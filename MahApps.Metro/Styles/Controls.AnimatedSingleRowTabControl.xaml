@@ -83,7 +83,7 @@
                         <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Template="{DynamicResource ScrollViewerTemplate}">
                             <TabPanel x:Name="HeaderPanel" IsItemsHost="True" Panel.ZIndex="1" Grid.Column="0" Grid.Row="0" KeyboardNavigation.TabIndex="1"/>
                         </ScrollViewer>
-                        <Controls:MetroContentControl Behaviours:Reload.OnSelectedTabChanged="True" Grid.Column="0" Grid.Row="1">
+                        <Controls:MetroContentControl Behaviours:ReloadBehavior.OnSelectedTabChanged="True" Grid.Column="0" Grid.Row="1">
                             <ContentPresenter x:Name="PART_SelectedContentHost"
                                     ContentTemplate="{TemplateBinding SelectedContentTemplate}"
                                     Content="{TemplateBinding SelectedContent}"

@@ -42,7 +42,7 @@
                                 Grid.Row="1"
                                 KeyboardNavigation.TabIndex="2"
                                 KeyboardNavigation.TabNavigation="Local">
-                            <Controls:MetroContentControl Behaviours:Reload.OnSelectedTabChanged="True">
+                            <Controls:MetroContentControl Behaviours:ReloadBehavior.OnSelectedTabChanged="True">
                                 <ContentPresenter x:Name="PART_SelectedContentHost"
                                                   ContentTemplate="{TemplateBinding SelectedContentTemplate}"
                                                   Content="{TemplateBinding SelectedContent}"
