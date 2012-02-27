@@ -68,10 +68,7 @@ namespace MahApps.Metro.Controls
 
             if (e.ClickCount == 2)
             {
-                if (WindowState == WindowState.Maximized)
-                    WindowState = WindowState.Normal;
-                else
-                    WindowState = WindowState.Maximized;
+                WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             }
         }
 
@@ -98,6 +95,11 @@ namespace MahApps.Metro.Controls
 
                 DragMove();
             }
+        }
+
+        internal T GetPart<T>(string name) where T : DependencyObject
+        {
+            return (T)GetTemplateChild(name);            
         }
     }
 }

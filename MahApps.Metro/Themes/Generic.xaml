@@ -522,7 +522,7 @@
 
 
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+        <Border x:Name="PART_Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
             <Grid>
                 <AdornerDecorator>
                     <Controls:MetroContentControl>

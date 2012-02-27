@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro</id>
-    <version>0.4.6.0</version>
+    <version>0.6.0.0</version>
     <title>MahApps.Metro</title>
     <authors>Paul Jenkins; Jake Ginnivan</authors>
     <owners>Paul Jenkins; Jake Ginnivan</owners>
@@ -12,21 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The goal of MahApps.Metro is to allow devs to quickly and easily cobble togther a "Metro" UI for their WPF4+ apps, with minimal effort.</description>
     <summary>The goal of MahApps.Metro is to allow devs to quickly and easily cobble togther a "Metro" UI for their WPF4+ apps, with minimal effort.</summary>
-    <releaseNotes>* Combined MahApps.Metro.Controls into MahApps.Metro for a single library  
-	
-	* New controls:
-	
-		- Panorama
-		- MetroImage
-		- Tile
-	* Added Theme Manager
-	* Additional controls styled:
-		- Slider
-		- GridView
-	* Fixed button hover and pressed state
-	* Fixed TabItem focus issues
-	* Fixed Dark -&gt; Light theme transition issues
-	* Fixed Localisation issue</releaseNotes>
+    <releaseNotes></releaseNotes>
   </metadata>
   <files>
     <file src="bin\Release\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />

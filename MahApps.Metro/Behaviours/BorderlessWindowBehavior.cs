@@ -1,14 +1,21 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
+using System.Windows.Media;
+using MahApps.Metro.Controls;
 using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Behaviours
 {
     public class BorderlessWindowBehavior : Behavior<Window>
     {
+        [DllImport("dwmapi", PreserveSig = false)]
+        public static extern bool DwmIsCompositionEnabled();
+
         [DllImport("dwmapi")]
         private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
 
@@ -64,6 +71,7 @@ namespace MahApps.Metro.Behaviours
             set { SetValue(AutoSizeToContentProperty, value); }
         }
 
+        public Border Border { get; set; }
 
         protected override void OnAttached()
         {
@@ -75,6 +83,28 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.WindowStyle = WindowStyle.None;
             AssociatedObject.ResizeMode = ResizeWithGrip ? ResizeMode.CanResizeWithGrip : ResizeMode.CanResize;
 
+            if (AssociatedObject is MetroWindow)
+            {
+                //MetroWindow already has a border we can use
+                AssociatedObject.Loaded += (s, e) =>
+                                               {
+                                                   var ancestors = ((MetroWindow)AssociatedObject).GetPart<Border>("PART_Border");
+                                                   Border = ancestors;
+                                               };
+            }
+            else { 
+                //Other windows may not, easiest to just inject one!
+                var content = (UIElement) AssociatedObject.Content;
+                AssociatedObject.Content = null;
+
+                Border = new Border
+                            {
+                                Child =  content,
+                                BorderBrush = new SolidColorBrush(Colors.Black)
+                            };
+                
+                AssociatedObject.Content = Border;
+            }
             if (AutoSizeToContent)
                 AssociatedObject.Loaded += (s, e) =>
                                                {
@@ -132,14 +162,17 @@ namespace MahApps.Metro.Behaviours
                     break;
                 case Constants.WM_NCPAINT:
                     {
-                        if (Environment.OSVersion.Version.Major >= 6)
+                        if (Environment.OSVersion.Version.Major >= 6 && DwmIsCompositionEnabled())
                         {
                             var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
                             DwmExtendFrameIntoClientArea(m_hwnd, ref m);
+                            if (Border != null)
+                                Border.BorderThickness = new Thickness(0);
                         }
                         else
                         {
-                            //render fake border?
+                            if (Border != null)
+                                Border.BorderThickness = new Thickness(1);
                         }
                         handled = true;
                     }
@@ -161,6 +194,7 @@ namespace MahApps.Metro.Behaviours
                     handled = false;
                     break;
             }
+
 
             return returnval;
         }
