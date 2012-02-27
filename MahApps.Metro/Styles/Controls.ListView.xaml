@@ -29,7 +29,6 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Margin" Value="0,0,0,0" />
-        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
         <Setter Property="Template">
             <Setter.Value>
