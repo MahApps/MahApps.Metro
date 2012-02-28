@@ -78,16 +78,15 @@ namespace MahApps.Metro.Controls
                 && e.LeftButton == MouseButtonState.Pressed && WindowState == WindowState.Maximized)
             {
                 // Calcualting correct left coordinate for multi-screen system.
-                double mouseX = PointToScreen(Mouse.GetPosition(this)).X;
+                Point mouseAbsolute = PointToScreen(Mouse.GetPosition(this));
                 double width = RestoreBounds.Width;
-                double left = mouseX - width / 2;
+                double left = mouseAbsolute.X - width / 2;
 
                 // Aligning window's position to fit the screen.
                 double virtualScreenWidth = SystemParameters.VirtualScreenWidth;
-                left = left < 0 ? 0 : left;
                 left = left + width > virtualScreenWidth ? virtualScreenWidth - width : left;
 
-                Top = 0;
+                Top = mouseAbsolute.Y - e.MouseDevice.GetPosition(this).Y;
                 Left = left;
 
                 // Restore window to normal state.
