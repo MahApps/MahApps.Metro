@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
-                    xmlns:conv="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:conv="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
@@ -553,12 +554,13 @@
                                     FontFamily="{DynamicResource HeaderFontFamily}"
                                     Foreground="White"/>
                             </Grid>
-                            <Controls:WindowCommands 
+                            <ContentPresenter 
+                                Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 
                                 x:Name="PART_WindowCommands"
                                 Panel.ZIndex="1"
                                 Grid.RowSpan="2"
                                 VerticalAlignment="Top"
-                                HorizontalAlignment="Right"/>
+                                HorizontalAlignment="Right" />
                             <ContentPresenter Grid.Row="1"/>
                         </Grid>
                     </Controls:MetroContentControl>
@@ -596,5 +598,119 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Template" Value="{StaticResource WindowTemplateKey}"/>
+    </Style>
+
+    <Style TargetType="{x:Type Controls:WindowCommands}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Controls:WindowCommands">
+                    <ControlTemplate.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                            </ResourceDictionary.MergedDictionaries>
+                            <!--<SolidColorBrush x:Key="BlackBrush" Color="White" />-->
+                            <sys:String x:Key="WindowCommandsMinimiseToolTip">Minimise</sys:String>
+                            <sys:String x:Key="WindowCommandsMaximiseToolTip">Maximise</sys:String>
+                            <sys:String x:Key="WindowCommandsRestoreToolTip">Restore</sys:String>
+                            <sys:String x:Key="WindowCommandsCloseToolTip">Close</sys:String>
+                        </ResourceDictionary>
+                    </ControlTemplate.Resources>
+                    <StackPanel Height="20" Margin="0,5,5,0" Orientation="Horizontal">
+                        <ItemsControl ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Background" Value="#02FFFFFF" />
+                                    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    <Setter Property="Padding" Value="1" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                    <Grid Background="{TemplateBinding Background}">
+                                                    <ContentPresenter x:Name="contentPresenter"
+                                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                            RecognizesAccessKey="True"
+                                                            Opacity="0.75"
+                                                                Margin="11,1,11,1" />
+                                                    
+                                                    <Rectangle x:Name="border" 
+                                                               SnapsToDevicePixels="True"
+                                                               IsHitTestVisible="False" 
+                                                               Opacity="0.25"
+                                                               Width="0" Height="15" VerticalAlignment="Stretch" HorizontalAlignment="Right" 
+                                                               Fill="{DynamicResource BlackBrush}" Margin="10,0,0,0" />
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                        <Setter TargetName="contentPresenter" Property="Opacity" Value=".5" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsKeyboardFocused" Value="true" />
+                                                    <Trigger Property="ToggleButton.IsChecked" Value="true" />
+                                                    <Trigger Property="IsEnabled" Value="false">
+                                                        <Setter Property="Foreground" Value="#ADADAD" />
+                                                    </Trigger>
+                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
+                                                        <Setter TargetName="border" Property="Rectangle.Width" Value="1"/>
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Rectangle Width="50" Height="50" Fill="Beige" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Button x:Name="PART_Min"
+                            Margin="2,0,0,0"
+                            Width="20"
+                            Height="20"
+                            Style="{DynamicResource ChromelessButtonStyle}"
+                            Padding="0"
+                            ToolTip="{DynamicResource WindowCommandsMinimiseToolTip}"
+                            FontFamily="Marlett"
+                            Foreground="{DynamicResource BlackBrush}"
+                            Opacity="0.8" Content="0" />
+
+                        <Button x:Name="PART_Max"
+                            Margin="2,0,0,0"
+                            Width="20"
+                            Height="20"
+                            Style="{DynamicResource ChromelessButtonStyle}"
+                            Padding="0"
+                            Foreground="{DynamicResource BlackBrush}"
+                            ToolTip="{DynamicResource WindowCommandsMaximiseToolTip}"
+                            Opacity="0.8" FontFamily="Marlett"
+                            Content="1" />
+
+                        <Button x:Name="PART_Close"
+                            Margin="2,0,0,0"
+                            Width="20"
+                            Height="20"
+                            Style="{DynamicResource ChromelessButtonStyle}"
+                            ToolTip="{DynamicResource WindowCommandsCloseToolTip}"
+                            Foreground="{DynamicResource BlackBrush}"
+                            Opacity="0.8" FontFamily="Marlett"
+                            Content="r" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

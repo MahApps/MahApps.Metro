@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
@@ -12,13 +13,12 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-
-        private WindowCommands windowCommands;
-
         static MetroWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
         }
+
+        public WindowCommands WindowCommands { get; set; }
 
         public bool ShowIconOnTitleBar
         {
@@ -36,8 +36,10 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
+            if (WindowCommands == null)
+                WindowCommands = new WindowCommands();
+
             var titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
-            windowCommands = GetTemplateChild(PART_WindowCommands) as WindowCommands;
 
             if (titleBar != null)
             {
@@ -51,11 +53,11 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected override void OnStateChanged(System.EventArgs e)
+        protected override void OnStateChanged(EventArgs e)
         {
-            if (windowCommands != null)
+            if (WindowCommands != null)
             {
-                windowCommands.RefreshMaximiseIconState();
+                WindowCommands.RefreshMaximiseIconState();
             }
 
             base.OnStateChanged(e);

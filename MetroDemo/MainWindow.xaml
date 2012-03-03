@@ -26,11 +26,36 @@
         </ResourceDictionary>
     </Window.Resources>
 
+<Controls:MetroWindow.WindowCommands>
+    <Controls:WindowCommands>
+        <Button Content="wat" />
+    </Controls:WindowCommands>
+</Controls:MetroWindow.WindowCommands>
+        
     <Controls:MetroContentControl>
         <Grid>
             <TabControl>
+                <TabItem>
+                    <!--<Controls:WindowCommands>
+                        <Button Content="1" />
+                        <Button Content="settings" />
+                        <Button>
+                            <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="20"
+                            			Height="20">
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill"
+                            					Visual="{StaticResource appbar_cupcake}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                                <TextBlock Text="  deploy cupcake" />
+                            </StackPanel>
+                        </Button>
+                    </Controls:WindowCommands>-->
+                </TabItem>
                 <TabItem Header="_First set of controls">
                         <Grid>
+
                             <Grid Margin="0,0,226.999,8">
                                 <Button Content="Right Click Me"
                                         Click="ButtonClick"
@@ -199,7 +224,7 @@
                             			Height="20">
                             			<Rectangle.Fill>
                             				<VisualBrush Stretch="Fill"
-                            					Visual="{StaticResource appbar_cupcake}" />
+                            					Visual="{StaticResource appbar_sound_3}" />
                             			</Rectangle.Fill>
                             		</Rectangle>
 
@@ -219,6 +244,7 @@
                                 HorizontalAlignment="Left"
                                 Width="261.667"
                                 Value="5"
+                                IsEnabled="False"
                                 SmallChange="0.5" />
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                         <TextBlock Text="ComboBox Binding scenario" />
