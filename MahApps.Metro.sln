@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro", "MahApps.Me
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo", "MetroDemo\MetroDemo.csproj", "{56E8080F-FFEB-47CD-ADB9-92245F92565B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Resources", "MahApps.Metro.Resources\MahApps.Metro.Resources.csproj", "{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,16 @@ Global
 		{56E8080F-FFEB-47CD-ADB9-92245F92565B}.Release|Mixed Platforms.Build.0 = Release|x86
 		{56E8080F-FFEB-47CD-ADB9-92245F92565B}.Release|x86.ActiveCfg = Release|x86
 		{56E8080F-FFEB-47CD-ADB9-92245F92565B}.Release|x86.Build.0 = Release|x86
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

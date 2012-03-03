@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <version>0.1.0.0</version>
+    <authors>Paul Jenkins</authors>
+    <owners>Paul Jenkins</owners>
+    <id>MahApps.Metro.Resources</id>
+    <title>MahApps.Metro.Resources</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>"loose" file XAML Resource for Metro UI's</description>
+  </metadata>
+  <files>
+    <file src="Icons\MergedResources.xaml" target="content\Resources\MergedResources.xaml" />
+  </files>
+</package>
