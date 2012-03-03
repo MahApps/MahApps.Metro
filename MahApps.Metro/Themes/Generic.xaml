@@ -609,7 +609,6 @@
                             <ResourceDictionary.MergedDictionaries>
                                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                             </ResourceDictionary.MergedDictionaries>
-                            <!--<SolidColorBrush x:Key="BlackBrush" Color="White" />-->
                             <sys:String x:Key="WindowCommandsMinimiseToolTip">Minimise</sys:String>
                             <sys:String x:Key="WindowCommandsMaximiseToolTip">Maximise</sys:String>
                             <sys:String x:Key="WindowCommandsRestoreToolTip">Restore</sys:String>
@@ -627,7 +626,6 @@
                             <ItemsControl.ItemContainerStyle>
                                 <Style TargetType="{x:Type Button}">
                                     <Setter Property="Background" Value="#02FFFFFF" />
-                                    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
                                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                                     <Setter Property="VerticalContentAlignment" Value="Center" />
                                     <Setter Property="Padding" Value="1" />
@@ -640,15 +638,14 @@
                                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                             RecognizesAccessKey="True"
-                                                            Opacity="0.75"
-                                                                Margin="11,1,11,1" />
+                                                            Opacity="0.75" Margin="11,1,11,1" />
                                                     
                                                     <Rectangle x:Name="border" 
                                                                SnapsToDevicePixels="True"
                                                                IsHitTestVisible="False" 
                                                                Opacity="0.25"
                                                                Width="0" Height="15" VerticalAlignment="Stretch" HorizontalAlignment="Right" 
-                                                               Fill="{DynamicResource BlackBrush}" Margin="10,0,0,0" />
+                                                               Fill="{TemplateBinding Foreground}" Margin="10,0,0,0" />
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="True">
@@ -669,13 +666,13 @@
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" Value="True">
+                                            <Setter Property="Foreground" Value="White" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
                                 </Style>
                             </ItemsControl.ItemContainerStyle>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Rectangle Width="50" Height="50" Fill="Beige" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
                         </ItemsControl>
                         <Button x:Name="PART_Min"
                             Margin="2,0,0,0"
@@ -685,7 +682,7 @@
                             Padding="0"
                             ToolTip="{DynamicResource WindowCommandsMinimiseToolTip}"
                             FontFamily="Marlett"
-                            Foreground="{DynamicResource BlackBrush}"
+                            Foreground="{TemplateBinding Foreground}"
                             Opacity="0.8" Content="0" />
 
                         <Button x:Name="PART_Max"
@@ -694,7 +691,7 @@
                             Height="20"
                             Style="{DynamicResource ChromelessButtonStyle}"
                             Padding="0"
-                            Foreground="{DynamicResource BlackBrush}"
+                            Foreground="{TemplateBinding Foreground}"
                             ToolTip="{DynamicResource WindowCommandsMaximiseToolTip}"
                             Opacity="0.8" FontFamily="Marlett"
                             Content="1" />
@@ -705,12 +702,18 @@
                             Height="20"
                             Style="{DynamicResource ChromelessButtonStyle}"
                             ToolTip="{DynamicResource WindowCommandsCloseToolTip}"
-                            Foreground="{DynamicResource BlackBrush}"
+                            Foreground="{TemplateBinding Foreground}"
                             Opacity="0.8" FontFamily="Marlett"
                             Content="r" />
                     </StackPanel>
+                   
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" Value="True">
+                <Setter Property="Foreground" Value="White" />
+            </DataTrigger>           
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

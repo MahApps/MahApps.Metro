@@ -9,7 +9,8 @@
         Height="439"
         Width="585"
         Icon="mahapps.metro.logo2.ico"
-        ShowIconOnTitleBar="false"
+        ShowTitleBar="True"
+        ShowIconOnTitleBar="true"
         d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <Window.Resources>
@@ -35,24 +36,6 @@
     <Controls:MetroContentControl>
         <Grid>
             <TabControl>
-                <TabItem>
-                    <!--<Controls:WindowCommands>
-                        <Button Content="1" />
-                        <Button Content="settings" />
-                        <Button>
-                            <StackPanel Orientation="Horizontal">
-                            <Rectangle Width="20"
-                            			Height="20">
-                                <Rectangle.Fill>
-                                    <VisualBrush Stretch="Fill"
-                            					Visual="{StaticResource appbar_cupcake}" />
-                                </Rectangle.Fill>
-                            </Rectangle>
-                                <TextBlock Text="  deploy cupcake" />
-                            </StackPanel>
-                        </Button>
-                    </Controls:WindowCommands>-->
-                </TabItem>
                 <TabItem Header="_First set of controls">
                         <Grid>
 
