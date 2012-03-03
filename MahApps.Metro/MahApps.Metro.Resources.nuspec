@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <version>0.1.0.0</version>
+    <authors>Paul Jenkins</authors>
+    <owners>Paul Jenkins</owners>
+    <projectUrl>https://github.com/mahapps/mahapps.metro</projectUrl>
+    <iconUrl>http://c713056.r56.cf2.rackcdn.com/mahapps.metro.logo2.png</iconUrl>
+    <dependencies>
+      <dependency id="MahApps.Metro" version="0.5" />
+    </dependencies>
+    <id>MahApps.Metro.Resources</id>
+    <title>MahApps.Metro.Resources</title>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>"loose" file XAML Resource for Metro UI's</description>
+  </metadata>
+  <files>
+    <file src="..\MahApps.Metro.Resources\Entypo-license.txt" target="content\Resources\Entypo-license.txt" />
+    <file src="..\MahApps.Metro.Resources\Entypo.ttf" target="content\Resources\Entypo.ttf" />
+    <file src="..\MahApps.Metro.Resources\Icons.xaml" target="content\Resources\Icons.xaml" />
+  </files>
+</package>
