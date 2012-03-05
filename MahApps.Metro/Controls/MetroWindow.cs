@@ -41,7 +41,7 @@ namespace MahApps.Metro.Controls
 
             var titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
 
-            if (titleBar != null)
+            if (ShowTitleBar && titleBar != null)
             {
                 titleBar.MouseDown += TitleBarMouseDown;
                 titleBar.MouseMove += TitleBarMouseMove;
