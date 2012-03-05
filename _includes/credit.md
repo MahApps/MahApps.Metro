@@ -1,1 +1,1 @@
-##Credit
+<h2 class="accent">Credit</h2>

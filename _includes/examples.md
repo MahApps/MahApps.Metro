@@ -1,4 +1,4 @@
-##Examples
+<h2 class="accent">Examples</h2>
 
 * [Windows Phone Power Tools](http://wptools.codeplex.com/)
 * Silverlight Spy (["vNext"](http://yfrog.com/kka0fp))

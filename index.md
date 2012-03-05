@@ -29,6 +29,8 @@ date: 2012-02-26 10:05:46 +11:00
 
 {% include gettingstarted.md %}	
 
+{% include controls.md %}	
+
 {% include resources.md %}
 
 {% include changelog.md %}	

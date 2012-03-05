@@ -12,5 +12,8 @@ pre {
 overflow: auto;
 }
 pre code { 
-	background:none;border:0;;padding-left:0px;padding-right:0px
+	background:none;border:0;padding-left:0px;padding-right:0px;
 }
+
+h3 { color : #E73347; }
+h4 { color: #036695; }
