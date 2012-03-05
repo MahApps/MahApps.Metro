@@ -138,10 +138,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Icons\MergedResources.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Styles\Accents\BaseDark.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

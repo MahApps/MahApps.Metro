@@ -20,7 +20,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Icons/MergedResources.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -286,10 +286,8 @@
                         <StackPanel Grid.Row="2"
                                     Grid.Column="1"
                                     Orientation="Horizontal">
-                            <Button Content="Ok"
-                                    Style="{StaticResource OkButton}" />
-                            <Button Content="Cancel"
-                                    Style="{StaticResource CancelButton}" />
+                            <!--<Button Content="Ok" Style="{StaticResource OkButton}" />
+                            <Button Content="Cancel" Style="{StaticResource CancelButton}" />-->
                         </StackPanel>
                     </Grid>
                 </TabItem>
