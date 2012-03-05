@@ -1,4 +1,4 @@
-<h2 class="accent">Getting Started</h2>
+##Getting Started
 
 ###Installing MahApps.Metro
 You can install MahApps.Metro via Nuget using the GUI (right click on your project, Manage Nuget References, search for 'MahApps.Metro') or via the console `PM> MahApps.Metro`

@@ -1,4 +1,4 @@
-<h2 class="accent">Controls</h2>
+##Controls
 Most of the controls are demonstrated in the sample application which you can pull down from [source](https://github.com/mahapps/mahapps.metro/). 
 
 There are three categories of controls in MahApps.Metro

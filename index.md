@@ -9,17 +9,17 @@ date: 2012-02-26 10:05:46 +11:00
 #MahApps.Metro Documentation
 
 ###Table of Contents###
-1. Foreword (Metro isn't for everything)
-2. Credit
-3. Examples
-4. Getting started
-5. Controls  
-  1. test  
-  2. test   
-6. Resources
-  1. Icons
-  2. Metro web theme (Metro.css)
-7. Changelog
+1. [Foreword (Metro isn't for everything)](#foreword)
+2. [Credit](#credit)
+3. [Examples](#examples)
+4. [Getting started](#getting_started)
+5. [Controls](#controls)
+  1. [Buttons](#buttons)
+  2. <a href="#">test   </a>
+6. [Resources](#resources)
+  1. <a href="#">Icons</a>
+  2. <a href="#">Metro web theme (Metro.css)</a>
+7. [Changelog](#changelog)
 
 {% include foreword.md %}	
 
