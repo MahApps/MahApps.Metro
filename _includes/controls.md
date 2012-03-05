@@ -10,12 +10,12 @@ There are three categories of controls in MahApps.Metro
 ###Buttons
 ####Standard Button
 This just replaces the standard button when you drop in the library, nothing fancy to activate it    
-![](images/08_regularbutton.png)
+![](images/08_RegularButton.png)
 
 ####MetroCircleButton  
 "Standard" circle button, designed for icons.  
 Add the following to a button to apply this style: `Style="{DynamicResource MetroCircleButtonStyle}"`  
-![](images/07_circlebuttons.png)
+![](images/07_CircleButtons.png)
 
 ####AppBarButton
 Inspired by Windows Phone 7's app bar buttons which are a circle button with text underneath.  
