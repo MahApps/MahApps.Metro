@@ -480,8 +480,6 @@
                 Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Background"
                 Value="{DynamicResource CheckBoxBackgroundBrush}" />
-        <Setter Property="MinWidth"
-                Value="100" />
         <Setter Property="Foreground"
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="HorizontalContentAlignment"
