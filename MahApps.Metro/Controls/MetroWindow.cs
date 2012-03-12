@@ -13,6 +13,9 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
         static MetroWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
@@ -32,6 +35,18 @@ namespace MahApps.Metro.Controls
             set { SetValue(ShowTitleBarProperty, value); }
         }
 
+        public bool ShowMinButton
+        {
+            get { return (bool)GetValue(ShowMinButtonProperty); }
+            set { SetValue(ShowMinButtonProperty, value); }
+        }
+
+        public bool ShowMaxRestoreButton
+        {
+            get { return (bool)GetValue(ShowMaxRestoreButtonProperty); }
+            set { SetValue(ShowMaxRestoreButtonProperty, value); }
+        }
+        
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();

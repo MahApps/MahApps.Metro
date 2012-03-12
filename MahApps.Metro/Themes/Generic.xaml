@@ -681,6 +681,7 @@
                             Style="{DynamicResource ChromelessButtonStyle}"
                             Padding="0"
                             ToolTip="{DynamicResource WindowCommandsMinimiseToolTip}"
+                            Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
                             FontFamily="Marlett"
                             Foreground="{TemplateBinding Foreground}"
                             Opacity="0.8" Content="0" />
@@ -692,6 +693,7 @@
                             Style="{DynamicResource ChromelessButtonStyle}"
                             Padding="0"
                             Foreground="{TemplateBinding Foreground}"
+                            Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
                             ToolTip="{DynamicResource WindowCommandsMaximiseToolTip}"
                             Opacity="0.8" FontFamily="Marlett"
                             Content="1" />
@@ -713,7 +715,7 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" Value="True">
                 <Setter Property="Foreground" Value="White" />
-            </DataTrigger>           
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>

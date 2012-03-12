@@ -81,16 +81,26 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
             AssociatedObject.WindowStyle = WindowStyle.None;
-            AssociatedObject.ResizeMode = ResizeWithGrip ? ResizeMode.CanResizeWithGrip : ResizeMode.CanResize;
 
             if (AssociatedObject is MetroWindow)
             {
+                var window = ((MetroWindow) AssociatedObject);
                 //MetroWindow already has a border we can use
                 AssociatedObject.Loaded += (s, e) =>
                                                {
-                                                   var ancestors = ((MetroWindow)AssociatedObject).GetPart<Border>("PART_Border");
+                                                   var ancestors = window.GetPart<Border>("PART_Border");
                                                    Border = ancestors;
+
                                                };
+
+                if (AssociatedObject.ResizeMode == ResizeMode.NoResize)
+                {
+                    window.ShowMaxRestoreButton = false;
+                    window.ShowMinButton = false;
+                    window.MaxWidth = window.Width;
+                    window.MaxHeight = window.Height;
+                    ResizeWithGrip = false;
+                }
             }
             else { 
                 //Other windows may not, easiest to just inject one!
@@ -105,6 +115,10 @@ namespace MahApps.Metro.Behaviours
                 
                 AssociatedObject.Content = Border;
             }
+
+            AssociatedObject.ResizeMode = ResizeWithGrip ? ResizeMode.CanResizeWithGrip : ResizeMode.CanResize;
+
+
             if (AutoSizeToContent)
                 AssociatedObject.Loaded += (s, e) =>
                                                {
@@ -114,6 +128,8 @@ namespace MahApps.Metro.Behaviours
                                                                                         ? SizeToContent.WidthAndHeight
                                                                                         : SizeToContent.Manual;
                                                };
+
+
 
             base.OnAttached();
         }
