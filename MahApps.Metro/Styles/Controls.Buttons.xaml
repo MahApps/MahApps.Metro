@@ -39,7 +39,7 @@
                                           Margin="{TemplateBinding Padding}"
                                           RecognizesAccessKey="True"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" x:Name="icon"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed"
@@ -69,6 +69,9 @@
                                  Value="true" />
                         <Trigger Property="IsEnabled"
                                  Value="false">
+                            <Setter TargetName="icon"
+                                    Property="Opacity"
+                                    Value=".5" />
                             <Setter Property="Foreground"
                                     Value="#ADADAD" />
                         </Trigger>
