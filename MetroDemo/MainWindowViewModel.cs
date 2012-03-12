@@ -49,12 +49,12 @@ namespace MetroDemo
                 this._dispatcher.BeginInvoke(
                     new Action(
                         () =>
+                        {
+                            foreach (var artist in x.Artists.artist)
                             {
-                                foreach (var artist in x.Artists.artist)
-                                {
-                                    this.Artists.Add(artist);
-                                }
-                            }));
+                                this.Artists.Add(artist);
+                            }
+                        }));
             }
             catch (Exception ex)
             {

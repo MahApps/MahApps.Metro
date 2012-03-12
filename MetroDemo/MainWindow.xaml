@@ -1,10 +1,10 @@
 ﻿<Controls:MetroWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" xmlns:MetroDemo="clr-namespace:MetroDemo"
-                      mc:Ignorable="d" x:Class="MetroDemo.MainWindow" Title="MahApps.Metro.Demo" Height="439" Width="585"
-                      Icon="mahapps.metro.logo2.ico" ShowTitleBar="True" ShowIconOnTitleBar="true"
-                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:MetroDemo="clr-namespace:MetroDemo" mc:Ignorable="d" x:Class="MetroDemo.MainWindow" Title="MahApps.Metro.Demo"
+    Height="439" Width="585" Icon="mahapps.metro.logo2.ico" ShowTitleBar="True" ShowIconOnTitleBar="true"
+    d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
   <Window.Resources>
     <ResourceDictionary>
@@ -12,12 +12,10 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-        <ResourceDictionary
-Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-        <ResourceDictionary
-Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Window.Resources>
@@ -36,8 +34,8 @@ Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.
           <Grid>
 
             <Grid Margin="0,0,226.999,8">
-              <Button Content="Right Click Me" Click="ButtonClick" Height="30"
-                      ToolTip="This is a tooltip" Margin="88.694,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154.002">
+              <Button Content="Right Click Me" Click="ButtonClick" Height="30" ToolTip="This is a tooltip"
+                  Margin="88.694,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154.002">
                 <Button.ContextMenu>
                   <ContextMenu>
                     <MenuItem Header="Light Red" Click="MiLightRed" />
@@ -52,53 +50,46 @@ Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.
                   </ContextMenu>
                 </Button.ContextMenu>
               </Button>
-              <PasswordBox Margin="88.695,66.96,0,0" Height="30" VerticalAlignment="Top"
-                           HorizontalAlignment="Left" Width="154.001" />
-              <CheckBox Content="CheckBox" Margin="88.695,100.96,0,0" VerticalAlignment="Top"
-                        HorizontalAlignment="Left" />
-              <RadioButton Content="Radio Button 1" Margin="88.291,134.92,0,0" VerticalAlignment="Top"
-                           GroupName="test" HorizontalAlignment="Left" />
+              <PasswordBox Margin="88.695,66.96,0,0" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left"
+                  Width="154.001" />
+              <CheckBox Content="CheckBox" Margin="88.695,100.96,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+              <RadioButton Content="Radio Button 1" Margin="88.291,134.92,0,0" VerticalAlignment="Top" GroupName="test"
+                  HorizontalAlignment="Left" />
               <TextBox Text="This is a textbox" Margin="88.694,36.96,0,0" VerticalAlignment="Top"
-                       HorizontalAlignment="Left" Width="154.002" />
-              <ComboBox Margin="88.292,176.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"
-                        SelectedIndex="0">
+                  HorizontalAlignment="Left" Width="154.002" />
+              <ComboBox Margin="88.292,176.84,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" SelectedIndex="0">
                 <ComboBoxItem Content="ComboBoxItem" />
                 <ComboBoxItem Content="ComboBoxItem" />
                 <ComboBoxItem Content="ComboBoxItem" />
               </ComboBox>
-              <ProgressBar x:Name="pb" Value="{Binding Value, ElementName=slider1}"
-                           IsIndeterminate="False" Margin="88.696,216.8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" />
-              <Label Content="Button" VerticalAlignment="Top" Margin="39.07,0,0,0"
-                     HorizontalAlignment="Left" />
+              <ProgressBar x:Name="pb" Value="{Binding Value, ElementName=slider1}" IsIndeterminate="False"
+                  Margin="88.696,216.8,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="154" />
+              <Label Content="Button" VerticalAlignment="Top" Margin="39.07,0,0,0" HorizontalAlignment="Left" />
               <Label Content="Passwordbox" Margin="5.147,71,0,0" RenderTransformOrigin="0.535,-0.381"
-                     VerticalAlignment="Top" HorizontalAlignment="Left" />
+                  VerticalAlignment="Top" HorizontalAlignment="Left" />
               <Label Content="Checkbox" Margin="23.1,96.96,0,0" HorizontalAlignment="Left" Height="25.96"
-                     VerticalAlignment="Top" />
+                  VerticalAlignment="Top" />
               <Label Content="Radio Buttons" VerticalAlignment="Top" Margin="0.404,126.92,0,0"
-                     HorizontalAlignment="Left" />
-              <Label Content="TextBox" VerticalAlignment="Top" Margin="33.14,37,0,0"
-                     HorizontalAlignment="Left" />
-              <Label Content="Combobox" VerticalAlignment="Top" Margin="16.224,170.84,0,0"
-                     HorizontalAlignment="Left" />
-              <RadioButton Content="Radio Button 2" Margin="88.695,155.88,0,0" VerticalAlignment="Top"
-                           GroupName="test" HorizontalAlignment="Left" />
-              <Label Content="Progress Bar" VerticalAlignment="Top" Margin="8.216,206.8,0,0"
-                     HorizontalAlignment="Left" d:LayoutOverrides="HorizontalAlignment" />
+                  HorizontalAlignment="Left" />
+              <Label Content="TextBox" VerticalAlignment="Top" Margin="33.14,37,0,0" HorizontalAlignment="Left" />
+              <Label Content="Combobox" VerticalAlignment="Top" Margin="16.224,170.84,0,0" HorizontalAlignment="Left" />
+              <RadioButton Content="Radio Button 2" Margin="88.695,155.88,0,0" VerticalAlignment="Top" GroupName="test"
+                  HorizontalAlignment="Left" />
+              <Label Content="Progress Bar" VerticalAlignment="Top" Margin="8.216,206.8,0,0" HorizontalAlignment="Left"
+                  d:LayoutOverrides="HorizontalAlignment" />
               <Button Content="Launch Panorama" Click="BtnPanoramaClick" VerticalAlignment="Top"
-                      Margin="88.696,234,89.305,0" />
+                  Margin="88.696,234,89.305,0" />
               <Button Content="Button" VerticalAlignment="Bottom" Margin="88.696,0,91.305,8"
-                      Style="{DynamicResource SquareButtonStyle}" />
+                  Style="{DynamicResource SquareButtonStyle}" />
               <ToggleButton Content="TOGGLE BUTTON" Margin="88,267,91.305,0" VerticalAlignment="Top" />
             </Grid>
             <WrapPanel Margin="332.001,0,0,8">
-              <Controls:AppBarButton VerticalAlignment="Top"
-                                     MetroImageSource="{StaticResource appbar_barcode}" Foreground="{DynamicResource BlackBrush}" Content="scan" />
+              <Controls:AppBarButton VerticalAlignment="Top" MetroImageSource="{StaticResource appbar_barcode}"
+                  Foreground="{DynamicResource BlackBrush}" Content="scan" />
 
-              <Controls:AppBarButton VerticalAlignment="Top"
-                                     MetroImageSource="{StaticResource appbar_barcode}" Foreground="{DynamicResource BlackBrush}" Content="scan" Width="48"
-                                     Height="48" />
-              <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="55" Width="55"
-                      VerticalAlignment="Top">
+              <Controls:AppBarButton VerticalAlignment="Top" MetroImageSource="{StaticResource appbar_barcode}"
+                  Foreground="{DynamicResource BlackBrush}" Content="scan" Width="48" Height="48" />
+              <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="55" Width="55" VerticalAlignment="Top">
                 <Rectangle Width="20" Height="20">
                   <Rectangle.Fill>
                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
@@ -106,8 +97,7 @@ Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.
                 </Rectangle>
 
               </Button>
-              <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="55" Width="55"
-                      VerticalAlignment="Top">
+              <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="55" Width="55" VerticalAlignment="Top">
                 <Rectangle Width="20" Height="20">
                   <Rectangle.Fill>
                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_barcode}" />
@@ -115,8 +105,7 @@ Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.
                 </Rectangle>
 
               </Button>
-              <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="55" Width="55"
-                      VerticalAlignment="Top">
+              <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="55" Width="55" VerticalAlignment="Top">
                 <Rectangle Width="28" Height="17.25">
                   <Rectangle.Fill>
                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cloud_download}" />
@@ -124,8 +113,7 @@ Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.
                 </Rectangle>
 
               </Button>
-              <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="55" Width="55"
-                      VerticalAlignment="Top">
+              <Button Style="{DynamicResource MetroCircleButtonStyle}" Height="55" Width="55" VerticalAlignment="Top">
                 <Rectangle Width="20" Height="20">
                   <Rectangle.Fill>
                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_sound_3}" />
@@ -134,7 +122,7 @@ Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.
 
               </Button>
               <Button Style="{DynamicResource BackButton}" Height="32" Width="32" VerticalAlignment="Top"
-                      RenderTransformOrigin="0.5,0.5">
+                  RenderTransformOrigin="0.5,0.5">
                 <Button.RenderTransform>
                   <TransformGroup>
                     <ScaleTransform ScaleY="-1" />
@@ -151,21 +139,19 @@ Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.
         </TabItem>
         <TabItem Header="_more controls">
           <StackPanel>
-            <Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}" Height="5" />
-            <Controls:ToggleSwitch HorizontalAlignment="Left" Margin="0,10,0,0" />
-            <Slider Margin="0,10,0,0" HorizontalAlignment="Left" Width="261.667" Value="5"
-                    IsEnabled="False" SmallChange="0.5" />
+            <Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}" />
+            <Controls:ToggleSwitch HorizontalAlignment="Left" Margin="0,10,0,0"/>
+            <Slider Margin="0,10,0,0" HorizontalAlignment="Left" Width="261.667" Value="5" IsEnabled="False"
+                SmallChange="0.5" />
             <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
             <TextBlock Text="ComboBox Binding scenario" />
             <ComboBox ItemsSource="{Binding Artists}" DisplayMemberPath="name" />
 
             <TextBlock Text="Items specified in xaml scenario" />
             <ComboBox>
-              <ComboBox.Items>
-                <ComboBoxItem Content="Test" />
-                <ComboBoxItem Content="Test 2" />
-                <ComboBoxItem Content="Test 3" />
-              </ComboBox.Items>
+              <ComboBoxItem Content="Test" />
+              <ComboBoxItem Content="Test 2" />
+              <ComboBoxItem Content="Test 3" />
             </ComboBox>
             <Controls:Tile Title="My _Cupcakes" Count="23">
               <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
@@ -176,8 +162,7 @@ Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.
           <TabItem.Resources>
             <ResourceDictionary>
               <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary
-Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
               </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
           </TabItem.Resources>

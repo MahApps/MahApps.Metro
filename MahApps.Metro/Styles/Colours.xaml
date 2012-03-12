@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <!-- from the cosmopolitan theme pack -->
   <!-- *************COLORS START************* -->
 
@@ -52,7 +52,6 @@
   <Color x:Key="TransparentLightLightColor">#A5FFFFFF</Color>
   <!--85%-->
   <Color x:Key="TransparentLightColor">#D8FFFFFF</Color>
-
 
   <!--DARK COLOR TRANSPARENCIES-->
   <!--0%-->
@@ -211,7 +210,6 @@
 
   <SolidColorBrush x:Key="SliderTrackBrush" Color="{DynamicResource Gray6}" />
 
-
   <SolidColorBrush x:Key="ComboBoxPopupBrush" Color="{DynamicResource Gray9}" />
   <LinearGradientBrush x:Key="BrandingBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5">
     <GradientStop Color="{DynamicResource HighlightDarkColor}" Offset="0" />
@@ -222,7 +220,6 @@
 
   <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource WhiteColor}" />
   <SolidColorBrush x:Key="SeperatorBrush" Color="#FFC4C4C5" />
-
 
   <!-- CONTROL VALIDATION BRUSHES -->
   <SolidColorBrush x:Key="ControlsValidationBrush" Color="{DynamicResource ControlsValidationColor}" />
@@ -257,10 +254,7 @@
 
   <!-- Brushes Stop -->
 
-
   <!-- Brushes End -->
-
-
 
   <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
     <GradientStop Color="#F3F3F3" Offset="0" />
@@ -269,8 +263,7 @@
     <GradientStop Color="#CDCDCD" Offset="1" />
   </LinearGradientBrush>
   <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070" />
-    
-    
+
   <!-- WPF default colours -->
   <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{DynamicResource WhiteColor}" />
   <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{DynamicResource BlackColor}" />

@@ -360,7 +360,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <typeparam name="T">The event type.</typeparam>
         /// <returns></returns>
-        public delegate T GetEventArgs<out T>() where T : EventArgs;
+        public delegate T GetEventArgs<T>() where T : EventArgs;
 
         #endregion
 
@@ -743,8 +743,7 @@ namespace MahApps.Metro.Controls
         /// <param name="e">The event information.</param>
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
         {
-            this._track.Clip = new RectangleGeometry
-                { Rect = new Rect(0, 0, this._track.ActualWidth, this._track.ActualHeight) };
+            this._track.Clip = new RectangleGeometry { Rect = new Rect(0, 0, this._track.ActualWidth, this._track.ActualHeight) };
             this._checkedTranslation = this._track.ActualWidth - this._thumb.ActualWidth - this._thumb.Margin.Left
                                        - this._thumb.Margin.Right;
         }
