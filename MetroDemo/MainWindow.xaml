@@ -29,14 +29,15 @@
 
 <Controls:MetroWindow.WindowCommands>
     <Controls:WindowCommands>
-        <Button Content="wat" />
+            <Button FontSize="10" Content="ABOUT" />
+            <Button FontSize="10" Content="SETTINGS" />
     </Controls:WindowCommands>
 </Controls:MetroWindow.WindowCommands>
         
     <Controls:MetroContentControl>
         <Grid>
             <TabControl>
-                <TabItem Header="_First set of controls">
+                <TabItem Header="controls">
                         <Grid>
 
                             <Grid Margin="0,0,226.999,8">
@@ -231,7 +232,7 @@
                             <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                         </Grid>
                 </TabItem>
-                <TabItem Header="_More Controls Here!">
+                <TabItem Header="_more controls">
                     <StackPanel>
                         <Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}" Height="5" />
                         <Controls:ToggleSwitch HorizontalAlignment="Left"
@@ -261,7 +262,7 @@
                         </Controls:Tile>
                     </StackPanel>
                 </TabItem>
-                <TabItem Header="More again">
+                <TabItem Header="_listview example">
                     <TabItem.Resources>
                         <ResourceDictionary>
                             <ResourceDictionary.MergedDictionaries>
