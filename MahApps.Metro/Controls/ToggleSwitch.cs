@@ -110,7 +110,7 @@ namespace MahApps.Metro.Controls
         /// <param name="e">The event information.</param>
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ToggleSwitch toggleSwitch = (ToggleSwitch)d;
+            var toggleSwitch = (ToggleSwitch)d;
             if (toggleSwitch._toggleButton != null)
             {
                 toggleSwitch._toggleButton.IsChecked = (bool?)e.NewValue;
@@ -172,7 +172,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private void SetDefaultContent()
         {
-            Binding binding = new Binding("IsChecked") { Source = this, Converter = new OffOnConverter() };
+            var binding = new Binding("IsChecked") { Source = this, Converter = new OffOnConverter() };
             SetBinding(ContentProperty, binding);
         }
 
@@ -182,14 +182,7 @@ namespace MahApps.Metro.Controls
         /// <param name="useTransitions">Indicates whether to use animation transitions.</param>
         private void ChangeVisualState(bool useTransitions)
         {
-            if (IsEnabled)
-            {
-                VisualStateManager.GoToState(this, NormalState, useTransitions);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, DisabledState, useTransitions);
-            }
+            VisualStateManager.GoToState(this, this.IsEnabled ? NormalState : DisabledState, useTransitions);
         }
 
         /// <summary>
@@ -279,7 +272,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// Mirrors the 
-        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Click"/>
+        /// <see cref="System.Windows.Controls.Primitives.ToggleButton.Click"/>
         /// event.
         /// </summary>
         /// <param name="sender">The event sender.</param>
@@ -372,7 +365,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         /// <typeparam name="T">The event type.</typeparam>
         /// <returns></returns>
-        public delegate T GetEventArgs<T>() where T : EventArgs;
+        public delegate T GetEventArgs<out T>() where T : EventArgs;
 
         /// <summary>
         /// Raise an event in a thread-safe manner, with the required null check. Lazily creates event args.
@@ -602,14 +595,7 @@ namespace MahApps.Metro.Controls
         /// <param name="useTransitions">Indicates whether to use animation transitions.</param>
         private void ChangeVisualState(bool useTransitions)
         {
-            if (IsEnabled)
-            {
-                VisualStateManager.GoToState(this, NormalState, useTransitions);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, DisabledState, useTransitions);
-            }
+            VisualStateManager.GoToState(this, this.IsEnabled ? NormalState : DisabledState, useTransitions);
 
             if (_isDragging)
             {
@@ -630,7 +616,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         protected override void OnToggle()
         {
-            IsChecked = IsChecked == true ? false : true;
+            IsChecked = this.IsChecked != true;
             ChangeVisualState(true);
         }
 
@@ -649,7 +635,7 @@ namespace MahApps.Metro.Controls
             }
             base.OnApplyTemplate();
             _root = GetTemplateChild(SwitchRootPart) as Grid;
-            UIElement background = GetTemplateChild(SwitchBackgroundPart) as UIElement;
+            var background = GetTemplateChild(SwitchBackgroundPart) as UIElement;
             _backgroundTranslation = background == null ? null : background.RenderTransform as TranslateTransform;
             _track = GetTemplateChild(SwitchTrackPart) as Grid;
             _thumb = GetTemplateChild(SwitchThumbPart) as Border;

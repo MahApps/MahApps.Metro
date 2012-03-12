@@ -38,7 +38,6 @@ namespace MahApps.Metro.Controls
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            DiscreteStringKeyFrame discreteStringKeyFrame;
             var stringAnimationUsingKeyFrames = new StringAnimationUsingKeyFrames
             {
                 Duration = new Duration(timeSpan)
@@ -47,10 +46,10 @@ namespace MahApps.Metro.Controls
             var tmp = string.Empty;
             foreach (var c in textToAnimate)
             {
-                discreteStringKeyFrame = new DiscreteStringKeyFrame
-                {
-                    KeyTime = KeyTime.Paced
-                };
+                var discreteStringKeyFrame = new DiscreteStringKeyFrame
+                    {
+                        KeyTime = KeyTime.Paced
+                    };
                 tmp += c;
                 discreteStringKeyFrame.Value = tmp;
                 stringAnimationUsingKeyFrames.KeyFrames.Add(discreteStringKeyFrame);

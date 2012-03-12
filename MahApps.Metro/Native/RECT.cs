@@ -12,7 +12,7 @@ namespace MahApps.Metro.Native
         public int right;
         public int bottom;
 
-        public static readonly RECT Empty = new RECT();
+        public static readonly RECT Empty;
 
         public int Width
         {

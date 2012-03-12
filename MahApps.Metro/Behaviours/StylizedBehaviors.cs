@@ -34,7 +34,7 @@ namespace MahApps.Metro.Behaviours
 
             for (int i = 0; i < itemBehaviors.Count; i++)
             {
-                Behavior currentBehavior = itemBehaviors[i];
+                var currentBehavior = itemBehaviors[i];
 
                 if (currentBehavior == behavior
                     || currentBehavior == orignalBehavior)

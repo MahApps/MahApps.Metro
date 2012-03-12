@@ -91,26 +91,28 @@ namespace MahApps.Metro.Controls
 
         protected void TitleBarMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed
-                && e.LeftButton == MouseButtonState.Pressed && WindowState == WindowState.Maximized)
+            if (e.RightButton == MouseButtonState.Pressed || e.MiddleButton == MouseButtonState.Pressed
+                || e.LeftButton != MouseButtonState.Pressed || this.WindowState != WindowState.Maximized)
             {
-                // Calcualting correct left coordinate for multi-screen system.
-                Point mouseAbsolute = PointToScreen(Mouse.GetPosition(this));
-                double width = RestoreBounds.Width;
-                double left = mouseAbsolute.X - width / 2;
-
-                // Aligning window's position to fit the screen.
-                double virtualScreenWidth = SystemParameters.VirtualScreenWidth;
-                left = left + width > virtualScreenWidth ? virtualScreenWidth - width : left;
-
-                Top = mouseAbsolute.Y - e.MouseDevice.GetPosition(this).Y;
-                Left = left;
-
-                // Restore window to normal state.
-                WindowState = WindowState.Normal;
-
-                DragMove();
+                return;
             }
+
+            // Calcualting correct left coordinate for multi-screen system.
+            Point mouseAbsolute = this.PointToScreen(Mouse.GetPosition(this));
+            double width = this.RestoreBounds.Width;
+            double left = mouseAbsolute.X - width / 2;
+
+            // Aligning window's position to fit the screen.
+            double virtualScreenWidth = SystemParameters.VirtualScreenWidth;
+            left = left + width > virtualScreenWidth ? virtualScreenWidth - width : left;
+
+            this.Top = mouseAbsolute.Y - e.MouseDevice.GetPosition(this).Y;
+            this.Left = left;
+
+            // Restore window to normal state.
+            this.WindowState = WindowState.Normal;
+
+            this.DragMove();
         }
 
         internal T GetPart<T>(string name) where T : DependencyObject

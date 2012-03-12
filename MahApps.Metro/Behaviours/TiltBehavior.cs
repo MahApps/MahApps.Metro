@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -9,6 +8,8 @@ using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Behaviours
 {
+    using System.Linq;
+
     public class TiltBehavior : Behavior<FrameworkElement>
     {
         public static readonly DependencyProperty KeepDraggingProperty =
@@ -47,13 +48,13 @@ namespace MahApps.Metro.Behaviours
         protected override void OnAttached()
         {
             attachedElement = AssociatedObject;
-            if (attachedElement is ListBox)
+            var l = this.attachedElement as ListBox;
+            if (l != null)
             {
-                var l = (ListBox) attachedElement;
                 l.Items.CurrentChanging += (s, e) =>
-                {
-                    Console.WriteLine("foo");
-                };
+                    {
+                        Console.WriteLine("foo");
+                    };
                 return;
             }
             if (attachedElement as Panel != null)
@@ -65,15 +66,10 @@ namespace MahApps.Metro.Behaviours
                                                };
                 (attachedElement as Panel).Loaded += (sl, el) =>
                                                          {
-                                                             List<UIElement> elements = new List<UIElement>();
+                                                             var elements = (this.attachedElement as Panel).Children.Cast<UIElement>().ToList();
 
-                                                             foreach (
-                                                                 UIElement ui in (attachedElement as Panel).Children)
-                                                             {
-                                                                 elements.Add(ui);
-                                                             }
                                                              elements.ForEach(
-                                                                 (element) =>
+                                                                 element =>
                                                                  Interaction.GetBehaviors(element).Add(
                                                                      new TiltBehavior
                                                                          {
@@ -192,9 +188,7 @@ namespace MahApps.Metro.Behaviours
         private static Panel GetParentPanel(DependencyObject element)
         {
             var parent = VisualTreeHelper.GetParent(element);
-            if (parent is Panel)
-                return (Panel)parent;
-            return parent == null ? null : GetParentPanel(parent);
+            return parent is Panel ? (Panel)parent : (parent == null ? null : GetParentPanel(parent));
         }
     }
 

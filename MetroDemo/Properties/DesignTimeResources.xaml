@@ -5,6 +5,7 @@
 		<ResourceDictionary Source="/MahApps.Metro;component/Styles/Colours.xaml"/>
         <ResourceDictionary Source="/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 	<!-- Resource dictionary entries should be defined here. -->
 </ResourceDictionary>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,12 +40,12 @@ namespace MahApps.Metro.Behaviours
 
             // Adjust the maximized size and position to fit the work area of the correct monitor
 
-            System.IntPtr monitor = MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
+            var monitor = MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
 
-            if (monitor != System.IntPtr.Zero)
+            if (monitor != IntPtr.Zero)
             {
 
-                MONITORINFO monitorInfo = new MONITORINFO();
+                var monitorInfo = new MONITORINFO();
                 GetMonitorInfo(monitor, monitorInfo);
                 RECT rcWorkArea = monitorInfo.rcWork;
                 RECT rcMonitorArea = monitorInfo.rcMonitor;

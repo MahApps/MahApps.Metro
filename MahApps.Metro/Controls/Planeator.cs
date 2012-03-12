@@ -157,15 +157,15 @@ namespace MahApps.Metro.Controls
             Material frontMaterial = new DiffuseMaterial(Brushes.White);
             frontMaterial.SetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty, true);
 
-            VisualBrush vb = new VisualBrush(_logicalChild);
+            var vb = new VisualBrush(_logicalChild);
             SetCachingForObject(vb); // big perf wins by caching!!
             Material backMaterial = new DiffuseMaterial(vb);
 
             _rotationTransform.Rotation = _quaternionRotation;
             var xfGroup = new Transform3DGroup { Children = { _scaleTransform, _rotationTransform } };
 
-            GeometryModel3D backModel = new GeometryModel3D { Geometry = simpleQuad, Transform = xfGroup, BackMaterial = backMaterial };
-            Model3DGroup m3dGroup = new Model3DGroup
+            var backModel = new GeometryModel3D { Geometry = simpleQuad, Transform = xfGroup, BackMaterial = backMaterial };
+            var m3dGroup = new Model3DGroup
             {
                 Children =
                             {
@@ -176,7 +176,7 @@ namespace MahApps.Metro.Controls
             };
 
             // Non-interactive Visual3D consisting of the backside, and two lights.
-            ModelVisual3D mv3d = new ModelVisual3D { Content = m3dGroup };
+            var mv3d = new ModelVisual3D { Content = m3dGroup };
 
             if (_frontModel != null)
                 _frontModel.Visual = null;
