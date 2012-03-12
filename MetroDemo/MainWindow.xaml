@@ -145,6 +145,7 @@
                                         VerticalAlignment="Top"
                                         Margin="88.696,234,89.305,0" />
                                 <Button Content="Button" VerticalAlignment="Bottom" Margin="88.696,0,91.305,8" Style="{DynamicResource SquareButtonStyle}"/>
+                                <ToggleButton Content="TOGGLE BUTTON" Margin="88,267,91.305,0" VerticalAlignment="Top" />
                             </Grid>
                             <WrapPanel Margin="332.001,0,0,8">
                             	<Controls:AppBarButton
