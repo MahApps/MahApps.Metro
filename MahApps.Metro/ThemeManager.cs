@@ -1,29 +1,54 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows;
-
-namespace MahApps.Metro
+﻿namespace MahApps.Metro
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Windows;
+
     public static class ThemeManager
     {
-        private static readonly ResourceDictionary LightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
-        private static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
+        #region Constants and Fields
+
+        private static readonly ResourceDictionary DarkResource = new ResourceDictionary
+            { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
+
+        private static readonly ResourceDictionary LightResource = new ResourceDictionary
+            { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
 
         private static IEnumerable<Accent> _accents;
+
+        #endregion
+
+        #region Public Properties
+
         public static IEnumerable<Accent> DefaultAccents
         {
             get
             {
-                return _accents ?? (_accents =
-                    new List<Accent>{
-                        new Accent("Red", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Red.xaml")),
-                        new Accent("Green", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml")),
-                        new Accent("Blue", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml")),
-                        new Accent("Purple", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Purple.xaml")),
-                    });
+                return _accents
+                       ??
+                       (_accents =
+                        new List<Accent>
+                            {
+                                new Accent(
+                                    "Red",
+                                    new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Red.xaml")),
+                                new Accent(
+                                    "Green",
+                                    new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml")),
+                                new Accent(
+                                    "Blue",
+                                    new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml")),
+                                new Accent(
+                                    "Purple",
+                                    new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Purple.xaml")),
+                            });
             }
         }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         public static void ChangeTheme(Application app, Accent accent, Theme theme)
         {
@@ -42,15 +67,23 @@ namespace MahApps.Metro
             ApplyResourceDictionary(accent.Resources, r);
         }
 
+        #endregion
+
+        #region Methods
+
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
         {
             foreach (DictionaryEntry r in newRd)
             {
                 if (oldRd.Contains(r.Key))
+                {
                     oldRd.Remove(r.Key);
+                }
 
                 oldRd.Add(r.Key, r.Value);
             }
         }
+
+        #endregion
     }
 }

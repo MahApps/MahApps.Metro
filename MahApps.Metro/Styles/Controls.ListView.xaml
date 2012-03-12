@@ -1,89 +1,88 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
-    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
-    <!-- 
+  <Converters:ToUpperConverter x:Key="ToUpperConverter" />
+  <!-- 
     Do not set CanContentScroll=True below. This breaks the scrolling for groups with more items that will fit on screen. 
     It also (setting true) has the ugly side effect of scrolling the entire group and not the items. The downside is we lose 
     virtualisation http://serialseb.blogspot.com/2007/09/wpf-tips-7-smooth-scrolling.html 
     -->
-    <Style TargetType="ListView">
-        <Setter Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
-        <Setter Property="BorderThickness" Value="0 1 0 0" />
-        <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
-        <Setter Property="AlternationCount" Value="2" />
-    </Style>
+  <Style TargetType="ListView">
+    <Setter Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
+    <Setter Property="BorderThickness" Value="0 1 0 0" />
+    <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+    <Setter Property="AlternationCount" Value="2" />
+  </Style>
 
-    <Style x:Key="VirtualisedListView" TargetType="ListView" BasedOn="{StaticResource {x:Type ListView}}">
-        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
-        <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
-        <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
-        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
-    </Style>
+  <Style x:Key="VirtualisedListView" TargetType="ListView" BasedOn="{StaticResource {x:Type ListView}}">
+    <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
+    <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
+    <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
+    <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+  </Style>
 
 
-    <Style TargetType="{x:Type ListViewItem}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="MinHeight" Value="25" />
-        <Setter Property="Margin" Value="0,0,0,0" />
-        <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                        <Grid>
-                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                            <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
-                        </Grid>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
-                            <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible"/>
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="true">
-                            <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                </Setter.Value>
-                            </Setter>
+  <Style TargetType="{x:Type ListViewItem}">
+    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="MinHeight" Value="25" />
+    <Setter Property="Margin" Value="0,0,0,0" />
+    <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ListViewItem}">
+          <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+            <Grid>
+              <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+              <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+              <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="IsSelected" Value="true">
+              <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
+              <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Bd" Property="Background">
+                <Setter.Value>
+                  <SolidColorBrush Color="{DynamicResource AccentColor3}" />
+                </Setter.Value>
+              </Setter>
 
-                        </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="true" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
-                        </MultiTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <!--<Style.Triggers>
+            </Trigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsSelected" Value="true" />
+                <Condition Property="Selector.IsSelectionActive" Value="True" />
+              </MultiTrigger.Conditions>
+              <Setter Property="Background" TargetName="Bd">
+                <Setter.Value>
+                  <SolidColorBrush Color="{DynamicResource AccentColor2}" />
+                </Setter.Value>
+              </Setter>
+              <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
+            </MultiTrigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="IsSelected" Value="True" />
+                <Condition Property="Selector.IsSelectionActive" Value="False" />
+              </MultiTrigger.Conditions>
+              <Setter Property="Background" TargetName="Bd">
+                <Setter.Value>
+                  <SolidColorBrush Color="{DynamicResource AccentColor2}" />
+                </Setter.Value>
+              </Setter>
+              <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
+            </MultiTrigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <!--<Style.Triggers>
       <Trigger Property="ItemsControl.AlternationIndex"
                Value="0">
         <Setter Property="Background"
@@ -97,112 +96,104 @@
                 Value="0 1 0 1" />
       </Trigger>
     </Style.Triggers>-->
-    </Style>
+  </Style>
 
-    <!--Gives the impression that items cannot be selected on the ListView-->
-    <Style x:Key="NonSelectableListViewContainerStyle" TargetType="{x:Type ListViewItem}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="MinHeight" Value="25" />
-        <Setter Property="Margin" Value="0,0,0,0" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Bd"
-                            Background="{TemplateBinding Background}"
-                            BorderThickness="{TemplateBinding Border.BorderThickness}"
-                            SnapsToDevicePixels="true">
-                        <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background" Value="#e0eff8" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
-                <Setter Property="Background" Value="{DynamicResource AlternateRow1BackgroundBrush}" />
+  <!--Gives the impression that items cannot be selected on the ListView-->
+  <Style x:Key="NonSelectableListViewContainerStyle" TargetType="{x:Type ListViewItem}">
+    <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="MinHeight" Value="25" />
+    <Setter Property="Margin" Value="0,0,0,0" />
+    <Setter Property="IsTabStop" Value="False" />
+    <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ListViewItem}">
+          <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                  BorderThickness="{TemplateBinding Border.BorderThickness}" SnapsToDevicePixels="true">
+            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Bd" Property="Background" Value="#e0eff8" />
             </Trigger>
-            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                <Setter Property="Background" Value="{DynamicResource AlternateRow2BackgroundBrush}" />
-                <Setter Property="Border.BorderThickness" Value="0 1 0 1" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+        <Setter Property="Background" Value="{DynamicResource AlternateRow1BackgroundBrush}" />
+      </Trigger>
+      <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+        <Setter Property="Background" Value="{DynamicResource AlternateRow2BackgroundBrush}" />
+        <Setter Property="Border.BorderThickness" Value="0 1 0 1" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
 
-    <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
-        <Setter Property="Width" Value="18" />
-        <Setter Property="Background" Value="LightGray" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border Padding="{TemplateBinding Padding}" Background="Transparent" Margin="0 0 0 2">
-                        <Rectangle HorizontalAlignment="Center" Width="1" Fill="{TemplateBinding Background}" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+  <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
+    <Setter Property="Width" Value="18" />
+    <Setter Property="Background" Value="LightGray" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Thumb}">
+          <Border Padding="{TemplateBinding Padding}" Background="Transparent" Margin="0 0 0 2">
+            <Rectangle HorizontalAlignment="Center" Width="1" Fill="{TemplateBinding Background}" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
-    <Style x:Key="{x:Type GridViewColumnHeader}" TargetType="GridViewColumnHeader">
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="4 2 4 2" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="GridViewColumnHeader">
-                    <Grid>
-                        <Rectangle Fill="Transparent" IsHitTestVisible="True" />
-                        <Border Name="HeaderBorder"
-                                Padding="{TemplateBinding Padding}">
-                            <ContentPresenter Name="HeaderContent"
-                                              Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"
-                                              TextBlock.FontWeight="SemiBold"
-                                            Margin="0,0,0,1"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            RecognizesAccessKey="True"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Border>
-                        <Thumb x:Name="PART_HeaderGripper"
-                               HorizontalAlignment="Right"
-                               Margin="0,0,-9,0"
-                               Style="{StaticResource GridViewColumnHeaderGripper}" />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource Grey3}" />
-                            <Setter TargetName="HeaderContent" Property="Margin" Value="1,1,0,0" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="Role" Value="Floating">
-                <Setter Property="Opacity" Value="0.7" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="GridViewColumnHeader">
-                            <Canvas Name="PART_FloatingHeaderCanvas">
-                                <Rectangle Fill="#60000000"
-                                           Width="{TemplateBinding ActualWidth}"
-                                           Height="{TemplateBinding ActualHeight}" />
-                            </Canvas>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
+  <Style x:Key="{x:Type GridViewColumnHeader}" TargetType="GridViewColumnHeader">
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Padding" Value="4 2 4 2" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="GridViewColumnHeader">
+          <Grid>
+            <Rectangle Fill="Transparent" IsHitTestVisible="True" />
+            <Border Name="HeaderBorder" Padding="{TemplateBinding Padding}">
+              <ContentPresenter Name="HeaderContent"
+                                Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}" TextBlock.FontWeight="SemiBold"
+                                Margin="0,0,0,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+            <Thumb x:Name="PART_HeaderGripper" HorizontalAlignment="Right" Margin="0,0,-9,0"
+                   Style="{StaticResource GridViewColumnHeaderGripper}" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="true">
+              <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource Grey3}" />
+              <Setter TargetName="HeaderContent" Property="Margin" Value="1,1,0,0" />
             </Trigger>
-            <!--<Trigger Property="Role"
+            <Trigger Property="IsEnabled" Value="false">
+              <Setter Property="Foreground"
+                      Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="Role" Value="Floating">
+        <Setter Property="Opacity" Value="0.7" />
+        <Setter Property="Template">
+          <Setter.Value>
+            <ControlTemplate TargetType="GridViewColumnHeader">
+              <Canvas Name="PART_FloatingHeaderCanvas">
+                <Rectangle Fill="#60000000" Width="{TemplateBinding ActualWidth}"
+                           Height="{TemplateBinding ActualHeight}" />
+              </Canvas>
+            </ControlTemplate>
+          </Setter.Value>
+        </Setter>
+      </Trigger>
+      <!--<Trigger Property="Role"
                Value="Padding">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -214,6 +205,6 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>-->
-        </Style.Triggers>
-    </Style>
+    </Style.Triggers>
+  </Style>
 </ResourceDictionary>

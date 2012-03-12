@@ -1,34 +1,49 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-
-namespace MahApps.Metro.Controls
+﻿namespace MahApps.Metro.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+
     /// <summary>
     /// Originally from http://xamlcoder.com/blog/2010/11/04/creating-a-metro-ui-style-control/
     /// </summary>
     public class MetroContentControl : ContentControl
     {
+        #region Constructors and Destructors
+
         public MetroContentControl()
         {
-            DefaultStyleKey = typeof(MetroContentControl);
+            this.DefaultStyleKey = typeof(MetroContentControl);
 
-            Loaded += MetroContentControlLoaded;
-            Unloaded += MetroContentControlUnloaded;
+            this.Loaded += this.MetroContentControlLoaded;
+            this.Unloaded += this.MetroContentControlUnloaded;
 
-            IsVisibleChanged += MetroContentControlIsVisibleChanged;
+            this.IsVisibleChanged += this.MetroContentControlIsVisibleChanged;
         }
 
-        void MetroContentControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        #endregion
+
+        #region Public Methods and Operators
+
+        public void Reload()
         {
-            if (!IsVisible)
+            VisualStateManager.GoToState(this, "BeforeLoaded", true);
+            VisualStateManager.GoToState(this, "AfterLoaded", true);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void MetroContentControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!this.IsVisible)
+            {
                 VisualStateManager.GoToState(this, "AfterUnLoaded", false);
+            }
             else
+            {
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
-        }
-
-        private void MetroContentControlUnloaded(object sender, RoutedEventArgs e)
-        {
-            VisualStateManager.GoToState(this, "AfterUnLoaded", false);
+            }
         }
 
         private void MetroContentControlLoaded(object sender, RoutedEventArgs e)
@@ -36,10 +51,11 @@ namespace MahApps.Metro.Controls
             VisualStateManager.GoToState(this, "AfterLoaded", true);
         }
 
-        public void Reload()
+        private void MetroContentControlUnloaded(object sender, RoutedEventArgs e)
         {
-            VisualStateManager.GoToState(this, "BeforeLoaded", true);
-            VisualStateManager.GoToState(this, "AfterLoaded", true);            
+            VisualStateManager.GoToState(this, "AfterUnLoaded", false);
         }
+
+        #endregion
     }
 }

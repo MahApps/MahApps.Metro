@@ -1,97 +1,100 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-
-namespace MahApps.Metro.Controls
+﻿namespace MahApps.Metro.Controls
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Media;
+
     [TemplatePart(Name = "PART_Max", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Close", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Min", Type = typeof(Button))]
     public class WindowCommands : ItemsControl
     {
-        public event ClosingWindowEventHandler ClosingWindow;
+        #region Constants and Fields
+
+        private Button close;
+
+        private Button max;
+
+        private Button min;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         static WindowCommands()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowCommands), new FrameworkPropertyMetadata(typeof(WindowCommands)));
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(WindowCommands), new FrameworkPropertyMetadata(typeof(WindowCommands)));
         }
 
-        private Button min;
-        private Button max;
-        private Button close;
+        #endregion
+
+        #region Delegates
+
+        public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
+
+        #endregion
+
+        #region Public Events
+
+        public event ClosingWindowEventHandler ClosingWindow;
+
+        #endregion
+
+        #region Public Methods and Operators
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            close = Template.FindName("PART_Close", this) as Button;
-            if (close != null)
-                close.Click += CloseClick;
-
-            max = Template.FindName("PART_Max", this) as Button;
-            if (max != null)
-                max.Click += MaximiseClick;
-
-            min = Template.FindName("PART_Min", this) as Button;
-            if (min != null)
-                min.Click += MinimiseClick;
-        }
-
-        protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
-        {
-            var handler = ClosingWindow;
-            if (handler != null) handler(this, args);
-        }
-
-        private void MinimiseClick(object sender, RoutedEventArgs e)
-        {
-            var parentWindow = GetParentWindow();
-            if (parentWindow != null)
+            this.close = this.Template.FindName("PART_Close", this) as Button;
+            if (this.close != null)
             {
-                parentWindow.WindowState = WindowState.Minimized;
+                this.close.Click += this.CloseClick;
             }
-        }
 
-        private void MaximiseClick(object sender, RoutedEventArgs e)
-        {
-            var parentWindow = GetParentWindow();
-            if (parentWindow == null)
-                return;
+            this.max = this.Template.FindName("PART_Max", this) as Button;
+            if (this.max != null)
+            {
+                this.max.Click += this.MaximiseClick;
+            }
 
-            parentWindow.WindowState = parentWindow.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
-            RefreshMaximiseIconState(parentWindow);
+            this.min = this.Template.FindName("PART_Min", this) as Button;
+            if (this.min != null)
+            {
+                this.min.Click += this.MinimiseClick;
+            }
         }
 
         public void RefreshMaximiseIconState()
         {
-            RefreshMaximiseIconState(GetParentWindow());
+            this.RefreshMaximiseIconState(this.GetParentWindow());
         }
 
-        private void RefreshMaximiseIconState(Window parentWindow)
+        #endregion
+
+        #region Methods
+
+        protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
         {
-            if (parentWindow != null)
+            var handler = this.ClosingWindow;
+            if (handler != null)
             {
-                if (parentWindow.WindowState == WindowState.Normal)
-                {
-                    max.Content = "1";
-                    max.SetResourceReference(ToolTipProperty, "WindowCommandsMaximiseToolTip");
-                }
-                else
-                {
-                    max.Content = "2";
-                    max.SetResourceReference(ToolTipProperty, "WindowCommandsRestoreToolTip");
-                }
+                handler(this, args);
             }
         }
 
         private void CloseClick(object sender, RoutedEventArgs e)
         {
             var closingWindowEventHandlerArgs = new ClosingWindowEventHandlerArgs();
-            OnClosingWindow(closingWindowEventHandlerArgs);
+            this.OnClosingWindow(closingWindowEventHandlerArgs);
 
-            if (closingWindowEventHandlerArgs.Cancelled) return;
+            if (closingWindowEventHandlerArgs.Cancelled)
+            {
+                return;
+            }
 
-            var parentWindow = GetParentWindow();
+            var parentWindow = this.GetParentWindow();
             if (parentWindow != null)
             {
                 parentWindow.Close();
@@ -111,11 +114,55 @@ namespace MahApps.Metro.Controls
             return parentWindow;
         }
 
-        public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
+        private void MaximiseClick(object sender, RoutedEventArgs e)
+        {
+            var parentWindow = this.GetParentWindow();
+            if (parentWindow == null)
+            {
+                return;
+            }
+
+            parentWindow.WindowState = parentWindow.WindowState == WindowState.Maximized
+                                           ? WindowState.Normal
+                                           : WindowState.Maximized;
+            this.RefreshMaximiseIconState(parentWindow);
+        }
+
+        private void MinimiseClick(object sender, RoutedEventArgs e)
+        {
+            var parentWindow = this.GetParentWindow();
+            if (parentWindow != null)
+            {
+                parentWindow.WindowState = WindowState.Minimized;
+            }
+        }
+
+        private void RefreshMaximiseIconState(Window parentWindow)
+        {
+            if (parentWindow != null)
+            {
+                if (parentWindow.WindowState == WindowState.Normal)
+                {
+                    this.max.Content = "1";
+                    this.max.SetResourceReference(ToolTipProperty, "WindowCommandsMaximiseToolTip");
+                }
+                else
+                {
+                    this.max.Content = "2";
+                    this.max.SetResourceReference(ToolTipProperty, "WindowCommandsRestoreToolTip");
+                }
+            }
+        }
+
+        #endregion
 
         public class ClosingWindowEventHandlerArgs : EventArgs
         {
+            #region Public Properties
+
             public bool Cancelled { get; set; }
+
+            #endregion
         }
     }
 }

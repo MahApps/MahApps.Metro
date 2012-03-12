@@ -1,18 +1,26 @@
-﻿using System.Windows;
-
-namespace MetroDemo
+﻿namespace MetroDemo
 {
+    using System.Windows;
+
     public partial class PanoramaDemo
     {
+        #region Constructors and Destructors
+
         public PanoramaDemo()
         {
-            InitializeComponent();
-            Loaded += MainWindowLoaded;
+            this.InitializeComponent();
+            this.Loaded += this.MainWindowLoaded;
         }
 
-        void MainWindowLoaded(object sender, RoutedEventArgs e)
+        #endregion
+
+        #region Methods
+
+        private void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
-            DataContext = new MainWindowViewModel(Dispatcher);
+            this.DataContext = new MainWindowViewModel(this.Dispatcher);
         }
+
+        #endregion
     }
 }

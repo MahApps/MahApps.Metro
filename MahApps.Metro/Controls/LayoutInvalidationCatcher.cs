@@ -1,18 +1,37 @@
-using System.Windows;
-using System.Windows.Controls;
-
 namespace MahApps.Metro.Controls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+
     public class LayoutInvalidationCatcher : Decorator
     {
+        #region Public Properties
+
         public Planerator PlaParent
         {
-            get { return Parent as Planerator; }
+            get
+            {
+                return this.Parent as Planerator;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        protected override Size ArrangeOverride(Size arrangeSize)
+        {
+            var pl = this.PlaParent;
+            if (pl != null)
+            {
+                pl.InvalidateArrange();
+            }
+            return base.ArrangeOverride(arrangeSize);
         }
 
         protected override Size MeasureOverride(Size constraint)
         {
-            Planerator pl = PlaParent;
+            var pl = this.PlaParent;
             if (pl != null)
             {
                 pl.InvalidateMeasure();
@@ -20,14 +39,6 @@ namespace MahApps.Metro.Controls
             return base.MeasureOverride(constraint);
         }
 
-        protected override Size ArrangeOverride(Size arrangeSize)
-        {
-            Planerator pl = PlaParent;
-            if (pl != null)
-            {
-                pl.InvalidateArrange();
-            }
-            return base.ArrangeOverride(arrangeSize);
-        }
+        #endregion
     }
 }
