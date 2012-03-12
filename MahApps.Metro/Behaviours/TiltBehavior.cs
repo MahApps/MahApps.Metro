@@ -1,202 +1,229 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Interactivity;
-using System.Windows.Media;
-using MahApps.Metro.Controls;
-
-namespace MahApps.Metro.Behaviours
+﻿namespace MahApps.Metro.Behaviours
 {
+    using System;
+    using System.Linq;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Interactivity;
+    using System.Windows.Media;
+
+    using MahApps.Metro.Controls;
+
     public class TiltBehavior : Behavior<FrameworkElement>
     {
-        public static readonly DependencyProperty KeepDraggingProperty =
-            DependencyProperty.Register("KeepDragging", typeof(bool), typeof(TiltBehavior), new PropertyMetadata(true));
+        #region Constants and Fields
 
+        public static readonly DependencyProperty KeepDraggingProperty = DependencyProperty.Register(
+            "KeepDragging", typeof(bool), typeof(TiltBehavior), new PropertyMetadata(true));
 
-        public static readonly DependencyProperty TiltFactorProperty =
-            DependencyProperty.Register("TiltFactor", typeof(Int32), typeof(TiltBehavior), new PropertyMetadata(20));
+        public static readonly DependencyProperty TiltFactorProperty = DependencyProperty.Register(
+            "TiltFactor", typeof(Int32), typeof(TiltBehavior), new PropertyMetadata(20));
 
         private bool IsPressed;
 
-
         private Thickness OriginalMargin;
+
         private Panel OriginalPanel;
+
         private Size OriginalSize;
+
         private FrameworkElement attachedElement;
 
-
         private Point current = new Point(-99, -99);
+
         private Int32 times = -1;
+
+        #endregion
+
+        #region Public Properties
 
         public bool KeepDragging
         {
-            get { return (bool)GetValue(KeepDraggingProperty); }
-            set { SetValue(KeepDraggingProperty, value); }
-        }
-
-        public Int32 TiltFactor
-        {
-            get { return (Int32)GetValue(TiltFactorProperty); }
-            set { SetValue(TiltFactorProperty, value); }
+            get
+            {
+                return (bool)this.GetValue(KeepDraggingProperty);
+            }
+            set
+            {
+                this.SetValue(KeepDraggingProperty, value);
+            }
         }
 
         public Planerator RotatorParent { get; set; }
 
+        public Int32 TiltFactor
+        {
+            get
+            {
+                return (Int32)this.GetValue(TiltFactorProperty);
+            }
+            set
+            {
+                this.SetValue(TiltFactorProperty, value);
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
         protected override void OnAttached()
         {
-            attachedElement = AssociatedObject;
-            if (attachedElement is ListBox)
+            this.attachedElement = this.AssociatedObject;
+            var l = this.attachedElement as ListBox;
+            if (l != null)
             {
-                var l = (ListBox) attachedElement;
-                l.Items.CurrentChanging += (s, e) =>
+                l.Items.CurrentChanging += (s, e) => { Console.WriteLine("foo"); };
+                return;
+            }
+            if (this.attachedElement as Panel != null)
+            {
+                var y = (this.attachedElement as ItemsControl);
+                y.Items.CurrentChanging += (s, e) => { Console.WriteLine("foo"); };
+                (this.attachedElement as Panel).Loaded += (sl, el) =>
+                    {
+                        var elements = (this.attachedElement as Panel).Children.Cast<UIElement>().ToList();
+
+                        elements.ForEach(
+                            element =>
+                            Interaction.GetBehaviors(element).Add(
+                                new TiltBehavior { KeepDragging = this.KeepDragging, TiltFactor = this.TiltFactor }));
+                    };
+
+                return;
+            }
+
+            this.OriginalPanel = this.attachedElement.Parent as Panel ?? GetParentPanel(this.attachedElement);
+
+            this.OriginalMargin = this.attachedElement.Margin;
+            this.OriginalSize = new Size(this.attachedElement.Width, this.attachedElement.Height);
+            var left = Canvas.GetLeft(this.attachedElement);
+            var right = Canvas.GetRight(this.attachedElement);
+            var top = Canvas.GetTop(this.attachedElement);
+            var bottom = Canvas.GetBottom(this.attachedElement);
+            var z = Panel.GetZIndex(this.attachedElement);
+            var va = this.attachedElement.VerticalAlignment;
+            var ha = this.attachedElement.HorizontalAlignment;
+
+            this.RotatorParent = new Planerator
                 {
-                    Console.WriteLine("foo");
+                    Margin = this.OriginalMargin,
+                    Width = this.OriginalSize.Width,
+                    Height = this.OriginalSize.Height,
+                    VerticalAlignment = va,
+                    HorizontalAlignment = ha
                 };
-                return;
-            }
-            if (attachedElement as Panel != null)
-            {
-                var y = (attachedElement as ItemsControl);
-                y.Items.CurrentChanging += (s, e) =>
-                                               {
-                                                   Console.WriteLine("foo");
-                                               };
-                (attachedElement as Panel).Loaded += (sl, el) =>
-                                                         {
-                                                             List<UIElement> elements = new List<UIElement>();
 
-                                                             foreach (
-                                                                 UIElement ui in (attachedElement as Panel).Children)
-                                                             {
-                                                                 elements.Add(ui);
-                                                             }
-                                                             elements.ForEach(
-                                                                 (element) =>
-                                                                 Interaction.GetBehaviors(element).Add(
-                                                                     new TiltBehavior
-                                                                         {
-                                                                             KeepDragging = KeepDragging,
-                                                                             TiltFactor = TiltFactor
-                                                                         }));
-                                                         };
+            this.RotatorParent.SetValue(Canvas.LeftProperty, left);
+            this.RotatorParent.SetValue(Canvas.RightProperty, right);
+            this.RotatorParent.SetValue(Canvas.TopProperty, top);
+            this.RotatorParent.SetValue(Canvas.BottomProperty, bottom);
+            this.RotatorParent.SetValue(Panel.ZIndexProperty, z);
 
-                return;
-            }
+            this.OriginalPanel.Children.Remove(this.attachedElement);
+            this.attachedElement.Margin = new Thickness();
+            this.attachedElement.Width = double.NaN;
+            this.attachedElement.Height = double.NaN;
 
-            OriginalPanel = attachedElement.Parent as Panel ?? GetParentPanel(attachedElement);
+            this.OriginalPanel.Children.Add(this.RotatorParent);
+            this.RotatorParent.Child = this.attachedElement;
 
-            OriginalMargin = attachedElement.Margin;
-            OriginalSize = new Size(attachedElement.Width, attachedElement.Height);
-            double left = Canvas.GetLeft(attachedElement);
-            double right = Canvas.GetRight(attachedElement);
-            double top = Canvas.GetTop(attachedElement);
-            double bottom = Canvas.GetBottom(attachedElement);
-            int z = Panel.GetZIndex(attachedElement);
-            VerticalAlignment va = attachedElement.VerticalAlignment;
-            HorizontalAlignment ha = attachedElement.HorizontalAlignment;
-
-
-            RotatorParent = new Planerator
-                                {
-                                    Margin = OriginalMargin,
-                                    Width = OriginalSize.Width,
-                                    Height = OriginalSize.Height,
-                                    VerticalAlignment = va,
-                                    HorizontalAlignment = ha
-                                };
-
-            RotatorParent.SetValue(Canvas.LeftProperty, left);
-            RotatorParent.SetValue(Canvas.RightProperty, right);
-            RotatorParent.SetValue(Canvas.TopProperty, top);
-            RotatorParent.SetValue(Canvas.BottomProperty, bottom);
-            RotatorParent.SetValue(Panel.ZIndexProperty, z);
-
-            OriginalPanel.Children.Remove(attachedElement);
-            attachedElement.Margin = new Thickness();
-            attachedElement.Width = double.NaN;
-            attachedElement.Height = double.NaN;
-
-            OriginalPanel.Children.Add(RotatorParent);
-            RotatorParent.Child = attachedElement;
-
-            CompositionTarget.Rendering += CompositionTargetRendering;
+            CompositionTarget.Rendering += this.CompositionTargetRendering;
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            CompositionTarget.Rendering -= CompositionTargetRendering;
+            CompositionTarget.Rendering -= this.CompositionTargetRendering;
+        }
+
+        private static Panel GetParentPanel(DependencyObject element)
+        {
+            var parent = VisualTreeHelper.GetParent(element);
+            return parent is Panel ? (Panel)parent : (parent == null ? null : GetParentPanel(parent));
         }
 
         private void CompositionTargetRendering(object sender, EventArgs e)
         {
-            if (KeepDragging)
+            if (this.KeepDragging)
             {
-                current = Mouse.GetPosition(RotatorParent.Child);
+                this.current = Mouse.GetPosition(this.RotatorParent.Child);
                 if (Mouse.LeftButton == MouseButtonState.Pressed)
                 {
-                    if (current.X > 0 && current.X < (attachedElement).ActualWidth && current.Y > 0 &&
-                        current.Y < (attachedElement).ActualHeight)
+                    if (this.current.X > 0 && this.current.X < (this.attachedElement).ActualWidth && this.current.Y > 0
+                        && this.current.Y < (this.attachedElement).ActualHeight)
                     {
-                        RotatorParent.RotationY = -1 * TiltFactor + current.X * 2 * TiltFactor / (attachedElement).ActualWidth;
-                        RotatorParent.RotationX = -1 * TiltFactor + current.Y * 2 * TiltFactor / (attachedElement).ActualHeight;
+                        this.RotatorParent.RotationY = -1 * this.TiltFactor
+                                                       +
+                                                       this.current.X * 2 * this.TiltFactor
+                                                       / (this.attachedElement).ActualWidth;
+                        this.RotatorParent.RotationX = -1 * this.TiltFactor
+                                                       +
+                                                       this.current.Y * 2 * this.TiltFactor
+                                                       / (this.attachedElement).ActualHeight;
                     }
                 }
                 else
                 {
-                    RotatorParent.RotationY = RotatorParent.RotationY - 5 < 0 ? 0 : RotatorParent.RotationY - 5;
-                    RotatorParent.RotationX = RotatorParent.RotationX - 5 < 0 ? 0 : RotatorParent.RotationX - 5;
+                    this.RotatorParent.RotationY = this.RotatorParent.RotationY - 5 < 0
+                                                       ? 0
+                                                       : this.RotatorParent.RotationY - 5;
+                    this.RotatorParent.RotationX = this.RotatorParent.RotationX - 5 < 0
+                                                       ? 0
+                                                       : this.RotatorParent.RotationX - 5;
                 }
             }
             else
             {
                 if (Mouse.LeftButton == MouseButtonState.Pressed)
                 {
-                    if (!IsPressed)
+                    if (!this.IsPressed)
                     {
-                        current = Mouse.GetPosition(RotatorParent.Child);
-                        if (current.X > 0 && current.X < (attachedElement).ActualWidth && current.Y > 0 &&
-                            current.Y < (attachedElement).ActualHeight)
+                        this.current = Mouse.GetPosition(this.RotatorParent.Child);
+                        if (this.current.X > 0 && this.current.X < (this.attachedElement).ActualWidth
+                            && this.current.Y > 0 && this.current.Y < (this.attachedElement).ActualHeight)
                         {
-                            RotatorParent.RotationY = -1 * TiltFactor +
-                                                      current.X * 2 * TiltFactor / (attachedElement).ActualWidth;
-                            RotatorParent.RotationX = -1 * TiltFactor +
-                                                      current.Y * 2 * TiltFactor / (attachedElement).ActualHeight;
+                            this.RotatorParent.RotationY = -1 * this.TiltFactor
+                                                           +
+                                                           this.current.X * 2 * this.TiltFactor
+                                                           / (this.attachedElement).ActualWidth;
+                            this.RotatorParent.RotationX = -1 * this.TiltFactor
+                                                           +
+                                                           this.current.Y * 2 * this.TiltFactor
+                                                           / (this.attachedElement).ActualHeight;
                         }
-                        IsPressed = true;
+                        this.IsPressed = true;
                     }
 
-
-                    if (IsPressed && times == 7)
+                    if (this.IsPressed && this.times == 7)
                     {
-                        RotatorParent.RotationY = RotatorParent.RotationY - 5 < 0 ? 0 : RotatorParent.RotationY - 5;
-                        RotatorParent.RotationX = RotatorParent.RotationX - 5 < 0 ? 0 : RotatorParent.RotationX - 5;
+                        this.RotatorParent.RotationY = this.RotatorParent.RotationY - 5 < 0
+                                                           ? 0
+                                                           : this.RotatorParent.RotationY - 5;
+                        this.RotatorParent.RotationX = this.RotatorParent.RotationX - 5 < 0
+                                                           ? 0
+                                                           : this.RotatorParent.RotationX - 5;
                     }
-                    else if (IsPressed && times < 7)
+                    else if (this.IsPressed && this.times < 7)
                     {
-                        times++;
+                        this.times++;
                     }
                 }
                 else
                 {
-                    IsPressed = false;
-                    times = -1;
-                    RotatorParent.RotationY = RotatorParent.RotationY - 5 < 0 ? 0 : RotatorParent.RotationY - 5;
-                    RotatorParent.RotationX = RotatorParent.RotationX - 5 < 0 ? 0 : RotatorParent.RotationX - 5;
+                    this.IsPressed = false;
+                    this.times = -1;
+                    this.RotatorParent.RotationY = this.RotatorParent.RotationY - 5 < 0
+                                                       ? 0
+                                                       : this.RotatorParent.RotationY - 5;
+                    this.RotatorParent.RotationX = this.RotatorParent.RotationX - 5 < 0
+                                                       ? 0
+                                                       : this.RotatorParent.RotationX - 5;
                 }
             }
         }
 
-        private static Panel GetParentPanel(DependencyObject element)
-        {
-            var parent = VisualTreeHelper.GetParent(element);
-            if (parent is Panel)
-                return (Panel)parent;
-            return parent == null ? null : GetParentPanel(parent);
-        }
+        #endregion
     }
-
-
 }

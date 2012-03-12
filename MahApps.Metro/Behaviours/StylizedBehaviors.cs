@@ -1,17 +1,26 @@
-using System.Windows;
-using System.Windows.Interactivity;
-
 namespace MahApps.Metro.Behaviours
 {
+    using System.Windows;
+    using System.Windows.Interactivity;
+
     public class StylizedBehaviors
     {
-        private static readonly DependencyProperty OriginalBehaviorProperty = DependencyProperty.RegisterAttached(@"OriginalBehaviorInternal", typeof(Behavior), typeof(StylizedBehaviors), new UIPropertyMetadata(null));
+        #region Constants and Fields
 
         public static readonly DependencyProperty BehaviorsProperty = DependencyProperty.RegisterAttached(
             @"Behaviors",
             typeof(StylizedBehaviorCollection),
             typeof(StylizedBehaviors),
             new FrameworkPropertyMetadata(null, OnPropertyChanged));
+
+        private static readonly DependencyProperty OriginalBehaviorProperty =
+            DependencyProperty.RegisterAttached(
+                @"OriginalBehaviorInternal", typeof(Behavior), typeof(StylizedBehaviors), new UIPropertyMetadata(null));
+
+        #endregion
+
+        #region Public Methods and Operators
+
         public static StylizedBehaviorCollection GetBehaviors(DependencyObject uie)
         {
             return (StylizedBehaviorCollection)uie.GetValue(BehaviorsProperty);
@@ -21,32 +30,30 @@ namespace MahApps.Metro.Behaviours
         {
             uie.SetValue(BehaviorsProperty, value);
         }
-        private static Behavior GetOriginalBehavior(DependencyObject obj)
-        {
-            return obj.GetValue(OriginalBehaviorProperty) as Behavior;
-        }
+
+        #endregion
+
+        #region Methods
 
         private static int GetIndexOf(BehaviorCollection itemBehaviors, Behavior behavior)
         {
-            int index = -1;
+            var index = -1;
 
-            Behavior orignalBehavior = GetOriginalBehavior(behavior);
+            var orignalBehavior = GetOriginalBehavior(behavior);
 
-            for (int i = 0; i < itemBehaviors.Count; i++)
+            for (var i = 0; i < itemBehaviors.Count; i++)
             {
-                Behavior currentBehavior = itemBehaviors[i];
+                var currentBehavior = itemBehaviors[i];
 
-                if (currentBehavior == behavior
-                    || currentBehavior == orignalBehavior)
+                if (currentBehavior == behavior || currentBehavior == orignalBehavior)
                 {
                     index = i;
                     break;
                 }
 
-                Behavior currentOrignalBehavior = GetOriginalBehavior(currentBehavior);
+                var currentOrignalBehavior = GetOriginalBehavior(currentBehavior);
 
-                if (currentOrignalBehavior == behavior
-                    || currentOrignalBehavior == orignalBehavior)
+                if (currentOrignalBehavior == behavior || currentOrignalBehavior == orignalBehavior)
                 {
                     index = i;
                     break;
@@ -54,6 +61,11 @@ namespace MahApps.Metro.Behaviours
             }
 
             return index;
+        }
+
+        private static Behavior GetOriginalBehavior(DependencyObject obj)
+        {
+            return obj.GetValue(OriginalBehaviorProperty) as Behavior;
         }
 
         private static void OnPropertyChanged(DependencyObject dpo, DependencyPropertyChangedEventArgs e)
@@ -65,7 +77,7 @@ namespace MahApps.Metro.Behaviours
                 return;
             }
 
-            BehaviorCollection itemBehaviors = Interaction.GetBehaviors(uie);
+            var itemBehaviors = Interaction.GetBehaviors(uie);
 
             var newBehaviors = e.NewValue as StylizedBehaviorCollection;
             var oldBehaviors = e.OldValue as StylizedBehaviorCollection;
@@ -79,7 +91,7 @@ namespace MahApps.Metro.Behaviours
             {
                 foreach (var behavior in oldBehaviors)
                 {
-                    int index = GetIndexOf(itemBehaviors, behavior);
+                    var index = GetIndexOf(itemBehaviors, behavior);
 
                     if (index >= 0)
                     {
@@ -92,7 +104,7 @@ namespace MahApps.Metro.Behaviours
             {
                 foreach (var behavior in newBehaviors)
                 {
-                    int index = GetIndexOf(itemBehaviors, behavior);
+                    var index = GetIndexOf(itemBehaviors, behavior);
 
                     if (index < 0)
                     {
@@ -108,5 +120,7 @@ namespace MahApps.Metro.Behaviours
         {
             obj.SetValue(OriginalBehaviorProperty, value);
         }
+
+        #endregion
     }
 }

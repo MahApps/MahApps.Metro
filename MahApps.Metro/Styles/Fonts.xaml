@@ -1,6 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <FontFamily x:Key="DefaultFont">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
-    <FontFamily x:Key="HeaderFontFamily">Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
-    <FontFamily x:Key="ContentFontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <FontFamily x:Key="DefaultFont">
+    Segoe UI, Lucida Sans Unicode, Verdana
+  </FontFamily>
+  <FontFamily x:Key="HeaderFontFamily">
+    Segoe UI Light, Lucida Sans Unicode, Verdana
+  </FontFamily>
+  <FontFamily x:Key="ContentFontFamily">
+    Segoe UI, Lucida Sans Unicode, Verdana
+  </FontFamily>
 </ResourceDictionary>

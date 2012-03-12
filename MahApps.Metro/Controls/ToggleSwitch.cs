@@ -3,17 +3,17 @@
 // Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
 // All other rights reserved.
 
-using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Media;
-
 namespace MahApps.Metro.Controls
 {
+    using System;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
+    using System.Windows.Data;
+    using System.Windows.Media;
+
     /// <summary>
     /// Represents a switch that can be toggled between two states.
     /// </summary>
@@ -22,15 +22,36 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = SwitchPart, Type = typeof(ToggleButton))]
     public class ToggleSwitch : ContentControl
     {
+        #region Constants and Fields
+
+        /// <summary>
+        /// Identifies the Header DependencyProperty.
+        /// </summary>
+        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
+            "Header", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the HeaderTemplate DependencyProperty.
+        /// </summary>
+        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register(
+            "HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
+
+        /// <summary>
+        /// Identifies the IsChecked DependencyProperty.
+        /// </summary>
+        public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register(
+            "IsChecked", typeof(bool?), typeof(ToggleSwitch), new PropertyMetadata(false, OnIsCheckedChanged));
+
+        /// <summary>
+        /// Identifies the SwitchForeground DependencyProperty.
+        /// </summary>
+        public static readonly DependencyProperty SwitchForegroundProperty =
+            DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), null);
+
         /// <summary>
         /// Common visual states.
         /// </summary>
         private const string CommonStates = "CommonStates";
-
-        /// <summary>
-        /// Normal visual state.
-        /// </summary>
-        private const string NormalState = "Normal";
 
         /// <summary>
         /// Disabled visual state.
@@ -38,112 +59,14 @@ namespace MahApps.Metro.Controls
         private const string DisabledState = "Disabled";
 
         /// <summary>
+        /// Normal visual state.
+        /// </summary>
+        private const string NormalState = "Normal";
+
+        /// <summary>
         /// The ToggleButton that drives this.
         /// </summary>
         private const string SwitchPart = "Switch";
-
-        /// <summary>
-        /// Identifies the Header DependencyProperty.
-        /// </summary>
-        public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets or sets the header.
-        /// </summary>
-        public object Header
-        {
-            get { return GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
-        }
-
-        /// <summary>
-        /// Identifies the HeaderTemplate DependencyProperty.
-        /// </summary>
-        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets or sets the template used to display the control's header.
-        /// </summary>
-        public DataTemplate HeaderTemplate
-        {
-            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
-            set { SetValue(HeaderTemplateProperty, value); }
-        }
-
-        /// <summary>
-        /// Identifies the SwitchForeground DependencyProperty.
-        /// </summary>
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), null);
-        
-        /// <summary>
-        /// Gets or sets the switch foreground.
-        /// </summary>
-        public Brush SwitchForeground
-        {
-            get { return (Brush)GetValue(SwitchForegroundProperty); }
-            set
-            {
-                SetValue(SwitchForegroundProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether the ToggleSwitch is checked.
-        /// </summary>
-        [TypeConverter(typeof(NullableBoolConverter))]
-        public bool? IsChecked
-        {
-            get { return (bool?)GetValue(IsCheckedProperty); }
-            set { SetValue(IsCheckedProperty, value); }
-        }
-
-        /// <summary>
-        /// Identifies the IsChecked DependencyProperty.
-        /// </summary>
-        public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new PropertyMetadata(false, OnIsCheckedChanged));
-
-        /// <summary>
-        /// Invoked when the IsChecked DependencyProperty is changed.
-        /// </summary>
-        /// <param name="d">The event sender.</param>
-        /// <param name="e">The event information.</param>
-        private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ToggleSwitch toggleSwitch = (ToggleSwitch)d;
-            if (toggleSwitch._toggleButton != null)
-            {
-                toggleSwitch._toggleButton.IsChecked = (bool?)e.NewValue;
-            }
-        }
-
-        /// <summary>
-        /// Occurs when the
-        /// <see cref="T:MahApps.Metro.Controls.ToggleSwitch"/>
-        /// is checked.
-        /// </summary>
-        public event EventHandler<RoutedEventArgs> Checked;
-
-        /// <summary>
-        /// Occurs when the
-        /// <see cref="T:MahApps.Metro.Controls.ToggleSwitch"/>
-        /// is unchecked.
-        /// </summary>
-        public event EventHandler<RoutedEventArgs> Unchecked;
-
-        /// <summary>
-        /// Occurs when the
-        /// <see cref="T:MahApps.Metro.Controls.ToggleSwitch"/>
-        /// is indeterminate.
-        /// </summary>
-        public event EventHandler<RoutedEventArgs> Indeterminate;
-
-        /// <summary>
-        /// Occurs when the
-        /// <see cref="System.Windows.Controls.Primitives.ToggleButton"/>
-        /// is clicked.
-        /// </summary>
-        public event EventHandler<RoutedEventArgs> Click;
 
         /// <summary>
         /// The
@@ -157,55 +80,120 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private bool _wasContentSet;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>
         /// Initializes a new instance of the ToggleSwitch class.
         /// </summary>
         public ToggleSwitch()
         {
-            DefaultStyleKey = typeof(ToggleSwitch);
+            this.DefaultStyleKey = typeof(ToggleSwitch);
             //DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleSwitch),
             //                                       new FrameworkPropertyMetadata(typeof(ToggleSwitch)));
         }
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>
-        /// Makes the content an "Off" or "On" string to match the state.
+        /// Occurs when the
+        /// <see cref="T:MahApps.Metro.Controls.ToggleSwitch"/>
+        /// is checked.
         /// </summary>
-        private void SetDefaultContent()
+        public event EventHandler<RoutedEventArgs> Checked;
+
+        /// <summary>
+        /// Occurs when the
+        /// <see cref="System.Windows.Controls.Primitives.ToggleButton"/>
+        /// is clicked.
+        /// </summary>
+        public event EventHandler<RoutedEventArgs> Click;
+
+        /// <summary>
+        /// Occurs when the
+        /// <see cref="T:MahApps.Metro.Controls.ToggleSwitch"/>
+        /// is indeterminate.
+        /// </summary>
+        public event EventHandler<RoutedEventArgs> Indeterminate;
+
+        /// <summary>
+        /// Occurs when the
+        /// <see cref="T:MahApps.Metro.Controls.ToggleSwitch"/>
+        /// is unchecked.
+        /// </summary>
+        public event EventHandler<RoutedEventArgs> Unchecked;
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the header.
+        /// </summary>
+        public object Header
         {
-            Binding binding = new Binding("IsChecked") { Source = this, Converter = new OffOnConverter() };
-            SetBinding(ContentProperty, binding);
+            get
+            {
+                return this.GetValue(HeaderProperty);
+            }
+            set
+            {
+                this.SetValue(HeaderProperty, value);
+            }
         }
 
         /// <summary>
-        /// Change the visual state.
+        /// Gets or sets the template used to display the control's header.
         /// </summary>
-        /// <param name="useTransitions">Indicates whether to use animation transitions.</param>
-        private void ChangeVisualState(bool useTransitions)
+        public DataTemplate HeaderTemplate
         {
-            if (IsEnabled)
+            get
             {
-                VisualStateManager.GoToState(this, NormalState, useTransitions);
+                return (DataTemplate)this.GetValue(HeaderTemplateProperty);
             }
-            else
+            set
             {
-                VisualStateManager.GoToState(this, DisabledState, useTransitions);
+                this.SetValue(HeaderTemplateProperty, value);
             }
         }
 
         /// <summary>
-        /// Makes the content an "Off" or "On" string to match the state if the content is set to null in the design tool.
+        /// Gets or sets whether the ToggleSwitch is checked.
         /// </summary>
-        /// <param name="oldContent">The old content.</param>
-        /// <param name="newContent">The new content.</param>
-        protected override void OnContentChanged(object oldContent, object newContent)
+        [TypeConverter(typeof(NullableBoolConverter))]
+        public bool? IsChecked
         {
-            base.OnContentChanged(oldContent, newContent);
-            _wasContentSet = true;
-            /*if (DesignerProperties.IsInDesignTool && newContent == null && GetBindingExpression(ContentProperty) == null)
+            get
             {
-                SetDefaultContent();
-            }*/
+                return (bool?)this.GetValue(IsCheckedProperty);
+            }
+            set
+            {
+                this.SetValue(IsCheckedProperty, value);
+            }
         }
+
+        /// <summary>
+        /// Gets or sets the switch foreground.
+        /// </summary>
+        public Brush SwitchForeground
+        {
+            get
+            {
+                return (Brush)this.GetValue(SwitchForegroundProperty);
+            }
+            set
+            {
+                this.SetValue(SwitchForegroundProperty, value);
+            }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>
         /// Gets all the template parts and initializes the corresponding state.
@@ -214,79 +202,28 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            if (!_wasContentSet && GetBindingExpression(ContentProperty) == null)
+            if (!this._wasContentSet && this.GetBindingExpression(ContentProperty) == null)
             {
-                SetDefaultContent();
+                this.SetDefaultContent();
             }
 
-            if (_toggleButton != null)
+            if (this._toggleButton != null)
             {
-                _toggleButton.Checked -= CheckedHandler;
-                _toggleButton.Unchecked -= UncheckedHandler;
-                _toggleButton.Indeterminate -= IndeterminateHandler;
-                _toggleButton.Click -= ClickHandler;
+                this._toggleButton.Checked -= this.CheckedHandler;
+                this._toggleButton.Unchecked -= this.UncheckedHandler;
+                this._toggleButton.Indeterminate -= this.IndeterminateHandler;
+                this._toggleButton.Click -= this.ClickHandler;
             }
-            _toggleButton = GetTemplateChild(SwitchPart) as ToggleButton;
-            if (_toggleButton != null)
+            this._toggleButton = this.GetTemplateChild(SwitchPart) as ToggleButton;
+            if (this._toggleButton != null)
             {
-                _toggleButton.Checked += CheckedHandler;
-                _toggleButton.Unchecked += UncheckedHandler;
-                _toggleButton.Indeterminate += IndeterminateHandler;
-                _toggleButton.Click += ClickHandler;
-                _toggleButton.IsChecked = IsChecked;
+                this._toggleButton.Checked += this.CheckedHandler;
+                this._toggleButton.Unchecked += this.UncheckedHandler;
+                this._toggleButton.Indeterminate += this.IndeterminateHandler;
+                this._toggleButton.Click += this.ClickHandler;
+                this._toggleButton.IsChecked = this.IsChecked;
             }
-            ChangeVisualState(false);
-        }
-
-        /// <summary>
-        /// Mirrors the
-        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Checked"/>
-        /// event.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="e">The event information.</param>
-        private void CheckedHandler(object sender, RoutedEventArgs e)
-        {
-            IsChecked = true;
-            SafeRaise.Raise(Checked, this, e);
-        }
-
-        /// <summary>
-        /// Mirrors the
-        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Unchecked"/>
-        /// event.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="e">The event information.</param>
-        private void UncheckedHandler(object sender, RoutedEventArgs e)
-        {
-            IsChecked = false;
-            SafeRaise.Raise(Unchecked, this, e);
-        }
-
-        /// <summary>
-        /// Mirrors the
-        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Indeterminate"/>
-        /// event.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="e">The event information.</param>
-        private void IndeterminateHandler(object sender, RoutedEventArgs e)
-        {
-            IsChecked = null;
-            SafeRaise.Raise(Indeterminate, this, e);
-        }
-
-        /// <summary>
-        /// Mirrors the 
-        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Click"/>
-        /// event.
-        /// </summary>
-        /// <param name="sender">The event sender.</param>
-        /// <param name="e">The event information.</param>
-        private void ClickHandler(object sender, RoutedEventArgs e)
-        {
-            SafeRaise.Raise(Click, this, e);
+            this.ChangeVisualState(false);
         }
 
         /// <summary>
@@ -302,10 +239,113 @@ namespace MahApps.Metro.Controls
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "{{ToggleSwitch IsChecked={0}, Content={1}}}",
-                IsChecked,
-                Content
-            );
+                this.IsChecked,
+                this.Content);
         }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Makes the content an "Off" or "On" string to match the state if the content is set to null in the design tool.
+        /// </summary>
+        /// <param name="oldContent">The old content.</param>
+        /// <param name="newContent">The new content.</param>
+        protected override void OnContentChanged(object oldContent, object newContent)
+        {
+            base.OnContentChanged(oldContent, newContent);
+            this._wasContentSet = true;
+            /*if (DesignerProperties.IsInDesignTool && newContent == null && GetBindingExpression(ContentProperty) == null)
+            {
+                SetDefaultContent();
+            }*/
+        }
+
+        /// <summary>
+        /// Invoked when the IsChecked DependencyProperty is changed.
+        /// </summary>
+        /// <param name="d">The event sender.</param>
+        /// <param name="e">The event information.</param>
+        private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var toggleSwitch = (ToggleSwitch)d;
+            if (toggleSwitch._toggleButton != null)
+            {
+                toggleSwitch._toggleButton.IsChecked = (bool?)e.NewValue;
+            }
+        }
+
+        /// <summary>
+        /// Change the visual state.
+        /// </summary>
+        /// <param name="useTransitions">Indicates whether to use animation transitions.</param>
+        private void ChangeVisualState(bool useTransitions)
+        {
+            VisualStateManager.GoToState(this, this.IsEnabled ? NormalState : DisabledState, useTransitions);
+        }
+
+        /// <summary>
+        /// Mirrors the
+        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Checked"/>
+        /// event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event information.</param>
+        private void CheckedHandler(object sender, RoutedEventArgs e)
+        {
+            this.IsChecked = true;
+            SafeRaise.Raise(this.Checked, this, e);
+        }
+
+        /// <summary>
+        /// Mirrors the 
+        /// <see cref="System.Windows.Controls.Primitives.ToggleButton.Click"/>
+        /// event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event information.</param>
+        private void ClickHandler(object sender, RoutedEventArgs e)
+        {
+            SafeRaise.Raise(this.Click, this, e);
+        }
+
+        /// <summary>
+        /// Mirrors the
+        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Indeterminate"/>
+        /// event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event information.</param>
+        private void IndeterminateHandler(object sender, RoutedEventArgs e)
+        {
+            this.IsChecked = null;
+            SafeRaise.Raise(this.Indeterminate, this, e);
+        }
+
+        /// <summary>
+        /// Makes the content an "Off" or "On" string to match the state.
+        /// </summary>
+        private void SetDefaultContent()
+        {
+            var binding = new Binding("IsChecked") { Source = this, Converter = new OffOnConverter() };
+            SetBinding(ContentProperty, binding);
+        }
+
+        /// <summary>
+        /// Mirrors the
+        /// <see cref="E:System.Windows.Controls.Primitives.ToggleButton.Unchecked"/>
+        /// event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event information.</param>
+        private void UncheckedHandler(object sender, RoutedEventArgs e)
+        {
+            this.IsChecked = false;
+            SafeRaise.Raise(this.Unchecked, this, e);
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -313,6 +353,19 @@ namespace MahApps.Metro.Controls
     /// </summary>
     internal static class SafeRaise
     {
+        #region Delegates
+
+        /// <summary>
+        /// This is a method that returns event args, used for lazy creation.
+        /// </summary>
+        /// <typeparam name="T">The event type.</typeparam>
+        /// <returns></returns>
+        public delegate T GetEventArgs<T>() where T : EventArgs;
+
+        #endregion
+
+        #region Public Methods and Operators
+
         /// <summary>
         /// Raises an event in a thread-safe manner, also does the null check.
         /// </summary>
@@ -368,30 +421,28 @@ namespace MahApps.Metro.Controls
         // }
 
         /// <summary>
-        /// This is a method that returns event args, used for lazy creation.
-        /// </summary>
-        /// <typeparam name="T">The event type.</typeparam>
-        /// <returns></returns>
-        public delegate T GetEventArgs<T>() where T : EventArgs;
-
-        /// <summary>
         /// Raise an event in a thread-safe manner, with the required null check. Lazily creates event args.
         /// </summary>
         /// <typeparam name="T">The event args type.</typeparam>
         /// <param name="eventToRaise">The event to raise.</param>
         /// <param name="sender">The event sender.</param>
         /// <param name="getEventArgs">The delegate to return the event args if needed.</param>
-        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, GetEventArgs<T> getEventArgs) where T : EventArgs
+        public static void Raise<T>(EventHandler<T> eventToRaise, object sender, GetEventArgs<T> getEventArgs)
+            where T : EventArgs
         {
             if (eventToRaise != null)
             {
                 eventToRaise(sender, getEventArgs());
             }
         }
+
+        #endregion
     }
 
     public class OffOnConverter : IValueConverter
     {
+        #region Public Methods and Operators
+
         /// <summary>
         /// Converts a value.
         /// </summary>
@@ -421,8 +472,9 @@ namespace MahApps.Metro.Controls
         {
             throw new NotImplementedException();
         }
-    }
 
+        #endregion
+    }
 
     /// <summary>
     /// Represents a switch that can be toggled between two states.
@@ -438,20 +490,14 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = SwitchThumbPart, Type = typeof(FrameworkElement))]
     public class ToggleSwitchButton : ToggleButton
     {
-        /// <summary>
-        /// Common visual states.
-        /// </summary>
-        private const string CommonStates = "CommonStates";
+        #region Constants and Fields
 
         /// <summary>
-        /// Normal visual state.
+        /// Identifies the SwitchForeground dependency property.
         /// </summary>
-        private const string NormalState = "Normal";
-
-        /// <summary>
-        /// Disabled visual state.
-        /// </summary>
-        private const string DisabledState = "Disabled";
+        public static readonly DependencyProperty SwitchForegroundProperty =
+            DependencyProperty.Register(
+                "SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null));
 
         /// <summary>
         /// Check visual states.
@@ -464,19 +510,24 @@ namespace MahApps.Metro.Controls
         private const string CheckedState = "Checked";
 
         /// <summary>
+        /// Common visual states.
+        /// </summary>
+        private const string CommonStates = "CommonStates";
+
+        /// <summary>
+        /// Disabled visual state.
+        /// </summary>
+        private const string DisabledState = "Disabled";
+
+        /// <summary>
         /// Dragging visual state.
         /// </summary>
         private const string DraggingState = "Dragging";
 
         /// <summary>
-        /// Unchecked visual state.
+        /// Normal visual state.
         /// </summary>
-        private const string UncheckedState = "Unchecked";
-
-        /// <summary>
-        /// Switch root template part name.
-        /// </summary>
-        private const string SwitchRootPart = "SwitchRoot";
+        private const string NormalState = "Normal";
 
         /// <summary>
         /// Switch background template part name.
@@ -484,9 +535,9 @@ namespace MahApps.Metro.Controls
         private const string SwitchBackgroundPart = "SwitchBackground";
 
         /// <summary>
-        /// Switch track template part name.
+        /// Switch root template part name.
         /// </summary>
-        private const string SwitchTrackPart = "SwitchTrack";
+        private const string SwitchRootPart = "SwitchRoot";
 
         /// <summary>
         /// Switch thumb template part name.
@@ -494,55 +545,24 @@ namespace MahApps.Metro.Controls
         private const string SwitchThumbPart = "SwitchThumb";
 
         /// <summary>
-        /// Identifies the SwitchForeground dependency property.
+        /// Switch track template part name.
         /// </summary>
-        public static readonly DependencyProperty SwitchForegroundProperty =
-            DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null));
+        private const string SwitchTrackPart = "SwitchTrack";
 
         /// <summary>
-        /// Gets or sets the switch foreground.
+        /// Unchecked visual state.
         /// </summary>
-        public Brush SwitchForeground
-        {
-            get
-            {
-                return (Brush)GetValue(SwitchForegroundProperty);
-            }
-            set
-            {
-                SetValue(SwitchForegroundProperty, value);
-            }
-        }
-
-        /// <summary>
-        /// The background TranslateTransform.
-        /// </summary>
-        private TranslateTransform _backgroundTranslation;
-
-        /// <summary>
-        /// The thumb TranslateTransform.
-        /// </summary>
-        private TranslateTransform _thumbTranslation;
-
-        /// <summary>
-        /// The root template part.
-        /// </summary>
-        private Grid _root;
-
-        /// <summary>
-        /// The track template part.
-        /// </summary>
-        private Grid _track;
-
-        /// <summary>
-        /// The thumb template part.
-        /// </summary>
-        private FrameworkElement _thumb;
+        private const string UncheckedState = "Unchecked";
 
         /// <summary>
         /// The minimum translation.
         /// </summary>
         private const double _uncheckedTranslation = 0;
+
+        /// <summary>
+        /// The background TranslateTransform.
+        /// </summary>
+        private TranslateTransform _backgroundTranslation;
 
         /// <summary>
         /// The maximum translation.
@@ -555,22 +575,69 @@ namespace MahApps.Metro.Controls
         private double _dragTranslation;
 
         /// <summary>
+        /// Whether the dragging state is current.
+        /// </summary>
+        private bool _isDragging;
+
+        /// <summary>
+        /// The root template part.
+        /// </summary>
+        private Grid _root;
+
+        /// <summary>
+        /// The thumb template part.
+        /// </summary>
+        private FrameworkElement _thumb;
+
+        /// <summary>
+        /// The thumb TranslateTransform.
+        /// </summary>
+        private TranslateTransform _thumbTranslation;
+
+        /// <summary>
+        /// The track template part.
+        /// </summary>
+        private Grid _track;
+
+        /// <summary>
         /// Whether the translation ever changed during the drag.
         /// </summary>
         private bool _wasDragged;
 
-        /// <summary>
-        /// Whether the dragging state is current.
-        /// </summary>
-        private bool _isDragging;
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>
         /// Initializes a new instance of the ToggleSwitch class.
         /// </summary>
         public ToggleSwitchButton()
         {
-            DefaultStyleKey = typeof(ToggleSwitchButton);
+            this.DefaultStyleKey = typeof(ToggleSwitchButton);
         }
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the switch foreground.
+        /// </summary>
+        public Brush SwitchForeground
+        {
+            get
+            {
+                return (Brush)this.GetValue(SwitchForegroundProperty);
+            }
+            set
+            {
+                this.SetValue(SwitchForegroundProperty, value);
+            }
+        }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Gets and sets the thumb and background translation.
@@ -580,20 +647,70 @@ namespace MahApps.Metro.Controls
         {
             get
             {
-                return _backgroundTranslation == null ? _thumbTranslation.X : _backgroundTranslation.X;
+                return this._backgroundTranslation == null ? this._thumbTranslation.X : this._backgroundTranslation.X;
             }
             set
             {
-                if (_backgroundTranslation != null)
+                if (this._backgroundTranslation != null)
                 {
-                    _backgroundTranslation.X = value;
+                    this._backgroundTranslation.X = value;
                 }
 
-                if (_thumbTranslation != null)
+                if (this._thumbTranslation != null)
                 {
-                    _thumbTranslation.X = value;
+                    this._thumbTranslation.X = value;
                 }
             }
+        }
+
+        #endregion
+
+        #region Public Methods and Operators
+
+        /// <summary>
+        /// Gets all the template parts and initializes the corresponding state.
+        /// </summary>
+        public override void OnApplyTemplate()
+        {
+            if (this._track != null)
+            {
+                this._track.SizeChanged -= this.SizeChangedHandler;
+            }
+            if (this._thumb != null)
+            {
+                this._thumb.SizeChanged -= this.SizeChangedHandler;
+            }
+            base.OnApplyTemplate();
+            this._root = this.GetTemplateChild(SwitchRootPart) as Grid;
+            var background = this.GetTemplateChild(SwitchBackgroundPart) as UIElement;
+            this._backgroundTranslation = background == null ? null : background.RenderTransform as TranslateTransform;
+            this._track = this.GetTemplateChild(SwitchTrackPart) as Grid;
+            this._thumb = this.GetTemplateChild(SwitchThumbPart) as Border;
+            this._thumbTranslation = this._thumb == null ? null : this._thumb.RenderTransform as TranslateTransform;
+            if (this._root != null && this._track != null && this._thumb != null
+                && (this._backgroundTranslation != null || this._thumbTranslation != null))
+            {
+                /*GestureListener gestureListener = GestureService.GetGestureListener(_root);
+                gestureListener.DragStarted += DragStartedHandler;
+                gestureListener.DragDelta += DragDeltaHandler;
+                gestureListener.DragCompleted += DragCompletedHandler;*/
+                this._track.SizeChanged += this.SizeChangedHandler;
+                this._thumb.SizeChanged += this.SizeChangedHandler;
+            }
+            this.ChangeVisualState(false);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Called by the OnClick method to implement toggle behavior.
+        /// </summary>
+        protected override void OnToggle()
+        {
+            this.IsChecked = this.IsChecked != true;
+            this.ChangeVisualState(true);
         }
 
         /// <summary>
@@ -602,20 +719,13 @@ namespace MahApps.Metro.Controls
         /// <param name="useTransitions">Indicates whether to use animation transitions.</param>
         private void ChangeVisualState(bool useTransitions)
         {
-            if (IsEnabled)
-            {
-                VisualStateManager.GoToState(this, NormalState, useTransitions);
-            }
-            else
-            {
-                VisualStateManager.GoToState(this, DisabledState, useTransitions);
-            }
+            VisualStateManager.GoToState(this, this.IsEnabled ? NormalState : DisabledState, useTransitions);
 
-            if (_isDragging)
+            if (this._isDragging)
             {
                 VisualStateManager.GoToState(this, DraggingState, useTransitions);
             }
-            else if (IsChecked == true)
+            else if (this.IsChecked == true)
             {
                 VisualStateManager.GoToState(this, CheckedState, useTransitions);
             }
@@ -626,47 +736,6 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Called by the OnClick method to implement toggle behavior.
-        /// </summary>
-        protected override void OnToggle()
-        {
-            IsChecked = IsChecked == true ? false : true;
-            ChangeVisualState(true);
-        }
-
-        /// <summary>
-        /// Gets all the template parts and initializes the corresponding state.
-        /// </summary>
-        public override void OnApplyTemplate()
-        {
-            if (_track != null)
-            {
-                _track.SizeChanged -= SizeChangedHandler;
-            }
-            if (_thumb != null)
-            {
-                _thumb.SizeChanged -= SizeChangedHandler;
-            }
-            base.OnApplyTemplate();
-            _root = GetTemplateChild(SwitchRootPart) as Grid;
-            UIElement background = GetTemplateChild(SwitchBackgroundPart) as UIElement;
-            _backgroundTranslation = background == null ? null : background.RenderTransform as TranslateTransform;
-            _track = GetTemplateChild(SwitchTrackPart) as Grid;
-            _thumb = GetTemplateChild(SwitchThumbPart) as Border;
-            _thumbTranslation = _thumb == null ? null : _thumb.RenderTransform as TranslateTransform;
-            if (_root != null && _track != null && _thumb != null && (_backgroundTranslation != null || _thumbTranslation != null))
-            {
-                /*GestureListener gestureListener = GestureService.GetGestureListener(_root);
-                gestureListener.DragStarted += DragStartedHandler;
-                gestureListener.DragDelta += DragDeltaHandler;
-                gestureListener.DragCompleted += DragCompletedHandler;*/
-                _track.SizeChanged += SizeChangedHandler;
-                _thumb.SizeChanged += SizeChangedHandler;
-            }
-            ChangeVisualState(false);
-        }
-
-        /// <summary>
         /// Handles changed sizes for the track and the thumb.
         /// Sets the clip of the track and computes the indeterminate and checked translations.
         /// </summary>
@@ -674,10 +743,11 @@ namespace MahApps.Metro.Controls
         /// <param name="e">The event information.</param>
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
         {
-            _track.Clip = new RectangleGeometry { Rect = new Rect(0, 0, _track.ActualWidth, _track.ActualHeight) };
-            _checkedTranslation = _track.ActualWidth - _thumb.ActualWidth - _thumb.Margin.Left - _thumb.Margin.Right;
+            this._track.Clip = new RectangleGeometry { Rect = new Rect(0, 0, this._track.ActualWidth, this._track.ActualHeight) };
+            this._checkedTranslation = this._track.ActualWidth - this._thumb.ActualWidth - this._thumb.Margin.Left
+                                       - this._thumb.Margin.Right;
         }
+
+        #endregion
     }
 }
-
-

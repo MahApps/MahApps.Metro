@@ -1,12 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="BlackColor">#FF000000</Color>
-    <Color x:Key="WhiteColor">#FFFFFFFF</Color>
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Color x:Key="BlackColor">#FF000000</Color>
+  <Color x:Key="WhiteColor">#FFFFFFFF</Color>
 
-    <Color x:Key="NormalForegroundColor">#FF000000</Color>
-    <Color x:Key="HoverForegroundColor">#FFFFFFFF</Color>
+  <Color x:Key="NormalForegroundColor">#FF000000</Color>
+  <Color x:Key="HoverForegroundColor">#FFFFFFFF</Color>
 
-    <Color x:Key="Gray5">#FFD8D8D9</Color>
-    <Color x:Key="Gray7">#FFF7F7F7</Color>
-    <Color x:Key="Gray8">#FFE0E0E0</Color>
+  <Color x:Key="Gray5">#FFD8D8D9</Color>
+  <Color x:Key="Gray7">#FFF7F7F7</Color>
+  <Color x:Key="Gray8">#FFE0E0E0</Color>
 </ResourceDictionary>
