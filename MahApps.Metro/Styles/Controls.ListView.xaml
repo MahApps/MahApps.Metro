@@ -67,6 +67,18 @@
                             </Setter>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
                         </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="Selector.IsSelectionActive" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" TargetName="Bd">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
