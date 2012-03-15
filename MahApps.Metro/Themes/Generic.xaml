@@ -601,6 +601,7 @@
     </Style>
 
     <Style TargetType="{x:Type Controls:WindowCommands}">
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:WindowCommands">
