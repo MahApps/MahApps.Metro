@@ -1686,7 +1686,13 @@
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
-                                    <Storyboard />
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
+                                                                       Storyboard.TargetName="DisabledVisualElement">
+                                            <SplineDoubleKeyFrame KeyTime="0"
+                                                                  Value=".55" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard />
@@ -1708,11 +1714,13 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border Background="{DynamicResource BlackBrush}"
                                 BorderThickness="0,0,1,0"
+                                CornerRadius="2.5"
+                                Opacity=".55"
                                 BorderBrush="{DynamicResource ControlBackgroundBrush}" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource DisabledWhiteColorBrush}"
                                    IsHitTestVisible="false"
-                                   Opacity="0" />
+                                   Opacity=".4" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -1736,7 +1744,13 @@
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
-                                    <Storyboard />
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
+                                                                       Storyboard.TargetName="DisabledVisualElement">
+                                            <SplineDoubleKeyFrame KeyTime="0"
+                                                                  Value=".55" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard />
@@ -1758,11 +1772,13 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border Background="{DynamicResource BlackBrush}"
                                 BorderThickness="0,1,0,0"
+                                CornerRadius="2.5"
+                                Opacity=".55"
                                 BorderBrush="{DynamicResource ControlBackgroundBrush}" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource DisabledWhiteColorBrush}"
                                    IsHitTestVisible="false"
-                                   Opacity="0" />
+                                   Opacity=".4" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -1829,10 +1845,16 @@
                                 <VisualState x:Name="Disabled" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle Height="3"
+                        <Rectangle Height="5"
                                    Margin="0,1,0,0">
                             <Rectangle.Fill>
-                                <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                                <!--<SolidColorBrush Color="{DynamicResource AccentColor}" />-->
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="{TemplateBinding Background}" Offset="0.0" />
+                                    <GradientStop Color="{DynamicResource AccentColor}" Offset="0.25" />
+                                    <GradientStop Color="{DynamicResource AccentColor}" Offset="0.75" />
+                                    <GradientStop Color="{TemplateBinding Background}" Offset="1.0" />
+                                </LinearGradientBrush>
                             </Rectangle.Fill>
                         </Rectangle>
                     </Grid>
@@ -1859,7 +1881,7 @@
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="Maximum"
-                Value="10" />
+                Value="100" />
         <Setter Property="Minimum"
                 Value="0" />
         <Setter Property="Value"
@@ -1911,9 +1933,9 @@
                                 <Track.Thumb>
                                     <Thumb x:Name="HorizontalThumb"
                                            Grid.Column="1"
-                                           Height="10"
+                                           Height="18"
                                            IsTabStop="True"
-                                           Width="4"
+                                           Width="10"
                                            Style="{StaticResource HorizontalSliderThumb}" />
                                 </Track.Thumb>
                             </Track>
