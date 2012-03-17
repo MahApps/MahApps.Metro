@@ -96,7 +96,7 @@
     <!-- Original style from http://www.jeff.wilcox.name/2010/05/zunelike-contextmenu-style/ -->
     <Style TargetType="{x:Type Separator}">
         <Setter Property="Background"
-                Value="LightGray" />
+                Value="{DynamicResource TextBrush}" />
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="Margin"
@@ -116,10 +116,12 @@
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="Background"
                 Value="Transparent" />
-        <Setter Property="FontSize"
-                Value="{DynamicResource DefaultFontSize}" />
         <Setter Property="FontFamily"
-                Value="{DynamicResource DefaultFont}" />
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
         <Setter Property="BorderBrush"
                 Value="Transparent" />
         <Setter Property="BorderThickness"
@@ -130,18 +132,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="MenuItem">
                     <Grid>
-                        <Rectangle RadiusX="0"
-                                   RadiusY="0"
-                                   Fill="{TemplateBinding Background}"
-                                   Stroke="{TemplateBinding BorderBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness}" />
-
                         <Rectangle x:Name="Bg"
                                    RadiusX="0"
                                    RadiusY="0"
-                                   StrokeThickness="0"
-                                   Opacity="0"
-                                   Fill="#11000000" />
+                                   Opacity=".65"
+                                   Fill="{TemplateBinding Background}"
+                                   Stroke="{TemplateBinding BorderBrush}"
+                                   StrokeThickness="{TemplateBinding BorderThickness}" />
 
                         <Grid Margin="{TemplateBinding Padding}">
                             <Grid.ColumnDefinitions>
@@ -167,9 +164,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted"
                                  Value="true">
-                            <Setter Property="Opacity"
+                            <Setter Property="Fill"
                                     TargetName="Bg"
-                                    Value="1" />
+                                    Value="{DynamicResource HighlightBrush}" />
+                            <Setter Property="Foreground"
+                                    Value="#FFFFFFFF" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -179,11 +178,11 @@
 
     <Style TargetType="{x:Type ContextMenu}">
         <Setter Property="Background"
-                Value="#FFFFFFFF" />
+                Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderThickness"
-                Value="0,1,0,1" />
+                Value="1" />
         <Setter Property="BorderBrush"
-                Value="#0D000000" />
+                Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="Padding"
                 Value="0,4,0,4" />
         <Setter Property="Template">
@@ -197,7 +196,7 @@
                             Background="{TemplateBinding Background}"
                             CornerRadius="0">
                         <Border.Effect>
-                            <DropShadowEffect ShadowDepth="0"
+                            <DropShadowEffect ShadowDepth="1"
                                               Opacity="0.6"
                                               BlurRadius="5" />
                         </Border.Effect>
