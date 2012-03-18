@@ -1983,6 +1983,7 @@
     </Style>
 
     <Style TargetType="TabItem">
+    <Setter Property="FontFamily" Value="{DynamicResource HeaderFontFamily}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="BorderThickness" Value="1" />
