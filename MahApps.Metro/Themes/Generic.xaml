@@ -683,8 +683,8 @@
                             Padding="0"
                             ToolTip="{DynamicResource WindowCommandsMinimiseToolTip}"
                             Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            FontFamily="Marlett"
-                            Foreground="{TemplateBinding Foreground}"
+                            FontFamily="Marlett" 
+                            Foreground="{DynamicResource BlackBrush}"
                             Opacity="0.8" Content="0" />
 
                         <Button x:Name="PART_Max"
@@ -692,8 +692,8 @@
                             Width="20"
                             Height="20"
                             Style="{DynamicResource ChromelessButtonStyle}"
-                            Padding="0"
-                            Foreground="{TemplateBinding Foreground}"
+                            Padding="0" 
+                            Foreground="{DynamicResource BlackBrush}"
                             Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
                             ToolTip="{DynamicResource WindowCommandsMaximiseToolTip}"
                             Opacity="0.8" FontFamily="Marlett"
@@ -705,7 +705,7 @@
                             Height="20"
                             Style="{DynamicResource ChromelessButtonStyle}"
                             ToolTip="{DynamicResource WindowCommandsCloseToolTip}"
-                            Foreground="{TemplateBinding Foreground}"
+                            Foreground="{DynamicResource BlackBrush}"
                             Opacity="0.8" FontFamily="Marlett"
                             Content="r" />
                     </StackPanel>

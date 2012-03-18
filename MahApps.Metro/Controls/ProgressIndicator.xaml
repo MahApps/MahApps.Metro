@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:Controls="clr-namespace:MahApps.Metro.Controls" 
-             x:Name="progressIndicator"
-             mc:Ignorable="d" 
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+             xmlns:Converters="clr-namespace:MahApps.Metro.Converters" x:Name="progressIndicator"
+             mc:Ignorable="d" MinWidth="200" MinHeight="5" MaxHeight="14"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
 
-        <Controls:WidthPercentageConverter x:Key="WidthPercentageConverter" />
+        <Converters:WidthPercentageConverter x:Key="WidthPercentageConverter" />
         <CircleEase EasingMode="EaseIn" x:Key="ProgressBarEaseIn"/>
 
         <CircleEase EasingMode="EaseIn" x:Key="ProgressBarEaseOut" />
@@ -75,31 +75,31 @@
     </UserControl.Triggers>
     <Border x:Name="IndeterminateRoot" Visibility="Visible"  VerticalAlignment="Stretch">
         <Grid VerticalAlignment="Stretch" Margin="0" HorizontalAlignment="Left">
-            <Rectangle Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R1" HorizontalAlignment="Left" >
-                <Rectangle.RenderTransform>
+            <Ellipse Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ActualHeight}" x:Name="R1" HorizontalAlignment="Left" Opacity="0">
+                <Ellipse.RenderTransform>
                     <TranslateTransform x:Name="R1TT" />
-                </Rectangle.RenderTransform>
-            </Rectangle>
-            <Rectangle Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R2" HorizontalAlignment="Left" >
-                <Rectangle.RenderTransform>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ActualHeight}" x:Name="R2" HorizontalAlignment="Left" Opacity="0">
+                <Ellipse.RenderTransform>
                     <TranslateTransform x:Name="R2TT" />
-                </Rectangle.RenderTransform>
-            </Rectangle>
-            <Rectangle Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R3" HorizontalAlignment="Left" >
-                <Rectangle.RenderTransform>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ActualHeight}" x:Name="R3" HorizontalAlignment="Left" Opacity="0">
+                <Ellipse.RenderTransform>
                     <TranslateTransform x:Name="R3TT" />
-                </Rectangle.RenderTransform>
-            </Rectangle>
-            <Rectangle Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R4" HorizontalAlignment="Left" >
-                <Rectangle.RenderTransform>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ActualHeight}" x:Name="R4" HorizontalAlignment="Left" Opacity="0">
+                <Ellipse.RenderTransform>
                     <TranslateTransform x:Name="R4TT" />
-                </Rectangle.RenderTransform>
-            </Rectangle>
-            <Rectangle Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R5" HorizontalAlignment="Left" >
-                <Rectangle.RenderTransform>
+                </Ellipse.RenderTransform>
+            </Ellipse>
+            <Ellipse Fill="{Binding ProgressColour}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Path=ActualHeight}" x:Name="R5" HorizontalAlignment="Left" Opacity="0">
+                <Ellipse.RenderTransform>
                     <TranslateTransform x:Name="R5TT" />
-                </Rectangle.RenderTransform>
-            </Rectangle>
+                </Ellipse.RenderTransform>
+            </Ellipse>
         </Grid>
     </Border>
 </UserControl>
