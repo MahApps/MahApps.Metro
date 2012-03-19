@@ -96,7 +96,6 @@ namespace MahApps.Metro.Behaviours
                 if (AssociatedObject.ResizeMode == ResizeMode.NoResize)
                 {
                     window.ShowMaxRestoreButton = false;
-                    window.ShowMinButton = false;
                     window.MaxWidth = window.Width;
                     window.MaxHeight = window.Height;
                     ResizeWithGrip = false;
@@ -116,9 +115,9 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Content = Border;
             }
 
-            AssociatedObject.ResizeMode = ResizeWithGrip ? ResizeMode.CanResizeWithGrip : ResizeMode.CanResize;
-
-
+            if (ResizeWithGrip)
+                AssociatedObject.ResizeMode = ResizeMode.CanResizeWithGrip;
+            
             if (AutoSizeToContent)
                 AssociatedObject.Loaded += (s, e) =>
                                                {
