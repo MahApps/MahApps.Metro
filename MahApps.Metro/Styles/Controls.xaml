@@ -10,7 +10,19 @@
 
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
 
-    <!--ValidationToolTipTemplate Style-->
+  <Style TargetType="GroupItem">
+    <Setter Property="FontFamily" Value="{DynamicResource SubHeaderFontFamily}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource NormalForegroundBrush}" />
+  </Style>
+
+  <Style TargetType="Expander">
+    <Setter Property="FontFamily" Value="{DynamicResource SubHeaderFontFamily}" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{DynamicResource NormalForegroundBrush}" />
+  </Style>
+
+  <!--ValidationToolTipTemplate Style-->
     <ControlTemplate x:Key="ValidationToolTipTemplate">
         <Grid x:Name="Root"
               Margin="5,0"
@@ -1971,6 +1983,7 @@
     </Style>
 
     <Style TargetType="TabItem">
+    <Setter Property="FontFamily" Value="{DynamicResource HeaderFontFamily}" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="BorderThickness" Value="1" />

@@ -17,6 +17,8 @@
     <!--20%-->
     <Color x:Key="AccentColor4">#33119EDA</Color>
 
+    <Color x:Key="AccentColor5">#216475</Color>
+
     <!--BASE COLORS-->
     <Color x:Key="BlackColor">#FF000000</Color>
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
@@ -33,6 +35,7 @@
     <Color x:Key="Gray11">#7FA9A9A9</Color>
     <Color x:Key="Gray12">#A5F7F7F7</Color>
     <Color x:Key="Gray13">#5EC9C9C9</Color>
+    <Color x:Key="Gray14">#DEDEDE</Color>
     <Color x:Key="TextBoxText">#FF414141</Color>
     <Color x:Key="NormalForegroundColor">#FF000000</Color>
     <Color x:Key="HoverForegroundColor">#FFFFFFFF</Color>
@@ -144,7 +147,8 @@
     <SolidColorBrush x:Key="LabelTextBrush" Color="{DynamicResource BlackColor}" />
     <SolidColorBrush x:Key="WhiteColorBrush" Color="{DynamicResource WhiteColor}" />
     <SolidColorBrush x:Key="BlackColorBrush" Color="{DynamicResource BlackColor}" />
-
+    <SolidColorBrush x:Key="NormalForegroundBrush" Color="{DynamicResource NormalForegroundColor}" />
+  
     <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource HighlightDarkColor}" />
     <SolidColorBrush x:Key="HighlightLightBrush" Color="{DynamicResource HighlightLightColor}" />
     <SolidColorBrush x:Key="NavigationBorderBrush" Color="#FF9D9492" />
@@ -184,6 +188,7 @@
     <SolidColorBrush x:Key="GrayBrush11" Color="{DynamicResource Gray11}"/>
     <SolidColorBrush x:Key="GrayBrush12" Color="{DynamicResource Gray12}"/>
     <SolidColorBrush x:Key="GrayBrush13" Color="{DynamicResource Gray13}"/>
+    <SolidColorBrush x:Key="GrayBrush14" Color="{DynamicResource Gray14}" />
 
     <SolidColorBrush x:Key="HoverHyperlinkForegroundBrush" Color="{DynamicResource BlackColor}"/>
     <SolidColorBrush x:Key="HoverHyperlinkBackgroundBrush" Color="{DynamicResource WhiteColor}"/>

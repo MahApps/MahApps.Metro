@@ -24,10 +24,12 @@
 
 
     <Style TargetType="{x:Type ListViewItem}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource NormalForegroundBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="MinHeight" Value="22" />
         <Setter Property="Margin" Value="0,0,0,0" />
         <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
         <Setter Property="Template">
@@ -45,15 +47,14 @@
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource HighlightBrush}"></Setter>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                </Setter.Value>
-                            </Setter>
-
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush14}" />
+                        </Trigger>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                            <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -119,7 +120,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background" Value="#e0eff8" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush14}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -138,7 +139,7 @@
 
     <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
         <Setter Property="Width" Value="18" />
-        <Setter Property="Background" Value="LightGray" />
+        <Setter Property="Background" Value="#FF7F7F7F" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
@@ -154,6 +155,9 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="4 2 4 2" />
+        <Setter Property="FontFamily" Value="{DynamicResource SubHeaderFontFamily}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Foreground" Value="{DynamicResource NormalForegroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GridViewColumnHeader">

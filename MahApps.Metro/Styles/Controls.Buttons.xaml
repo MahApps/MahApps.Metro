@@ -36,7 +36,7 @@
                                  StrokeThickness="2"
                                  VerticalAlignment="Stretch" />
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
+                                          Margin="{TemplateBinding Padding}" Name="icon"
                                           RecognizesAccessKey="True"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -69,6 +69,7 @@
                                  Value="true" />
                         <Trigger Property="IsEnabled"
                                  Value="false">
+                            <Setter TargetName="icon" Property="Opacity" Value=".5" />
                             <Setter Property="Foreground"
                                     Value="#ADADAD" />
                         </Trigger>
@@ -349,8 +350,8 @@
         <Setter Property="Background" Value="{DynamicResource GrayBrush7}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}"/>
-        <Setter Property="FontSize" Value="10"/>        
+        <Setter Property="FontFamily" Value="{DynamicResource SubHeaderFontFamily}"/>
+        <Setter Property="FontSize" Value="12"/>        
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Padding" Value="5,6"/>
         <Setter Property="BorderThickness" Value="1"/>

@@ -3,4 +3,6 @@
     <FontFamily x:Key="DefaultFont">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="HeaderFontFamily">Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="ContentFontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="SubHeaderFontFamily">Segoe UI Semibold, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="SmallSubHeaderFontFamily">Segoe UI Semilight, Lucida Sans Unicode, Verdana</FontFamily>
 </ResourceDictionary>

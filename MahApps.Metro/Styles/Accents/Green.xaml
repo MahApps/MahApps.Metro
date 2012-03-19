@@ -1,7 +1,7 @@
 ﻿ <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="HighlightDarkColor">#FF48cb00</Color>
-    <Color x:Key="HighlightLightColor">#FF48cb00</Color>
+    <Color x:Key="HighlightDarkColor">#199900</Color>
+    <Color x:Key="HighlightLightColor">#199900</Color>
 
     <Color x:Key="AccentColor">#CC48cb00</Color>
     <!--60%-->
@@ -11,7 +11,9 @@
     <!--20%-->
     <Color x:Key="AccentColor4">#3348cb00</Color>
 
-    <LinearGradientBrush x:Key="BrandingBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5">
+    <Color x:Key="AccentColor5">#216821</Color>
+
+  <LinearGradientBrush x:Key="BrandingBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5">
         <GradientStop Color="{DynamicResource HighlightDarkColor}" Offset="0"/>
         <GradientStop Color="#FF98370F" Offset="1"/>
     </LinearGradientBrush>
