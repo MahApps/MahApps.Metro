@@ -41,30 +41,9 @@
     <Color x:Key="BaseColor5">#FFBABABA</Color>
     <Color x:Key="BaseColor3">#FF303030</Color>
 
-    <!--LIGHT COLOR TRANSPARENCIES-->
-    <!--0%-->
     <Color x:Key="TransparentWhiteColor">#00FFFFFF</Color>
-    <!--10%-->
-    <Color x:Key="TransparentWhiteLightColor">#19FFFFFF</Color>
-    <!--25%-->
-    <Color x:Key="TransparentLightestColor">#34FFFFFF</Color>
-    <!--65%-->
     <Color x:Key="TransparentLightLightColor">#A5FFFFFF</Color>
-    <!--85%-->
-    <Color x:Key="TransparentLightColor">#D8FFFFFF</Color>
 
-
-    <!--DARK COLOR TRANSPARENCIES-->
-    <!--0%-->
-    <Color x:Key="TransparentBlackColor">#00000000</Color>
-    <!--25%-->
-    <Color x:Key="TransparentDarkColor">#3F000000</Color>
-    <!--35%-->
-    <Color x:Key="TransparentDarkDarkColor">#59000000</Color>
-    <!--60%-->
-    <Color x:Key="TransparentDarkDarkDarkColor">#99000000</Color>
-    <!--80%-->
-    <Color x:Key="TransparentDarkestColor">#CC000000</Color>
 
     <!-- CORE CONTROL COLORS-->
     <Color x:Key="ValidationColor1">#052A2E31</Color>
@@ -86,52 +65,6 @@
     <Color x:Key="ProgressIndeterminateColor3">#4C000000</Color>
     <Color x:Key="ProgressIndeterminateColor4">#4C000000</Color>
 
-    <!-- SDK COLORS -->
-    <Color x:Key="PageOverlayColor">#7F000000</Color>
-
-    <!-- TOOLKIT COLORS -->
-    <Color x:Key="RatingStarsColor">#F6FF9900</Color>
-    <Color x:Key="RatingMouseOverColor">#F6FDFF70</Color>
-    <Color x:Key="TimeHintIconColor1">#F6CAA709</Color>
-    <Color x:Key="TimeHintIconColor2">#F3F7F34F</Color>
-    <Color x:Key="TimeHintIconColor3">#E7CAA709</Color>
-    <Color x:Key="TimeHintIconColor4">#E7967C07</Color>
-    <Color x:Key="TimeHintIconColor5">#E7625106</Color>
-    <Color x:Key="TimeHintIconColor6">#FB8F8873</Color>
-    <Color x:Key="TimeHintIconColor7">#F6271A47</Color>
-    <Color x:Key="TimeHintIconColor8">#E7271A47</Color>
-    <Color x:Key="TimeHintIconColor9">#9A89782B</Color>
-    <Color x:Key="TimeHintIconColor10">#4DEBD60F</Color>
-    <Color x:Key="TimeHintIconColor11">#FBF6EC20</Color>
-    <Color x:Key="TimeHintIconColor12">#FF1B1B54</Color>
-    <Color x:Key="TimeHintIconColor13">#FF1C1C50</Color>
-
-    <Color x:Key="OKButtonIconColor1">#FF67CA0A</Color>
-    <Color x:Key="OKButtonIconColor2">#FF498C38</Color>
-    <Color x:Key="OKButtonIconColor3">#FF29EE5B</Color>
-    <Color x:Key="CancelButtonIconColor1">#FFEA7525</Color>
-    <Color x:Key="CancelButtonIconColor2">#FFDA715B</Color>
-    <Color x:Key="CancelButtonIconColor3">#FFB72909</Color>
-
-    <!--CHART COLORS-->
-    <Color x:Key="ChartBrush1">#FF0097FC</Color>
-    <Color x:Key="ChartBrush2">#FF70BBED</Color>
-    <Color x:Key="ChartBrush3">#FF70BBED</Color>
-    <Color x:Key="ChartBrush4">#FF4556BA</Color>
-    <Color x:Key="ChartBrush5">#FFC84BA4</Color>
-    <Color x:Key="ChartBrush6">#FF477ABE</Color>
-    <Color x:Key="ChartBrush7">#FF6644B7</Color>
-    <Color x:Key="ChartBrush8">#FFA045BA</Color>
-    <Color x:Key="ChartBrush9">#FF73C348</Color>
-    <Color x:Key="ChartBrush10">#FFDD5279</Color>
-    <Color x:Key="ChartBrush11">#FF4999C4</Color>
-    <Color x:Key="ChartBrush12">#FFEC8B58</Color>
-    <Color x:Key="ChartBrush13">#FFECA058</Color>
-    <Color x:Key="ChartBrush14">#FFEC6558</Color>
-    <Color x:Key="ChartBrush15">#FFEC8B58</Color>
-    <Color x:Key="ChartBrush16">#FFECA058</Color>
-
-    <!-- Colors Stop -->
 
     <!-- *************BRUSHES START************* -->
     <!--PROJECT TEMPLATE BRUSHES -->
@@ -152,24 +85,8 @@
     <SolidColorBrush x:Key="PageBorderBrush" Color="#FFB2B2B2" />
     <SolidColorBrush x:Key="BodyTextColorBrush" Color="#FF313131"/>
     <SolidColorBrush x:Key="ControlsDisabledBrush" Color="{DynamicResource TransparentLightLightColor}"/>
-    <SolidColorBrush x:Key="ReadOnlyBrush" Color="{DynamicResource TransparentLightestColor}"/>
-    <SolidColorBrush x:Key="DisabledControlBrush" Color="#FFAAAAAA"/>
-    <SolidColorBrush x:Key="DisabledWhiteColorBrush" Color="{DynamicResource WhiteColor}" />
-    <SolidColorBrush x:Key="RatingStarsBrush" Color="{DynamicResource RatingStarsColor}" />
-    <SolidColorBrush x:Key="RatingMouseOverBrush" Color="{DynamicResource RatingMouseOverColor}" />
-    <SolidColorBrush x:Key="PageOverlayBrush" Color="{DynamicResource PageOverlayColor}"/>
-
-    <SolidColorBrush x:Key="FuzzBrush1" Color="#1E000000" />
-    <SolidColorBrush x:Key="FuzzBrush2" Color="#14000000" />
-    <SolidColorBrush x:Key="FuzzBrush3" Color="Black" />
-
+    <SolidColorBrush x:Key="DisabledWhiteColorBrush" Color="{DynamicResource WhiteColor}" />   
     <SolidColorBrush x:Key="TransparentWhiteBrush" Color="{DynamicResource TransparentWhiteColor}"/>
-    <SolidColorBrush x:Key="TransparentWhiteLightBrush" Color="{DynamicResource TransparentWhiteColor}"/>
-    <SolidColorBrush x:Key="TransparentLightestBrush" Color="{DynamicResource TransparentLightestColor}"/>
-    <SolidColorBrush x:Key="TransparentLightLightBrush" Color="{DynamicResource TransparentLightLightColor}"/>
-    <SolidColorBrush x:Key="TransparentBlackBrush" Color="{DynamicResource TransparentBlackColor}"/>
-    <SolidColorBrush x:Key="TransparentDarkBrush" Color="{DynamicResource TransparentDarkColor}"/>
-    <SolidColorBrush x:Key="TransparentDarkDarkDarkBrush" Color="{DynamicResource TransparentDarkDarkDarkColor}"/>
 
     <SolidColorBrush x:Key="GrayBrush1" Color="{DynamicResource Gray1}"/>
     <SolidColorBrush x:Key="GrayBrush2" Color="{DynamicResource Gray2}"/>
@@ -200,11 +117,6 @@
         <GradientStop Color="{DynamicResource WhiteColor}" Offset="1"/>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="ApplicationNameBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="#FF14BBD2" Offset="0"/>
-        <GradientStop Color="#FF013C6C" Offset="1"/>
-    </LinearGradientBrush>
-
     <SolidColorBrush x:Key="ThumbBrush" Color="{DynamicResource Gray4}" />
 
     <SolidColorBrush x:Key="ItemSelectedBrush" Color="{DynamicResource Gray5}" />
@@ -231,35 +143,6 @@
     <SolidColorBrush x:Key="ValidationBrush3" Color="{DynamicResource ValidationColor3}"/>
     <SolidColorBrush x:Key="ValidationBrush4" Color="{DynamicResource ValidationColor4}"/>
     <SolidColorBrush x:Key="ValidationBrush5" Color="{DynamicResource ValidationColor5}"/>
-    <SolidColorBrush x:Key="ValidationSummaryBrush1" Color="{DynamicResource ValidationSummaryColor1}"/>
-    <SolidColorBrush x:Key="ValidationSummaryBrush2" Color="{DynamicResource ValidationSummaryColor2}"/>
-    <SolidColorBrush x:Key="ValidationSummaryBrush3" Color="{DynamicResource ValidationSummaryColor3}"/>
-    <SolidColorBrush x:Key="ValidationSummaryBrush4" Color="{DynamicResource ValidationSummaryColor4}"/>
-    <SolidColorBrush x:Key="ValidationSummaryBrush5" Color="{DynamicResource ValidationSummaryColor5}"/>
-    <SolidColorBrush x:Key="ValidationSummaryFillBrush1" Color="{DynamicResource ValidationSummaryFillColor1}"/>
-    <SolidColorBrush x:Key="ValidationSummaryFillBrush2" Color="{DynamicResource ValidationSummaryFillColor2}"/>
-    <SolidColorBrush x:Key="ValidationSummaryDisabledBrush" Color="{DynamicResource TransparentLightLightColor}"/>
-
-    <!--VALIDATION ICON BRUSHES-->
-    <SolidColorBrush x:Key="TimeHintIconBrush1" Color="{DynamicResource TimeHintIconColor1}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush2" Color="{DynamicResource TimeHintIconColor2}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush3" Color="{DynamicResource TimeHintIconColor3}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush4" Color="{DynamicResource TimeHintIconColor4}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush5" Color="{DynamicResource TimeHintIconColor5}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush6" Color="{DynamicResource TimeHintIconColor6}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush7" Color="{DynamicResource TimeHintIconColor7}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush8" Color="{DynamicResource TimeHintIconColor8}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush9" Color="{DynamicResource TimeHintIconColor9}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush10" Color="{DynamicResource TimeHintIconColor10}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush11" Color="{DynamicResource TimeHintIconColor11}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush12" Color="{DynamicResource TimeHintIconColor12}"/>
-    <SolidColorBrush x:Key="TimeHintIconBrush13" Color="{DynamicResource TimeHintIconColor13}"/>
-
-    <!-- Brushes Stop -->
-
-
-    <!-- Brushes End -->
-
 
 
     <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
