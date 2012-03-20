@@ -1344,7 +1344,21 @@
                                     </Path>
                                 </ToggleButton>
                                 <Grid Margin="0 0 16 0">
-                                    <ContentPresenter ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    <ContentPresenter x:Name="ContentSite" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    <TextBox    x:Name="PART_EditableTextBox"
+                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                IsHitTestVisible="false" 
+                                                Margin="{TemplateBinding Padding}" 
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                Style="{x:Null}"
+                                                BorderThickness="0"
+                                                Background="Transparent"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                Focusable="True"
+                                                IsReadOnly="{TemplateBinding IsReadOnly}" 
+                                                Visibility="Collapsed"
+                                     />                                    
                                 </Grid>
                             </Grid>
                         </Border>
@@ -1419,6 +1433,17 @@
                             </Border>
                         </Popup>
                     </Grid>
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsEditable" Value="True">
+                            <Setter Property="IsTabStop" Value="false"/>
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="DropDownToggle" Property="Focusable" Value="False"/>
+
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

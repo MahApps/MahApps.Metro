@@ -41,5 +41,13 @@ namespace MetroDemo
         }
 
         public ObservableCollection<Artist> Artists { get; private set; }
+
+        private string _artistName;
+        public string ArtistName {
+            get { return _artistName; }
+            set {
+                _artistName = value;
+            }
+        }
     }
 }
