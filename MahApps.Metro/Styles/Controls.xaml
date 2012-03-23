@@ -1133,6 +1133,7 @@
                 Value="Auto" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
+        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -1343,22 +1344,30 @@
                                         </Path.Fill>
                                     </Path>
                                 </ToggleButton>
+
+                                <Border x:Name="EditableTextBoxBorder"
+                                            Visibility="Collapsed"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="1,1,0,1"
+                                            Background="{DynamicResource ControlBackgroundBrush}"
+                                            HorizontalAlignment="Stretch"
+                                            Margin="0,0,23,0"
+                                            VerticalAlignment="Stretch"
+                                        >
+                                    <TextBox    x:Name="PART_EditableTextBox"
+                                                    HorizontalAlignment="Stretch" 
+                                                    Margin="{TemplateBinding Padding}" 
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    Style="{x:Null}"
+                                                    BorderThickness="0"
+                                                    Foreground="{TemplateBinding Foreground}"
+                                                    Focusable="True"
+                                                    IsReadOnly="{TemplateBinding IsReadOnly}" 
+                                    />
+                                </Border>
                                 <Grid Margin="0 0 16 0">
                                     <ContentPresenter x:Name="ContentSite" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                    <TextBox    x:Name="PART_EditableTextBox"
-                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                IsHitTestVisible="false" 
-                                                Margin="{TemplateBinding Padding}" 
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                Style="{x:Null}"
-                                                BorderThickness="0"
-                                                Background="Transparent"
-                                                Foreground="{TemplateBinding Foreground}"
-                                                Focusable="True"
-                                                IsReadOnly="{TemplateBinding IsReadOnly}" 
-                                                Visibility="Collapsed"
-                                     />                                    
                                 </Grid>
                             </Grid>
                         </Border>
@@ -1437,10 +1446,13 @@
 
                         <Trigger Property="IsEditable" Value="True">
                             <Setter Property="IsTabStop" Value="false"/>
-                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="EditableTextBoxBorder" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
                             <Setter TargetName="DropDownToggle" Property="Focusable" Value="False"/>
-
+                            <Setter TargetName="DropDownToggle" Property="HorizontalAlignment" Value="Right" />
+                            <Setter TargetName="DropDownToggle" Property="Background" Value="Transparent" />
+                            <Setter TargetName="DropDownToggle" Property="Width" Value="23" />
+                            <Setter TargetName="DropDownToggle" Property="BorderThickness" Value="0,1,1,1" />
                         </Trigger>
 
                     </ControlTemplate.Triggers>
