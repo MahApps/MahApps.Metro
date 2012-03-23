@@ -28,6 +28,21 @@ namespace MahApps.Metro.Behaviours
         [DllImport("user32")]
         internal static extern IntPtr MonitorFromWindow(IntPtr handle, int flags);
 
+        [DllImport("dwmapi.dll", PreserveSig = true)]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref Margins pMarInset);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct Margins
+        {
+            internal int leftWidth;
+            internal int rightWidth;
+            internal int topHeight;
+            internal int bottomHeight;
+        }
+
         private HwndSource m_hwndSource;
         private IntPtr m_hwnd;
 
@@ -96,6 +111,14 @@ namespace MahApps.Metro.Behaviours
                 if (AssociatedObject.ResizeMode == ResizeMode.NoResize)
                 {
                     window.ShowMaxRestoreButton = false;
+                    window.ShowMinButton = false;
+                    window.MaxWidth = window.Width;
+                    window.MaxHeight = window.Height;
+                    ResizeWithGrip = false;
+                }
+                else if (AssociatedObject.ResizeMode == ResizeMode.CanMinimize)
+                {
+                    window.ShowMaxRestoreButton = false;
                     window.MaxWidth = window.Width;
                     window.MaxHeight = window.Height;
                     ResizeWithGrip = false;
@@ -155,6 +178,18 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             AddHwndHook();
+
+            var helper = new WindowInteropHelper(AssociatedObject);
+            var val = 2;
+            DwmSetWindowAttribute(helper.Handle, 2, ref val, 4);
+            var m = new Margins
+            {
+                bottomHeight = -1,
+                leftWidth = -1,
+                rightWidth = -1,
+                topHeight = -1
+            };
+            DwmExtendFrameIntoClientArea(helper.Handle, ref m);
         }
 
         private IntPtr HwndHook(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam, ref bool handled)
