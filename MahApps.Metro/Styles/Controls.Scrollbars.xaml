@@ -634,7 +634,7 @@
                 <Setter Property="Width"
                         Value="Auto" />
                 <Setter Property="Height"
-                        Value="8" />
+                        Value="12" />
                 <Setter Property="Template"
                         Value="{DynamicResource HorizontalScrollBar}" />
             </Trigger>
