@@ -16,10 +16,11 @@ date: 2012-02-26 10:05:46 +11:00
 5. [Controls](#controls)
   1. [Buttons](#buttons)
   2. <a href="#">test   </a>
-6. [Resources](#resources)
+6. [Known issues][#known_issues]
+7. [Resources](#resources)
   1. <a href="#">Icons</a>
   2. <a href="#">Metro web theme (Metro.css)</a>
-7. [Changelog](#changelog)
+8. [Changelog](#changelog)
 
 {% include foreword.md %}	
 
@@ -31,6 +32,7 @@ date: 2012-02-26 10:05:46 +11:00
 
 {% include controls.md %}	
 
+{% include known_issues.md %}
 {% include resources.md %}
 
 {% include changelog.md %}	
