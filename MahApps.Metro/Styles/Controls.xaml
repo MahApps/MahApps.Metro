@@ -229,7 +229,7 @@
         <Setter Property="Foreground"
                 Value="{DynamicResource WhiteBrush}" />
         <Setter Property="Padding"
-                Value="3,0,3,0" />
+                Value="3,1,3,1" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="BorderBrush"
@@ -300,11 +300,8 @@
                 Value="26" />
         <Setter Property="Background"
                 Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource TextBoxText}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding"
                 Value="2" />
         <Setter Property="BorderBrush"
@@ -1043,7 +1040,7 @@
                                    Opacity="0"
                                    Margin="1"
                                    Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" />
-                        <Grid Margin="0,1,0,0">
+                        <Grid Margin="2">
                             <Border x:Name="ReadOnlyVisualElement"
                                     Background="{x:Null}"
                                     Opacity="0" />
@@ -1051,7 +1048,7 @@
                                 <ScrollViewer x:Name="PART_ContentHost"
                                               BorderThickness="0"
                                               IsTabStop="False"
-                                              Margin="4,2,2,2"
+                                              Margin="2"
                                               VerticalAlignment="Stretch"
                                               Background="{x:Null}" />
                             </Grid>
@@ -1343,7 +1340,7 @@
                                         </Path.Fill>
                                     </Path>
                                 </ToggleButton>
-                                <Grid Margin="0 0 16 0">
+                                <Grid Margin="4 0 16 0">
                                     <ContentPresenter ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                 </Grid>
                             </Grid>

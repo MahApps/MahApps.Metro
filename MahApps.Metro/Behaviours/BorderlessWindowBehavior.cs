@@ -19,6 +19,9 @@ namespace MahApps.Metro.Behaviours
         [DllImport("dwmapi")]
         private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
 
+        [DllImport("dwmapi", PreserveSig = true)]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
         [DllImport("user32")]
         public static extern IntPtr DefWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam);
 
@@ -101,6 +104,13 @@ namespace MahApps.Metro.Behaviours
                     window.MaxHeight = window.Height;
                     ResizeWithGrip = false;
                 }
+                else if (AssociatedObject.ResizeMode == ResizeMode.CanMinimize)
+                {
+                    window.ShowMaxRestoreButton = false;
+                    window.MaxWidth = window.Width;
+                    window.MaxHeight = window.Height;
+                    ResizeWithGrip = false;
+                }
             }
             else { 
                 //Other windows may not, easiest to just inject one!
@@ -116,9 +126,9 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Content = Border;
             }
 
-            AssociatedObject.ResizeMode = ResizeWithGrip ? ResizeMode.CanResizeWithGrip : ResizeMode.CanResize;
-
-
+            if (ResizeWithGrip)
+                AssociatedObject.ResizeMode = ResizeMode.CanResizeWithGrip;
+            
             if (AutoSizeToContent)
                 AssociatedObject.Loaded += (s, e) =>
                                                {
@@ -142,8 +152,8 @@ namespace MahApps.Metro.Behaviours
 
         private void AddHwndHook()
         {
-            m_hwndSource = HwndSource.FromVisual(AssociatedObject) as HwndSource;
-            m_hwndSource.AddHook(HwndHook);
+            m_hwndSource = PresentationSource.FromVisual(AssociatedObject) as HwndSource;
+            if (m_hwndSource != null) m_hwndSource.AddHook(HwndHook);
             m_hwnd = new WindowInteropHelper(AssociatedObject).Handle;
         }
 
@@ -180,6 +190,8 @@ namespace MahApps.Metro.Behaviours
                     {
                         if (Environment.OSVersion.Version.Major >= 6 && DwmIsCompositionEnabled())
                         {
+                            var val = 2;
+                            DwmSetWindowAttribute(m_hwnd, 2, ref val, 4);
                             var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
                             DwmExtendFrameIntoClientArea(m_hwnd, ref m);
                             if (Border != null)
