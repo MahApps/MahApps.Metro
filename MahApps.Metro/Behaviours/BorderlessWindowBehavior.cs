@@ -19,6 +19,9 @@ namespace MahApps.Metro.Behaviours
         [DllImport("dwmapi")]
         private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
 
+        [DllImport("dwmapi", PreserveSig = true)]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+
         [DllImport("user32")]
         public static extern IntPtr DefWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam);
 
@@ -27,21 +30,6 @@ namespace MahApps.Metro.Behaviours
 
         [DllImport("user32")]
         internal static extern IntPtr MonitorFromWindow(IntPtr handle, int flags);
-
-        [DllImport("dwmapi.dll", PreserveSig = true)]
-        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
-
-        [DllImport("dwmapi.dll")]
-        private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref Margins pMarInset);
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct Margins
-        {
-            internal int leftWidth;
-            internal int rightWidth;
-            internal int topHeight;
-            internal int bottomHeight;
-        }
 
         private HwndSource m_hwndSource;
         private IntPtr m_hwnd;
@@ -164,8 +152,8 @@ namespace MahApps.Metro.Behaviours
 
         private void AddHwndHook()
         {
-            m_hwndSource = HwndSource.FromVisual(AssociatedObject) as HwndSource;
-            m_hwndSource.AddHook(HwndHook);
+            m_hwndSource = PresentationSource.FromVisual(AssociatedObject) as HwndSource;
+            if (m_hwndSource != null) m_hwndSource.AddHook(HwndHook);
             m_hwnd = new WindowInteropHelper(AssociatedObject).Handle;
         }
 
@@ -178,18 +166,6 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             AddHwndHook();
-
-            var helper = new WindowInteropHelper(AssociatedObject);
-            var val = 2;
-            DwmSetWindowAttribute(helper.Handle, 2, ref val, 4);
-            var m = new Margins
-            {
-                bottomHeight = -1,
-                leftWidth = -1,
-                rightWidth = -1,
-                topHeight = -1
-            };
-            DwmExtendFrameIntoClientArea(helper.Handle, ref m);
         }
 
         private IntPtr HwndHook(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -214,6 +190,8 @@ namespace MahApps.Metro.Behaviours
                     {
                         if (Environment.OSVersion.Version.Major >= 6 && DwmIsCompositionEnabled())
                         {
+                            var val = 2;
+                            DwmSetWindowAttribute(m_hwnd, 2, ref val, 4);
                             var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
                             DwmExtendFrameIntoClientArea(m_hwnd, ref m);
                             if (Border != null)
