@@ -1,5 +1,12 @@
 ##Getting Started
 
+- [Installing MahApps.Metro](#installing_mahappsmetro)
+- [Styling a Window](#styling_a_window)
+- [Explaining the MetroWindow elements](#explaining_the_metrowindow_elements)
+- [Customisation](#customisation)
+- [Advanced](#advanced)
+
+
 ###Installing MahApps.Metro
 You can install MahApps.Metro via Nuget using the GUI (right click on your project, Manage Nuget References, search for 'MahApps.Metro') or via the console:
 
@@ -64,7 +71,7 @@ If you don't like the elements that are labelled, fear not, they're all optional
 
 1. The titlebar is what sets `MetroWindow` apart from rolling your own. `ShowTitleBar="true|false"`
 2. Instead of using static images, this uses a font called **Marlett**.
-3. The resize grip is the *only* way to resize a `MetroWindow`, other than in code or with the min/max buttons. For dialogs where you may not want the user resizing the window, **************
+3. The resize grip is the *only* way to resize a `MetroWindow`, other than in code or with the min/max buttons. For dialogs where you may not want the user resizing the window, *MISSING?*
 4. `ShowIconOnTitleBar="true|false"` 
 
 
@@ -87,7 +94,7 @@ Including this within the `MetroWindow` tag (under the `Window.Resources` sectio
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBlock Text="  deploy cupcakes" />
+                    <TextBlock Text="deploy cupcakes" />
                 </StackPanel>
             </Button>
         </Controls:WindowCommands>

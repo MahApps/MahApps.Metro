@@ -12,36 +12,43 @@ Last updated for stable release 0.7
 
 **This documentation is under construction**
 
-1. [Foreword](#foreword)
-2. [Examples](#examples)
-3. [Getting started](#getting_started)
-4. [Controls](#controls)
-  1. [Buttons](#buttons)
-  2. <a href="#">test   </a>
-5. [Known issues](#known_issues)
-6. [Resources](#resources)
-  1. [Icons](#icons)
-  2. [metro.css](#metrocss)
-7. [Credits](#credits)
-8. [Changelog](#changelog)
+{% capture foreword %}{% include foreword.md %}{% endcapture %}
+{% capture examples %}{% include examples.md %}{% endcapture %}
+{% capture gettingstarted %}{% include gettingstarted.md %}{% endcapture %}
+{% capture controls %}{% include controls.md %}{% endcapture %}
+{% capture known_issues %}{% include known_issues.md %}{% endcapture %}
+{% capture resources %}{% include resources.md %}{% endcapture %}
+{% capture credit %}{% include credit.md %}{% endcapture %}
+{% capture changelog %}{% include changelog.md %}{% endcapture %}
 
 
+<article class="metro-pivot">
+	<section>
+		{{ foreword | markdownify}}
+	</section>
+	<section>
+		{{ examples | markdownify}}
+	</section>
+	<section>
+		{{ gettingstarted | markdownify}}
+	</section>
+	<section>
+		{{ controls | markdownify}}
+	</section>
+	<section>
+		{{ known_issues | markdownify}}
+	</section>
+	<section>
+		{{ resources | markdownify}}
+	</section>
+	<section>
+		{{ credit | markdownify}}
+	</section>
+	<section>
+		{{ changelog | markdownify}}
+	</section>
+</article>
 
-{% include foreword.md %}	
 
-{% include examples.md %}
-
-{% include gettingstarted.md %}	
-
-{% include controls.md %}	
-
-{% include known_issues.md %}
-
-{% include resources.md %}
-
-{% include credit.md %}	
-
-{% include changelog.md %}	
-				
 				
 				
