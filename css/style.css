@@ -22,3 +22,7 @@ h4 { color: #036695; }
 .metro-pivot .headers {
 	white-space: normal;
 }
+
+small.top-link {
+	font-size: 10pt;
+}

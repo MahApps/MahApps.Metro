@@ -1,6 +1,6 @@
 
-// set up toc-pivot
 $(function(){
+	// set up toc-pivot
 	$('.metro-pivot').metroPivot({
 		animationDuration: 350,
 		headerOpacity: 0.25,
@@ -14,4 +14,7 @@ $(function(){
 		controlInitialized: undefined,
 		selectedItemChanged: undefined
 	});
+
+	// add top link
+	$('h3').append(' <small class="top-link"><a href="#top">TOP</small>');
 });
