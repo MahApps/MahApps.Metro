@@ -16,6 +16,3 @@ Currently, this consists of [Entypo](http://www.entypo.com/) and [Temparian's Wi
 More information about [MahApps.Metro.Resources](http://nuget.org/packages/MahApps.Metro.Resources/)
 
 
-### metro.css
-
-This document uses the [metro.css](http://code52.org/metro.css/), a [code52](http://code52.org) project.

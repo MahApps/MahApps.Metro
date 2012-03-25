@@ -1,13 +1,13 @@
 ##Getting Started
 
 ###Installing MahApps.Metro
-You can install MahApps.Metro via Nuget using the GUI (right click on your project, Manage Nuget References, search for 'MahApps.Metro') or via the console `PM> MahApps.Metro`
+You can install MahApps.Metro via Nuget using the GUI (right click on your project, Manage Nuget References, search for 'MahApps.Metro') or via the console:
+
+	PM> Install-Package MahApps.Metro
 
 If you wish to use the *alpha*/nightly releases of MahApps.Metro, you need to use the console
 
-				TODO
-
-This documentation assumes the latest stable release (at the time of writing, 0.6)
+	PM> Install-Package MahApps.Metro -Pre
 
 ###Styling a Window
 There are two main approaches you can take with MahApps.Metro to style a Window, using the `MetroWindow` control and rolling your own. For the getting started guide, we'll cover and assume `MetroWindow` as this approach will work for a good percentage of apps, and is the quickest and easiest way to get going. If you wish to learn more about rolling your own, it's covered in the "Advanced" section of Getting Started.
