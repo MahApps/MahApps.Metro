@@ -47,16 +47,16 @@ namespace MahApps.Metro.Controls
                 _mouseCaptured = false;
                 _currentWidth = -1;
                 var w = -1 * GetWidths();
-
-                if (Traslation < (Items.Count - 1) * w)
+                
+                if (Translation < (Items.Count - 1) * w)
                 {
                     c = Items.Count - 1;
                 }
-                else if (Traslation < 0)
+                else if (Translation < 0)
                 {
-                    if (Math.Abs(Traslation) + c * -ActualWidth > 20)
+                    if (Math.Abs(Translation) + c * -ActualWidth > 20)
                         c += 1;
-                    else if (Math.Abs(Traslation) + c * -ActualWidth < -20)
+                    else if (Math.Abs(Translation) + c * -ActualWidth < -20)
                         c -= 1;
                 }
                 else
@@ -64,7 +64,7 @@ namespace MahApps.Metro.Controls
                     c = 0;
                 }
 
-                Animate(Traslation, Math.Min(0, c * -ActualWidth));
+                Animate(Translation, Math.Min(0, c * -ActualWidth));
                 return;
             }
 
@@ -78,7 +78,7 @@ namespace MahApps.Metro.Controls
             if (_mouseCaptured && Mouse.LeftButton == MouseButtonState.Pressed && MouseOver())
             {
                 _increment = Mouse.GetPosition(Items[0] as PanoramaItem).X;
-                Traslation += _increment - _currentWidth;
+                Translation += _increment - _currentWidth;
             }
         }
 
@@ -100,7 +100,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(ItemHeightProperty, value); }
         }
 
-        public double Traslation
+        public double Translation
         {
             get
             {
@@ -117,6 +117,7 @@ namespace MahApps.Metro.Controls
                 }
                 return 0;
             }
+
             set
             {
                 if (Items != null || Items.Count > 0)
