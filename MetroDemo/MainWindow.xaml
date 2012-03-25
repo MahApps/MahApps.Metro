@@ -223,13 +223,11 @@
                         <Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}"
                                                     Height="6"
                                                     Width="600" />
-                        <Controls:ToggleSwitch HorizontalAlignment="Left"
-                                               Margin="0,10,0,0" />
+                        <Controls:ToggleSwitch HorizontalAlignment="Left" Width="150" Height="75"  Margin="0,10,0,0"  Header="WiFi rest state" />
                         <Slider Margin="0,10,0,0"
                                 HorizontalAlignment="Left"
                                 Width="261.667"
                                 Value="5"
-                                IsEnabled="False"
                                 SmallChange="0.5" />
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                         <TextBlock Text="ComboBox Binding scenario" />
