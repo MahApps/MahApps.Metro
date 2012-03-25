@@ -1,5 +1,8 @@
 ##Resources
 
+
+###Icons
+
 **Starting with MahApps.Metro 0.7, there will *no longer* be any embedded icons**. These have all been moved to a separate nuget package that installs the fonts/XAML resources as loose files. This allows better discoverability and customisation.
 
 You can install this package using nuget:
@@ -11,3 +14,8 @@ Currently, this consists of [Entypo](http://www.entypo.com/) and [Temparian's Wi
 ![](images/6_Resources.png)
 
 More information about [MahApps.Metro.Resources](http://nuget.org/packages/MahApps.Metro.Resources/)
+
+
+### metro.css
+
+This document uses the [metro.css](http://code52.org/metro.css/), a [code52](http://code52.org) project.

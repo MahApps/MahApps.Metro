@@ -1,0 +1,19 @@
+#content { width:900px; margin-left:auto; margin-right:auto;}
+
+blockquote
+{
+	border-left: 3px solid #a9a9a9;
+	color:#a9a9a9;
+	padding-left: 5px;
+	margin:25px;
+}
+
+pre { 
+overflow: auto;
+}
+pre code { 
+	background:none;border:0;padding-left:0px;padding-right:0px;
+}
+h2 { color: #1BA1E2; }
+h3 { color : #E73347; }
+h4 { color: #036695; }
