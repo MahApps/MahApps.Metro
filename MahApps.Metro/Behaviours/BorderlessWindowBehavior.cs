@@ -78,7 +78,7 @@ namespace MahApps.Metro.Behaviours
 
         protected override void OnAttached()
         {
-            if (HwndSource.FromVisual(AssociatedObject) != null)
+            if (PresentationSource.FromVisual(AssociatedObject) != null)
                 AddHwndHook();
             else
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
@@ -93,22 +93,19 @@ namespace MahApps.Metro.Behaviours
                                                {
                                                    var ancestors = window.GetPart<Border>("PART_Border");
                                                    Border = ancestors;
-
+                                                   if (Environment.OSVersion.Version.Major < 6 || !DwmIsCompositionEnabled()) 
+                                                       Border.BorderThickness = new Thickness(1);
                                                };
 
                 if (AssociatedObject.ResizeMode == ResizeMode.NoResize)
                 {
                     window.ShowMaxRestoreButton = false;
                     window.ShowMinButton = false;
-                    window.MaxWidth = window.Width;
-                    window.MaxHeight = window.Height;
                     ResizeWithGrip = false;
                 }
                 else if (AssociatedObject.ResizeMode == ResizeMode.CanMinimize)
                 {
                     window.ShowMaxRestoreButton = false;
-                    window.MaxWidth = window.Width;
-                    window.MaxHeight = window.Height;
                     ResizeWithGrip = false;
                 }
             }
