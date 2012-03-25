@@ -12,8 +12,7 @@ Last updated for stable release 0.7
 
 **This documentation is under construction**
 
-##Table of Contents
-1. [Foreword)](#foreword)
+1. [Foreword](#foreword)
 2. [Examples](#examples)
 3. [Getting started](#getting_started)
 4. [Controls](#controls)
