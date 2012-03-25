@@ -8,7 +8,7 @@ using System.Windows.Media.Media3D;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    ///   Based on Greg Schechter's Planeator
+    ///   Based on Greg Schechter's Planerator
     ///   http://blogs.msdn.com/b/greg_schechter/archive/2007/10/26/enter-the-planerator-dead-simple-3d-in-wpf-with-a-stupid-name.aspx
     /// </summary>
     [ContentProperty("Child")]
