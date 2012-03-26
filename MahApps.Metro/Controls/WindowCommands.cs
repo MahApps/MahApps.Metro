@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,6 +12,15 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Min", Type = typeof(Button))]
     public class WindowCommands : ItemsControl
     {
+        [DllImport("user32", CharSet = CharSet.Auto)]
+        static extern int LoadString(IntPtr hInstance, uint uID, StringBuilder lpBuffer, int nBufferMax);
+
+        [DllImport("kernel32")]
+        static extern IntPtr LoadLibrary(string lpFileName);
+
+        [DllImport("kernel32.dll")]
+        static extern bool FreeLibrary(IntPtr hModule);
+
         public event ClosingWindowEventHandler ClosingWindow;
 
         static WindowCommands()
@@ -20,6 +31,39 @@ namespace MahApps.Metro.Controls
         private Button min;
         private Button max;
         private Button close;
+
+        private IntPtr user32 = IntPtr.Zero;
+
+        ~WindowCommands()
+        {
+            if (user32 != IntPtr.Zero)
+                FreeLibrary(user32);
+        }
+
+        private string GetCaption(int id)
+        {
+            if (user32 == IntPtr.Zero)
+                user32 = LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+
+            var sb = new StringBuilder(256);
+            LoadString(user32, (uint)id, sb, sb.Capacity);
+            return sb.ToString().Replace("&", "");
+        }
+
+        public string strMinimize
+        {
+            get { return GetCaption(900); }
+        }
+
+        public string strMaximize
+        {
+            get { return GetCaption(901); }
+        }
+
+        public string strClose
+        {
+            get { return GetCaption(905); }
+        }
 
         public override void OnApplyTemplate()
         {
@@ -74,12 +118,12 @@ namespace MahApps.Metro.Controls
                 if (parentWindow.WindowState == WindowState.Normal)
                 {
                     max.Content = "1";
-                    max.SetResourceReference(ToolTipProperty, "WindowCommandsMaximiseToolTip");
+                    max.ToolTip = GetCaption(901);
                 }
                 else
                 {
                     max.Content = "2";
-                    max.SetResourceReference(ToolTipProperty, "WindowCommandsRestoreToolTip");
+                    max.ToolTip = GetCaption(903);
                 }
             }
         }
