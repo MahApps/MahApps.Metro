@@ -1,20 +1,12 @@
 
 $(function(){
-	// set up toc-pivot
-	$('.metro-pivot').metroPivot({
-		animationDuration: 350,
-		headerOpacity: 0.25,
-		fixedHeaders: true,
-		headerSelector: function (item) { return item.children("h2").first(); },
-		itemSelector: function (item) { return item.children("section"); },
-		headerItemTemplate: function () { return $("<span class='header' />"); },
-		pivotItemTemplate: function () { return $("<div class='pivotItem' />"); },
-		itemsTemplate: function () { return $("<div class='items' />"); },
-		headersTemplate: function () { return $("<div class='headers' />"); },
-		controlInitialized: undefined,
-		selectedItemChanged: undefined
-	});
-
-	// add top link
-	$('h3').append(' <small class="top-link"><a href="#top">TOP</small>');
+	// add 'top' link to h2 and h3
+	var headers = $('h2[class!="toc-header"], h3');
+	headers.append(' <small class="top-link"><a href="#top">TOP</small>');
+	// then hide it unless hovering
+	$('.top-link').hide();
+	headers.hover(
+		function() { $('.top-link', this).fadeIn(100); },
+		function() { $('.top-link', this).fadeOut(250); }
+	);
 });
