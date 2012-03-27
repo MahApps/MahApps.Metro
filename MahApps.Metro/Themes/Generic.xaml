@@ -652,7 +652,7 @@
                             Height="20"
                             Style="{DynamicResource ChromelessButtonStyle}"
                             Padding="0"
-                            ToolTip="{Binding strMinimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
+                            ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                             Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
                             FontFamily="Marlett"
                             Foreground="{TemplateBinding Foreground}"
@@ -666,7 +666,7 @@
                             Padding="0"
                             Foreground="{TemplateBinding Foreground}"
                             Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            ToolTip="{Binding strMaximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
+                            ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                             Opacity="0.8" FontFamily="Marlett"
                             Content="1" />
 
@@ -675,7 +675,7 @@
                             Width="20"
                             Height="20"
                             Style="{DynamicResource ChromelessButtonStyle}"
-                            ToolTip="{Binding strClose, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
+                            ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                             Foreground="{TemplateBinding Foreground}"
                             Opacity="0.8" FontFamily="Marlett"
                             Content="r" />

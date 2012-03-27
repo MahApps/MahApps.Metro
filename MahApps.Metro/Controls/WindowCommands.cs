@@ -22,17 +22,61 @@ namespace MahApps.Metro.Controls
         static extern bool FreeLibrary(IntPtr hModule);
 
         public event ClosingWindowEventHandler ClosingWindow;
+        public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
+
+        public string Minimize
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(minimize))
+                    minimize = GetCaption(900);
+                return minimize;
+            }
+        }
+
+        public string Maximize
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(maximize))
+                    maximize = GetCaption(901);
+                return maximize;
+            }
+        }
+
+        public string Close
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(closeText))
+                    closeText = GetCaption(905);
+                return closeText;
+            }
+        }
+
+        public string Restore
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(restore))
+                    closeText = GetCaption(905);
+                return closeText;
+            }
+        }
+
+        private static string minimize;
+        private static string maximize;
+        private static string closeText;
+        private static string restore;
+        private Button min;
+        private Button max;
+        private Button close;
+        private IntPtr user32 = IntPtr.Zero;
 
         static WindowCommands()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowCommands), new FrameworkPropertyMetadata(typeof(WindowCommands)));
         }
-
-        private Button min;
-        private Button max;
-        private Button close;
-
-        private IntPtr user32 = IntPtr.Zero;
 
         ~WindowCommands()
         {
@@ -48,21 +92,6 @@ namespace MahApps.Metro.Controls
             var sb = new StringBuilder(256);
             LoadString(user32, (uint)id, sb, sb.Capacity);
             return sb.ToString().Replace("&", "");
-        }
-
-        public string strMinimize
-        {
-            get { return GetCaption(900); }
-        }
-
-        public string strMaximize
-        {
-            get { return GetCaption(901); }
-        }
-
-        public string strClose
-        {
-            get { return GetCaption(905); }
         }
 
         public override void OnApplyTemplate()
@@ -84,16 +113,15 @@ namespace MahApps.Metro.Controls
         protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
         {
             var handler = ClosingWindow;
-            if (handler != null) handler(this, args);
+            if (handler != null) 
+                handler(this, args);
         }
 
         private void MinimiseClick(object sender, RoutedEventArgs e)
         {
             var parentWindow = GetParentWindow();
             if (parentWindow != null)
-            {
                 parentWindow.WindowState = WindowState.Minimized;
-            }
         }
 
         private void MaximiseClick(object sender, RoutedEventArgs e)
@@ -113,18 +141,18 @@ namespace MahApps.Metro.Controls
 
         private void RefreshMaximiseIconState(Window parentWindow)
         {
-            if (parentWindow != null)
+            if (parentWindow == null)
+                return;
+
+            if (parentWindow.WindowState == WindowState.Normal)
             {
-                if (parentWindow.WindowState == WindowState.Normal)
-                {
-                    max.Content = "1";
-                    max.ToolTip = GetCaption(901);
-                }
-                else
-                {
-                    max.Content = "2";
-                    max.ToolTip = GetCaption(903);
-                }
+                max.Content = "1";
+                max.ToolTip = maximize;
+            }
+            else
+            {
+                max.Content = "2";
+                max.ToolTip = Restore;
             }
         }
 
@@ -133,7 +161,8 @@ namespace MahApps.Metro.Controls
             var closingWindowEventHandlerArgs = new ClosingWindowEventHandlerArgs();
             OnClosingWindow(closingWindowEventHandlerArgs);
 
-            if (closingWindowEventHandlerArgs.Cancelled) return;
+            if (closingWindowEventHandlerArgs.Cancelled)
+                return;
 
             var parentWindow = GetParentWindow();
             if (parentWindow != null)
@@ -153,13 +182,6 @@ namespace MahApps.Metro.Controls
 
             var parentWindow = parent as Window;
             return parentWindow;
-        }
-
-        public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
-
-        public class ClosingWindowEventHandlerArgs : EventArgs
-        {
-            public bool Cancelled { get; set; }
         }
     }
 }
