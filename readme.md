@@ -160,7 +160,7 @@ References
   [6]: http://images.theleagueofpaul.com/postimages/green_2.png
   [7]: http://images.theleagueofpaul.com/postimages/dark_red_2.png
   [8]: https://connect.microsoft.com/VisualStudio/feedback/details/633535/msdn-forum-dynamicresource-in-nested-resource-dictionary-not-working
-  [9]: /wpf-resourcedictionary-bugs
+  [9]: http://www.theleagueofpaul.com/wpf-resourcedictionary-bugs
   [10]: http://weblogs.asp.net/bsimser/archive/2011/01/09/500-metro-style-wp7-icons.aspx
   [11]: http://www.thenounproject.com/
   [12]: http://somerandomdude.com/projects/iconic/
