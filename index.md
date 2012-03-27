@@ -12,19 +12,9 @@ Last updated for stable release 0.7
 
 **This documentation is under construction**
 
-1. [Foreword](#foreword)
-2. [Examples](#examples)
-3. [Getting started](#getting_started)
-4. [Controls](#controls)
-  1. [Buttons](#buttons)
-  2. <a href="#">test   </a>
-5. [Known issues](#known_issues)
-6. [Resources](#resources)
-  1. [Icons](#icons)
-  2. [metro.css](#metrocss)
-7. [Credits](#credits)
-8. [Changelog](#changelog)
-
+<h2 class="toc-header">Contents</h2>
+* Auto-generated toc:
+{:toc}
 
 
 {% include foreword.md %}	
@@ -43,5 +33,6 @@ Last updated for stable release 0.7
 
 {% include changelog.md %}	
 				
+
 				
 				

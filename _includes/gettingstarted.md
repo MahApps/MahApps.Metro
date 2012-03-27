@@ -1,5 +1,12 @@
 ##Getting Started
 
+- [Installing MahApps.Metro](#installing_mahappsmetro)
+- [Styling a Window](#styling_a_window)
+- [Explaining the MetroWindow elements](#explaining_the_metrowindow_elements)
+- [Customisation](#customisation)
+- [Advanced](#advanced)
+
+
 ###Installing MahApps.Metro
 You can install MahApps.Metro via Nuget using the GUI (right click on your project, Manage Nuget References, search for 'MahApps.Metro') or via the console:
 
@@ -64,7 +71,7 @@ If you don't like the elements that are labelled, fear not, they're all optional
 
 1. The titlebar is what sets `MetroWindow` apart from rolling your own. `ShowTitleBar="true|false"`
 2. Instead of using static images, this uses a font called **Marlett**.
-3. The resize grip is the *only* way to resize a `MetroWindow`, other than in code or with the min/max buttons. For dialogs where you may not want the user resizing the window, **************
+3. The resize grip is the *only* way to resize a `MetroWindow`, other than in code or with the min/max buttons. For dialogs where you may not want the user resizing the window, *MISSING?*
 4. `ShowIconOnTitleBar="true|false"` 
 
 
@@ -77,23 +84,24 @@ Including this within the `MetroWindow` tag (under the `Window.Resources` sectio
 	<Controls:MetroWindow.WindowCommands>
 	    <Controls:WindowCommands>
 	        <Button Content="settings" />
-	            <Button >
-	                <StackPanel Orientation="Horizontal">
-	                    <Rectangle Width="20" Height="20">
-	                        <Rectangle.Resources>
-	                            <SolidColorBrush x:Key="BlackBrush" Color="White" />
-	                        </Rectangle.Resources>
-	                        <Rectangle.Fill>
-	                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
-	                        </Rectangle.Fill>
-	                    </Rectangle>
-	                    <TextBlock Text="  deploy cupcakes" />
-	                </StackPanel>
-	            </Button>
-	        </Controls:WindowCommands>
+            <Button>
+                <StackPanel Orientation="Horizontal">
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Resources>
+                            <SolidColorBrush x:Key="BlackBrush" Color="White" />
+                        </Rectangle.Resources>
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                    <TextBlock Text="deploy cupcakes" />
+                </StackPanel>
+            </Button>
+        </Controls:WindowCommands>
 	</Controls:MetroWindow.WindowCommands>
 
 Produces this window titlebar:
+
 ![](images/05_WindowCommands.png)
 
 The foreground (link) colour of `WindowCommands` will always be white, *unless* the titlebar is disabled, in which case it will be the reverse of whatever theme you have selected. For example, using the White/Light theme, the foreground colour will be black.
@@ -101,7 +109,7 @@ The foreground (link) colour of `WindowCommands` will always be white, *unless* 
 
 ###Advanced
 ####Roll your own Window
-The roll your own approach is very relevant, depending on what style of app you're going for. A good example is [code52's MarkPad](http://code52.org/DownmarkerWPF/), where we needed the flexibility of rolling our own window while still using MahApps.Metro as an underlying visual framework. The key elements used were the `WindowsCommand` (discussed above), and `BorderlessWindowBehavior`.
+The roll your own approach is very relevant, depending on what style of app you're going for. A good example is [code52's MarkPad](http://code52.org/DownmarkerWPF/), where we needed the flexibility of rolling our own window while still using MahApps.Metro as an underlying visual framework. The key elements used were the `WindowCommands` (discussed [above](#windowcommands)), and `BorderlessWindowBehavior`.
 
 #####BorderlessWindowBehavior
 Add some namespace references to the opening `Window` tag:
