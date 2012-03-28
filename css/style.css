@@ -18,8 +18,6 @@ h2 { color: #1BA1E2; }
 h3 { color : #E73347; }
 h4 { color: #036695; }
 
-.maruku_toc ul { list-style:decimal !important; }
-
 small.top-link {
 	font-size: 10pt;
 }
