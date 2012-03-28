@@ -59,8 +59,8 @@ namespace MahApps.Metro.Controls
             get
             {
                 if (string.IsNullOrEmpty(restore))
-                    closeText = GetCaption(905);
-                return closeText;
+                    restore = GetCaption(903);
+                return restore;
             }
         }
 
@@ -147,7 +147,7 @@ namespace MahApps.Metro.Controls
             if (parentWindow.WindowState == WindowState.Normal)
             {
                 max.Content = "1";
-                max.ToolTip = maximize;
+                max.ToolTip = Maximize;
             }
             else
             {
