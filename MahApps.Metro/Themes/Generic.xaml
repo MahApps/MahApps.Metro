@@ -677,6 +677,7 @@
                             Height="20"
                             Style="{DynamicResource ChromelessButtonStyle}"
                             ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
+                            Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
                             Foreground="{TemplateBinding Foreground}"
                             Opacity="0.8" FontFamily="Marlett"
                             Content="r" />
