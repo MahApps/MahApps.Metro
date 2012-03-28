@@ -18,11 +18,9 @@ h2 { color: #1BA1E2; }
 h3 { color : #E73347; }
 h4 { color: #036695; }
 
-/* Override default metro-pivot headers style for TOC */
-.metro-pivot .headers {
-	white-space: normal;
-}
+.maruku_toc ul { list-style:decimal !important; }
 
 small.top-link {
 	font-size: 10pt;
 }
+
