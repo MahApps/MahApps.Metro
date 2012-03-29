@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace MahApps.Metro.Native
 {
     [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Auto)]
-    public struct CREATESTRUCT
+    internal struct CREATESTRUCT
     {
         public IntPtr lpCreateParams;
         public IntPtr hInstance;
