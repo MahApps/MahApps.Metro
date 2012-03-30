@@ -1,0 +1,111 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
+
+    <Converters:ToUpperConverter x:Key="ToUpperConverter1" />
+
+    <Style TargetType="DataGrid">
+        <Setter Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="BorderThickness" Value="0 1 0 0" />
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}"/>
+        <Setter Property="HeadersVisibility" Value="Column" />
+        <Setter Property="GridLinesVisibility" Value="None" />
+    </Style>
+
+    <Style TargetType="{x:Type DataGridRow}" >
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="MinHeight" Value="25" />
+        <!--<Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="IsTabStop" Value="False" />-->
+        <Style.Triggers>
+            <Trigger Property="IsSelected"  Value="True">
+                <Setter Property="BorderBrush" Value="#FF143c65" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource AccentColor3}" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource AccentColor3}" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type DataGridCell}">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Style.Triggers>
+            <Trigger Property="IsSelected"  Value="True">
+                <Setter Property="BorderBrush" Value="#FF143c65" />
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource AccentColor3}" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style x:Key="DataGridColumnHeaderGripper" TargetType="Thumb">
+    <Setter Property="Width" Value="18" />
+    <Setter Property="Background" Value="LightGray" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Thumb}">
+          <Border Padding="{TemplateBinding Padding}" Background="Transparent" Margin="0 0 0 2">
+            <Rectangle HorizontalAlignment="Center" Width="1" Fill="{TemplateBinding Background}" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+    <Style TargetType="DataGridColumnHeader" >
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Padding" Value="4 2 4 2" />
+        <Setter Property="Background" Value="Red"/>
+        <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="DataGridColumnHeader">
+          <Grid>
+            <Rectangle Fill="Transparent" IsHitTestVisible="True" />
+            <Border Name="HeaderBorder"
+                    Padding="{TemplateBinding Padding}">
+              <ContentPresenter Name="HeaderContent"
+                                Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter1}}"
+                                TextBlock.FontWeight="SemiBold"
+                              Margin="0,0,0,1"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              RecognizesAccessKey="True"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Border>
+            <Thumb x:Name="PART_HeaderGripper"
+                   HorizontalAlignment="Right"
+                   Margin="0,0,-9,0"
+                   Style="{StaticResource DataGridColumnHeaderGripper}" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsPressed" Value="true">
+              <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource Grey3}" />
+              <Setter TargetName="HeaderContent" Property="Margin" Value="1,1,0,0" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+              <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

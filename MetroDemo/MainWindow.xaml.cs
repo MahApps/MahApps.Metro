@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using MahApps.Metro;
 
 namespace MetroDemo
@@ -61,6 +62,11 @@ namespace MetroDemo
         {
             //new ChildWindow().ShowDialog();
             new PanoramaDemo().Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MahApps.Metro.Controls.MessageBox.DisplayMessage("Testing", "Testing the messagebox control");
         }
     }
 }
