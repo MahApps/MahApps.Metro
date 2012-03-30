@@ -67,6 +67,24 @@
                                                       Click="MiDarkBlue" />
                                         <MenuItem Header="Dark Purple"
                                                       Click="MiDarkPurple" />
+                                        <Separator />
+                                        <MenuItem Header="Application Light Red"
+                                                      Click="AppMiLightRed" />
+                                        <MenuItem Header="Application Light Green"
+                                                      Click="AppMiLightGreen" />
+                                        <MenuItem Header="Application Light Blue"
+                                                      Click="AppMiLightBlue" />
+                                        <MenuItem Header="Application Light Purple"
+                                                      Click="AppMiLightPurple" />
+                                        <Separator />
+                                        <MenuItem Header="Application Dark Red"
+                                                      Click="AppMiDarkRed" />
+                                        <MenuItem Header="Application Dark Green"
+                                                      Click="AppMiDarkGreen" />
+                                        <MenuItem Header="Application Dark Blue"
+                                                      Click="AppMiDarkBlue" />
+                                        <MenuItem Header="Application Dark Purple"
+                                                      Click="AppMiDarkPurple" />
                                     </ContextMenu>
                                 </Button.ContextMenu>
                             </Button>

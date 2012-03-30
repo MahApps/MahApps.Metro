@@ -26,6 +26,7 @@ namespace MahApps.Metro.Controls
         public MessageBox(string Title, string Message, BoxType Type)
         {
             InitializeComponent();
+            ThemeManager.ChangeAppTheme(this);
             this.Title = Title;
             txtMessage.Text = Message;
             type = Type;
