@@ -26,10 +26,9 @@ A default WPF Window with a few controls looks like the following:
 
 Once MahApps.Metro is [installed](#installing_mahappsmetro),
 
-* open up MainWindow.xaml,
-* add a namespace reference in the opening Window tag:
-
-	xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+* open up `MainWindow.xaml`
+* add a namespace reference in the opening Window tag:  
+`xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"`
 
 * change `<Window ...` to `<Controls:MetroWindow ...` (remember to change the closing tag!)
 
@@ -44,20 +43,20 @@ This doesn't look very 'metro'-ish yet because the resources and styles need to 
 > We have tried embedding the resources and styles in `MetroWindow`, but then you lose all ability to dynamically change the theme.
 
 Just under the opening MetroWindow tag, add the following
-
-   <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Icons/MergedResources.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
+	
+	   <Window.Resources>
+	        <ResourceDictionary>
+	            <ResourceDictionary.MergedDictionaries>
+	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Icons/MergedResources.xaml" />
+	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+	            </ResourceDictionary.MergedDictionaries>
+	        </ResourceDictionary>
+	    </Window.Resources>
 	
 ![](images/03_StyledWindow.png)
 
@@ -71,7 +70,7 @@ If you don't like the elements that are labelled, fear not, they're all optional
 
 1. The titlebar is what sets `MetroWindow` apart from rolling your own. `ShowTitleBar="true|false"`
 2. Instead of using static images, this uses a font called **Marlett**.
-3. The resize grip is the *only* way to resize a `MetroWindow`, other than in code or with the min/max buttons. For dialogs where you may not want the user resizing the window, *MISSING?*
+3. The resize grip is the *only* way to resize a `MetroWindow`, other than in code or with the min/max buttons. For dialogs where you may not want the user resizing the window, treating it like a normal window and setting `ResizeMode="NoResize"` will work
 4. `ShowIconOnTitleBar="true|false"` 
 
 
