@@ -175,7 +175,7 @@ namespace MahApps.Metro.Behaviours
                     var create = (CREATESTRUCT)Marshal.PtrToStructure(lParam, typeof(CREATESTRUCT));
                     if (create.style == Constants.WS_MAXIMIZE)
                     {
-                        MessageBox.Show("Got here");
+                        MahApps.Metro.Controls.MessageBox.DisplayMessage("Got here","Got here");
                     }
                     break;
 

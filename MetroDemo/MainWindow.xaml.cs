@@ -64,7 +64,7 @@ namespace MetroDemo
             new PanoramaDemo().Show();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             MahApps.Metro.Controls.MessageBox.DisplayMessage("Testing", "Testing the messagebox control");
         }
