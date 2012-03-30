@@ -10,5 +10,14 @@
         public const int WM_CREATE = 0x0001;
         public const long WS_MAXIMIZE = 0x01000000;
         public const int GCLP_HBRBACKGROUND = -0x0A;
+        public const int WM_NCHITTEST = 0x84;
+        public const int HTLEFT = 0x0A;
+        public const int HTRIGHT = 0x0B;
+        public const int HTTOP = 0x0C;
+        public const int HTTOPLEFT = 0x0D;
+        public const int HTTOPRIGHT = 0x0E;
+        public const int HTBOTTOM = 0x0F;
+        public const int HTBOTTOMLEFT = 0x10;
+        public const int HTBOTTOMRIGHT = 0x11;
     }
 }
