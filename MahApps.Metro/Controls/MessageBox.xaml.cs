@@ -48,10 +48,12 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public static BoxResult DisplayMessage(string Title, string Message, BoxType Type = BoxType.OK)
+        public static BoxResult DisplayMessage(string Title, string Message, Window owner=null, BoxType Type = BoxType.OK)
         {
             MessageBox mb = new MessageBox(Title, Message, Type);
+            mb.Owner = owner;
             mb.ShowDialog();
+            
             return mb.Result;
         }
 

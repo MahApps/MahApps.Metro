@@ -106,7 +106,7 @@ namespace MetroDemo
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MahApps.Metro.Controls.MessageBox.DisplayMessage("Testing", "Testing the messagebox control");
+            MahApps.Metro.Controls.MessageBox.DisplayMessage("Testing", "Testing the messagebox control", this);
         }
     }
 }
