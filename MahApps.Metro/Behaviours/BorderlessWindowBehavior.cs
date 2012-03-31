@@ -31,6 +31,26 @@ namespace MahApps.Metro.Behaviours
         [DllImport("user32")]
         internal static extern IntPtr MonitorFromWindow(IntPtr handle, int flags);
 
+        [DllImport("user32.dll", EntryPoint = "SetClassLong")]
+        public static extern uint SetClassLongPtr32(IntPtr hWnd, int nIndex, uint dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
+        public static extern IntPtr SetClassLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        [DllImport("gdi32.dll")]
+        private static extern IntPtr CreateSolidBrush(int crColor);
+
+        [DllImport("gdi32.dll")]
+        private static extern bool DeleteObject(IntPtr hObject);
+
+        private static IntPtr SetClassLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size > 4)
+                return SetClassLongPtr64(hWnd, nIndex, dwNewLong);
+            else
+                return new IntPtr(SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
+        }
+
         private HwndSource m_hwndSource;
         private IntPtr m_hwnd;
 
@@ -163,6 +183,23 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             AddHwndHook();
+            SetDefaultBackgroundColor();
+        }
+
+        private void SetDefaultBackgroundColor()
+        {
+            var bgSolidColorBrush = AssociatedObject.Background as SolidColorBrush;
+
+            if (bgSolidColorBrush != null)
+            {
+                var rgb = bgSolidColorBrush.Color.R | (bgSolidColorBrush.Color.G << 8) | (bgSolidColorBrush.Color.B << 16);
+
+                // set the default background color of the window -> this avoids the black stripes when resizing
+                var hBrushOld = SetClassLong(m_hwnd, Constants.GCLP_HBRBACKGROUND, CreateSolidBrush(rgb));
+
+                if (hBrushOld != IntPtr.Zero)
+                    DeleteObject(hBrushOld);
+            }
         }
 
         private IntPtr HwndHook(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam, ref bool handled)
