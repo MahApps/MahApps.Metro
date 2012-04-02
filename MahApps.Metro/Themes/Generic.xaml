@@ -6,6 +6,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/GridComboBox.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -69,10 +70,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:ToggleSwitchButton}">
                     <Border x:Name="Root"
-        						BorderBrush="{TemplateBinding BorderBrush}"
-        						BorderThickness="{TemplateBinding BorderThickness}"
-        						Opacity="{TemplateBinding Opacity}"
-        						Padding="{TemplateBinding Padding}">
+         BorderBrush="{TemplateBinding BorderBrush}"
+         BorderThickness="{TemplateBinding BorderThickness}"
+         Opacity="{TemplateBinding Opacity}"
+         Padding="{TemplateBinding Padding}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -108,9 +109,9 @@
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="BackgroundTranslation"
-        											Storyboard.TargetProperty="(TranslateTransform.X)"
-        											Duration="0"
-        											To="68">
+         Storyboard.TargetProperty="(TranslateTransform.X)"
+         Duration="0"
+         To="68">
                                             <DoubleAnimation.EasingFunction>
                                                 <ExponentialEase Exponent="15" EasingMode="EaseOut" />
                                             </DoubleAnimation.EasingFunction>
@@ -124,9 +125,9 @@
                                 <VisualState x:Name="Unchecked">
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="BackgroundTranslation"
-        											Storyboard.TargetProperty="(TranslateTransform.X)"
-        											Duration="0"
-        											To="0" />
+         Storyboard.TargetProperty="(TranslateTransform.X)"
+         Duration="0"
+         To="0" />
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="border">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
                                         </ObjectAnimationUsingKeyFrames>
@@ -138,10 +139,10 @@
                             <Grid x:Name="SwitchTrack" Width="Auto">
                                 <Grid x:Name="SwitchBottom" Height="25" Width="60">
                                     <Rectangle x:Name="SwitchBackground"
-        										Width="Auto"
-        										Height="Auto"
-        										HorizontalAlignment="Stretch"
-        										VerticalAlignment="Stretch">
+         Width="Auto"
+         Height="Auto"
+         HorizontalAlignment="Stretch"
+         VerticalAlignment="Stretch">
                                         <Rectangle.RenderTransform>
                                             <TranslateTransform x:Name="BackgroundTranslation" />
                                         </Rectangle.RenderTransform>
@@ -156,12 +157,12 @@
                                     </Border>
                                 </Grid>
                                 <Border x:Name="SwitchThumb"
-        									BorderBrush="{TemplateBinding Background}"
-        									BorderThickness="0"
-        									Margin="0"
-        									Width="13"
-        									Height="Auto"
-        									HorizontalAlignment="Left">
+         BorderBrush="{TemplateBinding Background}"
+         BorderThickness="0"
+         Margin="0"
+         Width="13"
+         Height="Auto"
+         HorizontalAlignment="Left">
                                     <Border.RenderTransform>
                                         <TransformGroup>
                                             <ScaleTransform/>
@@ -190,8 +191,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:ToggleSwitch}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}"
-        						BorderThickness="{TemplateBinding BorderThickness}"
-        						Padding="{TemplateBinding Padding}">
+         BorderThickness="{TemplateBinding BorderThickness}"
+         Padding="{TemplateBinding Padding}">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
@@ -199,7 +200,7 @@
                                     <Storyboard>
                                         <DoubleAnimation Storyboard.TargetName="Header" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0" To="0.3" />
                                         <DoubleAnimation Storyboard.TargetName="Content" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0" To="0.3" />
-                                        <DoubleAnimation Storyboard.TargetName="Switch" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0"  To="0.75" />
+                                        <DoubleAnimation Storyboard.TargetName="Switch" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0" To="0.75" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -214,28 +215,28 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <ContentControl x:Name="Header"
-        								FontWeight="Normal"
-        								Content="{TemplateBinding Header}"
-        								ContentTemplate="{TemplateBinding HeaderTemplate}"
-        								HorizontalAlignment="Left"
-        								IsTabStop="False"
-        								Margin="0,0,0,5"
-        								Opacity="0.65"
-        								VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="16" BorderThickness="0" />
+         FontWeight="Normal"
+         Content="{TemplateBinding Header}"
+         ContentTemplate="{TemplateBinding HeaderTemplate}"
+         HorizontalAlignment="Left"
+         IsTabStop="False"
+         Margin="0,0,0,5"
+         Opacity="0.65"
+         VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="16" BorderThickness="0" />
                             <ContentControl x:Name="Content"
-        								Grid.Row="1"
-        								Content="{TemplateBinding Content}"
-        								ContentTemplate="{TemplateBinding ContentTemplate}"
-        								HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-        								IsTabStop="False"
-        								Margin="-1,1,0,-7"
-        								VerticalAlignment="{TemplateBinding VerticalContentAlignment}" FontFamily="Segoe UI Semibold" FontSize="14.667" />
+         Grid.Row="1"
+         Content="{TemplateBinding Content}"
+         ContentTemplate="{TemplateBinding ContentTemplate}"
+         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+         IsTabStop="False"
+         Margin="-1,1,0,-7"
+         VerticalAlignment="{TemplateBinding VerticalContentAlignment}" FontFamily="Segoe UI Semibold" FontSize="14.667" />
                             <Controls:ToggleSwitchButton x:Name="Switch"
-        								Grid.RowSpan="1"
-        								Grid.Column="1"
-        								Background="{TemplateBinding Background}"
-        								SwitchForeground="{TemplateBinding SwitchForeground}"
-        								VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" />
+         Grid.RowSpan="1"
+         Grid.Column="1"
+         Background="{TemplateBinding Background}"
+         SwitchForeground="{TemplateBinding SwitchForeground}"
+         VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
@@ -522,16 +523,16 @@
                                 <TextBlock
                                     Grid.Column="1"
                                     Text="{TemplateBinding Title, Converter={conv:ToUpperConverter}}"
-                                    HorizontalAlignment="Left" 
+                                    HorizontalAlignment="Left"
                                     TextTrimming="CharacterEllipsis"
-                                    VerticalAlignment="Center" 
-                                    Margin="8 -1 0 0" 
-                                    FontSize="16" 
+                                    VerticalAlignment="Center"
+                                    Margin="8 -1 0 0"
+                                    FontSize="16"
                                     FontFamily="{DynamicResource HeaderFontFamily}"
                                     Foreground="White"/>
                             </Grid>
-                            <ContentPresenter 
-                                Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 
+                            <ContentPresenter
+                                Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 x:Name="PART_WindowCommands"
                                 Panel.ZIndex="1"
                                 Grid.RowSpan="2"
@@ -605,19 +606,19 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Grid Background="{TemplateBinding Background}">
+                                                <Grid Background="{TemplateBinding Background}">
                                                     <ContentPresenter x:Name="contentPresenter"
                                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                             RecognizesAccessKey="True"
                                                             Opacity="0.75" Margin="11,1,11,1" />
-                                                    
-                                                    <Rectangle x:Name="border" 
+
+                                                    <Rectangle x:Name="border"
                                                                SnapsToDevicePixels="True"
-                                                               IsHitTestVisible="False" 
+                                                               IsHitTestVisible="False"
                                                                Opacity="0.25"
-                                                               Width="0" Height="15" VerticalAlignment="Stretch" HorizontalAlignment="Right" 
+                                                               Width="0" Height="15" VerticalAlignment="Stretch" HorizontalAlignment="Right"
                                                                Fill="{TemplateBinding Foreground}" Margin="10,0,0,0" />
                                                 </Grid>
                                                 <ControlTemplate.Triggers>
@@ -681,7 +682,7 @@
                             Opacity="0.8" FontFamily="Marlett"
                             Content="r" />
                     </StackPanel>
-                   
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
