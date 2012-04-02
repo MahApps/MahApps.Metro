@@ -48,7 +48,7 @@ The function is very similar to that of a checkbox, but easier to differentiate 
 
 `<Controls:ToggleSwitch Header="WiFi rest state" />`
 
-![](/images/09_toggleswitch.png)  
+![](images/09_toggleswitch.png)  
 
 You can bind to/set `IsChecked` to switch between the two states.
 
@@ -67,4 +67,4 @@ The easiest way (for me) would have been to add a custom control, something like
 
 Will produce a textbox that looks like the below image. The three states are *unfocussed* with no user text entered, focussed, and unfocussed with user text.
 
-![](/images/10_textboxstates.png)
+![](images/10_textboxstates.png)
