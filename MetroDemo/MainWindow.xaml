@@ -84,7 +84,7 @@
                                              VerticalAlignment="Top"
                                              GroupName="test"
                                              HorizontalAlignment="Left" />
-                                <TextBox Text="This is a textbox"
+                                <TextBox Controls:TextboxHelper.Watermark="This is a textbox"
                                          Margin="88.694,36.96,0,0"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
