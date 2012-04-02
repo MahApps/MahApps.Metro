@@ -7,19 +7,14 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    using MahApps.Metro.Native;
+
     [TemplatePart(Name = "PART_Max", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Close", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Min", Type = typeof(Button))]
     public class WindowCommands : ItemsControl
     {
-        [DllImport("user32", CharSet = CharSet.Auto)]
-        static extern int LoadString(IntPtr hInstance, uint uID, StringBuilder lpBuffer, int nBufferMax);
-
-        [DllImport("kernel32")]
-        static extern IntPtr LoadLibrary(string lpFileName);
-
-        [DllImport("kernel32.dll")]
-        static extern bool FreeLibrary(IntPtr hModule);
+       
 
         public event ClosingWindowEventHandler ClosingWindow;
         public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
@@ -81,16 +76,16 @@ namespace MahApps.Metro.Controls
         ~WindowCommands()
         {
             if (user32 != IntPtr.Zero)
-                FreeLibrary(user32);
+                UnsafeNativeMethods.FreeLibrary(user32);
         }
 
         private string GetCaption(int id)
         {
             if (user32 == IntPtr.Zero)
-                user32 = LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+                user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
 
             var sb = new StringBuilder(256);
-            LoadString(user32, (uint)id, sb, sb.Capacity);
+            UnsafeNativeMethods.LoadString(user32, (uint)id, sb, sb.Capacity);
             return sb.ToString().Replace("&", "");
         }
 
