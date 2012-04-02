@@ -14,7 +14,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30));
 
         static MetroWindow()
         {
@@ -39,6 +41,18 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(ShowMinButtonProperty); }
             set { SetValue(ShowMinButtonProperty, value); }
+        }
+
+        public bool ShowCloseButton
+        {
+            get { return (bool)GetValue(ShowCloseButtonProperty); }
+            set { SetValue(ShowCloseButtonProperty, value); }
+        }
+
+        public int TitlebarHeight
+        {
+            get { return (int)GetValue(TitlebarHeightProperty); }
+            set { SetValue(TitlebarHeightProperty, value); }
         }
 
         public bool ShowMaxRestoreButton
