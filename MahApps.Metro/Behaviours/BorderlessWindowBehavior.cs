@@ -13,24 +13,6 @@ namespace MahApps.Metro.Behaviours
 {
     public class BorderlessWindowBehavior : Behavior<Window>
     {
-        [DllImport("dwmapi", PreserveSig = false)]
-        public static extern bool DwmIsCompositionEnabled();
-
-        [DllImport("dwmapi")]
-        private static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
-
-        [DllImport("dwmapi", PreserveSig = true)]
-        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
-
-        [DllImport("user32")]
-        public static extern IntPtr DefWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32")]
-        internal static extern bool GetMonitorInfo(IntPtr hMonitor, MONITORINFO lpmi);
-
-        [DllImport("user32")]
-        internal static extern IntPtr MonitorFromWindow(IntPtr handle, int flags);
-
         private HwndSource m_hwndSource;
         private IntPtr m_hwnd;
 
@@ -44,13 +26,13 @@ namespace MahApps.Metro.Behaviours
 
             // Adjust the maximized size and position to fit the work area of the correct monitor
 
-            System.IntPtr monitor = MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
+            System.IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
 
             if (monitor != System.IntPtr.Zero)
             {
 
                 MONITORINFO monitorInfo = new MONITORINFO();
-                GetMonitorInfo(monitor, monitorInfo);
+                UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
                 RECT rcWorkArea = monitorInfo.rcWork;
                 RECT rcMonitorArea = monitorInfo.rcMonitor;
                 mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
@@ -93,7 +75,7 @@ namespace MahApps.Metro.Behaviours
                                                {
                                                    var ancestors = window.GetPart<Border>("PART_Border");
                                                    Border = ancestors;
-                                                   if (Environment.OSVersion.Version.Major < 6 || !DwmIsCompositionEnabled()) 
+                                                   if (Environment.OSVersion.Version.Major < 6 || !UnsafeNativeMethods.DwmIsCompositionEnabled()) 
                                                        Border.BorderThickness = new Thickness(1);
                                                };
 
@@ -185,12 +167,12 @@ namespace MahApps.Metro.Behaviours
                     break;
                 case Constants.WM_NCPAINT:
                     {
-                        if (Environment.OSVersion.Version.Major >= 6 && DwmIsCompositionEnabled())
+                        if (Environment.OSVersion.Version.Major >= 6 && UnsafeNativeMethods.DwmIsCompositionEnabled())
                         {
                             var val = 2;
-                            DwmSetWindowAttribute(m_hwnd, 2, ref val, 4);
+                            UnsafeNativeMethods.DwmSetWindowAttribute(m_hwnd, 2, ref val, 4);
                             var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
-                            DwmExtendFrameIntoClientArea(m_hwnd, ref m);
+                            UnsafeNativeMethods.DwmExtendFrameIntoClientArea(m_hwnd, ref m);
                             if (Border != null)
                                 Border.BorderThickness = new Thickness(0);
                         }
@@ -206,7 +188,7 @@ namespace MahApps.Metro.Behaviours
                     {
                         /* As per http://msdn.microsoft.com/en-us/library/ms632633(VS.85).aspx , "-1" lParam
                          * "does not repaint the nonclient area to reflect the state change." */
-                        returnval = DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
+                        returnval = UnsafeNativeMethods.DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
                         handled = true;
                     }
                     break;
