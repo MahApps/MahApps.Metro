@@ -9,5 +9,6 @@
         public const int WM_GETMINMAXINFO = 0x24;
         public const int WM_CREATE = 0x0001;
         public const long WS_MAXIMIZE = 0x01000000;
+        public const int GCLP_HBRBACKGROUND = -0x0A;
     }
 }

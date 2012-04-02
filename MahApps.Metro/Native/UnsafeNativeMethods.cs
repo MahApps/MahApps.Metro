@@ -48,5 +48,17 @@ namespace MahApps.Metro.Native
         [DllImport("kernel32", CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool FreeLibrary([In] IntPtr hModule);
+
+        [DllImport("user32.dll", EntryPoint = "SetClassLong")]
+        internal static extern uint SetClassLongPtr32(IntPtr hWnd, int nIndex, uint dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
+        internal static extern IntPtr SetClassLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        [DllImport("gdi32.dll")]
+        internal static extern IntPtr CreateSolidBrush(int crColor);
+
+        [DllImport("gdi32.dll")]
+        internal static extern bool DeleteObject(IntPtr hObject);
     }
 }

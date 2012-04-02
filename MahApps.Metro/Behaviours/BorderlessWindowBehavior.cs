@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,36 +12,8 @@ namespace MahApps.Metro.Behaviours
 {
     public class BorderlessWindowBehavior : Behavior<Window>
     {
-        private HwndSource m_hwndSource;
-        private IntPtr m_hwnd;
-
         public static DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
         public static DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
-
-        private static void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
-        {
-
-            var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
-
-            // Adjust the maximized size and position to fit the work area of the correct monitor
-
-            System.IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
-
-            if (monitor != System.IntPtr.Zero)
-            {
-
-                MONITORINFO monitorInfo = new MONITORINFO();
-                UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                RECT rcWorkArea = monitorInfo.rcWork;
-                RECT rcMonitorArea = monitorInfo.rcMonitor;
-                mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
-                mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-                mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-                mmi.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
-            }
-
-            Marshal.StructureToPtr(mmi, lParam, true);
-        }
 
         public bool ResizeWithGrip
         {
@@ -57,6 +28,40 @@ namespace MahApps.Metro.Behaviours
         }
 
         public Border Border { get; set; }
+
+        private HwndSource _mHWNDSource;
+        private IntPtr _mHWND;
+        
+        private static IntPtr SetClassLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size > 4)
+                return UnsafeNativeMethods.SetClassLongPtr64(hWnd, nIndex, dwNewLong);
+
+            return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
+        }
+
+        private static void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
+        {
+            var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+
+            // Adjust the maximized size and position to fit the work area of the correct monitor
+            IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
+
+            if (monitor != IntPtr.Zero)
+            {
+
+                var monitorInfo = new MONITORINFO();
+                UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
+                RECT rcWorkArea = monitorInfo.rcWork;
+                RECT rcMonitorArea = monitorInfo.rcMonitor;
+                mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
+                mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
+                mmi.ptMaxSize.x = Math.Abs(rcWorkArea.right - rcWorkArea.left);
+                mmi.ptMaxSize.y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+            }
+
+            Marshal.StructureToPtr(mmi, lParam, true);
+        }
 
         protected override void OnAttached()
         {
@@ -131,20 +136,39 @@ namespace MahApps.Metro.Behaviours
 
         private void AddHwndHook()
         {
-            m_hwndSource = PresentationSource.FromVisual(AssociatedObject) as HwndSource;
-            if (m_hwndSource != null) m_hwndSource.AddHook(HwndHook);
-            m_hwnd = new WindowInteropHelper(AssociatedObject).Handle;
+            _mHWNDSource = PresentationSource.FromVisual(AssociatedObject) as HwndSource;
+            if (_mHWNDSource != null) 
+                _mHWNDSource.AddHook(HwndHook);
+
+            _mHWND = new WindowInteropHelper(AssociatedObject).Handle;
         }
 
         private void RemoveHwndHook()
         {
             AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
-            m_hwndSource.RemoveHook(HwndHook);
+            _mHWNDSource.RemoveHook(HwndHook);
         }
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             AddHwndHook();
+			SetDefaultBackgroundColor();
+        }
+
+        private void SetDefaultBackgroundColor()
+        {
+            var bgSolidColorBrush = AssociatedObject.Background as SolidColorBrush;
+
+            if (bgSolidColorBrush != null)
+            {
+                var rgb = bgSolidColorBrush.Color.R | (bgSolidColorBrush.Color.G << 8) | (bgSolidColorBrush.Color.B << 16);
+
+                // set the default background color of the window -> this avoids the black stripes when resizing
+                var hBrushOld = SetClassLong(_mHWND, Constants.GCLP_HBRBACKGROUND, UnsafeNativeMethods.CreateSolidBrush(rgb));
+
+                if (hBrushOld != IntPtr.Zero)
+                    UnsafeNativeMethods.DeleteObject(hBrushOld);
+            }
         }
 
         private IntPtr HwndHook(IntPtr hWnd, int message, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -170,9 +194,9 @@ namespace MahApps.Metro.Behaviours
                         if (Environment.OSVersion.Version.Major >= 6 && UnsafeNativeMethods.DwmIsCompositionEnabled())
                         {
                             var val = 2;
-                            UnsafeNativeMethods.DwmSetWindowAttribute(m_hwnd, 2, ref val, 4);
+                            UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
                             var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
-                            UnsafeNativeMethods.DwmExtendFrameIntoClientArea(m_hwnd, ref m);
+                            UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
                             if (Border != null)
                                 Border.BorderThickness = new Thickness(0);
                         }
