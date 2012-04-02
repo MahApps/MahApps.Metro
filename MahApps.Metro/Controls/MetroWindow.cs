@@ -117,7 +117,11 @@ namespace MahApps.Metro.Controls
                 double virtualScreenWidth = SystemParameters.VirtualScreenWidth;
                 left = left + width > virtualScreenWidth ? virtualScreenWidth - width : left;
 
-                Top = mouseAbsolute.Y - e.MouseDevice.GetPosition(this).Y;
+                var mousePosition = e.MouseDevice.GetPosition(this);
+
+                // When dragging the window down at the very top of the border,
+                // move the window a bit upwards to avoid showing the resize handle as soon as the mouse button is released
+                Top = mousePosition.Y < 5 ? -5 : mouseAbsolute.Y - mousePosition.Y;
                 Left = left;
 
                 // Restore window to normal state.

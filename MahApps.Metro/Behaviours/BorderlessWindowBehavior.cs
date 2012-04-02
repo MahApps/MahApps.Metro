@@ -224,8 +224,64 @@ namespace MahApps.Metro.Behaviours
                      * as mentioned by jason.bullard (comment from September 22, 2011) on http://gallery.expression.microsoft.com/ZuneWindowBehavior/ */
                     handled = false;
                     break;
-            }
+                case Constants.WM_NCHITTEST:
 
+                    // don't process the message on windows that can't be resized
+                    var resizeMode = AssociatedObject.ResizeMode;
+                    if (resizeMode == ResizeMode.CanMinimize || resizeMode == ResizeMode.NoResize)
+                        break;
+
+                    // get X & Y out of the message                   
+                    var screenPoint = new Point(UnsafeNativeMethods.GET_X_LPARAM(lParam), UnsafeNativeMethods.GET_Y_LPARAM(lParam));
+
+                    // convert to window coordinates
+                    var windowPoint = AssociatedObject.PointFromScreen(screenPoint);
+                    var windowSize = AssociatedObject.RenderSize;
+                    var windowRect = new Rect(windowSize);
+                    windowRect.Inflate(-6,-6);
+
+                    // don't process the message if the mouse is outside the 6px resize border
+                    if (windowRect.Contains(windowPoint))
+                        break;
+
+                    var windowHeight = (int)windowSize.Height;
+                    var windowWidth = (int)windowSize.Width;
+
+                    // create the rectangles where resize arrows are shown
+                    var topLeft = new Rect(0, 0, 6, 6);
+                    var top = new Rect(6, 0, windowWidth - 12, 6);
+                    var topRight = new Rect(windowWidth - 6, 0, 6, 6);
+
+                    var left = new Rect(0, 6, 6, windowHeight - 12);
+                    var right = new Rect(windowWidth - 6, 6, 6, windowHeight - 12);
+
+                    var bottomLeft = new Rect(0, windowHeight - 6, 6, 6);
+                    var bottom = new Rect(6, windowHeight - 6, windowWidth - 12, 6);
+                    var bottomRight = new Rect(windowWidth - 6, windowHeight - 6, 6, 6);
+
+                    // check if the mouse is within one of the rectangles
+                    if (topLeft.Contains(windowPoint))
+                        returnval = (IntPtr)Constants.HTTOPLEFT;
+                    else if (top.Contains(windowPoint))
+                        returnval = (IntPtr)Constants.HTTOP;
+                    else if (topRight.Contains(windowPoint))
+                        returnval = (IntPtr)Constants.HTTOPRIGHT;
+                    else if (left.Contains(windowPoint))
+                        returnval = (IntPtr)Constants.HTLEFT;
+                    else if (right.Contains(windowPoint))
+                        returnval = (IntPtr)Constants.HTRIGHT;
+                    else if (bottomLeft.Contains(windowPoint))
+                        returnval = (IntPtr)Constants.HTBOTTOMLEFT;
+                    else if (bottom.Contains(windowPoint))
+                        returnval = (IntPtr)Constants.HTBOTTOM;
+                    else if (bottomRight.Contains(windowPoint))
+                        returnval = (IntPtr)Constants.HTBOTTOMRIGHT;
+
+                    if (returnval != IntPtr.Zero)
+                        handled = true;
+
+                    break;
+            }
 
             return returnval;
         }
