@@ -50,23 +50,15 @@
                                         Width="154.002">
                                     <Button.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Header="Light Red"
-                                                      Click="MiLightRed" />
-                                            <MenuItem Header="Light Green"
-                                                      Click="MiLightGreen" />
-                                            <MenuItem Header="Light Blue"
-                                                      Click="MiLightBlue" />
-                                            <MenuItem Header="Light Purple"
-                                                      Click="MiLightPurple" />
+                                            <MenuItem Header="Light Red" Click="MiLightRed" />
+                                            <MenuItem Header="Light Green" Click="MiLightGreen" />
+                                            <MenuItem Header="Light Blue" Click="MiLightBlue" />
+                                            <MenuItem Header="Light Purple" Click="MiLightPurple" />
                                             <Separator />
-                                            <MenuItem Header="Dark Red"
-                                                      Click="MiDarkRed" />
-                                            <MenuItem Header="Dark Green"
-                                                      Click="MiDarkGreen" />
-                                            <MenuItem Header="Dark Blue"
-                                                      Click="MiDarkBlue" />
-                                            <MenuItem Header="Dark Purple"
-                                                      Click="MiDarkPurple" />
+                                            <MenuItem Header="Dark Red" Click="MiDarkRed" />
+                                            <MenuItem Header="Dark Green" Click="MiDarkGreen" />
+                                            <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
+                                            <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
                                         </ContextMenu>
                                     </Button.ContextMenu>
                                 </Button>
@@ -85,6 +77,7 @@
                                              GroupName="test"
                                              HorizontalAlignment="Left" />
                                 <TextBox Controls:TextboxHelper.Watermark="This is a textbox"
+                                         Controls:TextboxHelper.ClearTextButton="True"
                                          Margin="88.694,36.96,0,0"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"

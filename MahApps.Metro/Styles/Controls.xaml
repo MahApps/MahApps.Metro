@@ -9,6 +9,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
 
     <!--ValidationToolTipTemplate Style-->
@@ -847,6 +848,8 @@
                                               Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.Watermark)}" 
                                               Visibility="Collapsed" 
                                               Opacity="0.5" IsHitTestVisible="False" />
+                            
+                            <Button x:Name="PART_ClearText" Style="{DynamicResource ChromelessButtonStyle}" Width="20"  HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
                                    Stroke="{DynamicResource ControlsDisabledBrush}"
@@ -894,6 +897,9 @@
                                 <Setter Property="Visibility" TargetName="PART_Watermark" Value="Visible" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}" Value="True">
+                            <Setter TargetName="PART_ContentHost" Property="Margin" Value="2,2,20,2" />
+                        </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="FocusRectangle" Property="Opacity" Value="1" />
                         </Trigger>
@@ -905,6 +911,13 @@
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="FocusRectangle" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource GrayBrush5}" />
+                        </Trigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource BlackBrush}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
