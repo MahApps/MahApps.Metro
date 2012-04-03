@@ -53,7 +53,7 @@ The function is very similar to that of a checkbox, but easier to differentiate 
 You can bind to/set `IsChecked` to switch between the two states.
 
 ###TextBox
-There is just the one style in this library for `TextBox`, however it does have a special attached property for creating 'watermarked' textboxes. 
+There is just the one style in this library for `TextBox`, however it does have a special attached property for creating 'watermarked' textboxes and for added a 'clear' button.
 
 **What is a watermark?**  
 Watermarked - in the context of textboxes - refers to text that appears in the textbox *before* the user has focussed or entered text. This is often an alternative to having a set of labels, you can instead just have a textbox with a watermark like 'search terms go here'.
@@ -68,3 +68,15 @@ The easiest way (for me) would have been to add a custom control, something like
 Will produce a textbox that looks like the below image. The three states are *unfocussed* with no user text entered, focussed, and unfocussed with user text.
 
 ![](images/10_textboxstates.png)
+
+
+####Clear text button usage
+Like the watermark, a simple attached property adds in the functionality
+
+``<TextBox Controls:TextboxHelper.ClearTextButton="True" />``
+
+Which will give you
+
+![](images/11_textboxclearstates.png)
+
+This can be combined with - but doesn't require - the watermark attachedproperty
