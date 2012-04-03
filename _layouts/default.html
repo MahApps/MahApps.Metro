@@ -9,22 +9,19 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<link rel="shortcut icon" href="favicon.png" />
 		<script src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
-		<script src="js/jquery.metro.js"></script>
 		<script src="js/site.js"></script>
 	</head>
 	<body id="top">
 		<div id="content">
 			{{content}}
 
-
-
 			<script type="text/javascript">
-				(function () {
-					var nb = document.createElement('script'); nb.type = 'text/javascript'; nb.async = true;
-					nb.src = 'http://s.prabir.me/nuget-button/0.2.1/nuget-button.min.js';
-					var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(nb, s);
-				})();
+
 			</script>
+		</div>
+		<div class="current-section">
+			<p class="name"></p>
+			<a href="#top">Scroll to top</a>
 		</div>
 	</body>
 </html>

@@ -18,7 +18,40 @@ h2 { color: #1BA1E2; }
 h3 { color : #E73347; }
 h4 { color: #036695; }
 
-small.top-link {
-	font-size: 10pt;
+.current-section {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width:900px;
+  margin-left: -450px;
+  background: #222;
+  color: #fff;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: opacity ease-in-out 0.3s;
 }
 
+.current-section p {
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-bottom:15px;
+  font-size: 2em;
+  font-family:"Segoe UI Light","Helvetica Neue",'RobotoLight',"Segoe UI","Segoe WP",sans-serif;font-weight:100;
+  display:inline;
+  
+}
+
+.current-section a {
+  float: right;
+  text-indent: -10000px;
+  background: transparent url(../images/appbar.arrow.up.png) no-repeat 0 0;
+  width: 48px;
+  height: 48px;
+  opacity: 0.8;
+}
+
+.current-section a:hover {
+  opacity: 1;
+  -moz-opacity: 1;
+  filter:alpha(opacity=1);
+}

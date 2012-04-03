@@ -17,23 +17,11 @@ Last updated for stable release 0.7
 * Auto-generated toc:
 {:toc}
 
-
 {% include foreword.md %}	
-
 {% include examples.md %}
-
 {% include gettingstarted.md %}	
-
 {% include controls.md %}	
-
 {% include known_issues.md %}
-
 {% include resources.md %}
-
 {% include credit.md %}	
-
 {% include changelog.md %}	
-				
-
-				
-				
