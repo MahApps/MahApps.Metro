@@ -60,5 +60,25 @@ namespace MahApps.Metro.Native
 
         [DllImport("gdi32.dll")]
         internal static extern bool DeleteObject(IntPtr hObject);
+
+        internal static int GET_X_LPARAM(IntPtr lParam)
+        {
+            return LOWORD(lParam.ToInt32());
+        }
+
+        internal static int GET_Y_LPARAM(IntPtr lParam)
+        {
+            return HIWORD(lParam.ToInt32());
+        }
+
+        internal static int HIWORD(int i)
+        {
+            return (short)(i >> 16);
+        }
+
+        internal static int LOWORD(int i)
+        {
+            return (short)(i & 0xFFFF);
+        }
     }
 }
