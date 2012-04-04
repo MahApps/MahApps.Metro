@@ -19,7 +19,10 @@
         public const int HTBOTTOM = 0x0F;
         public const int HTBOTTOMLEFT = 0x10;
         public const int HTBOTTOMRIGHT = 0x11;
+        public const uint TPM_RETURNCMD = 0x0100;
+        public const uint TPM_LEFTBUTTON = 0x0;
         public const int SW_SHOWNORMAL = 1;
         public  const int SW_SHOWMINIMIZED = 2;
+        public const uint SYSCOMMAND = 0x0112;
     }
 }

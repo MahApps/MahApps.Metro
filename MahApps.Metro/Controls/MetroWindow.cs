@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
+using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
@@ -10,6 +13,8 @@ namespace MahApps.Metro.Controls
     {
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowCommands = "PART_WindowCommands";
+        private readonly int doubleclick = UnsafeNativeMethods.GetDoubleClickTime();
+        private DateTime lastMouseClick;
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -73,6 +78,7 @@ namespace MahApps.Metro.Controls
             if (ShowTitleBar && titleBar != null)
             {
                 titleBar.MouseDown += TitleBarMouseDown;
+                titleBar.MouseUp += TitleBarMouseUp;
                 titleBar.MouseMove += TitleBarMouseMove;
             }
             else
@@ -92,18 +98,47 @@ namespace MahApps.Metro.Controls
             base.OnStateChanged(e);
         }
 
-        protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
+        private void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed && e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
-            
+
             if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize))
             {
                 WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             }
         }
 
-        protected void TitleBarMouseMove(object sender, MouseEventArgs e)
+        private void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!ShowIconOnTitleBar) return;
+            var mousePosition = GetCorrectPosition(this);
+
+            if (mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight)
+            {
+                if ((DateTime.Now - lastMouseClick).TotalMilliseconds <= doubleclick)
+                {
+                    Close();
+                    return;
+                }
+                lastMouseClick = DateTime.Now;
+
+                ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitlebarHeight)));
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                ShowSystemMenuPhysicalCoordinates(this, PointToScreen(GetCorrectPosition(this)));
+            }
+        }
+
+        private static Point GetCorrectPosition(Visual relativeTo)
+        {
+            UnsafeNativeMethods.Win32Point w32Mouse;
+            UnsafeNativeMethods.GetCursorPos(out w32Mouse);
+            return relativeTo.PointFromScreen(new Point(w32Mouse.X, w32Mouse.Y));
+        }
+
+        private void TitleBarMouseMove(object sender, MouseEventArgs e)
         {
             if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed
                 && e.LeftButton == MouseButtonState.Pressed && WindowState == WindowState.Maximized)
@@ -134,6 +169,21 @@ namespace MahApps.Metro.Controls
         internal T GetPart<T>(string name) where T : DependencyObject
         {
             return (T)GetTemplateChild(name);            
+        }
+
+        private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
+        {
+            if (window == null) return;
+
+            var hwnd = new WindowInteropHelper(window).Handle;
+            if (hwnd == IntPtr.Zero || !UnsafeNativeMethods.IsWindow(hwnd))
+                return;
+
+            var hmenu = UnsafeNativeMethods.GetSystemMenu(hwnd, false);
+
+            var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD, (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
+            if (0 != cmd)
+                UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
         }
     }
 }

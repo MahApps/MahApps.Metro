@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -40,6 +41,30 @@ namespace MahApps.Metro.Native
         [DllImport("user32", CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "LoadStringW", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         internal static extern int LoadString([In] [Optional] IntPtr hInstance, [In] uint uID, [Out] StringBuilder lpBuffer, [In] int nBufferMax);
 
+        /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms633528(v=vs.85).aspx</devdoc>
+        [DllImport("user32", CharSet = CharSet.Auto, ExactSpelling = true)]
+        internal static extern bool IsWindow([In] [Optional] IntPtr hWnd);
+
+        /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms647985(v=vs.85).aspx</devdoc>
+        [DllImport("user32")]
+        internal static extern IntPtr GetSystemMenu([In] IntPtr hWnd, [In] bool bRevert);
+
+        /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms648003(v=vs.85).aspx</devdoc>
+        [DllImport("user32")]
+        internal static extern uint TrackPopupMenuEx([In] IntPtr hmenu, [In] uint fuFlags, [In] int x, [In] int y, [In] IntPtr hwnd, [In] [Optional] IntPtr lptpm);
+
+        /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms644944(v=vs.85).aspx</devdoc>
+        [DllImport("user32", EntryPoint = "PostMessage", SetLastError = true)]
+        private static extern bool _PostMessage([In] [Optional] IntPtr hWnd, [In] uint Msg, [In] IntPtr wParam, [In] IntPtr lParam);
+
+        /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms648390(v=vs.85).aspx</devdoc>
+        [DllImport("user32")]
+        internal static extern bool GetCursorPos([Out] out Win32Point pt);
+
+        /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms646258(v=vs.85).aspx</devdoc>
+        [DllImport("user32", CharSet = CharSet.Auto, ExactSpelling = true)]
+        internal static extern int GetDoubleClickTime();
+
         /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms684175%28v=vs.85%29.aspx</devdoc>
         [DllImport("kernel32", CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "LoadLibraryW", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         internal static extern IntPtr LoadLibrary([In] [MarshalAs(UnmanagedType.LPWStr)] string lpFileName);
@@ -67,6 +92,21 @@ namespace MahApps.Metro.Native
         [DllImport("user32.dll")]
         internal static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
 
+        internal static void PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam)
+        {
+            if (!_PostMessage(hWnd, Msg, wParam, lParam))
+            {
+                throw new Win32Exception();
+            }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Win32Point
+        {
+            public readonly Int32 X;
+            public readonly Int32 Y;
+        };
+
         internal static int GET_X_LPARAM(IntPtr lParam)
         {
             return LOWORD(lParam.ToInt32());
@@ -77,12 +117,12 @@ namespace MahApps.Metro.Native
             return HIWORD(lParam.ToInt32());
         }
 
-        internal static int HIWORD(int i)
+        private static int HIWORD(int i)
         {
             return (short)(i >> 16);
         }
 
-        internal static int LOWORD(int i)
+        private static int LOWORD(int i)
         {
             return (short)(i & 0xFFFF);
         }
