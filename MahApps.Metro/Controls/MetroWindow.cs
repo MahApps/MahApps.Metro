@@ -98,7 +98,7 @@ namespace MahApps.Metro.Controls
             base.OnStateChanged(e);
         }
 
-        private void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
+        protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed && e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
@@ -109,7 +109,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
+        protected void TitleBarMouseMove(object sender, MouseEventArgs e)
         {
             if (!ShowIconOnTitleBar) return;
             var mousePosition = GetCorrectPosition(this);
