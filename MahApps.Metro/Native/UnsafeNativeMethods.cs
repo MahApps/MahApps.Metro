@@ -61,6 +61,12 @@ namespace MahApps.Metro.Native
         [DllImport("gdi32.dll")]
         internal static extern bool DeleteObject(IntPtr hObject);
 
+        [DllImport("user32.dll")]
+        internal static extern bool SetWindowPlacement(IntPtr hWnd, [In] ref WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll")]
+        internal static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
+
         internal static int GET_X_LPARAM(IntPtr lParam)
         {
             return LOWORD(lParam.ToInt32());
