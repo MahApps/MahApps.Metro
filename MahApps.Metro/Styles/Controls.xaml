@@ -290,7 +290,7 @@
         </Setter>
     </Style>
 
-    <!--TextBox Style-->
+    <!--PasswordBox Style-->
     <Style TargetType="{x:Type PasswordBox}">
         <Setter Property="SelectionBrush" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
