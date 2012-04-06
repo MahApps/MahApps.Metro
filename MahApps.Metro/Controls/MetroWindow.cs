@@ -109,7 +109,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected void TitleBarMouseMove(object sender, MouseEventArgs e)
+        protected void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (!ShowIconOnTitleBar) return;
             var mousePosition = GetCorrectPosition(this);
