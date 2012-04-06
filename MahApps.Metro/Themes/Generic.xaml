@@ -505,10 +505,12 @@
                     <Controls:MetroContentControl>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <Grid x:Name="PART_TitleBar" Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Grid x:Name="PART_TitleBar"
+                                  Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                                 <Grid.Background>
                                     <SolidColorBrush Color="{DynamicResource AccentColor}"/>
                                 </Grid.Background>
