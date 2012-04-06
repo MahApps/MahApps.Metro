@@ -176,15 +176,6 @@ namespace MahApps.Metro.Behaviours
             IntPtr returnval = IntPtr.Zero;
             switch (message)
             {
-                case Constants.WM_CREATE:
-                    handled = true;
-                    var create = (CREATESTRUCT)Marshal.PtrToStructure(lParam, typeof(CREATESTRUCT));
-                    if (create.style == Constants.WS_MAXIMIZE)
-                    {
-                        MessageBox.Show("Got here");
-                    }
-                    break;
-
                 case Constants.WM_NCCALCSIZE:
                     /* Hides the border */
                     handled = true;
