@@ -108,7 +108,7 @@ namespace MahApps.Metro.Controls
             if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed
                 && e.LeftButton == MouseButtonState.Pressed && WindowState == WindowState.Maximized)
             {
-                // Calcualting correct left coordinate for multi-screen system.
+                // Calculating correct left coordinate for multi-screen system.
                 Point mouseAbsolute = PointToScreen(Mouse.GetPosition(this));
                 double width = RestoreBounds.Width;
                 double left = mouseAbsolute.X - width / 2;
