@@ -6,37 +6,31 @@
 	var s = document.getElementsByTagName('script')[0];
 	s.parentNode.insertBefore(nb, s);
 })();
-				
+
 (function($) {
 	$(document).ready(function(){
+		var headings = $("#content h1, #content h2");
 
-		var headings = [];
+		$.each(headings, function (index, heading) {
+			headings[index] = $(heading);
+		});
 
-		var collectHeaders = function(){
-			headings.push({"top":$(this).offset().top + 15,"text":$(this).text()});
-		}
-
-		if ($("#content h1").length > 1)
-			$("#content h1").each(collectHeaders)
-		if($("#content h2").length > 1) 
-			$("#content h2").each(collectHeaders)
-			
 		$(window).scroll(function(){
-			if (headings.length==0) 
+			if (headings.length < 2) 
 				return true;
-				
+
 			var scrolltop = $(window).scrollTop() || 0;
-			if (headings[0] && scrolltop < headings[0].top) {
+			if (scrolltop < (headings.get(1).offset().top + 15)) {
 				$(".current-section").css({"opacity":0,"visibility":"hidden"});
 				return false;
 			}
-			
+
 			$(".current-section").css({"opacity":1,"visibility":"visible"});
-			for(var i in headings) {
-				if(scrolltop >= headings[i].top) {
-					$(".current-section .name").text(headings[i].text);
+			$.each(headings, function (index, value) {
+				if (scrolltop >= (value.offset().top + 15)) {
+					$(".current-section .name").text(value.text());					
 				}
-			}
+			});
 		});
 
 		$(".current-section a").click(function(){
