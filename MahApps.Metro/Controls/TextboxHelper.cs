@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -9,17 +8,6 @@ namespace MahApps.Metro.Controls
     public static class TextboxHelper
     {
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ClearTextChanged));
-        public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextboxHelper), new FrameworkPropertyMetadata(string.Empty));
-
-        public static string GetWatermark(DependencyObject d)
-        {
-            return (string)d.GetValue(WatermarkProperty);
-        }
-
-        public static void SetWatermark(DependencyObject obj, string value)
-        {
-            obj.SetValue(WatermarkProperty, value);
-        }
 
         public static bool GetClearTextButton(DependencyObject d)
         {
