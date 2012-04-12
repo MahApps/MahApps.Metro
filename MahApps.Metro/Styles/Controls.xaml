@@ -843,8 +843,9 @@
                         <Rectangle x:Name="FocusRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{DynamicResource BlackBrush}" />
                         <Grid Margin="2">
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0" />
-                            <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}" />
+                            <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Center" Background="{x:Null}" />
                             <ContentPresenter Margin="2" x:Name="PART_Watermark" 
+                                              VerticalAlignment="Center"
                                               Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.Watermark)}" 
                                               Visibility="Collapsed" 
                                               Opacity="0.5" IsHitTestVisible="False" />
