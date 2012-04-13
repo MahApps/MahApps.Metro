@@ -801,10 +801,12 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid>
+                       
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="ValidationStates">
                                 <VisualState x:Name="Valid" />
@@ -843,12 +845,16 @@
                         <Rectangle x:Name="FocusRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{DynamicResource BlackBrush}" />
                         <Grid Margin="2">
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0" />
-                            <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}" />
-                            <ContentPresenter Margin="2" x:Name="PART_Watermark" 
+                            <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}">
+                               
+                            </ScrollViewer>
+                            <ContentPresenter Margin="2" x:Name="PART_Watermark"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.Watermark)}" 
                                               Visibility="Collapsed" 
-                                              Opacity="0.5" IsHitTestVisible="False" />
-                            
+                                              Opacity="0.5" IsHitTestVisible="False">
+                               
+                            </ContentPresenter>                            
                             <Button x:Name="PART_ClearText" Style="{DynamicResource ChromelessButtonStyle}" Width="20"  HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
