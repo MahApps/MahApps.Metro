@@ -64,10 +64,10 @@
                                 </Button>
                             <PasswordBox Controls:WaterMarkTextHelper.WatermarkText="Enter Password"
                                              Margin="88.695,66.96,0,0"
-                                             Height="30"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
-                                             Width="154.001" />
+                                             Width="154.001"
+											 VerticalContentAlignment="Center" />
                                 <CheckBox Content="CheckBox"
                                           Margin="88.695,100.96,0,0"
                                           VerticalAlignment="Top"
@@ -82,7 +82,8 @@
                                          Margin="88.694,36.96,0,0"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
-                                         Width="154.002" />
+                                         Width="154.002"
+										 VerticalContentAlignment="Center" />
                                 <ComboBox Margin="88.292,176.84,0,0"
                                           VerticalAlignment="Top"
                                           HorizontalAlignment="Left"
