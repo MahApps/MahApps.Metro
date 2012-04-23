@@ -215,6 +215,8 @@
                 </TabItem>
                 <TabItem Header="_More Controls Here!">
                     <StackPanel>
+                        <!--<Controls:MetroProgressBar Width="600" IsIndeterminate="True"/>-->
+                        
                         <Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}"
                                                     Height="6"
                                                     Width="600" />
