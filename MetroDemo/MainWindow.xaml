@@ -62,7 +62,7 @@
                                         </ContextMenu>
                                     </Button.ContextMenu>
                                 </Button>
-                            <PasswordBox Controls:WaterMarkTextHelper.WatermarkText="Enter Password"
+                            <PasswordBox Controls:TextboxHelper.Watermark="Enter Password"
                                              Margin="88.695,66.96,0,0"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
@@ -77,7 +77,7 @@
                                              VerticalAlignment="Top"
                                              GroupName="test"
                                              HorizontalAlignment="Left" />
-                            <TextBox Controls:WaterMarkTextHelper.WatermarkText="Enter Username"
+                            <TextBox Controls:TextboxHelper.Watermark="Enter Username"
                                      Controls:TextboxHelper.ClearTextButton="True"
                                          Margin="88.694,36.96,0,0"
                                          VerticalAlignment="Top"

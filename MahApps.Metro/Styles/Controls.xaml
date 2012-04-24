@@ -292,7 +292,7 @@
 
     <!--PasswordBox Style-->
     <Style TargetType="{x:Type PasswordBox}">
-        <Setter Property="Controls:WaterMarkTextHelper.IsMonitoring" Value="True"/>
+        <Setter Property="Controls:TextboxHelper.IsMonitoring" Value="True"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
@@ -360,9 +360,9 @@
                         <Grid Margin="2">
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0" />
                             <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}" />
-                            <TextBlock x:Name="Message" FontStyle="Italic"
-                                       Text="{TemplateBinding Controls:WaterMarkTextHelper.WatermarkText}" 
-                                       Foreground="{DynamicResource TextBrush}" IsHitTestVisible="False" FontFamily="Calibri"
+                            <TextBlock x:Name="Message"
+                                       Text="{TemplateBinding Controls:TextboxHelper.Watermark}" 
+                                       Foreground="{DynamicResource TextBrush}" IsHitTestVisible="False"
                                        Opacity="0.6" HorizontalAlignment="Left" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="6,0,0,0"/>
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
@@ -414,7 +414,7 @@
                         
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="Controls:WaterMarkTextHelper.HasText" Value="False"/>
+                                <Condition Property="Controls:TextboxHelper.HasText" Value="False"/>
                                 <Condition Property="IsFocused" Value="True"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
@@ -425,7 +425,7 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
-                        <Trigger Property="Controls:WaterMarkTextHelper.HasText" Value="True">
+                        <Trigger Property="Controls:TextboxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource enterHasText}"/>
                             </Trigger.EnterActions>
@@ -782,7 +782,7 @@
 
     <!--TextBox Style-->
     <Style TargetType="{x:Type TextBox}">
-        <Setter Property="Controls:WaterMarkTextHelper.IsMonitoring" Value="True"/>
+        <Setter Property="Controls:TextboxHelper.IsMonitoring" Value="True"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
@@ -850,8 +850,8 @@
                         <Grid Margin="2">
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0" />
                             <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}" />
-                            <TextBlock x:Name="Message" Text="{TemplateBinding Controls:WaterMarkTextHelper.WatermarkText}" FontStyle="Italic"
-                                       Foreground="{DynamicResource TextBrush}" IsHitTestVisible="False" FontFamily="Calibri" Opacity="0.6" HorizontalAlignment="Left" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            <TextBlock x:Name="Message" Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                       Foreground="{DynamicResource TextBrush}" IsHitTestVisible="False" Opacity="0.6" HorizontalAlignment="Left" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,0,0,0"/>
                             
                             <Button x:Name="PART_ClearText" Style="{DynamicResource ChromelessButtonStyle}" Width="20"  HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -918,7 +918,7 @@
                         
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="Controls:WaterMarkTextHelper.HasText" Value="False"/>
+                                <Condition Property="Controls:TextboxHelper.HasText" Value="False"/>
                                 <Condition Property="IsFocused" Value="True"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
@@ -929,7 +929,7 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
-                        <Trigger Property="Controls:WaterMarkTextHelper.HasText" Value="True">
+                        <Trigger Property="Controls:TextboxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource enterHasText}"/>
                             </Trigger.EnterActions>
