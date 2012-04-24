@@ -152,9 +152,9 @@
         <GradientStop Color="#CDCDCD" Offset="1"/>
     </LinearGradientBrush>
     <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
-    
-    
     <!-- WPF default colours -->
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{DynamicResource WhiteColor}" />
     <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{DynamicResource BlackColor}" />
+
+    <SolidColorBrush x:Key="Win8-DialogButtonBgBrush" Color="#FF008287"/>
 </ResourceDictionary>
