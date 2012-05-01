@@ -10,10 +10,10 @@ using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Behaviours
 {
-    public class BorderlessWindowBehavior : Behavior<Window>
+    public class BorderlessWindowBehavior : Behavior<MetroWindow>
     {
-        public static DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
-        public static DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
+        public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
+        public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
 
         public bool ResizeWithGrip
         {
@@ -27,8 +27,7 @@ namespace MahApps.Metro.Behaviours
             set { SetValue(AutoSizeToContentProperty, value); }
         }
 
-        public Border Border { get; set; }
-
+        private Border Border;
         private HwndSource _mHWNDSource;
         private IntPtr _mHWND;
         
@@ -72,46 +71,30 @@ namespace MahApps.Metro.Behaviours
 
             AssociatedObject.WindowStyle = WindowStyle.None;
 
-            if (AssociatedObject is MetroWindow)
+            //MetroWindow already has a border we can use
+            AssociatedObject.Loaded += (s, e) =>
+                                            {
+                                                var ancestors = AssociatedObject.GetPart<Border>("PART_Border");
+                                                Border = ancestors;
+                                                Border.BorderThickness = new Thickness(1);
+                                                Border.BorderBrush = new SolidColorBrush(Colors.DarkGray);
+                                            };
+
+            switch (AssociatedObject.ResizeMode)
             {
-                var window = ((MetroWindow) AssociatedObject);
-                //MetroWindow already has a border we can use
-                AssociatedObject.Loaded += (s, e) =>
-                                               {
-                                                   var ancestors = window.GetPart<Border>("PART_Border");
-                                                   Border = ancestors;
-                                                   Border.BorderThickness = new Thickness(1);
-                                                   Border.BorderBrush = new SolidColorBrush(Colors.DarkGray);
-                                               };
-
-                if (AssociatedObject.ResizeMode == ResizeMode.NoResize)
-                {
-                    window.ShowMaxRestoreButton = false;
-                    window.ShowMinButton = false;
+                case ResizeMode.NoResize:
+                    AssociatedObject.ShowMaxRestoreButton = false;
+                    AssociatedObject.ShowMinButton = false;
                     ResizeWithGrip = false;
-                }
-                else if (AssociatedObject.ResizeMode == ResizeMode.CanMinimize)
-                {
-                    window.ShowMaxRestoreButton = false;
+                    break;
+                case ResizeMode.CanMinimize:
+                    AssociatedObject.ShowMaxRestoreButton = false;
                     ResizeWithGrip = false;
-                }
+                    break;
+                default:
+                    AssociatedObject.ResizeMode = ResizeMode.CanResizeWithGrip;
+                    break;
             }
-            else { 
-                //Other windows may not, easiest to just inject one!
-                var content = (UIElement) AssociatedObject.Content;
-                AssociatedObject.Content = null;
-
-                Border = new Border
-                            {
-                                Child =  content,
-                                BorderBrush = new SolidColorBrush(Colors.DarkGray)
-                            };
-                
-                AssociatedObject.Content = Border;
-            }
-
-            if (ResizeWithGrip)
-                AssociatedObject.ResizeMode = ResizeMode.CanResizeWithGrip;
             
             if (AutoSizeToContent)
                 AssociatedObject.Loaded += (s, e) =>
@@ -122,8 +105,6 @@ namespace MahApps.Metro.Behaviours
                                                                                         ? SizeToContent.WidthAndHeight
                                                                                         : SizeToContent.Manual;
                                                };
-
-
 
             base.OnAttached();
         }
@@ -190,10 +171,8 @@ namespace MahApps.Metro.Behaviours
                             UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
                         }
                         if (Border != null)
-                        {
                             Border.BorderThickness = new Thickness(1);
-                            Border.BorderBrush = new SolidColorBrush(Colors.DarkGray);
-                        }
+
                         handled = true;
                     }
                     break;
