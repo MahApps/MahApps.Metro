@@ -987,7 +987,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroProgressBar}">
-                    <Grid x:Name="ContainingGrid">
+                    <Grid x:Name="ContainingGrid" ClipToBounds="True">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">                         
                                 <VisualState x:Name="Determinate"/>
