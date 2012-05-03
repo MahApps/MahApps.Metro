@@ -103,6 +103,8 @@ namespace MahApps.Metro.Controls
             min = Template.FindName("PART_Min", this) as Button;
             if (min != null)
                 min.Click += MinimiseClick;
+
+            RefreshMaximiseIconState();
         }
 
         protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
