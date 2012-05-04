@@ -39,11 +39,22 @@ namespace MahApps.Metro.Controls
 
         public void Stop()
         {
-            this.Dispatcher.BeginInvoke(new Action(() =>
+            Dispatcher.BeginInvoke(new Action(() =>
                                                   {
-                                                      var s = this.Resources["animate"] as Storyboard;
+                                                      var s = Resources["animate"] as Storyboard;
                                                       s.Stop();
-                                                      this.Visibility = Visibility.Collapsed;
+                                                      Visibility = Visibility.Hidden;
+                                                  })
+                );
+        }
+
+        public void Start()
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+                                                  {
+                                                      var s = Resources["animate"] as Storyboard;
+                                                      s.Begin();
+                                                      Visibility = Visibility.Visible;
                                                   })
                 );
         }
