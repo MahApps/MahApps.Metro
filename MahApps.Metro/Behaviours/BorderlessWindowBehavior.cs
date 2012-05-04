@@ -84,16 +84,23 @@ namespace MahApps.Metro.Behaviours
                                                    Border.BorderBrush = new SolidColorBrush(Colors.DarkGray);
                                                };
 
-                if (window.ResizeMode == ResizeMode.NoResize)
+                switch (window.ResizeMode)
                 {
-                    window.ShowMaxRestoreButton = false;
-                    window.ShowMinButton = false;
-                    ResizeWithGrip = false;
-                }
-                else if (window.ResizeMode == ResizeMode.CanMinimize)
-                {
-                    window.ShowMaxRestoreButton = false;
-                    ResizeWithGrip = false;
+                    case ResizeMode.NoResize:
+                        window.ShowMaxRestoreButton = false;
+                        window.ShowMinButton = false;
+                        ResizeWithGrip = false;
+                        break;
+                    case ResizeMode.CanMinimize:
+                        window.ShowMaxRestoreButton = false;
+                        ResizeWithGrip = false;
+                        break;
+                    case ResizeMode.CanResize:
+                        ResizeWithGrip = false;
+                        break;
+                    case ResizeMode.CanResizeWithGrip:
+                        ResizeWithGrip = true;
+                        break;
                 }
             }
             else { 
