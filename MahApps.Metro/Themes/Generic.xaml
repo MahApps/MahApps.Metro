@@ -699,7 +699,7 @@
     </Style>
 
     <Style TargetType="Controls:ProgressRing">
-        <Setter Property="Foreground" Value="{StaticResource Win8-DialogButtonBgBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="IsHitTestVisible" Value="False"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -708,25 +708,20 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:ProgressRing">
-                    <Border Background="{TemplateBinding Background}"
-                BorderThickness="{TemplateBinding BorderThickness}"
-                BorderBrush="{TemplateBinding BorderBrush}" >
-
+                    <Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" >
                         <Border.Resources>
                             <Style x:Key="ProgressRingEllipseStyle" TargetType="Ellipse">
                                 <Setter Property="Opacity" Value="0" />
                                 <Setter Property="HorizontalAlignment" Value="Left" />
                                 <Setter Property="VerticalAlignment" Value="Top" />
                             </Style>
-                            
+                           
                         </Border.Resources>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="SizeStates">
                                 <VisualState x:Name="Large">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Duration="0"
-                                    Storyboard.TargetName="SixthCircle"
-                                    Storyboard.TargetProperty="Visibility">
+                                        <ObjectAnimationUsingKeyFrames Duration="0" Storyboard.TargetName="SixthCircle" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Visible</Visibility>
@@ -1173,9 +1168,7 @@
                         </Grid>
                         <Border x:Name="DeterminateRoot" Opacity="1">
                             <Grid Margin="{TemplateBinding Padding}">
-                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" x:Name="PART_Track"/>
-                                
-                            
+                                <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" x:Name="PART_Track"/>                           
                                 <Rectangle x:Name="PART_Indicator" Fill="{TemplateBinding Foreground}" HorizontalAlignment="Left" />
                             </Grid>
                     </Border>
