@@ -7,6 +7,27 @@
 	s.parentNode.insertBefore(nb, s);
 })();
 
+var template = '{{#contributors}}<li><img src="http://gravatar.com/avatar/{{gravatar_id}}?s=25" alt="{{name}}" />  <a href="https://github.com/{{login}}">{{login}}</a> - ({{contributions}} commits) </li>{{/contributors}}';
+function getContribs() {
+	$.ajax({
+		url: "http://github.com/api/v2/json/repos/show/MahApps/MahApps.Metro/contributors",
+		dataType: 'jsonp',
+		success: function(data) 
+		{
+			data.contributors = data.contributors.sort(function (a, b) 
+			{ 
+				if (a.contributions > b.contributions) return -1;
+				if (a.contributions < b.contributions) return 1;
+				return 0;
+			});
+			
+			var output = Mustache.render(template, data);
+			$("#contributors").html(output);
+			//$("#contributorTemplate").tmpl(data).appendTo("#contributors");
+		}
+	});
+  }
+
 (function($) {
 	$(document).ready(function(){
 		var headings = $("#content h1, #content h2");
@@ -37,5 +58,7 @@
 			$(window).scrollTop(0);
 			return false;
 		})
+		
+		getContribs();
 	});
 })(jQuery)

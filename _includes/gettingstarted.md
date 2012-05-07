@@ -10,11 +10,13 @@
 ###Installing MahApps.Metro
 You can install MahApps.Metro via Nuget using the GUI (right click on your project, Manage Nuget References, search for 'MahApps.Metro') or via the console:
 
-	PM> Install-Package MahApps.Metro
+<pre class="nuget-button">Install-Package MahApps.Metro</pre>
 
-If you wish to use the *alpha*/nightly releases of MahApps.Metro, you need to use the console
+If you wish to use the *alpha* releases of MahApps.Metro, you need to include "pre" releases in Nuget (1.7 and above) 
 
-	PM> Install-Package MahApps.Metro -Pre
+![](/images/include_prerelease.png)
+
+or use the console (`PM> Install-Package MahApps.Metro -Pre`)
 
 
 ###Styling a Window
@@ -50,8 +52,6 @@ Just under the opening MetroWindow tag, add the following
 	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
 	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
 	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Icons/MergedResources.xaml" />
 	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
 	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
 	            </ResourceDictionary.MergedDictionaries>
@@ -70,13 +70,13 @@ If you don't like the elements that are labelled, fear not, they're all optional
 
 1. The titlebar is what sets `MetroWindow` apart from rolling your own. `ShowTitleBar="true|false"`
 2. Instead of using static images, this uses a font called **Marlett**.
-3. The resize grip is the *only* way to resize a `MetroWindow`, other than in code or with the min/max buttons. For dialogs where you may not want the user resizing the window, treating it like a normal window and setting `ResizeMode="NoResize"` will work
+3. The resize grip is no longer (from 0.8 onwards) the *only* way to resize a `MetroWindow` - all edges and corners can be gripped, but given a metro window doesn't have a noticeable window "chrome" like an aero window, the resize grip can help reassure users
 4. `ShowIconOnTitleBar="true|false"` 
 
 
 ###Customisation
 ####WindowCommands
-`WindowCommands` are the minimise, maximise/restore, and close buttons. From MahApps.Metro 0.7, these can be extended to include your own buttons too.
+`WindowCommands` are the minimise, maximise/restore, and close buttons. From 0.7 onwards, these can be extended to include your own buttons too.
 
 Including this within the `MetroWindow` tag (under the `Window.Resources` section),
 

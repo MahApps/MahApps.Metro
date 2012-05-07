@@ -7,7 +7,7 @@
 
 You can install this package using nuget:
 
-`PM> Install MahApps.Metro.Resources`
+<pre class="nuget-button">Install-Package MahApps.Metro.Resources</pre>
 
 Currently, this consists of [Entypo](http://www.entypo.com/) and [Temparian's Windows Phone Icon pack](http://templarian.com/project_windows_phone_icons/)
 

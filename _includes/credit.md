@@ -1,4 +1,6 @@
 ##Credits
+<ul id="contributors">
+</ul>
 
 ###Documentation
 This document uses the [metro.css](http://code52.org/metro.css/) framework, a [code52](http://code52.org) project.

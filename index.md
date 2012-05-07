@@ -9,9 +9,10 @@ Use numbered headers: true
 
 <pre class="nuget-button">Install-Package MahApps.Metro</pre>
 
-Last updated for stable release 0.7
+Last updated for stable release 0.8.
 
-**This documentation is under construction**
+![](/images/aim_software.png)
+<h3>Sponsored by <a href="http://www.aimsoftware.com/">Aim Software</a></h3>
 
 <h2 class="toc-header">Contents</h2>
 * Auto-generated toc:

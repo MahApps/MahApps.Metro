@@ -80,3 +80,32 @@ Which will give you
 ![](images/11_textboxclearstates.png)
 
 This can be combined with - but doesn't require - the watermark attachedproperty
+
+####Progress Ring
+The Progress Ring control is styled after a similar control in Windows 8 to indicate activity rather than a percentage of progress completed.
+``<Controls:ProgressRing IsActive="True" />``
+
+`IsActive` can easily be bound to a view model property. Override `Foreground` if you wish to change the colour.
+
+![](images/progress_ring.gif)
+
+
+
+####Tabs
+There are three included tab styles - Animated Tab Control, Single Row Animated Tab Control and the default Tab Control. The default Tab Control style is included in `Controls.xaml`, but the other two require specific referencing (make sure to do this *after* a reference to `Controls.xaml`)
+
+**Default look**  
+![](images/default_tab_control.png)  
+This shows the three states - selected/active tab, hover and inactive.
+
+#####AnimatedTabControl
+``<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedRowTabControl.xaml" />``
+Functioning just like the regular tab control, except it animates every tab change by wrapping everything in a `MetroContentControl`.  
+![](images/animatedtabcontrol.gif) 
+
+#####AnimatedSingleRowTabControl
+``<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />``
+`AnimatedSingleRowTabControl` functions exactly the same as the `AnimtedTabControl`  except the tabs will only appear on a single line rather than wrapping. Instead of wrapping, arrows (left/right) are presented.   
+
+![](images/singlerow_tab_control.png)  
+
