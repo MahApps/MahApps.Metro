@@ -11,7 +11,7 @@ Use numbered headers: true
 
 Last updated for stable release 0.8.
 
-![](/images/aim_software.png)
+![](images/aim_software.png)
 <h3>Sponsored by <a href="http://www.aimsoftware.com/">Aim Software</a></h3>
 
 <h2 class="toc-header">Contents</h2>
