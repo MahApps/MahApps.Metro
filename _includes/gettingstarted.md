@@ -14,7 +14,7 @@ You can install MahApps.Metro via Nuget using the GUI (right click on your proje
 
 If you wish to use the *alpha* releases of MahApps.Metro, you need to include "pre" releases in Nuget (1.7 and above) 
 
-![](/images/include_prerelease.png)
+![](images/include_prerelease.png)
 
 or use the console (`PM> Install-Package MahApps.Metro -Pre`)
 
