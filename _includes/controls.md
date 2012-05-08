@@ -7,6 +7,11 @@ There are three categories of controls in MahApps.Metro
 * Explicit template/styles that require you to set the *style* of a control (such as `ChromelessButtonStyle`)
 * New controls (such as `ToggleSwitch` or `MetroWindow`)
 
+###MetroWindow
+`MetroWindow` is detailed in the [getting started](#styling_a_window) section. One property not detailed is the `SaveWindowPosition` (true/false, default false) option. Setting this property to `true` will mean on next launch, it will automatically be positioned and sized to what it was on exit. This is designed to improve UX and speed development as its one of those "plumbing" UI things that is done regularly.  
+
+Be careful though - if a monitor is detached during application exit and restart, or if certain circumstances arise, your application may launch off screen. Be sure to provide a 'reset' option or handle that in code.
+
 ###Buttons
 ####Standard Button
 This just replaces the standard button when you drop in the library, nothing fancy to activate it    
