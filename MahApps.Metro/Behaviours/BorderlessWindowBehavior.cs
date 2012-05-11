@@ -76,24 +76,31 @@ namespace MahApps.Metro.Behaviours
             {
                 var window = ((MetroWindow) AssociatedObject);
                 //MetroWindow already has a border we can use
-                AssociatedObject.Loaded += (s, e) =>
+                window.Loaded += (s, e) =>
                                                {
                                                    var ancestors = window.GetPart<Border>("PART_Border");
                                                    Border = ancestors;
-                                                   if (Environment.OSVersion.Version.Major < 6 || !UnsafeNativeMethods.DwmIsCompositionEnabled()) 
-                                                       Border.BorderThickness = new Thickness(1);
+                                                   Border.BorderThickness = new Thickness(1);
+                                                   Border.BorderBrush = new SolidColorBrush(Colors.DarkGray);
                                                };
 
-                if (AssociatedObject.ResizeMode == ResizeMode.NoResize)
+                switch (window.ResizeMode)
                 {
-                    window.ShowMaxRestoreButton = false;
-                    window.ShowMinButton = false;
-                    ResizeWithGrip = false;
-                }
-                else if (AssociatedObject.ResizeMode == ResizeMode.CanMinimize)
-                {
-                    window.ShowMaxRestoreButton = false;
-                    ResizeWithGrip = false;
+                    case ResizeMode.NoResize:
+                        window.ShowMaxRestoreButton = false;
+                        window.ShowMinButton = false;
+                        ResizeWithGrip = false;
+                        break;
+                    case ResizeMode.CanMinimize:
+                        window.ShowMaxRestoreButton = false;
+                        ResizeWithGrip = false;
+                        break;
+                    case ResizeMode.CanResize:
+                        ResizeWithGrip = false;
+                        break;
+                    case ResizeMode.CanResizeWithGrip:
+                        ResizeWithGrip = true;
+                        break;
                 }
             }
             else { 
@@ -104,7 +111,8 @@ namespace MahApps.Metro.Behaviours
                 Border = new Border
                             {
                                 Child =  content,
-                                BorderBrush = new SolidColorBrush(Colors.Black)
+                                BorderBrush = new SolidColorBrush(Colors.DarkGray),
+                                BorderThickness = new Thickness(1)
                             };
                 
                 AssociatedObject.Content = Border;
@@ -188,14 +196,10 @@ namespace MahApps.Metro.Behaviours
                             UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
                             var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
                             UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(0);
                         }
-                        else
-                        {
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(1);
-                        }
+                        if (Border != null)
+                            Border.BorderThickness = new Thickness(1);
+
                         handled = true;
                     }
                     break;
