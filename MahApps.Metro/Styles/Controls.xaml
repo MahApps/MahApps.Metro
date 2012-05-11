@@ -1841,14 +1841,14 @@
                         <Trigger Property="IsSelected" Value="false">
                             <Setter  TargetName="root" Property="Foreground">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray11}" />
+                                    <SolidColorBrush Color="{DynamicResource GrayNormal}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
                         <Trigger SourceName="root" Property="IsMouseOver" Value="True">
                             <Setter  TargetName="root" Property="Foreground">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray3}" />
+                                    <SolidColorBrush Color="{DynamicResource GrayHover}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
