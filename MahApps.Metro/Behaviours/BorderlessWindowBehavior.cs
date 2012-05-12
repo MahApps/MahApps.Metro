@@ -80,8 +80,8 @@ namespace MahApps.Metro.Behaviours
                                                {
                                                    var ancestors = window.GetPart<Border>("PART_Border");
                                                    Border = ancestors;
-                                                   if (Environment.OSVersion.Version.Major < 6 || !UnsafeNativeMethods.DwmIsCompositionEnabled()) 
-                                                       Border.BorderThickness = new Thickness(1);
+                                                   Border.BorderThickness = new Thickness(1);
+                                                   Border.BorderBrush = new SolidColorBrush(Colors.DarkGray);
                                                };
 
                 if (AssociatedObject.ResizeMode == ResizeMode.NoResize)
@@ -104,7 +104,7 @@ namespace MahApps.Metro.Behaviours
                 Border = new Border
                             {
                                 Child =  content,
-                                BorderBrush = new SolidColorBrush(Colors.Black)
+                                BorderBrush = new SolidColorBrush(Colors.DarkGray)
                             };
                 
                 AssociatedObject.Content = Border;
@@ -188,14 +188,12 @@ namespace MahApps.Metro.Behaviours
                             UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
                             var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
                             UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(0);
                         }
-                        else
+                        if (Border != null)
                         {
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(1);
-                        }
+                            Border.BorderThickness = new Thickness(1);
+                            Border.BorderBrush = new SolidColorBrush(Colors.DarkGray);
+                         }
                         handled = true;
                     }
                     break;
