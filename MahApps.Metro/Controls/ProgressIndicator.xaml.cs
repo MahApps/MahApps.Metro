@@ -27,6 +27,7 @@ namespace MahApps.Metro.Controls
         {
             InitializeComponent();
             this.DataContext = this;
+            IsVisibleChanged += StartStopAnimation;
         }
 
         public static readonly DependencyProperty ProgressColourProperty = DependencyProperty.RegisterAttached("ProgressColour", typeof(Brush), typeof(ProgressIndicator), new UIPropertyMetadata(null));
@@ -37,13 +38,16 @@ namespace MahApps.Metro.Controls
             set { SetValue(ProgressColourProperty, value); }
         }
 
-        public void Stop()
+        private void StartStopAnimation(object sender, DependencyPropertyChangedEventArgs e)
         {
             this.Dispatcher.BeginInvoke(new Action(() =>
                                                   {
                                                       var s = this.Resources["animate"] as Storyboard;
-                                                      s.Stop();
-                                                      this.Visibility = Visibility.Collapsed;
+                                                      if ((bool) e.NewValue)
+                                                          s.Begin();
+                                                      else
+                                                          s.Stop();
+
                                                   })
                 );
         }
