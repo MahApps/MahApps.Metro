@@ -91,7 +91,6 @@ namespace MahApps.Metro.Controls
             else
             {
                 MouseDown += TitleBarMouseDown;
-                MouseMove += TitleBarMouseMove;
             }
         }
 
