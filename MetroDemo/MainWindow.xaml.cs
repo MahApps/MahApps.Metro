@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Threading;
 using MahApps.Metro;
 
 namespace MetroDemo
@@ -10,6 +13,16 @@ namespace MetroDemo
         {
             DataContext = new MainWindowViewModel(Dispatcher);
             InitializeComponent();
+            var t = new DispatcherTimer();
+            t.Tick += Tick;
+            t.Interval = new TimeSpan(0, 0, 0, 1);
+            t.Start();
+        }
+
+        int i = 0;
+        void Tick(object sender, System.EventArgs e)
+        {
+            transitioning.Content = new TextBlock {Text = "hello " + i++};
         }
 
         private void ButtonClick(object sender, RoutedEventArgs e)
