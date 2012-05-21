@@ -322,30 +322,18 @@
     </Style>
 
     <Style TargetType="Controls:Tile">
-        <Setter Property="Width"
-                Value="140" />
-        <Setter Property="Height"
-                Value="140" />
-        <Setter Property="Margin"
-                Value="3" />
-        <Setter Property="Foreground"
-                Value="White" />
+        <Setter Property="Width" Value="140" />
+        <Setter Property="Height" Value="140" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:Tile">
-                    <Grid>
-                        <Grid.Background>
-                            <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                        </Grid.Background>
-
-                        <StackPanel VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    Orientation="Horizontal">
+                    <Grid Background="{TemplateBinding Background}">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
                             <ContentPresenter RecognizesAccessKey="True" />
-
-                            <TextBlock Text="{TemplateBinding Count}"
-                                       FontSize="28"
-                                       VerticalAlignment="Center" />
+                            <TextBlock Text="{TemplateBinding Count}" FontSize="28" VerticalAlignment="Center" />
                         </StackPanel>
 
                         <Label Grid.ColumnSpan="2"
