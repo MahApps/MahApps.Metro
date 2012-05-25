@@ -780,6 +780,11 @@
         </Setter>
     </Style>
 
+    <!--TextBlock Style-->
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+    </Style>
+
     <!--TextBox Style-->
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="Controls:TextboxHelper.IsMonitoring" Value="True"/>
