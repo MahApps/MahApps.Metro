@@ -86,7 +86,7 @@ Which will give you
 
 This can be combined with - but doesn't require - the watermark attachedproperty
 
-####Progress Ring
+###Progress Ring
 The Progress Ring control is styled after a similar control in Windows 8 to indicate activity rather than a percentage of progress completed.
 ``<Controls:ProgressRing IsActive="True" />``
 
@@ -96,21 +96,33 @@ The Progress Ring control is styled after a similar control in Windows 8 to indi
 
 
 
-####Tabs
+###Tabs
 There are three included tab styles - Animated Tab Control, Single Row Animated Tab Control and the default Tab Control. The default Tab Control style is included in `Controls.xaml`, but the other two require specific referencing (make sure to do this *after* a reference to `Controls.xaml`)
 
 **Default look**  
 ![](images/default_tab_control.png)  
 This shows the three states - selected/active tab, hover and inactive.
 
-#####AnimatedTabControl
+####AnimatedTabControl
 ``<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedRowTabControl.xaml" />``
 Functioning just like the regular tab control, except it animates every tab change by wrapping everything in a `MetroContentControl`.  
 ![](images/animatedtabcontrol.gif) 
 
-#####AnimatedSingleRowTabControl
+####AnimatedSingleRowTabControl
 ``<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />``
 `AnimatedSingleRowTabControl` functions exactly the same as the `AnimtedTabControl`  except the tabs will only appear on a single line rather than wrapping. Instead of wrapping, arrows (left/right) are presented.   
 
 ![](images/singlerow_tab_control.png)  
+
+###Range Slider
+![](images/range_slider.png)  
+
+Taken from the [Avalon Controls Library](http://avaloncontrolslib.codeplex.com/) (MS-PL), `RangeSlider` lets you select a range of values with a slider, rather than a single value.
+
+	<Controls:RangeSlider 
+		Height="25" 
+		RangeStartSelected="{Binding DarkestValue, Mode=TwoWay}" 
+		RangeStopSelected="{Binding LightestValue, Mode=TwoWay}" />
+
+
 
