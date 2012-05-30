@@ -1,0 +1,184 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+    <Style TargetType="{x:Type Controls:ToggleSwitchButton}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="SwitchForeground" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:ToggleSwitchButton}">
+                    <Border x:Name="Root"
+        						BorderBrush="{TemplateBinding BorderBrush}"
+        						BorderThickness="{TemplateBinding BorderThickness}"
+        						Opacity="{TemplateBinding Opacity}"
+        						Padding="{TemplateBinding Padding}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Disabled" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="hover">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="pressed">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.05" To="Unchecked" />
+                                    <VisualTransition GeneratedDuration="0:0:0.05" To="Checked" >
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.05" To="47" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="SwitchThumb">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <CircleEase EasingMode="EaseIn"/>
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="BackgroundTranslation"
+        											Storyboard.TargetProperty="(TranslateTransform.X)"
+        											Duration="0"
+        											To="68">
+                                            <DoubleAnimation.EasingFunction>
+                                                <ExponentialEase Exponent="15" EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="SwitchThumb">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="47"/>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Dragging" />
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="BackgroundTranslation"
+        											Storyboard.TargetProperty="(TranslateTransform.X)"
+        											Duration="0"
+        											To="0" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="border">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid x:Name="SwitchRoot" Background="{x:Null}" Height="Auto" Width="Auto" UseLayoutRounding="True">
+                            <Grid x:Name="SwitchTrack" Width="Auto">
+                                <Grid x:Name="SwitchBottom" Height="25" Width="60">
+                                    <Rectangle x:Name="SwitchBackground"
+        										Width="Auto"
+        										Height="Auto"
+        										HorizontalAlignment="Stretch"
+        										VerticalAlignment="Stretch">
+                                        <Rectangle.RenderTransform>
+                                            <TranslateTransform x:Name="BackgroundTranslation" />
+                                        </Rectangle.RenderTransform>
+                                    </Rectangle>
+                                    <Border BorderThickness="2" BorderBrush="{DynamicResource GrayBrush9}">
+                                        <Grid Margin="2">
+                                            <Border BorderThickness="0" Background="{DynamicResource AccentColorBrush}" Margin="0" />
+                                            <Border x:Name="border" BorderThickness="0" Background="{DynamicResource GrayBrush9}" Visibility="Collapsed" Margin="0" />
+                                            <Border x:Name="pressed" BorderThickness="0" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Opacity="0.25" Visibility="Collapsed" Margin="0" />
+                                            <Border x:Name="hover" BorderThickness="0" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Opacity="0.15" Visibility="Collapsed" Margin="0" />
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <Border x:Name="SwitchThumb"
+        									BorderBrush="{TemplateBinding Background}"
+        									BorderThickness="0"
+        									Margin="0"
+        									Width="13"
+        									Height="Auto"
+        									HorizontalAlignment="Left">
+                                    <Border.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform/>
+                                            <SkewTransform/>
+                                            <RotateTransform/>
+                                            <TranslateTransform/>
+                                        </TransformGroup>
+                                    </Border.RenderTransform>
+                                    <Border x:Name="ThumbCenter" BorderBrush="{TemplateBinding Foreground}" BorderThickness="0" Background="{DynamicResource BlackBrush}" />
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Controls:ToggleSwitch}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="SwitchForeground" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:ToggleSwitch}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+        						BorderThickness="{TemplateBinding BorderThickness}"
+        						Padding="{TemplateBinding Padding}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Header" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0" To="0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="Content" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0" To="0.3" />
+                                        <DoubleAnimation Storyboard.TargetName="Switch" Storyboard.TargetProperty="(UIElement.Opacity)" Duration="0"  To="0.75" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid Margin="12,5,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <ContentControl x:Name="Header"
+        								FontWeight="Normal"
+        								Content="{TemplateBinding Header}"
+        								ContentTemplate="{TemplateBinding HeaderTemplate}"
+        								HorizontalAlignment="Left"
+        								IsTabStop="False"
+        								Margin="0,0,0,5"
+        								Opacity="0.65"
+        								VerticalAlignment="Top" Grid.ColumnSpan="3" FontSize="16" BorderThickness="0" />
+                            <ContentControl x:Name="Content"
+        								Grid.Row="1"
+        								Content="{TemplateBinding Content}"
+        								ContentTemplate="{TemplateBinding ContentTemplate}"
+        								HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+        								IsTabStop="False"
+        								Margin="-1,1,0,-7"
+        								VerticalAlignment="{TemplateBinding VerticalContentAlignment}" FontFamily="Segoe UI Semibold" FontSize="14.667" />
+                            <Controls:ToggleSwitchButton x:Name="Switch"
+        								Grid.RowSpan="1"
+        								Grid.Column="1"
+        								Background="{TemplateBinding Background}"
+        								SwitchForeground="{TemplateBinding SwitchForeground}"
+        								VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

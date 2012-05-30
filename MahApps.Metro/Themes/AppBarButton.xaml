@@ -1,0 +1,74 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+    <Style TargetType="Controls:AppBarButton">
+        <Setter Property="Background" Value="{DynamicResource ButtonNormalBackground}" />
+        <Setter Property="BorderBrush"  Value="{DynamicResource ButtonNormalBorder}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="1" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Width" Value="80" />
+        <Setter Property="Height" Value="80" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:AppBarButton}">
+                    <Grid x:Name="grid" Background="#02FFFFFF" Margin="{TemplateBinding Padding}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Viewbox>
+                            <Grid>
+                                <Ellipse x:Name="ellipsebg"
+                                         Stroke="{TemplateBinding Foreground}"
+                                         StrokeThickness="0"
+                                         VerticalAlignment="Stretch"
+                                         Width="48"
+                                         Height="48" />
+                                <Ellipse x:Name="ellipse"
+                                         Stroke="{TemplateBinding Foreground}"
+                                         StrokeThickness="2"
+                                         VerticalAlignment="Stretch"
+                                         Width="48"
+                                         Height="48" />
+                                <Rectangle Width="28"
+                                           Height="28"
+                                           Fill="{TemplateBinding Foreground}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Visual="{Binding MetroImageSource, RelativeSource={RelativeSource TemplatedParent}}"
+                                                     Stretch="Fill" />
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                            </Grid>
+                        </Viewbox>
+                        <ContentPresenter RecognizesAccessKey="True"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Grid.Row="1" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ellipsebg" Property="Fill" Value="{DynamicResource BlackBrush}" />
+                            <Setter TargetName="ellipsebg" Property="Opacity" Value="0.2" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ellipse" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="ellipse" Property="Opacity" Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true" />
+                        <Trigger Property="ToggleButton.IsChecked" Value="true" />
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#ADADAD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
