@@ -61,6 +61,8 @@
     <Compile Include="Controls\MetroProgressBar.cs" />
     <Compile Include="Controls\Planerator.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
+    <Compile Include="Controls\RangeSelectionChangedEventArgs.cs" />
+    <Compile Include="Controls\RangeSlider.cs" />
     <Compile Include="Controls\TextboxHelper.cs" />
     <Compile Include="Controls\TransitioningContentControl.cs" />
     <Compile Include="Controls\VisualStates.cs" />
