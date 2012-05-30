@@ -18,8 +18,57 @@ namespace MahApps.Metro.Controls
     TemplatePart(Name = "PART_RightThumb", Type = typeof(Thumb))]
     public sealed class RangeSlider : Control
     {
-        const double RepeatButtonMoveRatio = 0.1;
-        const double DefaultSplittersThumbWidth = 10;
+        public static readonly RoutedEvent RangeSelectionChangedEvent = EventManager.RegisterRoutedEvent("RangeSelectionChanged", RoutingStrategy.Bubble, typeof(RangeSelectionChangedEventHandler), typeof(RangeSlider));
+        public static RoutedUICommand MoveBack = new RoutedUICommand("MoveBack", "MoveBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Control) }));
+        public static RoutedUICommand MoveForward = new RoutedUICommand("MoveForward", "MoveForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Control) }));
+        public static RoutedUICommand MoveAllForward = new RoutedUICommand("MoveAllForward", "MoveAllForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Alt) }));
+        public static RoutedUICommand MoveAllBack = new RoutedUICommand("MoveAllBack", "MoveAllBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Alt) }));
+
+        public static readonly DependencyProperty RangeStartProperty = DependencyProperty.Register("RangeStart", typeof(long), typeof(RangeSlider), new UIPropertyMetadata((long)0, RangeChanged));
+        public static readonly DependencyProperty RangeStopProperty = DependencyProperty.Register("RangeStop", typeof(long), typeof(RangeSlider), new UIPropertyMetadata((long)1, RangeChanged));
+        public static readonly DependencyProperty RangeStartSelectedProperty = DependencyProperty.Register("RangeStartSelected", typeof(long), typeof(RangeSlider), new UIPropertyMetadata((long)0, RangesChanged));
+        public static readonly DependencyProperty RangeStopSelectedProperty = DependencyProperty.Register("RangeStopSelected", typeof(long), typeof(RangeSlider), new UIPropertyMetadata((long)1, RangesChanged));
+        public static readonly DependencyProperty MinRangeProperty = DependencyProperty.Register("MinRange", typeof(long), typeof(RangeSlider), new UIPropertyMetadata((long)0, MinRangeChanged));
+
+        public long RangeStart
+        {
+            get { return (long)GetValue(RangeStartProperty); }
+            set { SetValue(RangeStartProperty, value); }
+        }
+
+        public long RangeStop
+        {
+            get { return (long)GetValue(RangeStopProperty); }
+            set { SetValue(RangeStopProperty, value); }
+        }
+
+        public long RangeStartSelected
+        {
+            get { return (long)GetValue(RangeStartSelectedProperty); }
+            set { SetValue(RangeStartSelectedProperty, value); }
+        }
+
+        public long RangeStopSelected
+        {
+            get { return (long)GetValue(RangeStopSelectedProperty); }
+            set { SetValue(RangeStopSelectedProperty, value); }
+        }
+
+        public long MinRange
+        {
+            get { return (long)GetValue(MinRangeProperty); }
+            set { SetValue(MinRangeProperty, value); }
+        }
+
+
+        public event RangeSelectionChangedEventHandler RangeSelectionChanged
+        {
+            add { AddHandler(RangeSelectionChangedEvent, value); }
+            remove { RemoveHandler(RangeSelectionChangedEvent, value); }
+        }
+
+        private const double RepeatButtonMoveRatio = 0.1;
+        private const double DefaultSplittersThumbWidth = 10;
         private bool _internalUpdate;
         private Thumb _centerThumb;
         private Thumb _leftThumb;
@@ -29,125 +78,6 @@ namespace MahApps.Metro.Controls
         private StackPanel _visualElementsContainer;
         private long _movableRange;
         private double _movableWidth;
-
-        public long RangeStart
-        {
-            get { return (long)GetValue(RangeStartProperty); }
-            set { SetValue(RangeStartProperty, value); }
-        }
-
-        public static readonly DependencyProperty RangeStartProperty =
-            DependencyProperty.Register("RangeStart", typeof(long), typeof(RangeSlider),
-            new UIPropertyMetadata((long)0,
-                delegate(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-                {
-                    RangeSlider slider = (RangeSlider)sender;
-                    if (!slider._internalUpdate)//check if the property is set internally
-                    {
-                        slider.ReCalculateRanges();
-                        slider.ReCalculateWidths();
-                    }
-                }));
-
-
-        public long RangeStop
-        {
-            get { return (long)GetValue(RangeStopProperty); }
-            set { SetValue(RangeStopProperty, value); }
-        }
-
-        public static readonly DependencyProperty RangeStopProperty =
-            DependencyProperty.Register("RangeStop", typeof(long), typeof(RangeSlider),
-            new UIPropertyMetadata((long)1,
-                delegate(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-                {
-                    RangeSlider slider = (RangeSlider)sender;
-                    if (!slider._internalUpdate)//check if the property is set internally
-                    {
-                        slider.ReCalculateRanges();
-                        slider.ReCalculateWidths();
-                    }
-                }));
-
-        public long RangeStartSelected
-        {
-            get { return (long)GetValue(RangeStartSelectedProperty); }
-            set { SetValue(RangeStartSelectedProperty, value); }
-        }
-
-        public static readonly DependencyProperty RangeStartSelectedProperty =
-            DependencyProperty.Register("RangeStartSelected", typeof(long), typeof(RangeSlider),
-            new UIPropertyMetadata((long)0,
-                delegate(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-                {
-                    RangeSlider slider = (RangeSlider)sender;
-                    if (!slider._internalUpdate)//check if the property is set internally
-                    {
-                        slider.ReCalculateWidths();
-                        slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider));
-                    }
-                }));
-
-
-        public long RangeStopSelected
-        {
-            get { return (long)GetValue(RangeStopSelectedProperty); }
-            set { SetValue(RangeStopSelectedProperty, value); }
-        }
-
-        public static readonly DependencyProperty RangeStopSelectedProperty =
-            DependencyProperty.Register("RangeStopSelected", typeof(long), typeof(RangeSlider),
-            new UIPropertyMetadata((long)1,
-                delegate(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-                {
-                    RangeSlider slider = (RangeSlider)sender;
-                    if (!slider._internalUpdate)//check if the property is set internally
-                    {
-                        slider.ReCalculateWidths();
-                        slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider));
-                    }
-                }));
-
-
-        public long MinRange
-        {
-            get { return (long)GetValue(MinRangeProperty); }
-            set { SetValue(MinRangeProperty, value); }
-        }
-
-        public static readonly DependencyProperty MinRangeProperty =
-            DependencyProperty.Register("MinRange", typeof(long), typeof(RangeSlider),
-            new UIPropertyMetadata((long)0,
-                delegate(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-                {
-                    if ((long)e.NewValue < 0)
-                        throw new ArgumentOutOfRangeException("value", "value for MinRange cannot be less than 0");
-
-                    RangeSlider slider = (RangeSlider)sender;
-                    if (!slider._internalUpdate)//check if the property is set internally
-                    {
-                        slider._internalUpdate = true;//set flag to signal that the properties are being set by the object itself
-                        slider.RangeStopSelected = Math.Max(slider.RangeStopSelected, slider.RangeStartSelected + (long)e.NewValue);
-                        slider.RangeStop = Math.Max(slider.RangeStop, slider.RangeStopSelected);
-                        slider._internalUpdate = false;//set flag to signal that the properties are being set by the object itself
-
-                        slider.ReCalculateRanges();
-                        slider.ReCalculateWidths();
-                    }
-                }));
-
-        public static readonly RoutedEvent RangeSelectionChangedEvent = EventManager.RegisterRoutedEvent("RangeSelectionChanged", RoutingStrategy.Bubble, typeof(RangeSelectionChangedEventHandler), typeof(RangeSlider));
-
-        public event RangeSelectionChangedEventHandler RangeSelectionChanged
-        {
-            add { AddHandler(RangeSelectionChangedEvent, value); }
-            remove { RemoveHandler(RangeSelectionChangedEvent, value); }
-        }
-
-        public static RoutedUICommand MoveBack = new RoutedUICommand("MoveBack", "MoveBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Control) }));
-        public static RoutedUICommand MoveForward = new RoutedUICommand("MoveForward", "MoveForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Control) }));
-        public static RoutedUICommand MoveAllForward = new RoutedUICommand("MoveAllForward", "MoveAllForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Alt) }));
-        public static RoutedUICommand MoveAllBack = new RoutedUICommand("MoveAllBack", "MoveAllBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Alt) }));
 
         public RangeSlider()
         {
@@ -162,6 +92,44 @@ namespace MahApps.Metro.Controls
         static RangeSlider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
+        }
+
+        private static void RangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var slider = (RangeSlider)dependencyObject;
+            if (slider._internalUpdate)
+                return;
+
+            slider.ReCalculateRanges();
+            slider.ReCalculateWidths();
+        }
+
+        private static void RangesChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var slider = (RangeSlider)dependencyObject;
+            if (slider._internalUpdate)
+                return;
+
+            slider.ReCalculateWidths();
+            slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider));
+        }
+
+        private static void MinRangeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((long)e.NewValue < 0)
+                throw new ArgumentOutOfRangeException("value", "value for MinRange cannot be less than 0");
+
+            var slider = (RangeSlider)sender;
+            if (slider._internalUpdate)
+                return;
+
+            slider._internalUpdate = true;
+            slider.RangeStopSelected = Math.Max(slider.RangeStopSelected, slider.RangeStartSelected + (long)e.NewValue);
+            slider.RangeStop = Math.Max(slider.RangeStop, slider.RangeStopSelected);
+            slider._internalUpdate = false;
+
+            slider.ReCalculateRanges();
+            slider.ReCalculateWidths();
         }
 
         void MoveAllBackHandler(object sender, ExecutedRoutedEventArgs e)

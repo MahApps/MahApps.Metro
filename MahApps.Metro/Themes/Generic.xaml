@@ -11,9 +11,9 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroWindow.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Panorama.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ProgressRing.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/RangeSlider.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Tile.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
-        <ResourceDictionary Source="/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />      
-       
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
