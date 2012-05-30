@@ -115,7 +115,7 @@ Functioning just like the regular tab control, except it animates every tab chan
 ![](images/singlerow_tab_control.png)  
 
 ###Range Slider
-![](images/range_slider.png)  
+![](images/range_slider.PNG)  
 
 Taken from the [Avalon Controls Library](http://avaloncontrolslib.codeplex.com/) (MS-PL), `RangeSlider` lets you select a range of values with a slider, rather than a single value.
 
