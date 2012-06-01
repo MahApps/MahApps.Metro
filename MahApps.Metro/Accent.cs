@@ -15,7 +15,7 @@ namespace MahApps.Metro
         public Accent(string name, Uri resourceAddress)
         {
             Name = name;
-            Resources = new ResourceDictionary() {Source = resourceAddress};
+            Resources = new ResourceDictionary {Source = resourceAddress};
         }
     }
 }

@@ -1,38 +1,42 @@
 using System;
+using System.Linq;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Net;
+using System.Windows.Data;
 using System.Windows.Threading;
+using MahApps.Metro.Controls;
 using MetroDemo.Models;
 using Newtonsoft.Json;
 
 namespace MetroDemo
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        public ObservableCollection<PanoramaGroup> Groups { get; set; }
+
         private readonly Dispatcher _dispatcher;
 
         public MainWindowViewModel(Dispatcher dispatcher)
         {
             _dispatcher = dispatcher;
-            Artists = new ObservableCollection<Artist>();
-
+            Groups = new ObservableCollection<PanoramaGroup>();
             var wc = new WebClient();
             wc.DownloadStringCompleted += WcDownloadStringCompleted;
             wc.DownloadStringAsync(new Uri("http://ws.audioscrobbler.com/2.0/?method=chart.gethypedartists&api_key=b25b959554ed76058ac220b7b2e0a026&format=json"));
+
+            var wc2 = new WebClient();
+            wc2.DownloadStringCompleted += WcDownloadStringCompleted2;
+            wc2.DownloadStringAsync(new Uri("http://ws.audioscrobbler.com/2.0/?method=chart.gethypedtracks&api_key=b25b959554ed76058ac220b7b2e0a026&format=json"));
         }
 
-        private void WcDownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        private void WcDownloadStringCompleted2(object sender, DownloadStringCompletedEventArgs e)
         {
             try
             {
-                var x = JsonConvert.DeserializeObject<Wrapper>(e.Result);
-                _dispatcher.BeginInvoke(new Action(() =>
-                                                       {
-                                                           foreach (var artist in x.Artists.artist)
-                                                           {
-                                                               Artists.Add(artist);
-                                                           }
-                                                       }));
+                var x = JsonConvert.DeserializeObject<TrackWrapper>(e.Result);
+                _dispatcher.BeginInvoke(new Action(() => Groups.Add(new PanoramaGroup("trending tracks", CollectionViewSource.GetDefaultView(x.Tracks.track.Take(25))))));
             }
             catch (Exception ex)
             {
@@ -40,14 +44,19 @@ namespace MetroDemo
             }
         }
 
-        public ObservableCollection<Artist> Artists { get; private set; }
+        private void WcDownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            try
+            {
+                var x = JsonConvert.DeserializeObject<Wrapper>(e.Result);
+                _dispatcher.BeginInvoke(new Action(() => Groups.Add(new PanoramaGroup("trending artists", CollectionViewSource.GetDefaultView(x.Artists.artist.Take(25))))));
+            }
+            catch (Exception ex)
+            {
 
-        private string _artistName;
-        public string ArtistName {
-            get { return _artistName; }
-            set {
-                _artistName = value;
             }
         }
+
+        
     }
 }

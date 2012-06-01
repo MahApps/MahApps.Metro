@@ -58,15 +58,20 @@
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
+    <Compile Include="Controls\IPanoramaTile.cs" />
     <Compile Include="Controls\MetroProgressBar.cs" />
+    <Compile Include="Controls\Panorama.cs" />
+    <Compile Include="Controls\PanoramaGroup.cs" />
     <Compile Include="Controls\Planerator.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
     <Compile Include="Controls\RangeSelectionChangedEventArgs.cs" />
     <Compile Include="Controls\RangeSlider.cs" />
     <Compile Include="Controls\TextboxHelper.cs" />
     <Compile Include="Controls\TransitioningContentControl.cs" />
+    <Compile Include="Controls\TreeHelper.cs" />
     <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="Controls\WindowCommands.cs" />
+    <Compile Include="Converters\PanoramaGroupWidthConverter.cs" />
     <Compile Include="Native\WINDOWPLACEMENT.cs" />
     <Compile Include="Controls\WindowSettings.cs" />
     <Compile Include="Native\Constants.cs" />
@@ -84,8 +89,6 @@
     <Compile Include="Controls\MetroContentControl.cs" />
     <Compile Include="Controls\MetroImage.cs" />
     <Compile Include="Controls\MetroWindow.cs" />
-    <Compile Include="Controls\Panorama.cs" />
-    <Compile Include="Controls\PanoramaItem.cs" />
     <Compile Include="Controls\ProgressIndicator.xaml.cs">
       <DependentUpon>ProgressIndicator.xaml</DependentUpon>
     </Compile>
@@ -229,7 +232,6 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -238,4 +240,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterCompile" />
 </Project>
