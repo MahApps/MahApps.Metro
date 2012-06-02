@@ -1,23 +1,18 @@
-﻿using System;
+using System;
 using System.Globalization;
-using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace MahApps.Metro.Converters
 {
-    public class PanoramaGroupWidthConverter : IMultiValueConverter
+    public class PanoramaGroupHeightConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var itemBox = double.Parse(values[0].ToString());
             var groupHeight = double.Parse(values[1].ToString());
+            var headerHeight = double.Parse(values[2].ToString());
 
-            double ratio = groupHeight / itemBox;
-            var list = (ListBox)values[2];
-
-            double width = Math.Ceiling(list.Items.Count / ratio);
-            width *= itemBox;
-            return width < itemBox ? itemBox : width;
+            return (Math.Floor((groupHeight - headerHeight) / itemBox) * itemBox);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

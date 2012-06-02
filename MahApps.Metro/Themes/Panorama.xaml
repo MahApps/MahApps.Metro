@@ -4,6 +4,7 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <converters:PanoramaGroupWidthConverter x:Key="conv" />
+    <converters:PanoramaGroupHeightConverter x:Key="PanoramaGroupHeightConverter" />
 
     <Style x:Key="headerLabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource  AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}, Path=HeaderFontSize}" />
@@ -31,8 +32,10 @@
         <DockPanel LastChildFill="True" Background="Transparent">
             <Label Style="{StaticResource headerLabelStyle}"
                    Content="{Binding Header}"
+                   x:Name="header"
                    DockPanel.Dock="Top" />
             <ListBox ItemsSource="{Binding Tiles}" 
+                     x:Name="items"
                      SelectionMode="Single"
                      BorderThickness="0"
                      BorderBrush="Transparent"
@@ -43,11 +46,19 @@
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}, Path=GroupHeight}">
+                        <WrapPanel>
+                            <WrapPanel.Height>
+                                <MultiBinding Converter="{StaticResource PanoramaGroupHeightConverter}">
+                                    <Binding Path="ItemBox" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />
+                                    <Binding Path="GroupHeight" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />
+                                    <Binding Path="ActualHeight" ElementName="header"/>
+                                </MultiBinding>
+                            </WrapPanel.Height>
                             <WrapPanel.Width>
                                 <MultiBinding Converter="{StaticResource conv}">
                                     <Binding Path="ItemBox" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />
-                                    <Binding Path="GroupHeight" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />
+                                    <!--<Binding Path="GroupHeight" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />-->
+                                    <Binding Path="ActualHeight" ElementName="items"/>
                                     <Binding RelativeSource="{RelativeSource AncestorType={x:Type ListBox}, Mode=FindAncestor}" />
                                 </MultiBinding>
                             </WrapPanel.Width>
@@ -64,7 +75,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ItemsControl}">
                     <ControlTemplate.Resources>
-                        <Style TargetType="{x:Type ScrollViewer}"> 
+                        <Style TargetType="{x:Type ScrollViewer}">
                             <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
                             <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
                         </Style>
@@ -83,5 +94,5 @@
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
-    </Style>   
+    </Style>
 </ResourceDictionary>
