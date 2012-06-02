@@ -1,184 +1,228 @@
 ﻿using System;
-using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows;
+using System.Windows.Threading;
+using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
+    [TemplatePart(Name = "PART_ScrollViewer", Type = typeof(ScrollViewer))]
     public class Panorama : ItemsControl
     {
-        public static readonly DependencyProperty HeaderOffsetProperty = DependencyProperty.Register("HeaderOffset", typeof(double), typeof(Panorama), new PropertyMetadata(1.0));
+        public static readonly DependencyProperty ItemBoxProperty = DependencyProperty.Register("ItemHeight", typeof(double), typeof(Panorama), new FrameworkPropertyMetadata(120.0));
+        public static readonly DependencyProperty GroupHeightProperty = DependencyProperty.Register("GroupHeight", typeof(double), typeof(Panorama), new FrameworkPropertyMetadata(640.0));
+        public static readonly DependencyProperty HeaderFontSizeProperty = DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(Panorama), new FrameworkPropertyMetadata(40.0));
+        public static readonly DependencyProperty HeaderFontColorProperty = DependencyProperty.Register("HeaderFontColor", typeof(Brush), typeof(Panorama), new FrameworkPropertyMetadata(Brushes.White));
+        public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(Panorama), new FrameworkPropertyMetadata(new FontFamily("Segoe UI Light")));
+        public static readonly DependencyProperty UseSnapBackScrollingProperty = DependencyProperty.Register("UseSnapBackScrolling", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
 
-        public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(double), typeof(Panorama), new PropertyMetadata(Double.NaN));
-
-        public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight", typeof(double), typeof(Panorama), new PropertyMetadata(Double.NaN));
-
-        private double _currentWidth = -1;
-        private double _increment;
-        private bool _mouseCaptured;
-
-        private double GetWidths()
+        public double Friction
         {
-            return Items.Cast<PanoramaItem>().Sum(i => i.ActualWidth);
+            get { return 1.0 - friction; }
+            set { friction = Math.Min(Math.Max(1.0 - value, 0), 1.0); }
         }
+
+        public double ItemBox
+        {
+            get { return (double)GetValue(ItemBoxProperty); }
+            set { SetValue(ItemBoxProperty, value); }
+        }
+
+        public double GroupHeight
+        {
+            get { return (double)GetValue(GroupHeightProperty); }
+            set { SetValue(GroupHeightProperty, value); }
+        }
+
+        public double HeaderFontSize
+        {
+            get { return (double)GetValue(HeaderFontSizeProperty); }
+            set { SetValue(HeaderFontSizeProperty, value); }
+        }
+
+        public Brush HeaderFontColor
+        {
+            get { return (Brush)GetValue(HeaderFontColorProperty); }
+            set { SetValue(HeaderFontColorProperty, value); }
+        }
+
+        public FontFamily HeaderFontFamily
+        {
+            get { return (FontFamily)GetValue(HeaderFontFamilyProperty); }
+            set { SetValue(HeaderFontFamilyProperty, value); }
+        }
+
+        public bool UseSnapBackScrolling
+        {
+            get { return (bool)GetValue(UseSnapBackScrollingProperty); }
+            set { SetValue(UseSnapBackScrollingProperty, value); }
+        }
+
+        private ScrollViewer sv;
+        private Point scrollTarget;
+        private Point scrollStartPoint;
+        private Point scrollStartOffset;
+        private Point previousPoint;
+        private Vector velocity;
+        private double friction;
+        private DispatcherTimer animationTimer = new DispatcherTimer(DispatcherPriority.DataBind);
+        private static int PixelsToMoveToBeConsideredScroll = 5;
+        private static int PixelsToMoveToBeConsideredClick = 2;
+        private IPanoramaTile tile;
 
         public Panorama()
         {
-            DefaultStyleKey = typeof(Panorama);
-            Loaded += (s, e) =>
-            {
-                foreach (var panoramaItem in Items.OfType<PanoramaItem>())
-                {
-                    panoramaItem.RenderTransform = new TranslateTransform();
-                }
-                CompositionTarget.Rendering += CompositionTargetOnRendering;
-            };
-            Unloaded += (s, e) => CompositionTarget.Rendering -= CompositionTargetOnRendering;
+            friction = 0.85;
+
+            animationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20);
+            animationTimer.Tick += HandleWorldTimerTick;
+            animationTimer.Start();
         }
 
-        private void CompositionTargetOnRendering(object sender, EventArgs eventArgs)
+        static Panorama()
         {
-            var c = 0;
-            if (_mouseCaptured && Mouse.LeftButton == MouseButtonState.Released)
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Panorama), new FrameworkPropertyMetadata(typeof(Panorama)));
+        }
+
+        private void DoStandardScrolling()
+        {
+            sv.ScrollToHorizontalOffset(scrollTarget.X);
+            sv.ScrollToVerticalOffset(scrollTarget.Y);
+            scrollTarget.X += velocity.X;
+            scrollTarget.Y += velocity.Y;
+            velocity *= friction;
+        }
+
+        private void HandleWorldTimerTick(object sender, EventArgs e)
+        {
+            var prop = DesignerProperties.IsInDesignModeProperty;
+            var isInDesignMode = (bool)DependencyPropertyDescriptor.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
+
+            if (isInDesignMode)
+                return;
+
+            if (IsMouseCaptured)
             {
-                _mouseCaptured = false;
-                _currentWidth = -1;
-                var w = -1 * GetWidths();
-                
-                if (Translation < (Items.Count - 1) * w)
+                Point currentPoint = Mouse.GetPosition(this);
+                velocity = previousPoint - currentPoint;
+                previousPoint = currentPoint;
+            }
+            else
+            {
+                if (velocity.Length > 1)
                 {
-                    c = Items.Count - 1;
-                }
-                else if (Translation < 0)
-                {
-                    if (Math.Abs(Translation) + c * -ActualWidth > 20)
-                        c += 1;
-                    else if (Math.Abs(Translation) + c * -ActualWidth < -20)
-                        c -= 1;
+                    DoStandardScrolling();
                 }
                 else
                 {
-                    c = 0;
-                }
-
-                Animate(Translation, Math.Min(0, c * -ActualWidth));
-                return;
-            }
-
-            if (!_mouseCaptured && Mouse.LeftButton == MouseButtonState.Pressed && MouseOver())
-            {
-                _mouseCaptured = true;
-                _currentWidth = Mouse.GetPosition(Items[0] as PanoramaItem).X;
-                return;
-            }
-
-            if (_mouseCaptured && Mouse.LeftButton == MouseButtonState.Pressed && MouseOver())
-            {
-                _increment = Mouse.GetPosition(Items[0] as PanoramaItem).X;
-                Translation += _increment - _currentWidth;
-            }
-        }
-
-        public double HeaderOffset
-        {
-            get { return (double)GetValue(HeaderOffsetProperty); }
-            set { SetValue(HeaderOffsetProperty, value); }
-        }
-
-        public double ItemWidth
-        {
-            get { return (double)GetValue(ItemWidthProperty); }
-            set { SetValue(ItemWidthProperty, value); }
-        }
-
-        public double ItemHeight
-        {
-            get { return (double)GetValue(ItemHeightProperty); }
-            set { SetValue(ItemHeightProperty, value); }
-        }
-
-        public double Translation
-        {
-            get
-            {
-                if (Items != null || Items.Count > 0)
-                {
-                    if ((Items[0] as PanoramaItem).RenderTransform == null)
+                    if (UseSnapBackScrolling)
                     {
-                        foreach (object ob in Items)
-                        {
-                            (ob as PanoramaItem).RenderTransform = new TranslateTransform();
-                        }
+                        int mx = (int)sv.HorizontalOffset % (int)ActualWidth;
+                        if (mx == 0)
+                            return;
+                        int ix = (int)sv.HorizontalOffset / (int)ActualWidth;
+                        double snapBackX = mx > ActualWidth / 2 ? (ix + 1) * ActualWidth : ix * ActualWidth;
+                        sv.ScrollToHorizontalOffset(sv.HorizontalOffset + (snapBackX - sv.HorizontalOffset) / 4.0);
                     }
-                    return ((TranslateTransform)((Items[0] as PanoramaItem).RenderTransform)).X;
-                }
-                return 0;
-            }
-
-            set
-            {
-                if (Items != null || Items.Count > 0)
-                {
-                    foreach (object ob in Items)
+                    else
                     {
-                        var currentpanorama = (ob as PanoramaItem);
-                        ((TranslateTransform)(currentpanorama.RenderTransform)).X = value;
+                        DoStandardScrolling();
                     }
                 }
             }
         }
 
-        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        public override void OnApplyTemplate()
         {
-            var panoramaItem = element as PanoramaItem;
-            if (panoramaItem == null)
-                return;
-
-            panoramaItem.Width = ItemWidth;
-            panoramaItem.Height = ItemHeight;
+            sv = (ScrollViewer)Template.FindName("PART_ScrollViewer", this);
+            base.OnApplyTemplate();
         }
 
-        private bool MouseOver()
+        protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {
-            Point p = Mouse.GetPosition(this);
-            return !(p.X < 0 || p.X > Width - 120 || p.Y < 0 || p.Y > Height);
-        }
-
-        private TranslateTransform RenderTranslateTransform(object ob)
-        {
-            return (ob as PanoramaItem).RenderTransform as TranslateTransform;
-        }
-
-        private void Animate(double begin, double end)
-        {
-            var da = new DoubleAnimationUsingKeyFrames();
-            da.Completed += (s, e) =>
+            if (sv.IsMouseOver)
             {
-                foreach (object ob in Items)
+                tile = null;
+
+                // Save starting point, used later when determining how much to scroll.
+                scrollStartPoint = e.GetPosition(this);
+                scrollStartOffset.X = sv.HorizontalOffset;
+                scrollStartOffset.Y = sv.VerticalOffset;
+
+                // Update the cursor if can scroll or not.
+                Cursor = (sv.ExtentWidth > sv.ViewportWidth) || (sv.ExtentHeight > sv.ViewportHeight) ? Cursors.ScrollAll : Cursors.Arrow;
+
+                //store Control if one was found, so we can call its command later
+                var x = TreeHelper.TryFindFromPoint<ListBoxItem>(this, scrollStartPoint);
+                if (x != null)
                 {
-                    (ob as PanoramaItem).RenderTransform = new TranslateTransform(RenderTranslateTransform(ob).X, RenderTranslateTransform(ob).Y);
+                    x.IsSelected = true;
+                    ItemsControl tiles = ItemsControlFromItemContainer(x);
+                    var data = tiles.ItemContainerGenerator.ItemFromContainer(x);
+                    if (data != null && data is IPanoramaTile)
+                    {
+                        tile = (IPanoramaTile)data;
+                    }
                 }
-            };
 
-            var e0 = new EasingDoubleKeyFrame(begin, KeyTime.FromTimeSpan(TimeSpan.Zero))
-            {
-                EasingFunction = new BackEase { EasingMode = EasingMode.EaseOut, Amplitude = 0.5 }
-            };
-            da.KeyFrames.Add(e0);
-
-            var e1 = new EasingDoubleKeyFrame(end, KeyTime.FromTimeSpan(TimeSpan.FromSeconds(0.6)))
-            {
-                EasingFunction = new BackEase { EasingMode = EasingMode.EaseOut, Amplitude = 0.5 }
-            };
-            da.KeyFrames.Add(e1);
-
-            foreach (object ob in Items)
-            {
-                RenderTranslateTransform(ob).BeginAnimation(TranslateTransform.XProperty, da, HandoffBehavior.SnapshotAndReplace);
+                CaptureMouse();
             }
+
+            base.OnPreviewMouseDown(e);
         }
+
+        protected override void OnPreviewMouseMove(MouseEventArgs e)
+        {
+            if (IsMouseCaptured)
+            {
+                Point currentPoint = e.GetPosition(this);
+
+                // Determine the new amount to scroll.
+                var delta = new Point(scrollStartPoint.X - currentPoint.X, scrollStartPoint.Y - currentPoint.Y);
+
+                if (Math.Abs(delta.X) < PixelsToMoveToBeConsideredScroll &&
+                    Math.Abs(delta.Y) < PixelsToMoveToBeConsideredScroll)
+                    return;
+
+                scrollTarget.X = scrollStartOffset.X + delta.X;
+                scrollTarget.Y = scrollStartOffset.Y + delta.Y;
+
+                // Scroll to the new position.
+                sv.ScrollToHorizontalOffset(scrollTarget.X);
+                sv.ScrollToVerticalOffset(scrollTarget.Y);
+            }
+
+            base.OnPreviewMouseMove(e);
+        }
+
+        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
+        {
+            if (IsMouseCaptured)
+            {
+                Cursor = Cursors.Arrow;
+                ReleaseMouseCapture();
+            }
+
+            Point currentPoint = e.GetPosition(this);
+
+            // Determine the new amount to scroll.
+            var delta = new Point(scrollStartPoint.X - currentPoint.X, scrollStartPoint.Y - currentPoint.Y);
+
+            if (Math.Abs(delta.X) < PixelsToMoveToBeConsideredClick &&
+                Math.Abs(delta.Y) < PixelsToMoveToBeConsideredClick && tile != null)
+            {
+                if (tile.TileClickedCommand != null)
+                    //Ok, its a click ask the tile to do its job
+                    if (tile.TileClickedCommand.CanExecute(null))
+                    {
+                        tile.TileClickedCommand.Execute(null);
+                    }
+            }
+
+            base.OnPreviewMouseUp(e);
+        }
+
     }
 }
