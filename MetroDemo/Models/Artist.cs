@@ -1,8 +1,10 @@
 using System.Linq;
+using System.Windows.Input;
+using MahApps.Metro.Controls;
 
 namespace MetroDemo.Models
 {
-    public class Artist
+    public class Artist : IPanoramaTile
     {
         public string name { get; set; }
         public string percentagechange { get; set; }
@@ -19,6 +21,11 @@ namespace MetroDemo.Models
                 if (x != null) return x.text;
                 return string.Empty;
             }
+        }
+
+        public ICommand TileClickedCommand
+        {
+            get { return null; }
         }
     }
 }

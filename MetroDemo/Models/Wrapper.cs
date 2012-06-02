@@ -4,4 +4,9 @@ namespace MetroDemo.Models
     {
         public Artists Artists { get; set; }
     }
+
+    public class TrackWrapper
+    {
+        public Tracks Tracks { get; set; }
+    }
 }
