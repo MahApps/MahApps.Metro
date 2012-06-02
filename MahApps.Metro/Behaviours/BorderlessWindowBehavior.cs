@@ -80,8 +80,16 @@ namespace MahApps.Metro.Behaviours
                                                {
                                                    var ancestors = window.GetPart<Border>("PART_Border");
                                                    Border = ancestors;
-                                                   if (Environment.OSVersion.Version.Major < 6 || !UnsafeNativeMethods.DwmIsCompositionEnabled()) 
-                                                       Border.BorderThickness = new Thickness(1);
+
+                                                   if (Environment.OSVersion.Version.Major == 6)
+                                                   {
+                                                       if ((Environment.OSVersion.Version.Minor == 0 || Environment.OSVersion.Version.Minor == 1) && UnsafeNativeMethods.DwmIsCompositionEnabled())
+                                                           Border.BorderThickness = new Thickness(0);
+                                                       else
+                                                           AddGrayBorder();
+                                                   }
+                                                   else
+                                                       AddGrayBorder();
                                                };
 
                 switch (AssociatedObject.ResizeMode)
@@ -108,12 +116,18 @@ namespace MahApps.Metro.Behaviours
                 var content = (UIElement) AssociatedObject.Content;
                 AssociatedObject.Content = null;
 
-                Border = new Border
-                            {
-                                Child =  content,
-                                BorderBrush = new SolidColorBrush(Colors.Black)
-                            };
-                
+                Border = new Border { Child =  content };
+
+                if (Environment.OSVersion.Version.Major == 6)
+                {
+                    if ((Environment.OSVersion.Version.Minor == 0 || Environment.OSVersion.Version.Minor == 1) && UnsafeNativeMethods.DwmIsCompositionEnabled())
+                        Border.BorderThickness = new Thickness(0);
+                    else
+                        AddGrayBorder();
+                }
+                else
+                    AddGrayBorder();
+
                 AssociatedObject.Content = Border;
             }
 
@@ -162,6 +176,12 @@ namespace MahApps.Metro.Behaviours
 			SetDefaultBackgroundColor();
         }
 
+        private void AddGrayBorder()
+        {
+            Border.BorderThickness = new Thickness(1);
+            Border.BorderBrush = new SolidColorBrush(Colors.DarkGray);
+        }
+
         private void SetDefaultBackgroundColor()
         {
             var bgSolidColorBrush = AssociatedObject.Background as SolidColorBrush;
@@ -189,20 +209,27 @@ namespace MahApps.Metro.Behaviours
                     break;
                 case Constants.WM_NCPAINT:
                     {
-                        if (Environment.OSVersion.Version.Major >= 6 && UnsafeNativeMethods.DwmIsCompositionEnabled())
+                        if (Border != null)
                         {
-                            var val = 2;
-                            UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
-                            var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
-                            UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(0);
+                            if (Environment.OSVersion.Version.Major == 6)
+                            {
+                                if (UnsafeNativeMethods.DwmIsCompositionEnabled())
+                                {
+                                    var val = 2;
+                                    UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
+                                    var m = new MARGINS {bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1};
+                                    UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
+                                }
+
+                                if (Environment.OSVersion.Version.Minor == 0 || Environment.OSVersion.Version.Minor == 1)
+                                    Border.BorderThickness = new Thickness(0);
+                                else
+                                    AddGrayBorder();
+                            }
+                            else
+                                AddGrayBorder();
                         }
-                        else
-                        {
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(1);
-                        }
+
                         handled = true;
                     }
                     break;
@@ -225,8 +252,7 @@ namespace MahApps.Metro.Behaviours
                 case Constants.WM_NCHITTEST:
 
                     // don't process the message on windows that can't be resized
-                    var resizeMode = AssociatedObject.ResizeMode;
-                    if (resizeMode == ResizeMode.CanMinimize || resizeMode == ResizeMode.NoResize)
+                    if (AssociatedObject.ResizeMode == ResizeMode.CanMinimize || AssociatedObject.ResizeMode == ResizeMode.NoResize)
                         break;
 
                     // get X & Y out of the message                   
