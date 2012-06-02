@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net;
-using System.Windows.Data;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MetroDemo.Models;
@@ -15,13 +14,17 @@ namespace MetroDemo
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<PanoramaGroup> Groups { get; set; }
-
         private readonly Dispatcher _dispatcher;
+        readonly PanoramaGroup tracks;
+        readonly PanoramaGroup artists;
 
         public MainWindowViewModel(Dispatcher dispatcher)
         {
             _dispatcher = dispatcher;
-            Groups = new ObservableCollection<PanoramaGroup>();
+            tracks = new PanoramaGroup("trending tracks");
+            artists = new PanoramaGroup("trending artists");
+            Groups = new ObservableCollection<PanoramaGroup> { tracks, artists };
+
             var wc = new WebClient();
             wc.DownloadStringCompleted += WcDownloadStringCompleted;
             wc.DownloadStringAsync(new Uri("http://ws.audioscrobbler.com/2.0/?method=chart.gethypedartists&api_key=b25b959554ed76058ac220b7b2e0a026&format=json"));
@@ -36,7 +39,8 @@ namespace MetroDemo
             try
             {
                 var x = JsonConvert.DeserializeObject<TrackWrapper>(e.Result);
-                _dispatcher.BeginInvoke(new Action(() => Groups.Add(new PanoramaGroup("trending tracks", CollectionViewSource.GetDefaultView(x.Tracks.track.Take(25))))));
+                _dispatcher.BeginInvoke(new Action(() => tracks.SetSource(x.Tracks.track.Take(25))));
+
             }
             catch (Exception ex)
             {
@@ -49,7 +53,8 @@ namespace MetroDemo
             try
             {
                 var x = JsonConvert.DeserializeObject<Wrapper>(e.Result);
-                _dispatcher.BeginInvoke(new Action(() => Groups.Add(new PanoramaGroup("trending artists", CollectionViewSource.GetDefaultView(x.Artists.artist.Take(25))))));
+                _dispatcher.BeginInvoke(new Action(() => artists.SetSource(x.Artists.artist.Take(25))));
+                
             }
             catch (Exception ex)
             {
@@ -57,6 +62,5 @@ namespace MetroDemo
             }
         }
 
-        
     }
 }

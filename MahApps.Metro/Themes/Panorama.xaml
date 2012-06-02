@@ -50,16 +50,16 @@
                             <WrapPanel.Height>
                                 <MultiBinding Converter="{StaticResource PanoramaGroupHeightConverter}">
                                     <Binding Path="ItemBox" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />
-                                    <Binding Path="GroupHeight" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />
                                     <Binding Path="ActualHeight" ElementName="header"/>
                                 </MultiBinding>
                             </WrapPanel.Height>
                             <WrapPanel.Width>
                                 <MultiBinding Converter="{StaticResource conv}">
                                     <Binding Path="ItemBox" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />
-                                    <!--<Binding Path="GroupHeight" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />-->
                                     <Binding Path="ActualHeight" ElementName="items"/>
                                     <Binding RelativeSource="{RelativeSource AncestorType={x:Type ListBox}, Mode=FindAncestor}" />
+                                    <Binding Path="Items.Count" ElementName="items"/>
                                 </MultiBinding>
                             </WrapPanel.Width>
                         </WrapPanel>
