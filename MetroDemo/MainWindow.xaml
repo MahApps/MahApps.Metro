@@ -232,11 +232,13 @@
                                 SmallChange="0.5" />
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                         <TextBlock Text="ComboBox Binding scenario" />
-                        <ComboBox ItemsSource="{Binding Groups}"
+                        <ComboBox ItemsSource="{Binding Tracks}"
+                                  MaxDropDownHeight="100"
                                   DisplayMemberPath="name" />
 
                         <TextBlock Text="Editable ComboBox Binding scenario" />
-                        <ComboBox ItemsSource="{Binding Groups}"
+                        <ComboBox ItemsSource="{Binding Tracks}"
+                                  MaxDropDownHeight="50"
                                   DisplayMemberPath="name" IsEditable="True" Text="{Binding Path=ArtistName, Mode=TwoWay}" IsReadOnly="False" />
 
                         <TextBlock Text="Items specified in xaml scenario" />
@@ -272,7 +274,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         
-                        <ListView ItemsSource="{Binding Groups}" BorderThickness="0">
+                        <ListView ItemsSource="{Binding Tracks}" BorderThickness="0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="artist" DisplayMemberBinding="{Binding name}" />
