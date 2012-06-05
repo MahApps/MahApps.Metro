@@ -18,6 +18,8 @@ namespace MetroDemo
         readonly PanoramaGroup tracks;
         readonly PanoramaGroup artists;
 
+        public ObservableCollection<Track> Tracks { get; set; }
+
         public MainWindowViewModel(Dispatcher dispatcher)
         {
             _dispatcher = dispatcher;
@@ -39,7 +41,11 @@ namespace MetroDemo
             try
             {
                 var x = JsonConvert.DeserializeObject<TrackWrapper>(e.Result);
-                _dispatcher.BeginInvoke(new Action(() => tracks.SetSource(x.Tracks.track.Take(25))));
+                _dispatcher.BeginInvoke(new Action(() =>
+                                                       {
+                                                           tracks.SetSource(x.Tracks.track.Take(25));
+                                                           Tracks = new ObservableCollection<Track>(x.Tracks.track.Take(25));
+                                                       }));
 
             }
             catch (Exception ex)
