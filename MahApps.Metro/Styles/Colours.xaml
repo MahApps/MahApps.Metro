@@ -116,6 +116,8 @@
         <GradientStop Color="{DynamicResource Gray5}" Offset="0"/>
         <GradientStop Color="{DynamicResource WhiteColor}" Offset="1"/>
     </LinearGradientBrush>
+    
+    <SolidColorBrush x:Key="MenuItemDisabledBrush" Color="{DynamicResource Gray6}" />
 
     <SolidColorBrush x:Key="ThumbBrush" Color="{DynamicResource Gray4}" />
 

@@ -157,7 +157,6 @@
                                               VerticalAlignment="Center" />
 
                             <ContentPresenter x:Name="Presenter"
-                                              Opacity=".7"
                                               Content="{TemplateBinding Header}"
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                                               Grid.Column="2" />
@@ -176,6 +175,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource MenuItemDisabledBrush}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type ContextMenu}">
