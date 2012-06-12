@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -30,7 +31,6 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(WatermarkProperty, value);
         }
-
         
         private static void SetTextLength(DependencyObject obj, int value)
         {
@@ -68,14 +68,16 @@ namespace MahApps.Metro.Controls
         static void TextChanged(object sender, TextChangedEventArgs e)
         {
             var txtBox = sender as TextBox;
-            if (txtBox == null) return;
+            if (txtBox == null)
+                return;
             SetTextLength(txtBox, txtBox.Text.Length);
         }
 
         static void PasswordChanged(object sender, RoutedEventArgs e)
         {
             var passBox = sender as PasswordBox;
-            if (passBox == null) return;
+            if (passBox == null) 
+                return;
             SetTextLength(passBox, passBox.Password.Length);
         }
 
