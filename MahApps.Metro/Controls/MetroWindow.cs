@@ -147,7 +147,8 @@ namespace MahApps.Metro.Controls
         private void TitleBarMouseMove(object sender, MouseEventArgs e)
         {
             if (e.RightButton != MouseButtonState.Pressed && e.MiddleButton != MouseButtonState.Pressed
-                && e.LeftButton == MouseButtonState.Pressed && WindowState == WindowState.Maximized)
+                && e.LeftButton == MouseButtonState.Pressed && WindowState == WindowState.Maximized
+                && ResizeMode != ResizeMode.NoResize)
             {
                 // Calculating correct left coordinate for multi-screen system.
                 Point mouseAbsolute = PointToScreen(Mouse.GetPosition(this));
