@@ -56,5 +56,6 @@
 		</Grid.Background>
 
         <Controls:Panorama x:Name="MainPanorama" VerticalAlignment="Stretch" Margin="0,25,25,25" ItemBox="140" ItemsSource="{Binding Groups}" />
+        <Controls:ProgressRing IsActive="{Binding Busy}" VerticalAlignment="Center" HorizontalAlignment="Center" />
     </Grid>
 </Window>

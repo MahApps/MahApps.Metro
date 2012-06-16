@@ -101,7 +101,7 @@ namespace MahApps.Metro.Controls
         /// Identifies the IsChecked DependencyProperty.
         /// </summary>
         public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new PropertyMetadata(false, OnIsCheckedChanged));
+            DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
 
         /// <summary>
         /// Invoked when the IsChecked DependencyProperty is changed.

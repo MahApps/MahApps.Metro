@@ -18,10 +18,13 @@ namespace MetroDemo
         readonly PanoramaGroup tracks;
         readonly PanoramaGroup artists;
 
+        public bool Busy { get; set; }
+
         public ObservableCollection<Track> Tracks { get; set; }
 
         public MainWindowViewModel(Dispatcher dispatcher)
         {
+            Busy = true;
             _dispatcher = dispatcher;
             tracks = new PanoramaGroup("trending tracks");
             artists = new PanoramaGroup("trending artists");
@@ -45,6 +48,8 @@ namespace MetroDemo
                                                        {
                                                            tracks.SetSource(x.Tracks.track.Take(25));
                                                            Tracks = new ObservableCollection<Track>(x.Tracks.track.Take(25));
+
+                                                           Busy = false;
                                                        }));
 
             }
