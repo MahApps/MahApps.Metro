@@ -73,4 +73,5 @@
         </Grid>
     </ControlTemplate>
 
+    <Style TargetType="ToolTip" BasedOn="{DynamicResource tooltip}" />
 </ResourceDictionary>
