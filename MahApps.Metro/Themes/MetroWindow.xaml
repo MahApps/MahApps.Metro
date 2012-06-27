@@ -31,7 +31,7 @@
                                     Source="{TemplateBinding Icon}"/>
                                 <TextBlock
                                     Grid.Column="1"
-                                    Text="{TemplateBinding Title, Converter={conv:ToUpperConverter}}"
+                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=WindowTitle}"
                                     HorizontalAlignment="Left" 
                                     TextTrimming="CharacterEllipsis"
                                     VerticalAlignment="Center" 
