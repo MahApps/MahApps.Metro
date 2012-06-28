@@ -29,7 +29,7 @@
             </Style>
         </DataTemplate.Resources>
 
-        <DockPanel LastChildFill="True" Background="Transparent">
+        <DockPanel LastChildFill="True" Background="Transparent" Margin="{Binding Path=ContentOffset, RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}}">
             <Label Style="{StaticResource headerLabelStyle}"
                    Content="{Binding Header}"
                    x:Name="header"
