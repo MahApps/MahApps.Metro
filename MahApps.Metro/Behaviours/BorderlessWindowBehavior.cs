@@ -80,8 +80,8 @@ namespace MahApps.Metro.Behaviours
                                                {
                                                    var ancestors = window.GetPart<Border>("PART_Border");
                                                    Border = ancestors;
-                                                   if (Environment.OSVersion.Version.Major < 6 || !UnsafeNativeMethods.DwmIsCompositionEnabled()) 
-                                                       Border.BorderThickness = new Thickness(1);
+                                                   if (ShouldHaveBorder())
+                                                       AddBorder();
                                                };
 
                 switch (AssociatedObject.ResizeMode)
@@ -162,6 +162,37 @@ namespace MahApps.Metro.Behaviours
 			SetDefaultBackgroundColor();
         }
 
+        private bool ShouldHaveBorder()
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+                return true;
+
+            if (!UnsafeNativeMethods.DwmIsCompositionEnabled())
+                return true;
+
+            return false;
+        }
+
+        readonly SolidColorBrush _borderColour = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
+
+        private void AddBorder()
+        {
+            if (Border == null)
+                return;
+            
+            Border.BorderThickness = new Thickness(1);
+            Border.BorderBrush = _borderColour;
+        }
+
+        private void RemoveBorder()
+        {
+            if (Border == null)
+                return;
+
+            Border.BorderThickness = new Thickness(0);
+            Border.BorderBrush = null;
+        }
+
         private void SetDefaultBackgroundColor()
         {
             var bgSolidColorBrush = AssociatedObject.Background as SolidColorBrush;
@@ -189,19 +220,19 @@ namespace MahApps.Metro.Behaviours
                     break;
                 case Constants.WM_NCPAINT:
                     {
-                        if (Environment.OSVersion.Version.Major >= 6 && UnsafeNativeMethods.DwmIsCompositionEnabled())
+                        if (!ShouldHaveBorder())
                         {
                             var val = 2;
                             UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
                             var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
                             UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
+
                             if (Border != null)
                                 Border.BorderThickness = new Thickness(0);
                         }
                         else
                         {
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(1);
+                            AddBorder();
                         }
                         handled = true;
                     }
@@ -211,6 +242,14 @@ namespace MahApps.Metro.Behaviours
                         /* As per http://msdn.microsoft.com/en-us/library/ms632633(VS.85).aspx , "-1" lParam
                          * "does not repaint the nonclient area to reflect the state change." */
                         returnval = UnsafeNativeMethods.DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
+
+                        if (!ShouldHaveBorder())
+
+                        if (wParam == IntPtr.Zero)
+                            AddBorder();
+                        else
+                            RemoveBorder();
+
                         handled = true;
                     }
                     break;

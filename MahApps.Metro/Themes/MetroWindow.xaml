@@ -6,31 +6,30 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <conv:ToUpperConverter x:Key="ToUpperConverter" />
-    
+
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
-        <Border x:Name="PART_Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-            <Grid>
-                <AdornerDecorator>
-                    <Controls:MetroContentControl>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid x:Name="PART_TitleBar"
+        <Grid Background="{TemplateBinding Background}">
+            <AdornerDecorator>
+                <Controls:MetroContentControl>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid x:Name="PART_TitleBar"
                                   Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                   Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <Grid.Background>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor}"/>
-                                </Grid.Background>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Image
+                            <Grid.Background>
+                                <SolidColorBrush Color="{DynamicResource AccentColor}"/>
+                            </Grid.Background>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Source="{TemplateBinding Icon}"/>
-                                <TextBlock
+                            <TextBlock
                                     x:Name="WindowTitleTextBlock"
                                     Grid.Column="1"
                                     Text="{TemplateBinding Title}"
@@ -41,8 +40,8 @@
                                     FontSize="16" 
                                     FontFamily="{DynamicResource HeaderFontFamily}"
                                     Foreground="White"/>
-                            </Grid>
-                            <ContentPresenter 
+                        </Grid>
+                        <ContentPresenter 
                                 Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 
                                 x:Name="PART_WindowCommands"
                                 Panel.ZIndex="1"
@@ -50,13 +49,13 @@
 								VerticalAlignment="Top"
                                 HorizontalAlignment="Right"
 								Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
-                            <ContentPresenter Grid.Row="1"/>
-                        </Grid>
-                    </Controls:MetroContentControl>
-                </AdornerDecorator>
-                <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" IsTabStop="false" Visibility="Collapsed" VerticalAlignment="Bottom"/>
-            </Grid>
-        </Border>
+                        <ContentPresenter Grid.Row="1"/>
+                    </Grid>
+                </Controls:MetroContentControl>
+            </AdornerDecorator>
+            <Border x:Name="PART_Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" IsTabStop="false" Visibility="Collapsed" VerticalAlignment="Bottom"/>
+        </Grid>
         <ControlTemplate.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
