@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +24,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty EllipseDiameterProperty = DependencyProperty.Register("EllipseDiameter", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
 
         public static readonly DependencyProperty EllipseOffsetProperty = DependencyProperty.Register("EllipseOffset", typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(default(Thickness)));
+
+        private List<Action> _deferredActions = new List<Action>();
 
         static ProgressRing()
         {
@@ -76,9 +79,20 @@ namespace MahApps.Metro.Controls
             if (ring == null)
                 return;
 
-            ring.SetEllipseDiameter((double)dependencyPropertyChangedEventArgs.NewValue);
-            ring.SetEllipseOffset((double)dependencyPropertyChangedEventArgs.NewValue);
-            ring.SetMaxSideLength((double)dependencyPropertyChangedEventArgs.NewValue);
+            var action = new Action(() =>
+                                           {
+                                               ring.SetEllipseDiameter(
+                                                   (double) dependencyPropertyChangedEventArgs.NewValue);
+                                               ring.SetEllipseOffset(
+                                                   (double) dependencyPropertyChangedEventArgs.NewValue);
+                                               ring.SetMaxSideLength(
+                                                   (double) dependencyPropertyChangedEventArgs.NewValue);
+                                           });
+
+            if (ring._deferredActions != null)
+                ring._deferredActions.Add(action);
+            else
+                action();
         }
 
         private void SetMaxSideLength(double width)
@@ -116,11 +130,16 @@ namespace MahApps.Metro.Controls
             var ring = dependencyObject as ProgressRing;
             if (ring == null)
                 return;
+            Action action;
 
             if ((bool)dependencyPropertyChangedEventArgs.NewValue)
-                VisualStateManager.GoToState(ring, "Large", true);
+                action = () => VisualStateManager.GoToState(ring, "Large", true);
             else
-                VisualStateManager.GoToState(ring, "Small", true);
+                action = () => VisualStateManager.GoToState(ring, "Small", true);
+            if (ring._deferredActions != null)
+                ring._deferredActions.Add(action);
+            else
+                action();
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
@@ -131,20 +150,28 @@ namespace MahApps.Metro.Controls
         private static void IsActiveChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var ring = dependencyObject as ProgressRing;
-            if (ring != null)
-            {
-                if ((bool)dependencyPropertyChangedEventArgs.NewValue)
+            if (ring == null)
+                return;
+            Action action;
 
-                    VisualStateManager.GoToState(ring, "Active", true);
-                else
-                    VisualStateManager.GoToState(ring, "Inactive", true);
-            }
+            if ((bool)dependencyPropertyChangedEventArgs.NewValue)
+                action = () => VisualStateManager.GoToState(ring, "Active", true);
+            else
+                action = () => VisualStateManager.GoToState(ring, "Inactive", true);
+            if (ring._deferredActions != null)
+                ring._deferredActions.Add(action);
+            else
+                action();
         }
 
         public override void OnApplyTemplate()
         {
             UpdateStates();
             base.OnApplyTemplate();
+            if (_deferredActions != null)
+                foreach (var action in _deferredActions)
+                    action();
+            _deferredActions = null;
         }
 
         private void UpdateStates()
