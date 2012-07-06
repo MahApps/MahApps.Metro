@@ -92,6 +92,10 @@ namespace MahApps.Metro.Native
         [DllImport("user32.dll")]
         internal static extern bool GetWindowPlacement(IntPtr hWnd, out WINDOWPLACEMENT lpwndpl);
 
+        /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms647636(v=vs.85).aspx</devdoc>
+        [DllImport("user32.dll")]
+        internal static extern uint EnableMenuItem(IntPtr hMenu, uint itemId, uint uEnable);
+
         internal static void PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam)
         {
             if (!_PostMessage(hWnd, Msg, wParam, lParam))

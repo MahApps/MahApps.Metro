@@ -318,7 +318,28 @@ namespace MahApps.Metro.Behaviours
                         handled = true;
 
                     break;
+
+                case Constants.WM_INITMENU:
+                    System.Console.WriteLine("shoulda put it here");
+
+                    var window = AssociatedObject as MetroWindow;
+                    
+                    if (window != null)
+                    {
+                        if (!window.ShowMaxRestoreButton)
+                            UnsafeNativeMethods.EnableMenuItem(UnsafeNativeMethods.GetSystemMenu(hWnd, false), Constants.SC_MAXIMIZE, Constants.MF_GRAYED | Constants.MF_BYCOMMAND);
+
+                        if (!window.ShowMinButton)
+                            UnsafeNativeMethods.EnableMenuItem(UnsafeNativeMethods.GetSystemMenu(hWnd, false), Constants.SC_MINIMIZE, Constants.MF_GRAYED | Constants.MF_BYCOMMAND);
+                    
+                        if (AssociatedObject.ResizeMode == ResizeMode.NoResize)
+                            UnsafeNativeMethods.EnableMenuItem(UnsafeNativeMethods.GetSystemMenu(hWnd, false), Constants.SC_SIZE, Constants.MF_GRAYED | Constants.MF_BYCOMMAND);
+                    }
+                    break;
             }
+
+        
+
 
             return returnval;
         }
