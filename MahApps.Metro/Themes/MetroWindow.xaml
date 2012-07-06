@@ -5,6 +5,7 @@
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <conv:ToUpperConverter x:Key="ToUpperConverter" />
     
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
         <Border x:Name="PART_Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
@@ -30,8 +31,9 @@
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Source="{TemplateBinding Icon}"/>
                                 <TextBlock
+                                    x:Name="WindowTitleTextBlock"
                                     Grid.Column="1"
-                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=WindowTitle}"
+                                    Text="{TemplateBinding Title}"
                                     HorizontalAlignment="Left" 
                                     TextTrimming="CharacterEllipsis"
                                     VerticalAlignment="Center" 
@@ -63,6 +65,9 @@
                 </MultiTrigger.Conditions>
                 <Setter Property="Visibility" TargetName="WindowResizeGrip" Value="Visible"/>
             </MultiTrigger>
+            <Trigger Property="TitleCaps" Value="True">
+                <Setter TargetName="WindowTitleTextBlock" Property="Text" Value="{Binding Path=Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
