@@ -13,10 +13,11 @@ namespace MahApps.Metro.Controls
     {
         public static readonly DependencyProperty ItemBoxProperty = DependencyProperty.Register("ItemHeight", typeof(double), typeof(Panorama), new FrameworkPropertyMetadata(120.0));
         public static readonly DependencyProperty GroupHeightProperty = DependencyProperty.Register("GroupHeight", typeof(double), typeof(Panorama), new FrameworkPropertyMetadata(640.0));
-        public static readonly DependencyProperty HeaderFontSizeProperty = DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(Panorama), new FrameworkPropertyMetadata(40.0));
+        public static readonly DependencyProperty HeaderFontSizeProperty = DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(Panorama), new FrameworkPropertyMetadata(29.33));
         public static readonly DependencyProperty HeaderFontColorProperty = DependencyProperty.Register("HeaderFontColor", typeof(Brush), typeof(Panorama), new FrameworkPropertyMetadata(Brushes.White));
         public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(Panorama), new FrameworkPropertyMetadata(new FontFamily("Segoe UI Light")));
         public static readonly DependencyProperty UseSnapBackScrollingProperty = DependencyProperty.Register("UseSnapBackScrolling", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
+        private static readonly DependencyProperty ContentOffsetProperty = DependencyProperty.Register("ContentOffset", typeof(Thickness), typeof(Panorama), new FrameworkPropertyMetadata(new Thickness(0.0)));
 
         public double Friction
         {
@@ -58,6 +59,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(UseSnapBackScrollingProperty); }
             set { SetValue(UseSnapBackScrollingProperty, value); }
+        }
+
+        public Thickness ContentOffset
+        {
+            get { return (Thickness)GetValue(ContentOffsetProperty); }
+            set { SetValue(ContentOffsetProperty, value); }
         }
 
         private ScrollViewer sv;
