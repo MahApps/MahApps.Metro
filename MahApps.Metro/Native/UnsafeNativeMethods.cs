@@ -37,6 +37,10 @@ namespace MahApps.Metro.Native
         [DllImport("user32")]
         internal static extern IntPtr MonitorFromWindow([In] IntPtr handle, [In] int flags);
 
+        /// <devdoc>http://msdn.microsoft.com/en-us/library/dd145062%28v=VS.85%29.aspx</devdoc>
+        [DllImport("user32")]
+        internal static extern IntPtr MonitorFromPoint([In] POINT pt, [In] int flags);
+
         /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms647486%28v=vs.85%29.aspx</devdoc>
         [DllImport("user32", CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "LoadStringW", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         internal static extern int LoadString([In] [Optional] IntPtr hInstance, [In] uint uID, [Out] StringBuilder lpBuffer, [In] int nBufferMax);
