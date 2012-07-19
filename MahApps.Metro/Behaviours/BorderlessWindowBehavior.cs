@@ -49,15 +49,27 @@ namespace MahApps.Metro.Behaviours
 
             if (monitor != IntPtr.Zero)
             {
-
                 var monitorInfo = new MONITORINFO();
                 UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                RECT rcWorkArea = monitorInfo.rcWork;
-                RECT rcMonitorArea = monitorInfo.rcMonitor;
-                mmi.ptMaxPosition.X = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
-                mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-                mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-                mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+                if (monitorInfo.dwFlags == 1)
+                {
+                    RECT rcWorkArea = monitorInfo.rcWork;
+                    RECT rcMonitorArea = monitorInfo.rcMonitor;
+                    mmi.ptMaxPosition.X = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
+                    mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
+                    mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
+                    mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+                }
+                else
+                {
+                    monitor = UnsafeNativeMethods.MonitorFromPoint(new POINT(0, 0), Constants.MONITOR_DEFAULTONPRIMARY);
+                    UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
+                    RECT rcMonitorArea = monitorInfo.rcMonitor;
+                    mmi.ptMaxPosition.X = 0;
+                    mmi.ptMaxPosition.Y = 0;
+                    mmi.ptMaxSize.X = rcMonitorArea.right;
+                    mmi.ptMaxSize.Y = rcMonitorArea.bottom;
+                }
             }
 
             Marshal.StructureToPtr(mmi, lParam, true);
