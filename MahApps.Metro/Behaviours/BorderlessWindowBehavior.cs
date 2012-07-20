@@ -81,6 +81,7 @@ namespace MahApps.Metro.Behaviours
                 AddHwndHook();
             else
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
+            
 
             AssociatedObject.WindowStyle = WindowStyle.None;
 
@@ -95,6 +96,7 @@ namespace MahApps.Metro.Behaviours
                                                    if (ShouldHaveBorder())
                                                        AddBorder();
                                                };
+                AssociatedObject.StateChanged += new EventHandler(AssociatedObject_StateChanged);
 
                 switch (AssociatedObject.ResizeMode)
                 {
@@ -145,6 +147,15 @@ namespace MahApps.Metro.Behaviours
 
 
             base.OnAttached();
+        }
+
+        void AssociatedObject_StateChanged(object sender, EventArgs e)
+        {
+            if (AssociatedObject.WindowState == WindowState.Maximized)
+            {
+                IntPtr ptr = new IntPtr(Constants.SC_MAXIMIZE);
+                UnsafeNativeMethods.DefWindowProc(_mHWND, Constants.WM_SYSCOMMAND, ptr, IntPtr.Zero);
+            }
         }
 
         protected override void OnDetaching()
@@ -272,6 +283,17 @@ namespace MahApps.Metro.Behaviours
                     /* Setting handled to false enables the application to process it's own Min/Max requirements,
                      * as mentioned by jason.bullard (comment from September 22, 2011) on http://gallery.expression.microsoft.com/ZuneWindowBehavior/ */
                     handled = false;
+                    break;
+                case Constants.WM_SYSCOMMAND:
+                    if (wParam.ToInt32() == Constants.SC_MAXIMIZE)
+                    {
+                        handled = true;
+                    }
+                    //if wparam == constants.sc_maximize
+                    //{
+                    //  do stuff
+                    //  return 0;
+                    //}
                     break;
                 case Constants.WM_NCHITTEST:
 
