@@ -3,7 +3,6 @@
     public static class Constants
     {
         public const int MONITOR_DEFAULTTONEAREST = 0x00000002;
-        public const int MONITOR_DEFAULTONPRIMARY = 0x00000001;
         public const int WM_NCCALCSIZE = 0x83;
         public const int WM_NCPAINT = 0x85;
         public const int WM_NCACTIVATE = 0x86;
@@ -26,7 +25,6 @@
         public const int SW_SHOWMINIMIZED = 2;
         public const uint SYSCOMMAND = 0x0112;
         public const int WM_INITMENU = 0x116;
-        public const int WM_SYSCOMMAND = 0x0112;
 
         public const int SC_MAXIMIZE = 0xF030;
         public const int SC_SIZE = 0xF000;

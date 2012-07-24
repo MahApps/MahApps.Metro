@@ -37,10 +37,6 @@ namespace MahApps.Metro.Native
         [DllImport("user32")]
         internal static extern IntPtr MonitorFromWindow([In] IntPtr handle, [In] int flags);
 
-        /// <devdoc>http://msdn.microsoft.com/en-us/library/dd145062%28v=VS.85%29.aspx</devdoc>
-        [DllImport("user32")]
-        internal static extern IntPtr MonitorFromPoint([In] POINT pt, [In] int flags);
-
         /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms633545(v=vs.85).aspx</devdoc>
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]

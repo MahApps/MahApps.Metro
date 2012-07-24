@@ -69,7 +69,6 @@ namespace MahApps.Metro.Behaviours
             else
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
-
             AssociatedObject.WindowStyle = WindowStyle.None;
             AssociatedObject.StateChanged += new EventHandler(AssociatedObject_StateChanged);
 
