@@ -70,7 +70,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
             AssociatedObject.WindowStyle = WindowStyle.None;
-            AssociatedObject.StateChanged += new EventHandler(AssociatedObject_StateChanged);
+            AssociatedObject.StateChanged += AssociatedObjectStateChanged;
 
             if (AssociatedObject is MetroWindow)
             {
@@ -136,7 +136,7 @@ namespace MahApps.Metro.Behaviours
             base.OnAttached();
         }
 
-        private void AssociatedObject_StateChanged(object sender, EventArgs e)
+        private void AssociatedObjectStateChanged(object sender, EventArgs e)
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
