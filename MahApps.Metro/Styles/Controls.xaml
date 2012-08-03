@@ -73,5 +73,22 @@
         </Grid>
     </ControlTemplate>
 
-    <Style TargetType="ToolTip" BasedOn="{StaticResource tooltip}" />
+    <Style TargetType="ToolTip" BasedOn="{StaticResource MetroToolTip}" />
+    <Style TargetType="Button" BasedOn="{StaticResource MetroButton}" />
+    <Style TargetType="ToggleButton" BasedOn="{StaticResource MetroToggleButton}" />
+    <Style TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}" />
+    <Style TargetType="Slider" BasedOn="{StaticResource MetroSlider}" />
+    <Style TargetType="TextBlock" BasedOn="{StaticResource MetroTextBlock}" />
+    <Style TargetType="TabItem" BasedOn="{StaticResource MetroTabItem}"  />
+    <Style TargetType="TabControl" BasedOn="{StaticResource MetroTabControl}" />
+    <Style TargetType="ScrollBar" BasedOn="{StaticResource MetroScrollBar}" />
+    <Style TargetType="RadioButton" BasedOn="{StaticResource MetroRadioButton}" />
+    <Style TargetType="ProgressBar" BasedOn="{StaticResource MetroProgressBar}" />
+    <Style TargetType="PasswordBox" BasedOn="{StaticResource MetroPasswordBox}" />
+    <Style TargetType="CheckBox" BasedOn="{StaticResource MetroCheckBox}" />
+    <Style TargetType="ComboBox" BasedOn="{StaticResource MetroComboBox}" />
+    <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MetroComboBoxItem}" />
+    <Style TargetType="Separator" BasedOn="{StaticResource MetroSeparator}" />
+    <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}" />
+    <Style TargetType="ContextMenu" BasedOn="{StaticResource MetroContextMenu}" />
 </ResourceDictionary>

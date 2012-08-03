@@ -3,7 +3,7 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <!--RadioButton Style-->
-    <Style TargetType="RadioButton">
+    <Style TargetType="RadioButton" x:Key="MetroRadioButton">
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Background" Value="{DynamicResource CheckBoxBackgroundBrush}" />

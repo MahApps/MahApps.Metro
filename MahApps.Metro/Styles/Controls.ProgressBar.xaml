@@ -1,19 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--ProgressBar Style-->
-    <Style TargetType="ProgressBar">
-        <Setter Property="Foreground"
-                Value="{DynamicResource HighlightBrush}" />
-        <Setter Property="Background"
-                Value="{DynamicResource GrayBrush4}" />
-        <Setter Property="Maximum"
-                Value="100" />
-        <Setter Property="Height"
-                Value="10" />
-        <Setter Property="IsTabStop"
-                Value="False" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource TextBoxBorderBrush}" />
+    <Style TargetType="ProgressBar" x:Key="MetroProgressBar">
+        <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="Background" Value="{DynamicResource GrayBrush4}" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="Height" Value="10" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ProgressBar">
@@ -130,31 +124,21 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Orientation"
-                                 Value="Vertical">
-                            <Setter Property="LayoutTransform"
-                                    TargetName="Root">
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter Property="LayoutTransform" TargetName="Root">
                                 <Setter.Value>
                                     <RotateTransform Angle="-90" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        <Trigger Property="IsIndeterminate"
-                                 Value="true">
-                            <Setter Property="Visibility"
-                                    TargetName="IndeterminateRoot"
-                                    Value="Visible" />
-                            <Setter Property="Visibility"
-                                    TargetName="DeterminateRoot"
-                                    Value="Collapsed" />
+                        <Trigger Property="IsIndeterminate" Value="true">
+                            <Setter Property="Visibility" TargetName="IndeterminateRoot" Value="Visible" />
+                            <Setter Property="Visibility" TargetName="DeterminateRoot" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="BorderThickness"
-                Value="1" />
+        <Setter Property="BorderThickness" Value="1" />
     </Style>
-
-
 </ResourceDictionary>

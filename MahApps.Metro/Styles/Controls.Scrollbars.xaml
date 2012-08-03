@@ -3,8 +3,7 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <!-- fugging Scrollbars -->
-    <ControlTemplate x:Key="HorizontalScrollBar"
-                     TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
         <Grid x:Name="Root">
             <Grid.Resources>
                 <ControlTemplate x:Key="RepeatButtonTemplate"
@@ -94,8 +93,7 @@
                                    RadiusX="2" />
                     </Grid>
                 </ControlTemplate>
-                <ControlTemplate x:Key="HorizontalDecrementTemplate"
-                                 TargetType="RepeatButton">
+                <ControlTemplate x:Key="HorizontalDecrementTemplate" TargetType="RepeatButton">
                     <Grid x:Name="Root">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -622,30 +620,19 @@
     </ControlTemplate>
 
     <!-- Style for overall  ScrollBar -->
-    <Style x:Key="{x:Type ScrollBar}"
-           TargetType="{x:Type ScrollBar}">
-        <Setter Property="SnapsToDevicePixels"
-                Value="True" />
-        <Setter Property="OverridesDefaultStyle"
-                Value="true" />
+    <Style x:Key="MetroScrollBar" TargetType="{x:Type ScrollBar}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
         <Style.Triggers>
-            <Trigger Property="Orientation"
-                     Value="Horizontal">
-                <Setter Property="Width"
-                        Value="Auto" />
-                <Setter Property="Height"
-                        Value="12" />
-                <Setter Property="Template"
-                        Value="{DynamicResource HorizontalScrollBar}" />
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto" />
+                <Setter Property="Height" Value="12" />
+                <Setter Property="Template" Value="{DynamicResource HorizontalScrollBar}" />
             </Trigger>
-            <Trigger Property="Orientation"
-                     Value="Vertical">
-                <Setter Property="Width"
-                        Value="12" />
-                <Setter Property="Height"
-                        Value="Auto" />
-                <Setter Property="Template"
-                        Value="{DynamicResource VerticalScrollBar}" />
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Width" Value="12" />
+                <Setter Property="Height" Value="Auto" />
+                <Setter Property="Template" Value="{DynamicResource VerticalScrollBar}" />
             </Trigger>
         </Style.Triggers>
     </Style>

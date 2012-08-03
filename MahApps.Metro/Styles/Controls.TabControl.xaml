@@ -1,12 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
-    <Style TargetType="{x:Type TabControl}">
+    <Style TargetType="{x:Type TabControl}" x:Key="MetroTabControl">
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />
     </Style>
 
-    <Style TargetType="TabItem">
+    <Style TargetType="TabItem" x:Key="MetroTabItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="BorderThickness" Value="1" />

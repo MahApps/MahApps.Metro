@@ -3,7 +3,7 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <!--CheckBox Style-->
-    <Style TargetType="CheckBox">
+    <Style TargetType="CheckBox" x:Key="MetroCheckBox">
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Background" Value="{DynamicResource CheckBoxBackgroundBrush}" />

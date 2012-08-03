@@ -3,7 +3,7 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type ComboBox}">
+    <Style TargetType="{x:Type ComboBox}" x:Key="MetroComboBox">
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Background">
@@ -281,7 +281,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="ComboBoxItem">
+    <Style TargetType="ComboBoxItem" x:Key="MetroComboBoxItem">
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding" Value="2" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />

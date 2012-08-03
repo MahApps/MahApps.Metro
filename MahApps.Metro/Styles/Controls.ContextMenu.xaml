@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <!-- Original style from http://www.jeff.wilcox.name/2010/05/zunelike-contextmenu-style/ -->
-    <Style TargetType="{x:Type Separator}">
+    <Style TargetType="{x:Type Separator}" x:Key="MetroSeparator">
         <Setter Property="Background" Value="{DynamicResource TextBrush}" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Margin" Value="6,2,6,2" />
@@ -18,7 +18,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type MenuItem}">
+    <Style TargetType="{x:Type MenuItem}" x:Key="MetroMenuItem">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
@@ -59,7 +59,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type ContextMenu}">
+    <Style TargetType="{x:Type ContextMenu}" x:Key="MetroContextMenu">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlBackgroundBrush}" />

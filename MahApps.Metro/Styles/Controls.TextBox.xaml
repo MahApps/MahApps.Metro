@@ -8,7 +8,7 @@
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
 
     <!--TextBox Style-->
-    <Style TargetType="{x:Type TextBox}">
+    <Style TargetType="{x:Type TextBox}" x:Key="MetroTextBox">
         <Setter Property="Controls:TextboxHelper.IsMonitoring" Value="True"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
