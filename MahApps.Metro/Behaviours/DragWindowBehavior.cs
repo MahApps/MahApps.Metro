@@ -1,10 +1,10 @@
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Interactivity;
+
 namespace MahApps.Metro.Behaviours
 {
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Interactivity;
-
     /// <summary>
     /// Drag window behavior adds dragging parent window behavior to any UIElement within window's visual tree.
     /// </summary>
