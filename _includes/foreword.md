@@ -9,4 +9,4 @@ Of course, there will always be exceptions to the rule, but just because metro *
 While MahApps.Metro strives to make *good looking* metro interfaces easier, but just like with Windows Form or "default" WPF, a designer (or at least thinking about design) is needed to create a *good* interface. This is a combination of aesthetic and usability.
 
 ###Fonts
-Segoe UI, Segoe WP and Zegoe UI are all Microsoft/Ascender fonts. They cannot be embedded in MahApps.Metro due to legal reasons.
+Segoe UI, Segoe WP and Zegoe UI are all Microsoft/Ascender fonts. They will not be embedded in MahApps.Metro.

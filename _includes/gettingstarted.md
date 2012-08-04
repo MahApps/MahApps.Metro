@@ -76,7 +76,7 @@ If you don't like the elements that are labelled, fear not, they're all optional
 
 ###Customisation
 ####WindowCommands
-`WindowCommands` are the minimise, maximise/restore, and close buttons. From 0.7 onwards, these can be extended to include your own buttons too.
+`WindowCommands` are the minimise, maximise/restore, and close buttons. You can add your own controls to `WindowsCommands` - by default, buttons have a style automatically applied to them to make them fit in with the rest of the `WindowsCommands`. As of 0.9, you are no longer limited to just buttons, but any control. Be aware, you're responsible for styling anything other than buttons.
 
 Including this within the `MetroWindow` tag (under the `Window.Resources` section),
 

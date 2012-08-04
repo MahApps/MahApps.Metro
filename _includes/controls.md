@@ -50,7 +50,7 @@ This just replaces the standard button when you drop in the library, nothing fan
 Add the following to a button to apply this style: `Style="{DynamicResource MetroCircleButtonStyle}"`  
 ![](images/07_CircleButtons.png)
 
-####AppBarButton
+####AppBarButton &#91;Obsolete\]
 Inspired by Windows Phone 7's app bar buttons which are a circle button with text underneath.  
 ![](http://images.theleagueofpaul.com/appbarbuttoncontrol.png)  
 Use the `AppBarButton` control to use this type of button.  
@@ -60,6 +60,8 @@ Use the `AppBarButton` control to use this type of button.
        MetroImageSource="{StaticResource appbar_barcode}"
        Foreground="{DynamicResource BlackBrush}"
        Content="scan" />  
+
+> Due to issues with this control, `AppBarButton` is due to be removed for v1.0
 
 ####Square button 
 Another WP7 styled button, this time just for text. Like all the buttons here, has normal, clicked, and hover states.  
@@ -83,7 +85,7 @@ The function is very similar to that of a checkbox, but easier to differentiate 
 
 ![](images/09_toggleswitch.png)  
 
-You can bind to/set `IsChecked` to switch between the two states.
+You can bind to/set `IsChecked` to switch between the two states.  You can change the *on* and *off* labels by setting `<Controls:ToggleSwitch OnLabel="Yes" OffLabel="No" />`
 
 ###TextBox
 There is just the one style in this library for `TextBox`, however it does have a special attached property for creating 'watermarked' textboxes and for added a 'clear' button.
