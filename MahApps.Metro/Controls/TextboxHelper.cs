@@ -107,12 +107,7 @@ namespace MahApps.Metro.Controls
             if (textbox.Style == null)
                 return;
 
-            var setter = textbox.Style.Setters.FirstOrDefault(s => ((Setter)s).Property.ToString() == "Template") as Setter;
-
-            if (setter == null)
-                return;
-
-            var template = setter.Value as ControlTemplate;
+            var template = textbox.Template;
             if (template == null)
                 return;
 
