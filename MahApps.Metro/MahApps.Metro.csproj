@@ -54,9 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accent.cs" />
-    <Compile Include="Behaviours\BehaviorsHelper.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
-    <Compile Include="Behaviours\DragWindowBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
