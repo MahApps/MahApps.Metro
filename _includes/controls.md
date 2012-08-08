@@ -134,13 +134,13 @@ There are three included tab styles - Animated Tab Control, Single Row Animated 
 This shows the three states - selected/active tab, hover and inactive.
 
 ####AnimatedTabControl
-``<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedRowTabControl.xaml" />``
+``<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />``
 Functioning just like the regular tab control, except it animates every tab change by wrapping everything in a `MetroContentControl`.  
 ![](images/animatedtabcontrol.gif) 
 
 ####AnimatedSingleRowTabControl
 ``<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />``
-`AnimatedSingleRowTabControl` functions exactly the same as the `AnimtedTabControl`  except the tabs will only appear on a single line rather than wrapping. Instead of wrapping, arrows (left/right) are presented.   
+`AnimatedSingleRowTabControl` functions exactly the same as the `AnimatedTabControl` except the tabs will only appear on a single line rather than wrapping. Instead of wrapping, arrows (left/right) are presented.   
 
 ![](images/singlerow_tab_control.png)  
 
