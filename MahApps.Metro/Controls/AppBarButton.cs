@@ -1,9 +1,11 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    [Obsolete("Control is broken in that it only works under some very specific circumstances. Will be removed in v1")]
     public class AppBarButton : Button
     {
         public AppBarButton()
