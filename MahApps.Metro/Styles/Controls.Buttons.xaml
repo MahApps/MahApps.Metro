@@ -181,6 +181,7 @@
                                    RadiusY="3"
                                    Opacity="0" />
                         <ContentPresenter x:Name="contentPresenter"
+                                          RecognizesAccessKey="True"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -270,6 +271,7 @@
                         			Content="{TemplateBinding Content, Converter={StaticResource ToLowerConverter}}"
                         			HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                         			Margin="{TemplateBinding Padding}"
+                                    RecognizesAccessKey="True"
                         			VerticalAlignment="{TemplateBinding VerticalContentAlignment}" OpacityMask="{x:Null}" />
                     </Grid>
 
@@ -361,7 +363,7 @@
                         <Rectangle x:Name="FocusInnerRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{DynamicResource TextBoxMouseOverBorderBrush}" RadiusX="3" RadiusY="3" Opacity="0" />
                         <Rectangle x:Name="CheckedRectangle" Stroke="{DynamicResource GrayBrush1}" RadiusY="4" RadiusX="4" Margin="-1" Opacity="0" />
                         <Rectangle x:Name="CheckedInnerRectangle" Fill="{DynamicResource GrayBrush2}" StrokeThickness="{TemplateBinding BorderThickness}" Stroke="{DynamicResource GrayBrush2}" RadiusX="3" RadiusY="3" Opacity="0" />
-                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <ContentPresenter x:Name="contentPresenter" RecognizesAccessKey="True" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
