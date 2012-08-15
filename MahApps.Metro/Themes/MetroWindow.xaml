@@ -159,37 +159,37 @@
                         </ItemsControl>
                         <Button x:Name="PART_Min"
                             Margin="2,0,0,0"
-                            Width="20"
-                            Height="20"
+                            Width="30"
+                            Height="30"
                             Style="{DynamicResource ChromelessButtonStyle}"
                             Padding="0"
                             ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                             Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            FontFamily="Marlett"
+                            FontFamily="Marlett" FontSize="14"
                             Foreground="{TemplateBinding Foreground}"
                             Opacity="0.8" Content="0" />
 
                         <Button x:Name="PART_Max"
                             Margin="2,0,0,0"
-                            Width="20"
-                            Height="20"
+                            Width="30"
+                            Height="30"
                             Style="{DynamicResource ChromelessButtonStyle}"
                             Padding="0"
                             Foreground="{TemplateBinding Foreground}"
                             Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
                             ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
-                            Opacity="0.8" FontFamily="Marlett"
+                            Opacity="0.8" FontFamily="Marlett" FontSize="14"
                             Content="1" />
 
                         <Button x:Name="PART_Close"
                             Margin="2,0,0,0"
-                            Width="20"
-                            Height="20"
+                            Width="30"
+                            Height="30"
                             Style="{DynamicResource ChromelessButtonStyle}"
                             ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                             Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
                             Foreground="{TemplateBinding Foreground}"
-                            Opacity="0.8" FontFamily="Marlett"
+                            Opacity="0.8" FontFamily="Marlett" FontSize="14"
                             Content="r" />
                     </StackPanel>
 
