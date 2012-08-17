@@ -130,22 +130,14 @@ namespace MahApps.Metro.Controls
             var ring = dependencyObject as ProgressRing;
             if (ring == null)
                 return;
-
-            ring.UpdateLargeState();
-        }
-
-        private void UpdateLargeState()
-        {
             Action action;
 
-            if (IsLarge)
-                action = () => VisualStateManager.GoToState(this, "Large", true);
+            if ((bool)dependencyPropertyChangedEventArgs.NewValue)
+                action = () => VisualStateManager.GoToState(ring, "Large", true);
             else
-                action = () => VisualStateManager.GoToState(this, "Small", true);
-
-            if (_deferredActions != null)
-                _deferredActions.Add(action);
-
+                action = () => VisualStateManager.GoToState(ring, "Small", true);
+            if (ring._deferredActions != null)
+                ring._deferredActions.Add(action);
             else
                 action();
         }
@@ -160,36 +152,35 @@ namespace MahApps.Metro.Controls
             var ring = dependencyObject as ProgressRing;
             if (ring == null)
                 return;
-
-            ring.UpdateActiveState();
-        }
-
-        private void UpdateActiveState()
-        {
             Action action;
 
-            if (IsActive)
-                action = () => VisualStateManager.GoToState(this, "Active", true);
+            if ((bool)dependencyPropertyChangedEventArgs.NewValue)
+                action = () => VisualStateManager.GoToState(ring, "Active", true);
             else
-                action = () => VisualStateManager.GoToState(this, "Inactive", true);
-
-            if (_deferredActions != null)
-                _deferredActions.Add(action);
-
+                action = () => VisualStateManager.GoToState(ring, "Inactive", true);
+            if (ring._deferredActions != null)
+                ring._deferredActions.Add(action);
             else
                 action();
         }
 
         public override void OnApplyTemplate()
         {
-            //make sure the states get updated
-            UpdateLargeState();
-            UpdateActiveState();
+            UpdateStates();
             base.OnApplyTemplate();
             if (_deferredActions != null)
                 foreach (var action in _deferredActions)
                     action();
             _deferredActions = null;
+        }
+
+        private void UpdateStates()
+        {
+            //make sure the states get updated
+            IsLarge = !IsLarge;
+            IsLarge = !IsLarge;
+            IsActive = !IsActive;
+            IsActive = !IsActive;
         }
     }
 
