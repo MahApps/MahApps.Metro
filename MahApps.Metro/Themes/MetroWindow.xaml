@@ -149,7 +149,8 @@
                             </Style>
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
-                    <StackPanel Margin="0,0,5,0" Orientation="Horizontal" VerticalAlignment="Center" >
+                    
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" >
                         <ItemsControl ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -158,39 +159,38 @@
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
                         <Button x:Name="PART_Min"
-                            Margin="2,0,0,0"
-                            Width="20"
-                            Height="20"
-                            Style="{DynamicResource ChromelessButtonStyle}"
+                            Width="34"
+                            Height="34"
+                            Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
                             Padding="0"
                             ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
-                            Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            FontFamily="Marlett"
-                            Foreground="{TemplateBinding Foreground}"
-                            Opacity="0.8" Content="0" />
+                            Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Path Data="F1M0,6L0,9 9,9 9,6 0,6z" SnapsToDevicePixels="True"  Fill="{TemplateBinding Foreground}"/>
+                        </Button>
 
                         <Button x:Name="PART_Max"
-                            Margin="2,0,0,0"
-                            Width="20"
-                            Height="20"
-                            Style="{DynamicResource ChromelessButtonStyle}"
+                            Width="34"
+                            Height="34"
+                            Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
                             Padding="0"
                             Foreground="{TemplateBinding Foreground}"
                             Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
-                            Opacity="0.8" FontFamily="Marlett"
-                            Content="1" />
+                            ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
+                            <Grid>
+                                <Path x:Name="MaximisePath" SnapsToDevicePixels="True" Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z" Fill="{TemplateBinding Foreground}"/>
+                                <Path x:Name="RestorePath" SnapsToDevicePixels="True" Data="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z"  Fill="{TemplateBinding Foreground}"/>
+                            </Grid>
+                        </Button>
 
                         <Button x:Name="PART_Close"
-                            Margin="2,0,0,0"
-                            Width="20"
-                            Height="20"
-                            Style="{DynamicResource ChromelessButtonStyle}"
+                            Width="34"
+                            Height="34"
+                            Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
                             ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                             Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Foreground="{TemplateBinding Foreground}"
-                            Opacity="0.8" FontFamily="Marlett"
-                            Content="r" />
+                            Foreground="{TemplateBinding Foreground}">
+                            <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"  SnapsToDevicePixels="True"  Fill="{TemplateBinding Foreground}"/>
+                        </Button>
                     </StackPanel>
 
                 </ControlTemplate>
