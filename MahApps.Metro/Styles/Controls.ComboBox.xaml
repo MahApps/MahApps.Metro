@@ -18,6 +18,8 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -170,7 +172,8 @@
                                               Margin="0"
                                               Style="{DynamicResource comboToggleStyle}"
                                               IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                              VerticalAlignment="Stretch">
+                                              VerticalAlignment="Stretch"
+                                              KeyboardNavigation.IsTabStop="False">
                                     <Path x:Name="BtnArrow"
                                           Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
                                           HorizontalAlignment="Right"
@@ -202,7 +205,9 @@
                                                     Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}"
                                                     Foreground="{TemplateBinding Foreground}"
                                                     Focusable="True"
-                                                    IsReadOnly="{TemplateBinding IsReadOnly}" />
+                                                    IsReadOnly="{TemplateBinding IsReadOnly}"
+                                                    FontFamily="{TemplateBinding FontFamily}"
+                                                    FontSize="{TemplateBinding FontSize}" />
                                 </Border>
                                 <Grid Margin="4 0 16 0">
                                     <ContentPresenter x:Name="ContentSite" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
