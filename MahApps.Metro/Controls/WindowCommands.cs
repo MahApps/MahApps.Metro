@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace MahApps.Metro.Controls
 {
@@ -14,7 +16,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Min", Type = typeof(Button))]
     public class WindowCommands : ItemsControl
     {
-       
+
 
         public event ClosingWindowEventHandler ClosingWindow;
         public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
@@ -110,7 +112,7 @@ namespace MahApps.Metro.Controls
         protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
         {
             var handler = ClosingWindow;
-            if (handler != null) 
+            if (handler != null)
                 handler(this, args);
         }
 
@@ -143,12 +145,21 @@ namespace MahApps.Metro.Controls
 
             if (parentWindow.WindowState == WindowState.Normal)
             {
-                max.Content = "1";
+                var maxpath = (Path)max.FindName("MaximisePath");
+                maxpath.Visibility = Visibility.Visible;
+
+                var restorepath = (Path)max.FindName("RestorePath");
+                restorepath.Visibility = Visibility.Collapsed;
+
                 max.ToolTip = Maximize;
             }
             else
             {
-                max.Content = "2";
+                var restorepath = (Path)max.FindName("RestorePath");
+                restorepath.Visibility = Visibility.Visible;
+
+                var maxpath = (Path)max.FindName("MaximisePath");
+                maxpath.Visibility = Visibility.Collapsed;
                 max.ToolTip = Restore;
             }
         }

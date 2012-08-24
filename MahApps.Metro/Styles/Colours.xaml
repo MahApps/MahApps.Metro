@@ -42,6 +42,7 @@
     <Color x:Key="BaseColor3">#FF303030</Color>
 
     <Color x:Key="TransparentWhiteColor">#00FFFFFF</Color>
+    <Color x:Key="SemiTransparentWhiteColor">#55FFFFFF</Color>
     <Color x:Key="TransparentLightLightColor">#A5FFFFFF</Color>
 
 
@@ -87,6 +88,7 @@
     <SolidColorBrush x:Key="ControlsDisabledBrush" Color="{DynamicResource TransparentLightLightColor}"/>
     <SolidColorBrush x:Key="DisabledWhiteColorBrush" Color="{DynamicResource WhiteColor}" />   
     <SolidColorBrush x:Key="TransparentWhiteBrush" Color="{DynamicResource TransparentWhiteColor}"/>
+    <SolidColorBrush x:Key="SemiTransparentWhiteBrush" Color="{DynamicResource SemiTransparentWhiteColor}"/>
 
     <SolidColorBrush x:Key="GrayBrush1" Color="{DynamicResource Gray1}"/>
     <SolidColorBrush x:Key="GrayBrush2" Color="{DynamicResource Gray2}"/>
