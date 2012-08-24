@@ -39,7 +39,7 @@
                                     Margin="8 -1 0 0" 
                                     FontSize="16" 
                                     FontFamily="{DynamicResource HeaderFontFamily}"
-                                    Foreground="White"/>
+                                    Foreground="{TemplateBinding TitleForeground}"/>
                         </Grid>
                         <ContentPresenter 
                                 Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 
@@ -89,6 +89,7 @@
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
+        <Setter Property="TitleForeground" Value="White" />
         <Setter Property="Template" Value="{StaticResource WindowTemplateKey}"/>
     </Style>
 

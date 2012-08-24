@@ -24,6 +24,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30));
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty SavePositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
+
+        public Brush TitleForeground
+        {
+            get { return (Brush)GetValue(TitleForegroundProperty); }
+            set { SetValue(TitleForegroundProperty, value); }
+        }
 
         public bool SaveWindowPosition
         {
