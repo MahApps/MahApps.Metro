@@ -6,7 +6,7 @@
 
     <DataTemplate x:Key="HeaderTemplate">
         <StackPanel Orientation="Horizontal" Margin="10" >
-            <Button Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" VerticalAlignment="Top" Content="" >
+            <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" VerticalAlignment="Top" Content="" >
                 <Button.Resources>
                     <SolidColorBrush x:Key="BlackBrush" Color="White" />
                 </Button.Resources>
@@ -18,6 +18,11 @@
             </Button>
             <TextBlock Text="{Binding}" x:Name="PART_BackButton" FontSize="20" Margin="15,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Right">
+                <Setter TargetName="nav" Property="Content" Value="" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
 
     <Style TargetType="{x:Type Controls:Flyout}">
