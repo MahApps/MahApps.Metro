@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using MahApps.Metro;
+using MahApps.Metro.Controls;
 
 namespace MetroDemo
 {
@@ -20,7 +21,7 @@ namespace MetroDemo
         }
 
         int i = 0;
-        void Tick(object sender, System.EventArgs e)
+        void Tick(object sender, EventArgs e)
         {
             transitioning.Content = new TextBlock {Text = "hello " + i++};
         }
@@ -28,6 +29,8 @@ namespace MetroDemo
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
             pb.IsIndeterminate = !pb.IsIndeterminate;
+            Flyouts[0].IsOpen = !Flyouts[0].IsOpen;
+            Flyouts[1].IsOpen = !Flyouts[1].IsOpen;
         }
 
         private void MiLightRed(object sender, RoutedEventArgs e)

@@ -27,20 +27,35 @@
         </ResourceDictionary>
     </Window.Resources>
 
-<Controls:MetroWindow.WindowCommands>
-    <Controls:WindowCommands>
-        <Button Content="wat" />
-    </Controls:WindowCommands>
-</Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.WindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="wat" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.WindowCommands>
+
+    <Controls:MetroWindow.Flyouts>
         
+            <Controls:Flyout Header="hiiiii">
+                <Button Content="hi"  />
+            </Controls:Flyout>
+            <Controls:Flyout Header="Bakery" Background="#9f000000" Position="Right">
+            <StackPanel>
+                <Controls:Tile Title="My _Cupcakes" Count="23">
+                    <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
+                </Controls:Tile>
+            </StackPanel>
+        </Controls:Flyout>
+
+    </Controls:MetroWindow.Flyouts>
+
     <Controls:MetroContentControl>
         <Grid>
             <TabControl>
                 <TabItem Header="_First set of controls">
-                        <Grid>
+                    <Grid>
 
-                            <Grid Margin="0,0,226.999,8">
-                                <Button Content="Right Click Me"
+                        <Grid Margin="0,0,226.999,8">
+                            <Button Content="Right Click Me"
                                         Click="ButtonClick"
                                         Height="30"
                                         ToolTip="This is a tooltip"
@@ -48,31 +63,31 @@
                                         VerticalAlignment="Top"
                                         HorizontalAlignment="Left"
                                         Width="154.002">
-                                    <Button.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="Light Red" Click="MiLightRed" />
-                                            <MenuItem Header="Light Green" Click="MiLightGreen" />
-                                            <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                                            <MenuItem Header="Light Purple" Click="MiLightPurple" />
-                                            <Separator />
-                                            <MenuItem Header="Dark Red" Click="MiDarkRed" />
-                                            <MenuItem Header="Dark Green" Click="MiDarkGreen" />
-                                            <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
-                                            <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
-                                </Button>
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Light Red" Click="MiLightRed" />
+                                        <MenuItem Header="Light Green" Click="MiLightGreen" />
+                                        <MenuItem Header="Light Blue" Click="MiLightBlue" />
+                                        <MenuItem Header="Light Purple" Click="MiLightPurple" />
+                                        <Separator />
+                                        <MenuItem Header="Dark Red" Click="MiDarkRed" />
+                                        <MenuItem Header="Dark Green" Click="MiDarkGreen" />
+                                        <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
+                                        <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                            </Button>
                             <PasswordBox Controls:TextboxHelper.Watermark="Enter Password"
                                              Margin="88.695,66.96,0,0"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
                                              Width="154.001"
 											 VerticalContentAlignment="Center" />
-                                <CheckBox Content="CheckBox"
+                            <CheckBox Content="CheckBox"
                                           Margin="88.695,100.96,0,0"
                                           VerticalAlignment="Top"
                                           HorizontalAlignment="Left" />
-                                <RadioButton Content="Radio Button 1"
+                            <RadioButton Content="Radio Button 1"
                                              Margin="88.291,134.92,0,0"
                                              VerticalAlignment="Top"
                                              GroupName="test"
@@ -84,143 +99,143 @@
                                          HorizontalAlignment="Left"
                                          Width="154.002"
 										 VerticalContentAlignment="Center" />
-                                <ComboBox Margin="88.292,176.84,0,0"
+                            <ComboBox Margin="88.292,176.84,0,0"
                                           VerticalAlignment="Top"
                                           HorizontalAlignment="Left"
                                           SelectedIndex="0">
-                                    <ComboBoxItem Content="ComboBoxItem" />
-                                    <ComboBoxItem Content="ComboBoxItem" />
-                                    <ComboBoxItem Content="ComboBoxItem" />
-                                </ComboBox>
-                                <ProgressBar x:Name="pb"
+                                <ComboBoxItem Content="ComboBoxItem" />
+                                <ComboBoxItem Content="ComboBoxItem" />
+                                <ComboBoxItem Content="ComboBoxItem" />
+                            </ComboBox>
+                            <ProgressBar x:Name="pb"
                                              Value="{Binding Value, ElementName=slider1}"
                                              IsIndeterminate="False"
                                              Margin="88.696,216.8,0,0"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
                                              Width="154" />
-                                <Label Content="Button"
+                            <Label Content="Button"
                                        VerticalAlignment="Top"
                                        Margin="39.07,0,0,0"
                                        HorizontalAlignment="Left" />
-                                <Label Content="Passwordbox"
+                            <Label Content="Passwordbox"
                                        Margin="5.147,71,0,0"
                                        RenderTransformOrigin="0.535,-0.381"
                                        VerticalAlignment="Top"
                                        HorizontalAlignment="Left" />
-                                <Label Content="Checkbox"
+                            <Label Content="Checkbox"
                                        Margin="23.1,96.96,0,0"
                                        HorizontalAlignment="Left"
                                        Height="25.96"
                                        VerticalAlignment="Top" />
-                                <Label Content="Radio Buttons"
+                            <Label Content="Radio Buttons"
                                        VerticalAlignment="Top"
                                        Margin="0.404,126.92,0,0"
                                        HorizontalAlignment="Left" />
-                                <Label Content="TextBox"
+                            <Label Content="TextBox"
                                        VerticalAlignment="Top"
                                        Margin="33.14,37,0,0"
                                        HorizontalAlignment="Left" />
-                                <Label Content="Combobox"
+                            <Label Content="Combobox"
                                        VerticalAlignment="Top"
                                        Margin="16.224,170.84,0,0"
                                        HorizontalAlignment="Left" />
-                                <RadioButton Content="Radio Button 2"
+                            <RadioButton Content="Radio Button 2"
                                              Margin="88.695,155.88,0,0"
                                              VerticalAlignment="Top"
                                              GroupName="test"
                                              HorizontalAlignment="Left" />
-                                <Label Content="Progress Bar"
+                            <Label Content="Progress Bar"
                                        VerticalAlignment="Top"
                                        Margin="8.216,206.8,0,0"
                                        HorizontalAlignment="Left"
                                        d:LayoutOverrides="HorizontalAlignment" />
-                                <Button Content="Launch Panorama"
+                            <Button Content="Launch Panorama"
                                         Click="BtnPanoramaClick"
                                         VerticalAlignment="Top"
                                         Margin="88.696,270,89.305,0" />
-                                <Button Content="Button" VerticalAlignment="Bottom" Margin="88.696,0,91.305,8" Style="{DynamicResource SquareButtonStyle}"/>
-                                <ToggleButton Content="TOGGLE BUTTON" Margin="88,303,91.305,0" VerticalAlignment="Top" />
+                            <Button Content="Button" VerticalAlignment="Bottom" Margin="88.696,0,91.305,8" Style="{DynamicResource SquareButtonStyle}"/>
+                            <ToggleButton Content="TOGGLE BUTTON" Margin="88,303,91.305,0" VerticalAlignment="Top" />
                             <Slider Height="19" HorizontalAlignment="Right" Margin="0,239,91,0" Name="slider1" VerticalAlignment="Top" Width="154" Maximum="100" Value="25" />
                         </Grid>
-                            <WrapPanel Margin="332.001,0,0,8">
-                            	<Controls:AppBarButton
+                        <WrapPanel Margin="332.001,0,0,8">
+                            <Controls:AppBarButton
                             		VerticalAlignment="Top"
                             		MetroImageSource="{StaticResource appbar_barcode}"
                             		Foreground="{DynamicResource BlackBrush}"
                             		Content="scan" />
 
-                            	<Controls:AppBarButton
+                            <Controls:AppBarButton
                             		VerticalAlignment="Top"
                             		MetroImageSource="{StaticResource appbar_barcode}"
                             		Foreground="{DynamicResource BlackBrush}"
                             		Content="scan"
                             		Width="48"
                             		Height="48"/>
-                            	<Button Style="{DynamicResource MetroCircleButtonStyle}"
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
                             		Height="55"
                             		Width="55"
                             		VerticalAlignment="Top">
-                            		<Rectangle Width="20"
+                                <Rectangle Width="20"
                             			Height="20">
-                            			<Rectangle.Fill>
-                            				<VisualBrush Stretch="Fill"
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill"
                             					Visual="{StaticResource appbar_city}" />
-                            			</Rectangle.Fill>
-                            		</Rectangle>
+                                    </Rectangle.Fill>
+                                </Rectangle>
 
-                            	</Button>
-                            	<Button Style="{DynamicResource MetroCircleButtonStyle}"
+                            </Button>
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
                             		Height="55"
                             		Width="55"
                             		VerticalAlignment="Top">
-                            		<Rectangle Width="20"
+                                <Rectangle Width="20"
                             			Height="20">
-                            			<Rectangle.Fill>
-                            				<VisualBrush Stretch="Fill"
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill"
                             					Visual="{StaticResource appbar_barcode}" />
-                            			</Rectangle.Fill>
-                            		</Rectangle>
+                                    </Rectangle.Fill>
+                                </Rectangle>
 
-                            	</Button>
-                            	<Button Style="{DynamicResource MetroCircleButtonStyle}"
+                            </Button>
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
                             		Height="55"
                             		Width="55"
                             		VerticalAlignment="Top">
-                            		<Rectangle Width="28"
+                                <Rectangle Width="28"
                             			Height="17.25">
-                            			<Rectangle.Fill>
-                            				<VisualBrush Stretch="Fill"
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill"
                             					Visual="{StaticResource appbar_cloud_download}" />
-                            			</Rectangle.Fill>
-                            		</Rectangle>
+                                    </Rectangle.Fill>
+                                </Rectangle>
 
-                            	</Button>
-                            	<Button Style="{DynamicResource MetroCircleButtonStyle}"
+                            </Button>
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
                             		Height="55"
                             		Width="55"
                             		VerticalAlignment="Top">
-                            		<Rectangle Width="20"
+                                <Rectangle Width="20"
                             			Height="20">
-                            			<Rectangle.Fill>
-                            				<VisualBrush Stretch="Fill"
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill"
                             					Visual="{StaticResource appbar_sound_3}" />
-                            			</Rectangle.Fill>
-                            		</Rectangle>
+                                    </Rectangle.Fill>
+                                </Rectangle>
 
-                            	</Button>
+                            </Button>
 
                             <Controls:ProgressRing IsActive="True"/>
                             <Controls:TransitioningContentControl x:Name="transitioning" Width="150" Height="50" Transition="DownTransition" />
                             <Controls:RangeSlider Width="227" Height="25" RangeStartSelected="20" RangeStopSelected="50"/>
                         </WrapPanel>
-                            <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
-                        </Grid>
+                        <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
+                    </Grid>
                 </TabItem>
                 <TabItem Header="_More Controls Here!">
                     <StackPanel>
                         <!--<Controls:MetroProgressBar Width="600" IsIndeterminate="True"/>-->
-                        
+
                         <Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}"
                                                     Height="6"
                                                     Width="600" />
@@ -275,7 +290,7 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        
+
                         <ListView ItemsSource="{Binding Tracks}" BorderThickness="0">
                             <ListView.View>
                                 <GridView>

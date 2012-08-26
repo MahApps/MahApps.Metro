@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -25,7 +28,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty SavePositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
+        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(ObservableCollection<Flyout>), typeof(MetroWindow), new PropertyMetadata(new ObservableCollection<Flyout>()));
 
+        public ObservableCollection<Flyout> Flyouts
+        {
+            get { return (ObservableCollection<Flyout>) GetValue(FlyoutsProperty); }
+            set { SetValue(FlyoutsProperty, value); }
+        }
         public Brush TitleForeground
         {
             get { return (Brush)GetValue(TitleForegroundProperty); }
