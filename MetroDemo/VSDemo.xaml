@@ -10,10 +10,12 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colours.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid>
-        
-    </Grid>
+    <TabControl>
+        <TabItem Header="Test"/>
+        <TabItem Header="Hello"/>
+    </TabControl>
 </Controls:MetroWindow>

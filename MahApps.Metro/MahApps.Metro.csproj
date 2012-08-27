@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Accent.cs" />
+    <Compile Include="Actions\CloseTabItemAction.cs" />
     <Compile Include="Actions\SetFlyoutOpenAction.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
@@ -173,6 +174,14 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\VS\Colours.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\VS\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\VS\TabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -3,6 +3,7 @@
     <!--Background-->
     <SolidColorBrush x:Key="Background" Color="#1C1C1C"/>
     <Color x:Key="AccentColor">#2D2D30</Color>
+    <Color x:Key="BlackColor">#FFFFFFFF</Color>
     <Color x:Key="WhiteColor">#2D2D30</Color>
 
     <!--Foreground-->
