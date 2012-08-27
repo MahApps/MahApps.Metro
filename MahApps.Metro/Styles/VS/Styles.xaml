@@ -1,9 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Button.xaml"/>
         <ResourceDictionary Source="Menu.xaml"/>
         <ResourceDictionary Source="TabControl.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="Button" BasedOn="{StaticResource StandardButton}"/>
     <Style TargetType="Menu" BasedOn="{StaticResource StandardMenu}"/>
     <Style TargetType="TabControl" BasedOn="{StaticResource StandardTabControl}"/>
 </ResourceDictionary>
