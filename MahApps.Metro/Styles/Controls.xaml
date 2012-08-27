@@ -16,6 +16,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Tooltip.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DatePicker.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate x:Key="ValidationToolTipTemplate">
@@ -91,4 +92,6 @@
     <Style TargetType="Separator" BasedOn="{StaticResource MetroSeparator}" />
     <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}" />
     <Style TargetType="ContextMenu" BasedOn="{StaticResource MetroContextMenu}" />
+    <Style TargetType="DatePicker" BasedOn="{StaticResource DatePicker}" />
+    <Style TargetType="DatePickerTextBox" BasedOn="{StaticResource DatePickerTextBox}" />
 </ResourceDictionary>
