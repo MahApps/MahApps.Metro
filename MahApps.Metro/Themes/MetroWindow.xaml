@@ -168,8 +168,7 @@
                         </ItemsControl>
                         <Button x:Name="PART_Min"
                             Width="34"
-                            MaxHeight="34"
-		Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
+                            Height="34"
                             Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
                             Padding="0"
                             ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
@@ -179,8 +178,7 @@
 
                         <Button x:Name="PART_Max"
                             Width="34"
-                            MaxHeight="34"
-		Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
+                            Height="34"
                             Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
                             Padding="0"
                             Foreground="{TemplateBinding Foreground}"
@@ -194,8 +192,7 @@
 
                         <Button x:Name="PART_Close"
                             Width="34"
-                            MaxHeight="34"
-		Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
+                            Height="34"
                             Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
                             ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                             Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
