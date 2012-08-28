@@ -28,13 +28,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty SavePositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
-        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(ObservableCollection<Flyout>), typeof(MetroWindow), new PropertyMetadata(new ObservableCollection<Flyout>()));
 
-        public ObservableCollection<Flyout> Flyouts
-        {
-            get { return (ObservableCollection<Flyout>) GetValue(FlyoutsProperty); }
-            set { SetValue(FlyoutsProperty, value); }
-        }
+        public ObservableCollection<Flyout> Flyouts { get; set; }
+
         public Brush TitleForeground
         {
             get { return (Brush)GetValue(TitleForegroundProperty); }
@@ -47,6 +43,11 @@ namespace MahApps.Metro.Controls
             set { SetValue(SavePositionProperty, value); }
         }
 
+        public MetroWindow()
+        {
+            if (Flyouts == null)
+                Flyouts = new ObservableCollection<Flyout>();
+        }
         static MetroWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
@@ -56,13 +57,13 @@ namespace MahApps.Metro.Controls
 
         public bool ShowIconOnTitleBar
         {
-            get { return (bool) GetValue(ShowIconOnTitleBarProperty); }
+            get { return (bool)GetValue(ShowIconOnTitleBarProperty); }
             set { SetValue(ShowIconOnTitleBarProperty, value); }
         }
 
         public bool ShowTitleBar
         {
-            get { return (bool) GetValue(ShowTitleBarProperty); }
+            get { return (bool)GetValue(ShowTitleBarProperty); }
             set { SetValue(ShowTitleBarProperty, value); }
         }
 
@@ -100,7 +101,7 @@ namespace MahApps.Metro.Controls
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
         }
-        
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -203,7 +204,7 @@ namespace MahApps.Metro.Controls
 
         internal T GetPart<T>(string name) where T : DependencyObject
         {
-            return (T)GetTemplateChild(name);            
+            return (T)GetTemplateChild(name);
         }
 
         private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
