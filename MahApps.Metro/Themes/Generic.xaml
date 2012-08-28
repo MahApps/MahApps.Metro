@@ -10,6 +10,7 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroImage.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroProgressBar.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroWindow.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/Pivot.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Panorama.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/RangeSlider.xaml" />

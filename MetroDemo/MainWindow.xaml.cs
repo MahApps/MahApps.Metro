@@ -28,6 +28,7 @@ namespace MetroDemo
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
+            var x = pivot.Items;
             pb.IsIndeterminate = !pb.IsIndeterminate;
             Flyouts[0].IsOpen = !Flyouts[0].IsOpen;
             Flyouts[1].IsOpen = !Flyouts[1].IsOpen;
@@ -77,6 +78,12 @@ namespace MetroDemo
         {
             //new ChildWindow().ShowDialog();
             new PanoramaDemo().Show();
+            
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            pivot.GoToItem(pi3);
         }
     }
 }

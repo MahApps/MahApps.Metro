@@ -315,6 +315,24 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
+                <TabItem>
+                    <StackPanel>
+                        <Controls:Pivot x:Name="pivot" Header="this is my header" Height="250">
+                            <Controls:PivotItem Header="Hi">
+                                <Grid Width="900" Background="Red">
+                                    <TextBlock Text="herpadera" />
+                                </Grid>
+                            </Controls:PivotItem>
+                            <Controls:PivotItem Header="Bye">
+                                <TextBlock Text="derp derp derp"  Width="900" Background="Blue" />
+                            </Controls:PivotItem>
+                            <Controls:PivotItem x:Name="pi3" Header="Bye">
+                                <TextBlock Text="derp derp derp" Width="900" Background="Green" />
+                            </Controls:PivotItem>
+                        </Controls:Pivot>
+                        <Button Content="Go To Item 3" Click="Button_Click_1" />
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </Grid>
     </Controls:MetroContentControl>
