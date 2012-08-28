@@ -33,6 +33,8 @@
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>
                         </ScrollViewer>
+
+                        <Controls:ScrollViewerOffsetMediator x:Name="PART_Mediator" ScrollViewer="{Binding ElementName=PART_Scroll}"/>
                     </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
