@@ -85,5 +85,10 @@ namespace MetroDemo
         {
             pivot.GoToItem(pi3);
         }
+
+        private void BtnVSClick(object sender, RoutedEventArgs e)
+        {
+            new VSDemo().Show();
+        }
     }
 }

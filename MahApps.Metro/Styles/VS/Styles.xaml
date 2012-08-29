@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Button.xaml"/>
+        <ResourceDictionary Source="ListBox.xaml"/>
+        <ResourceDictionary Source="Menu.xaml"/>
+        <ResourceDictionary Source="ScrollBar.xaml"/>
+        <ResourceDictionary Source="TabControl.xaml"/>
+        <ResourceDictionary Source="TextBox.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <Style TargetType="Button" BasedOn="{StaticResource StandardButton}"/>
+    <Style TargetType="ListBox" BasedOn="{StaticResource StandardListBox}"/>
+    <Style TargetType="Menu" BasedOn="{StaticResource StandardMenu}"/>
+    <Style TargetType="ScrollBar" BasedOn="{StaticResource StandardScrollBar}"/>
+    <Style TargetType="TabControl" BasedOn="{StaticResource StandardTabControl}"/>
+    <Style TargetType="TextBox" BasedOn="{StaticResource StandardTextBox}"/>
+</ResourceDictionary>
