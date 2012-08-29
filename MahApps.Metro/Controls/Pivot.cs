@@ -9,6 +9,13 @@ namespace MahApps.Metro.Controls
         private ScrollViewer scroller;
         public static readonly RoutedEvent SelectionChangedEvent = EventManager.RegisterRoutedEvent("SelectionChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Pivot));
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Pivot), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Pivot));
+
+        public DataTemplate HeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
+            set { SetValue(HeaderTemplateProperty, value); }
+        }
 
         public string Header
         {

@@ -2,7 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
+
+    <DataTemplate x:Key="PivotHeaderTemplate">
+        <TextBlock Text="{Binding}" FontSize="{DynamicResource HeaderFontSize}" FontFamily="{DynamicResource HeaderFontFamily}"  />
+    </DataTemplate>
+    
     <Style TargetType="{x:Type Controls:Pivot}">
+        <Setter Property="HeaderTemplate" Value="{StaticResource PivotHeaderTemplate}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Pivot}">
@@ -12,7 +18,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <ContentPresenter Grid.Row="0" Content="{Binding Header, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}" />
+                        <ContentPresenter Grid.Row="0" Content="{Binding Header, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}"  ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <ListView 
                             Grid.Row="1"
                             BorderBrush="{x:Null}"
