@@ -6,6 +6,39 @@
     <DataTemplate x:Key="PivotHeaderTemplate">
         <TextBlock Text="{Binding}" FontSize="{DynamicResource HeaderFontSize}" FontFamily="{DynamicResource HeaderFontFamily}"  />
     </DataTemplate>
+
+    <Style x:Key="PivotListViewItem" TargetType="{x:Type ListViewItem}">
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Border.BorderBrush" Value="{DynamicResource Grey3}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <Border x:Name="Bd" SnapsToDevicePixels="true">
+                        <Grid>
+                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" Opacity="0.35" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+                            <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     
     <Style TargetType="{x:Type Controls:Pivot}">
         <Setter Property="HeaderTemplate" Value="{StaticResource PivotHeaderTemplate}" />
@@ -20,9 +53,11 @@
                         </Grid.RowDefinitions>
                         <ContentPresenter Grid.Row="0" Content="{Binding Header, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}"  ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <ListView 
+                            x:Name="PART_Headers"
                             Grid.Row="1"
                             BorderBrush="{x:Null}"
                             Style="{x:Null}"
+                            ItemContainerStyle="{StaticResource PivotListViewItem}"
                             ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -31,7 +66,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Header}" FontSize="{DynamicResource SubHeaderFontSize}" FontFamily="{DynamicResource HeaderFontFamily}" />
+                                    <TextBlock Text="{Binding Header}" FontSize="{DynamicResource SubHeaderFontSize}" FontFamily="{DynamicResource HeaderFontFamily}" Margin="0,0,25,0"/>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListView>
