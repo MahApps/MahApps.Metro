@@ -48,5 +48,14 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <AdornerDecorator>
+                        <ContentPresenter ContentSource="Content"></ContentPresenter>
+                    </AdornerDecorator>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>
