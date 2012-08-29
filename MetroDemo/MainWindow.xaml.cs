@@ -78,5 +78,10 @@ namespace MetroDemo
             //new ChildWindow().ShowDialog();
             new PanoramaDemo().Show();
         }
+
+        private void BtnVSClick(object sender, RoutedEventArgs e)
+        {
+            new VSDemo().Show();
+        }
     }
 }
