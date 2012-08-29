@@ -52,7 +52,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <AdornerDecorator>
-                        <ContentPresenter ContentSource="Content"></ContentPresenter>
+                        <ContentPresenter Content="{Binding}"/>
                     </AdornerDecorator>
                 </DataTemplate>
             </Setter.Value>
