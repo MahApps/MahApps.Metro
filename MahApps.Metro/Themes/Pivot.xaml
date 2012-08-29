@@ -6,9 +6,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Pivot}">
-                    <StackPanel>
-                        <ContentPresenter Content="{Binding Header, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}" />
+                    <Grid x:Name="root">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ContentPresenter Grid.Row="0" Content="{Binding Header, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}" />
                         <ListView 
+                            Grid.Row="1"
                             BorderBrush="{x:Null}"
                             Style="{x:Null}"
                             ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">
@@ -19,12 +25,12 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Header}" />
+                                    <TextBlock Text="{Binding Header}" FontSize="{DynamicResource SubHeaderFontSize}" FontFamily="{DynamicResource HeaderFontFamily}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ListView>
 
-                        <ScrollViewer x:Name="PART_Scroll" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto">
+                        <ScrollViewer Grid.Row="2" x:Name="PART_Scroll" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
                             <ItemsControl ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -33,9 +39,7 @@
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>
                         </ScrollViewer>
-
-                        <Controls:ScrollViewerOffsetMediator x:Name="PART_Mediator" ScrollViewer="{Binding ElementName=PART_Scroll}"/>
-                    </StackPanel>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -347,8 +347,6 @@ namespace MahApps.Metro.Behaviours
                     break;
 
                 case Constants.WM_INITMENU:
-                    System.Console.WriteLine("shoulda put it here");
-
                     var window = AssociatedObject as MetroWindow;
 
                     if (window != null)

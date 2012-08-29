@@ -66,7 +66,6 @@
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
-    <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Converters\OffOnConverter.cs" />
     <Compile Include="Controls\Panorama.cs" />
     <Compile Include="Controls\PanoramaGroup.cs" />
