@@ -445,6 +445,7 @@
                       Margin="1,4,1,9"
                       ContentTemplate="{TemplateBinding ContentTemplate}"
                       Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"
+                      TextElement.FontFamily="{DynamicResource HeaderFontFamily}"
                       TextElement.Foreground="{DynamicResource WhiteBrush}"
                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -462,7 +463,7 @@
                             <TextBlock Foreground="#FF333333"
                        FontWeight="Bold"
                        FontSize="9.5"
-                       FontFamily="Verdana"
+                       FontFamily="{DynamicResource ContentFontFamily}"
                        Margin="0,6,0,6"
                        Text="{Binding}"
                        HorizontalAlignment="Center"
