@@ -80,6 +80,21 @@
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>
                         </ScrollViewer>
+
+                        <Controls:ScrollViewerOffsetMediator x:Name="PART_Mediator" ScrollViewer="{Binding ElementName=PART_Scroll}">
+                            <Controls:ScrollViewerOffsetMediator.Resources>
+                                <Storyboard x:Key="Storyboard1">
+                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="HorizontalOffset" Storyboard.TargetName="PART_Mediator">
+                                        <EasingDoubleKeyFrame x:Name="edkf" KeyTime="0:0:0.6" Value="0">
+                                            <EasingDoubleKeyFrame.EasingFunction>
+                                                <CircleEase/>
+                                            </EasingDoubleKeyFrame.EasingFunction>
+                                        </EasingDoubleKeyFrame>
+                                    </DoubleAnimationUsingKeyFrames>
+                                </Storyboard>
+
+                            </Controls:ScrollViewerOffsetMediator.Resources>
+                        </Controls:ScrollViewerOffsetMediator>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

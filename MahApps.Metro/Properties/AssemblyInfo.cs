@@ -8,7 +8,7 @@ using System.Windows.Markup;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("MahApps")]
 [assembly: AssemblyProduct("MahApps.Metro")]
-[assembly: AssemblyCopyright("Copyright © MahApps 2011")]
+[assembly: AssemblyCopyright("Copyright © MahApps 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
