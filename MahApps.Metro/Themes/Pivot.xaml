@@ -58,6 +58,8 @@
                             BorderBrush="{x:Null}"
                             Style="{x:Null}"
                             ItemContainerStyle="{StaticResource PivotListViewItem}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
                             ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
