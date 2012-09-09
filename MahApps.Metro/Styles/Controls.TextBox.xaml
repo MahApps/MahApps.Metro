@@ -100,7 +100,7 @@
                                         <EventTrigger RoutedEvent="Canvas.Loaded">
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible" Storyboard.TargetName="validationTooltip">
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible">
                                                         <DiscreteObjectKeyFrame KeyTime="0">
                                                             <DiscreteObjectKeyFrame.Value>
                                                                 <System:Boolean>true</System:Boolean>
