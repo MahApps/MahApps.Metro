@@ -74,4 +74,85 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <DataTemplate x:Key="NotificationHeaderTemplate">
+        <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right">
+            <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" VerticalAlignment="Top" Content="" >
+                <Button.Resources>
+                    <SolidColorBrush x:Key="BlackBrush" Color="White" />
+                </Button.Resources>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="False" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <TextBlock Text="{Binding}" x:Name="PART_BackButton" FontSize="20" Margin="15,0,0,0" VerticalAlignment="Center"/>
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Right">
+                <Setter TargetName="nav" Property="Content" Value="" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <Style TargetType="{x:Type Controls:NotificationBarFlyout}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <!--<Setter Property="Width" Value="{Binding Width, RelativeSource={RelativeSource FindAncestor, Window, 1}}" />-->
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource NotificationHeaderTemplate}" />
+        <!--<Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource AccentColor}"/>
+            </Setter.Value>
+        </Setter>-->
+        <Setter Property="Foreground" Value="#FFFFFFFF" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:NotificationBarFlyout}">
+                    <Grid x:Name="root" HorizontalAlignment="Stretch">
+                        <Grid.Background>
+                            <SolidColorBrush Color="{DynamicResource AccentColor}"/>
+                        </Grid.Background>
+                        <Grid.RenderTransform>
+                            <TranslateTransform />
+                        </Grid.RenderTransform>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="Default"/>
+                                <VisualState x:Name="Hide">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="root">
+                                            <EasingDoubleKeyFrame KeyTime="00:00:00.500" Value="1" x:Name="hideFrame">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Show">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="root">
+                                            <EasingDoubleKeyFrame KeyTime="00:00:00.600" Value="1" x:Name="showFrame" >
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <StackPanel Margin="0,0,0,0">
+                            <ContentPresenter x:Name="PART_Header" ContentSource="Header" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                            <ContentPresenter x:Name="PART_Content"/>
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

@@ -69,7 +69,7 @@ namespace MahApps.Metro.Controls
             ApplyAnimation(Position);
         }
 
-        internal void ApplyAnimation(Position position)
+        internal virtual void ApplyAnimation(Position position)
         {
             var root = (Grid)GetTemplateChild("root");
             if (root == null)

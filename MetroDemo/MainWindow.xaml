@@ -34,17 +34,24 @@
     </Controls:MetroWindow.WindowCommands>
 
     <Controls:MetroWindow.Flyouts>
-        
-            <Controls:Flyout Header="hiiiii">
-                <Button Content="hi"  />
-            </Controls:Flyout>
-            <Controls:Flyout Header="Bakery" Background="#9f000000" Position="Right">
-            <StackPanel>
+
+        <Controls:Flyout Header="hiiiii">
+            <Button Content="hi"  />
+        </Controls:Flyout>
+        <Controls:Flyout Header="Bakery" Background="#9f000000" Position="Right">
+            <StackPanel Width="200">
                 <Controls:Tile Title="My _Cupcakes" Count="23">
                     <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
                 </Controls:Tile>
             </StackPanel>
         </Controls:Flyout>
+        <Controls:NotificationBarFlyout Header="Warning" Position="Left">
+            <StackPanel>
+                <Controls:Tile Title="My _Cupcakes" Count="23">
+                    <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
+                </Controls:Tile>
+            </StackPanel>
+        </Controls:NotificationBarFlyout>
 
     </Controls:MetroWindow.Flyouts>
 
@@ -158,7 +165,7 @@
                                     Click="BtnVSClick"
                                     VerticalAlignment="Top"
                                     Margin="88,300,90,0"/>
-                            <Button Content="Button" VerticalAlignment="Bottom" Margin="88,0,90,8" Style="{DynamicResource SquareButtonStyle}"/>
+                            <Button Content="Button" Click="BottomButton_Click" VerticalAlignment="Bottom" Margin="88,0,90,8" Style="{DynamicResource SquareButtonStyle}"/>
                             <ToggleButton Content="TOGGLE BUTTON" Margin="88,330,90,0" VerticalAlignment="Top" />
                             <Slider Height="19" HorizontalAlignment="Right" Margin="0,239,91,0" Name="slider1" VerticalAlignment="Top" Width="154" Maximum="100" Value="25" />
                         </Grid>

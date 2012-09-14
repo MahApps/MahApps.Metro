@@ -90,5 +90,15 @@ namespace MetroDemo
         {
             new VSDemo().Show();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BottomButton_Click(object sender, RoutedEventArgs e)
+        {
+            Flyouts[2].IsOpen = !Flyouts[2].IsOpen;
+        }
     }
 }
