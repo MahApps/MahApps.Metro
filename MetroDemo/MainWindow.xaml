@@ -34,26 +34,26 @@
     </Controls:MetroWindow.WindowCommands>
 
     <Controls:MetroWindow.Flyouts>
-
         <Controls:Flyout Header="hiiiii">
             <Button Content="hi"  />
         </Controls:Flyout>
-        <Controls:Flyout Header="Bakery" Background="#9f000000" Position="Right">
+        <Controls:Flyout Header="Bakery" Background="#9f000000" Position="Right" Peek="True">
             <StackPanel Width="200">
                 <Controls:Tile Title="My _Cupcakes" Count="23">
                     <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
                 </Controls:Tile>
             </StackPanel>
         </Controls:Flyout>
-        <Controls:NotificationBarFlyout Header="Warning" Position="Left">
+    </Controls:MetroWindow.Flyouts>
+    <Controls:MetroWindow.NotificationBar>
+        <Controls:NotificationBarFlyout Position="Left" IsClosable="False">
             <StackPanel>
                 <Controls:Tile Title="My _Cupcakes" Count="23">
                     <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
                 </Controls:Tile>
             </StackPanel>
         </Controls:NotificationBarFlyout>
-
-    </Controls:MetroWindow.Flyouts>
+    </Controls:MetroWindow.NotificationBar>
 
     <Controls:MetroContentControl>
         <Grid>

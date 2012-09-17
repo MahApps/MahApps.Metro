@@ -98,7 +98,7 @@ namespace MetroDemo
 
         private void BottomButton_Click(object sender, RoutedEventArgs e)
         {
-            Flyouts[2].IsOpen = !Flyouts[2].IsOpen;
+            NotificationBar.IsOpen = !NotificationBar.IsOpen;
         }
     }
 }

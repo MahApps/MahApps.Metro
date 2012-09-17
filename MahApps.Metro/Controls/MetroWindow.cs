@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -30,6 +28,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
 
         public ObservableCollection<Flyout> Flyouts { get; set; }
+
+        public NotificationBarFlyout NotificationBar { get; set; }
 
         public Brush TitleForeground
         {

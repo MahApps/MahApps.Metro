@@ -1,10 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -14,18 +17,64 @@ namespace MahApps.Metro.Controls
     public enum NotificationType
     {
         NoClassification,
-        Information,
-        Warning,
-        Error
+        Question, // appbar_question
+        Information, //appbar_information,
+        Warning, //appbar_alert
+        Error // appbar_stop
     }
 
-    [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
-    public class NotificationBarFlyout : Flyout
+    public class NotificationBarFlyout : ContentControl
     {
         private static FrameworkElement _rootElement;
         private Window _Shell;
         private static AdornerLayer _myAdorner;
+
+        public static readonly DependencyProperty IsClosableProperty = DependencyProperty.Register("IsClosable", typeof(bool), typeof(NotificationBarFlyout), new PropertyMetadata(default(bool)));
+        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
+        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
+        public static readonly DependencyProperty CommandsProperty = DependencyProperty.Register("Commands", typeof(ObservableCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ObservableCollection<CommandViewModel>), CommandsPropertyChanged));
+        public static readonly DependencyPropertyKey WrappedCommandsPropertyKey = DependencyProperty.RegisterReadOnly("WrappedCommands", typeof(ReadOnlyCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ReadOnlyCollection<CommandViewModel>)));
+
+        private static void CommandsPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            NotificationBarFlyout targetObject = dependencyObject as NotificationBarFlyout;
+            if ((targetObject.Commands == null) || (!targetObject.Commands.Any())) return;
+
+            List<CommandViewModel> sourceCommands = targetObject.Commands.Select(commandViewModel => new CommandViewModel(commandViewModel.DisplayName,
+                                                                                                                          new RelayCommand(o =>
+                                                                                                                                               {
+                                                                                                                                                   targetObject.IsOpen = false;
+                                                                                                                                                   commandViewModel.Command.Execute(o);
+                                                                                                                                               },
+                                                                                                                                           o => commandViewModel.Command.CanExecute(o)))).ToList();
+            targetObject.WrappedCommands = new ReadOnlyCollection<CommandViewModel>(sourceCommands);
+        }
+
+        public ReadOnlyCollection<CommandViewModel> WrappedCommands
+        {
+            get { return (ReadOnlyCollection<CommandViewModel>)GetValue(WrappedCommandsPropertyKey.DependencyProperty); }
+            protected set { SetValue(WrappedCommandsPropertyKey, value); }
+        }
+
+        public ObservableCollection<CommandViewModel> Commands
+        {
+            get { return (ObservableCollection<CommandViewModel>)GetValue(CommandsProperty); }
+            set { SetValue(CommandsProperty, value); }
+        }
+
+        public DataTemplate HeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
+            set { SetValue(HeaderTemplateProperty, value); }
+        }
+
+        public bool IsClosable
+        {
+            get { return (bool)GetValue(IsClosableProperty); }
+            set { SetValue(IsClosableProperty, value); }
+        }
 
         static NotificationBarFlyout()
         {
@@ -43,11 +92,35 @@ namespace MahApps.Metro.Controls
             base.OnPropertyChanged(e);
             if (e.Property == IsOpenProperty)
             {
-                if ((bool) e.NewValue)
+                if ((bool)e.NewValue)
                     _myAdorner.Visibility = Visibility.Visible;
                 else
                     _myAdorner.Visibility = Visibility.Hidden;
             }
+        }
+
+        private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var flyout = (Flyout)dependencyObject;
+            VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
+        }
+
+        private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var flyout = (Flyout)dependencyObject;
+            flyout.ApplyAnimation((Position)e.NewValue);
+        }
+
+        public bool IsOpen
+        {
+            get { return (bool)GetValue(IsOpenProperty); }
+            set { SetValue(IsOpenProperty, value); }
+        }
+
+        public Position Position
+        {
+            get { return (Position)GetValue(PositionProperty); }
+            set { SetValue(PositionProperty, value); }
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
@@ -72,7 +145,7 @@ namespace MahApps.Metro.Controls
                 {
                     _Shell = ((Window)_rootElement.GetTopLevelControl());
                     //_Shell.SizeChanged += OnSizeChanged;
-                    Binding parentWidthBinding = new Binding("Width") {Source = _Shell};
+                    Binding parentWidthBinding = new Binding("Width") { Source = _Shell };
                     SetBinding(WidthProperty, parentWidthBinding);
                 }
 
@@ -80,17 +153,17 @@ namespace MahApps.Metro.Controls
                 {
                     if (_Shell is MetroWindow)
                     {
-                        MetroContentControl contentControl = _Shell.FindChildren<MetroContentControl>().First();
-                        _myAdorner = AdornerLayer.GetAdornerLayer(contentControl);
+                        Grid contentGrid = _Shell.FindChildren<Grid>().First();
+                        _myAdorner = AdornerLayer.GetAdornerLayer(contentGrid);
                         _myAdorner.Visibility = Visibility.Hidden;
-                        _myAdorner.Add(new Shader(contentControl));
+                        _myAdorner.Add(new Shader(contentGrid));
                     }
                 }
             }
             ApplyAnimation(Position, IsOpen);
         }
 
-        internal void ApplyAnimation(Position position, bool isOpen)
+        private void ApplyAnimation(Position position, bool isOpen)
         {
             var root = (Grid)GetTemplateChild("root");
             if (root == null)
@@ -129,50 +202,84 @@ namespace MahApps.Metro.Controls
     }
 
     /// <summary>
-    /// Adorner to create background shading over an element.
+    /// Viewmodel to represent a command with a display name for associated buttons.
     /// </summary>
-    public class Shader : Adorner
+    public class CommandViewModel
     {
         /// <summary>
-        /// Creates a Shader with 50% black shading.
+        /// Creates a new CommandViewModel.
         /// </summary>
-        /// <param name="adornedElement">The element over which to apply the shading.</param>
-        public Shader(UIElement adornedElement) : base(adornedElement)
+        /// <param name="displayName">The display name to show when the command is bound to a button or other suitable UI element that supports it.</param>
+        /// <param name="command">The command to bind to the button or other UI element.</param>
+        /// <remarks>Currently only supported or used by the ModalDialogPopup buttons.</remarks>
+        public CommandViewModel(string displayName, ICommand command)
         {
-            Background = new SolidColorBrush(Colors.Black) {Opacity = 0.5d};
-            StrokeBorder = null;
+            DisplayName = displayName;
+            Command = command;
         }
 
         /// <summary>
-        /// Creates a Shader with the specified background and border.
+        /// The display name to show when the command is bound to a button or other suitable UI element that supports it.
         /// </summary>
-        /// <param name="adornedElement">The element over which to apply the shading.</param>
-        /// <param name="background">The brush to use to fill the shading.  Note less than 100% opacity should have been set before the brush is passed through.</param>
-        /// <param name="strokeBorder">The border to apply.</param>
-        public Shader(UIElement adornedElement, SolidColorBrush background, Pen strokeBorder) : this(adornedElement)
+        public string DisplayName { get; set; }
+        /// <summary>
+        /// The command to bind to the button or other UI element.
+        /// </summary>
+        public ICommand Command { get; set; }
+    }
+
+
+    /// <summary>
+    /// ICommand implementation supporting the providing of commands by wrapping ACtion delegates.
+    /// </summary>
+    public class RelayCommand : ICommand
+    {
+        #region Fields
+
+        readonly Action<object> _Execute;
+        readonly Predicate<object> _CanExecute;
+
+        #endregion // Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Creates a RelayCommand.
+        /// </summary>
+        /// <param name="execute">The action delegate implementing the commands behaviour.</param>
+        /// <param name="canExecute">The action delegate implementing the check for the commands CanExecute behaviour.</param>
+        /// <exception cref="ArgumentNullException">execute delegate is null.</exception>
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
-            //caller needs to have set opacity on background brush
-            Background = background;
-            StrokeBorder = strokeBorder;
+            if (execute == null)
+                throw new ArgumentNullException("execute");
+
+            _Execute = execute;
+            _CanExecute = canExecute;
+        }
+        #endregion // Constructors
+
+        #region ICommand Members
+
+        public bool CanExecute(object parameter)
+        {
+            return _CanExecute == null || _CanExecute(parameter);
         }
 
-        SolidColorBrush Background
+        /// <summary>
+        /// Delegated to CommandManager RequerySuggested, to ensure that RelayCommand's check their CanExecute values if conditions change.
+        /// </summary>
+        public event EventHandler CanExecuteChanged
         {
-            get;
-            set;
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
         }
 
-        Pen StrokeBorder
+        public void Execute(object parameter)
         {
-            get;
-            set;
+            _Execute(parameter);
         }
 
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            FrameworkElement elem = (FrameworkElement)AdornedElement;
-            Rect adornedElementRect = new Rect(0, 0, elem.ActualWidth, elem.ActualHeight);
-            drawingContext.DrawRectangle(Background, StrokeBorder, adornedElementRect);
-        }
+        #endregion // ICommand Members
     }
 }

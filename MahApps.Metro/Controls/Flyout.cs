@@ -15,6 +15,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsPinnableProperty = DependencyProperty.Register("IsPinnable", typeof(bool), typeof(Flyout), new PropertyMetadata(default(bool)));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
+        public static readonly DependencyProperty PeekProperty = DependencyProperty.Register("Peek", typeof (bool), typeof (Flyout), new FrameworkPropertyMetadata(default(bool)));
 
         public DataTemplate HeaderTemplate
         {
@@ -26,6 +27,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
+        }
+
+        public bool Peek
+        {
+            get { return (bool)GetValue(PeekProperty); }
+            set { SetValue(PeekProperty, value); }
         }
 
         public bool IsPinnable
@@ -89,13 +96,13 @@ namespace MahApps.Metro.Controls
 
             if (position == Position.Right)
             {
-                hideFrame.Value = root.DesiredSize.Width;
-                root.RenderTransform = new TranslateTransform(root.DesiredSize.Width, 0);
+                hideFrame.Value = root.DesiredSize.Width - (Peek ? 30 : 0);
+                root.RenderTransform = new TranslateTransform(hideFrame.Value, 0);
             }
             else
             {
-                hideFrame.Value = -root.DesiredSize.Width;
-                root.RenderTransform = new TranslateTransform(-root.DesiredSize.Width, 0);
+                hideFrame.Value = -root.DesiredSize.Width + (Peek ? 30 : 0);
+                root.RenderTransform = new TranslateTransform(hideFrame.Value, 0);
             }
         }
     }

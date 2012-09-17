@@ -69,6 +69,7 @@
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
+    <Compile Include="Controls\Shader.cs" />
     <Compile Include="Converters\OffOnConverter.cs" />
     <Compile Include="Controls\Panorama.cs" />
     <Compile Include="Controls\PanoramaGroup.cs" />
@@ -212,6 +213,10 @@
     <Page Include="Themes\AppBarButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\NotificationBarFlyout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Flyout.xaml">
       <SubType>Designer</SubType>

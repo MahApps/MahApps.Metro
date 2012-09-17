@@ -1,0 +1,117 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
+    
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    
+    <DataTemplate x:Key="NotificationHeaderTemplate">
+        <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" VerticalAlignment="Top" Content="✖" Visibility="{Binding IsClosable, RelativeSource={RelativeSource AncestorType={x:Type Controls:NotificationBarFlyout}}, Converter={StaticResource BooleanToVisibilityConverter}}" >
+            <Button.Resources>
+                <SolidColorBrush x:Key="BlackBrush" Color="White" />
+            </Button.Resources>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:NotificationBarFlyout}}}" Value="False" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ButtonCommandsTemplate">
+        <ItemsControl IsTabStop="False" ItemsSource="{Binding}" Margin="6,2">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding Path=Command}" Content="{Binding Path=DisplayName}" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </DataTemplate>
+    
+    <Style TargetType="{x:Type Controls:NotificationBarFlyout}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="HeaderTemplate" Value="{StaticResource NotificationHeaderTemplate}" />
+        <Setter Property="Foreground" Value="#FFFFFFFF" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:NotificationBarFlyout}">
+                    <Grid x:Name="root" HorizontalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.Background>
+                            <SolidColorBrush Color="{DynamicResource AccentColor}"/>
+                        </Grid.Background>
+                        <Grid.RenderTransform>
+                            <TranslateTransform />
+                        </Grid.RenderTransform>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup>
+                                <VisualState x:Name="Default"/>
+                                <VisualState x:Name="Hide">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="root">
+                                            <EasingDoubleKeyFrame KeyTime="00:00:00.500" Value="1" x:Name="hideFrame">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Show">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="root">
+                                            <EasingDoubleKeyFrame KeyTime="00:00:00.600" Value="1" x:Name="showFrame" >
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="PART_Header" ContentSource="Header" ContentTemplate="{TemplateBinding HeaderTemplate}" HorizontalAlignment="Right" />
+                        <ContentPresenter Grid.Row="1" Grid.Column="1" x:Name="PART_Content"/>
+                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="2">
+                            <ContentControl HorizontalAlignment="Stretch"  Content="{Binding}" ContentTemplate="{StaticResource ButtonCommandsTemplate}" DataContext="{Binding WrappedCommands, RelativeSource={x:Static RelativeSource.TemplatedParent}}" /> 
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" UseLayoutRounding="False" x:Key="appbar_question">
+        <Path Width="16" Height="25" Canvas.Left="16" Canvas.Top="11" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 23.5,31C 24.8807,31 26,32.1193 26,33.5C 26,34.8807 24.8807,36 23.5,36C 22.1193,36 21,34.8807 21,33.5C 21,32.1193 22.1193,31 23.5,31 Z M 24,11C 28.4183,11 32,13.8579 32,18C 32,19.5 31,22 29,23C 27,24 26,25.3431 26,27L 26,29L 21,29L 21,27.5C 21,24.0992 24,22 25,21C 27,19 27,18.7226 27,18C 27,16.3432 25.6568,15 24,15C 22.3431,15 21,16.3432 21,18L 21,19.5L 16,19.5L 16,18.5C 16,14.3579 19.5817,11 24,11 Z " />
+    </Canvas>
+
+    <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" UseLayoutRounding="False" x:Key="appbar_information">
+        <Path Width="8.99996" Height="24" Canvas.Left="20" Canvas.Top="12" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 20,19.0001L 26.9999,19.0001L 26.9999,21.0001L 26.9999,33L 28.9999,33L 28.9999,36L 20,36L 20,33L 21.9999,33L 21.9999,22.0001L 20,22.0001L 20,19.0001 Z M 24.5,12C 25.8807,12 27,13.1193 27,14.5C 27,15.8807 25.8807,17 24.5,17C 23.1193,17 22,15.8807 22,14.5C 22,13.1193 23.1193,12 24.5,12 Z " />
+    </Canvas>
+
+    <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" x:Key="appbar_alert">
+        <Path Width="22.1402" Height="20.75" Canvas.Left="12.9299" Canvas.Top="14" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 24,14C 26,14 36,33 35,34C 34,35 14,35 13,34C 12,33 22,14 24,14 Z M 24,29C 23.1716,29 22.5,29.6716 22.5,30.5C 22.5,31.3284 23.1716,32 24,32C 24.8284,32 25.5,31.3284 25.5,30.5C 25.5,29.6716 24.8284,29 24,29 Z M 22.5,20L 23,28L 25,28L 25.5,20L 22.5,20 Z " />
+    </Canvas>
+
+    <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" x:Key="appbar_stop">
+        <Path Width="24" Height="24" Canvas.Left="12" Canvas.Top="12" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 20,12L 28,12L 36,20L 36,28L 28,36L 20,36L 12,28L 12,20L 20,12 Z M 16.7218,28.4497L 19.5502,31.2782L 24,26.8284L 28.4497,31.2782L 31.2781,28.4497L 26.8284,24L 31.2782,19.5503L 28.4497,16.7218L 24,21.1716L 19.5502,16.7218L 16.7218,19.5503L 21.1716,24L 16.7218,28.4497 Z " />
+    </Canvas>
+</ResourceDictionary>
