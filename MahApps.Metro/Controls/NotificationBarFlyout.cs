@@ -31,9 +31,9 @@ namespace MahApps.Metro.Controls
         private static AdornerLayer _myAdorner;
 
         public static readonly DependencyProperty IsClosableProperty = DependencyProperty.Register("IsClosable", typeof(bool), typeof(NotificationBarFlyout), new PropertyMetadata(default(bool)));
-        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
-        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
+        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(NotificationBarFlyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(NotificationBarFlyout), new PropertyMetadata(Position.Left, PositionChanged));
+        //public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CommandsProperty = DependencyProperty.Register("Commands", typeof(ObservableCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ObservableCollection<CommandViewModel>), CommandsPropertyChanged));
         public static readonly DependencyPropertyKey WrappedCommandsPropertyKey = DependencyProperty.RegisterReadOnly("WrappedCommands", typeof(ReadOnlyCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ReadOnlyCollection<CommandViewModel>)));
 
@@ -64,11 +64,11 @@ namespace MahApps.Metro.Controls
             set { SetValue(CommandsProperty, value); }
         }
 
-        public DataTemplate HeaderTemplate
-        {
-            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
-            set { SetValue(HeaderTemplateProperty, value); }
-        }
+        //public DataTemplate HeaderTemplate
+        //{
+        //    get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
+        //    set { SetValue(HeaderTemplateProperty, value); }
+        //}
 
         public bool IsClosable
         {
@@ -87,21 +87,13 @@ namespace MahApps.Metro.Controls
             SizeChanged += OnSizeChanged;
         }
 
-        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
-        {
-            base.OnPropertyChanged(e);
-            if (e.Property == IsOpenProperty)
-            {
-                if ((bool)e.NewValue)
-                    _myAdorner.Visibility = Visibility.Visible;
-                else
-                    _myAdorner.Visibility = Visibility.Hidden;
-            }
-        }
-
         private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var flyout = (Flyout)dependencyObject;
+            NotificationBarFlyout flyout = dependencyObject as NotificationBarFlyout;
+            if ((bool)e.NewValue)
+                _myAdorner.Visibility = Visibility.Visible;
+            else
+                _myAdorner.Visibility = Visibility.Hidden;
             VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
         }
 

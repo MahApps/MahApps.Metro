@@ -6,7 +6,7 @@
     
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     
-    <DataTemplate x:Key="NotificationHeaderTemplate">
+    <!--<DataTemplate x:Key="NotificationHeaderTemplate">
         <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" VerticalAlignment="Top" Content="✖" Visibility="{Binding IsClosable, RelativeSource={RelativeSource AncestorType={x:Type Controls:NotificationBarFlyout}}, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <Button.Resources>
                 <SolidColorBrush x:Key="BlackBrush" Color="White" />
@@ -17,7 +17,7 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>
-    </DataTemplate>
+    </DataTemplate>-->
 
     <DataTemplate x:Key="ButtonCommandsTemplate">
         <ItemsControl IsTabStop="False" ItemsSource="{Binding}" Margin="6,2">
@@ -39,7 +39,6 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="HeaderTemplate" Value="{StaticResource NotificationHeaderTemplate}" />
         <Setter Property="Foreground" Value="#FFFFFFFF" />
         <Setter Property="Template">
             <Setter.Value>
@@ -88,7 +87,6 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" x:Name="PART_Header" ContentSource="Header" ContentTemplate="{TemplateBinding HeaderTemplate}" HorizontalAlignment="Right" />
                         <ContentPresenter Grid.Row="1" Grid.Column="1" x:Name="PART_Content"/>
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="2">
                             <ContentControl HorizontalAlignment="Stretch"  Content="{Binding}" ContentTemplate="{StaticResource ButtonCommandsTemplate}" DataContext="{Binding WrappedCommands, RelativeSource={x:Static RelativeSource.TemplatedParent}}" /> 

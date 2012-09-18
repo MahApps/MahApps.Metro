@@ -52,6 +52,9 @@
                     <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
                 </Controls:Tile>
             </StackPanel>
+            <Controls:NotificationBarFlyout.Commands>
+
+            </Controls:NotificationBarFlyout.Commands>
         </Controls:NotificationBarFlyout>
     </Controls:MetroWindow.NotificationBar>
 
