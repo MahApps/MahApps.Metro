@@ -14,66 +14,55 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
-    public enum NotificationType
-    {
-        NoClassification,
-        Question, // appbar_question
-        Information, //appbar_information,
-        Warning, //appbar_alert
-        Error // appbar_stop
-    }
-
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
-    public class NotificationBarFlyout : ContentControl
+    public class NotificationBarFlyout : FlyoutBase
     {
         private static FrameworkElement _rootElement;
         private Window _Shell;
         private static AdornerLayer _myAdorner;
 
         public static readonly DependencyProperty IsClosableProperty = DependencyProperty.Register("IsClosable", typeof(bool), typeof(NotificationBarFlyout), new PropertyMetadata(default(bool)));
-        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(NotificationBarFlyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
-        public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(NotificationBarFlyout), new PropertyMetadata(Position.Left, PositionChanged));
-        //public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
-        public static readonly DependencyProperty CommandsProperty = DependencyProperty.Register("Commands", typeof(ObservableCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ObservableCollection<CommandViewModel>), CommandsPropertyChanged));
-        public static readonly DependencyPropertyKey WrappedCommandsPropertyKey = DependencyProperty.RegisterReadOnly("WrappedCommands", typeof(ReadOnlyCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ReadOnlyCollection<CommandViewModel>)));
-
-        private static void CommandsPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            NotificationBarFlyout targetObject = dependencyObject as NotificationBarFlyout;
-            if ((targetObject.Commands == null) || (!targetObject.Commands.Any())) return;
-
-            List<CommandViewModel> sourceCommands = targetObject.Commands.Select(commandViewModel => new CommandViewModel(commandViewModel.DisplayName,
-                                                                                                                          new RelayCommand(o =>
-                                                                                                                                               {
-                                                                                                                                                   targetObject.IsOpen = false;
-                                                                                                                                                   commandViewModel.Command.Execute(o);
-                                                                                                                                               },
-                                                                                                                                           o => commandViewModel.Command.CanExecute(o)))).ToList();
-            targetObject.WrappedCommands = new ReadOnlyCollection<CommandViewModel>(sourceCommands);
-        }
-
-        public ReadOnlyCollection<CommandViewModel> WrappedCommands
-        {
-            get { return (ReadOnlyCollection<CommandViewModel>)GetValue(WrappedCommandsPropertyKey.DependencyProperty); }
-            protected set { SetValue(WrappedCommandsPropertyKey, value); }
-        }
-
-        public ObservableCollection<CommandViewModel> Commands
-        {
-            get { return (ObservableCollection<CommandViewModel>)GetValue(CommandsProperty); }
-            set { SetValue(CommandsProperty, value); }
-        }
-
-        //public DataTemplate HeaderTemplate
+        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(NotificationBarFlyout));
+        //public static readonly DependencyProperty CommandsProperty = DependencyProperty.Register("Commands", typeof(ObservableCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ObservableCollection<CommandViewModel>), CommandsPropertyChanged));
+        //public static readonly DependencyPropertyKey WrappedCommandsPropertyKey = DependencyProperty.RegisterReadOnly("WrappedCommands", typeof(ReadOnlyCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ReadOnlyCollection<CommandViewModel>)));
+        
+        //private static void CommandsPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         //{
-        //    get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
-        //    set { SetValue(HeaderTemplateProperty, value); }
+        //    NotificationBarFlyout targetObject = dependencyObject as NotificationBarFlyout;
+        //    if ((targetObject.Commands == null) || (!targetObject.Commands.Any())) return;
+
+        //    List<CommandViewModel> sourceCommands = targetObject.Commands.Select(commandViewModel => new CommandViewModel(commandViewModel.DisplayName,
+        //                                                                                                                  new RelayCommand(o =>
+        //                                                                                                                                       {
+        //                                                                                                                                           targetObject.IsOpen = false;
+        //                                                                                                                                           commandViewModel.Command.Execute(o);
+        //                                                                                                                                       },
+        //                                                                                                                                   o => commandViewModel.Command.CanExecute(o)))).ToList();
+        //    targetObject.WrappedCommands = new ReadOnlyCollection<CommandViewModel>(sourceCommands);
         //}
 
         public bool IsClosable
         {
             get { return (bool)GetValue(IsClosableProperty); }
             set { SetValue(IsClosableProperty, value); }
+        }
+
+        //public ReadOnlyCollection<CommandViewModel> WrappedCommands
+        //{
+        //    get { return (ReadOnlyCollection<CommandViewModel>)GetValue(WrappedCommandsPropertyKey.DependencyProperty); }
+        //    protected set { SetValue(WrappedCommandsPropertyKey, value); }
+        //}
+
+        //public ObservableCollection<CommandViewModel> Commands
+        //{
+        //    get { return (ObservableCollection<CommandViewModel>)GetValue(CommandsProperty); }
+        //    set { SetValue(CommandsProperty, value); }
+        //}
+
+        public DataTemplate HeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
+            set { SetValue(HeaderTemplateProperty, value); }
         }
 
         static NotificationBarFlyout()
@@ -87,32 +76,19 @@ namespace MahApps.Metro.Controls
             SizeChanged += OnSizeChanged;
         }
 
-        private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        protected override void IsOpenedChanged(DependencyPropertyChangedEventArgs e)
         {
-            NotificationBarFlyout flyout = dependencyObject as NotificationBarFlyout;
+            base.IsOpenedChanged(e);
             if ((bool)e.NewValue)
                 _myAdorner.Visibility = Visibility.Visible;
             else
                 _myAdorner.Visibility = Visibility.Hidden;
-            VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
         }
 
-        private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        protected override void PositionChanged(DependencyPropertyChangedEventArgs e)
         {
-            var flyout = (Flyout)dependencyObject;
-            flyout.ApplyAnimation((Position)e.NewValue);
-        }
-
-        public bool IsOpen
-        {
-            get { return (bool)GetValue(IsOpenProperty); }
-            set { SetValue(IsOpenProperty, value); }
-        }
-
-        public Position Position
-        {
-            get { return (Position)GetValue(PositionProperty); }
-            set { SetValue(PositionProperty, value); }
+            base.PositionChanged(e);
+            ApplyAnimation((Position)e.NewValue, IsOpen);
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)

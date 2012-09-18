@@ -23,7 +23,66 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/NotificationBarFlyout.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="notificationFlyoutStyle" TargetType="Controls:NotificationBarFlyout" BasedOn="{StaticResource {x:Type Controls:NotificationBarFlyout}}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate  TargetType="Controls:NotificationBarFlyout">
+                            <Grid x:Name="root" HorizontalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.Background>
+                                    <SolidColorBrush Color="{DynamicResource AccentDarkColor}"/>
+                                </Grid.Background>
+                                <Grid.RenderTransform>
+                                    <TranslateTransform />
+                                </Grid.RenderTransform>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup>
+                                        <VisualState x:Name="Default"/>
+                                        <VisualState x:Name="Hide">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="root">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00.500" Value="1" x:Name="hideFrame">
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut" />
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                        <VisualState x:Name="Show">
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="root">
+                                                    <EasingDoubleKeyFrame KeyTime="00:00:00.600" Value="1" x:Name="showFrame" >
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                            <CubicEase EasingMode="EaseOut" />
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    </EasingDoubleKeyFrame>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <ContentPresenter Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1" x:Name="PART_Header" ContentTemplate="{StaticResource NotificationHeaderTemplate}" />
+                                <ContentPresenter Grid.Row="1" Grid.Column="1" x:Name="PART_Content"/>
+                                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="2">
+                                    <ContentControl HorizontalAlignment="Stretch"  Content="{Binding}" ContentTemplate="{StaticResource ButtonCommandsTemplate}" DataContext="{Binding WrappedCommands, RelativeSource={x:Static RelativeSource.TemplatedParent}}" />
+                                </StackPanel>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -46,15 +105,12 @@
         </Controls:Flyout>
     </Controls:MetroWindow.Flyouts>
     <Controls:MetroWindow.NotificationBar>
-        <Controls:NotificationBarFlyout Position="Left" IsClosable="False">
+        <Controls:NotificationBarFlyout Position="Left" IsClosable="True" Style="{StaticResource notificationFlyoutStyle}">
             <StackPanel>
                 <Controls:Tile Title="My _Cupcakes" Count="23">
                     <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
                 </Controls:Tile>
             </StackPanel>
-            <Controls:NotificationBarFlyout.Commands>
-
-            </Controls:NotificationBarFlyout.Commands>
         </Controls:NotificationBarFlyout>
     </Controls:MetroWindow.NotificationBar>
 

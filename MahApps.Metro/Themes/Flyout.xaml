@@ -5,7 +5,7 @@
                     xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
 
     <DataTemplate x:Key="HeaderTemplate">
-        <StackPanel x:Name="parentStackPanel" Orientation="Horizontal" Margin="10">
+        <StackPanel x:Name="parentStackPanel" Orientation="Horizontal" Margin="10,10,10,10">
             <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" VerticalAlignment="Top" Content="❮" >
                 <Button.Resources>
                     <SolidColorBrush x:Key="BlackBrush" Color="White" />

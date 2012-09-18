@@ -23,7 +23,7 @@ namespace MahApps.Metro.Actions
 
         protected override void Invoke(object parameter)
         {
-            Flyout targetFlyout = TargetObject as Flyout;
+            FlyoutBase targetFlyout = TargetObject as FlyoutBase;
             if (InvertTarget) 
                 targetFlyout.IsOpen = !targetFlyout.IsOpen;
             else 
