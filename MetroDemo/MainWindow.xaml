@@ -25,7 +25,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/NotificationBarFlyout.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="notificationFlyoutStyle" TargetType="Controls:NotificationBarFlyout" BasedOn="{StaticResource {x:Type Controls:NotificationBarFlyout}}">
+            <!--<Style x:Key="notificationFlyoutStyle" TargetType="Controls:NotificationBarFlyout" BasedOn="{StaticResource {x:Type Controls:NotificationBarFlyout}}">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate  TargetType="Controls:NotificationBarFlyout">
@@ -82,7 +82,7 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
-            </Style>
+            </Style>-->
         </ResourceDictionary>
     </Window.Resources>
 
@@ -105,7 +105,7 @@
         </Controls:Flyout>
     </Controls:MetroWindow.Flyouts>
     <Controls:MetroWindow.NotificationBar>
-        <Controls:NotificationBarFlyout Position="Left" IsClosable="True" Style="{StaticResource notificationFlyoutStyle}">
+        <Controls:NotificationBarFlyout Position="Left" IsClosable="True" > <!--Style="{StaticResource notificationFlyoutStyle}">-->
             <StackPanel>
                 <Controls:Tile Title="My _Cupcakes" Count="23">
                     <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
