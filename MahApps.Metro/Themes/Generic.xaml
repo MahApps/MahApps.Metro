@@ -6,7 +6,7 @@
 
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/AppBarButton.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Flyout.xaml" />
-        <ResourceDictionary Source="/MahApps.Metro;component/Themes/NotificationBarFlyout.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/MessageBoxBarFlyout.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroContentControl.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroImage.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroProgressBar.xaml" />

@@ -70,7 +70,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:Flyout}">
-                    <Grid x:Name="root" Background="{TemplateBinding Background}" HorizontalAlignment="Left" Margin="0,30,0,0">
+                    <Grid x:Name="root" Background="{TemplateBinding Background}" HorizontalAlignment="Left">
                         <Grid.RenderTransform>
                             <TranslateTransform />
                         </Grid.RenderTransform>

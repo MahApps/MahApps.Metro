@@ -7,13 +7,13 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
     <DataTemplate x:Key="NotificationHeaderTemplate">
-        <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Top" Content="✖" Visibility="{Binding IsClosable, RelativeSource={RelativeSource AncestorType={x:Type Controls:NotificationBarFlyout}}, Converter={StaticResource BooleanToVisibilityConverter}}" >
+        <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Top" Content="✖" Visibility="{Binding IsClosable, RelativeSource={RelativeSource AncestorType={x:Type Controls:MessageBoxBarFlyout}}, Converter={StaticResource BooleanToVisibilityConverter}}" >
             <Button.Resources>
                 <SolidColorBrush x:Key="BlackBrush" Color="White" />
             </Button.Resources>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
-                    <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:NotificationBarFlyout}}}" Value="False" />
+                    <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:MessageBoxBarFlyout}}}" Value="False" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>
@@ -34,7 +34,7 @@
         </ItemsControl>
     </DataTemplate>-->
 
-    <Style TargetType="{x:Type Controls:NotificationBarFlyout}">
+    <Style TargetType="{x:Type Controls:MessageBoxBarFlyout}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -42,7 +42,7 @@
         <Setter Property="Foreground" Value="#FFFFFFFF" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Controls:NotificationBarFlyout}">
+                <ControlTemplate TargetType="{x:Type Controls:MessageBoxBarFlyout}">
                     <Grid x:Name="root" HorizontalAlignment="Stretch">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

@@ -29,7 +29,7 @@ namespace MahApps.Metro.Controls
 
         public ObservableCollection<Flyout> Flyouts { get; set; }
 
-        public NotificationBarFlyout NotificationBar { get; set; }
+        public MessageBoxBarFlyout NotificationBar { get; set; }
 
         public Brush TitleForeground
         {

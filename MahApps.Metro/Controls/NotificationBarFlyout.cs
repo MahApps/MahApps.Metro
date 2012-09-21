@@ -15,14 +15,14 @@ using System.Windows.Media.Animation;
 namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
-    public class NotificationBarFlyout : FlyoutBase
+    public class MessageBoxBarFlyout : FlyoutBase
     {
         private static FrameworkElement _rootElement;
         private Window _Shell;
         private static AdornerLayer _myAdorner;
 
-        public static readonly DependencyProperty IsClosableProperty = DependencyProperty.Register("IsClosable", typeof(bool), typeof(NotificationBarFlyout), new PropertyMetadata(default(bool)));
-        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(NotificationBarFlyout));
+        public static readonly DependencyProperty IsClosableProperty = DependencyProperty.Register("IsClosable", typeof(bool), typeof(MessageBoxBarFlyout), new PropertyMetadata(default(bool)));
+        public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(MessageBoxBarFlyout));
         //public static readonly DependencyProperty CommandsProperty = DependencyProperty.Register("Commands", typeof(ObservableCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ObservableCollection<CommandViewModel>), CommandsPropertyChanged));
         //public static readonly DependencyPropertyKey WrappedCommandsPropertyKey = DependencyProperty.RegisterReadOnly("WrappedCommands", typeof(ReadOnlyCollection<CommandViewModel>), typeof(NotificationBarFlyout), new PropertyMetadata(default(ReadOnlyCollection<CommandViewModel>)));
         
@@ -65,12 +65,12 @@ namespace MahApps.Metro.Controls
             set { SetValue(HeaderTemplateProperty, value); }
         }
 
-        static NotificationBarFlyout()
+        static MessageBoxBarFlyout()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(NotificationBarFlyout), new FrameworkPropertyMetadata(typeof(NotificationBarFlyout)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageBoxBarFlyout), new FrameworkPropertyMetadata(typeof(MessageBoxBarFlyout)));
         }
 
-        public NotificationBarFlyout()
+        public MessageBoxBarFlyout()
         {
             Loaded += NotificationBarFlyout_Loaded;
             SizeChanged += OnSizeChanged;

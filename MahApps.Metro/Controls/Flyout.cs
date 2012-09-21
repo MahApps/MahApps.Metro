@@ -56,6 +56,19 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsPinnableProperty = DependencyProperty.Register("IsPinnable", typeof(bool), typeof(Flyout), new PropertyMetadata(default(bool)));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty PeekProperty = DependencyProperty.Register("Peek", typeof (bool), typeof (Flyout), new FrameworkPropertyMetadata(default(bool)));
+        public static readonly DependencyProperty PeekWidthProperty = DependencyProperty.Register("PeekWidth", typeof (int), typeof (Flyout), new PropertyMetadata(30, PeekWidthChanged));
+
+        private static void PeekWidthChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            Flyout flyout = dependencyObject as Flyout;
+            flyout.ApplyAnimation(flyout.Position);
+        }
+
+        public int PeekWidth
+        {
+            get { return (int) GetValue(PeekWidthProperty); }
+            set { SetValue(PeekWidthProperty, value); }
+        }
 
         public DataTemplate HeaderTemplate
         {
@@ -119,14 +132,21 @@ namespace MahApps.Metro.Controls
 
             if (position == Position.Right)
             {
-                hideFrame.Value = root.DesiredSize.Width - (Peek ? 30 : 0);
+                hideFrame.Value = root.DesiredSize.Width - (Peek ? PeekWidth : 0);
                 root.RenderTransform = new TranslateTransform(hideFrame.Value, 0);
             }
             else
             {
-                hideFrame.Value = -root.DesiredSize.Width + (Peek ? 30 : 0);
+                hideFrame.Value = -root.DesiredSize.Width + (Peek ? PeekWidth : 0);
                 root.RenderTransform = new TranslateTransform(hideFrame.Value, 0);
             }
+            root.SizeChanged -= root_SizeChanged;
+            root.SizeChanged += root_SizeChanged;
+        }
+
+        private void root_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ApplyAnimation(Position);
         }
     }
 }
