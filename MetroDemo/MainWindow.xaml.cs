@@ -90,5 +90,15 @@ namespace MetroDemo
         {
             new VSDemo().Show();
         }
+
+        private void MiDarkOrange(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Orange"), Theme.Dark);
+        }
+
+        private void MiLightOrange(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Orange"), Theme.Light);
+        }
     }
 }
