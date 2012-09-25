@@ -83,7 +83,8 @@ namespace MetroDemo
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            pivot.GoToItem(pi3);
+            //pivot.GoToItem(pi3);
+            ((MainWindowViewModel) this.DataContext).SelectedIndex = 2;
         }
 
         private void BtnVSClick(object sender, RoutedEventArgs e)
