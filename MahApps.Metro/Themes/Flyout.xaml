@@ -5,23 +5,59 @@
                     xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
 
     <DataTemplate x:Key="HeaderTemplate">
-        <StackPanel Orientation="Horizontal" Margin="10" >
-            <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" VerticalAlignment="Top" Content="" >
+        <StackPanel x:Name="parentStackPanel" Orientation="Horizontal" Margin="10,10,10,10">
+            <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" VerticalAlignment="Top" Content="❮" >
                 <Button.Resources>
                     <SolidColorBrush x:Key="BlackBrush" Color="White" />
                 </Button.Resources>
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="False" />
+                        <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" InvertTarget="True" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <TextBlock Text="{Binding}" x:Name="PART_BackButton" FontSize="20" Margin="15,0,0,0" VerticalAlignment="Center"/>
         </StackPanel>
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Right">
-                <Setter TargetName="nav" Property="Content" Value="" />
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Left">
+                <Setter TargetName="parentStackPanel" Property="FlowDirection" Value="RightToLeft" />
             </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Right" />
+                    <Condition Binding="{Binding IsOpen, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter TargetName="nav" Property="Content" Value="❯" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Right" />
+                    <Condition Binding="{Binding IsOpen, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter TargetName="nav" Property="Content" Value="❮" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Left" />
+                    <Condition Binding="{Binding IsOpen, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="True" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter TargetName="nav" Property="Content" Value="❯" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Left" />
+                    <Condition Binding="{Binding IsOpen, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="False" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter TargetName="nav" Property="Content" Value="❮" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 

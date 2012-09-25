@@ -90,5 +90,15 @@ namespace MetroDemo
         {
             new VSDemo().Show();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BottomButton_Click(object sender, RoutedEventArgs e)
+        {
+            NotificationBar.IsOpen = !NotificationBar.IsOpen;
+        }
     }
 }
