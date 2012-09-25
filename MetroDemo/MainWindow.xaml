@@ -323,7 +323,7 @@
                 </TabItem>
                 <TabItem>
                     <StackPanel>
-                        <Controls:Pivot x:Name="pivot" Header="this is my header" Height="250">
+                        <Controls:Pivot x:Name="pivot" Header="this is my header" Height="250" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
                             <Controls:PivotItem Header="Hi">
                                 <Grid Width="900" Background="Red">
                                     <TextBlock Text="herpadera" />
@@ -337,6 +337,7 @@
                             </Controls:PivotItem>
                         </Controls:Pivot>
                         <Button Content="Go To Item 3" Click="Button_Click_1" />
+                        <TextBlock Text="{Binding SelectedIndex}" />
                     </StackPanel>
                 </TabItem>
             </TabControl>

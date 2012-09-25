@@ -21,7 +21,7 @@ namespace MetroDemo
         public bool Busy { get; set; }
 
         public ObservableCollection<Track> Tracks { get; set; }
-
+        public int SelectedIndex { get; set; }
         public MainWindowViewModel(Dispatcher dispatcher)
         {
             Busy = true;
