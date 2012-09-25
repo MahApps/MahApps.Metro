@@ -74,7 +74,7 @@
                         </ListView>
 
                         <ScrollViewer Grid.Row="2" x:Name="PART_Scroll" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
-                            <ItemsControl ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">
+                            <ItemsControl x:Name="itemscontrol" Margin="0,0,250,0" ItemsSource="{Binding Items, RelativeSource={RelativeSource AncestorType={x:Type Controls:Pivot}}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Horizontal" />

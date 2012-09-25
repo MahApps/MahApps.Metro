@@ -70,10 +70,17 @@ namespace MahApps.Metro.Controls
             mediator = GetTemplateChild("PART_Mediator") as ScrollViewerOffsetMediator;
 
             if (scroller != null)
+            {
                 scroller.ScrollChanged += scroller_ScrollChanged;
-
+                scroller.PreviewMouseWheel += scroller_MouseWheel;
+            }
             if (headers != null)
                 headers.SelectionChanged += headers_SelectionChanged;
+        }
+
+        void scroller_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            scroller.ScrollToHorizontalOffset(scroller.HorizontalOffset + -e.Delta);
         }
 
         void headers_SelectionChanged(object sender, SelectionChangedEventArgs e)
