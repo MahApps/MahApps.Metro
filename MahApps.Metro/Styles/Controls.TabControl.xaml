@@ -48,7 +48,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ContentTemplate">
+        <!--<Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate>
                     <AdornerDecorator>
@@ -56,6 +56,6 @@
                     </AdornerDecorator>
                 </DataTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
     </Style>
 </ResourceDictionary>
