@@ -97,6 +97,8 @@ namespace MahApps.Metro.Controls
 
         private void HandleWorldTimerTick(object sender, EventArgs e)
         {
+            if (sv == null)
+                return;
             var prop = DesignerProperties.IsInDesignModeProperty;
             var isInDesignMode = (bool)DependencyPropertyDescriptor.FromProperty(prop, typeof(FrameworkElement)).Metadata.DefaultValue;
 
