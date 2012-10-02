@@ -10,7 +10,7 @@
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
         <Grid Background="{TemplateBinding Background}">
             <AdornerDecorator>
-                <Controls:MetroContentControl>
+                <Controls:MetroContentControl IsTabStop="False">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -102,6 +102,7 @@
 
     <Style TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:WindowCommands">
