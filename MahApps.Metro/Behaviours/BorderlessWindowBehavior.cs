@@ -292,7 +292,7 @@ namespace MahApps.Metro.Behaviours
 
                     // don't process the message on windows that can't be resized
                     var resizeMode = AssociatedObject.ResizeMode;
-                    if (resizeMode == ResizeMode.CanMinimize || resizeMode == ResizeMode.NoResize)
+                    if (resizeMode == ResizeMode.CanMinimize || resizeMode == ResizeMode.NoResize || AssociatedObject.WindowState == WindowState.Maximized)
                         break;
 
                     // get X & Y out of the message                   
