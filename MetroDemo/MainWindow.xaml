@@ -234,6 +234,7 @@
                             <Controls:ProgressRing IsActive="True"/>
                             <Controls:TransitioningContentControl x:Name="transitioning" Width="150" Height="50" Transition="DownTransition" />
                             <Controls:RangeSlider Width="227" Height="25" RangeStartSelected="20" RangeStopSelected="50"/>
+                            <DatePicker Height="25" Name="datePicker1" Width="115" />
                         </WrapPanel>
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                     </Grid>
