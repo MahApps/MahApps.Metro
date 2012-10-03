@@ -160,7 +160,7 @@
                     </ControlTemplate.Resources>
                     
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Top" >
-                        <ItemsControl ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
+                        <ItemsControl IsTabStop="False" ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal" />
