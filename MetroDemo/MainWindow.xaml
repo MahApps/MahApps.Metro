@@ -34,11 +34,11 @@
     </Controls:MetroWindow.WindowCommands>
 
     <Controls:MetroWindow.Flyouts>
-        
-            <Controls:Flyout Header="hiiiii">
-                <Button Content="hi"  />
-            </Controls:Flyout>
-            <Controls:Flyout Header="Bakery" Background="#9f000000" Position="Right">
+
+        <Controls:Flyout Header="hiiiii">
+            <Button Content="hi"  />
+        </Controls:Flyout>
+        <Controls:Flyout Header="Bakery" Background="#9f000000" Position="Right">
             <StackPanel>
                 <Controls:Tile Title="My _Cupcakes" Count="23">
                     <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
@@ -53,8 +53,8 @@
             <TabControl>
                 <TabItem Header="_First set of controls">
                     <Grid>
-
-                        <Grid Margin="0,0,226.999,8">
+                       
+                            <Grid Margin="0,0,226.999,8">
                             <Button Content="Right Click Me"
                                         Click="ButtonClick"
                                         Height="30"
@@ -65,17 +65,28 @@
                                         Width="154.002">
                                 <Button.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="Light Red" Click="MiLightRed" />
-                                        <MenuItem Header="Light Green" Click="MiLightGreen" />
-                                        <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                                        <MenuItem Header="Light Purple" Click="MiLightPurple" />
-                                        <MenuItem Header="Light Orange" Click="MiLightOrange" />
+
+                                        <MenuItem Header="Light">
+                                            <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
+                                            <MenuItem Header="Light Green" Click="MiLightGreen" />
+                                            <MenuItem Header="Light Blue" Click="MiLightBlue" />
+                                            <MenuItem Header="Light Purple" Click="MiLightPurple" />
+                                            <MenuItem Header="Light Orange" Click="MiLightOrange">
+                                                <MenuItem Header="Light Orange" Click="MiLightOrange" />
+                                                <MenuItem Header="Light Orange" Click="MiLightOrange" />
+                                            </MenuItem>
+                                            
+                                        </MenuItem>
+
                                         <Separator />
                                         <MenuItem Header="Dark Red" Click="MiDarkRed" />
-                                        <MenuItem Header="Dark Green" Click="MiDarkGreen" />
-                                        <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
-                                        <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
-                                        <MenuItem Header="Dark Orange" Click="MiDarkOrange" />
+                                        <MenuItem Header="Dark">
+                                            
+                                            <MenuItem Header="Dark Green" Click="MiDarkGreen" />
+                                            <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
+                                            <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
+                                            <MenuItem Header="Dark Orange" Click="MiDarkOrange" />
+                                        </MenuItem>
                                     </ContextMenu>
                                 </Button.ContextMenu>
                             </Button>
@@ -234,6 +245,33 @@
                             <Controls:ProgressRing IsActive="True"/>
                             <Controls:TransitioningContentControl x:Name="transitioning" Width="150" Height="50" Transition="DownTransition" />
                             <Controls:RangeSlider Width="227" Height="25" RangeStartSelected="20" RangeStopSelected="50"/>
+
+                            <Menu  VerticalAlignment="Top" HorizontalAlignment="Left" Height="23" >
+                                <MenuItem Header="Light">
+                                    <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
+                                    <MenuItem Header="Light Green" Click="MiLightGreen" />
+                                    <MenuItem Header="Light Blue" Click="MiLightBlue" />
+                                    <MenuItem Header="Light Purple" Click="MiLightPurple" />
+                                    <MenuItem Header="Light Orange" Click="MiLightOrange">
+                                        <MenuItem Header="Light Orange" Click="MiLightOrange" />
+                                        <MenuItem Header="Light Orange" Click="MiLightOrange" />
+                                    </MenuItem>
+
+                                </MenuItem>
+                                <Menu Height="50">
+                                    <MenuItem Header="Light">
+                                        <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
+                                        <MenuItem Header="Light Green" Click="MiLightGreen" />
+                                        <MenuItem Header="Light Blue" Click="MiLightBlue" />
+                                        <MenuItem Header="Light Purple" Click="MiLightPurple" />
+                                        <MenuItem Header="Light Orange" Click="MiLightOrange">
+                                            <MenuItem Header="Light Orange" Click="MiLightOrange" />
+                                            <MenuItem Header="Light Orange" Click="MiLightOrange" />
+                                        </MenuItem>
+
+                                    </MenuItem>
+                                </Menu>
+                            </Menu>
                         </WrapPanel>
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                     </Grid>

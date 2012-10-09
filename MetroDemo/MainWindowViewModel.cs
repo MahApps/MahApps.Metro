@@ -44,6 +44,9 @@ namespace MetroDemo
             try
             {
                 var x = JsonConvert.DeserializeObject<TrackWrapper>(e.Result);
+                if (x == null || x.Tracks == null)
+                    return;
+
                 _dispatcher.BeginInvoke(new Action(() =>
                                                        {
                                                            tracks.SetSource(x.Tracks.track.Take(25));
@@ -64,6 +67,8 @@ namespace MetroDemo
             try
             {
                 var x = JsonConvert.DeserializeObject<Wrapper>(e.Result);
+                if (x == null || x.Artists == null)
+                    return;
                 _dispatcher.BeginInvoke(new Action(() => artists.SetSource(x.Artists.artist.Take(25))));
                 
             }

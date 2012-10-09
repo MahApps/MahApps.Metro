@@ -17,5 +17,10 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PivotItem), new FrameworkPropertyMetadata(typeof(PivotItem)));
         }
+
+        public PivotItem()
+        {
+            RequestBringIntoView += (s, e) => { e.Handled = true; };
+        }
     }
 }
