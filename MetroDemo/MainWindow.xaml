@@ -344,6 +344,11 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+                        <ListBox Grid.Row="0" Grid.Column="1" Margin="10, 0, 0, 0">
+							<ListBoxItem Content="Item 1" />
+							<ListBoxItem Content="Item 2" />
+							<ListBoxItem Content="Item 3" />
+						</ListBox>
 
                         <StackPanel Grid.Row="1"
                                     Grid.Column="1">
