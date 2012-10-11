@@ -177,7 +177,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource GrayBrush3}" />
+                            <Setter TargetName="HeaderBorder" Property="Background" Value="{DynamicResource GrayBrush8}" />
                             <Setter TargetName="HeaderContent" Property="Margin" Value="1,1,0,0" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
