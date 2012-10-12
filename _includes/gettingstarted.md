@@ -99,6 +99,8 @@ Including this within the `MetroWindow` tag (under the `Window.Resources` sectio
         </Controls:WindowCommands>
 	</Controls:MetroWindow.WindowCommands>
 
+> Make sure to include the [icons](#icons) to get the cupcake
+
 Produces this window titlebar:
 
 ![](images/05_WindowCommands.png)
