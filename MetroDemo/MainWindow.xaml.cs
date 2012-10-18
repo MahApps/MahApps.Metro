@@ -101,5 +101,10 @@ namespace MetroDemo
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Orange"), Theme.Light);
         }
+
+        private void IgnoreTaskbarOnMaximizedClick(object sender, RoutedEventArgs e)
+        {
+            this.IgnoreTaskbarOnMaximize = !this.IgnoreTaskbarOnMaximize;
+        }
     }
 }

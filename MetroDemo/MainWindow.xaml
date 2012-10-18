@@ -96,10 +96,11 @@
                                              HorizontalAlignment="Left"
                                              Width="154.001"
 											 VerticalContentAlignment="Center" />
-                            <CheckBox Content="CheckBox"
+                            <CheckBox Content="Ignore Taskbar on maximize"
                                           Margin="88.695,100.96,0,0"
                                           VerticalAlignment="Top"
-                                          HorizontalAlignment="Left" />
+                                          HorizontalAlignment="Left" 
+                                      Click="IgnoreTaskbarOnMaximizedClick" />
                             <RadioButton Content="Radio Button 1"
                                              Margin="88.291,134.92,0,0"
                                              VerticalAlignment="Top"
