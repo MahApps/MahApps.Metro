@@ -297,7 +297,7 @@
                         <ComboBox ItemsSource="{Binding Artists}"
                                   
                                   MaxDropDownHeight="100"
-                                  DisplayMemberPath="name" />
+                                  DisplayMemberPath="Name" />
 
                         <TextBlock Text="Editable ComboBox Binding scenario" />
                         <ComboBox ItemsSource="{Binding Albums}"

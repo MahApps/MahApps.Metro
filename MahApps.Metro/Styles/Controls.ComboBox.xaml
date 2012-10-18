@@ -253,7 +253,7 @@
                         <Popup x:Name="PART_Popup"
                                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
-                               Width="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                               MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                                MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
                                Placement="Bottom">
                             <Border x:Name="PopupBorder"
