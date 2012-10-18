@@ -77,7 +77,7 @@
                         <Grid Margin="2">
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0" />
                             <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}" />
-                            <TextBlock x:Name="Message" Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                            <TextBlock x:Name="Message" Text="{TemplateBinding Controls:TextboxHelper.Watermark}" Visibility="Collapsed"
                                        Foreground="{DynamicResource TextBrush}" IsHitTestVisible="False" Opacity="0.6" HorizontalAlignment="Left" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,0,0,0"/>
 
@@ -120,6 +120,10 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value="">
+                            <Setter TargetName="Message" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}" Value="True">
                             <Setter TargetName="PART_ContentHost" Property="Margin" Value="2,2,20,2" />
                         </DataTrigger>
