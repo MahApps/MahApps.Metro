@@ -21,8 +21,8 @@
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type Models:Artist}">
-                <Controls:Tile Title="{Binding name}" Width="120" Height="120">
-                    <Image Source="{Binding LargeImage}" Opacity="0.5"  Stretch="UniformToFill">
+                <Controls:Tile Title="{Binding Name}" Width="120" Height="120">
+                    <Image Source="images/placeholder_person.gif" Opacity="0.5"  Stretch="UniformToFill">
                         <Image.Effect>
                             <effect:GrayscaleEffect x:Name="grayscaleEffect"/>
                         </Image.Effect>
@@ -30,7 +30,17 @@
                 </Controls:Tile>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type Models:Track}">
+            <DataTemplate DataType="{x:Type Models:Album}">
+                <Controls:Tile Title="{Binding Title}" Width="120" Height="120">
+                    <Image Source="images/blank-cd.png" Opacity="0.5"  Stretch="UniformToFill">
+                        <Image.Effect>
+                            <effect:GrayscaleEffect x:Name="grayscaleEffect"/>
+                        </Image.Effect>
+                    </Image>
+                </Controls:Tile>
+            </DataTemplate>
+
+            <!--<DataTemplate DataType="{x:Type Models:Track}">
                 <Controls:Tile Title="{Binding name}"  Width="120" Height="120">
 
                     <Image Source="{Binding LargeImage}" Opacity="0.5"  Stretch="UniformToFill">
@@ -39,7 +49,7 @@
                         </Image.Effect>
                     </Image>
                 </Controls:Tile>
-            </DataTemplate>
+            </DataTemplate>-->
         </ResourceDictionary>
 
     </Window.Resources>
