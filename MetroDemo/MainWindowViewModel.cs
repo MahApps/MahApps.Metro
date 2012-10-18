@@ -1,12 +1,10 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Net;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MetroDemo.Models;
-using Newtonsoft.Json;
 
 namespace MetroDemo
 {
@@ -14,69 +12,28 @@ namespace MetroDemo
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public ObservableCollection<PanoramaGroup> Groups { get; set; }
-        private readonly Dispatcher _dispatcher;
-        readonly PanoramaGroup tracks;
-        readonly PanoramaGroup artists;
+        readonly PanoramaGroup _albums;
+        readonly PanoramaGroup _artists;
 
         public bool Busy { get; set; }
 
-        public ObservableCollection<Track> Tracks { get; set; }
         public int SelectedIndex { get; set; }
+        public List<Album> Albums { get; set; }
+        public List<Artist> Artists { get; set; }
         public MainWindowViewModel(Dispatcher dispatcher)
         {
+
+            SampleData.Seed();
+            Albums = SampleData.Albums;
+            Artists = SampleData.Artists;
             Busy = true;
-            _dispatcher = dispatcher;
-            tracks = new PanoramaGroup("trending tracks");
-            artists = new PanoramaGroup("trending artists");
-            Groups = new ObservableCollection<PanoramaGroup> { tracks, artists };
+            _albums = new PanoramaGroup("trending tracks");
+            _artists = new PanoramaGroup("trending artists");
+            Groups = new ObservableCollection<PanoramaGroup> {_albums, _artists};
 
-            var wc = new WebClient();
-            wc.DownloadStringCompleted += WcDownloadStringCompleted;
-            wc.DownloadStringAsync(new Uri("http://ws.audioscrobbler.com/2.0/?method=chart.gethypedartists&api_key=b25b959554ed76058ac220b7b2e0a026&format=json"));
-
-            var wc2 = new WebClient();
-            wc2.DownloadStringCompleted += WcDownloadStringCompleted2;
-            wc2.DownloadStringAsync(new Uri("http://ws.audioscrobbler.com/2.0/?method=chart.gethypedtracks&api_key=b25b959554ed76058ac220b7b2e0a026&format=json"));
+            _artists.SetSource(SampleData.Artists.Take(25));
+            _albums.SetSource(SampleData.Albums.Take(25));
+            Busy = false;
         }
-
-        private void WcDownloadStringCompleted2(object sender, DownloadStringCompletedEventArgs e)
-        {
-            try
-            {
-                var x = JsonConvert.DeserializeObject<TrackWrapper>(e.Result);
-                if (x == null || x.Tracks == null)
-                    return;
-
-                _dispatcher.BeginInvoke(new Action(() =>
-                                                       {
-                                                           tracks.SetSource(x.Tracks.track.Take(25));
-                                                           Tracks = new ObservableCollection<Track>(x.Tracks.track.Take(25));
-
-                                                           Busy = false;
-                                                       }));
-
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        private void WcDownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
-        {
-            try
-            {
-                var x = JsonConvert.DeserializeObject<Wrapper>(e.Result);
-                if (x == null || x.Artists == null)
-                    return;
-                _dispatcher.BeginInvoke(new Action(() => artists.SetSource(x.Artists.artist.Take(25))));
-                
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
     }
 }

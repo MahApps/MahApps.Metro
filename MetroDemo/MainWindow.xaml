@@ -292,16 +292,16 @@
                                 SmallChange="0.5" />
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                         <TextBlock Text="ComboBox Binding scenario" />
-                        <ComboBox ItemsSource="{Binding Tracks}"
+                        <ComboBox ItemsSource="{Binding Artists}"
                                   
                                   MaxDropDownHeight="100"
                                   DisplayMemberPath="name" />
 
                         <TextBlock Text="Editable ComboBox Binding scenario" />
-                        <ComboBox ItemsSource="{Binding Tracks}"
+                        <ComboBox ItemsSource="{Binding Albums}"
                                   Controls:TextboxHelper.Watermark="watermark"
                                   MaxDropDownHeight="50"
-                                  DisplayMemberPath="name" IsEditable="True" Text="{Binding Path=ArtistName, Mode=TwoWay}" IsReadOnly="False" />
+                                  DisplayMemberPath="name" IsEditable="True" Text="{Binding Path=Title, Mode=TwoWay}" IsReadOnly="False" />
 
                         <TextBlock Text="Items specified in xaml scenario" />
                         <ComboBox>
@@ -336,11 +336,11 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <ListView ItemsSource="{Binding Tracks}" BorderThickness="0">
+                        <ListView ItemsSource="{Binding Albums}" BorderThickness="0">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="artist" DisplayMemberBinding="{Binding name}" />
-                                    <GridViewColumn Header="url" DisplayMemberBinding="{Binding url}" />
+                                    <GridViewColumn Header="artist" DisplayMemberBinding="{Binding Title}" />
+                                    <GridViewColumn Header="url" DisplayMemberBinding="{Binding Price}" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
