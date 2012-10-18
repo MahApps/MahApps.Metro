@@ -28,8 +28,15 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty SavePositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
-
+        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        
         public ObservableCollection<Flyout> Flyouts { get; set; }
+
+        public bool IgnoreTaskbarOnMaximize
+        {
+            get { return (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty); }
+            set{ SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
+        }
 
         public Brush TitleForeground
         {
