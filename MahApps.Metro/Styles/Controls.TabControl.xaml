@@ -18,7 +18,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
-                    <Label x:Name="root" FontSize="26.67">
+                    <Label x:Name="root" FontSize="14">
                         <ContentPresenter ContentSource="Header"  RecognizesAccessKey="True" />
                     </Label>
                     <ControlTemplate.Triggers>
@@ -40,7 +40,14 @@
                         <Trigger SourceName="root" Property="IsMouseOver" Value="True">
                             <Setter  TargetName="root" Property="Foreground">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource GrayHover}" />
+                                    <SolidColorBrush Color="{DynamicResource HoverForegroundColor}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger SourceName="root" Property="IsMouseOver" Value="True">
+                            <Setter  TargetName="root" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>

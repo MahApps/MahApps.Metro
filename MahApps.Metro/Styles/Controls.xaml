@@ -4,10 +4,10 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
-
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ContextMenu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.GroupBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.PasswordBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ProgressBar.xaml" />
@@ -74,6 +74,7 @@
         </Grid>
     </ControlTemplate>
 
+    <Style TargetType="GroupBox" BasedOn="{StaticResource MetroGroupBox}" />
     <Style TargetType="ToolTip" BasedOn="{StaticResource MetroToolTip}" />
     <Style TargetType="Button" BasedOn="{StaticResource MetroButton}" />
     <Style TargetType="ToggleButton" BasedOn="{StaticResource MetroToggleButton}" />
