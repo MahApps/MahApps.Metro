@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -29,13 +27,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SavePositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
-        
+
         public ObservableCollection<Flyout> Flyouts { get; set; }
 
         public bool IgnoreTaskbarOnMaximize
         {
             get { return (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty); }
-            set{ SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
+            set { SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
         }
 
         public Brush TitleForeground

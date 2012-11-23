@@ -91,6 +91,9 @@
                                 </Button.ContextMenu>
                             </Button>
                             <PasswordBox Controls:TextboxHelper.Watermark="Enter Password"
+                                         Controls:TextboxHelper.ClearTextButton="True"
+                                         Controls:TextboxHelper.IsMonitoring="True"
+                                         Controls:TextboxHelper.SelectAllOnFocus="True"
                                              Margin="88.695,66.96,0,0"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
@@ -108,7 +111,9 @@
                                              HorizontalAlignment="Left" />
                             <TextBox
                                 Text="Hi"
+                                Controls:TextboxHelper.IsMonitoring="True"
                                 Controls:TextboxHelper.Watermark="Enter Username"
+                                Controls:TextboxHelper.SelectAllOnFocus="True"
                                      Controls:TextboxHelper.ClearTextButton="True"
                                          Margin="88.694,36.96,0,0"
                                          VerticalAlignment="Top"
