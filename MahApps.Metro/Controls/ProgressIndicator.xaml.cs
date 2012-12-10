@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -12,7 +13,7 @@ namespace MahApps.Metro.Controls
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var percentage = Double.Parse(parameter.ToString(), new CultureInfo("en-US"));
-            return ((double) value)*percentage;
+            return ((double)value) * percentage;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -27,7 +28,19 @@ namespace MahApps.Metro.Controls
         {
             InitializeComponent();
             this.DataContext = this;
-            IsVisibleChanged += StartStopAnimation;
+            IsVisibleChanged += OnIsVisibleChanged;
+            DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor.FromProperty(VisibilityProperty, GetType());
+            dpd.AddValueChanged(this, OnVisibilityChanged);
+        }
+
+        private void OnVisibilityChanged(object sender, EventArgs e)
+        {
+            StartStopAnimation();
+        }
+
+        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            StartStopAnimation();
         }
 
         public static readonly DependencyProperty ProgressColourProperty = DependencyProperty.RegisterAttached("ProgressColour", typeof(Brush), typeof(ProgressIndicator), new UIPropertyMetadata(null));
@@ -38,18 +51,20 @@ namespace MahApps.Metro.Controls
             set { SetValue(ProgressColourProperty, value); }
         }
 
-        private void StartStopAnimation(object sender, DependencyPropertyChangedEventArgs e)
+        private void StartStopAnimation()
         {
-            this.Dispatcher.BeginInvoke(new Action(() =>
+            bool startAnimation = IsVisible && (Visibility == Visibility.Visible);
+            this.Dispatcher.BeginInvoke((Action)(() =>
                                                   {
                                                       var s = this.Resources["animate"] as Storyboard;
-                                                      if ((bool) e.NewValue)
-                                                          s.Begin();
-                                                      else
-                                                          s.Stop();
-
-                                                  })
-                );
+                                                      if (s != null)
+                                                      {
+                                                          if (startAnimation)
+                                                              s.Begin();
+                                                          else
+                                                              s.Stop();
+                                                      }
+                                                  }));
         }
     }
 }

@@ -38,10 +38,13 @@ namespace MahApps.Metro
 
         public static void ChangeTheme(ResourceDictionary r, Accent accent, Theme theme)
         {
+            ThemeIsDark = (theme == Theme.Dark);
             var themeResource = (theme == Theme.Light) ? LightResource : DarkResource;
             ApplyResourceDictionary(themeResource, r);
             ApplyResourceDictionary(accent.Resources, r);
         }
+
+        public static bool ThemeIsDark { get; private set; }
 
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
         {
