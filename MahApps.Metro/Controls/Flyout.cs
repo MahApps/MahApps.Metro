@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
@@ -105,14 +106,14 @@ namespace MahApps.Metro.Controls
             ApplyAnimation((Position)e.NewValue);
         }
 
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            ApplyAnimation(Position);
+            Dispatcher.BeginInvoke(new Action<Position>(ApplyAnimation), DispatcherPriority.Loaded, Position);
+            //ApplyAnimation(Position);
         }
 
-        internal virtual void ApplyAnimation(Position position)
+        protected virtual void ApplyAnimation(Position position)
         {
             var root = (Grid)GetTemplateChild("root");
             if (root == null)
@@ -140,13 +141,6 @@ namespace MahApps.Metro.Controls
                 hideFrame.Value = -root.DesiredSize.Width + (Peek ? PeekWidth : 0);
                 root.RenderTransform = new TranslateTransform(hideFrame.Value, 0);
             }
-            root.SizeChanged -= root_SizeChanged;
-            root.SizeChanged += root_SizeChanged;
-        }
-
-        private void root_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ApplyAnimation(Position);
         }
     }
 }

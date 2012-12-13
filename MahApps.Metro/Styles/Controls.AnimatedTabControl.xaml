@@ -14,10 +14,8 @@
                           SnapsToDevicePixels="True"
                           KeyboardNavigation.TabNavigation="Local">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition x:Name="ColumnDefinition0" 
-                                              Width="Auto" />
-                            <ColumnDefinition x:Name="ColumnDefinition1"
-                                              Width="*" />
+                            <ColumnDefinition x:Name="ColumnDefinition0" Width="Auto" />
+                            <ColumnDefinition x:Name="ColumnDefinition1"                                   Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition x:Name="RowDefinition0"
