@@ -7,7 +7,7 @@
     
     <!-- style for WP7/Circle button -->
     <Style x:Key="MetroCircleButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource ButtonNormalBackground}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="{DynamicResource ButtonNormalBorder}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -16,7 +16,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid x:Name="grid" Background="#02FFFFFF">
+                    <Grid x:Name="grid" Background="{TemplateBinding Background}">
                         <Ellipse x:Name="ellipsebg"
                                  Margin="4"
                                  Stroke="{TemplateBinding Foreground}"
