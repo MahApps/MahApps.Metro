@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -12,7 +13,7 @@ namespace MahApps.Metro.Controls
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var percentage = Double.Parse(parameter.ToString(), new CultureInfo("en-US"));
-            return ((double) value)*percentage;
+            return ((double)value) * percentage;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -26,8 +27,10 @@ namespace MahApps.Metro.Controls
         public ProgressIndicator()
         {
             InitializeComponent();
-            this.DataContext = this;
-            IsVisibleChanged += StartStopAnimation;
+            DataContext = this;
+            IsVisibleChanged += OnVisibleChanged;
+            DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor.FromProperty(VisibilityProperty, GetType());
+            dpd.AddValueChanged(this, OnVisibilityChanged);
         }
 
         public static readonly DependencyProperty ProgressColourProperty = DependencyProperty.RegisterAttached("ProgressColour", typeof(Brush), typeof(ProgressIndicator), new UIPropertyMetadata(null));
@@ -38,18 +41,30 @@ namespace MahApps.Metro.Controls
             set { SetValue(ProgressColourProperty, value); }
         }
 
-        private void StartStopAnimation(object sender, DependencyPropertyChangedEventArgs e)
+        private void OnVisibilityChanged(object sender, EventArgs e)
         {
-            this.Dispatcher.BeginInvoke(new Action(() =>
-                                                  {
-                                                      var s = this.Resources["animate"] as Storyboard;
-                                                      if ((bool) e.NewValue)
-                                                          s.Begin();
-                                                      else
-                                                          s.Stop();
+            StartStopAnimation();
+        }
 
-                                                  })
-                );
+        private void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            StartStopAnimation();
+        }
+
+        private void StartStopAnimation()
+        {
+            bool newValue = Visibility == Visibility.Visible && IsVisible;
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                var s = Resources["animate"] as Storyboard;
+                if (s != null)
+                {
+                    if (newValue)
+                        s.Begin();
+                    else
+                        s.Stop();
+                }
+            }));
         }
     }
 }
