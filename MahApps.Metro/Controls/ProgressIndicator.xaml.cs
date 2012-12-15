@@ -28,9 +28,9 @@ namespace MahApps.Metro.Controls
         {
             InitializeComponent();
             DataContext = this;
-            IsVisibleChanged += OnVisibleChanged;
+            IsVisibleChanged += (s,e) => ((ProgressIndicator)s).StartStopAnimation();
             DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor.FromProperty(VisibilityProperty, GetType());
-            dpd.AddValueChanged(this, OnVisibilityChanged);
+            dpd.AddValueChanged(this, (s,e) => ((ProgressIndicator)s).StartStopAnimation());
         }
 
         public static readonly DependencyProperty ProgressColourProperty = DependencyProperty.RegisterAttached("ProgressColour", typeof(Brush), typeof(ProgressIndicator), new UIPropertyMetadata(null));
@@ -41,25 +41,15 @@ namespace MahApps.Metro.Controls
             set { SetValue(ProgressColourProperty, value); }
         }
 
-        private void OnVisibilityChanged(object sender, EventArgs e)
-        {
-            StartStopAnimation();
-        }
-
-        private void OnVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            StartStopAnimation();
-        }
-
         private void StartStopAnimation()
         {
-            bool newValue = Visibility == Visibility.Visible && IsVisible;
+            bool shouldAnimate = (Visibility == Visibility.Visible && IsVisible);
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 var s = Resources["animate"] as Storyboard;
                 if (s != null)
                 {
-                    if (newValue)
+                    if (shouldAnimate)
                         s.Begin();
                     else
                         s.Stop();
