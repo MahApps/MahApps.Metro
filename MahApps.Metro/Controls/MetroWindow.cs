@@ -34,8 +34,8 @@ namespace MahApps.Metro.Controls
 
         public bool IgnoreTaskbarOnMaximize
         {
-            get { return (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty); }
-            set{ SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
+            get { return (bool)GetValue(IgnoreTaskbarOnMaximizeProperty); }
+            set { SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
         }
 
         public Brush TitleForeground
@@ -187,7 +187,7 @@ namespace MahApps.Metro.Controls
                 isDragging = false;
             }
 
-            if (isDragging 
+            if (isDragging
                 && WindowState == WindowState.Maximized
                 && ResizeMode != ResizeMode.NoResize)
             {

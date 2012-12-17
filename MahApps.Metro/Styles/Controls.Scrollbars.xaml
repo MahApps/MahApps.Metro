@@ -56,7 +56,7 @@
                               Stretch="Uniform"
                               Width="4">
                             <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource Gray2}" />
+                                <SolidColorBrush Color="{DynamicResource Gray3}" />
                             </Path.Fill>
                         </Path>
                         <Path x:Name="HoverPath"
@@ -131,7 +131,7 @@
                               Stretch="Uniform"
                               Width="4">
                             <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource Gray2}" />
+                                <SolidColorBrush Color="{DynamicResource Gray3}" />
                             </Path.Fill>
                         </Path>
                         <Path x:Name="HoverPath"
@@ -161,6 +161,11 @@
                                 <SolidColorBrush Color="{DynamicResource BlackColor}" />
                             </Path.Fill>
                         </Path>
+                        <Rectangle x:Name="DisabledElement"
+                                   Fill="{DynamicResource WhiteColorBrush}"
+                                   Opacity="0"
+                                   RadiusY="2"
+                                   RadiusX="2" />
                     </Grid>
                 </ControlTemplate>
                 <ControlTemplate x:Key="HorizontalThumbTemplate"
@@ -419,44 +424,12 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="Background"
-                                   Fill="{DynamicResource ControlBackgroundBrush}"
-                                   Opacity="0"
-                                   RadiusY="2"
-                                   RadiusX="2"
-                                   StrokeThickness="1" />
-                        <Rectangle x:Name="BackgroundMouseOver"
-                                   Fill="{DynamicResource HighlightBrush}"
-                                   Opacity="0"
-                                   RadiusY="2"
-                                   RadiusX="2" />
-                        <Rectangle x:Name="BackgroundPressed"
-                                   Fill="{DynamicResource HighlightBrush}"
-                                   Opacity="0"
-                                   RadiusY="2"
-                                   RadiusX="2" />
-                        <Rectangle x:Name="BackgroundGradient"
-                                   Fill="{DynamicResource TransparentWhiteBrush}"
-                                   Margin="1"
-                                   Opacity="0"
-                                   RadiusY="1"
-                                   RadiusX="1"
-                                   Stroke="{DynamicResource ControlBackgroundBrush}"
-                                   StrokeThickness="1" />
-                        <Rectangle x:Name="Highlight"
-                                   IsHitTestVisible="false"
-                                   Margin="1"
-                                   Opacity="0"
-                                   RadiusY="1"
-                                   RadiusX="1"
-                                   Stroke="{DynamicResource HighlightBrush}"
-                                   StrokeThickness="1" />
                         <Path Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
                               Height="4"
                               Stretch="Uniform"
                               Width="6">
                             <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource Gray2}" />
+                                <SolidColorBrush Color="{DynamicResource Gray3}" />
                             </Path.Fill>
                         </Path>
                         <Path x:Name="HoverPath"
@@ -486,6 +459,11 @@
                                 <SolidColorBrush Color="{DynamicResource BlackColor}" />
                             </Path.Fill>
                         </Path>
+                        <Rectangle x:Name="DisabledElement"
+                                   Fill="{DynamicResource WhiteColorBrush}"
+                                   Opacity="0"
+                                   RadiusY="2"
+                                   RadiusX="2" />
                     </Grid>
                 </ControlTemplate>
                 <ControlTemplate x:Key="VerticalThumbTemplate"
