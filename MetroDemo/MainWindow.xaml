@@ -275,8 +275,10 @@
                                     </MenuItem>
                                 </Menu>
                             </Menu>
+                            
+                            <Slider Orientation="Vertical" Value="{Binding ElementName=pb, Path=Value}" Height="150" Margin="20" Name="slider2" VerticalAlignment="Top" Maximum="100" />
                         </WrapPanel>
-                        <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
+                        
                     </Grid>
                 </TabItem>
                 <TabItem Header="_More Controls Here!">
