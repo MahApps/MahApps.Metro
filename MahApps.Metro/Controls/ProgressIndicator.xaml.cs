@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -27,7 +28,9 @@ namespace MahApps.Metro.Controls
         {
             InitializeComponent();
             this.DataContext = this;
-            IsVisibleChanged += StartStopAnimation;
+            IsVisibleChanged += (s, e) => ((ProgressIndicator)s).StartStopAnimation();
+            DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor.FromProperty(VisibilityProperty, GetType());
+            dpd.AddValueChanged(this, (s, e) => ((ProgressIndicator)s).StartStopAnimation());
         }
 
         public static readonly DependencyProperty ProgressColourProperty = DependencyProperty.RegisterAttached("ProgressColour", typeof(Brush), typeof(ProgressIndicator), new UIPropertyMetadata(null));
@@ -38,18 +41,20 @@ namespace MahApps.Metro.Controls
             set { SetValue(ProgressColourProperty, value); }
         }
 
-        private void StartStopAnimation(object sender, DependencyPropertyChangedEventArgs e)
+        private void StartStopAnimation()
         {
-            this.Dispatcher.BeginInvoke(new Action(() =>
-                                                  {
-                                                      var s = this.Resources["animate"] as Storyboard;
-                                                      if ((bool) e.NewValue)
-                                                          s.Begin();
-                                                      else
-                                                          s.Stop();
-
-                                                  })
-                );
+            bool shouldAnimate = (Visibility == Visibility.Visible && IsVisible);
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                var s = Resources["animate"] as Storyboard;
+                if (s != null)
+                {
+                    if (shouldAnimate)
+                        s.Begin();
+                    else
+                        s.Stop();
+                }
+            }));
         }
     }
 }

@@ -372,7 +372,7 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
-                <TabItem>
+                <TabItem Header="Pivot">
                     <StackPanel>
                         <Controls:Pivot x:Name="pivot" Header="this is my header" Height="250" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
                             <Controls:PivotItem Header="Hi">
