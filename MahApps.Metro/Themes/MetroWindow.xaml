@@ -10,7 +10,7 @@
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
         <Grid Background="{TemplateBinding Background}">
             <AdornerDecorator>
-                <Controls:MetroContentControl IsTabStop="False">
+                <Controls:MetroContentControl IsTabStop="False" FocusVisualStyle="{x:Null}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
