@@ -98,5 +98,11 @@ namespace MahApps.Metro.Controls
                 root.RenderTransform = new TranslateTransform(-root.DesiredSize.Width, 0);
             }
         }
+
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            ApplyAnimation(Position);
+            base.OnRenderSizeChanged(sizeInfo);
+        }
     }
 }
