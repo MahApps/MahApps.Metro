@@ -8,6 +8,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ContextMenu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.GroupBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.PasswordBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ProgressBar.xaml" />
@@ -92,4 +93,5 @@
     <Style TargetType="Separator" BasedOn="{StaticResource MetroSeparator}" />
     <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}" />
     <Style TargetType="ContextMenu" BasedOn="{StaticResource MetroContextMenu}" />
+    <Style TargetType="GroupBox" BasedOn="{StaticResource MetroGroupBox}" />
 </ResourceDictionary>
