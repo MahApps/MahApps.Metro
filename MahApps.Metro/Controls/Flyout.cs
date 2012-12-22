@@ -115,12 +115,10 @@ namespace MahApps.Metro.Controls
             if (Position == Position.Right)
             {
                 hideFrame.Value = root.DesiredSize.Width;
-                root.RenderTransform = new TranslateTransform(root.DesiredSize.Width, 0);
             }
             else
             {
                 hideFrame.Value = -root.DesiredSize.Width;
-                root.RenderTransform = new TranslateTransform(-root.DesiredSize.Width, 0);
             }
             base.OnRenderSizeChanged(sizeInfo);
         }
