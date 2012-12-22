@@ -182,6 +182,10 @@ namespace MahApps.Metro.Controls
             // both presenters must be available, otherwise a transition is useless.
             if (CurrentContentPresentationSite != null && PreviousContentPresentationSite != null)
             {
+                if (RestartTransitionOnContentChange) {
+                    CurrentTransition.Completed -= OnTransitionCompleted;
+                }
+
                 CurrentContentPresentationSite.Content = newContent;
 
                 PreviousContentPresentationSite.Content = oldContent;
@@ -189,6 +193,9 @@ namespace MahApps.Metro.Controls
                 // and start a new transition
                 if (!IsTransitioning || RestartTransitionOnContentChange)
                 {
+                    if (RestartTransitionOnContentChange) {
+                        CurrentTransition.Completed += OnTransitionCompleted;
+                    }
                     IsTransitioning = true;
                     VisualStateManager.GoToState(this, NormalState, false);
                     VisualStateManager.GoToState(this, Transition, true);
