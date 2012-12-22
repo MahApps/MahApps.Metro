@@ -9,7 +9,7 @@ Use numbered headers: true
 
 <pre class="nuget-button">Install-Package MahApps.Metro</pre>
 
-Last updated for stable release 0.9 (released 2012/08/04).
+Last updated for stable release 0.10 (released 2012/10/18).
 
 [![](images/aim_software.gif)](http://www.aimsoftware.com)
 <h3>Sponsored by <a href="http://www.aimsoftware.com/">Aim Software</a></h3>
