@@ -20,6 +20,9 @@ namespace MetroDemo
         public int SelectedIndex { get; set; }
         public List<Album> Albums { get; set; }
         public List<Artist> Artists { get; set; }
+
+        public string Title { get; set; }
+
         public MainWindowViewModel(Dispatcher dispatcher)
         {
 
@@ -29,11 +32,13 @@ namespace MetroDemo
             Busy = true;
             _albums = new PanoramaGroup("trending tracks");
             _artists = new PanoramaGroup("trending artists");
-            Groups = new ObservableCollection<PanoramaGroup> {_albums, _artists};
+            Groups = new ObservableCollection<PanoramaGroup> { _albums, _artists };
 
             _artists.SetSource(SampleData.Artists.Take(25));
             _albums.SetSource(SampleData.Albums.Take(25));
             Busy = false;
+
+            Title = "MahApps.Metro.Demo";
         }
     }
 }
