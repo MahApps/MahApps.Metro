@@ -15,7 +15,7 @@ namespace MahApps.Metro.Converters
             double ratio = groupHeight / itemBox;
             var list = (ListBox)values[2];
 
-            double width = Math.Ceiling(list.Items.Count / ratio);
+            double width = Math.Ceiling(list.Items.Count / ratio) + 1;
             width *= itemBox;
             return width < itemBox ? itemBox : width;
         }
