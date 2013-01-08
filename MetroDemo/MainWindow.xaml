@@ -50,7 +50,30 @@
 
     <Controls:MetroContentControl>
         <Grid>
-            <TabControl>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Menu Grid.Row="0">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Open">
+                        <MenuItem Header="_Open File" />
+                        <MenuItem Header="Open _Serv">
+                            <MenuItem Header="Open Serv _1" />
+                            <Separator />
+                            <MenuItem Header="Open Serv _2" />
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="_Close" />
+                </MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem Header="_Undo" Command="ApplicationCommands.Undo" />
+                    <MenuItem Header="_Cut" />
+                    <MenuItem Header="C_opy" />
+                    <MenuItem Header="_Paste" />
+                </MenuItem>
+            </Menu>
+            <TabControl Grid.Row="1">
                 <TabItem Header="_First set of controls">
                     <Grid>
                        

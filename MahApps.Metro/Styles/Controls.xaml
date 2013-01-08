@@ -92,6 +92,7 @@
     <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MetroComboBoxItem}" />
     <Style TargetType="Separator" BasedOn="{StaticResource MetroSeparator}" />
     <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}" />
+    <Style TargetType="Menu" BasedOn="{StaticResource StandardMenu}" />
     <Style TargetType="ContextMenu" BasedOn="{StaticResource MetroContextMenu}" />
     <Style TargetType="GroupBox" BasedOn="{StaticResource MetroGroupBox}" />
 
