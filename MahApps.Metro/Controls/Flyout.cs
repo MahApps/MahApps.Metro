@@ -101,6 +101,16 @@ namespace MahApps.Metro.Controls
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
+            base.OnRenderSizeChanged(sizeInfo);
+
+            if (!sizeInfo.WidthChanged) return;
+
+            if (!IsOpen)
+            {
+                ApplyAnimation(Position);
+                return;
+            }
+
             var root = (Grid)GetTemplateChild("root");
             if (root == null)
                 return;
@@ -120,7 +130,6 @@ namespace MahApps.Metro.Controls
             {
                 hideFrame.Value = -root.DesiredSize.Width;
             }
-            base.OnRenderSizeChanged(sizeInfo);
         }
     }
 }
