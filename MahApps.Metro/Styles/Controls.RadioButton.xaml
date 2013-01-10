@@ -58,10 +58,7 @@
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <ContentControl Grid.Column="1" IsTabStop="False">
-                            <ContentControl.Foreground>
-                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{DynamicResource BlackColor}" />
-                            </ContentControl.Foreground>
+                        <ContentControl Grid.Column="1" IsTabStop="False" Foreground="{TemplateBinding Foreground}">
                             <ContentPresenter x:Name="contentPresenter"
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                 Content="{TemplateBinding Content}"
