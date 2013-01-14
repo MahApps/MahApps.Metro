@@ -70,6 +70,28 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="18"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="18"/>
+            </Grid.ColumnDefinitions>
+            <RepeatButton Grid.Column="0" Style="{StaticResource ScrollBarLineButton}" Content="M 0 4 L 4 8 L 4 0 Z" Command="ScrollBar.LineLeftCommand"/>
+            <Track Name="PART_Track" Grid.Column="1">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource ScrollBarThumb}"/>
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+            <RepeatButton Grid.Column="2" Style="{StaticResource ScrollBarLineButton}" Command="ScrollBar.LineRightCommand" Content="M 0 0 L 0 8 L 4 4 Z"/>
+        </Grid>
+    </ControlTemplate>
     <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
         <Grid>
             <Grid.RowDefinitions>
@@ -102,6 +124,11 @@
                 <Setter Property="Width" Value="18"/>
                 <Setter Property="Height" Value="Auto" />
                 <Setter Property="Template" Value="{StaticResource VerticalScrollBar}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Height" Value="18" />
+                <Setter Property="Template" Value="{StaticResource HorizontalScrollBar}" />
             </Trigger>
         </Style.Triggers>
     </Style>
