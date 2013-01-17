@@ -124,6 +124,14 @@
         <Border BorderBrush="{DynamicResource BlackColorBrush}" BorderThickness="1" Background="{DynamicResource WhiteColorBrush}">
             <ContentPresenter/>
         </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="#FF9A9A9A"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="true">
+                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <!-- TopLevelHeader -->
