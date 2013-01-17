@@ -135,7 +135,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="37"/>
+                    <ColumnDefinition MinWidth="37"/>
                 </Grid.ColumnDefinitions>
                 <Border x:Name="GlyphPanel" Height="22" Margin="1" Visibility="Collapsed" Width="22">
                     <Path x:Name="Glyph" Data="{StaticResource Checkmark}" Fill="{DynamicResource BlackColorBrush}" FlowDirection="LeftToRight" Height="11" Width="9"/>
