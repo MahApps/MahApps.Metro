@@ -3,6 +3,8 @@
     
     <Geometry x:Key="Checkmark">M 0,5.1 L 1.7,5.2 L 3.4,7.1 L 8,0.4 L 9.2,0 L 3.3,10.8 Z</Geometry>
     <Geometry x:Key="RightArrow">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
+    
+    <SolidColorBrush x:Key="DisabledMenuItemBrush" Color="#FF9A9A9A" />
 
     <!-- Original style from http://www.jeff.wilcox.name/2010/05/zunelike-contextmenu-style/ -->
     <Style TargetType="{x:Type Separator}" x:Key="MetroSeparator">
@@ -29,10 +31,12 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup" />
                     <ColumnDefinition Width="2" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
                     <ColumnDefinition Width="17" />
                 </Grid.ColumnDefinitions>
                 <ContentPresenter x:Name="Icon" ContentSource="Icon" Margin="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
                 <ContentPresenter x:Name="Presenter" RecognizesAccessKey="True" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" Grid.Column="2" />
+                <TextBlock x:Name="InputGestureText" Grid.Column="3" DockPanel.Dock="Right" Margin="5,0,0,0" Text="{TemplateBinding InputGestureText}" />
                 <Border x:Name="GlyphPanel" Height="22" Margin="1" Visibility="Collapsed" Width="22">
                     <Path x:Name="Glyph" Data="{StaticResource Checkmark}" Fill="{DynamicResource BlackColorBrush}" FlowDirection="LeftToRight" Height="11" Width="9"/>
                 </Border>
@@ -46,6 +50,9 @@
             <Trigger Property="IsChecked" Value="true">
                 <Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
                 <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemBrush}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -78,6 +85,9 @@
             <Trigger Property="IsHighlighted" Value="true">
                 <Setter Property="Fill" TargetName="Bg" Value="{DynamicResource HighlightBrush}" />
                 <Setter Property="Foreground" Value="#FFFFFFFF" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemBrush}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -163,7 +173,7 @@
                 <Setter Property="Foreground" Value="#FFFFFFFF" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Foreground" Value="#FF9A9A9A"/>
+                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemBrush}"/>
                 <Setter Property="Background" TargetName="GlyphPanel" Value="#EEE9E9"/>
                 <Setter Property="BorderBrush" TargetName="GlyphPanel" Value="#DBD6D6"/>
                 <Setter Property="Fill" TargetName="Glyph" Value="#848589"/>
@@ -219,7 +229,7 @@
                 <Setter Property="Foreground" Value="#FFFFFFFF" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Foreground" Value="#FF9A9A9A"/>
+                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemBrush}"/>
                 <Setter Property="Background" TargetName="GlyphPanel" Value="#EEE9E9"/>
                 <Setter Property="BorderBrush" TargetName="GlyphPanel" Value="#DBD6D6"/>
                 <Setter Property="Fill" TargetName="Glyph" Value="#848589"/>
