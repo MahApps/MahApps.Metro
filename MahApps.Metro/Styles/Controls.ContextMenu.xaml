@@ -29,10 +29,12 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup" />
                     <ColumnDefinition Width="2" />
                     <ColumnDefinition Width="*" />
+                    <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
                     <ColumnDefinition Width="17" />
                 </Grid.ColumnDefinitions>
                 <ContentPresenter x:Name="Icon" ContentSource="Icon" Margin="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
                 <ContentPresenter x:Name="Presenter" RecognizesAccessKey="True" Content="{TemplateBinding Header}" ContentTemplate="{TemplateBinding HeaderTemplate}" Grid.Column="2" />
+                <TextBlock x:Name="InputGestureText" Grid.Column="3" DockPanel.Dock="Right" Margin="5,0,0,0" Text="{TemplateBinding InputGestureText}" />
                 <Border x:Name="GlyphPanel" Height="22" Margin="1" Visibility="Collapsed" Width="22">
                     <Path x:Name="Glyph" Data="{StaticResource Checkmark}" Fill="{DynamicResource BlackColorBrush}" FlowDirection="LeftToRight" Height="11" Width="9"/>
                 </Border>
