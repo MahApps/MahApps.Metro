@@ -114,6 +114,7 @@
                                 </Button.ContextMenu>
                             </Button>
                             <PasswordBox Controls:TextboxHelper.Watermark="Enter Password"
+                                         Controls:TextboxHelper.ClearTextButton="True"
                                              Margin="88.695,66.96,0,0"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
