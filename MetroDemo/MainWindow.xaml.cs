@@ -92,6 +92,11 @@ namespace MetroDemo
             new VSDemo().Show();
         }
 
+        private void BtnIconsClick(object sender, RoutedEventArgs e)
+        {
+            new IconsWindow().Show();
+        }
+
         private void MiDarkOrange(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Orange"), Theme.Dark);
