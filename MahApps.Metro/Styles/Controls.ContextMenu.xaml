@@ -3,6 +3,8 @@
     
     <Geometry x:Key="Checkmark">M 0,5.1 L 1.7,5.2 L 3.4,7.1 L 8,0.4 L 9.2,0 L 3.3,10.8 Z</Geometry>
     <Geometry x:Key="RightArrow">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
+    
+    <SolidColorBrush x:Key="DisabledMenuItemBrush" Color="#FF9A9A9A" />
 
     <!-- Original style from http://www.jeff.wilcox.name/2010/05/zunelike-contextmenu-style/ -->
     <Style TargetType="{x:Type Separator}" x:Key="MetroSeparator">
@@ -50,7 +52,7 @@
                 <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Foreground" Value="#FF9A9A9A"/>
+                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemBrush}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -85,7 +87,7 @@
                 <Setter Property="Foreground" Value="#FFFFFFFF" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Foreground" Value="#FF9A9A9A"/>
+                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemBrush}"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -171,7 +173,7 @@
                 <Setter Property="Foreground" Value="#FFFFFFFF" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Foreground" Value="#FF9A9A9A"/>
+                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemBrush}"/>
                 <Setter Property="Background" TargetName="GlyphPanel" Value="#EEE9E9"/>
                 <Setter Property="BorderBrush" TargetName="GlyphPanel" Value="#DBD6D6"/>
                 <Setter Property="Fill" TargetName="Glyph" Value="#848589"/>
@@ -227,7 +229,7 @@
                 <Setter Property="Foreground" Value="#FFFFFFFF" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Foreground" Value="#FF9A9A9A"/>
+                <Setter Property="Foreground" Value="{DynamicResource DisabledMenuItemBrush}"/>
                 <Setter Property="Background" TargetName="GlyphPanel" Value="#EEE9E9"/>
                 <Setter Property="BorderBrush" TargetName="GlyphPanel" Value="#DBD6D6"/>
                 <Setter Property="Fill" TargetName="Glyph" Value="#848589"/>
