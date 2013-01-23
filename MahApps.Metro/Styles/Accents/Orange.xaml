@@ -25,7 +25,7 @@
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="AccentColorBrush"
-                     Color="{DynamicResource AccentColor}" />
+                     Color="{StaticResource AccentColor}" />
 
 
 
