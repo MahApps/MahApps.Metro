@@ -6,8 +6,8 @@
         xmlns:MetroDemo="clr-namespace:MetroDemo" mc:Ignorable="d"
         x:Class="MetroDemo.MainWindow"
         Title="MahApps.Metro.Demo"
-        Height="498"
-        Width="585"
+        Height="540"
+        Width="600"
         Icon="mahapps.metro.logo2.ico"
         ShowTitleBar="True"
         ShowIconOnTitleBar="true"
@@ -114,6 +114,7 @@
                                 </Button.ContextMenu>
                             </Button>
                             <PasswordBox Controls:TextboxHelper.Watermark="Enter Password"
+                                         Controls:TextboxHelper.ClearTextButton="True"
                                              Margin="88.695,66.96,0,0"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
@@ -197,6 +198,10 @@
                                     Click="BtnVSClick"
                                     VerticalAlignment="Top"
                                     Margin="88,300,90,0"/>
+                            <Button Content="Launch Icons"
+                                    Click="BtnIconsClick"
+                                    VerticalAlignment="Top"
+                                    Margin="88,360,90,0"/>
                             <Button Content="Button" VerticalAlignment="Bottom" Margin="88,0,90,8" Style="{DynamicResource SquareButtonStyle}"/>
                             <ToggleButton Content="TOGGLE BUTTON" Margin="88,330,90,0" VerticalAlignment="Top" />
                             <Slider Height="19" HorizontalAlignment="Right" Margin="0,239,91,0" Name="slider1" VerticalAlignment="Top" Width="154" Maximum="100" Value="25" />
