@@ -45,8 +45,6 @@ namespace MahApps.Metro.Controls
         {
             double actualWidth = ActualWidth;
             MetroProgressBar bar = this;
-            bar.SetEllipseDiameter(actualWidth);
-            bar.SetEllipseOffset(actualWidth);
 
             bar.ResetStoryboard(actualWidth);
         }
@@ -210,6 +208,18 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
             SizeChangedHandler(null, null);
+        }
+        
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+
+            // Update the Ellipse properties to their default values
+            // only if they haven't been user-set.
+            if (EllipseDiameter.Equals(0))
+                SetEllipseDiameter(ActualWidth);
+            if (EllipseOffset.Equals(0))
+                SetEllipseOffset(ActualWidth);
         }
     }
 }
