@@ -26,3 +26,4 @@ Last updated for stable release 0.10 (released 2012/10/18).
 {% include resources.md %}
 {% include credit.md %}	
 {% include changelog.md %}	
+ 
