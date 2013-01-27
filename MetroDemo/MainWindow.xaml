@@ -93,7 +93,7 @@
                                             <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
                                             <MenuItem Header="Light Green" Click="MiLightGreen" />
                                             <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                                            <MenuItem Header="Light Purple" Click="MiLightPurple" />
+                                            <MenuItem Header="Light Purple" Click="MiLightPurple" IsEnabled="False" />
                                             <MenuItem Header="Light Orange" Click="MiLightOrange">
                                                 <MenuItem Header="Light Orange" Click="MiLightOrange" />
                                                 <MenuItem Header="Light Orange" Click="MiLightOrange" />
