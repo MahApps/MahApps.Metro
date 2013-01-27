@@ -4,11 +4,14 @@
 // All other rights reserved.
 
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
@@ -30,6 +33,12 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsTransitioningProperty = DependencyProperty.Register("IsTransitioning", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(OnIsTransitioningPropertyChanged));
         public static readonly DependencyProperty TransitionProperty = DependencyProperty.Register("Transition", typeof(string), typeof(TransitioningContentControl), new PropertyMetadata(DefaultTransitionState, OnTransitionPropertyChanged));
         public static readonly DependencyProperty RestartTransitionOnContentChangeProperty = DependencyProperty.Register("RestartTransitionOnContentChange", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(false, OnRestartTransitionOnContentChangePropertyChanged));
+        public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register("CustomVisualStates", typeof(ObservableCollection<VisualState>), typeof(TransitioningContentControl), new PropertyMetadata(null));
+
+        public ObservableCollection<VisualState> CustomVisualStates {
+          get { return (ObservableCollection<VisualState>)this.GetValue(CustomVisualStatesProperty); }
+            set { this.SetValue(CustomVisualStatesProperty, value); }
+        }
 
         public bool IsTransitioning
         {
@@ -134,6 +143,7 @@ namespace MahApps.Metro.Controls
 
         public TransitioningContentControl()
         {
+            this.CustomVisualStates = new ObservableCollection<VisualState>();
             DefaultStyleKey = typeof(TransitioningContentControl);
         }
 
@@ -142,6 +152,15 @@ namespace MahApps.Metro.Controls
             if (IsTransitioning)
             {
                 AbortTransition();
+            }
+
+            if (this.CustomVisualStates != null && this.CustomVisualStates.Any()) {
+                var presentationGroup = VisualStates.TryGetVisualStateGroup(this, PresentationGroup);
+                if (presentationGroup != null) {
+                    foreach (var state in this.CustomVisualStates) {
+                        presentationGroup.States.Add(state);
+                    }
+                }
             }
 
             base.OnApplyTemplate();
