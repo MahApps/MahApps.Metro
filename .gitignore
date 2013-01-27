@@ -43,3 +43,6 @@ _ReSharper*/
 ~$*
 
 MetroDemo/publish/*
+
+
+*.ncrunch*
