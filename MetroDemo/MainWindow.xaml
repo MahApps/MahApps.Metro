@@ -274,9 +274,13 @@
                             </Button>
 
                             <Controls:ProgressRing IsActive="True"/>
-                            <Controls:TransitioningContentControl x:Name="transitioning" Width="150" Height="50" Transition="DownTransition" />
+                            
+                            
+                            <Controls:TransitioningContentControl x:Name="transitioning" Width="250" Height="50" Transition="DownTransition" />
+                            
+                            
                             <Controls:TransitioningContentControl x:Name="customTransitioning"
-                                                                  Width="150"
+                                                                  Width="250"
                                                                   Height="50"
                                                                   Transition="CustomTransition">
                                 <Controls:TransitioningContentControl.CustomVisualStates>

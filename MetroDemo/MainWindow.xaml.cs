@@ -20,8 +20,8 @@ namespace MetroDemo
         void Tick(object sender, EventArgs e)
         {
             var dateTime = DateTime.Now;
-            transitioning.Content = new TextBlock {Text = "DateTime " + dateTime, SnapsToDevicePixels = true};
-            customTransitioning.Content = new TextBlock {Text = "Custom transistion " + dateTime.Second, SnapsToDevicePixels = true};
+            transitioning.Content = new TextBlock {Text = "Transitioning Content! " + dateTime, SnapsToDevicePixels = true};
+            customTransitioning.Content = new TextBlock {Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true};
         }
 
         private void ButtonClick(object sender, RoutedEventArgs e)
