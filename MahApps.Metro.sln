@@ -8,7 +8,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Resources", "MahApps.Metro.Resources\MahApps.Metro.Resources.csproj", "{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo2", "MetroDemo2\MetroDemo2.csproj", "{81635CB1-E951-4BBC-8EE6-B8C74AF1E4FA}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccentColorRepro", "AccentColorRepro\AccentColorRepro.csproj", "{E74223AD-91C0-433D-A202-ED0EAF2C122A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{72C27A3B-930A-45E7-B073-C9D7BF046E4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,5 +76,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E74223AD-91C0-433D-A202-ED0EAF2C122A} = {72C27A3B-930A-45E7-B073-C9D7BF046E4B}
+		{56E8080F-FFEB-47CD-ADB9-92245F92565B} = {72C27A3B-930A-45E7-B073-C9D7BF046E4B}
+		{81635CB1-E951-4BBC-8EE6-B8C74AF1E4FA} = {72C27A3B-930A-45E7-B073-C9D7BF046E4B}
 	EndGlobalSection
 EndGlobal
