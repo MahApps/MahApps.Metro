@@ -275,6 +275,33 @@
 
                             <Controls:ProgressRing IsActive="True"/>
                             <Controls:TransitioningContentControl x:Name="transitioning" Width="150" Height="50" Transition="DownTransition" />
+                            <Controls:TransitioningContentControl x:Name="customTransitioning"
+                                                                  Width="150"
+                                                                  Height="50"
+                                                                  Transition="CustomTransition">
+                                <Controls:TransitioningContentControl.CustomVisualStates>
+                                    <VisualState x:Name="CustomTransition">
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                           Storyboard.TargetName="CurrentContentPresentationSite"
+                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                                <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                      Value="0" />
+                                                <SplineDoubleKeyFrame KeyTime="00:00:00.700"
+                                                                      Value="1" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                           Storyboard.TargetName="PreviousContentPresentationSite"
+                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                                <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                      Value="1" />
+                                                <SplineDoubleKeyFrame KeyTime="00:00:00.700"
+                                                                      Value="0" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </Controls:TransitioningContentControl.CustomVisualStates>
+                            </Controls:TransitioningContentControl>
                             <Controls:RangeSlider Width="227" Height="25" RangeStartSelected="20" RangeStopSelected="50"/>
 
                             <Menu  VerticalAlignment="Top" HorizontalAlignment="Left" Height="23" >

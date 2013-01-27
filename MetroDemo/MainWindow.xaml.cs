@@ -14,16 +14,14 @@ namespace MetroDemo
         {
             DataContext = new MainWindowViewModel(Dispatcher);
             InitializeComponent();
-            var t = new DispatcherTimer();
-            t.Tick += Tick;
-            t.Interval = new TimeSpan(0, 0, 0, 1);
-            t.Start();
+            var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
         }
 
-        int i = 0;
         void Tick(object sender, EventArgs e)
         {
-            transitioning.Content = new TextBlock {Text = "hello " + i++};
+            var dateTime = DateTime.Now;
+            transitioning.Content = new TextBlock {Text = "DateTime " + dateTime, SnapsToDevicePixels = true};
+            customTransitioning.Content = new TextBlock {Text = "Custom transistion " + dateTime.Second, SnapsToDevicePixels = true};
         }
 
         private void ButtonClick(object sender, RoutedEventArgs e)
