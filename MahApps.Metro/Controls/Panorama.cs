@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Threading;
@@ -168,6 +168,8 @@ namespace MahApps.Metro.Controls
                         tile = (IPanoramaTile)data;
                     }
                 }
+
+                CaptureMouse();
             }
 
             base.OnPreviewMouseDown(e);
@@ -175,7 +177,7 @@ namespace MahApps.Metro.Controls
 
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (IsMouseCaptured)
             {
                 Point currentPoint = e.GetPosition(this);
 
@@ -192,7 +194,6 @@ namespace MahApps.Metro.Controls
                 // Scroll to the new position.
                 sv.ScrollToHorizontalOffset(scrollTarget.X);
                 sv.ScrollToVerticalOffset(scrollTarget.Y);
-                CaptureMouse();
             }
 
             base.OnPreviewMouseMove(e);
@@ -202,9 +203,10 @@ namespace MahApps.Metro.Controls
         {
             if (IsMouseCaptured)
             {
+                Cursor = Cursors.Arrow;
                 ReleaseMouseCapture();
             }
-            Cursor = Cursors.Arrow;
+
             Point currentPoint = e.GetPosition(this);
 
             // Determine the new amount to scroll.

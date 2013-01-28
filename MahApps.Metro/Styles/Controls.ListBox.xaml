@@ -13,18 +13,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style x:Key="VirtualisedListBox"
-           TargetType="ListBox"
-           BasedOn="{StaticResource {x:Type ListBox}}">
-        <Setter Property="VirtualizingStackPanel.IsVirtualizing"
-                Value="True" />
-        <Setter Property="VirtualizingStackPanel.VirtualizationMode"
-                Value="Recycling" />
-        <Setter Property="ScrollViewer.CanContentScroll"
-                Value="True" />
-    </Style>
-
+    
     <Style TargetType="{x:Type ListBoxItem}">
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Margin" Value="0" />

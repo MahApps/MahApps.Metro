@@ -168,7 +168,6 @@
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
                         <Button x:Name="PART_Min"
-                            IsTabStop="False"
                             Width="34"
                             Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                             MaxHeight="34"    
@@ -180,7 +179,6 @@
                         </Button>
 
                         <Button x:Name="PART_Max"
-                            IsTabStop="False"
                             Width="34"
                             Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                             MaxHeight="34"
@@ -196,7 +194,6 @@
                         </Button>
 
                         <Button x:Name="PART_Close"
-                            IsTabStop="False"
                             Width="34"
                             Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                             MaxHeight="34"
