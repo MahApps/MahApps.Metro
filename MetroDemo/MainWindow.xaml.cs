@@ -109,5 +109,14 @@ namespace MetroDemo
         {
             this.IgnoreTaskbarOnMaximize = !this.IgnoreTaskbarOnMaximize;
         }
+
+        private void ToggleSwitch_OnIsCheckedChanged(object sender, EventArgs e)
+        {
+            var toggle = sender as ToggleSwitch;
+            if (toggle != null)
+            {
+                Console.WriteLine("Value changed to '{0}'", toggle.IsChecked);    
+            }
+        }
     }
 }
