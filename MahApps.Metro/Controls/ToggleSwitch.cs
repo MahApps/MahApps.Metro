@@ -80,13 +80,23 @@ namespace MahApps.Metro.Controls
             set { SetValue(IsCheckedProperty, value); }
         }
 
+        public event EventHandler IsCheckedChanged;
+
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var toggleSwitch = (ToggleSwitch)d;
             if (toggleSwitch._toggleButton != null)
             {
-                toggleSwitch._toggleButton.IsChecked = (bool?)e.NewValue;
+                var oldValue = (bool?)e.OldValue;
+                var newValue = (bool?)e.NewValue;
 
+                toggleSwitch._toggleButton.IsChecked = newValue;
+
+                if (oldValue != newValue
+                    && toggleSwitch.IsCheckedChanged != null)
+                    {
+                        toggleSwitch.IsCheckedChanged(toggleSwitch, EventArgs.Empty);
+                    }
             }
         }
 
