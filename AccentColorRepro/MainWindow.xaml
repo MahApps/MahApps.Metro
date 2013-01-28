@@ -18,32 +18,33 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <!--All icons used in the below section belong to the respective owners and is used for demo purpose only-->
+        <!--All icons used in the below section belong is from VS 2012 Image library-->
+        <!--http://www.microsoft.com/en-us/download/details.aspx?id=35825-->
         <ToolBarTray Grid.Row="0">
             <!--All enabled-->
             <ToolBar Band="0" BandIndex="1">
                 <Button Content="Enabled" ToolTip="Testing tooltips" />
                 <Button Height="25" Width="25" ToolTip="Cut">
-                    <Image Source="http://png-4.findicons.com/files/icons/2232/wireframe_mono/48/clipboard_cut.png" />
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Cut.png" />
                 </Button>
                 <Button Height="25" Width="25" ToolTip="Copy">
-                    <Image Source="http://png-5.findicons.com/files/icons/990/vistaico_toolbar/128/copy.png" />
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Copy.png" />
                 </Button>
                 <Button Height="25" Width="25" ToolTip="Paste">
-                    <Image Source="http://icons.iconarchive.com/icons/deleket/sleek-xp-basic/256/Paste-icon.png" />
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Paste.png" />
                 </Button>
             </ToolBar>
             <!--All disabled-->
             <ToolBar Band="0" BandIndex="1">
                 <Button Content="Disabled" ToolTip="Testing tooltips" IsEnabled="False" />
                 <Button Height="25" Width="25" ToolTip="Cut" IsEnabled="False">
-                    <Image Source="http://png-4.findicons.com/files/icons/2232/wireframe_mono/48/clipboard_cut.png" />
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Cut.png" />
                 </Button>
                 <Button Height="25" Width="25" ToolTip="Copy" IsEnabled="False">
-                    <Image Source="http://png-5.findicons.com/files/icons/990/vistaico_toolbar/128/copy.png" />
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Copy.png" />
                 </Button>
                 <Button Height="25" Width="25" ToolTip="Paste" IsEnabled="False">
-                    <Image Source="http://icons.iconarchive.com/icons/deleket/sleek-xp-basic/256/Paste-icon.png" />
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Paste.png" />
                 </Button>
             </ToolBar>
         </ToolBarTray>
