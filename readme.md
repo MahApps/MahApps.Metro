@@ -1,15 +1,14 @@
-###Bug reporting
-If you wish to report a bug, you need to work with, not against me.
 
-* If there are visual issues, provide a *screenshot*. If there are animation issues, you may need to provide a screencast.
+## MahApps.Metro
 
-* If you're having issues with resources, you *need* to provide the XAML on how you're importing them and *where* you're importing them.
-* **And for !@#$@!#$ sake, provide repros that *compile* and are actually *repros*, not your project/application.**
-You can see my code, but I can't see yours. How can I fix an issue if I don't know what you've done?
+A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
 
-Failure to do so will result in issues just being closed.
+### Documentation
 
-###Documentation and usage guide
-[http://mahapps.com/MahApps.Metro/](http://mahapps.com/MahApps.Metro/) 
+Read it here: [http://mahapps.com/MahApps.Metro/](http://mahapps.com/MahApps.Metro/)
 
-If you wish to contribute to documentation, checkout the `gh-pages` branch.
+You can help keep the documentation up to date by submitting a pull request on the `gh-pages` branch of this repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
+
+### Bug Reports
+
+Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-Reports) before submitting an issue.
