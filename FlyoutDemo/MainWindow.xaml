@@ -1,0 +1,35 @@
+﻿<Controls:MetroWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"   
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen" Width="1000" Height="600" Title="Flyouts Demo"
+        SaveWindowPosition="True"
+        x:Class="FlyoutDemo.MainWindow">
+    <Controls:MetroWindow.Flyouts>
+        <Controls:Flyout Header="settings" Position="Right">
+            <TextBlock Text="Will hold settings information" />
+        </Controls:Flyout>
+
+        <Controls:Flyout Header="new goodness" Position="Right">
+            <StackPanel Orientation="Vertical">
+                <Button Content="create" />
+                <Button Content="cancel" />
+            </StackPanel>
+        </Controls:Flyout>
+
+        <Controls:Flyout Header="third" Position="Right">
+            <TextBlock Text="a third for testing" />
+        </Controls:Flyout>
+    </Controls:MetroWindow.Flyouts>
+
+    <StackPanel>
+        <Button Click="ShowFirst" Content="Show 1"></Button>
+        <Button Click="ShowSecond" Content="Show 2"></Button>
+        <Button Click="ShowThird" Content="Show 3"></Button>
+    </StackPanel>
+
+</Controls:MetroWindow>
+        
