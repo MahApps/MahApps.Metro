@@ -56,7 +56,7 @@
     </Style>
 
     <!-- "Chromeless" style for buttons -->
-    <Style x:Key="ChromelessButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="ChromelessButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -90,7 +90,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="IronicallyNamedChromelessButtonStyle" TargetType="{x:Type Button}">
+    <Style x:Key="IronicallyNamedChromelessButtonStyle" TargetType="{x:Type ButtonBase}">
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -129,7 +129,7 @@
     </Style>
 
     <!-- style for default button -->    
-  <Style TargetType="{x:Type Button}" x:Key="MetroButton">
+  <Style TargetType="{x:Type ButtonBase}" x:Key="MetroButton">
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="FontSize" Value="10" />
