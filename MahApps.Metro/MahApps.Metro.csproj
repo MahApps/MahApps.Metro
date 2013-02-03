@@ -422,7 +422,20 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
-    <AssemblyInfo CodeLanguage="CS" OutputFile="$(ProjectDir)\Properties\CommonAssemblyInfo.cs" AssemblyTitle="MahApps.Metro" AssemblyDescription="" AssemblyConfiguration="" AssemblyCompany="MahApps" AssemblyProduct="MahApps.Metro" AssemblyCopyright="Copyright © MahApps 2013" AssemblyTrademark="" ComVisible="false" AssemblyVersion="$(Version)" AssemblyFileVersion="$(Version)" />
+    <GitVersion LocalPath="$(SolutionDir)">
+      <Output TaskParameter="CommitHash" PropertyName="GitCommitHash" />
+    </GitVersion>
+    <AssemblyInfo CodeLanguage="CS" 
+                  OutputFile="$(ProjectDir)\Properties\CommonAssemblyInfo.cs"
+                  AssemblyTitle="MahApps.Metro" 
+                  AssemblyCompany="MahApps"
+                  AssemblyProduct="MahApps.Metro"
+                  AssemblyCopyright="Copyright © MahApps 2013" 
+                  ComVisible="false" 
+                  AssemblyVersion="$(Version)" 
+                  AssemblyFileVersion="$(Version)" 
+                  AssemblyInformationalVersion="$(GitCommitHash)" />
   </Target>
   <Target Name="AfterCompile" />
+  
 </Project>
