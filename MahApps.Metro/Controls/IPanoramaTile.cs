@@ -13,11 +13,34 @@ namespace MahApps.Metro.Controls
 
     public class PanoramaTile : INotifyPropertyChanged, IPanoramaTile
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public string Text { get; set; }
+        string text;
+        public string Text
+        {
+            get { return text; }
+            set
+            {
+                text = value;
+                RaisePropertyChanged("Text");
+            }
+        }
+
         public ICommand TileClickedCommand
         {
             get { return null; }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Raises the PropertyChanged event if needed.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that changed.</param>
+        protected virtual void RaisePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }
