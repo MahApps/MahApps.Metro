@@ -34,7 +34,7 @@ namespace MahApps.Metro.Controls
         private Grid _root;
         private Grid _track;
         private FrameworkElement _thumb;
-        private bool _isDragging;
+        private bool _isDragging = false;
 
         public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null));
 
