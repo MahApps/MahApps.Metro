@@ -33,14 +33,11 @@ namespace MetroDemo
         }
 
         public ObservableCollection<PanoramaGroup> Groups { get; set; }
-
         public bool Busy { get; set; }
-
         public string Title { get; set; }
         public int SelectedIndex { get; set; }
         public List<Album> Albums { get; set; }
         public List<Artist> Artists { get; set; }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
