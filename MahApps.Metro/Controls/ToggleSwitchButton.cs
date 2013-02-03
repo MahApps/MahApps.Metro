@@ -28,16 +28,12 @@ namespace MahApps.Metro.Controls
         private const string SwitchBackgroundPart = "SwitchBackground";
         private const string SwitchTrackPart = "SwitchTrack";
         private const string SwitchThumbPart = "SwitchThumb";
-        private const double _uncheckedTranslation = 0;
-
+        
         private TranslateTransform _backgroundTranslation;
         private TranslateTransform _thumbTranslation;
         private Grid _root;
         private Grid _track;
         private FrameworkElement _thumb;
-        private double _checkedTranslation;
-        private double _dragTranslation;
-        private bool _wasDragged;
         private bool _isDragging;
 
         public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null));
@@ -86,6 +82,7 @@ namespace MahApps.Metro.Controls
 
             if (_isDragging)
             {
+                // TODO: _isDragging is never set to true, so we never enter this state
                 VisualStateManager.GoToState(this, DraggingState, useTransitions);
             }
             else if (IsChecked == true)
@@ -132,7 +129,8 @@ namespace MahApps.Metro.Controls
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
         {
             _track.Clip = new RectangleGeometry { Rect = new Rect(0, 0, _track.ActualWidth, _track.ActualHeight) };
-            _checkedTranslation = _track.ActualWidth - _thumb.ActualWidth - _thumb.Margin.Left - _thumb.Margin.Right;
+            // TODO: this value is being assigned on each callback but not used anywhere
+            var checkedTranslation = _track.ActualWidth - _thumb.ActualWidth - _thumb.Margin.Left - _thumb.Margin.Right;
         }
     }
 }
