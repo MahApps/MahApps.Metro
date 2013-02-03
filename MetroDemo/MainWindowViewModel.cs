@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MetroDemo.Models;
 
@@ -10,10 +9,30 @@ namespace MetroDemo
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public ObservableCollection<PanoramaGroup> Groups { get; set; }
         readonly PanoramaGroup _albums;
         readonly PanoramaGroup _artists;
+
+        public MainWindowViewModel()
+        {
+            SampleData.Seed();
+            
+            Albums = SampleData.Albums;
+            Artists = SampleData.Artists;
+            
+            Busy = true;
+
+            _albums = new PanoramaGroup("trending tracks");
+            _artists = new PanoramaGroup("trending artists");
+
+            Groups = new ObservableCollection<PanoramaGroup> { _albums, _artists };
+
+            _artists.SetSource(SampleData.Artists.Take(25));
+            _albums.SetSource(SampleData.Albums.Take(25));
+
+            Busy = false;
+        }
+
+        public ObservableCollection<PanoramaGroup> Groups { get; set; }
 
         public bool Busy { get; set; }
 
@@ -21,20 +40,20 @@ namespace MetroDemo
         public int SelectedIndex { get; set; }
         public List<Album> Albums { get; set; }
         public List<Artist> Artists { get; set; }
-        public MainWindowViewModel(Dispatcher dispatcher)
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Raises the PropertyChanged event if needed.
+        /// </summary>
+        /// <param name="propertyName">The name of the property that changed.</param>
+        protected virtual void RaisePropertyChanged(string propertyName)
         {
-
-            SampleData.Seed();
-            Albums = SampleData.Albums;
-            Artists = SampleData.Artists;
-            Busy = true;
-            _albums = new PanoramaGroup("trending tracks");
-            _artists = new PanoramaGroup("trending artists");
-            Groups = new ObservableCollection<PanoramaGroup> {_albums, _artists};
-
-            _artists.SetSource(SampleData.Artists.Take(25));
-            _albums.SetSource(SampleData.Albums.Take(25));
-            Busy = false;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }
