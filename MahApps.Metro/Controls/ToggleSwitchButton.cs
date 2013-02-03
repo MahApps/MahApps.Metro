@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -53,14 +54,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-
-
         public ToggleSwitchButton()
         {
             DefaultStyleKey = typeof(ToggleSwitchButton);
         }
 
-        private double Translation
+        [Obsolete("No callers to this property found by R#, looks like old code")]
+        double Translation
         {
             get
             {
@@ -116,17 +116,13 @@ namespace MahApps.Metro.Controls
             }
             base.OnApplyTemplate();
             _root = GetTemplateChild(SwitchRootPart) as Grid;
-            UIElement background = GetTemplateChild(SwitchBackgroundPart) as UIElement;
+            var background = GetTemplateChild(SwitchBackgroundPart) as UIElement;
             _backgroundTranslation = background == null ? null : background.RenderTransform as TranslateTransform;
             _track = GetTemplateChild(SwitchTrackPart) as Grid;
             _thumb = GetTemplateChild(SwitchThumbPart) as Border;
             _thumbTranslation = _thumb == null ? null : _thumb.RenderTransform as TranslateTransform;
             if (_root != null && _track != null && _thumb != null && (_backgroundTranslation != null || _thumbTranslation != null))
             {
-                /*GestureListener gestureListener = GestureService.GetGestureListener(_root);
-                gestureListener.DragStarted += DragStartedHandler;
-                gestureListener.DragDelta += DragDeltaHandler;
-                gestureListener.DragCompleted += DragCompletedHandler;*/
                 _track.SizeChanged += SizeChangedHandler;
                 _thumb.SizeChanged += SizeChangedHandler;
             }
