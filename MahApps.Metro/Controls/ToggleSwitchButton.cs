@@ -55,27 +55,6 @@ namespace MahApps.Metro.Controls
             DefaultStyleKey = typeof(ToggleSwitchButton);
         }
 
-        [Obsolete("No callers to this property found by R#, looks like old code")]
-        double Translation
-        {
-            get
-            {
-                return _backgroundTranslation == null ? _thumbTranslation.X : _backgroundTranslation.X;
-            }
-            set
-            {
-                if (_backgroundTranslation != null)
-                {
-                    _backgroundTranslation.X = value;
-                }
-
-                if (_thumbTranslation != null)
-                {
-                    _thumbTranslation.X = value;
-                }
-            }
-        }
-
         private void ChangeVisualState(bool useTransitions)
         {
             VisualStateManager.GoToState(this, IsEnabled ? NormalState : DisabledState, useTransitions);
