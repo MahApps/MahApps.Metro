@@ -19,6 +19,23 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Pivot), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Pivot));
         public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Pivot), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedItemChanged));
+        public static readonly DependencyProperty IsResizingItemsDynamicProperty = DependencyProperty.Register("IsResizingItemsDynamic", typeof(bool), typeof(Pivot), new PropertyMetadata(true));
+
+        public Pivot()
+        {
+            Loaded += Pivot_Loaded;
+        }
+
+        void Pivot_Loaded(object sender, RoutedEventArgs e)
+        {
+            ApplyNewWidth(ActualWidth);
+        }
+
+        public bool IsResizingItemsDynamic
+        {
+            get { return (bool)GetValue(IsResizingItemsDynamicProperty); }
+            set { SetValue(IsResizingItemsDynamicProperty, value); }
+        }
 
         public DataTemplate HeaderTemplate
         {
@@ -69,6 +86,8 @@ namespace MahApps.Metro.Controls
             sb.Completed += sb_Completed;
             sb.Begin();
 
+            SelectedIndex = internalIndex;
+
             RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
 
         }
@@ -93,7 +112,7 @@ namespace MahApps.Metro.Controls
             if (scroller != null)
             {
                 scroller.ScrollChanged += scroller_ScrollChanged;
-                scroller.PreviewMouseWheel += scroller_MouseWheel;
+                //scroller.PreviewMouseWheel += scroller_MouseWheel;
             }
             if (headers != null)
                 headers.SelectionChanged += headers_SelectionChanged;
@@ -111,6 +130,9 @@ namespace MahApps.Metro.Controls
 
         void scroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
+            if (SelectedIndex != 0 && e.HorizontalOffset == 0)
+                return;
+
             var position = 0.0;
             for (int i = 0; i < Items.Count; i++)
             {
@@ -133,13 +155,71 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private void ApplyNewWidth(double newWidth)
+        {
+            if (IsResizingItemsDynamic)
+            {
+                var calculatedWidth = newWidth * 0.9;
+
+                var selectedIndexOld = SelectedIndex;
+
+                if (Items.Count > 0)
+                {
+                    if (Items.Count == 1)
+                    {
+                        PivotItem pivotItem = (PivotItem)Items[0];
+                        pivotItem.Width = ActualWidth;
+                    }
+                    else if (Items.Count > 1)
+                    {
+                        bool anyChange = false;
+                        foreach (object item in Items)
+                        {
+                            PivotItem pivotItem = (PivotItem)item;
+
+
+                            if (calculatedWidth >= pivotItem.MinWidth && calculatedWidth <= pivotItem.MaxWidth)
+                            {
+                                pivotItem.Width = calculatedWidth;
+                                anyChange = true;
+                            }
+                        }
+
+                        PivotItem lastItem = (PivotItem)Items[Items.Count - 1];
+
+                        if (ActualWidth >= lastItem.MinWidth && ActualWidth <= lastItem.MaxWidth)
+                        {
+                            lastItem.Width = ActualWidth;
+                        }
+
+                        if (anyChange)
+                        {
+                            if (selectedIndexOld != SelectedIndex)
+                            {
+                                GoToItem((PivotItem)Items[selectedIndexOld]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            base.OnRenderSizeChanged(sizeInfo);
+            if (sizeInfo.WidthChanged)
+            {
+                ApplyNewWidth(sizeInfo.NewSize.Width);
+            }
+        }
+
         private static void SelectedItemChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             var p = (Pivot)dependencyObject;
             if (p == null)
                 return;
 
-            if (p.internalIndex != p.SelectedIndex)
+            if (dependencyPropertyChangedEventArgs.OldValue != dependencyPropertyChangedEventArgs.NewValue)
                 p.GoToItem((PivotItem)p.Items[(int)dependencyPropertyChangedEventArgs.NewValue]);
         }
     }
