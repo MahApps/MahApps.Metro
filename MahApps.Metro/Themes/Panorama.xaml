@@ -7,8 +7,15 @@
     <converters:PanoramaGroupHeightConverter x:Key="PanoramaGroupHeightConverter" />
 
     <Style x:Key="headerLabelStyle" TargetType="Label">
-        <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource  AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}, Path=HeaderFontSize}" />
-        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource  AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}, Path=HeaderFontColor}" />
+        <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}, Path=HeaderFontSize}" />
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}, Path=HeaderFontColor}" />
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" Foreground="{Binding RelativeSource={RelativeSource AncestorType=Label}, Path=Foreground}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="FontFamily" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}, Path=HeaderFontFamily}" />
         <Setter Property="FontWeight" Value="Light" />
         <Setter Property="HorizontalAlignment" Value="Left" />
