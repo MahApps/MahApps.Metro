@@ -98,10 +98,10 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <StackPanel>
-                            <ContentPresenter x:Name="PART_Header" ContentSource="Header" ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                            <ContentPresenter x:Name="PART_Content"/>
-                        </StackPanel>
+                        <DockPanel>
+                            <ContentPresenter x:Name="PART_Header" DockPanel.Dock="Top" ContentSource="Header" ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                            <ContentPresenter x:Name="PART_Content" DockPanel.Dock="Bottom" />
+                        </DockPanel>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
