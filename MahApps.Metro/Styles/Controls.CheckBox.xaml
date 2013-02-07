@@ -176,6 +176,7 @@
                                 <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{DynamicResource BlackColor}" />
                             </ContentControl.Foreground>
                             <ContentPresenter x:Name="contentPresenter"
+                                RecognizesAccessKey="True"
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                 Content="{TemplateBinding Content}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

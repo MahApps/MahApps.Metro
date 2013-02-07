@@ -1,4 +1,3 @@
-
 ## MahApps.Metro
 
 A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
@@ -8,6 +7,10 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 Read it here: [http://mahapps.com/MahApps.Metro/](http://mahapps.com/MahApps.Metro/)
 
 You can help keep the documentation up to date by submitting a pull request on the `gh-pages` branch of this repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
+
+### Contributions
+
+If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request!
 
 ### Bug Reports
 

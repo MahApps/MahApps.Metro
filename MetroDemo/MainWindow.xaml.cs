@@ -12,7 +12,7 @@ namespace MetroDemo
     {
         public MainWindow()
         {
-            DataContext = new MainWindowViewModel(Dispatcher);
+            DataContext = new MainWindowViewModel();
             InitializeComponent();
             var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
         }

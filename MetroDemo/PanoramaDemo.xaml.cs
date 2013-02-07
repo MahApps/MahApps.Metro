@@ -12,7 +12,7 @@ namespace MetroDemo
 
         void MainWindowLoaded(object sender, RoutedEventArgs e)
         {
-            DataContext = new MainWindowViewModel(Dispatcher);
+            DataContext = new MainWindowViewModel();
         }
     }
 }
