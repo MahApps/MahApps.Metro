@@ -2,8 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interactivity;
 using System.Windows.Interop;
 using System.Windows.Media;
+using MahApps.Metro.Behaviours;
 using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
@@ -23,6 +25,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30));
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty SavePositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty WindowsSettingsProperty = DependencyProperty.Register("WindowsSettings", typeof(IWindowsSettings), typeof(MetroWindow), new PropertyMetadata(WindowSettings.Instance));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
 
@@ -48,6 +51,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(SavePositionProperty); }
             set { SetValue(SavePositionProperty, value); }
+        }
+
+        public IWindowsSettings WindowsSettings
+        {
+            get { return (IWindowsSettings)GetValue(WindowsSettingsProperty); }
+            set { SetValue(WindowsSettingsProperty, value); }
         }
 
         public bool ShowIconOnTitleBar
