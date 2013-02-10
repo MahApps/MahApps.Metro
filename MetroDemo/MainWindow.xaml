@@ -73,7 +73,7 @@
                     <MenuItem Header="_Paste" />
                 </MenuItem>
             </Menu>
-            <TabControl Grid.Row="1">
+            <TabControl Grid.Row="1" >
                 <TabItem Header="_First set of controls">
                     <Grid>
                        

@@ -80,7 +80,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Template="{DynamicResource ScrollViewerTemplate}">
+                        <ScrollViewer Margin="{TemplateBinding Controls:TabControlHelper.TabStripMargin}" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" Template="{DynamicResource ScrollViewerTemplate}">
                             <TabPanel x:Name="HeaderPanel" IsItemsHost="True" Panel.ZIndex="1" Grid.Column="0" Grid.Row="0" KeyboardNavigation.TabIndex="1"/>
                         </ScrollViewer>
                         <Controls:MetroContentControl Behaviours:ReloadBehavior.OnSelectedTabChanged="True" Grid.Column="0" Grid.Row="1">
