@@ -11,6 +11,8 @@
         Icon="mahapps.metro.logo2.ico"
         ShowTitleBar="True"
         ShowIconOnTitleBar="true"
+        WindowsSettings="{x:Static MetroDemo:CustomWindowSettings.Instance}"
+        SaveWindowPosition="True"
         d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <Window.Resources>

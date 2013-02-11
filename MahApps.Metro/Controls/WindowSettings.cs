@@ -9,13 +9,34 @@ using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
-    public class WindowSettings
+    public interface IWindowsSettings
     {
-        public static readonly DependencyProperty SaveProperty = DependencyProperty.RegisterAttached("Save", typeof(bool), typeof(WindowSettings), new FrameworkPropertyMetadata(OnSaveInvalidated));
+        void SetSave(DependencyObject dependencyObject, bool enabled);
+    }
 
-        public static void SetSave(DependencyObject dependencyObject, bool enabled)
-        {
-            dependencyObject.SetValue(SaveProperty, enabled);
+    public class WindowSettings : IWindowsSettings
+    {
+        public void SetSave(DependencyObject dependencyObject, bool enabled) {
+            var window = dependencyObject as Window;
+            if (window == null || !enabled)
+                return;
+
+            var settings = new WindowSettings(window);
+            settings.Attach();
+        }
+
+        private static WindowSettings instance;
+
+        // Explicit static constructor to tell C# compiler
+        // not to mark type as beforefieldinit
+        static WindowSettings() {
+        }
+
+        private WindowSettings() {
+        }
+
+        public static WindowSettings Instance {
+            get { return instance ?? (instance = new WindowSettings()); }
         }
 
         internal class WindowApplicationSettings : ApplicationSettingsBase
@@ -47,16 +68,6 @@ namespace MahApps.Metro.Controls
         public WindowSettings(Window window)
         {
             _window = window;
-        }
-
-        private static void OnSaveInvalidated(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            var window = dependencyObject as Window;
-            if (window == null || !((bool)e.NewValue)) 
-                return;
-
-            var settings = new WindowSettings(window);
-            settings.Attach();
         }
 
         protected virtual void LoadWindowState()

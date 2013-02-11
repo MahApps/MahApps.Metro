@@ -7,7 +7,10 @@ namespace MahApps.Metro.Behaviours
     {
         protected override void OnAttached()
         {
-            WindowSettings.SetSave(AssociatedObject, AssociatedObject.SaveWindowPosition);
+            if (AssociatedObject != null && AssociatedObject.WindowsSettings != null)
+            {
+                AssociatedObject.WindowsSettings.SetSave(AssociatedObject, AssociatedObject.SaveWindowPosition);
+            }
         }
     }
 }
