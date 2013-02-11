@@ -160,7 +160,7 @@ namespace MahApps.Metro.Controls
                 var x = TreeHelper.TryFindFromPoint<ListBoxItem>(this, scrollStartPoint);
                 if (x != null)
                 {
-                    x.IsSelected = true;
+                    x.IsSelected = !x.IsSelected;
                     ItemsControl tiles = ItemsControlFromItemContainer(x);
                     var data = tiles.ItemContainerGenerator.ItemFromContainer(x);
                     if (data != null && data is IPanoramaTile)
