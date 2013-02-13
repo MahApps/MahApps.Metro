@@ -78,7 +78,16 @@ namespace MahApps.Metro.Controls
 
             animationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20);
             animationTimer.Tick += HandleWorldTimerTick;
-            animationTimer.Start();
+
+            this.Loaded += (sender, e) =>
+            {
+                animationTimer.Start();
+            };
+
+            this.Unloaded += (sender, e) =>
+            {
+                animationTimer.Stop();
+            };
         }
 
         static Panorama()
