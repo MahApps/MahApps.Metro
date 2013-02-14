@@ -1,8 +1,13 @@
 ﻿<controls:MetroWindow x:Class="MetroDemo.IconsWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Icons" Height="500" Width="600">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:metroDemo="clr-namespace:MetroDemo"
+                      SaveWindowPosition="True"
+                      WindowPlacementSettings="{x:Static metroDemo:CustomWindowPlacementSettings.Instance}"
+                      Title="Icons"
+                      Height="500"
+                      Width="600">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
