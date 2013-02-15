@@ -71,6 +71,7 @@
     <Compile Include="ChildWindow.xaml.cs">
       <DependentUpon>ChildWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomWindowPlacementSettings.cs" />
     <Compile Include="IconsWindow.xaml.cs">
       <DependentUpon>IconsWindow.xaml</DependentUpon>
     </Compile>
