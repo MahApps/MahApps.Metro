@@ -14,9 +14,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="VirtualisedListBox"
-           TargetType="ListBox"
-           BasedOn="{StaticResource {x:Type ListBox}}">
+    <Style x:Key="VirtualisedMetroListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource MetroListBox}">
         <Setter Property="VirtualizingStackPanel.IsVirtualizing"
                 Value="True" />
         <Setter Property="VirtualizingStackPanel.VirtualizationMode"

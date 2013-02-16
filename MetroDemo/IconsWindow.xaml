@@ -7,24 +7,30 @@
                       WindowPlacementSettings="{x:Static metroDemo:CustomWindowPlacementSettings.Instance}"
                       Title="Icons"
                       Height="500"
-                      Width="600">
+                      Width="700">
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+
     <Grid>
-        <ListBox x:Name="IconsListBox" Grid.IsSharedSizeScope="True">
+        <ListBox x:Name="IconsListBox"
+                 Grid.IsSharedSizeScope="True">
+                        
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" Width="{Binding 
-                  Path=ActualWidth,
-                  RelativeSource={RelativeSource 
-                      Mode=FindAncestor, 
-                      AncestorType=
-                         {x:Type ScrollContentPresenter}}}" />
+                    <WrapPanel IsItemsHost="True"
+                               Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollContentPresenter}}}" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
 
@@ -32,15 +38,19 @@
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="Content"/>
+                            <ColumnDefinition SharedSizeGroup="Content" />
                         </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
-                            <Rectangle Width="32" Height="32">
+                            <Rectangle Width="32"
+                                       Height="32"
+                                       Margin="2"
+                                       HorizontalAlignment="Center">
                                 <Rectangle.Fill>
-                                    <VisualBrush Visual="{Binding Path=Visual}" Stretch="Fill"/>
+                                    <VisualBrush Visual="{Binding Path=Visual}" Stretch="Fill" />
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="{Binding Path=Name}"/>
+                            <TextBlock HorizontalAlignment="Center"
+                                       Text="{Binding Path=Name}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,18 +21,13 @@ namespace MetroDemo
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var dict = Resources.MergedDictionaries.First();
-            List<MetroIcon> foundIcons = new List<MetroIcon>(dict.Count);
-            foreach (DictionaryEntry resource in dict)
-            {
-                Canvas visual = resource.Value as Canvas;
-                if (visual != null)
-                {
-                    foundIcons.Add(new MetroIcon((string)resource.Key, visual));
-                }
-            }
-
-            foundIcons.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.InvariantCulture));
+            var dict = new ResourceDictionary {Source = new Uri("pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml")};
+            var foundIcons = dict
+                .OfType<DictionaryEntry>()
+                .Where(de => de.Value is Canvas)
+                .Select(de => new MetroIcon((string)de.Key, (Canvas)de.Value))
+                .OrderBy(mi => mi.Name)
+                .ToList();
             IconsListBox.ItemsSource = foundIcons;
         }
 
