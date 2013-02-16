@@ -17,5 +17,6 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Tile.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/Glow.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
