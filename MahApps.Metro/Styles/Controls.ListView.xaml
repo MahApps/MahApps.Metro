@@ -8,22 +8,21 @@
     It also (setting true) has the ugly side effect of scrolling the entire group and not the items. The downside is we lose 
     virtualisation http://serialseb.blogspot.com/2007/09/wpf-tips-7-smooth-scrolling.html 
     -->
-    <Style TargetType="ListView">
+    <Style x:Key="MetroListView" TargetType="{x:Type ListView}">
         <Setter Property="BorderBrush" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="BorderThickness" Value="0 1 0 0" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="AlternationCount" Value="2" />
     </Style>
 
-    <Style x:Key="VirtualisedListView" TargetType="ListView" BasedOn="{StaticResource {x:Type ListView}}">
+    <Style x:Key="VirtualisedMetroListView" TargetType="{x:Type ListView}" BasedOn="{StaticResource MetroListView}">
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True" />
         <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling" />
         <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="True" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
     </Style>
 
-
-    <Style TargetType="{x:Type ListViewItem}">
+    <Style x:Key="MetroListViewItem" TargetType="{x:Type ListViewItem}">
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
