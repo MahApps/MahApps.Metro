@@ -31,7 +31,6 @@ namespace MahApps.Metro.Behaviours
 
         private HwndSource _mHWNDSource;
         private IntPtr _mHWND;
-        private GlowWindow left, right, top, bottom;
 
         private static IntPtr SetClassLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
         {
@@ -83,21 +82,6 @@ namespace MahApps.Metro.Behaviours
                                                    Border = ancestors;
                                                    if (ShouldHaveBorder())
                                                        AddBorder();
-                                                   
-                                                   left = new GlowWindow(window, GlowDirection.Left);
-                                                   right = new GlowWindow(window, GlowDirection.Right);
-                                                   top = new GlowWindow(window, GlowDirection.Top);
-                                                   bottom = new GlowWindow(window, GlowDirection.Bottom);
-
-                                                   left.Show();
-                                                   right.Show();
-                                                   top.Show();
-                                                   bottom.Show();
-
-                                                   left.Update();
-                                                   right.Update();
-                                                   top.Update();
-                                                   bottom.Update();
                                                };
 
                 switch (AssociatedObject.ResizeMode)

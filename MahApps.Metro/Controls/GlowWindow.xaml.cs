@@ -18,7 +18,7 @@ namespace MahApps.Metro.Controls
 {
 	partial class GlowWindow : Window
 	{
-		private MetroWindow owner;
+		private Window owner;
 		private double glowSize = 9.0;
 		private double edgeSize = 20.0;
 		private IntPtr handle;
@@ -30,7 +30,7 @@ namespace MahApps.Metro.Controls
 		private Func<Point, HitTestValues> getHitTestValue;
 		private Func<Point, Cursor> getCursor;
 
-		public GlowWindow(MetroWindow owner, GlowDirection direction)
+		public GlowWindow(Window owner, GlowDirection direction)
 		{
 			InitializeComponent();
 
