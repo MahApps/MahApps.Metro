@@ -96,6 +96,7 @@
                 <Behaviours:StylizedBehaviorCollection>
                     <Behaviours:BorderlessWindowBehavior/>
                     <Behaviours:WindowsSettingBehaviour/>
+                    <Behaviours:GlowWindowBehavior/>
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
