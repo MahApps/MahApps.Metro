@@ -96,6 +96,8 @@
     <Style TargetType="Menu" BasedOn="{StaticResource StandardMenu}" />
     <Style TargetType="ContextMenu" BasedOn="{StaticResource MetroContextMenu}" />
     <Style TargetType="GroupBox" BasedOn="{StaticResource MetroGroupBox}" />
+    <Style TargetType="ListBox" BasedOn="{StaticResource MetroListBox}" />
+    <Style TargetType="ListBoxItem" BasedOn="{StaticResource MetroListBoxItem}" />
 
     <Style TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template">
