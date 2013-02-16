@@ -16,7 +16,6 @@ namespace MetroDemo
             DataContext = new MainWindowViewModel();
             InitializeComponent();
             var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CC119EDA"));
         }
 
         void Tick(object sender, EventArgs e)
@@ -37,49 +36,41 @@ namespace MetroDemo
         private void MiLightRed(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Red"), Theme.Light);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CCcb0000"));
         }
 
         private void MiDarkRed(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Red"), Theme.Dark);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CCcb0000"));
         }
 
         private void MiLightGreen(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Light);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CC48cb00"));
         }
 
         private void MiDarkGreen(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Dark);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CC48cb00"));
         }
 
         private void MiLightBlue(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), Theme.Light);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CC119EDA"));
         }
 
         private void MiDarkBlue(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), Theme.Dark);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CC119EDA"));
         }
 
         private void MiLightPurple(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), Theme.Light);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CCb400ff"));
         }
 
         private void MiDarkPurple(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), Theme.Dark);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CCb400ff"));
         }
 
         private void BtnPanoramaClick(object sender, RoutedEventArgs e)
@@ -108,13 +99,11 @@ namespace MetroDemo
         private void MiDarkOrange(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Orange"), Theme.Dark);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CCff9829"));
         }
 
         private void MiLightOrange(object sender, RoutedEventArgs e)
         {
             ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Orange"), Theme.Light);
-            this.GlowBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#CCff9829"));
         }
 
         private void IgnoreTaskbarOnMaximizedClick(object sender, RoutedEventArgs e)

@@ -12,6 +12,11 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+
+    <controls:MetroWindow.GlowBrush>
+        <SolidColorBrush Color="{DynamicResource AccentColor}" />
+    </controls:MetroWindow.GlowBrush>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
