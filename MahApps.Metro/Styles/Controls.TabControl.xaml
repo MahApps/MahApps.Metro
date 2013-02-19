@@ -19,7 +19,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
-                    <Label x:Name="root" FontSize="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TabItemHelper.HeaderFontSize),FallbackValue=26.67}">
+                    <Label x:Name="root" FontSize="26.67">
                         <ContentPresenter ContentSource="Header"  RecognizesAccessKey="True" />
                     </Label>
                     <ControlTemplate.Triggers>
