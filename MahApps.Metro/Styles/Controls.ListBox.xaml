@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
-    <Style TargetType="{x:Type ListBox}">
+    <Style x:Key="MetroListBox" TargetType="{x:Type ListBox}">
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
@@ -14,9 +14,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="VirtualisedListBox"
-           TargetType="ListBox"
-           BasedOn="{StaticResource {x:Type ListBox}}">
+    <Style x:Key="VirtualisedMetroListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource MetroListBox}">
         <Setter Property="VirtualizingStackPanel.IsVirtualizing"
                 Value="True" />
         <Setter Property="VirtualizingStackPanel.VirtualizationMode"
@@ -25,7 +23,7 @@
                 Value="True" />
     </Style>
 
-    <Style TargetType="{x:Type ListBoxItem}">
+    <Style x:Key="MetroListBoxItem" TargetType="{x:Type ListBoxItem}">
         <Setter Property="MinHeight" Value="25" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="Template">

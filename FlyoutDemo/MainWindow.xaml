@@ -10,7 +10,35 @@
         x:Class="FlyoutDemo.MainWindow">
     <Controls:MetroWindow.Flyouts>
         <Controls:Flyout Header="settings" Position="Right">
-            <TextBlock Text="Will hold settings information" />
+            <Grid Margin="24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Something above the ScrollPanel" />
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 01" />
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 02" Margin="0,5,0,0" />
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 03" Margin="0,5,0,0" />
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 04" Margin="0,5,0,0" />
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 05" Margin="0,5,0,0" />
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 06" Margin="0,5,0,0" />
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 07" Margin="0,5,0,0" />
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 08" Margin="0,5,0,0" />
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 09" Margin="0,5,0,0" />
+                        <TextBox Controls:TextboxHelper.Watermark="TextBox 10" Margin="0,5,0,0" />
+                    </StackPanel>
+                </ScrollViewer>
+                
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,5,0,0">
+                    <Button Content="create" Margin="0,0,10,0" />
+                    <Button Content="cancel" />
+                </StackPanel>
+
+            </Grid>
         </Controls:Flyout>
 
         <Controls:Flyout Header="new goodness" Position="Right">

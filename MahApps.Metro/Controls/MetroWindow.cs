@@ -22,7 +22,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30));
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty SavePositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
 
@@ -46,8 +47,14 @@ namespace MahApps.Metro.Controls
 
         public bool SaveWindowPosition
         {
-            get { return (bool)GetValue(SavePositionProperty); }
-            set { SetValue(SavePositionProperty, value); }
+            get { return (bool)GetValue(SaveWindowPositionProperty); }
+            set { SetValue(SaveWindowPositionProperty, value); }
+        }
+
+        public IWindowPlacementSettings WindowPlacementSettings
+        {
+            get { return (IWindowPlacementSettings)GetValue(WindowPlacementSettingsProperty); }
+            set { SetValue(WindowPlacementSettingsProperty, value); }
         }
 
         public bool ShowIconOnTitleBar

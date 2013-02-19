@@ -7,7 +7,7 @@
         xmlns:effect="clr-namespace:GrayscaleEffect;assembly=GrayscaleEffect"
         xmlns:Models="clr-namespace:MetroDemo.Models" x:Class="MetroDemo.PanoramaDemo"
 		Background="Black"
-        Title="PanoramaDemo" Height="600" Width="900">
+        Title="PanoramaDemo" Height="600" Width="900" KeyUp="Window_KeyUp">
     <Window.Resources>
         <ResourceDictionary>
             
