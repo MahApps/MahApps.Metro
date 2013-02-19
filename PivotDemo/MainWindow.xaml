@@ -1,0 +1,50 @@
+﻿<controls:MetroWindow x:Class="PivotDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      Name="XXX"
+                                    xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                                    Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <controls:Pivot Header="Test">
+        <controls:Pivot.Items>
+            <controls:PivotItem Header="Page1">
+                
+            </controls:PivotItem>
+            <controls:PivotItem Header="Page2">
+                <Grid>
+                    <ListView Style="{StaticResource VirtualisedListView}" ItemsSource="{Binding Items, ElementName=XXX}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                                <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </controls:PivotItem>
+            <controls:PivotItem Header="Page3"/>
+        </controls:Pivot.Items>
+    </controls:Pivot>
+</controls:MetroWindow>

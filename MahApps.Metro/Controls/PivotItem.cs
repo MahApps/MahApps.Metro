@@ -21,6 +21,10 @@ namespace MahApps.Metro.Controls
         public PivotItem()
         {
             RequestBringIntoView += (s, e) => { e.Handled = true; };
+            AddHandler(ScrollViewer.ScrollChangedEvent, new ScrollChangedEventHandler((sender, args) =>
+                {
+                    args.Handled = true;
+                }));
         }
     }
 }
