@@ -73,11 +73,11 @@
                     <MenuItem Header="_Paste" />
                 </MenuItem>
             </Menu>
-            <TabControl Grid.Row="1" >
-                <TabItem Header="_First set of controls">
+            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1" TabStripMargin="40,0,0,0" >
+                <Controls:MetroTabItem Header="_First set of controls" HeaderFontSize="35">
                     <Grid>
-                       
-                            <Grid Margin="0,0,226.999,8">
+
+                        <Grid Margin="0,0,226.999,8">
                             <Button Content="Right Click Me"
                                         Click="ButtonClick"
                                         Height="30"
@@ -98,13 +98,13 @@
                                                 <MenuItem Header="Light Orange" Click="MiLightOrange" />
                                                 <MenuItem Header="Light Orange" Click="MiLightOrange" />
                                             </MenuItem>
-                                            
+
                                         </MenuItem>
 
                                         <Separator />
                                         <MenuItem Header="Dark Red" Click="MiDarkRed" />
                                         <MenuItem Header="Dark">
-                                            
+
                                             <MenuItem Header="Dark Green" Click="MiDarkGreen" />
                                             <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
                                             <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
@@ -274,11 +274,11 @@
                             </Button>
 
                             <Controls:ProgressRing IsActive="True"/>
-                            
-                            
+
+
                             <Controls:TransitioningContentControl x:Name="transitioning" Width="250" Height="50" Transition="DownTransition" />
-                            
-                            
+
+
                             <Controls:TransitioningContentControl x:Name="customTransitioning"
                                                                   Width="250"
                                                                   Height="50"
@@ -338,7 +338,7 @@
                         </WrapPanel>
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                     </Grid>
-                </TabItem>
+                </Controls:MetroTabItem>
                 <TabItem Header="_More Controls Here!">
                     <StackPanel>
                         <!--<Controls:MetroProgressBar Width="600" IsIndeterminate="True"/>-->
@@ -413,10 +413,10 @@
                             </ListView.View>
                         </ListView>
                         <ListBox Grid.Row="0" Grid.Column="1" Margin="10, 0, 0, 0">
-							<ListBoxItem Content="Item 1" />
-							<ListBoxItem Content="Item 2" />
-							<ListBoxItem Content="Item 3" />
-						</ListBox>
+                            <ListBoxItem Content="Item 1" />
+                            <ListBoxItem Content="Item 2" />
+                            <ListBoxItem Content="Item 3" />
+                        </ListBox>
 
                         <StackPanel Grid.Row="1"
                                     Grid.Column="1">
@@ -452,7 +452,7 @@
                         <TextBlock Text="{Binding SelectedIndex}" />
                     </StackPanel>
                 </TabItem>
-            </TabControl>
+            </Controls:MetroAnimatedSingleRowTabControl>
         </Grid>
     </Controls:MetroContentControl>
 </Controls:MetroWindow>
