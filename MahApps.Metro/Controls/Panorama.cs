@@ -17,6 +17,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderFontColorProperty = DependencyProperty.Register("HeaderFontColor", typeof(Brush), typeof(Panorama), new FrameworkPropertyMetadata(Brushes.White));
         public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(Panorama), new FrameworkPropertyMetadata(new FontFamily("Segoe UI Light")));
         public static readonly DependencyProperty UseSnapBackScrollingProperty = DependencyProperty.Register("UseSnapBackScrolling", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty MouseScrollEnabledProperty = DependencyProperty.Register("MouseScrollEnabled", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty HorizontalScrollBarEnabledProperty = DependencyProperty.Register("HorizontalScrollBarEnabled", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
 
         public double Friction
         {
@@ -60,6 +62,18 @@ namespace MahApps.Metro.Controls
             set { SetValue(UseSnapBackScrollingProperty, value); }
         }
 
+        public bool MouseScrollEnabled
+        {
+            get { return (bool)GetValue(MouseScrollEnabledProperty); }
+            set { SetValue(MouseScrollEnabledProperty, value); }
+        }
+
+        public bool HorizontalScrollBarEnabled
+        {
+            get { return (bool)GetValue(HorizontalScrollBarEnabledProperty); }
+            set { SetValue(HorizontalScrollBarEnabledProperty, value); }
+        }
+
         private ScrollViewer sv;
         private Point scrollTarget;
         private Point scrollStartPoint;
@@ -68,6 +82,7 @@ namespace MahApps.Metro.Controls
         private Vector velocity;
         private double friction;
         private DispatcherTimer animationTimer = new DispatcherTimer(DispatcherPriority.DataBind);
+        private DispatcherTimer scrollBarTimer = new DispatcherTimer(DispatcherPriority.DataBind);
         private static int PixelsToMoveToBeConsideredScroll = 5;
         private static int PixelsToMoveToBeConsideredClick = 2;
         private IPanoramaTile tile;
@@ -78,6 +93,9 @@ namespace MahApps.Metro.Controls
 
             animationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20);
             animationTimer.Tick += HandleWorldTimerTick;
+
+            scrollBarTimer.Interval = TimeSpan.FromSeconds(1);
+            scrollBarTimer.Tick += (s, e) => HideHorizontalScrollBar();
 
             this.Loaded += (sender, e) =>
             {
@@ -145,9 +163,40 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private void HideHorizontalScrollBar()
+        {
+            // Ignore when scroll happen with mouse drag or not to be viewed
+            if (!HorizontalScrollBarEnabled || Mouse.LeftButton == MouseButtonState.Pressed) return;
+
+            // Hide the scrollbar
+            scrollBarTimer.Stop();
+            if (sv.HorizontalScrollBarVisibility == ScrollBarVisibility.Visible)
+                sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
+        }
+
+        private void ShowHorizontalScrollBar()
+        {
+            // Ignore if scrollbar is visible yet or not to be viewed
+            if (!HorizontalScrollBarEnabled || sv.HorizontalScrollBarVisibility == ScrollBarVisibility.Visible) return;
+
+            // Restart the timer and show the scrollbar
+            scrollBarTimer.Stop();
+            if (sv.HorizontalScrollBarVisibility == ScrollBarVisibility.Hidden)
+                sv.HorizontalScrollBarVisibility = ScrollBarVisibility.Visible;
+            scrollBarTimer.Start();
+        }
+
         public override void OnApplyTemplate()
         {
             sv = (ScrollViewer)Template.FindName("PART_ScrollViewer", this);
+
+            // Apply the handler for scrollbar visibility
+            sv.ScrollChanged += (s, e) =>
+            {
+                if (HorizontalScrollBarEnabled && Math.Abs(e.HorizontalChange) > PixelsToMoveToBeConsideredScroll)
+                    ShowHorizontalScrollBar();
+            };
+
             base.OnApplyTemplate();
         }
 
@@ -231,6 +280,32 @@ namespace MahApps.Metro.Controls
             }
 
             base.OnPreviewMouseUp(e);
+        }
+
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            if (!MouseScrollEnabled) return;
+
+            // Pause the scrollbar timer
+            if (scrollBarTimer.IsEnabled)
+                scrollBarTimer.Stop();
+
+            // Determine the new amount to scroll.
+            scrollTarget.X = sv.HorizontalOffset + ((e.Delta * -1) / 3);
+
+            // Scroll to the new position.
+            sv.ScrollToHorizontalOffset(scrollTarget.X);
+            CaptureMouse();
+
+            // Save starting point, used later when determining how much to scroll.
+            scrollStartPoint = e.GetPosition(this);
+            scrollStartOffset.X = sv.HorizontalOffset;
+
+            // Restart the scrollbar timer
+            if (HorizontalScrollBarEnabled)
+                scrollBarTimer.Start();
+
+            base.OnPreviewMouseWheel(e);
         }
 
     }
