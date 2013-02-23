@@ -20,6 +20,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -227,7 +229,7 @@
                                         <EventTrigger RoutedEvent="Canvas.Loaded">
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible" Storyboard.TargetName="validationTooltip">
+                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible">
                                                         <DiscreteObjectKeyFrame KeyTime="0">
                                                             <DiscreteObjectKeyFrame.Value>
                                                                 <System:Boolean>true</System:Boolean>

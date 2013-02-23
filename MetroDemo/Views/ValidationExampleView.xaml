@@ -59,6 +59,21 @@
                  Margin="0,5,5,5"
                  controls:TextboxHelper.Watermark="I need a number greater than 5!"
                  Text="{Binding IntegerGreater5Property, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="2"
+                   VerticalAlignment="Center"
+                   Margin="5"
+                   Text="Combobox Validation:" />
+        <ComboBox Grid.Column="1"
+                  Grid.Row="2"
+                  VerticalAlignment="Center"
+                  Margin="0,5,5,5"
+                  SelectedItem="{Binding ComboBoxProperty, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}">
+            <ComboBoxItem>Item 1</ComboBoxItem>
+            <ComboBoxItem>Item 2</ComboBoxItem>
+            <ComboBoxItem>Item 3</ComboBoxItem>
+        </ComboBox>
     </Grid>
 
 </UserControl>

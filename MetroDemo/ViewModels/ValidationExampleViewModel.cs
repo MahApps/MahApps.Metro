@@ -33,6 +33,19 @@ namespace MetroDemo.ViewModels
             }
         }
 
+        private string comboBoxProperty;
+
+        public string ComboBoxProperty {
+            get { return this.comboBoxProperty; }
+            set {
+                if (Equals(value, this.comboBoxProperty)) {
+                    return;
+                }
+                this.comboBoxProperty = value;
+                this.OnPropertyChanged("ComboBoxProperty");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName) {
@@ -47,6 +60,11 @@ namespace MetroDemo.ViewModels
                 if (columnName.Equals("IntegerGreater5Property")) {
                     if (this.IntegerGreater5Property <= 5) {
                         return "This number is not greater 5!";
+                    }
+                }
+                if (columnName.Equals("ComboBoxProperty")) {
+                    if (string.IsNullOrWhiteSpace(this.ComboBoxProperty)) {
+                        return "Please choose a valid item!";
                     }
                 }
                 return null;
