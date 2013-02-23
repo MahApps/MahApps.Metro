@@ -10,7 +10,7 @@
                    LastChildFill="True">
             <Button x:Name="nav"
                     DockPanel.Dock="Left"
-                    Foreground="{DynamicResource WhiteBrush}"
+                    Foreground="{DynamicResource FlyoutWhiteBrush}"
                     Style="{DynamicResource MetroCircleButtonStyle}"
                     Height="40"
                     Width="40"
@@ -37,7 +37,7 @@
                                           Canvas.Left="12"
                                           Canvas.Top="15"
                                           Stretch="Fill"
-                                          Fill="{DynamicResource WhiteBrush}"
+                                          Fill="{DynamicResource FlyoutWhiteBrush}"
                                           Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z " />
                                 </Canvas>
                             </VisualBrush.Visual>

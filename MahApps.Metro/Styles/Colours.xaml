@@ -70,6 +70,9 @@
     <!-- *************BRUSHES START************* -->
     <!--PROJECT TEMPLATE BRUSHES -->
 
+    <!--FLYOUT BRUSHES -->
+    <SolidColorBrush x:Key="FlyoutWhiteBrush" Color="White" />
+
     <!-- UNIVERSAL CONTROL BRUSHES -->
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource WhiteColor}"/>
     <SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource WhiteColor}" />
