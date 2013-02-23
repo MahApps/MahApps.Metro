@@ -4,6 +4,10 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <DataTemplate x:Key="HeaderTemplate"
                   x:Shared="False">
         <DockPanel Margin="10"
@@ -47,6 +51,7 @@
             </Button>
             <TextBlock Text="{Binding}"
                        x:Name="PART_BackButton"
+                       Foreground="{DynamicResource FlyoutWhiteBrush}"
                        FontSize="20"
                        Margin="15,0,0,0"
                        VerticalAlignment="Center" />
@@ -122,12 +127,17 @@
                                   ContentSource="Header"
                                   ContentTemplate="{TemplateBinding HeaderTemplate}" />
                 <ContentPresenter x:Name="PART_Content"
-                                  DockPanel.Dock="Bottom" />
+                                  DockPanel.Dock="Bottom">
+                </ContentPresenter>
             </DockPanel>
         </Grid>
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Flyout}">
+        <Style.Resources>
+            <SolidColorBrush x:Key="LabelTextBrush"
+                             Color="{StaticResource FlyoutWhiteColor}" />
+        </Style.Resources>
         <Setter Property="VerticalAlignment"
                 Value="Stretch" />
         <Setter Property="VerticalContentAlignment"

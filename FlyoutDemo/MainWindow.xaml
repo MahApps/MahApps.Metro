@@ -122,15 +122,23 @@
 
         <Controls:Flyout Header="left"
                          Position="Left">
-            <Grid Margin="5,5,5,5" Width="150">
+            <StackPanel Margin="5,5,5,5" Width="150">
                 <TextBlock Text="a test for left" />
-            </Grid>
+                <CheckBox Content="a simple checkbox"></CheckBox>
+                <RadioButton Content="a simple RadioButton"></RadioButton>
+                <ComboBox>
+                    <ComboBoxItem>Item 1</ComboBoxItem>
+                    <ComboBoxItem>Item 2</ComboBoxItem>
+                    <ComboBoxItem>Item 3</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
         </Controls:Flyout>
     </Controls:MetroWindow.Flyouts>
 
     <Grid>
         <StackPanel HorizontalAlignment="Left"
                     Margin="10">
+            <TextBlock Text="Some Flyout Tests..." FontSize="30" Margin="10" />
             <Button Click="ShowFirst"
                     MinWidth="90"
                     Margin="2"
