@@ -58,7 +58,7 @@
             <ItemsControl ItemsSource="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" VerticalAlignment="Stretch">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Grid  />
+                        <Grid TextElement.Foreground="{DynamicResource WhiteBrush}" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
