@@ -19,7 +19,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseSnapBackScrollingProperty = DependencyProperty.Register("UseSnapBackScrolling", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
         public static readonly DependencyProperty MouseScrollEnabledProperty = DependencyProperty.Register("MouseScrollEnabled", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
         public static readonly DependencyProperty HorizontalScrollBarEnabledProperty = DependencyProperty.Register("HorizontalScrollBarEnabled", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
-
+        public static readonly DependencyProperty DynamicGroupHeaderProperty = DependencyProperty.Register("DynamicGroupHeader", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
+  
         public double Friction
         {
             get { return 1.0 - friction; }
@@ -60,6 +61,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(UseSnapBackScrollingProperty); }
             set { SetValue(UseSnapBackScrollingProperty, value); }
+        }
+
+        public bool DynamicGroupHeader
+        {
+            get { return (bool)GetValue(DynamicGroupHeaderProperty); }
+            set { SetValue(DynamicGroupHeaderProperty, value); }
         }
 
         public bool MouseScrollEnabled
