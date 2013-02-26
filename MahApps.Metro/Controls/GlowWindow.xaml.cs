@@ -154,6 +154,12 @@ namespace MahApps.Metro.Controls
 
 				this.UpdateCore();
 			}
+            else if (owner.Visibility == Visibility.Hidden)
+            {
+                this.Visibility = Visibility.Hidden;
+
+                this.UpdateCore();
+            }
 			else
 			{
 				this.Visibility = Visibility.Collapsed;
