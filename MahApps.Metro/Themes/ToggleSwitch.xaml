@@ -120,7 +120,7 @@
     </Style>
 
     <Style TargetType="{x:Type Controls:ToggleSwitch}">
-        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="IsTabStop" Value="True" />
         <Setter Property="SwitchForeground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
