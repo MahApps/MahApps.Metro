@@ -103,6 +103,16 @@ namespace MahApps.Metro.Controls
         public ToggleSwitch()
         {
             DefaultStyleKey = typeof(ToggleSwitch);
+
+            PreviewKeyUp += ToggleSwitch_PreviewKeyUp;
+        }
+
+        void ToggleSwitch_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+         
+                if (e.Key == System.Windows.Input.Key.Space && e.OriginalSource == sender)
+                    IsChecked = !IsChecked;
+            
         }
 
         private void SetDefaultContent()
