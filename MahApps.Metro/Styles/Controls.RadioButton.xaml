@@ -13,6 +13,8 @@
         <Setter Property="Padding" Value="4,1,0,0" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBrush}" />
+        <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
+        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
