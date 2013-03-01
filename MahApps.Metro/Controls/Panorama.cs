@@ -17,6 +17,18 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderFontColorProperty = DependencyProperty.Register("HeaderFontColor", typeof(Brush), typeof(Panorama), new FrameworkPropertyMetadata(Brushes.White));
         public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(Panorama), new FrameworkPropertyMetadata(new FontFamily("Segoe UI Light")));
         public static readonly DependencyProperty UseSnapBackScrollingProperty = DependencyProperty.Register("UseSnapBackScrolling", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
+        public static readonly RoutedEvent ScrollToEndRoutedEvent = EventManager.RegisterRoutedEvent("ScrollToEnd", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Panorama));
+
+        public event RoutedEventHandler ScrollToEnd
+        {
+            add { AddHandler(ScrollToEndRoutedEvent, value); }
+            remove { RemoveHandler(ScrollToEndRoutedEvent, value); }
+        }
+
+        protected virtual void OnScrollToEnd() 
+        {
+            RaiseEvent(new RoutedEventArgs(ScrollToEndRoutedEvent, this));
+        }
 
         public double Friction
         {
@@ -148,7 +160,16 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             sv = (ScrollViewer)Template.FindName("PART_ScrollViewer", this);
+            sv.ScrollChanged += sv_ScrollChanged;
             base.OnApplyTemplate();
+        }
+
+        void sv_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (sv.HorizontalOffset == sv.ScrollableWidth)
+            {
+                OnScrollToEnd();
+            }
         }
 
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
