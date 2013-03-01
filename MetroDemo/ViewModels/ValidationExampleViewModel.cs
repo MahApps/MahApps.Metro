@@ -4,66 +4,80 @@ namespace MetroDemo.ViewModels
 {
     public class ValidationExampleViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
-        public ValidationExampleViewModel() {
-        }
+        int? _integerProperty;
 
-        private int? _integerProperty;
-
-        public int? IntegerProperty {
-            get { return this._integerProperty; }
-            set {
-                if (Equals(value, this._integerProperty)) {
+        public int? IntegerProperty
+        {
+            get { return _integerProperty; }
+            set
+            {
+                if (Equals(value, _integerProperty))
+                {
                     return;
                 }
-                this._integerProperty = value;
-                this.OnPropertyChanged("IntegerProperty");
+                _integerProperty = value;
+                OnPropertyChanged("IntegerProperty");
             }
         }
 
-        private int? _integerGreater5Property;
+        int? _integerGreater5Property;
 
-        public int? IntegerGreater5Property {
-            get { return this._integerGreater5Property; }
-            set {
-                if (Equals(value, this._integerGreater5Property)) {
+        public int? IntegerGreater5Property
+        {
+            get { return _integerGreater5Property; }
+            set
+            {
+                if (Equals(value, _integerGreater5Property))
+                {
                     return;
                 }
-                this._integerGreater5Property = value;
-                this.OnPropertyChanged("IntegerGreater5Property");
+                _integerGreater5Property = value;
+                OnPropertyChanged("IntegerGreater5Property");
             }
         }
 
-        private string comboBoxProperty;
+        private string _comboBoxProperty;
 
-        public string ComboBoxProperty {
-            get { return this.comboBoxProperty; }
-            set {
-                if (Equals(value, this.comboBoxProperty)) {
+        public string ComboBoxProperty
+        {
+            get { return _comboBoxProperty; }
+            set
+            {
+                if (Equals(value, _comboBoxProperty))
+                {
                     return;
                 }
-                this.comboBoxProperty = value;
-                this.OnPropertyChanged("ComboBoxProperty");
+                _comboBoxProperty = value;
+                OnPropertyChanged("ComboBoxProperty");
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propertyName) {
-            var handler = this.PropertyChanged;
-            if (handler != null) {
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+            {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
-        public string this[string columnName] {
-            get {
-                if (columnName.Equals("IntegerGreater5Property")) {
-                    if (this.IntegerGreater5Property <= 5) {
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName.Equals("IntegerGreater5Property"))
+                {
+                    if (IntegerGreater5Property <= 5)
+                    {
                         return "This number is not greater 5!";
                     }
                 }
-                if (columnName.Equals("ComboBoxProperty")) {
-                    if (string.IsNullOrWhiteSpace(this.ComboBoxProperty)) {
+                if (columnName.Equals("ComboBoxProperty"))
+                {
+                    if (string.IsNullOrWhiteSpace(ComboBoxProperty))
+                    {
                         return "Please choose a valid item!";
                     }
                 }
