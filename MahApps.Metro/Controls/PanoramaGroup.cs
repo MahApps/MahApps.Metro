@@ -10,6 +10,7 @@ namespace MahApps.Metro.Controls
     public class PanoramaGroup : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public Orientation Orientation { get; set; }
 
         public string Header { get; private set; }
         public ICollectionView Tiles { get; private set; }
