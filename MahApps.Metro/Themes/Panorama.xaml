@@ -25,7 +25,7 @@
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}},Path=DynamicGroupHeader}" Value="False">
-                <Setter Property="Margin" Value="10,0,20,0" />
+                <Setter Property="Margin" Value="10,0,0,20" />
             </DataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}},Path=DynamicGroupHeader}" Value="True">
                 <Setter Property="Margin">
