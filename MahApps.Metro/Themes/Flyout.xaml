@@ -4,107 +4,149 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
 
-    <DataTemplate x:Key="HeaderTemplate">
-        <StackPanel Orientation="Horizontal" Margin="10" >
-            <Button x:Name="nav" Foreground="White" Style="{DynamicResource MetroCircleButtonStyle}" Height="40" Width="40" FontFamily="Segoe UI Symbol" FontSize="16" VerticalAlignment="Top" >
-                <Button.Resources>
-                    <SolidColorBrush x:Key="BlackBrush" Color="White" />
-                </Button.Resources>
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <DataTemplate x:Key="HeaderTemplate"
+                  x:Shared="False">
+        <DockPanel Margin="10"
+                   LastChildFill="True">
+            <Button x:Name="nav"
+                    DockPanel.Dock="Left"
+                    Foreground="{DynamicResource FlyoutWhiteBrush}"
+                    Style="{DynamicResource MetroCircleButtonStyle}"
+                    Height="40"
+                    Width="40"
+                    FontFamily="Segoe UI Symbol"
+                    FontSize="16"
+                    VerticalAlignment="Top">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="False" />
+                        <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
+                                                     Value="False" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <Rectangle Width="20" Height="15">
+                <Rectangle Width="20"
+                           Height="15">
                     <Rectangle.Fill>
                         <VisualBrush Stretch="Fill">
                             <VisualBrush.Visual>
-                                <Canvas Clip="F1M0,0L48,0 48,48 0,48 0,0" Height="40" Width="48" >
-                                    <Path Data="F1M36,22L36,26 19.75,26 27,33 20.5,33 11,24 20.5,15 27,15 19.75,22 36,22z" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="18" Canvas.Left="11" Stretch="Fill" Canvas.Top="15" Width="25" />
+                                <Canvas Width="48"
+                                        Height="48"
+                                        Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                                        UseLayoutRounding="False">
+                                    <Path Width="25"
+                                          Height="18"
+                                          Canvas.Left="12"
+                                          Canvas.Top="15"
+                                          Stretch="Fill"
+                                          Fill="{DynamicResource FlyoutWhiteBrush}"
+                                          Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z " />
                                 </Canvas>
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Rectangle.Fill>
                 </Rectangle>
             </Button>
-            <TextBlock Text="{Binding}" x:Name="PART_BackButton" FontSize="20" Margin="15,0,0,0" VerticalAlignment="Center"/>
-        </StackPanel>
+            <TextBlock Text="{Binding}"
+                       x:Name="PART_BackButton"
+                       Foreground="{DynamicResource FlyoutWhiteBrush}"
+                       FontSize="20"
+                       Margin="15,0,0,0"
+                       VerticalAlignment="Center" />
+        </DockPanel>
         <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}" Value="Right">
-                <Setter TargetName="nav" Property="Content">
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
+                         Value="Left">
+                <Setter TargetName="nav"
+                        Property="DockPanel.Dock"
+                        Value="Right" />
+                <Setter TargetName="PART_BackButton"
+                        Property="TextAlignment"
+                        Value="Right" />
+                <Setter TargetName="PART_BackButton"
+                        Property="Margin"
+                        Value="0,0,15,0" />
+                <Setter TargetName="nav"
+                        Property="LayoutTransform">
                     <Setter.Value>
-                        <Rectangle Width="20" Height="15" RenderTransformOrigin="0.5,0.5">
-                            <Rectangle.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform Angle="-180"/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Rectangle.RenderTransform>
-                            <Rectangle.Fill>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <Canvas Clip="F1M0,0L48,0 48,48 0,48 0,0" Height="40" Width="48" >
-                                            <Path Data="F1M36,22L36,26 19.75,26 27,33 20.5,33 11,24 20.5,15 27,15 19.75,22 36,22z" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Height="18" Canvas.Left="11" Stretch="Fill" Canvas.Top="15" Width="25" />
-                                        </Canvas>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                        <ScaleTransform ScaleX="-1" />
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 
+    <ControlTemplate x:Key="FlyoutTemplate"
+                     TargetType="{x:Type Controls:Flyout}">
+        <Grid x:Name="root"
+              Background="{TemplateBinding Background}"
+              HorizontalAlignment="Left">
+            <Grid.RenderTransform>
+                <TranslateTransform />
+            </Grid.RenderTransform>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="Default" />
+                    <VisualState x:Name="Hide">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                           Storyboard.TargetName="root">
+                                <EasingDoubleKeyFrame KeyTime="00:00:00.500"
+                                                      Value="1"
+                                                      x:Name="hideFrame">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut" />
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Show">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                           Storyboard.TargetName="root">
+                                <EasingDoubleKeyFrame KeyTime="00:00:00.600"
+                                                      Value="1"
+                                                      x:Name="showFrame">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut" />
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <DockPanel>
+                <ContentPresenter x:Name="PART_Header"
+                                  DockPanel.Dock="Top"
+                                  ContentSource="Header"
+                                  ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                <ContentPresenter x:Name="PART_Content"
+                                  DockPanel.Dock="Bottom">
+                </ContentPresenter>
+            </DockPanel>
+        </Grid>
+    </ControlTemplate>
+
     <Style TargetType="{x:Type Controls:Flyout}">
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="HeaderTemplate" Value="{StaticResource HeaderTemplate}" />
-        <Setter Property="Background" Value="#FF252525" />
-        <Setter Property="Foreground" Value="#FFFFFFFF" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Controls:Flyout}">
-                    <Grid x:Name="root" Background="{TemplateBinding Background}" HorizontalAlignment="Left">
-                        <Grid.RenderTransform>
-                            <TranslateTransform />
-                        </Grid.RenderTransform>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup>
-                                <VisualState x:Name="Default"/>
-                                <VisualState x:Name="Hide">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="root">
-                                            <EasingDoubleKeyFrame KeyTime="00:00:00.500" Value="1" x:Name="hideFrame">
-                                                <EasingDoubleKeyFrame.EasingFunction>
-                                                    <CubicEase EasingMode="EaseOut" />
-                                                </EasingDoubleKeyFrame.EasingFunction>
-                                            </EasingDoubleKeyFrame>
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Show">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" Storyboard.TargetName="root">
-                                            <EasingDoubleKeyFrame KeyTime="00:00:00.600" Value="1" x:Name="showFrame" >
-                                                <EasingDoubleKeyFrame.EasingFunction>
-                                                    <CubicEase EasingMode="EaseOut" />
-                                                </EasingDoubleKeyFrame.EasingFunction>
-                                            </EasingDoubleKeyFrame>
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <DockPanel>
-                            <ContentPresenter x:Name="PART_Header" DockPanel.Dock="Top" ContentSource="Header" ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                            <ContentPresenter x:Name="PART_Content" DockPanel.Dock="Bottom" />
-                        </DockPanel>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Style.Resources>
+            <SolidColorBrush x:Key="LabelTextBrush"
+                             Color="{StaticResource FlyoutWhiteColor}" />
+        </Style.Resources>
+        <Setter Property="VerticalAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="HeaderTemplate"
+                Value="{StaticResource HeaderTemplate}" />
+        <Setter Property="Background"
+                Value="#FF252525" />
+        <Setter Property="Template"
+                Value="{StaticResource FlyoutTemplate}" />
     </Style>
 </ResourceDictionary>
