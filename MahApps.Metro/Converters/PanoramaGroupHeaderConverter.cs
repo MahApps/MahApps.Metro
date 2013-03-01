@@ -11,7 +11,7 @@ namespace MahApps.Metro.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var result = new Thickness(10, 0, 20, 0);
+            var result = new Thickness(10, 0, 0, 20);
             var panorama_group_header = (Label)values[0];
             var panorama_left_edge = panorama_group_header.TryFindParent<ScrollViewer>().Margin.Left;
             var panorama_group = panorama_group_header.TryFindParent<DockPanel>();
