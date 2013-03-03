@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Data;
-using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
@@ -11,7 +10,6 @@ namespace MahApps.Metro.Controls
     public class PanoramaGroup : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        public Orientation Orientation { get; set; }
 
         public string Header { get; private set; }
         public ICollectionView Tiles { get; private set; }
