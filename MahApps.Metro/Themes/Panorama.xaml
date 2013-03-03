@@ -53,7 +53,7 @@
 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="{Binding Orientation}">
+                        <WrapPanel Orientation="{Binding Path=Orientation, RelativeSource={RelativeSource AncestorType=Controls:Panorama}}">
                             <WrapPanel.Height>
                                 <MultiBinding Converter="{StaticResource PanoramaGroupHeightConverter}">
                                     <Binding Path="ItemBox" RelativeSource="{RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}" />
