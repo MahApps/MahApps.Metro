@@ -17,6 +17,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderFontColorProperty = DependencyProperty.Register("HeaderFontColor", typeof(Brush), typeof(Panorama), new FrameworkPropertyMetadata(Brushes.White));
         public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(Panorama), new FrameworkPropertyMetadata(new FontFamily("Segoe UI Light")));
         public static readonly DependencyProperty UseSnapBackScrollingProperty = DependencyProperty.Register("UseSnapBackScrolling", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(Panorama), new PropertyMetadata(Orientation.Horizontal));
+
         public static readonly RoutedEvent ScrollToEndRoutedEvent = EventManager.RegisterRoutedEvent("ScrollToEnd", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Panorama));
 
         public event RoutedEventHandler ScrollToEnd
@@ -34,6 +36,12 @@ namespace MahApps.Metro.Controls
         {
             get { return 1.0 - friction; }
             set { friction = Math.Min(Math.Max(1.0 - value, 0), 1.0); }
+        }
+
+        public Orientation Orientation 
+        {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
         }
 
         public double ItemBox
