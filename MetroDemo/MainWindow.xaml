@@ -77,7 +77,7 @@
                 </MenuItem>
             </Menu>
             <TabControl Grid.Row="1">
-                <TabItem Header="_First set of controls">
+                <TabItem Header="_First set of controls" Controls:TabItemHelper.HeaderFontSize="45">
                     <Grid>
                        
                             <Grid Margin="0,0,226.999,8">
