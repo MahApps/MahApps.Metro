@@ -233,5 +233,19 @@ namespace MahApps.Metro.Controls
             base.OnPreviewMouseUp(e);
         }
 
+        protected override void OnManipulationDelta(ManipulationDeltaEventArgs e)
+        {
+            Point delta = new Point(e.DeltaManipulation.Translation.X, e.DeltaManipulation.Translation.Y);
+
+            if (Math.Abs(delta.X) < PixelsToMoveToBeConsideredScroll &&
+                Math.Abs(delta.Y) < PixelsToMoveToBeConsideredScroll)
+                return;
+
+            scrollTarget.X = scrollStartOffset.X + delta.X;
+            scrollTarget.Y = scrollStartOffset.Y + delta.Y;                
+            
+            base.OnManipulationDelta(e);
+        }
+
     }
 }
