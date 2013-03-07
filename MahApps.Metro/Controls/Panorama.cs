@@ -75,7 +75,6 @@ namespace MahApps.Metro.Controls
         public Panorama()
         {
             friction = 0.85;
-
             animationTimer.Interval = new TimeSpan(0, 0, 0, 0, 20);
             animationTimer.Tick += HandleWorldTimerTick;
 
@@ -88,6 +87,9 @@ namespace MahApps.Metro.Controls
             {
                 animationTimer.Stop();
             };
+
+            // Needed to get Manipulation events
+            this.IsManipulationEnabled = true;
         }
 
         static Panorama()
