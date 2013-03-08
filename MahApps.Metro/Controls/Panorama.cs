@@ -89,8 +89,6 @@ namespace MahApps.Metro.Controls
                 animationTimer.Stop();
             };
 
-            // Needed to get Manipulation events
-            this.IsManipulationEnabled = true;
         }
 
         static Panorama()
@@ -236,19 +234,26 @@ namespace MahApps.Metro.Controls
             base.OnPreviewMouseUp(e);
         }
 
-        protected override void OnManipulationDelta(ManipulationDeltaEventArgs e)
+        protected override void OnPreviewTouchMove(TouchEventArgs e)
         {
-            Point delta = new Point(e.DeltaManipulation.Translation.X, e.DeltaManipulation.Translation.Y);
+            Point currentPoint = e.GetTouchPoint(this).Position;
 
-            if (Math.Abs(delta.X) < PixelsToMoveToBeConsideredScroll &&
-                Math.Abs(delta.Y) < PixelsToMoveToBeConsideredScroll)
-                return;
+            // Determine the new amount to scroll.
+            var delta = new Point(scrollStartPoint.X - currentPoint.X, scrollStartPoint.Y - currentPoint.Y);
 
             scrollTarget.X = scrollStartOffset.X + delta.X;
-            scrollTarget.Y = scrollStartOffset.Y + delta.Y;                
-            
-            base.OnManipulationDelta(e);
+            scrollTarget.Y = scrollStartOffset.Y + delta.Y;
+
+            sv.ScrollToHorizontalOffset(scrollTarget.X);
+            sv.ScrollToVerticalOffset(scrollTarget.Y);
         }
 
+        protected override void OnPreviewTouchDown(TouchEventArgs e)
+        {
+            scrollStartPoint = e.GetTouchPoint(this).Position;
+            scrollStartOffset.X = sv.HorizontalOffset;
+            scrollStartOffset.Y = sv.VerticalOffset;
+        }
+        
     }
 }
