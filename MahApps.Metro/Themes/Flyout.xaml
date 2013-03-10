@@ -138,6 +138,8 @@
             <SolidColorBrush x:Key="LabelTextBrush"
                              Color="{StaticResource FlyoutWhiteColor}" />
         </Style.Resources>
+        <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="Cycle" />
         <Setter Property="VerticalAlignment"
                 Value="Stretch" />
         <Setter Property="VerticalContentAlignment"
@@ -145,7 +147,7 @@
         <Setter Property="HeaderTemplate"
                 Value="{StaticResource HeaderTemplate}" />
         <Setter Property="Background"
-                Value="#FF252525" />
+                Value="#333333" />
         <Setter Property="Template"
                 Value="{StaticResource FlyoutTemplate}" />
     </Style>
