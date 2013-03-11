@@ -17,6 +17,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderFontColorProperty = DependencyProperty.Register("HeaderFontColor", typeof(Brush), typeof(Panorama), new FrameworkPropertyMetadata(Brushes.White));
         public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(Panorama), new FrameworkPropertyMetadata(new FontFamily("Segoe UI Light")));
         public static readonly DependencyProperty UseSnapBackScrollingProperty = DependencyProperty.Register("UseSnapBackScrolling", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty DynamicGroupHeaderProperty = DependencyProperty.Register("DynamicGroupHeader", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
 
         public double Friction
         {
@@ -58,6 +59,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(UseSnapBackScrollingProperty); }
             set { SetValue(UseSnapBackScrollingProperty, value); }
+        }
+
+        public bool DynamicGroupHeader
+        {
+            get { return (bool)GetValue(DynamicGroupHeaderProperty); }
+            set { SetValue(DynamicGroupHeaderProperty, value); }
         }
 
         private ScrollViewer sv;
