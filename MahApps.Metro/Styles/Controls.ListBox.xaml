@@ -52,21 +52,6 @@
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True"/>
-                                <Condition Property="IsMouseOver" Value="True"/>
-                                <Condition Property="IsEnabled" Value="True"/>
-                            </MultiTrigger.Conditions>
-                            <MultiTrigger.Setters>
-                                <Setter Property="Foreground" Value="{DynamicResource GrayBrush3}"/>
-                                <Setter TargetName="Border" Property="Background">
-                                    <Setter.Value>
-                                        <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                    </Setter.Value>
-                                </Setter>
-                            </MultiTrigger.Setters>
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
                                 <Condition Property="IsEnabled" Value="False" />
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
