@@ -36,7 +36,7 @@
                                     <VisualTransition GeneratedDuration="0:0:0.05" To="Unchecked" />
                                     <VisualTransition GeneratedDuration="0:0:0.05" To="Checked" >
                                         <Storyboard>
-                                            <DoubleAnimation Duration="0:0:0.05" To="47" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="SwitchThumb">
+                                            <DoubleAnimation Duration="0:0:0.05" To="47" Storyboard.TargetProperty="(TranslateTransform.X)" Storyboard.TargetName="SwitchThumbTranslate">
                                                 <DoubleAnimation.EasingFunction>
                                                     <CircleEase EasingMode="EaseIn"/>
                                                 </DoubleAnimation.EasingFunction>
@@ -106,7 +106,7 @@
                                             <ScaleTransform/>
                                             <SkewTransform/>
                                             <RotateTransform/>
-                                            <TranslateTransform/>
+                                            <TranslateTransform x:Name="SwitchThumbTranslate"/>
                                         </TransformGroup>
                                     </Border.RenderTransform>
                                     <Border x:Name="ThumbCenter" BorderBrush="{TemplateBinding Foreground}" BorderThickness="0" Background="{DynamicResource BlackBrush}" />
@@ -120,7 +120,7 @@
     </Style>
 
     <Style TargetType="{x:Type Controls:ToggleSwitch}">
-        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="IsTabStop" Value="True" />
         <Setter Property="SwitchForeground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
