@@ -1,211 +1,224 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using MahApps.Metro.Models.Win32;
 
 namespace MahApps.Metro.Controls
 {
-	partial class GlowWindow : Window
-	{
-		private Window owner;
-		private double glowSize = 9.0;
-		private double edgeSize = 20.0;
-		private IntPtr handle;
-		private IntPtr ownerHandle;
-		private Func<double> getLeft;
-		private Func<double> getTop;
-		private Func<double> getWidth;
-		private Func<double> getHeight;
-		private Func<Point, HitTestValues> getHitTestValue;
-		private Func<Point, Cursor> getCursor;
+    partial class GlowWindow : Window
+    {
+        private readonly Func<Point, Cursor> getCursor;
+        private readonly Func<double> getHeight;
+        private readonly Func<Point, HitTestValues> getHitTestValue;
+        private readonly Func<double> getLeft;
+        private readonly Func<double> getTop;
+        private readonly Func<double> getWidth;
+        private readonly Window owner;
+        private double edgeSize = 20.0;
+        private double glowSize = 9.0;
+        private IntPtr handle;
+        private IntPtr ownerHandle;
 
-		public GlowWindow(Window owner, GlowDirection direction)
-		{
-			InitializeComponent();
+        public GlowWindow(Window owner, GlowDirection direction)
+        {
+            InitializeComponent();
 
-			this.owner = owner;
-			this.glow.Visibility = Visibility.Collapsed;
-            
-            Binding b = new Binding("GlowBrush.Color");
-		    b.Source = owner;
-		    glow.SetBinding(Glow.GlowColorProperty, b);
+            this.owner = owner;
+            glow.Visibility = Visibility.Collapsed;
 
-			switch (direction)
-			{
-				case GlowDirection.Left:
-					this.glow.Orientation = Orientation.Vertical;
-					this.glow.HorizontalAlignment = HorizontalAlignment.Right;
-					this.getLeft = () => owner.Left - this.glowSize;
-					this.getTop = () => owner.Top - this.glowSize;
-					this.getWidth = () => this.glowSize;
-					this.getHeight = () => owner.ActualHeight + this.glowSize * 2;
-					this.getHitTestValue = p => new Rect(0, 0, this.ActualWidth, edgeSize).Contains(p)
-						? HitTestValues.HTTOPLEFT
-						: new Rect(0, this.ActualHeight - edgeSize, this.ActualWidth, edgeSize).Contains(p)
-							? HitTestValues.HTBOTTOMLEFT
-							: HitTestValues.HTLEFT;
-					this.getCursor = p => new Rect(0, 0, this.ActualWidth, edgeSize).Contains(p)
-						? Cursors.SizeNWSE
-						: new Rect(0, this.ActualHeight - edgeSize, this.ActualWidth, edgeSize).Contains(p)
-							? Cursors.SizeNESW
-							: Cursors.SizeWE;
-					break;
-				case GlowDirection.Right:
-					this.glow.Orientation = Orientation.Vertical;
-					this.glow.HorizontalAlignment = HorizontalAlignment.Left;
-					this.getLeft = () => owner.Left + owner.ActualWidth;
-					this.getTop = () => owner.Top - this.glowSize;
-					this.getWidth = () => this.glowSize;
-					this.getHeight = () => owner.ActualHeight + this.glowSize * 2;
-					this.getHitTestValue = p => new Rect(0, 0, this.ActualWidth, edgeSize).Contains(p)
-						? HitTestValues.HTTOPRIGHT
-						: new Rect(0, this.ActualHeight - edgeSize, this.ActualWidth, edgeSize).Contains(p)
-							? HitTestValues.HTBOTTOMRIGHT
-							: HitTestValues.HTRIGHT;
-					this.getCursor = p => new Rect(0, 0, this.ActualWidth, edgeSize).Contains(p)
-						? Cursors.SizeNESW
-						: new Rect(0, this.ActualHeight - edgeSize, this.ActualWidth, edgeSize).Contains(p)
-							? Cursors.SizeNWSE
-							: Cursors.SizeWE;
-					break;
-				case GlowDirection.Top:
-					this.glow.Orientation = Orientation.Horizontal;
-					this.glow.VerticalAlignment = VerticalAlignment.Bottom;
-					this.getLeft = () => owner.Left;
-					this.getTop = () => owner.Top - this.glowSize;
-					this.getWidth = () => owner.ActualWidth;
-					this.getHeight = () => this.glowSize;
-					this.getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, this.ActualHeight).Contains(p)
-						? HitTestValues.HTTOPLEFT
-						: new Rect(this.Width - edgeSize + glowSize, 0, edgeSize - glowSize, this.ActualHeight).Contains(p)
-							? HitTestValues.HTTOPRIGHT
-							: HitTestValues.HTTOP;
-					this.getCursor = p => new Rect(0, 0, edgeSize - glowSize, this.ActualHeight).Contains(p)
-						? Cursors.SizeNWSE
-						: new Rect(this.Width - edgeSize + glowSize, 0, edgeSize - glowSize, this.ActualHeight).Contains(p)
-							? Cursors.SizeNESW
-							: Cursors.SizeNS;
-					break;
-				case GlowDirection.Bottom:
-					this.glow.Orientation = Orientation.Horizontal;
-					this.glow.VerticalAlignment = VerticalAlignment.Top;
-					this.getLeft = () => owner.Left;
-					this.getTop = () => owner.Top + owner.ActualHeight;
-					this.getWidth = () => owner.ActualWidth;
-					this.getHeight = () => this.glowSize;
-					this.getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, this.ActualHeight).Contains(p)
-						? HitTestValues.HTBOTTOMLEFT
-						: new Rect(this.Width - edgeSize + glowSize, 0, edgeSize - glowSize, this.ActualHeight).Contains(p)
-							? HitTestValues.HTBOTTOMRIGHT
-							: HitTestValues.HTBOTTOM;
-					this.getCursor = p => new Rect(0, 0, edgeSize - glowSize, this.ActualHeight).Contains(p)
-						? Cursors.SizeNESW
-						: new Rect(this.Width - edgeSize + glowSize, 0, edgeSize - glowSize, this.ActualHeight).Contains(p)
-							? Cursors.SizeNWSE
-							: Cursors.SizeNS;
-					break;
-			}
+            var b = new Binding("GlowBrush.Color");
+            b.Source = owner;
+            glow.SetBinding(Glow.GlowColorProperty, b);
 
-			owner.ContentRendered += (sender, e) => this.glow.Visibility = Visibility.Visible;
-			owner.Activated += (sender, e) => this.Update();
-			owner.Activated += (sender, e) => this.glow.IsGlow = true;
-			owner.Deactivated += (sender, e) => this.glow.IsGlow = false;
-			owner.LocationChanged += (sender, e) => this.Update();
-			owner.SizeChanged += (sender, e) => this.Update();
-			owner.StateChanged += (sender, e) => this.Update();
-			owner.Closed += (sender, e) => this.Close();
-		}
+            switch (direction)
+            {
+                case GlowDirection.Left:
+                    glow.Orientation = Orientation.Vertical;
+                    glow.HorizontalAlignment = HorizontalAlignment.Right;
+                    getLeft = () => owner.Left - glowSize;
+                    getTop = () => owner.Top - glowSize;
+                    getWidth = () => glowSize;
+                    getHeight = () => owner.ActualHeight + glowSize*2;
+                    getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
+                                               ? HitTestValues.HTTOPLEFT
+                                               : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
+                                                     ? HitTestValues.HTBOTTOMLEFT
+                                                     : HitTestValues.HTLEFT;
+                    getCursor = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
+                                         ? Cursors.SizeNWSE
+                                         : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
+                                               ? Cursors.SizeNESW
+                                               : Cursors.SizeWE;
+                    break;
+                case GlowDirection.Right:
+                    glow.Orientation = Orientation.Vertical;
+                    glow.HorizontalAlignment = HorizontalAlignment.Left;
+                    getLeft = () => owner.Left + owner.ActualWidth;
+                    getTop = () => owner.Top - glowSize;
+                    getWidth = () => glowSize;
+                    getHeight = () => owner.ActualHeight + glowSize*2;
+                    getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
+                                               ? HitTestValues.HTTOPRIGHT
+                                               : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
+                                                     ? HitTestValues.HTBOTTOMRIGHT
+                                                     : HitTestValues.HTRIGHT;
+                    getCursor = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
+                                         ? Cursors.SizeNESW
+                                         : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
+                                               ? Cursors.SizeNWSE
+                                               : Cursors.SizeWE;
+                    break;
+                case GlowDirection.Top:
+                    glow.Orientation = Orientation.Horizontal;
+                    glow.VerticalAlignment = VerticalAlignment.Bottom;
+                    getLeft = () => owner.Left;
+                    getTop = () => owner.Top - glowSize;
+                    getWidth = () => owner.ActualWidth;
+                    getHeight = () => glowSize;
+                    getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
+                                               ? HitTestValues.HTTOPLEFT
+                                               : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize,
+                                                          ActualHeight).Contains(p)
+                                                     ? HitTestValues.HTTOPRIGHT
+                                                     : HitTestValues.HTTOP;
+                    getCursor = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
+                                         ? Cursors.SizeNWSE
+                                         : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize, ActualHeight).
+                                               Contains(p)
+                                               ? Cursors.SizeNESW
+                                               : Cursors.SizeNS;
+                    break;
+                case GlowDirection.Bottom:
+                    glow.Orientation = Orientation.Horizontal;
+                    glow.VerticalAlignment = VerticalAlignment.Top;
+                    getLeft = () => owner.Left;
+                    getTop = () => owner.Top + owner.ActualHeight;
+                    getWidth = () => owner.ActualWidth;
+                    getHeight = () => glowSize;
+                    getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
+                                               ? HitTestValues.HTBOTTOMLEFT
+                                               : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize,
+                                                          ActualHeight).Contains(p)
+                                                     ? HitTestValues.HTBOTTOMRIGHT
+                                                     : HitTestValues.HTBOTTOM;
+                    getCursor = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
+                                         ? Cursors.SizeNESW
+                                         : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize, ActualHeight).
+                                               Contains(p)
+                                               ? Cursors.SizeNWSE
+                                               : Cursors.SizeNS;
+                    break;
+            }
 
-		protected override void OnSourceInitialized(EventArgs e)
-		{
-			base.OnSourceInitialized(e);
+            owner.ContentRendered += (sender, e) => glow.Visibility = Visibility.Visible;
+            owner.Activated += (sender, e) => Update();
+            owner.Activated += (sender, e) => glow.IsGlow = true;
+            owner.Deactivated += (sender, e) => glow.IsGlow = false;
+            owner.LocationChanged += (sender, e) => Update();
+            owner.SizeChanged += (sender, e) => Update();
+            owner.StateChanged += (sender, e) => Update();
+            owner.Closed += (sender, e) => Close();
+        }
 
-			var source = (HwndSource)HwndSource.FromVisual(this);
-			var ws = source.Handle.GetWindowLong();
-			var wsex = source.Handle.GetWindowLongEx();
+        public static double DpiFactor(GlowWindow window)
+        {
+            PresentationSource source = PresentationSource.FromVisual(window);
+            double dpiX = 96.0, dpiY = 96.0;
+            if (source != null)
+            {
+                dpiX = 96.0*source.CompositionTarget.TransformToDevice.M11;
+                dpiY = 96.0*source.CompositionTarget.TransformToDevice.M22;
+            }
+            if (dpiX == dpiY)
+            {
+                return dpiX/96.0;
+            }
+            return 1;
+        }
 
-			//ws |= WS.POPUP;
-			wsex ^= WSEX.APPWINDOW;
-			wsex |= WSEX.NOACTIVATE;
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
 
-			source.Handle.SetWindowLong(ws);
-			source.Handle.SetWindowLongEx(wsex);
-			source.AddHook(this.WndProc);
+            var source = (HwndSource) PresentationSource.FromVisual(this);
+            WS ws = source.Handle.GetWindowLong();
+            WSEX wsex = source.Handle.GetWindowLongEx();
 
-			this.handle = source.Handle;
-		}
+            //ws |= WS.POPUP;
+            wsex ^= WSEX.APPWINDOW;
+            wsex |= WSEX.NOACTIVATE;
 
-		public void Update()
-		{
-			if (owner.WindowState == WindowState.Normal)
-			{
-				this.Visibility = Visibility.Visible;
+            source.Handle.SetWindowLong(ws);
+            source.Handle.SetWindowLongEx(wsex);
+            source.AddHook(WndProc);
 
-				this.UpdateCore();
-			}
+            handle = source.Handle;
+        }
+
+        public void Update()
+        {
+            if (owner.WindowState == WindowState.Normal)
+            {
+                Visibility = Visibility.Visible;
+
+                UpdateCore();
+            }
             else if (owner.Visibility == Visibility.Hidden)
             {
-                this.Visibility = Visibility.Hidden;
+                Visibility = Visibility.Hidden;
 
-                this.UpdateCore();
+                UpdateCore();
             }
-			else
-			{
-				this.Visibility = Visibility.Collapsed;
-			}
-		}
+            else
+            {
+                Visibility = Visibility.Collapsed;
+            }
+        }
 
-		private void UpdateCore()
-		{
-			if (this.ownerHandle == IntPtr.Zero)
-			{
-				this.ownerHandle = new WindowInteropHelper(this.owner).Handle;
-			}
+        private void UpdateCore()
+        {
+            if (ownerHandle == IntPtr.Zero)
+            {
+                ownerHandle = new WindowInteropHelper(owner).Handle;
+            }
 
-			NativeMethods.SetWindowPos(
-				this.handle,
-				this.ownerHandle,
-				(int)this.getLeft(),
-				(int)this.getTop(),
-				(int)this.getWidth(),
-				(int)this.getHeight(),
-				SWP.NOACTIVATE);
-		}
+            NativeMethods.SetWindowPos(
+                handle,
+                ownerHandle,
+                (int) ((int) getLeft()*DpiFactor(this)),
+                (int) ((int) getTop()*DpiFactor(this)),
+                (int) ((int) getWidth()*DpiFactor(this)),
+                (int) ((int) getHeight()*DpiFactor(this)),
+                SWP.NOACTIVATE);
+        }
 
-		private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-		{
-			if (msg == (int)WM.MOUSEACTIVATE)
-			{
-				handled = true;
-				return new IntPtr(3);
-			}
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == (int) WM.MOUSEACTIVATE)
+            {
+                handled = true;
+                return new IntPtr(3);
+            }
 
-			if (msg == (int)WM.LBUTTONDOWN)
-			{
-				var pt = new Point((int)lParam & 0xFFFF, ((int)lParam >> 16) & 0xFFFF);
+            if (msg == (int) WM.LBUTTONDOWN)
+            {
+                var pt = new Point((int) lParam & 0xFFFF, ((int) lParam >> 16) & 0xFFFF);
 
-				NativeMethods.PostMessage(this.ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)this.getHitTestValue(pt), IntPtr.Zero);
-			}
-			if (msg == (int)WM.NCHITTEST)
-			{
-				var ptScreen = new Point((int)lParam & 0xFFFF, ((int)lParam >> 16) & 0xFFFF);
-				var ptClient = this.PointFromScreen(ptScreen);
-				var cursor = this.getCursor(ptClient);
-				if (cursor != this.Cursor) this.Cursor = cursor;
-			}
+                NativeMethods.PostMessage(ownerHandle, (uint) WM.NCLBUTTONDOWN, (IntPtr) getHitTestValue(pt),
+                                          IntPtr.Zero);
+            }
+            if (msg == (int) WM.NCHITTEST)
+            {
+                var ptScreen = new Point((int) lParam & 0xFFFF, ((int) lParam >> 16) & 0xFFFF);
+                Point ptClient = PointFromScreen(ptScreen);
+                Cursor cursor = getCursor(ptClient);
+                if (cursor != Cursor) Cursor = cursor;
+            }
 
-			return IntPtr.Zero;
-		}
-	}
+            return IntPtr.Zero;
+        }
+    }
 }
