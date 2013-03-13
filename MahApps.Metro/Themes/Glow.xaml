@@ -5,7 +5,7 @@
     <ControlTemplate x:Key="GlowTemplate" TargetType="{x:Type Controls:Glow}">
         <Grid Margin="{TemplateBinding Padding}" Background="Transparent">
             <Border Grid.Row="1" Grid.Column="1" Background="{TemplateBinding Background}" />
-            <Border x:Name="glowSource" Grid.Row="1" Grid.Column="1" Margin="-1,0" Opacity="0.5" Background="{TemplateBinding Background}" >
+            <Border x:Name="glowSource" Grid.Row="1" Grid.Column="1" Margin="-1,0" Opacity="0.6" Background="{TemplateBinding Background}" >
                 <Border.Effect>
                     <BlurEffect Radius="8" />
                 </Border.Effect>
