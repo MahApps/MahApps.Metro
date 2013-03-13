@@ -21,6 +21,7 @@ namespace MahApps.Metro.Controls
         private double glowSize = 9.0;
         private IntPtr handle;
         private IntPtr ownerHandle;
+        private static double? _dpiFactor = null;
 
         public GlowWindow(Window owner, GlowDirection direction)
         {
@@ -123,20 +124,28 @@ namespace MahApps.Metro.Controls
             owner.Closed += (sender, e) => Close();
         }
 
-        public static double DpiFactor(GlowWindow window)
+        public static double DpiFactor
         {
-            PresentationSource source = PresentationSource.FromVisual(window);
-            double dpiX = 96.0, dpiY = 96.0;
-            if (source != null)
+            get
             {
-                dpiX = 96.0*source.CompositionTarget.TransformToDevice.M11;
-                dpiY = 96.0*source.CompositionTarget.TransformToDevice.M22;
+                if (_dpiFactor == null)
+                {
+
+                    PresentationSource source = PresentationSource.FromVisual(Application.Current.MainWindow);
+                    double dpiX = 96.0, dpiY = 96.0;
+                    if (source != null)
+                    {
+                        dpiX = 96.0*source.CompositionTarget.TransformToDevice.M11;
+                        dpiY = 96.0*source.CompositionTarget.TransformToDevice.M22;
+                    }
+                    if (dpiX == dpiY)
+                    {
+                        _dpiFactor = dpiX/96.0;
+                    }
+                }
+                return _dpiFactor.Value;
             }
-            if (dpiX == dpiY)
-            {
-                return dpiX/96.0;
-            }
-            return 1;
+            
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -188,10 +197,10 @@ namespace MahApps.Metro.Controls
             NativeMethods.SetWindowPos(
                 handle,
                 ownerHandle,
-                (int) ((int) getLeft()*DpiFactor(this)),
-                (int) ((int) getTop()*DpiFactor(this)),
-                (int) ((int) getWidth()*DpiFactor(this)),
-                (int) ((int) getHeight()*DpiFactor(this)),
+                (int) ((int) getLeft()*DpiFactor),
+                (int) ((int) getTop()*DpiFactor),
+                (int) ((int) getWidth()*DpiFactor),
+                (int) ((int) getHeight()*DpiFactor),
                 SWP.NOACTIVATE);
         }
 
