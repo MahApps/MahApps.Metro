@@ -17,8 +17,8 @@ namespace MahApps.Metro.Controls
         private readonly Func<double> getTop;
         private readonly Func<double> getWidth;
         private readonly Window owner;
-        private double edgeSize = 20.0;
-        private double glowSize = 9.0;
+        private const double edgeSize = 20.0;
+        private const double glowSize = 9.0;
         private IntPtr handle;
         private IntPtr ownerHandle;
         private static double? _dpiFactor = null;
@@ -39,7 +39,7 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Left:
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Right;
-                    getLeft = () => owner.Left - glowSize;
+                    getLeft = () => Math.Ceiling(owner.Left - glowSize);
                     getTop = () => owner.Top - glowSize;
                     getWidth = () => glowSize;
                     getHeight = () => owner.ActualHeight + glowSize*2;
@@ -76,7 +76,7 @@ namespace MahApps.Metro.Controls
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Bottom;
                     getLeft = () => owner.Left;
-                    getTop = () => owner.Top - glowSize;
+                    getTop = () => Math.Ceiling(owner.Top - glowSize);
                     getWidth = () => owner.ActualWidth;
                     getHeight = () => glowSize;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
@@ -135,12 +135,12 @@ namespace MahApps.Metro.Controls
                     double dpiX = 96.0, dpiY = 96.0;
                     if (source != null)
                     {
-                        dpiX = 96.0*source.CompositionTarget.TransformToDevice.M11;
-                        dpiY = 96.0*source.CompositionTarget.TransformToDevice.M22;
+                        dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
+                        dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
                     }
                     if (dpiX == dpiY)
                     {
-                        _dpiFactor = dpiX/96.0;
+                        _dpiFactor = dpiX / 96.0;
                     }
                 }
                 return _dpiFactor.Value;
@@ -197,10 +197,10 @@ namespace MahApps.Metro.Controls
             NativeMethods.SetWindowPos(
                 handle,
                 ownerHandle,
-                (int) ((int) getLeft()*DpiFactor),
-                (int) ((int) getTop()*DpiFactor),
-                (int) ((int) getWidth()*DpiFactor),
-                (int) ((int) getHeight()*DpiFactor),
+                (int) (getLeft() * DpiFactor),
+                (int) (getTop() * DpiFactor),
+                (int) (getWidth() * DpiFactor),
+                (int) (getHeight() * DpiFactor),
                 SWP.NOACTIVATE);
         }
 
