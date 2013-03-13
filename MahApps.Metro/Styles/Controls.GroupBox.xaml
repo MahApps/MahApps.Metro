@@ -8,6 +8,8 @@
            TargetType="{x:Type GroupBox}">
         <Setter Property="Margin" Value="5" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupBox}">
@@ -17,15 +19,15 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border Grid.Row="0"
-                                Background="{DynamicResource AccentColorBrush}"
-                                BorderBrush="{DynamicResource AccentColorBrush}"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="1">
                             <ContentPresenter Margin="{TemplateBinding Margin}"
                                               ContentSource="Header"
                                               RecognizesAccessKey="True">
                                 <ContentPresenter.Resources>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Foreground" Value="White" />
+                                        <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
                                         <Setter Property="VerticalAlignment" Value="Center" />
                                     </Style>
                                 </ContentPresenter.Resources>
@@ -38,7 +40,7 @@
                         </Border>
                         <Border Grid.Row="1"
                                 Background="Transparent"
-                                BorderBrush="{DynamicResource AccentColorBrush}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="1,0,1,1">
                             <ContentPresenter Margin="{TemplateBinding Margin}"
                                               Content="{TemplateBinding Content}"
