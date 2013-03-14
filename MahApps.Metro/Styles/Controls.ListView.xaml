@@ -52,7 +52,6 @@
                                     <SolidColorBrush Color="{DynamicResource AccentColor3}" />
                                 </Setter.Value>
                             </Setter>
-
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -82,20 +81,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <!--<Style.Triggers>
-      <Trigger Property="ItemsControl.AlternationIndex"
-               Value="0">
-        <Setter Property="Background"
-                Value="{DynamicResource AlternateRow1BackgroundBrush}" />
-      </Trigger>
-      <Trigger Property="ItemsControl.AlternationIndex"
-               Value="1">
-        <Setter Property="Background"
-                Value="{DynamicResource AlternateRow2BackgroundBrush}" />
-        <Setter Property="Border.BorderThickness"
-                Value="0 1 0 1" />
-      </Trigger>
-    </Style.Triggers>-->
     </Style>
 
     <!--Gives the impression that items cannot be selected on the ListView-->
@@ -201,18 +186,6 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
-            <!--<Trigger Property="Role"
-               Value="Padding">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="GridViewColumnHeader">
-                            <Border Name="HeaderBorder"
-                                      BorderThickness="0,0,0,1"
-                                      BorderBrush="{DynamicResource HighlightBrush}"  />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>-->
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
