@@ -41,7 +41,7 @@
                                         <Style.Triggers>
                                             <DataTrigger
                                                 Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
-                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -57,7 +57,7 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
                             <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Bd" Property="Background">
@@ -77,7 +77,7 @@
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
                         </MultiTrigger>
                         <!--<MultiTrigger>
                             <MultiTrigger.Conditions>
