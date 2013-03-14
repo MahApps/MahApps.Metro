@@ -18,6 +18,8 @@
   <files>
     <file src="bin\Release\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />
     <file src="bin\Release\System.Windows.Interactivity.dll" target="lib\net40\System.Windows.Interactivity.dll" />
+    <file src="bin\Release\NET45\MahApps.Metro.dll" target="lib\net45\MahApps.Metro.dll" />
+    <file src="bin\Release\NET45\System.Windows.Interactivity.dll" target="lib\net45\System.Windows.Interactivity.dll" />
 	<file src="tools\install.ps1" target="tools\install.ps1" />
   </files>
 </package>
