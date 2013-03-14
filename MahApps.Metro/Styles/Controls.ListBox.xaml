@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <Style x:Key="MetroListBox" TargetType="{x:Type ListBox}">
@@ -38,6 +38,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Foreground" Value="White" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Border" Property="Background">
@@ -56,7 +57,7 @@
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
                                 <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
-                                <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                                <Setter Property="Foreground" Value="White" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                         <MultiTrigger>
