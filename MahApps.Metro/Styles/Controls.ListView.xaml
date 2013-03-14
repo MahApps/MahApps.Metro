@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
@@ -32,9 +32,21 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                    <Border x:Name="Border" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
                         <Grid>
-                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <GridViewRowPresenter.Resources>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
+                                                <Setter Property="Foreground" Value="White"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </GridViewRowPresenter.Resources>
+                            </GridViewRowPresenter>
                             <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
                         </Grid>
                     </Border>
@@ -43,12 +55,12 @@
                             <Setter TargetName="contentPresenter" Property="Visibility" Value="Visible"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource WhiteColorBrush}"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#FF143c65" />
+                            <Setter Property="Background" TargetName="Border" Value="{DynamicResource AccentColorBrush}"/>
+                            <Setter Property="Foreground" Value="White"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background">
+                            <Setter TargetName="Border" Property="Background">
                                 <Setter.Value>
                                     <SolidColorBrush Color="{DynamicResource AccentColor3}" />
                                 </Setter.Value>
@@ -60,25 +72,26 @@
                                 <Condition Property="IsSelected" Value="true" />
                                 <Condition Property="Selector.IsSelectionActive" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd">
+                            <Setter Property="Background" TargetName="Border">
                                 <Setter.Value>
                                     <SolidColorBrush Color="{DynamicResource AccentColor2}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
+                            <Setter Property="BorderBrush" TargetName="Border" Value="#FF143c65" />
+                            <Setter Property="Foreground" Value="White"/>
                         </MultiTrigger>
-                        <MultiTrigger>
+                        <!--<MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="Selector.IsSelectionActive" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd">
+                            <Setter Property="Background" TargetName="Border">
                                 <Setter.Value>
                                     <SolidColorBrush Color="{DynamicResource AccentColor2}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
-                        </MultiTrigger>
+                            <Setter Property="BorderBrush" TargetName="Border" Value="#FF143c65" />
+                        </MultiTrigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -111,7 +124,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
-                    <Border x:Name="Bd"
+                    <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
                             BorderThickness="{TemplateBinding Border.BorderThickness}"
                             SnapsToDevicePixels="true">
@@ -119,7 +132,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Bd" Property="Background" Value="#e0eff8" />
+                            <Setter TargetName="Border" Property="Background" Value="#e0eff8" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
