@@ -19,4 +19,7 @@
     <SolidColorBrush x:Key="AccentColorBrush"
                      Color="{StaticResource AccentColor}" />
 
+    <SolidColorBrush x:Key="AccentSelectedColorBrush"
+                     Color="White" />
+
 </ResourceDictionary>
