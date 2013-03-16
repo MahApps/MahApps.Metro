@@ -134,6 +134,59 @@
                 </ComboBox>
             </StackPanel>
         </Controls:Flyout>
+
+        <Controls:Flyout Header="Top"
+                         Position="Top">
+            <StackPanel Margin="5,5,5,5"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Height="80">
+                <Button Foreground="{DynamicResource FlyoutWhiteBrush}"
+                        Style="{DynamicResource MetroCircleButtonStyle}"
+                        Height="40"
+                        Width="40"
+                        FontFamily="Segoe UI Symbol"
+                        FontSize="16">
+                    <Rectangle Width="20"
+                               Height="20">
+                        <Rectangle.Resources>
+                            <SolidColorBrush x:Key="BlackBrush"
+                                             Color="{DynamicResource FlyoutWhiteColor}" />
+                        </Rectangle.Resources>
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill"
+                                         Visual="{StaticResource appbar_add}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+            </StackPanel>
+        </Controls:Flyout>
+        <Controls:Flyout Header="Bottom"
+                         Position="Bottom">
+            <StackPanel Margin="5,5,5,5"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Height="80">
+                <Button Foreground="{DynamicResource FlyoutWhiteBrush}"
+                        Style="{DynamicResource MetroCircleButtonStyle}"
+                        Height="40"
+                        Width="40"
+                        FontFamily="Segoe UI Symbol"
+                        FontSize="16">
+                    <Rectangle Width="20"
+                               Height="20">
+                        <Rectangle.Resources>
+                            <SolidColorBrush x:Key="BlackBrush"
+                                             Color="{DynamicResource FlyoutWhiteColor}" />
+                        </Rectangle.Resources>
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill"
+                                         Visual="{StaticResource appbar_add}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Button>
+            </StackPanel>
+        </Controls:Flyout>
     </Controls:MetroWindow.Flyouts>
 
     <Grid>
@@ -160,6 +213,19 @@
                     MinWidth="90"
                     Margin="2"
                     Content="Close" />
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="10">
+            <Button Click="ShowTop"
+                    MinWidth="90"
+                    Margin="2"
+                    Content="Show Top" />
+            <Button Click="ShowBottom"
+                    MinWidth="90"
+                    Margin="2"
+                    Content="Show Bottom" />
         </StackPanel>
 
         <StackPanel HorizontalAlignment="Right"
