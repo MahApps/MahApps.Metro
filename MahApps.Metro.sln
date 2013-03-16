@@ -18,6 +18,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.NET45", "MahApps.Metro\MahApps.Metro.NET45.csproj", "{942D11C4-29F5-46C4-8C14-4B976D56C637}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5B1710D2-5DC8-4754-91B2-19165DE49B3D} = {5B1710D2-5DC8-4754-91B2-19165DE49B3D}
+	EndProjectSection
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F80ABBD3-DDB4-4797-8979-80926F03C94B}"
 	ProjectSection(SolutionItems) = preProject
 		Build.proj = Build.proj

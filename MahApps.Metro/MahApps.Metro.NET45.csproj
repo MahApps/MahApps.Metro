@@ -17,6 +17,9 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <Version>$(BUILD_NUMBER)</Version>
+    <!-- dev config -->
+    <Version Condition=" '$(Version)' == '' ">1.0.0.9999</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -134,6 +137,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="ThemeManager.cs" />
     <AppDesigner Include="Properties\" />
