@@ -5,10 +5,14 @@ function Get-ScriptDirectory
 }
 
 # build the solution from scratch
-$build_number = "0.10.2.0"
+$build_number = "0.11.0.0"
 $version = "v4.0.30319"
 $proj = Join-Path (Get-ScriptDirectory) ..\MahApps.Metro\MahApps.Metro.csproj
 $solution_dir = Join-Path (Get-ScriptDirectory) ..\
+
+. $env:windir\Microsoft.NET\Framework\$version\MSBuild.exe $proj /t:Rebuild /ToolsVersion:4.0 /p:SolutionDir=$solution_dir /p:StrongName=True /p:configuration=Release /m /v:q /p:BUILD_NUMBER=$build_number
+
+$proj = Join-Path (Get-ScriptDirectory) ..\MahApps.Metro\MahApps.Metro.NET45.csproj
 
 . $env:windir\Microsoft.NET\Framework\$version\MSBuild.exe $proj /t:Rebuild /ToolsVersion:4.0 /p:SolutionDir=$solution_dir /p:StrongName=True /p:configuration=Release /m /v:q /p:BUILD_NUMBER=$build_number
 
