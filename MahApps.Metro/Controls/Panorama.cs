@@ -71,8 +71,8 @@ namespace MahApps.Metro.Controls
         private static int PixelsToMoveToBeConsideredScroll = 5;
         private static int PixelsToMoveToBeConsideredClick = 2;
         private IPanoramaTile tile;
-        private bool TouchCaptured = false;
-        private Point LastTouchPosition ;
+        private bool touchCaptured = false;
+        private Point lastTouchPosition;
 
         public Panorama()
         {
@@ -90,7 +90,7 @@ namespace MahApps.Metro.Controls
             {
                 animationTimer.Stop();
             };
-            LastTouchPosition = new Point();
+            lastTouchPosition = new Point();
         }
 
         static Panorama()
@@ -117,14 +117,14 @@ namespace MahApps.Metro.Controls
             if (isInDesignMode)
                 return;
 
-            if (IsMouseCaptured || TouchCaptured )
+            if (IsMouseCaptured || touchCaptured)
             {
                 Point currentPoint;
 
                 if (IsMouseCaptured)
-                    currentPoint = Mouse.GetPosition(this) ;
+                    currentPoint = Mouse.GetPosition(this);
                 else
-                    currentPoint = LastTouchPosition ;
+                    currentPoint = lastTouchPosition;
 
                 velocity = previousPoint - currentPoint;
                 previousPoint = currentPoint;
@@ -162,7 +162,7 @@ namespace MahApps.Metro.Controls
 
 
 
-        #region Handle Mouse Down
+        // Handle Mouse Down
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {
             if (sv.IsMouseOver)
@@ -203,18 +203,18 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
-        #endregion
 
 
-        #region Handle Moving
+        // Handle Moving
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Point currentPoint = e.GetPosition(this);
-                if (HandleMouseMove(currentPoint)){
-                	CaptureMouse();
-				}
+                if (HandleMouseMove(currentPoint))
+                {
+                    CaptureMouse();
+                }
             }
 
             base.OnPreviewMouseMove(e);
@@ -223,10 +223,11 @@ namespace MahApps.Metro.Controls
         protected override void OnPreviewTouchMove(TouchEventArgs e)
         {
             Point currentPoint = e.GetTouchPoint(this).Position;
-            if (HandleMouseMove(currentPoint)){
-	            TouchCaptured = true;
-            	LastTouchPosition = currentPoint;
-			}
+            if (HandleMouseMove(currentPoint))
+            {
+                touchCaptured = true;
+                lastTouchPosition = currentPoint;
+            }
         }
 
         private bool HandleMouseMove(Point currentPoint)
@@ -244,12 +245,11 @@ namespace MahApps.Metro.Controls
             // Scroll to the new position.
             sv.ScrollToHorizontalOffset(scrollTarget.X);
             sv.ScrollToVerticalOffset(scrollTarget.Y);
-			return true ;
+            return true;
         }
-        #endregion 
 
 
-
+        // Handle Mouse Up
         protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
         {
             Point currentPoint = e.GetPosition(this);
@@ -267,12 +267,14 @@ namespace MahApps.Metro.Controls
 
         protected override void OnPreviewTouchUp(TouchEventArgs e)
         {
-            if (TouchCaptured)
+            if (touchCaptured)
             {
-                TouchCaptured = false;
+                touchCaptured = false;
             }
             Point currentPoint = e.GetTouchPoint(this).Position;
             HandleMouseUp(currentPoint);
+
+            base.OnPreviewTouchUp(e);
         }
 
         private void HandleMouseUp(Point currentPoint)
@@ -294,6 +296,6 @@ namespace MahApps.Metro.Controls
         }
 
 
-        
+
     }
 }
