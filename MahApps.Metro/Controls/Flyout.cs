@@ -76,26 +76,46 @@ namespace MahApps.Metro.Controls
                 return;
 
             var hideFrame = (EasingDoubleKeyFrame)GetTemplateChild("hideFrame");
+            var hideFrameY = (EasingDoubleKeyFrame)GetTemplateChild("hideFrameY");
             var showFrame = (EasingDoubleKeyFrame)GetTemplateChild("showFrame");
+            var showFrameY = (EasingDoubleKeyFrame)GetTemplateChild("showFrameY");
 
-            if (hideFrame == null || showFrame == null)
+            if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
                 return;
 
-            showFrame.Value = 0;
+            if (Position == Position.Left || Position == Position.Right)
+                showFrame.Value = 0;
+            if (Position == Position.Top || Position == Position.Bottom)
+                showFrameY.Value = 0;
             root.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
 
-            if (position == Position.Right)
-                HorizontalAlignment = HorizontalAlignment.Right;
-
-            if (position == Position.Right)
+            switch (position)
             {
-                hideFrame.Value = root.DesiredSize.Width;
-                root.RenderTransform = new TranslateTransform(root.DesiredSize.Width, 0);
-            }
-            else
-            {
-                hideFrame.Value = -root.DesiredSize.Width;
-                root.RenderTransform = new TranslateTransform(-root.DesiredSize.Width, 0);
+                default:
+                case Position.Left:
+                    HorizontalAlignment = HorizontalAlignment.Left;
+                    VerticalAlignment = VerticalAlignment.Stretch;
+                    hideFrame.Value = -root.DesiredSize.Width;
+                    root.RenderTransform = new TranslateTransform(-root.DesiredSize.Width, 0);
+                    break;
+                case Position.Right:
+                    HorizontalAlignment = HorizontalAlignment.Right;
+                    VerticalAlignment = VerticalAlignment.Stretch;
+                    hideFrame.Value = root.DesiredSize.Width;
+                    root.RenderTransform = new TranslateTransform(root.DesiredSize.Width, 0);
+                    break;
+                case Position.Top:
+                    HorizontalAlignment = HorizontalAlignment.Stretch;
+                    VerticalAlignment = VerticalAlignment.Top;
+                    hideFrameY.Value = -root.DesiredSize.Height;
+                    root.RenderTransform = new TranslateTransform(0, -root.DesiredSize.Height);
+                    break;
+                case Position.Bottom:
+                    HorizontalAlignment = HorizontalAlignment.Stretch;
+                    VerticalAlignment = VerticalAlignment.Bottom;
+                    hideFrameY.Value = root.DesiredSize.Height;
+                    root.RenderTransform = new TranslateTransform(0, root.DesiredSize.Height);
+                    break;
             }
         }
 
@@ -103,7 +123,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnRenderSizeChanged(sizeInfo);
 
-            if (!sizeInfo.WidthChanged) return;
+            if (!sizeInfo.WidthChanged || !sizeInfo.HeightChanged) return;
 
             if (!IsOpen)
             {
@@ -116,19 +136,33 @@ namespace MahApps.Metro.Controls
                 return;
 
             var hideFrame = (EasingDoubleKeyFrame)GetTemplateChild("hideFrame");
+            var hideFrameY = (EasingDoubleKeyFrame)GetTemplateChild("hideFrameY");
             var showFrame = (EasingDoubleKeyFrame)GetTemplateChild("showFrame");
+            var showFrameY = (EasingDoubleKeyFrame)GetTemplateChild("showFrameY");
 
-            if (hideFrame == null || showFrame == null)
+            if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
                 return;
 
-            showFrame.Value = 0;
-            if (Position == Position.Right)
+            if (Position == Position.Left || Position == Position.Right)
+                showFrame.Value = 0;
+            if (Position == Position.Top || Position == Position.Bottom) 
+                showFrameY.Value = 0;
+
+            switch (Position)
             {
-                hideFrame.Value = root.DesiredSize.Width;
-            }
-            else
-            {
-                hideFrame.Value = -root.DesiredSize.Width;
+                default:
+                case Position.Left:
+                    hideFrame.Value = -root.DesiredSize.Width;
+                    break;
+                case Position.Right:
+                    hideFrame.Value = root.DesiredSize.Width;
+                    break;
+                case Position.Top:
+                    hideFrameY.Value = -root.DesiredSize.Height;
+                    break;
+                case Position.Bottom:
+                    hideFrameY.Value = root.DesiredSize.Height;
+                    break;
             }
         }
     }

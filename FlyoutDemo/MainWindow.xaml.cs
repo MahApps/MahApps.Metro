@@ -29,6 +29,14 @@ namespace FlyoutDemo
             this.Flyouts[4].IsOpen = !this.Flyouts[4].IsOpen;
         }
 
+        private void ShowTop(object sender, RoutedEventArgs e) {
+            this.Flyouts[5].IsOpen = !this.Flyouts[5].IsOpen;
+        }
+
+        private void ShowBottom(object sender, RoutedEventArgs e) {
+            this.Flyouts[6].IsOpen = !this.Flyouts[6].IsOpen;
+        }
+
         private void CloseMe(object sender, RoutedEventArgs e) {
             this.Close();
         }
