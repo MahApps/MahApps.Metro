@@ -160,9 +160,6 @@ namespace MahApps.Metro.Controls
             base.OnApplyTemplate();
         }
 
-
-
-        // Handle Mouse Down
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
         {
             if (sv.IsMouseOver)
@@ -204,8 +201,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-
-        // Handle Moving
         protected override void OnPreviewMouseMove(MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -248,8 +243,6 @@ namespace MahApps.Metro.Controls
             return true;
         }
 
-
-        // Handle Mouse Up
         protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
         {
             Point currentPoint = e.GetPosition(this);
@@ -263,7 +256,6 @@ namespace MahApps.Metro.Controls
 
             base.OnPreviewMouseUp(e);
         }
-
 
         protected override void OnPreviewTouchUp(TouchEventArgs e)
         {
