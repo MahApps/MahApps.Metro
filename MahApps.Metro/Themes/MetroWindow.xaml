@@ -54,6 +54,7 @@
                         <ItemsControl Grid.Row="0"
                                       Grid.RowSpan="2"
                                       Panel.ZIndex="2"
+                                      KeyboardNavigation.TabNavigation="None"
                                       ItemsSource="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                       VerticalAlignment="Stretch">
                             <ItemsControl.ItemsPanel>

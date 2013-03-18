@@ -150,5 +150,7 @@
                 Value="#FF252525" />
         <Setter Property="Template"
                 Value="{StaticResource FlyoutTemplate}" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
     </Style>
 </ResourceDictionary>
