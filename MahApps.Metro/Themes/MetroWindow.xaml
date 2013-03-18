@@ -18,10 +18,7 @@
                         </Grid.RowDefinitions>
                         <Grid x:Name="PART_TitleBar"
                                   Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <Grid.Background>
-                                <SolidColorBrush Color="{DynamicResource AccentColor}"/>
-                            </Grid.Background>
+                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" Background="{DynamicResource WindowTitleColorBrush}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -98,6 +95,7 @@
                 <Behaviours:StylizedBehaviorCollection>
                     <Behaviours:BorderlessWindowBehavior/>
                     <Behaviours:WindowsSettingBehaviour/>
+                    <Behaviours:GlowWindowBehavior/>
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>

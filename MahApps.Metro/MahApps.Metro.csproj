@@ -58,10 +58,16 @@
     <Compile Include="Actions\CloseTabItemAction.cs" />
     <Compile Include="Actions\SetFlyoutOpenAction.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
+    <Compile Include="Behaviours\GlowWindowBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="Controls\Flyout.cs" />
+    <Compile Include="Controls\Glow.cs" />
+    <Compile Include="Controls\GlowDirection.cs" />
+    <Compile Include="Controls\GlowWindow.xaml.cs">
+      <DependentUpon>GlowWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IPanoramaTile.cs" />
     <Compile Include="Controls\MetroProgressBar.cs" />
     <Compile Include="Controls\Pivot.cs" />
@@ -85,6 +91,13 @@
     <Compile Include="Converters\PanoramaGroupWidthConverter.cs" />
     <Compile Include="Converters\PanoramaGroupHeightConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
+    <Compile Include="Models\Win32\GWL.cs" />
+    <Compile Include="Models\Win32\HitTestValues.cs" />
+    <Compile Include="Models\Win32\NativeMethods.cs" />
+    <Compile Include="Models\Win32\SWP.cs" />
+    <Compile Include="Models\Win32\WM.cs" />
+    <Compile Include="Models\Win32\WS.cs" />
+    <Compile Include="Models\Win32\WSEX.cs" />
     <Compile Include="Native\WINDOWPLACEMENT.cs" />
     <Compile Include="Controls\WindowSettings.cs" />
     <Compile Include="Native\Constants.cs" />
@@ -119,6 +132,10 @@
     <Compile Include="Theme.cs" />
     <Compile Include="ThemeManager.cs" />
     <AppDesigner Include="Properties\" />
+    <Page Include="Controls\GlowWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Controls.AnimatedSingleRowTabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -234,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Flyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Glow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
