@@ -16,6 +16,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyoutDemo", "FlyoutDemo\FlyoutDemo.csproj", "{D1ECA9C6-C303-4856-B647-970AE30D6C29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PivotDemo", "PivotDemo\PivotDemo.csproj", "{EE5C188D-9A23-44AF-BF99-C0732956E4F1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.NET45", "MahApps.Metro\MahApps.Metro.NET45.csproj", "{942D11C4-29F5-46C4-8C14-4B976D56C637}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5B1710D2-5DC8-4754-91B2-19165DE49B3D} = {5B1710D2-5DC8-4754-91B2-19165DE49B3D}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +101,16 @@ Global
 		{EE5C188D-9A23-44AF-BF99-C0732956E4F1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{EE5C188D-9A23-44AF-BF99-C0732956E4F1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{EE5C188D-9A23-44AF-BF99-C0732956E4F1}.Release|x86.ActiveCfg = Release|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Release|Any CPU.Build.0 = Release|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{942D11C4-29F5-46C4-8C14-4B976D56C637}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -34,7 +34,19 @@
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
                     <Border x:Name="Bd" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
                         <Grid>
-                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <GridViewRowPresenter.Resources>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
+                                        <Style.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
+                                                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </GridViewRowPresenter.Resources>
+                            </GridViewRowPresenter>
                             <ContentPresenter x:Name="contentPresenter" Visibility="Collapsed" />
                         </Grid>
                     </Border>
@@ -45,6 +57,7 @@
                         <Trigger Property="IsSelected" Value="true">
                             <Setter TargetName="Bd" Property="BorderBrush" Value="#FF143c65" />
                             <Setter Property="Background" TargetName="Bd" Value="{DynamicResource AccentColorBrush}"></Setter>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="Bd" Property="Background">
@@ -52,7 +65,6 @@
                                     <SolidColorBrush Color="{DynamicResource AccentColor3}" />
                                 </Setter.Value>
                             </Setter>
-
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -65,37 +77,12 @@
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
-                        </MultiTrigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Background" TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <!--<Style.Triggers>
-      <Trigger Property="ItemsControl.AlternationIndex"
-               Value="0">
-        <Setter Property="Background"
-                Value="{DynamicResource AlternateRow1BackgroundBrush}" />
-      </Trigger>
-      <Trigger Property="ItemsControl.AlternationIndex"
-               Value="1">
-        <Setter Property="Background"
-                Value="{DynamicResource AlternateRow2BackgroundBrush}" />
-        <Setter Property="Border.BorderThickness"
-                Value="0 1 0 1" />
-      </Trigger>
-    </Style.Triggers>-->
     </Style>
 
     <!--Gives the impression that items cannot be selected on the ListView-->
@@ -201,18 +188,6 @@
                     </Setter.Value>
                 </Setter>
             </Trigger>
-            <!--<Trigger Property="Role"
-               Value="Padding">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="GridViewColumnHeader">
-                            <Border Name="HeaderBorder"
-                                      BorderThickness="0,0,0,1"
-                                      BorderBrush="{DynamicResource HighlightBrush}"  />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>-->
         </Style.Triggers>
     </Style>
 </ResourceDictionary>
