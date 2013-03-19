@@ -132,6 +132,8 @@ namespace MahApps.Metro.Controls
             else
             {
                 MouseDown += TitleBarMouseDown;
+                MouseUp += TitleBarMouseUp;
+                MouseMove += TitleBarMouseMove;
             }
         }
 
@@ -202,6 +204,10 @@ namespace MahApps.Metro.Controls
                 Point mouseAbsolute = PointToScreen(Mouse.GetPosition(this));
                 double width = RestoreBounds.Width;
                 double left = mouseAbsolute.X - width / 2;
+
+                // Check if the mouse is at the top of the screen if TitleBar is not visible
+                if(!ShowTitleBar && mouseAbsolute.Y > TitlebarHeight)
+                    return;
 
                 // Aligning window's position to fit the screen.
                 double virtualScreenWidth = SystemParameters.VirtualScreenWidth;
