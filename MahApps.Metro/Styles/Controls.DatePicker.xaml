@@ -21,6 +21,7 @@
         <Setter Property="Padding" Value="0" />
         <Setter Property="SelectedDateFormat" Value="Short" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="CalendarStyle" Value="{DynamicResource MetroCalendar}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
