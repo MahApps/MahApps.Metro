@@ -5,6 +5,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
 
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Calendar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ContextMenu.xaml" />
@@ -105,6 +106,7 @@
     <Style TargetType="ListViewItem" BasedOn="{StaticResource MetroListViewItem}" />
     <Style TargetType="DatePicker" BasedOn="{StaticResource MetroDatePicker}"/>
     <Style TargetType="DatePickerTextBox" BasedOn="{StaticResource MetroDatePickerTextBox}"/>
+    <Style TargetType="Calendar" BasedOn="{StaticResource MetroCalendar}" />
     
     <Style TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template">
