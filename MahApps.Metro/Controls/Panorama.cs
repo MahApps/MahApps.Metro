@@ -19,12 +19,28 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseSnapBackScrollingProperty = DependencyProperty.Register("UseSnapBackScrolling", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(Panorama), new PropertyMetadata(Orientation.Horizontal));
 
-        public static readonly RoutedEvent ScrollToEndRoutedEvent = EventManager.RegisterRoutedEvent("ScrollToEnd", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Panorama));
 
-        public event RoutedEventHandler ScrollToEnd
+        public static readonly RoutedEvent ScrollToEndRoutedEvent = EventManager.RegisterRoutedEvent("ScrollToEnd", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Panorama));
+        public static readonly RoutedEvent ScrollToStartRoutedEvent = EventManager.RegisterRoutedEvent("ScrollToStart", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Panorama));
+
+        public event RoutedEventHandler ScrollToEnd 
         {
             add { AddHandler(ScrollToEndRoutedEvent, value); }
             remove { RemoveHandler(ScrollToEndRoutedEvent, value); }
+        }
+        public event RoutedEventHandler ScrollToStart 
+        {
+            add { AddHandler(ScrollToStartRoutedEvent, value); }
+            remove { RemoveHandler(ScrollToStartRoutedEvent, value); }
+        }
+
+        protected virtual void OnScrollToEnd()
+        {
+            RaiseEvent(new RoutedEventArgs(ScrollToEndRoutedEvent, this));
+        }
+        protected virtual void OnScrollToStart() 
+        {
+            RaiseEvent(new RoutedEventArgs(ScrollToStartRoutedEvent, this));
         }
 
         protected virtual void OnScrollToEnd() 
@@ -177,6 +193,10 @@ namespace MahApps.Metro.Controls
             if (sv.HorizontalOffset == sv.ScrollableWidth)
             {
                 OnScrollToEnd();
+            }
+            if (sv.HorizontalOffset == 0)
+            {
+                OnScrollToStart();
             }
         }
 
