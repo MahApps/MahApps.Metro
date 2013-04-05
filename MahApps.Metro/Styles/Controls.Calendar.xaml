@@ -498,16 +498,7 @@
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="BorderBrush">
-            <Setter.Value>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFA3AEB9" Offset="0" />
-                    <GradientStop Color="#FF8399A9" Offset="0.375" />
-                    <GradientStop Color="#FF718597" Offset="0.375" />
-                    <GradientStop Color="#FF617584" Offset="1" />
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
