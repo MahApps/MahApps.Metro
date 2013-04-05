@@ -170,19 +170,27 @@
                         <Storyboard x:Key="EnterGotFocus">
                             <DoubleAnimation Duration="0:0:0.2" To=".2" Storyboard.TargetProperty="Opacity"
                                              Storyboard.TargetName="PART_Watermark" />
+                            <DoubleAnimation Duration="0:0:0.2" To=".2" Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
                         <Storyboard x:Key="ExitGotFocus">
                             <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"
                                              Storyboard.TargetName="PART_Watermark" />
+                            <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
 
                         <Storyboard x:Key="EnterHasText">
                             <DoubleAnimation Duration="0:0:0.2" From=".2" To="0" Storyboard.TargetProperty="Opacity"
                                              Storyboard.TargetName="PART_Watermark" />
+                            <DoubleAnimation Duration="0:0:0.2" From=".2" To="0" Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
                         <Storyboard x:Key="ExitHasText">
                             <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"
                                              Storyboard.TargetName="PART_Watermark" />
+                            <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
@@ -192,7 +200,11 @@
                         <ContentControl x:Name="PART_Watermark" Focusable="False" IsHitTestVisible="False"
                                         Opacity="0.6" Padding="2" Margin="6,0,0,0" HorizontalAlignment="Left"
                                         VerticalAlignment="Center" VerticalContentAlignment="Center"
-                                        Foreground="{TemplateBinding Foreground}" />
+                                        Foreground="{TemplateBinding Foreground}" 
+                                        Visibility="Hidden"/>
+                        <TextBlock x:Name="Message" Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextboxHelper.Watermark)}"
+                                       Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Opacity="0.6" HorizontalAlignment="Left" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Margin="4,0,0,0" Padding="2"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -208,6 +220,10 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextboxHelper.Watermark)}" Value="{x:Static System:String.Empty}">
+                            <Setter TargetName="PART_Watermark" Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                        
                         <Trigger Property="Controls:TextboxHelper.HasText" Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource EnterHasText}" />
