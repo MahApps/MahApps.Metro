@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace MetroDemo.ViewModels
 {
@@ -81,10 +82,28 @@ namespace MetroDemo.ViewModels
                         return "Please choose a valid item!";
                     }
                 }
+                if (columnName.Equals("DatePickerProperty"))
+                {
+                    if (DatePickerProperty < DateTime.Today)
+                    {
+                        return "Please choose a date in the future!";
+                    }
+                }
                 return null;
             }
         }
 
         public string Error { get; private set; }
+
+        private DateTime? _datePickerProperty;
+        public DateTime? DatePickerProperty
+        {
+            get { return _datePickerProperty; }
+            set 
+            { 
+                _datePickerProperty = value;
+                OnPropertyChanged("DatePickerProperty");
+            }
+        }
     }
 }

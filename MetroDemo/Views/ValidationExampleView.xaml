@@ -34,6 +34,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Column="0"
@@ -74,6 +75,13 @@
             <ComboBoxItem>Item 2</ComboBoxItem>
             <ComboBoxItem>Item 3</ComboBoxItem>
         </ComboBox>
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="3"
+                   VerticalAlignment="Center"
+                   Margin="5"
+                   Text="DatePicker Validation:" />
+        <DatePicker Grid.Row="3" Grid.Column="1" DisplayDate="{Binding DatePickerProperty, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 
 </UserControl>

@@ -118,18 +118,23 @@
                             </Button>
                             <PasswordBox Controls:TextboxHelper.Watermark="Enter Password"
                                          Controls:TextboxHelper.ClearTextButton="True"
-                                             Margin="88.695,66.96,0,0"
+                                             Margin="89,67,0,0"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
-                                             Width="154.001"
+                                             Width="154"
 											 VerticalContentAlignment="Center" />
+                            <DatePicker VerticalAlignment="Top" 
+                                        HorizontalAlignment="Left"
+                                        Controls:TextboxHelper.Watermark="Custom watermark"        
+                                        VerticalContentAlignment="Center"
+                                        Width="154" Margin="89,98,0,0"/>
                             <CheckBox Content="Ignore Taskbar on maximize"
-                                          Margin="88.695,100.96,0,0"
+                                          Margin="89,136,0,0"
                                           VerticalAlignment="Top"
                                           HorizontalAlignment="Left" 
                                       Click="IgnoreTaskbarOnMaximizedClick" />
                             <RadioButton Content="Radio Button 1"
-                                             Margin="88.291,134.92,0,0"
+                                             Margin="88,170,0,0"
                                              VerticalAlignment="Top"
                                              GroupName="test"
                                              HorizontalAlignment="Left" />
@@ -142,7 +147,7 @@
                                          HorizontalAlignment="Left"
                                          Width="154.002"
 										 VerticalContentAlignment="Center" />
-                            <ComboBox Margin="88.292,176.84,0,0"
+                            <ComboBox Margin="88,212,0,0"
                                           VerticalAlignment="Top"
                                           HorizontalAlignment="Left"
                                           SelectedIndex="0">
@@ -153,7 +158,7 @@
                             <ProgressBar x:Name="pb"
                                              Value="{Binding Value, ElementName=slider1}"
                                              IsIndeterminate="False"
-                                             Margin="88.696,216.8,0,0"
+                                             Margin="89,252,0,0"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
                                              Width="154" />
@@ -167,13 +172,13 @@
                                        VerticalAlignment="Top"
                                        HorizontalAlignment="Left" />
                             <Label Content="Checkbox"
-                                       Margin="23.1,96.96,0,0"
+                                       Margin="23,132,0,0"
                                        HorizontalAlignment="Left"
-                                       Height="25.96"
+                                       Height="26"
                                        VerticalAlignment="Top" />
                             <Label Content="Radio Buttons"
                                        VerticalAlignment="Top"
-                                       Margin="0.404,126.92,0,0"
+                                       Margin="0,162,0,0"
                                        HorizontalAlignment="Left" />
                             <Label Content="TextBox"
                                        VerticalAlignment="Top"
@@ -181,18 +186,17 @@
                                        HorizontalAlignment="Left" />
                             <Label Content="Combobox"
                                        VerticalAlignment="Top"
-                                       Margin="16.224,170.84,0,0"
+                                       Margin="16,206,0,0"
                                        HorizontalAlignment="Left" />
                             <RadioButton Content="Radio Button 2"
-                                             Margin="88.695,155.88,0,0"
+                                             Margin="89,191,0,0"
                                              VerticalAlignment="Top"
                                              GroupName="test"
                                              HorizontalAlignment="Left" />
                             <Label Content="Progress Bar"
                                        VerticalAlignment="Top"
-                                       Margin="8.216,206.8,0,0"
-                                       HorizontalAlignment="Left"
-                                       d:LayoutOverrides="HorizontalAlignment" />
+                                       Margin="8,242,0,0"
+                                       HorizontalAlignment="Left" />
                             <Button Content="Launch Panorama"
                                         Click="BtnPanoramaClick"
                                         VerticalAlignment="Top"
@@ -208,6 +212,11 @@
                             <Button Content="Button" VerticalAlignment="Bottom" Margin="88,0,90,8" Style="{DynamicResource SquareButtonStyle}"/>
                             <ToggleButton Content="TOGGLE BUTTON" Margin="88,330,90,0" VerticalAlignment="Top" />
                             <Slider Height="19" HorizontalAlignment="Right" Margin="0,239,91,0" Name="slider1" VerticalAlignment="Top" Width="154" Maximum="100" Value="25" />
+                            <Label Content="DatePicker"
+                            	Margin="18,100,0,0"
+                            	RenderTransformOrigin="0.535,-0.381"
+                            	VerticalAlignment="Top"
+                            	HorizontalAlignment="Left" />
                         </Grid>
                         <WrapPanel Margin="332.001,0,0,8">
                             <Controls:AppBarButton

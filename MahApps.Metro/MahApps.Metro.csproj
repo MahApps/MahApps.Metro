@@ -137,6 +137,11 @@
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
+    <Page Include="Styles\Controls.DatePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
     <Page Include="Styles\Controls.GroupBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -359,6 +364,13 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\Controls.RadioButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Styles\Controls.Calendar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <DependentUpon>Controls.xaml</DependentUpon>
