@@ -98,7 +98,7 @@
                                    Fill="{DynamicResource ControlsDisabledBrush}"
                                    IsHitTestVisible="False"
                                    Opacity="0" />
-                            <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_TextBox}" StaysOpen="False"/>
+                            <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom" PlacementTarget="{Binding ElementName=PART_Root}" StaysOpen="False"/>
                             <Border x:Name="ValidationErrorElement" BorderBrush="{DynamicResource ControlsValidationBrush}" BorderThickness="1" Visibility="Collapsed">
                                 <ToolTipService.ToolTip>
                                     <ToolTip x:Name="validationTooltip"
