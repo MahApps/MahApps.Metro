@@ -10,6 +10,9 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
     public class Flyout : ContentControl
     {
+        
+        public event EventHandler IsOpenChanged;
+        
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Flyout), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnableProperty = DependencyProperty.Register("IsPinnable", typeof(bool), typeof(Flyout), new PropertyMetadata(default(bool)));
@@ -50,6 +53,10 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
             VisualStateManager.GoToState(flyout, (bool) e.NewValue == false ? "Hide" : "Show", true);
+            if (flyout.IsOpenChanged != null)
+            {
+                flyout.IsOpenChanged(flyout, EventArgs.Empty);
+            }
         }
 
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
