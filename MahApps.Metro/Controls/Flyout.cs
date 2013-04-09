@@ -53,7 +53,7 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
             VisualStateManager.GoToState(flyout, (bool) e.NewValue == false ? "Hide" : "Show", true);
-             flyout.IsOpenChanged(flyout, new EventArgs());
+            flyout.IsOpenChanged(flyout, EventArgs.Empty);
         }
 
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
