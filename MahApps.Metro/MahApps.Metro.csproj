@@ -16,6 +16,9 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <Version>$(BUILD_NUMBER)</Version>
+    <!-- dev config -->
+    <Version Condition=" '$(Version)' == '' ">1.0.0.9999</Version>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -133,6 +136,7 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="ThemeManager.cs" />
     <AppDesigner Include="Properties\" />
@@ -405,7 +409,11 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.build\MSBuild.Community.Tasks.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -413,5 +421,21 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="BeforeBuild">
+    <GitVersion LocalPath="$(SolutionDir)">
+      <Output TaskParameter="CommitHash" PropertyName="GitCommitHash" />
+    </GitVersion>
+    <AssemblyInfo CodeLanguage="CS" 
+                  OutputFile="$(ProjectDir)\Properties\CommonAssemblyInfo.cs"
+                  AssemblyTitle="MahApps.Metro" 
+                  AssemblyCompany="MahApps"
+                  AssemblyProduct="MahApps.Metro"
+                  AssemblyCopyright="Copyright © MahApps 2013" 
+                  ComVisible="false" 
+                  AssemblyVersion="$(Version)" 
+                  AssemblyFileVersion="$(Version)" 
+                  AssemblyInformationalVersion="Built from hash '$(GitCommitHash)'" />
+  </Target>
   <Target Name="AfterCompile" />
+  
 </Project>
