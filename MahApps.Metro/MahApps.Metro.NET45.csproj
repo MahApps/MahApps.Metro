@@ -20,6 +20,7 @@
     <Version>$(BUILD_NUMBER)</Version>
     <!-- dev config -->
     <Version Condition=" '$(Version)' == '' ">1.0.0.9999</Version>
+    <SolutionDir Condition=" '$(SolutionDir)' == '' ">..</SolutionDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
