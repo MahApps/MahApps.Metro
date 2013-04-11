@@ -423,7 +423,11 @@
   </Target>
   -->
   <Target Name="BeforeBuild">
-    <!-- if not on build server, call git.exe to get HEAD commit -->
+    <!-- if provided, ensure it's a trimmed hash -->
+    <PropertyGroup>
+      <GitCommitHash Condition=" '$(GitCommitHash)' != '' ">$(GitCommitHash.Substring(0, 7))</GitCommitHash>
+    </PropertyGroup>
+    <!-- if not provided, call git.exe to get HEAD commit -->
     <GitVersion LocalPath="$(SolutionDir)" Condition=" '$(GitCommitHash)' == '' ">
       <Output TaskParameter="CommitHash" PropertyName="GitCommitHash" />
     </GitVersion>
