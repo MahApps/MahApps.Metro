@@ -64,7 +64,11 @@
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="Controls\Flyout.cs" />
     <Compile Include="Controls\IPanoramaTile.cs" />
+    <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
+    <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroProgressBar.cs" />
+    <Compile Include="Controls\MetroTabControl.cs" />
+    <Compile Include="Controls\MetroTabItem.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
@@ -238,6 +242,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Glow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MetroAnimatedTabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\MetroContentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -249,6 +265,14 @@
     <Page Include="Themes\MetroProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroTabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MetroTabItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\MetroWindow.xaml">
       <SubType>Designer</SubType>
