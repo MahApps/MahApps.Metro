@@ -24,7 +24,7 @@
             </controls:PivotItem>
             <controls:PivotItem Header="Page2">
                 <Grid>
-                    <ListView Style="{StaticResource VirtualisedListView}" ItemsSource="{Binding Items, ElementName=XXX}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <ListView Style="{StaticResource VirtualisedMetroListView}" ItemsSource="{Binding Items, ElementName=XXX}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="long header long header" DisplayMemberBinding="{Binding Data}"></GridViewColumn>
