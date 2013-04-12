@@ -16,6 +16,10 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <Version>$(BUILD_NUMBER)</Version>
+    <!-- dev config -->
+    <Version Condition=" '$(Version)' == '' ">1.0.0.9999</Version>
+    <SolutionDir Condition=" '$(SolutionDir)' == '' ">..</SolutionDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -64,12 +68,22 @@
     <Compile Include="Actions\CloseTabItemAction.cs" />
     <Compile Include="Actions\SetFlyoutOpenAction.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
+    <Compile Include="Behaviours\GlowWindowBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="Controls\Flyout.cs" />
+    <Compile Include="Controls\Glow.cs" />
+    <Compile Include="Controls\GlowDirection.cs" />
+    <Compile Include="Controls\GlowWindow.xaml.cs">
+      <DependentUpon>GlowWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IPanoramaTile.cs" />
+    <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
+    <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroProgressBar.cs" />
+    <Compile Include="Controls\MetroTabControl.cs" />
+    <Compile Include="Controls\MetroTabItem.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
@@ -91,6 +105,13 @@
     <Compile Include="Converters\PanoramaGroupWidthConverter.cs" />
     <Compile Include="Converters\PanoramaGroupHeightConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
+    <Compile Include="Models\Win32\GWL.cs" />
+    <Compile Include="Models\Win32\HitTestValues.cs" />
+    <Compile Include="Models\Win32\NativeMethods.cs" />
+    <Compile Include="Models\Win32\SWP.cs" />
+    <Compile Include="Models\Win32\WM.cs" />
+    <Compile Include="Models\Win32\WS.cs" />
+    <Compile Include="Models\Win32\WSEX.cs" />
     <Compile Include="Native\WINDOWPLACEMENT.cs" />
     <Compile Include="Controls\WindowSettings.cs" />
     <Compile Include="Native\Constants.cs" />
@@ -122,9 +143,14 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\CommonAssemblyInfo.cs" />
     <Compile Include="Theme.cs" />
     <Compile Include="ThemeManager.cs" />
     <AppDesigner Include="Properties\" />
+    <Page Include="Controls\GlowWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Controls.AnimatedSingleRowTabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -243,6 +269,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroAnimatedTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Glow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\MetroContentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -252,6 +290,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroTabItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -373,8 +419,10 @@
   <ItemGroup>
     <None Include="AIM.snk" />
     <None Include="mahapps.metro.pfx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.build\MSBuild.Community.Tasks.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -382,5 +430,26 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="BeforeBuild">
+    <!-- if provided, ensure it's a trimmed hash -->
+    <PropertyGroup>
+      <GitCommitHash Condition=" '$(GitCommitHash)' != '' ">$(GitCommitHash.Substring(0, 7))</GitCommitHash>
+    </PropertyGroup>
+    <!-- if not provided, call git.exe to get HEAD commit -->
+    <GitVersion LocalPath="$(SolutionDir)" Condition=" '$(GitCommitHash)' == '' ">
+      <Output TaskParameter="CommitHash" PropertyName="GitCommitHash" />
+    </GitVersion>
+    <AssemblyInfo CodeLanguage="CS" 
+                  OutputFile="$(ProjectDir)\Properties\CommonAssemblyInfo.cs"
+                  AssemblyTitle="MahApps.Metro" 
+                  AssemblyCompany="MahApps"
+                  AssemblyProduct="MahApps.Metro"
+                  AssemblyCopyright="Copyright © MahApps 2013" 
+                  ComVisible="false" 
+                  AssemblyVersion="$(Version)" 
+                  AssemblyFileVersion="$(Version)" 
+                  AssemblyInformationalVersion="Built from hash '$(GitCommitHash)'" />
+  </Target>
   <Target Name="AfterCompile" />
+  
 </Project>

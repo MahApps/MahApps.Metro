@@ -1,21 +1,16 @@
-﻿<Controls:MetroWindow xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<controls:MetroWindow x:Class="NET45Demo.MainWindow"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      xmlns:MetroDemo="clr-namespace:MetroDemo"
-                      xmlns:views="clr-namespace:MetroDemo.Views"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       mc:Ignorable="d"
-                      x:Class="MetroDemo.MainWindow"
                       Title="MahApps.Metro.Demo"
                       Height="600"
                       Width="800"
                       WindowStartupLocation="CenterScreen"
-                      Icon="mahapps.metro.logo2.ico"
                       ShowTitleBar="True"
-                      ShowIconOnTitleBar="true"
-                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
-
+                      ShowIconOnTitleBar="true">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -29,33 +24,33 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
-    <Controls:MetroWindow.GlowBrush>
+
+    <controls:MetroWindow.GlowBrush>
         <SolidColorBrush Color="{DynamicResource AccentColor}" />
-    </Controls:MetroWindow.GlowBrush>
+    </controls:MetroWindow.GlowBrush>
 
-    <Controls:MetroWindow.WindowCommands>
-        <Controls:WindowCommands>
+    <controls:MetroWindow.WindowCommands>
+        <controls:WindowCommands>
             <Button Content="wat" />
-        </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
+        </controls:WindowCommands>
+    </controls:MetroWindow.WindowCommands>
 
-    <Controls:MetroWindow.Flyouts>
+    <controls:MetroWindow.Flyouts>
 
-        <Controls:Flyout Header="hiiiii">
+        <controls:Flyout Header="hiiiii">
             <Button Content="hi"  />
-        </Controls:Flyout>
-        <Controls:Flyout Header="Bakery" Background="#9f000000" Position="Right">
+        </controls:Flyout>
+        <controls:Flyout Header="Bakery" Background="#9f000000" Position="Right">
             <StackPanel>
-                <Controls:Tile Title="My _Cupcakes" Count="23">
-                    <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
-                </Controls:Tile>
+                <controls:Tile Title="My _Cupcakes" Count="23">
+                    <controls:MetroImage Source="{StaticResource appbar_cupcake}" />
+                </controls:Tile>
             </StackPanel>
-        </Controls:Flyout>
+        </controls:Flyout>
 
-    </Controls:MetroWindow.Flyouts>
+    </controls:MetroWindow.Flyouts>
 
-    <Controls:MetroContentControl>
+    <controls:MetroContentControl>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
@@ -80,13 +75,12 @@
                     <MenuItem Header="_Paste" />
                 </MenuItem>
             </Menu>
-            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1" TabStripMargin="40,0,0,0" >
-                <Controls:MetroTabItem Header="_First set of controls" HeaderFontSize="35">
+            <controls:MetroAnimatedSingleRowTabControl Grid.Row="1" TabStripMargin="40,0,0,0" >
+                <controls:MetroTabItem Header="_First set of controls" HeaderFontSize="35">
                     <Grid>
 
                         <Grid Margin="0,0,226.999,8">
                             <Button Content="Right Click Me"
-                                        Click="ButtonClick"
                                         Height="30"
                                         ToolTip="This is a tooltip"
                                         Margin="88.694,0,0,0"
@@ -97,31 +91,28 @@
                                     <ContextMenu>
 
                                         <MenuItem Header="Light">
-                                            <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
-                                            <MenuItem Header="Light Green" Click="MiLightGreen" />
-                                            <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                                            <MenuItem Header="Light Purple" Click="MiLightPurple" IsEnabled="False" />
-                                            <MenuItem Header="Light Orange" Click="MiLightOrange">
-                                                <MenuItem Header="Light Orange" Click="MiLightOrange" />
-                                                <MenuItem Header="Light Orange" Click="MiLightOrange" />
+                                            <MenuItem Header="Light Red" IsChecked="True"  />
+                                            <MenuItem Header="Light Green"  />
+                                            <MenuItem Header="Light Blue" />
+                                            <MenuItem Header="Light Purple" IsEnabled="False" />
+                                            <MenuItem Header="Light Orange" >
+                                                <MenuItem Header="Light Orange"  />
+                                                <MenuItem Header="Light Orange" />
                                             </MenuItem>
-
                                         </MenuItem>
-
                                         <Separator />
-                                        <MenuItem Header="Dark Red" Click="MiDarkRed" />
+                                        <MenuItem Header="Dark Red" />
                                         <MenuItem Header="Dark">
-
-                                            <MenuItem Header="Dark Green" Click="MiDarkGreen" />
-                                            <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
-                                            <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
-                                            <MenuItem Header="Dark Orange" Click="MiDarkOrange" />
+                                            <MenuItem Header="Dark Green" />
+                                            <MenuItem Header="Dark Blue" />
+                                            <MenuItem Header="Dark Purple"  />
+                                            <MenuItem Header="Dark Orange" />
                                         </MenuItem>
                                     </ContextMenu>
                                 </Button.ContextMenu>
                             </Button>
-                            <PasswordBox Controls:TextboxHelper.Watermark="Enter Password"
-                                         Controls:TextboxHelper.ClearTextButton="True"
+                            <PasswordBox controls:TextboxHelper.Watermark="Enter Password"
+                                         controls:TextboxHelper.ClearTextButton="True"
                                              Margin="88.695,66.96,0,0"
                                              VerticalAlignment="Top"
                                              HorizontalAlignment="Left"
@@ -130,8 +121,7 @@
                             <CheckBox Content="Ignore Taskbar on maximize"
                                           Margin="88.695,100.96,0,0"
                                           VerticalAlignment="Top"
-                                          HorizontalAlignment="Left" 
-                                      Click="IgnoreTaskbarOnMaximizedClick" />
+                                          HorizontalAlignment="Left" />
                             <RadioButton Content="Radio Button 1"
                                              Margin="88.291,134.92,0,0"
                                              VerticalAlignment="Top"
@@ -139,8 +129,8 @@
                                              HorizontalAlignment="Left" />
                             <TextBox
                                 Text="Hi"
-                                Controls:TextboxHelper.Watermark="Enter Username"
-                                     Controls:TextboxHelper.ClearTextButton="True"
+                                controls:TextboxHelper.Watermark="Enter Username"
+                                     controls:TextboxHelper.ClearTextButton="True"
                                          Margin="88.694,36.96,0,0"
                                          VerticalAlignment="Top"
                                          HorizontalAlignment="Left"
@@ -198,15 +188,14 @@
                                        HorizontalAlignment="Left"
                                        d:LayoutOverrides="HorizontalAlignment" />
                             <Button Content="Launch Panorama"
-                                        Click="BtnPanoramaClick"
                                         VerticalAlignment="Top"
                                         Margin="88,270,90,0" />
                             <Button Content="Launch VS Demo"
-                                    Click="BtnVSClick"
+                                    
                                     VerticalAlignment="Top"
                                     Margin="88,300,90,0"/>
                             <Button Content="Launch Icons"
-                                    Click="BtnIconsClick"
+                                    
                                     VerticalAlignment="Top"
                                     Margin="88,360,90,0"/>
                             <Button Content="Button" VerticalAlignment="Bottom" Margin="88,0,90,8" Style="{DynamicResource SquareButtonStyle}"/>
@@ -214,13 +203,13 @@
                             <Slider Height="19" HorizontalAlignment="Right" Margin="0,239,91,0" Name="slider1" VerticalAlignment="Top" Width="154" Maximum="100" Value="25" />
                         </Grid>
                         <WrapPanel Margin="332.001,0,0,8">
-                            <Controls:AppBarButton
+                            <controls:AppBarButton
                             		VerticalAlignment="Top"
                             		MetroImageSource="{StaticResource appbar_barcode}"
                             		Foreground="{DynamicResource BlackBrush}"
                             		Content="scan" />
 
-                            <Controls:AppBarButton
+                            <controls:AppBarButton
                             		VerticalAlignment="Top"
                             		MetroImageSource="{StaticResource appbar_barcode}"
                             		Foreground="{DynamicResource BlackBrush}"
@@ -280,17 +269,17 @@
 
                             </Button>
 
-                            <Controls:ProgressRing IsActive="True"/>
+                            <controls:ProgressRing IsActive="True"/>
 
 
-                            <Controls:TransitioningContentControl x:Name="transitioning" Width="250" Height="50" Transition="DownTransition" />
+                            <controls:TransitioningContentControl x:Name="transitioning" Width="250" Height="50" Transition="DownTransition" />
 
 
-                            <Controls:TransitioningContentControl x:Name="customTransitioning"
+                            <controls:TransitioningContentControl x:Name="customTransitioning"
                                                                   Width="250"
                                                                   Height="50"
                                                                   Transition="CustomTransition">
-                                <Controls:TransitioningContentControl.CustomVisualStates>
+                                <controls:TransitioningContentControl.CustomVisualStates>
                                     <VisualState x:Name="CustomTransition">
                                         <Storyboard>
                                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
@@ -311,31 +300,31 @@
                                             </DoubleAnimationUsingKeyFrames>
                                         </Storyboard>
                                     </VisualState>
-                                </Controls:TransitioningContentControl.CustomVisualStates>
-                            </Controls:TransitioningContentControl>
-                            <Controls:RangeSlider Width="227" Height="25" RangeStartSelected="20" RangeStopSelected="50"/>
+                                </controls:TransitioningContentControl.CustomVisualStates>
+                            </controls:TransitioningContentControl>
+                            <controls:RangeSlider Width="227" Height="25" RangeStartSelected="20" RangeStopSelected="50"/>
 
                             <Menu  VerticalAlignment="Top" HorizontalAlignment="Left" Height="23" >
                                 <MenuItem Header="Light">
-                                    <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
-                                    <MenuItem Header="Light Green" Click="MiLightGreen" />
-                                    <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                                    <MenuItem Header="Light Purple" Click="MiLightPurple" />
-                                    <MenuItem Header="Light Orange" Click="MiLightOrange">
-                                        <MenuItem Header="Light Orange" Click="MiLightOrange" />
-                                        <MenuItem Header="Light Orange" Click="MiLightOrange" />
+                                    <MenuItem Header="Light Red" IsChecked="True" />
+                                    <MenuItem Header="Light Green" />
+                                    <MenuItem Header="Light Blue" />
+                                    <MenuItem Header="Light Purple" />
+                                    <MenuItem Header="Light Orange" >
+                                        <MenuItem Header="Light Orange" />
+                                        <MenuItem Header="Light Orange" />
                                     </MenuItem>
 
                                 </MenuItem>
                                 <Menu Height="50">
                                     <MenuItem Header="Light">
-                                        <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
-                                        <MenuItem Header="Light Green" Click="MiLightGreen" />
-                                        <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                                        <MenuItem Header="Light Purple" Click="MiLightPurple" />
-                                        <MenuItem Header="Light Orange" Click="MiLightOrange">
-                                            <MenuItem Header="Light Orange" Click="MiLightOrange" />
-                                            <MenuItem Header="Light Orange" Click="MiLightOrange" />
+                                        <MenuItem Header="Light Red" IsChecked="True" />
+                                        <MenuItem Header="Light Green"  />
+                                        <MenuItem Header="Light Blue"  />
+                                        <MenuItem Header="Light Purple" />
+                                        <MenuItem Header="Light Orange" >
+                                            <MenuItem Header="Light Orange"  />
+                                            <MenuItem Header="Light Orange" />
                                         </MenuItem>
 
                                     </MenuItem>
@@ -345,16 +334,15 @@
                         </WrapPanel>
                         <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
                     </Grid>
-                </Controls:MetroTabItem>
+                </controls:MetroTabItem>
                 <TabItem Header="_More Controls Here!">
                     <StackPanel>
                         <!--<Controls:MetroProgressBar Width="600" IsIndeterminate="True"/>-->
 
-                        <Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}"
+                        <controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}"
                                                     Height="6"
                                                     Width="600" />
-                        <Controls:ToggleSwitch 
-                            IsCheckedChanged="ToggleSwitch_OnIsCheckedChanged"
+                        <controls:ToggleSwitch 
                             HorizontalAlignment="Left" 
                             Width="150" 
                             Height="75" 
@@ -374,9 +362,12 @@
 
                         <TextBlock Text="Editable ComboBox Binding scenario" />
                         <ComboBox ItemsSource="{Binding Albums}"
-                                  Controls:TextboxHelper.Watermark="watermark"
+                                  controls:TextboxHelper.Watermark="watermark"
                                   MaxDropDownHeight="50"
-                                  DisplayMemberPath="Title" IsEditable="True" Text="{Binding Path=Title, Mode=TwoWay}" IsReadOnly="False" />
+                                  DisplayMemberPath="Title"
+                                  IsEditable="True" 
+                                  Text="{Binding Path=Title, Mode=TwoWay}"
+                                  IsReadOnly="False" />
 
                         <TextBlock Text="Items specified in xaml scenario" />
                         <ComboBox>
@@ -386,10 +377,10 @@
                                 <ComboBoxItem Content="Test 3" />
                             </ComboBox.Items>
                         </ComboBox>
-                        <Controls:Tile Title="My _Cupcakes"
+                        <controls:Tile Title="My _Cupcakes"
                                        Count="23">
-                            <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
-                        </Controls:Tile>
+                            <controls:MetroImage Source="{StaticResource appbar_cupcake}" />
+                        </controls:Tile>
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="More again">
@@ -441,29 +432,28 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Validation Examples">
-                    <views:ValidationExampleView x:Name="validationExample"
-                                                 DataContext="{Binding ValidationExampleViewModel, Mode=OneWay}" />
                 </TabItem>
                 <TabItem>
                     <StackPanel>
-                        <Controls:Pivot x:Name="pivot" Header="this is my header" Height="250" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
-                            <Controls:PivotItem Header="Hi">
+                        <controls:Pivot x:Name="pivot" Header="this is my header" Height="250" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">
+                            <controls:PivotItem Header="Hi">
                                 <Grid Width="900" Background="Red">
                                     <TextBlock Text="herpadera" />
                                 </Grid>
-                            </Controls:PivotItem>
-                            <Controls:PivotItem Header="Bye">
+                            </controls:PivotItem>
+                            <controls:PivotItem Header="Bye">
                                 <TextBlock Text="derp derp derp"  Width="900" Background="Blue" />
-                            </Controls:PivotItem>
-                            <Controls:PivotItem x:Name="pi3" Header="Bye">
+                            </controls:PivotItem>
+                            <controls:PivotItem x:Name="pi3" Header="Bye">
                                 <TextBlock Text="derp derp derp" Width="900" Background="Green" />
-                            </Controls:PivotItem>
-                        </Controls:Pivot>
-                        <Button Content="Go To Item 3" Click="Button_Click_1" />
+                            </controls:PivotItem>
+                        </controls:Pivot>
+                        <Button Content="Go To Item 3" />
                         <TextBlock Text="{Binding SelectedIndex}" />
                     </StackPanel>
                 </TabItem>
-            </Controls:MetroAnimatedSingleRowTabControl>
+            </controls:MetroAnimatedSingleRowTabControl>
         </Grid>
-    </Controls:MetroContentControl>
-</Controls:MetroWindow>
+    </controls:MetroContentControl>
+
+</controls:MetroWindow>

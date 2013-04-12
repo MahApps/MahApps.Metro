@@ -14,8 +14,12 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Panorama.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/RangeSlider.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroAnimatedSingleRowTabControl.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroTabControl.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroTabItem.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Tile.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/Glow.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

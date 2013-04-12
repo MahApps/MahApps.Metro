@@ -26,6 +26,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
 
         bool isDragging;
 
@@ -97,6 +98,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(TitleCapsProperty); }
             set { SetValue(TitleCapsProperty, value); }
+        }
+
+        public SolidColorBrush GlowBrush
+        {
+            get { return (SolidColorBrush)GetValue(GlowBrushProperty); }
+            set { SetValue(GlowBrushProperty, value); }
         }
 
         public string WindowTitle

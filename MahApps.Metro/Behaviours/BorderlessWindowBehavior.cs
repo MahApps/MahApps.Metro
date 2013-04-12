@@ -247,10 +247,14 @@ namespace MahApps.Metro.Behaviours
                     {
                         if (!ShouldHaveBorder())
                         {
-                            var val = 2;
-                            UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
-                            var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
-                            UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
+                            MetroWindow w = AssociatedObject as MetroWindow;
+                            if (!(w != null && w.GlowBrush != null))
+                            {
+                                var val = 2;
+                                UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
+                                var m = new MARGINS {bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1};
+                                UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
+                            }
 
                             if (Border != null)
                                 Border.BorderThickness = new Thickness(0);
