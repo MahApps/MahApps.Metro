@@ -25,7 +25,8 @@
                             </Grid.ColumnDefinitions>
                             <Image
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    Source="{TemplateBinding Icon}"/>
+                                    Source="{TemplateBinding Icon}"
+                                    RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality"/>
                             <TextBlock
                                     x:Name="WindowTitleTextBlock"
                                     Grid.Column="1"
