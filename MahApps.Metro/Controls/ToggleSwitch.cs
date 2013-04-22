@@ -147,6 +147,7 @@ namespace MahApps.Metro.Controls
                 _toggleButton.Unchecked -= UncheckedHandler;
                 _toggleButton.Indeterminate -= IndeterminateHandler;
                 _toggleButton.Click -= ClickHandler;
+                BindingOperations.ClearBinding(_toggleButton, ToggleButton.IsCheckedProperty);
             }
             _toggleButton = GetTemplateChild(SwitchPart) as ToggleButton;
             if (_toggleButton != null)
@@ -155,7 +156,9 @@ namespace MahApps.Metro.Controls
                 _toggleButton.Unchecked += UncheckedHandler;
                 _toggleButton.Indeterminate += IndeterminateHandler;
                 _toggleButton.Click += ClickHandler;
-                _toggleButton.IsChecked = IsChecked;
+                Binding binding = new Binding("IsChecked");
+                binding.Source = this;
+                _toggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
             }
             ChangeVisualState(false);
         }
