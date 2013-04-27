@@ -130,7 +130,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnRenderSizeChanged(sizeInfo);
 
-            if (!sizeInfo.WidthChanged || !sizeInfo.HeightChanged) return;
+            if (!sizeInfo.WidthChanged && !sizeInfo.HeightChanged) return;
 
             if (!IsOpen)
             {
