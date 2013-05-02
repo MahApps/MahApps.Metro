@@ -174,12 +174,17 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    if (e.ClickCount == 1)
-                    {
-                        isDragging = true;
-                        DragMove();
-                    }
-                    else if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize))
+                    IntPtr windowHandle = new WindowInteropHelper(this).Handle;
+                    UnsafeNativeMethods.ReleaseCapture();
+
+                    var wpfPoint = PointToScreen(Mouse.GetPosition(this));
+                    short x = Convert.ToInt16(wpfPoint.X);
+                    short y = Convert.ToInt16(wpfPoint.Y);
+
+                    int lParam = x | (y << 16);
+
+                    UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
+                    if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize))
                     {
                         WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
                     }
@@ -229,8 +234,6 @@ namespace MahApps.Metro.Controls
 
                 // Restore window to normal state.
                 WindowState = WindowState.Normal;
-
-                DragMove();
             }
         }
 
