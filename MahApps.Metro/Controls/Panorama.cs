@@ -17,11 +17,47 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderFontColorProperty = DependencyProperty.Register("HeaderFontColor", typeof(Brush), typeof(Panorama), new FrameworkPropertyMetadata(Brushes.White));
         public static readonly DependencyProperty HeaderFontFamilyProperty = DependencyProperty.Register("HeaderFontFamily", typeof(FontFamily), typeof(Panorama), new FrameworkPropertyMetadata(new FontFamily("Segoe UI Light")));
         public static readonly DependencyProperty UseSnapBackScrollingProperty = DependencyProperty.Register("UseSnapBackScrolling", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(Panorama), new PropertyMetadata(Orientation.Horizontal));
+
+
+        public static readonly RoutedEvent ScrollToEndRoutedEvent = EventManager.RegisterRoutedEvent("ScrollToEnd", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Panorama));
+        public static readonly RoutedEvent ScrollToStartRoutedEvent = EventManager.RegisterRoutedEvent("ScrollToStart", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Panorama));
+
+        public event RoutedEventHandler ScrollToEnd 
+        {
+            add { AddHandler(ScrollToEndRoutedEvent, value); }
+            remove { RemoveHandler(ScrollToEndRoutedEvent, value); }
+        }
+        public event RoutedEventHandler ScrollToStart 
+        {
+            add { AddHandler(ScrollToStartRoutedEvent, value); }
+            remove { RemoveHandler(ScrollToStartRoutedEvent, value); }
+        }
+
+        protected virtual void OnScrollToEnd()
+        {
+            RaiseEvent(new RoutedEventArgs(ScrollToEndRoutedEvent, this));
+        }
+        protected virtual void OnScrollToStart() 
+        {
+            RaiseEvent(new RoutedEventArgs(ScrollToStartRoutedEvent, this));
+        }
+
+        protected virtual void OnScrollToEnd() 
+        {
+            RaiseEvent(new RoutedEventArgs(ScrollToEndRoutedEvent, this));
+        }
 
         public double Friction
         {
             get { return 1.0 - friction; }
             set { friction = Math.Min(Math.Max(1.0 - value, 0), 1.0); }
+        }
+
+        public Orientation Orientation 
+        {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
         }
 
         public double ItemBox
@@ -148,7 +184,20 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             sv = (ScrollViewer)Template.FindName("PART_ScrollViewer", this);
+            sv.ScrollChanged += sv_ScrollChanged;
             base.OnApplyTemplate();
+        }
+
+        void sv_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (sv.HorizontalOffset == sv.ScrollableWidth)
+            {
+                OnScrollToEnd();
+            }
+            if (sv.HorizontalOffset == 0)
+            {
+                OnScrollToStart();
+            }
         }
 
         protected override void OnPreviewMouseDown(MouseButtonEventArgs e)
