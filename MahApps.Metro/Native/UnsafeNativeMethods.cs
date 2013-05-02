@@ -101,6 +101,12 @@ namespace MahApps.Metro.Native
         [DllImport("user32.dll")]
         internal static extern uint EnableMenuItem(IntPtr hMenu, uint itemId, uint uEnable);
 
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
         internal static void PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam)
         {
             if (!_PostMessage(hWnd, Msg, wParam, lParam))
