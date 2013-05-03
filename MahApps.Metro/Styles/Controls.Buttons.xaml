@@ -465,21 +465,23 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         
-                        <Rectangle x:Name="MouseOverRectangle" Fill="{DynamicResource WhiteBrush}" Opacity="0"/>
-                        <Rectangle x:Name="PressedRectangle" Fill="{DynamicResource BlackBrush}" Opacity="0"/>
-                        
                         <Border x:Name="Border"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}">
-                        
-                            <ContentPresenter x:Name="ContentPresenter"
-                                              TextBlock.Foreground="{TemplateBinding Foreground}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+
+                            <Grid>
+                                <Rectangle x:Name="MouseOverRectangle" Fill="{DynamicResource WhiteBrush}" Opacity="0"/>
+                                <Rectangle x:Name="PressedRectangle" Fill="{DynamicResource BlackBrush}" Opacity="0"/>
+
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  TextBlock.Foreground="{TemplateBinding Foreground}"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
                         </Border>
                         
                         <Rectangle x:Name="FocusVisualWhite"
