@@ -10,6 +10,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ContextMenu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DatePicker.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DataGrid.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.GroupBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.PasswordBox.xaml" />
@@ -107,7 +108,11 @@
     <Style TargetType="DatePicker" BasedOn="{StaticResource MetroDatePicker}"/>
     <Style TargetType="DatePickerTextBox" BasedOn="{StaticResource MetroDatePickerTextBox}"/>
     <Style TargetType="Calendar" BasedOn="{StaticResource MetroCalendar}" />
-    
+    <Style TargetType="DataGrid" BasedOn="{StaticResource MetroDataGrid}" />
+    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MetroDataGridColumnHeader}" />
+    <Style TargetType="DataGridRowHeader" BasedOn="{StaticResource MetroDataGridRowHeader}" />
+    <Style TargetType="DataGridCell" BasedOn="{StaticResource MetroDataGridCell}" />
+
     <Style TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template">
             <Setter.Value>
