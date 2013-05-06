@@ -266,7 +266,7 @@
                                     BorderBrush="{DynamicResource ComboBoxPopupBrush}"
                                     Background="{DynamicResource WhiteBrush}">
                                 <ScrollViewer x:Name="DropDownScrollViewer" BorderThickness="0" Margin="2" Padding="1">
-                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    <VirtualizingStackPanel x:Name="ItemsPresenter" IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
                             </Border>
                         </Popup>
@@ -291,8 +291,6 @@
     <Style TargetType="ComboBoxItem" x:Key="MetroComboBoxItem">
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding" Value="2" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
@@ -336,10 +334,7 @@
                         </VisualStateManager.VisualStateGroups>
                         <Rectangle x:Name="SelectedRectangle" IsHitTestVisible="False" Opacity="0" Fill="{DynamicResource HighlightBrush}" />
                         <Rectangle x:Name="MouseOverRectangle" IsHitTestVisible="False" Opacity="0" Fill="{DynamicResource HighlightBrush}" />
-                        <ContentControl>
-                            <ContentControl.Foreground>
-                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{DynamicResource NormalForegroundColor}" />
-                            </ContentControl.Foreground>
+                        <ContentControl >
                             <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </ContentControl>
                         <Rectangle x:Name="FocusVisualElement" Stroke="{DynamicResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed" />
