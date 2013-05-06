@@ -463,6 +463,20 @@
                         <TextBlock Text="{Binding SelectedIndex}" />
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="DataGrid">
+                    <DataGrid ItemsSource="{Binding Path=Albums}" 
+                              AutoGenerateColumns="False" 
+                              HorizontalAlignment="Stretch" 
+                              ScrollViewer.CanContentScroll="True" 
+                              Grid.Row="1"
+                              CanUserAddRows="False"
+                              CanUserDeleteRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Title, Mode=OneWay}" Header="artist" ></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Price, Mode=OneWay}" Header="url" ></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
         </Grid>
     </Controls:MetroContentControl>
