@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -179,7 +178,6 @@ namespace MahApps.Metro.Controls
 
         private static void ComboBoxLoaded(object sender, RoutedEventArgs e)
         {
-            Trace.WriteLine("ComboBoxLoaded");
             if (!(sender is ComboBox))
                 return;
 
@@ -187,19 +185,13 @@ namespace MahApps.Metro.Controls
             if (passbox.Style == null)
                 return;
 
-            Trace.WriteLine("Style is not null");
             var template = passbox.Template;
             if (template == null)
                 return;
 
-
-            Trace.WriteLine("Template is not null");
-
             var button = template.FindName("PART_ClearText", passbox) as Button;
             if (button == null)
                 return;
-
-            Trace.WriteLine("PART_ClearText is not null");
 
             if (GetClearTextButton(passbox))
             {
