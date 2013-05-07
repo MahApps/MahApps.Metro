@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <Style TargetType="{x:Type ComboBox}" x:Key="MetroComboBox">
         <Setter Property="MinHeight" Value="26" />
@@ -11,7 +12,7 @@
                 <SolidColorBrush Color="{DynamicResource Gray7}" />
             </Setter.Value>
         </Setter>
-        
+
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="1" />
@@ -165,9 +166,11 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="ContentPresenterBorder">
                             <Grid>
-                                <ToggleButton x:Name="DropDownToggle"
+                                <Border x:Name="DropDownToggleBorder" HorizontalAlignment="Stretch" 
                                               BorderBrush="{TemplateBinding BorderBrush}"
-                                              BorderThickness="{TemplateBinding BorderThickness}"
+                                              BorderThickness="{TemplateBinding BorderThickness}" >
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="DropDownToggle"  BorderThickness="0"
                                               Background="{TemplateBinding Background}"
                                               HorizontalAlignment="Stretch"
                                               HorizontalContentAlignment="Right"
@@ -176,18 +179,22 @@
                                               IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                               VerticalAlignment="Stretch"
                                               KeyboardNavigation.IsTabStop="False">
-                                    <Path x:Name="BtnArrow"
+                                            <Path x:Name="BtnArrow"
                                           Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
                                           HorizontalAlignment="Right"
                                           Height="4"
                                           Margin="0,0,6,0"
                                           Stretch="Uniform"
                                           Width="8">
-                                        <Path.Fill>
-                                            <SolidColorBrush x:Name="BtnArrowColor" Color="{DynamicResource Gray3}" />
-                                        </Path.Fill>
-                                    </Path>
-                                </ToggleButton>
+                                                <Path.Fill>
+                                                    <SolidColorBrush x:Name="BtnArrowColor" Color="{DynamicResource Gray3}" />
+                                                </Path.Fill>
+                                            </Path>
+                                        </ToggleButton>
+                                        <Button x:Name="PART_ClearText" Margin="0,2,15,2" FontSize="12" VerticalAlignment="Center" Height="14" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False" />
+                                    </Grid>
+                                </Border>
+
 
                                 <Border x:Name="EditableTextBoxBorder"
                                             Visibility="Collapsed"
@@ -197,7 +204,7 @@
                                             HorizontalAlignment="Stretch"
                                             Margin="0,0,23,0"
                                             VerticalAlignment="Stretch">
-                                        <TextBox    x:Name="PART_EditableTextBox"
+                                    <TextBox    x:Name="PART_EditableTextBox"
                                                     HorizontalAlignment="Stretch" 
                                                     Margin="{TemplateBinding Padding}" 
                                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
@@ -276,12 +283,19 @@
                             <Setter Property="IsTabStop" Value="false"/>
                             <Setter TargetName="EditableTextBoxBorder" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
-                            <Setter TargetName="DropDownToggle" Property="Focusable" Value="False"/>
-                            <Setter TargetName="DropDownToggle" Property="HorizontalAlignment" Value="Right" />
+                            <Setter TargetName="DropDownToggleBorder" Property="Focusable" Value="False"/>
+                            <Setter TargetName="DropDownToggleBorder" Property="HorizontalAlignment" Value="Right" />
                             <Setter TargetName="DropDownToggle" Property="Background" Value="Transparent" />
-                            <Setter TargetName="DropDownToggle" Property="Width" Value="23" />
-                            <Setter TargetName="DropDownToggle" Property="BorderThickness" Value="0,1,1,1" />
+                            <Setter TargetName="DropDownToggleBorder" Property="Width" Value="30" />
+                            <Setter TargetName="DropDownToggleBorder" Property="BorderThickness" Value="0,1,1,1" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEditable" Value="True"></Condition>
+                                <Condition Property="Controls:TextboxHelper.ClearTextButton" Value="True"></Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EditableTextBoxBorder" Property="Margin" Value="0,0,30,0"></Setter>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
