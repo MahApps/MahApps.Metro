@@ -104,9 +104,6 @@
     <Style TargetType="ListView" BasedOn="{StaticResource MetroListView}" />
     <Style TargetType="ListViewItem" BasedOn="{StaticResource MetroListViewItem}" />
     <Style TargetType="DataGrid" BasedOn="{StaticResource MetroDataGrid}" />
-    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MetroDataGridColumnHeader}" />
-    <Style TargetType="DataGridRowHeader" BasedOn="{StaticResource MetroDataGridRowHeader}" />
-    <Style TargetType="DataGridCell" BasedOn="{StaticResource MetroDataGridCell}" />
 
     <Style TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template">
