@@ -109,9 +109,6 @@
     <Style TargetType="DatePickerTextBox" BasedOn="{StaticResource MetroDatePickerTextBox}"/>
     <Style TargetType="Calendar" BasedOn="{StaticResource MetroCalendar}" />
     <Style TargetType="DataGrid" BasedOn="{StaticResource MetroDataGrid}" />
-    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MetroDataGridColumnHeader}" />
-    <Style TargetType="DataGridRowHeader" BasedOn="{StaticResource MetroDataGridRowHeader}" />
-    <Style TargetType="DataGridCell" BasedOn="{StaticResource MetroDataGridCell}" />
 
     <Style TargetType="{x:Type ScrollViewer}">
         <Setter Property="Template">
