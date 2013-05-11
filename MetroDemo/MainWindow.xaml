@@ -464,7 +464,7 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem Header="DataGrid">
-                    <DataGrid ItemsSource="{Binding Path=Albums}" />
+                    <DataGrid ItemsSource="{Binding Path=Albums}"/>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
         </Grid>

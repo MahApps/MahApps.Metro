@@ -46,7 +46,7 @@
         <Setter Property="Width" Value="8" />
         <Setter Property="Background">
             <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource Gray6}"/>
+                <SolidColorBrush Color="{DynamicResource Gray4}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Cursor" Value="SizeWE"/>
@@ -82,7 +82,7 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="4,2" />
+        <Setter Property="Padding" Value="10,4,4,7" />
         <Setter Property="Margin" Value="0,0,0,10"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -95,10 +95,10 @@
                         <Border x:Name="BackgroundBorder" BorderThickness="0,0,0,3"
                                 Grid.ColumnSpan="2">
                             <Border.Background>
-                                <SolidColorBrush Color="{DynamicResource Gray5}"/>
+                                <SolidColorBrush Color="{DynamicResource Gray8}"/>
                             </Border.Background>
                             <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource Gray6}"/>
+                                <SolidColorBrush Color="{DynamicResource Gray4}"/>
                             </Border.BorderBrush>
                         </Border>
 
@@ -118,10 +118,13 @@
                               Grid.Column="1"
                               Width="8"
                               Height="10"
-                              Fill="{DynamicResource BlackColorBrush}"
-                              Margin="0,0,8,0" 
+                              Margin="0,0,8,2" 
                               VerticalAlignment="Center"
-                              RenderTransformOrigin="0.5,0.4" />
+                              RenderTransformOrigin="0.5,0.5">
+                            <Path.Fill>
+                                <SolidColorBrush Color="{DynamicResource Gray2}"/>
+                            </Path.Fill>
+                        </Path>
 
                         <Thumb x:Name="PART_LeftHeaderGripper"
                                HorizontalAlignment="Left" 
@@ -146,7 +149,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="BackgroundBorder" Property="Background">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray5}"/>
+                                    <SolidColorBrush Color="{DynamicResource Gray8}"/>
                                 </Setter.Value>
                             </Setter>
                         </MultiTrigger>
@@ -158,10 +161,14 @@
                         <Trigger Property="SortDirection" Value="Descending">
                             <Setter TargetName="SortArrow" Property="Visibility" Value="Visible" />
                             <Setter TargetName="SortArrow" Property="Data" Value="F1 M 42,19.0002L 34,19.0002L 34,43.7502L 24,33.7502L 24,44.2502L 38,58.2502L 52,44.2502L 52,33.7502L 42,43.7502L 42,19.0002 Z "/>
+                            <Setter TargetName="SortArrow" Property="Margin" Value="0,0,8,0"/>
                         </Trigger>
                         <Trigger Property="DisplayIndex" Value="0">
                             <Setter Property="Visibility" Value="Collapsed" 
                                     TargetName="PART_LeftHeaderGripper"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -300,6 +307,9 @@
                     <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}"/>
                 </MultiTrigger.Setters>
             </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+            </Trigger>
         </Style.Triggers>
     </Style>
 
@@ -312,7 +322,7 @@
         <Setter Property="RowHeaderStyle" Value="{StaticResource MetroDataGridRowHeader}"/>
         <Setter Property="CellStyle" Value="{StaticResource MetroDataGridCell}"/>
         <Setter Property="RowStyle" Value="{StaticResource MetroDataGridRow}"/>
-        <!--<Setter Property="HeadersVisibility" Value="Column"/>-->
+        <Setter Property="HeadersVisibility" Value="Column"/>
         <Setter Property="DropLocationIndicatorStyle">
             <Setter.Value>
                 <Style TargetType="Separator">
