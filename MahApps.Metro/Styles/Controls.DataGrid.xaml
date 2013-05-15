@@ -12,21 +12,14 @@
                         <Rectangle x:Name="Border" SnapsToDevicePixels="True">
                             <Rectangle.Resources>
                                 <Style TargetType="{x:Type Rectangle}">
-                                    <Setter Property="Fill" Value="Transparent"/>
+                                    <Setter Property="Fill" Value="{DynamicResource GrayBrush5}"/>
                                 </Style>
                             </Rectangle.Resources>
                         </Rectangle>
-                        <Polygon x:Name="Arrow" Fill="Black" HorizontalAlignment="Right" Margin="8,8,3,3" Opacity="0.15" Points="0,10 10,10 10,0" Stretch="Uniform" VerticalAlignment="Bottom"/>
+                        <Polygon x:Name="Arrow" Fill="{DynamicResource GrayBrush3}" HorizontalAlignment="Right" Margin="8,8,3,3" Opacity="0.15" Points="0,10 10,10 10,0" Stretch="Uniform" VerticalAlignment="Bottom"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Fill" TargetName="Border">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor}"/>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Fill" TargetName="Border">
                                 <Setter.Value>
                                     <SolidColorBrush Color="{DynamicResource AccentColor2}"/>
@@ -44,11 +37,7 @@
 
     <Style x:Key="MetroColumnHeaderGripperStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Width" Value="8" />
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource Gray4}"/>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource GrayBrush4}"/>
         <Setter Property="Cursor" Value="SizeWE"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -64,7 +53,7 @@
     <Style x:Key="MetroRowHeaderGripperStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Width" Value="8"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Cursor" Value="SizeNS"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
@@ -83,7 +72,9 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="10,4,4,7" />
-        <Setter Property="Margin" Value="0,0,0,10"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush4}"/>
+        <Setter Property="Background" Value="{DynamicResource GrayBrush8}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
@@ -93,14 +84,8 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Border x:Name="BackgroundBorder" BorderThickness="0,0,0,3"
-                                Grid.ColumnSpan="2">
-                            <Border.Background>
-                                <SolidColorBrush Color="{DynamicResource Gray8}"/>
-                            </Border.Background>
-                            <Border.BorderBrush>
-                                <SolidColorBrush Color="{DynamicResource Gray4}"/>
-                            </Border.BorderBrush>
-                        </Border>
+                                Grid.ColumnSpan="2" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"/>
 
                         <ContentPresenter x:Name="HeaderContent"
                                           Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"
@@ -120,11 +105,8 @@
                               Height="10"
                               Margin="0,0,8,2" 
                               VerticalAlignment="Center"
-                              RenderTransformOrigin="0.5,0.5">
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource Gray2}"/>
-                            </Path.Fill>
-                        </Path>
+                              RenderTransformOrigin="0.5,0.5"
+                              Fill="{DynamicResource GrayBrush2}"/>
 
                         <Thumb x:Name="PART_LeftHeaderGripper"
                                HorizontalAlignment="Left" 
@@ -147,11 +129,8 @@
                                 <Condition Property="IsMouseOver" Value="True" />
                                 <Condition Property="SortDirection" Value="{x:Null}" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="BackgroundBorder" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray8}"/>
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="BackgroundBorder" Property="Background"
+                                    Value="{DynamicResource GrayBrush8}"/>
                         </MultiTrigger>
 
                         <Trigger Property="SortDirection" Value="Ascending">
@@ -178,15 +157,18 @@
 
     <Style x:Key="MetroDataGridRowHeader" TargetType="{x:Type DataGridRowHeader}">
         <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush4}"/>
+        <Setter Property="BorderThickness" Value="0,0,1,0"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
                     <Grid>
-                        <Border  BorderBrush="{Binding HorizontalGridLinesBrush, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                        <Border  BorderBrush="{TemplateBinding BorderBrush}" 
                                  Background="{TemplateBinding Background}"                                     
-                                 BorderThickness="0,0,0,0" 
+                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                  Padding ="{TemplateBinding Padding}" 
-                                 Margin="0,0,0,0"
+                                 Margin="{TemplateBinding Margin}"
                                  SnapsToDevicePixels="True">
                             <StackPanel Orientation="Horizontal">
                                 <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
@@ -220,54 +202,12 @@
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow, Mode=FindAncestor}, Path=Foreground}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="MinHeight" Value="25"/>
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type DataGridCell}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
-                            VerticalAlignment="Stretch">
-                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          Content="{TemplateBinding Content}"
-                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="Center"
-                                          Margin="2"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <DataTrigger
-						Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Column.DisplayIndex}"
-						Value="0">
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource AccentColor4}"/>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Column.DisplayIndex}" Value="0"/>
-                    <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsSelected}" Value="True"/>
-                </MultiDataTrigger.Conditions>
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource AccentColor2}"/>
-                    </Setter.Value>
-                </Setter>
-            </MultiDataTrigger>
-        </Style.Triggers>
     </Style>
 
     <Style x:Key="MetroDataGridRow" TargetType="{x:Type DataGridRow}">
         <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="MinHeight" Value="25"/>
-        <Setter Property="Margin" Value="0,0,0,1"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
@@ -326,11 +266,7 @@
         <Setter Property="DropLocationIndicatorStyle">
             <Setter.Value>
                 <Style TargetType="Separator">
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="{DynamicResource Gray5}"/>
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Background" Value="{DynamicResource GrayBrush5}"/>
                     <Setter Property="Width" Value="2"/>
                     <Setter Property="Template">
                         <Setter.Value>
@@ -388,6 +324,74 @@
                 <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="AzureDataGridColumnHeader" TargetType="{x:Type DataGridColumnHeader}" BasedOn="{StaticResource MetroDataGridColumnHeader}">
+        <Setter Property="Margin" Value="0,0,0,10"/>
+    </Style>
+
+    <Style x:Key="AzureDataGridRowHeader" TargetType="{x:Type DataGridRowHeader}" BasedOn="{StaticResource MetroDataGridRowHeader}">
+        <Setter Property="BorderThickness" Value="0,0,0,0"/>
+    </Style>
+
+    <Style x:Key="AzureDataGridCell" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow, Mode=FindAncestor}, Path=Foreground}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="MinHeight" Value="25"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" SnapsToDevicePixels="True"
+                            VerticalAlignment="Stretch">
+                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="Center"
+                                          Margin="2"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger
+                        Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Column.DisplayIndex}"
+                        Value="0">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource AccentColor4}"/>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Column.DisplayIndex}" Value="0"/>
+                    <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsSelected}" Value="True"/>
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource AccentColor2}"/>
+                    </Setter.Value>
+                </Setter>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="AzureDataGridRow" TargetType="{x:Type DataGridRow}" BasedOn="{StaticResource MetroDataGridRow}">
+        <Setter Property="Margin" Value="0,0,0,1"/>
+    </Style>
+
+    <Style x:Key="AzureDataGrid" TargetType="{x:Type DataGrid}" BasedOn="{StaticResource MetroDataGrid}">
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource AzureDataGridColumnHeader}"/>
+        <Setter Property="CellStyle" Value="{StaticResource AzureDataGridCell}"/>
+        <Setter Property="RowStyle" Value="{StaticResource AzureDataGridRow}"/>
+        <Setter Property="RowHeaderStyle" Value="{StaticResource AzureDataGridRowHeader}"/>
     </Style>
 
 </ResourceDictionary>
