@@ -32,10 +32,10 @@ namespace MahApps.Metro.Behaviours
 
             this.AssociatedObject.Closed += (sender, args) =>
             {
-                left.Close();
-                right.Close();
-                top.Close();
-                bottom.Close();
+                if (left != null) left.Close();
+                if (right != null) right.Close();
+                if (top != null) top.Close();
+                if (bottom != null) bottom.Close();
             };
         }
 
