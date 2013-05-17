@@ -61,7 +61,7 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(SelectionChangedEvent, value); }
         }
 
-        public void GoToItem(PivotItem item)
+        public void GoToItem(PivotItem item, int? selectedIndex = null)
         {
             if (item == null || item == selectedItem)
                 return;
@@ -86,15 +86,21 @@ namespace MahApps.Metro.Controls
             sb.Completed += sb_Completed;
             sb.Begin();
 
-            SelectedIndex = internalIndex;
+            if (selectedIndex.HasValue)
+            {
+                SelectedIndex = selectedIndex.Value;
 
-            RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
+                internalIndex = selectedIndex.Value;
 
+                RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
+            }
         }
+
+        public bool IsAutoScrolling { get; set; }
 
         void sb_Completed(object sender, EventArgs e)
         {
-            SelectedIndex = internalIndex;
+            IsAutoScrolling = false;
         }
 
         static Pivot()
@@ -125,13 +131,14 @@ namespace MahApps.Metro.Controls
 
         void headers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            GoToItem((PivotItem)headers.SelectedItem);
+            IsAutoScrolling = true;
+            GoToItem((PivotItem)headers.SelectedItem, headers.SelectedIndex);
         }
 
         void scroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (SelectedIndex != 0 && e.HorizontalOffset == 0)
-                return;
+            //if (SelectedIndex != 0 && e.HorizontalOffset == 0)
+            //    return;
 
             var position = 0.0;
             for (int i = 0; i < Items.Count; i++)
@@ -144,10 +151,14 @@ namespace MahApps.Metro.Controls
                     if (headers.SelectedItem != selectedItem)
                     {
                         headers.SelectedItem = selectedItem;
-                        internalIndex = i;
-                        SelectedIndex = i;
+                        
+                        if (!IsAutoScrolling)
+                        {
+                            internalIndex = i;
+                            SelectedIndex = i;
 
-                        RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
+                            RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
+                        }
                     }
                     break;
                 }
