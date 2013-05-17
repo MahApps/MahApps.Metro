@@ -10,49 +10,25 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Mediator", Type = typeof(ScrollViewerOffsetMediator))]
     public class Pivot : ItemsControl
     {
-        private ScrollViewer scroller;
-        private ListView headers;
-        private PivotItem selectedItem;
-        private ScrollViewerOffsetMediator mediator;
-        internal int internalIndex;
-        public static readonly RoutedEvent SelectionChangedEvent = EventManager.RegisterRoutedEvent("SelectionChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Pivot));
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Pivot), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Pivot));
-        public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Pivot), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedItemChanged));
         public static readonly DependencyProperty IsResizingItemsDynamicProperty = DependencyProperty.Register("IsResizingItemsDynamic", typeof(bool), typeof(Pivot), new PropertyMetadata(true));
+        public static readonly DependencyProperty SelectedIndexProperty = DependencyProperty.Register("SelectedIndex", typeof(int), typeof(Pivot), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, SelectedItemChanged));
+        public static readonly RoutedEvent SelectionChangedEvent = EventManager.RegisterRoutedEvent("SelectionChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Pivot));
+        internal int internalIndex;
+        private ListView headers;
+        private ScrollViewerOffsetMediator mediator;
+        private ScrollViewer scroller;
+        private PivotItem selectedItem;
+
+        static Pivot()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Pivot), new FrameworkPropertyMetadata(typeof(Pivot)));
+        }
 
         public Pivot()
         {
             Loaded += Pivot_Loaded;
-        }
-
-        void Pivot_Loaded(object sender, RoutedEventArgs e)
-        {
-            ApplyNewWidth(ActualWidth);
-        }
-
-        public bool IsResizingItemsDynamic
-        {
-            get { return (bool)GetValue(IsResizingItemsDynamicProperty); }
-            set { SetValue(IsResizingItemsDynamicProperty, value); }
-        }
-
-        public DataTemplate HeaderTemplate
-        {
-            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
-            set { SetValue(HeaderTemplateProperty, value); }
-        }
-
-        public string Header
-        {
-            get { return (string)GetValue(HeaderProperty); }
-            set { SetValue(HeaderProperty, value); }
-        }
-
-        public int SelectedIndex
-        {
-            get { return (int)GetValue(SelectedIndexProperty); }
-            set { SetValue(SelectedIndexProperty, value); }
         }
 
         public event RoutedEventHandler SelectionChanged
@@ -61,22 +37,58 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(SelectionChangedEvent, value); }
         }
 
-        public void GoToItem(PivotItem item, int? selectedIndex = null)
+        public string Header
         {
-            if (item == null || item == selectedItem)
+            get { return (string)GetValue(HeaderProperty); }
+            set { SetValue(HeaderProperty, value); }
+        }
+
+        public DataTemplate HeaderTemplate
+        {
+            get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
+            set { SetValue(HeaderTemplateProperty, value); }
+        }
+
+        public bool IsAutoScrolling { get; set; }
+
+        public bool IsManualScrolling { get; set; }
+
+        public bool IsResizingItemsDynamic
+        {
+            get { return (bool)GetValue(IsResizingItemsDynamicProperty); }
+            set { SetValue(IsResizingItemsDynamicProperty, value); }
+        }
+
+        public int SelectedIndex
+        {
+            get { return (int)GetValue(SelectedIndexProperty); }
+            set { SetValue(SelectedIndexProperty, value); }
+        }
+
+        public void AutoScrollToItem(PivotItem pivotItem)
+        {
+            if (mediator == null || scroller == null)
                 return;
+
+            IsAutoScrolling = true;
 
             var widthToScroll = 0.0;
             int index;
             for (index = 0; index < Items.Count; index++)
             {
-                if (Items[index] == item)
+                if (Items[index] == pivotItem)
                 {
                     internalIndex = index;
                     break;
                 }
                 widthToScroll += ((PivotItem)Items[index]).ActualWidth;
             }
+
+            SelectedIndex = internalIndex;
+
+            headers.SelectedIndex = internalIndex;
+
+            RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
 
             mediator.HorizontalOffset = scroller.HorizontalOffset;
             var sb = mediator.Resources["Storyboard1"] as Storyboard;
@@ -85,27 +97,6 @@ namespace MahApps.Metro.Controls
             sb.Completed -= sb_Completed;
             sb.Completed += sb_Completed;
             sb.Begin();
-
-            if (selectedIndex.HasValue)
-            {
-                SelectedIndex = selectedIndex.Value;
-
-                internalIndex = selectedIndex.Value;
-
-                RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
-            }
-        }
-
-        public bool IsAutoScrolling { get; set; }
-
-        void sb_Completed(object sender, EventArgs e)
-        {
-            IsAutoScrolling = false;
-        }
-
-        static Pivot()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Pivot), new FrameworkPropertyMetadata(typeof(Pivot)));
         }
 
         public override void OnApplyTemplate()
@@ -124,45 +115,31 @@ namespace MahApps.Metro.Controls
                 headers.SelectionChanged += headers_SelectionChanged;
         }
 
-        void scroller_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
-            scroller.ScrollToHorizontalOffset(scroller.HorizontalOffset + -e.Delta);
-        }
-
-        void headers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            IsAutoScrolling = true;
-            GoToItem((PivotItem)headers.SelectedItem, headers.SelectedIndex);
-        }
-
-        void scroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            //if (SelectedIndex != 0 && e.HorizontalOffset == 0)
-            //    return;
-
-            var position = 0.0;
-            for (int i = 0; i < Items.Count; i++)
+            base.OnRenderSizeChanged(sizeInfo);
+            if (sizeInfo.WidthChanged && !IsAutoScrolling)
             {
-                var pivotItem = ((PivotItem)Items[i]);
-                var widthOfItem = pivotItem.ActualWidth;
-                if (e.HorizontalOffset <= (position + widthOfItem - 1))
-                {
-                    selectedItem = pivotItem;
-                    if (headers.SelectedItem != selectedItem)
-                    {
-                        headers.SelectedItem = selectedItem;
-                        
-                        if (!IsAutoScrolling)
-                        {
-                            internalIndex = i;
-                            SelectedIndex = i;
+                ApplyNewWidth(sizeInfo.NewSize.Width);
+            }
+        }
 
-                            RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
-                        }
-                    }
-                    break;
+        private static void SelectedItemChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var p = (Pivot)dependencyObject;
+            if (p == null)
+                return;
+
+            if (p.IsManualScrolling || p.IsAutoScrolling)
+                return;
+
+            // In this case SelectedIndex was set from outside
+            if (dependencyPropertyChangedEventArgs.OldValue != dependencyPropertyChangedEventArgs.NewValue)
+            {
+                if (p.internalIndex != (int)dependencyPropertyChangedEventArgs.NewValue)
+                {
+                    p.AutoScrollToItem((PivotItem)p.Items[(int)dependencyPropertyChangedEventArgs.NewValue]);
                 }
-                position += widthOfItem;
             }
         }
 
@@ -188,7 +165,6 @@ namespace MahApps.Metro.Controls
                         {
                             PivotItem pivotItem = (PivotItem)item;
 
-
                             if (calculatedWidth >= pivotItem.MinWidth && calculatedWidth <= pivotItem.MaxWidth)
                             {
                                 pivotItem.Width = calculatedWidth;
@@ -207,7 +183,7 @@ namespace MahApps.Metro.Controls
                         {
                             if (selectedIndexOld != SelectedIndex)
                             {
-                                GoToItem((PivotItem)Items[selectedIndexOld]);
+                                AutoScrollToItem((PivotItem)Items[selectedIndexOld]);
                             }
                         }
                     }
@@ -215,23 +191,64 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        void headers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            base.OnRenderSizeChanged(sizeInfo);
-            if (sizeInfo.WidthChanged)
+            if (!IsAutoScrolling && !IsManualScrolling)
             {
-                ApplyNewWidth(sizeInfo.NewSize.Width);
+                AutoScrollToItem((PivotItem)headers.SelectedItem);
             }
         }
 
-        private static void SelectedItemChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        void Pivot_Loaded(object sender, RoutedEventArgs e)
         {
-            var p = (Pivot)dependencyObject;
-            if (p == null)
+            ApplyNewWidth(ActualWidth);
+
+            if (Items.Count > 0)
+            {
+                AutoScrollToItem((PivotItem)Items[SelectedIndex]);
+            }
+        }
+
+        void sb_Completed(object sender, EventArgs e)
+        {
+            IsAutoScrolling = false;
+        }
+
+        void scroller_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        {
+            scroller.ScrollToHorizontalOffset(scroller.HorizontalOffset + -e.Delta);
+        }
+
+        void scroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (IsAutoScrolling)
                 return;
 
-            if (dependencyPropertyChangedEventArgs.OldValue != dependencyPropertyChangedEventArgs.NewValue)
-                p.GoToItem((PivotItem)p.Items[(int)dependencyPropertyChangedEventArgs.NewValue]);
+            IsManualScrolling = true;
+
+            var position = 0.0;
+            for (int i = 0; i < Items.Count; i++)
+            {
+                var pivotItem = ((PivotItem)Items[i]);
+                var widthOfItem = pivotItem.ActualWidth;
+                if (e.HorizontalOffset <= (position + widthOfItem - 1))
+                {
+                    selectedItem = pivotItem;
+                    if (headers.SelectedItem != selectedItem)
+                    {
+                        headers.SelectedItem = selectedItem;
+
+                        internalIndex = i;
+                        SelectedIndex = i;
+
+                        RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
+                    }
+                    break;
+                }
+                position += widthOfItem;
+            }
+
+            IsManualScrolling = false;
         }
     }
 }

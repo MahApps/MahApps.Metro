@@ -56,11 +56,7 @@ namespace PivotDemo
             
 
             Items = items;
-
-
         }
-
-
 
         public List<DataItem> Items
         {
