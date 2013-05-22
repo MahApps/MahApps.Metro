@@ -27,6 +27,10 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TextBlock" x:Key="DescriptionHeaderStyle">
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     
@@ -36,12 +40,12 @@
 
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Content="wat" />
+            <Button Content="things" />
+            <Button Content="stuff" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
     <Controls:MetroWindow.Flyouts>
-
         <Controls:Flyout Header="hiiiii">
             <Button Content="hi"  />
         </Controls:Flyout>
@@ -52,13 +56,12 @@
                 </Controls:Tile>
             </StackPanel>
         </Controls:Flyout>
-
     </Controls:MetroWindow.Flyouts>
 
     <Controls:MetroContentControl>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Menu Grid.Row="0">
@@ -80,363 +83,170 @@
                     <MenuItem Header="_Paste" />
                 </MenuItem>
             </Menu>
-            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1" TabStripMargin="40,0,0,0" >
-                <Controls:MetroTabItem Header="_First set of controls" HeaderFontSize="35">
+            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
+                <Controls:MetroTabItem Header="buttons">    
                     <Grid>
-
-                        <Grid Margin="0,0,226.999,8">
-                            <Button Content="Right Click Me"
-                                        Click="ButtonClick"
-                                        Height="30"
-                                        ToolTip="This is a tooltip"
-                                        Margin="88.694,0,0,0"
-                                        VerticalAlignment="Top"
-                                        HorizontalAlignment="Left"
-                                        Width="154.002">
-                                <Button.ContextMenu>
-                                    <ContextMenu>
-
-                                        <MenuItem Header="Light">
-                                            <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
-                                            <MenuItem Header="Light Green" Click="MiLightGreen" />
-                                            <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                                            <MenuItem Header="Light Purple" Click="MiLightPurple" IsEnabled="False" />
-                                            <MenuItem Header="Light Orange" Click="MiLightOrange">
-                                                <MenuItem Header="Light Orange" Click="MiLightOrange" />
-                                                <MenuItem Header="Light Orange" Click="MiLightOrange" />
-                                            </MenuItem>
-
-                                        </MenuItem>
-
-                                        <Separator />
-                                        <MenuItem Header="Dark Red" Click="MiDarkRed" />
-                                        <MenuItem Header="Dark">
-
-                                            <MenuItem Header="Dark Green" Click="MiDarkGreen" />
-                                            <MenuItem Header="Dark Blue" Click="MiDarkBlue" />
-                                            <MenuItem Header="Dark Purple" Click="MiDarkPurple" />
-                                            <MenuItem Header="Dark Orange" Click="MiDarkOrange" />
-                                        </MenuItem>
-                                    </ContextMenu>
-                                </Button.ContextMenu>
-                            </Button>
-                            <PasswordBox Controls:TextboxHelper.Watermark="Enter Password"
-                                         Controls:TextboxHelper.ClearTextButton="True"
-                                             Margin="88.695,66.96,0,0"
-                                             VerticalAlignment="Top"
-                                             HorizontalAlignment="Left"
-                                             Width="154.001"
-											 VerticalContentAlignment="Center" />
-                            <CheckBox Content="Ignore Taskbar on maximize"
-                                          Margin="88.695,100.96,0,0"
-                                          VerticalAlignment="Top"
-                                          HorizontalAlignment="Left" 
-                                      Click="IgnoreTaskbarOnMaximizedClick" />
-                            <RadioButton Content="Radio Button 1"
-                                             Margin="88.291,134.92,0,0"
-                                             VerticalAlignment="Top"
-                                             GroupName="test"
-                                             HorizontalAlignment="Left" />
-                            <TextBox
-                                Text="Hi"
-                                Controls:TextboxHelper.Watermark="Enter Username"
-                                     Controls:TextboxHelper.ClearTextButton="True"
-                                         Margin="88.694,36.96,0,0"
-                                         VerticalAlignment="Top"
-                                         HorizontalAlignment="Left"
-                                         Width="154.002"
-										 VerticalContentAlignment="Center" />
-                            <ComboBox Margin="88.292,176.84,0,0"
-                                          VerticalAlignment="Top"
-                                          HorizontalAlignment="Left"
-                                          SelectedIndex="0">
-                                <ComboBoxItem Content="ComboBoxItem" />
-                                <ComboBoxItem Content="ComboBoxItem" />
-                                <ComboBoxItem Content="ComboBoxItem" />
-                            </ComboBox>
-                            <ProgressBar x:Name="pb"
-                                             Value="{Binding Value, ElementName=slider1}"
-                                             IsIndeterminate="False"
-                                             Margin="88.696,216.8,0,0"
-                                             VerticalAlignment="Top"
-                                             HorizontalAlignment="Left"
-                                             Width="154" />
-                            <Label Content="Button"
-                                       VerticalAlignment="Top"
-                                       Margin="39.07,0,0,0"
-                                       HorizontalAlignment="Left" />
-                            <Label Content="Passwordbox"
-                                       Margin="5.147,71,0,0"
-                                       RenderTransformOrigin="0.535,-0.381"
-                                       VerticalAlignment="Top"
-                                       HorizontalAlignment="Left" />
-                            <Label Content="Checkbox"
-                                       Margin="23.1,96.96,0,0"
-                                       HorizontalAlignment="Left"
-                                       Height="25.96"
-                                       VerticalAlignment="Top" />
-                            <Label Content="Radio Buttons"
-                                       VerticalAlignment="Top"
-                                       Margin="0.404,126.92,0,0"
-                                       HorizontalAlignment="Left" />
-                            <Label Content="TextBox"
-                                       VerticalAlignment="Top"
-                                       Margin="33.14,37,0,0"
-                                       HorizontalAlignment="Left" />
-                            <Label Content="Combobox"
-                                       VerticalAlignment="Top"
-                                       Margin="16.224,170.84,0,0"
-                                       HorizontalAlignment="Left" />
-                            <RadioButton Content="Radio Button 2"
-                                             Margin="88.695,155.88,0,0"
-                                             VerticalAlignment="Top"
-                                             GroupName="test"
-                                             HorizontalAlignment="Left" />
-                            <Label Content="Progress Bar"
-                                       VerticalAlignment="Top"
-                                       Margin="8.216,206.8,0,0"
-                                       HorizontalAlignment="Left"
-                                       d:LayoutOverrides="HorizontalAlignment" />
-                            <Button Content="Launch Panorama"
-                                        Click="BtnPanoramaClick"
-                                        VerticalAlignment="Top"
-                                        Margin="88,270,90,0" />
-                            <Button Content="Launch VS Demo"
-                                    Click="BtnVSClick"
-                                    VerticalAlignment="Top"
-                                    Margin="88,300,90,0"/>
-                            <Button Content="Launch Icons"
-                                    Click="BtnIconsClick"
-                                    VerticalAlignment="Top"
-                                    Margin="88,360,90,0"/>
-                            <Button Content="Button" VerticalAlignment="Bottom" Margin="88,0,90,8" Style="{DynamicResource SquareButtonStyle}"/>
-                            <ToggleButton Content="TOGGLE BUTTON" Margin="88,330,90,0" VerticalAlignment="Top" />
-                            <Slider Height="19" HorizontalAlignment="Right" Margin="0,239,91,0" Name="slider1" VerticalAlignment="Top" Width="154" Maximum="100" Value="25" />
-                        </Grid>
-                        <WrapPanel Margin="332.001,0,0,8">
-                            <Controls:AppBarButton
-                            		VerticalAlignment="Top"
-                            		MetroImageSource="{StaticResource appbar_barcode}"
-                            		Foreground="{DynamicResource BlackBrush}"
-                            		Content="scan" />
-
-                            <Controls:AppBarButton
-                            		VerticalAlignment="Top"
-                            		MetroImageSource="{StaticResource appbar_barcode}"
-                            		Foreground="{DynamicResource BlackBrush}"
-                            		Content="scan"
-                            		Width="48"
-                            		Height="48"/>
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                            		Height="55"
-                            		Width="55"
-                            		VerticalAlignment="Top">
-                                <Rectangle Width="20"
-                            			Height="20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="0" Width="150">
+                            <TextBlock Text="Default button" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Button Content="Enabled" Width="100" Margin="0, 10, 0, 0" />
+                            <Button Content="Disabled" Width="100" Margin="0, 10, 0, 0" IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Width="150">
+                            <TextBlock Text="Square button" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Button Content="Enabled" Width="100" Margin="0, 10, 0, 0" Style="{StaticResource SquareButtonStyle}" />
+                            <Button Content="Disabled" Width="100" Margin="0, 10, 0, 0" Style="{StaticResource SquareButtonStyle}" IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Width="150">
+                            <TextBlock Text="Toggle button" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <ToggleButton Content="Enabled" Width="100" Margin="0, 10, 0, 0" />
+                            <ToggleButton Content="Disabled" Width="100" Margin="0, 10, 0, 0" IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="3" Width="100">
+                            <StackPanel.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.MergedDictionaries>
+                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+                                    </ResourceDictionary.MergedDictionaries>
+                                </ResourceDictionary>
+                            </StackPanel.Resources>
+                            <TextBlock Text="Flat button" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Button Content="Enabled" Margin="0, 10, 0, 0" />
+                            <Button Content="Disabled" Margin="0, 10, 0, 0" IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="4" Width="100">
+                            <TextBlock Text="Circle button" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Margin="0, 10, 0, 0"
+                            		Height="50"
+                            		Width="50">
+                                <Rectangle Width="20" Height="20">
                                     <Rectangle.Fill>
-                                        <VisualBrush Stretch="Fill"
-                            					Visual="{StaticResource appbar_city}" />
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
                                     </Rectangle.Fill>
                                 </Rectangle>
-
                             </Button>
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                            		Height="55"
-                            		Width="55"
-                            		VerticalAlignment="Top">
-                                <Rectangle Width="20"
-                            			Height="20">
+                            <Button Style="{DynamicResource MetroCircleButtonStyle}" Margin="0, 10, 0, 0"
+                            		Height="50"
+                            		Width="50" IsEnabled="False">
+                                <Rectangle Width="20" Height="20">
                                     <Rectangle.Fill>
-                                        <VisualBrush Stretch="Fill"
-                            					Visual="{StaticResource appbar_barcode}" />
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
                                     </Rectangle.Fill>
                                 </Rectangle>
-
                             </Button>
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                            		Height="55"
-                            		Width="55"
-                            		VerticalAlignment="Top">
-                                <Rectangle Width="28"
-                            			Height="17.25">
-                                    <Rectangle.Fill>
-                                        <VisualBrush Stretch="Fill"
-                            					Visual="{StaticResource appbar_cloud_download}" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
-
-                            </Button>
-                            <Button Style="{DynamicResource MetroCircleButtonStyle}"
-                            		Height="55"
-                            		Width="55"
-                            		VerticalAlignment="Top">
-                                <Rectangle Width="20"
-                            			Height="20">
-                                    <Rectangle.Fill>
-                                        <VisualBrush Stretch="Fill"
-                            					Visual="{StaticResource appbar_sound_3}" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
-
-                            </Button>
-
-                            <Controls:ProgressRing IsActive="True"/>
-
-
-                            <Controls:TransitioningContentControl x:Name="transitioning" Width="250" Height="50" Transition="DownTransition" />
-
-
-                            <Controls:TransitioningContentControl x:Name="customTransitioning"
-                                                                  Width="250"
-                                                                  Height="50"
-                                                                  Transition="CustomTransition">
-                                <Controls:TransitioningContentControl.CustomVisualStates>
-                                    <VisualState x:Name="CustomTransition">
-                                        <Storyboard>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                           Storyboard.TargetName="CurrentContentPresentationSite"
-                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
-                                                <SplineDoubleKeyFrame KeyTime="00:00:00"
-                                                                      Value="0" />
-                                                <SplineDoubleKeyFrame KeyTime="00:00:00.700"
-                                                                      Value="1" />
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                           Storyboard.TargetName="PreviousContentPresentationSite"
-                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
-                                                <SplineDoubleKeyFrame KeyTime="00:00:00"
-                                                                      Value="1" />
-                                                <SplineDoubleKeyFrame KeyTime="00:00:00.700"
-                                                                      Value="0" />
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </Controls:TransitioningContentControl.CustomVisualStates>
-                            </Controls:TransitioningContentControl>
-                            <Controls:RangeSlider Width="227" Height="25" RangeStartSelected="20" RangeStopSelected="50"/>
-
-                            <Menu  VerticalAlignment="Top" HorizontalAlignment="Left" Height="23" >
-                                <MenuItem Header="Light">
-                                    <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
-                                    <MenuItem Header="Light Green" Click="MiLightGreen" />
-                                    <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                                    <MenuItem Header="Light Purple" Click="MiLightPurple" />
-                                    <MenuItem Header="Light Orange" Click="MiLightOrange">
-                                        <MenuItem Header="Light Orange" Click="MiLightOrange" />
-                                        <MenuItem Header="Light Orange" Click="MiLightOrange" />
-                                    </MenuItem>
-
-                                </MenuItem>
-                                <Menu Height="50">
-                                    <MenuItem Header="Light">
-                                        <MenuItem Header="Light Red" IsChecked="True" Click="MiLightRed" />
-                                        <MenuItem Header="Light Green" Click="MiLightGreen" />
-                                        <MenuItem Header="Light Blue" Click="MiLightBlue" />
-                                        <MenuItem Header="Light Purple" Click="MiLightPurple" />
-                                        <MenuItem Header="Light Orange" Click="MiLightOrange">
-                                            <MenuItem Header="Light Orange" Click="MiLightOrange" />
-                                            <MenuItem Header="Light Orange" Click="MiLightOrange" />
-                                        </MenuItem>
-
-                                    </MenuItem>
-                                </Menu>
-                            </Menu>
-                            <Slider Orientation="Vertical" Value="{Binding ElementName=pb, Path=Value}" Height="150" Margin="20" Name="slider2" VerticalAlignment="Top" Maximum="100" />
-                        </WrapPanel>
-                        <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
+                        </StackPanel>
+                        <StackPanel Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center">
+                            <TextBlock Text="Toggle switch" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Controls:ToggleSwitch IsChecked="True" />
+                            <Controls:ToggleSwitch />
+                            <Controls:ToggleSwitch IsChecked="True" IsEnabled="False" />
+                            <Controls:ToggleSwitch IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center">
+                            <TextBlock Text="Checkbox" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <CheckBox Content="Enabled" Margin="0, 10, 0, 0" />
+                            <CheckBox Content="Enabled" Margin="0, 10, 0, 0" IsChecked="True"/>
+                            <CheckBox Content="Disabled" Margin="0, 10, 0, 0" IsEnabled="False" />
+                            <CheckBox Content="Disabled" Margin="0, 10, 0, 0" IsChecked="True" IsEnabled="False" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center">
+                            <TextBlock Text="Radio button" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <RadioButton Content="Enabled" GroupName="1" Margin="0, 10, 0, 0" />
+                            <RadioButton Content="Enabled" GroupName="1" Margin="0, 10, 0, 0" IsChecked="True"/>
+                            <RadioButton Content="Disabled" GroupName="2" Margin="0, 10, 0, 0" IsEnabled="False" />
+                            <RadioButton Content="Disabled" GroupName="2" Margin="0, 10, 0, 0" IsChecked="True"  IsEnabled="False" />
+                        </StackPanel>
                     </Grid>
                 </Controls:MetroTabItem>
-                <TabItem Header="_More Controls Here!">
-                    <StackPanel>
-                        <!--<Controls:MetroProgressBar Width="600" IsIndeterminate="True"/>-->
-
-                        <Controls:ProgressIndicator ProgressColour="{StaticResource AccentColorBrush}"
-                                                    Height="6"
-                                                    Width="600" />
-                        <Controls:ToggleSwitch 
-                            IsCheckedChanged="ToggleSwitch_OnIsCheckedChanged"
-                            HorizontalAlignment="Left" 
-                            Width="150" 
-                            Height="75" 
-                            Margin="0,10,0,0"
-                            Header="WiFi rest state" />
-                        <Slider Margin="0,10,0,0"
-                                HorizontalAlignment="Left"
-                                Width="261.667"
-                                Value="5"
-                                SmallChange="0.5" />
-                        <!--<Slider Height="23" HorizontalAlignment="Left" Margin="273,119,0,0" Name="slider1" VerticalAlignment="Top" Width="218" Maximum="100" Value="50" />-->
-                        <TextBlock Text="ComboBox Binding scenario" />
-                        <ComboBox ItemsSource="{Binding Artists}"
-                                  
-                                  MaxDropDownHeight="100"
-                                  DisplayMemberPath="Name" />
-
-                        <TextBlock Text="Editable ComboBox Binding scenario" />
-                        <ComboBox ItemsSource="{Binding Albums}"
-                                  Controls:TextboxHelper.Watermark="watermark"
-                                  MaxDropDownHeight="50"
-                                  DisplayMemberPath="Title" IsEditable="True" Text="{Binding Path=Title, Mode=TwoWay}" IsReadOnly="False" />
-
-                        <TextBlock Text="Items specified in xaml scenario" />
-                        <ComboBox>
-                            <ComboBox.Items>
-                                <ComboBoxItem Content="Test" />
-                                <ComboBoxItem Content="Test 2" />
-                                <ComboBoxItem Content="Test 3" />
-                            </ComboBox.Items>
-                        </ComboBox>
-                        <Controls:Tile Title="My _Cupcakes"
-                                       Count="23">
-                            <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
-                        </Controls:Tile>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header="More again">
-                    <TabItem.Resources>
-                        <ResourceDictionary>
-                            <ResourceDictionary.MergedDictionaries>
-                                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
-                            </ResourceDictionary.MergedDictionaries>
-                        </ResourceDictionary>
-                    </TabItem.Resources>
+                <TabItem Header="text">
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-
-                        <ListView ItemsSource="{Binding Albums}" BorderThickness="0">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Header="artist" DisplayMemberBinding="{Binding Title}" />
-                                    <GridViewColumn Header="url" DisplayMemberBinding="{Binding Price}" />
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                        <ListBox Grid.Row="0" Grid.Column="1" Margin="10, 0, 0, 0">
-                            <ListBoxItem Content="Item 1" />
-                            <ListBoxItem Content="Item 2" />
-                            <ListBoxItem Content="Item 3" />
-                        </ListBox>
-
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="1">
-
-                            <Button Content="Flat Button" />
-                            <Button Content="Disabled Button"
-                                    IsEnabled="False" />
+                        <StackPanel Width="150" Grid.Column="0">
+                            <TextBlock Text="Textbox" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <TextBox Text="Enabled" Margin="0, 10, 0, 0" />
+                            <TextBox Margin="0, 10, 0, 0" Controls:TextboxHelper.Watermark="Watermark" VerticalContentAlignment="Center" />
+                            <TextBox Text="Clear button" Margin="0, 10, 0, 0" Controls:TextboxHelper.Watermark="Watermark" Controls:TextboxHelper.ClearTextButton="True" VerticalContentAlignment="Center" />
+                            <TextBox Text="Disabled" Margin="0, 10, 0, 0" IsEnabled="False" />
+                            <TextBox Margin="0, 10, 0, 0" Controls:TextboxHelper.Watermark="Watermark" VerticalContentAlignment="Center" IsEnabled="False"  />
+                            <TextBox Text="Clear button" Margin="0, 10, 0, 0" Controls:TextboxHelper.Watermark="Watermark" Controls:TextboxHelper.ClearTextButton="True" VerticalContentAlignment="Center" IsEnabled="False"  />
                         </StackPanel>
-                        <StackPanel Grid.Row="2"
-                                    Grid.Column="1"
-                                    Orientation="Horizontal">
-                            <!--<Button Content="Ok" Style="{StaticResource OkButton}" />
-                            <Button Content="Cancel" Style="{StaticResource CancelButton}" />-->
+                        <StackPanel Width="150" Grid.Column="1">
+                            <TextBlock Text="RichTextBox" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <RichTextBox Margin="0, 10, 0, 0" Padding="5">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <RichTextBox Margin="0, 10, 0, 0" Padding="5" IsEnabled="False">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </StackPanel>
+                        <StackPanel Width="150" Grid.Column="2">
+                            <TextBlock Text="Passwordbox" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <PasswordBox Margin="0, 10, 0, 0" Password="Password" />
+                            <PasswordBox Margin="0, 10, 0, 0" Password="Password" Controls:TextboxHelper.ClearTextButton="True" />
+                            <PasswordBox Margin="0, 10, 0, 0" Password="Password" IsEnabled="False" />
+                            <PasswordBox Margin="0, 10, 0, 0" Password="Password" Controls:TextboxHelper.ClearTextButton="True" IsEnabled="False" />
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="selection">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Width="350">
+                            <TextBlock Text="List/GridView" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <ListView ItemsSource="{Binding Artists}" BorderThickness="0" Margin="0, 10, 0, 0" Height="200">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ArtistId}" />
+                                        <GridViewColumn Header="artist" DisplayMemberBinding="{Binding Name}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <ListView ItemsSource="{Binding Artists}" BorderThickness="0" Margin="0, 10, 0, 0" Height="200" IsEnabled="False">
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ArtistId}" />
+                                        <GridViewColumn Header="artist" DisplayMemberBinding="{Binding Name}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Width="150">
+                            <TextBlock Text="ListBox" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <ListBox Grid.Row="0" Grid.Column="1" Margin="0, 10, 0, 0">
+                                <ListBoxItem Content="Item 1" />
+                                <ListBoxItem Content="Item 2" />
+                                <ListBoxItem Content="Item 3" />
+                            </ListBox>
+                            <ListBox Grid.Row="0" Grid.Column="1" Margin="0, 10, 0, 0" IsEnabled="False">
+                                <ListBoxItem Content="Item 1" />
+                                <ListBoxItem Content="Item 2" />
+                                <ListBoxItem Content="Item 3" />
+                            </ListBox>
                         </StackPanel>
                     </Grid>
                 </TabItem>
