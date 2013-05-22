@@ -534,6 +534,14 @@
                                 </Controls:TransitioningContentControl.CustomVisualStates>
                             </Controls:TransitioningContentControl>
                         </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <Label Content="Tile" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Controls:Tile Title="My cupcakes"
+                                           Margin="0, 10, 0, 0"
+                                           Count="23">
+                                <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
+                            </Controls:Tile>
+                        </StackPanel>
                     </Grid>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
