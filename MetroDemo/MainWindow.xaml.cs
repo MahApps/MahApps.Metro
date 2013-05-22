@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Threading;
-using MahApps.Metro;
-using MahApps.Metro.Controls;
 
 namespace MetroDemo
 {
@@ -15,6 +10,14 @@ namespace MetroDemo
         {
             DataContext = new MainWindowViewModel();
             InitializeComponent();
+            var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, (sender, args) => this.TransitionTick(), this.Dispatcher);
+        }
+
+        private void TransitionTick()
+        {
+            var dateTime = DateTime.Now;
+            transitioning.Content = new TextBlock {Text = "Transitioning Content! " + dateTime, SnapsToDevicePixels = true};
+            customTransitioning.Content = new TextBlock {Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true};
         }
     }
 }
