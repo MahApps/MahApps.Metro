@@ -108,6 +108,7 @@
     <Style TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:WindowCommands">
