@@ -22,7 +22,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
@@ -86,7 +85,7 @@
                 </MenuItem>
             </Menu>
             <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
-                <Controls:MetroTabItem Header="buttons">
+                <TabItem Header="buttons">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -216,7 +215,7 @@
                                          IsEnabled="False" />
                         </StackPanel>
                     </Grid>
-                </Controls:MetroTabItem>
+                </TabItem>
                 <TabItem Header="text">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -403,6 +402,72 @@
                                                         ProgressColour="DeepSkyBlue" />
                         </StackPanel>
                     </Grid>
+                </TabItem>
+                <TabItem Header="tabcontrol">
+                    <StackPanel Margin="15">
+                        <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Default TabControl" />
+                        <TabControl Margin="0, 10, 0, 0">
+                            <Controls:MetroTabItem Header="headers" HeaderFontSize="20">
+                                <TextBlock FontSize="30" Text="Content" />
+                            </Controls:MetroTabItem>
+                            <Controls:MetroTabItem Header="can" HeaderFontSize="22">
+                                <TextBlock FontSize="30" Text="More content" />
+                            </Controls:MetroTabItem>
+                            <Controls:MetroTabItem Header="have" HeaderFontSize="24">
+                                <TextBlock FontSize="30" Text="More more content" />
+                            </Controls:MetroTabItem>
+                            <Controls:MetroTabItem Header="different" HeaderFontSize="26">
+                                <TextBlock FontSize="30" Text="So much content!" />
+                            </Controls:MetroTabItem>
+                            <Controls:MetroTabItem Header="font" HeaderFontSize="28">
+                                <TextBlock FontSize="30" Text="Content!" />
+                            </Controls:MetroTabItem>
+                            <Controls:MetroTabItem Header="sizes" HeaderFontSize="30">
+                                <TextBlock FontSize="30" Text="This is not content (it is)" />
+                            </Controls:MetroTabItem>
+                        </TabControl>
+                        <TextBlock Margin="0, 40, 0, 0"
+                                   Style="{StaticResource DescriptionHeaderStyle}"
+                                   Text="MetroAnimatedTabControl" />
+                        <Grid>
+                            <Grid.Resources>
+                                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+                            </Grid.Resources>
+                            <Controls:MetroAnimatedSingleRowTabControl Margin="0, 10, 0, 0">
+                                <TabItem Header="this tabcontrol">
+                                    <TextBlock FontSize="30" Text="Cool transition" />
+                                </TabItem>
+                                <TabItem Header="animates its content">
+                                    <TextBlock FontSize="30" Text="More cool transition" />
+                                </TabItem>
+                                <TabItem Header="with a transition">
+                                    <TextBlock FontSize="30" Text="Animate everything!" />
+                                </TabItem>
+                            </Controls:MetroAnimatedSingleRowTabControl>
+                        </Grid>
+                        <TextBlock Margin="0, 40, 0, 0"
+                                   Style="{StaticResource DescriptionHeaderStyle}"
+                                   Text="MetroAnimatedSingleRowTabControl" />
+                        <Grid>
+                            <Grid.Resources>
+                                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                            </Grid.Resources>
+                            <Controls:MetroAnimatedSingleRowTabControl Margin="0, 10, 0, 0">
+                                <TabItem Header="this tabcontrols tabs">
+                                    <TextBlock FontSize="30" Text="Content" />
+                                </TabItem>
+                                <TabItem Header="appear only on a single line">
+                                    <TextBlock FontSize="30" Text="Content" />
+                                </TabItem>
+                                <TabItem Header="if they are overflowing">
+                                    <TextBlock FontSize="30" Text="Content" />
+                                </TabItem>
+                                <TabItem Header="instead of wrapping them">
+                                    <TextBlock FontSize="30" Text="Content" />
+                                </TabItem>
+                            </Controls:MetroAnimatedSingleRowTabControl>
+                        </Grid>
+                    </StackPanel>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
         </Grid>
