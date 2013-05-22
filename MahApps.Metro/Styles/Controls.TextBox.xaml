@@ -83,7 +83,7 @@
                                        Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Opacity="0.6" HorizontalAlignment="Left" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,0,0,0"/>
 
-                            <Button x:Name="PART_ClearText" Style="{DynamicResource ChromelessButtonStyle}" FontSize="16" Foreground="{TemplateBinding Foreground}" Width="20"  HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False" />
+                            <Button x:Name="PART_ClearText" Style="{DynamicResource ChromelessButtonStyle}" FontSize="16" Foreground="{TemplateBinding Foreground}" Width="20"  HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Controls:TextboxHelper.ClearTextButton, Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
                                    Stroke="{DynamicResource ControlsDisabledBrush}"
@@ -126,7 +126,7 @@
                             <Setter TargetName="Message" Property="Visibility" Value="Visible" />
                         </DataTrigger>
                         
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}" Value="True">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Controls:TextboxHelper.ClearTextButton}" Value="True">
                             <Setter TargetName="PART_ContentHost" Property="Margin" Value="2,2,20,2" />
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
