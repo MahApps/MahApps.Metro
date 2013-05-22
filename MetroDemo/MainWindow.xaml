@@ -359,8 +359,50 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Validation Examples">
-                    <views:ValidationExampleView x:Name="validationExample" DataContext="{Binding ValidationExampleViewModel, Mode=OneWay}" />
+                <TabItem Header="sliders and progress">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Slider" />
+                            <Slider Width="200" Margin="0, 10, 0, 0" />
+                            <Slider Width="200"
+                                    Margin="0, 10, 0, 0"
+                                    Value="50" />
+                            <Slider Width="200"
+                                    Margin="0, 10, 0, 0"
+                                    IsEnabled="False" />
+                            <Slider Width="200"
+                                    Margin="0, 10, 0, 0"
+                                    IsEnabled="False"
+                                    Value="50" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="ProgressBar" />
+                            <ProgressBar Width="200" Margin="0, 10, 0, 0" />
+                            <ProgressBar Width="200"
+                                         Margin="0, 10, 0, 0"
+                                         Value="50" />
+                            <ProgressBar Width="200"
+                                         Margin="0, 10, 0, 0"
+                                         IsIndeterminate="True"
+                                         Value="100" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="ProgressRing" />
+                            <Controls:ProgressRing Margin="0, 10, 0, 0" IsActive="True" />
+                            <TextBlock Margin="0, 10, 0, 0"
+                                       Style="{StaticResource DescriptionHeaderStyle}"
+                                       Text="ProgressIndicator" />
+                            <Controls:ProgressIndicator Width="100"
+                                                        Height="10"
+                                                        Margin="0, 10, 0, 0"
+                                                        ProgressColour="DeepSkyBlue" />
+                        </StackPanel>
+                    </Grid>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
         </Grid>
