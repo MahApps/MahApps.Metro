@@ -136,7 +136,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type GridViewColumnHeader}" TargetType="GridViewColumnHeader">
+    <Style x:Key="MetroGridViewColumnHeader" TargetType="GridViewColumnHeader">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="4 2 4 2" />
@@ -190,4 +190,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <Style TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource MetroGridViewColumnHeader}"/>
 </ResourceDictionary>
