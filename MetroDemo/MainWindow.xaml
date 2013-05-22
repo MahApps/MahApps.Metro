@@ -365,6 +365,10 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0">
                             <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Slider" />
                             <Slider Width="200" Margin="0, 10, 0, 0" />
@@ -400,6 +404,27 @@
                                                         Height="10"
                                                         Margin="0, 10, 0, 0"
                                                         ProgressColour="DeepSkyBlue" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0">
+                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="RangeSlider" />
+                            <Controls:RangeSlider Width="200"
+                                                  Height="20"
+                                                  Margin="0, 10, 0, 0" />
+                            <Controls:RangeSlider Width="200"
+                                                  Height="20"
+                                                  Margin="0, 10, 0, 0"
+                                                  RangeStartSelected="20"
+                                                  RangeStopSelected="60" />
+                            <Controls:RangeSlider Width="200"
+                                                  Height="20"
+                                                  Margin="0, 10, 0, 0"
+                                                  IsEnabled="False" />
+                            <Controls:RangeSlider Width="200"
+                                                  Height="20"
+                                                  Margin="0, 10, 0, 0"
+                                                  IsEnabled="False"
+                                                  RangeStartSelected="20"
+                                                  RangeStopSelected="60" />
                         </StackPanel>
                     </Grid>
                 </TabItem>
