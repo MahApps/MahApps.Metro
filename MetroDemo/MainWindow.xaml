@@ -290,7 +290,13 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Width="350">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Width="350">
                             <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="List/GridView" />
                             <ListView Height="200"
                                       Margin="0, 10, 0, 0"
@@ -333,6 +339,23 @@
                                 <ListBoxItem Content="Item 2" />
                                 <ListBoxItem Content="Item 3" />
                             </ListBox>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1">
+                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="ComboBox" />
+                            <ComboBox Width="200" Margin="0, 10, 0, 0">
+                                <ComboBoxItem Content="Item 1" />
+                                <ComboBoxItem Content="Item 2" />
+                                <ComboBoxItem Content="Item 3" />
+                                <ComboBoxItem Content="Item 4" />
+                            </ComboBox>
+                            <ComboBox Width="200"
+                                      Margin="0, 10, 0, 0"
+                                      IsEnabled="False">
+                                <ComboBoxItem Content="Item 1" />
+                                <ComboBoxItem Content="Item 2" />
+                                <ComboBoxItem Content="Item 3" />
+                                <ComboBoxItem Content="Item 4" />
+                            </ComboBox>
                         </StackPanel>
                     </Grid>
                 </TabItem>
