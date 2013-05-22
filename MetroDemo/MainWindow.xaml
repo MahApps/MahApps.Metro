@@ -26,7 +26,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="DescriptionHeaderStyle" TargetType="TextBlock">
+            <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="18" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
@@ -62,26 +62,22 @@
     <Controls:MetroContentControl>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="25" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Menu Grid.Row="0">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Open">
-                        <MenuItem Header="_Open File" />
-                        <MenuItem Header="Open _Serv">
-                            <MenuItem Header="Open Serv _1" />
-                            <Separator />
-                            <MenuItem Header="Open Serv _2" />
-                        </MenuItem>
+            <Menu Grid.Row="0" VerticalAlignment="Center">
+                <MenuItem Header="Appearance">
+                    <MenuItem Header="Theme">
+                        <MenuItem Click="ThemeLight" Header="Light" />
+                        <MenuItem Click="AccentDark" Header="Dark" />
                     </MenuItem>
-                    <MenuItem Header="_Close" />
-                </MenuItem>
-                <MenuItem Header="_Edit">
-                    <MenuItem Command="ApplicationCommands.Undo" Header="_Undo" />
-                    <MenuItem Header="_Cut" />
-                    <MenuItem Header="C_opy" />
-                    <MenuItem Header="_Paste" />
+                    <MenuItem Header="Accent">
+                        <MenuItem Click="AccentBlue" Header="Blue" />
+                        <MenuItem Click="AccentRed" Header="Red" />
+                        <MenuItem Click="AccentGreen" Header="Green" />
+                        <MenuItem Click="AccentOrange" Header="Orange" />
+                        <MenuItem Click="AccentPurple" Header="Purple" />
+                    </MenuItem>
                 </MenuItem>
             </Menu>
             <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
@@ -99,7 +95,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0" Width="150">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Default button" />
+                            <Label Content="Default button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Button Width="100"
                                     Margin="0, 10, 0, 0"
                                     Content="Enabled" />
@@ -109,7 +105,7 @@
                                     IsEnabled="False" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" Width="150">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Square button" />
+                            <Label Content="Square button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Button Width="100"
                                     Margin="0, 10, 0, 0"
                                     Content="Enabled"
@@ -121,7 +117,7 @@
                                     Style="{StaticResource SquareButtonStyle}" />
                         </StackPanel>
                         <StackPanel Grid.Column="2" Width="150">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Toggle button" />
+                            <Label Content="Toggle button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ToggleButton Width="100"
                                           Margin="0, 10, 0, 0"
                                           Content="Enabled" />
@@ -138,14 +134,14 @@
                                     </ResourceDictionary.MergedDictionaries>
                                 </ResourceDictionary>
                             </StackPanel.Resources>
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Flat button" />
+                            <Label Content="Flat button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Button Margin="0, 10, 0, 0" Content="Enabled" />
                             <Button Margin="0, 10, 0, 0"
                                     Content="Disabled"
                                     IsEnabled="False" />
                         </StackPanel>
                         <StackPanel Grid.Column="4" Width="100">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Circle button" />
+                            <Label Content="Circle button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Button Width="50"
                                     Height="50"
                                     Margin="0, 10, 0, 0"
@@ -171,7 +167,7 @@
                         <StackPanel Grid.Row="1"
                                     Grid.Column="0"
                                     HorizontalAlignment="Center">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Toggle switch" />
+                            <Label Content="Toggle switch" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Controls:ToggleSwitch IsChecked="True" />
                             <Controls:ToggleSwitch />
                             <Controls:ToggleSwitch IsChecked="True" IsEnabled="False" />
@@ -180,7 +176,7 @@
                         <StackPanel Grid.Row="1"
                                     Grid.Column="1"
                                     HorizontalAlignment="Center">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Checkbox" />
+                            <Label Content="Checkbox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <CheckBox Margin="0, 10, 0, 0" Content="Enabled" />
                             <CheckBox Margin="0, 10, 0, 0"
                                       Content="Enabled"
@@ -196,7 +192,7 @@
                         <StackPanel Grid.Row="1"
                                     Grid.Column="2"
                                     HorizontalAlignment="Center">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Radio button" />
+                            <Label Content="Radio button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <RadioButton Margin="0, 10, 0, 0"
                                          Content="Enabled"
                                          GroupName="1" />
@@ -224,7 +220,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Width="150">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Textbox" />
+                            <Label Content="Textbox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <TextBox Margin="0, 10, 0, 0" Text="Enabled" />
                             <TextBox Margin="0, 10, 0, 0"
                                      VerticalContentAlignment="Center"
@@ -249,7 +245,7 @@
                                      Text="Clear button" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" Width="150">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="RichTextBox" />
+                            <Label Content="RichTextBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <RichTextBox Margin="0, 10, 0, 0" Padding="5">
                                 <FlowDocument>
                                     <Paragraph>
@@ -268,7 +264,7 @@
                             </RichTextBox>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Width="150">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Passwordbox" />
+                            <Label Content="Passwordbox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <PasswordBox Margin="0, 10, 0, 0" Password="Password" />
                             <PasswordBox Margin="0, 10, 0, 0"
                                          Controls:TextboxHelper.ClearTextButton="True"
@@ -296,7 +292,7 @@
                         <StackPanel Grid.RowSpan="2"
                                     Grid.Column="0"
                                     Width="350">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="List/GridView" />
+                            <Label Content="List/GridView" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ListView Height="200"
                                       Margin="0, 10, 0, 0"
                                       BorderThickness="0"
@@ -322,7 +318,7 @@
                             </ListView>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Width="150">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="ListBox" />
+                            <Label Content="ListBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ListBox Grid.Row="0"
                                      Grid.Column="1"
                                      Margin="0, 10, 0, 0">
@@ -340,7 +336,7 @@
                             </ListBox>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="ComboBox" />
+                            <Label Content="ComboBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ComboBox Width="200" Margin="0, 10, 0, 0">
                                 <ComboBoxItem Content="Item 1" />
                                 <ComboBoxItem Content="Item 2" />
@@ -370,7 +366,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Slider" />
+                            <Label Content="Slider" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Slider Width="200" Margin="0, 10, 0, 0" />
                             <Slider Width="200"
                                     Margin="0, 10, 0, 0"
@@ -384,7 +380,7 @@
                                     Value="50" />
                         </StackPanel>
                         <StackPanel Grid.Column="1">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="ProgressBar" />
+                            <Label Content="ProgressBar" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ProgressBar Width="200" Margin="0, 10, 0, 0" />
                             <ProgressBar Width="200"
                                          Margin="0, 10, 0, 0"
@@ -395,18 +391,18 @@
                                          Value="100" />
                         </StackPanel>
                         <StackPanel Grid.Column="2">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="ProgressRing" />
+                            <Label Content="ProgressRing" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Controls:ProgressRing Margin="0, 10, 0, 0" IsActive="True" />
-                            <TextBlock Margin="0, 10, 0, 0"
-                                       Style="{StaticResource DescriptionHeaderStyle}"
-                                       Text="ProgressIndicator" />
+                            <Label Margin="0, 10, 0, 0"
+                                   Content="ProgressIndicator"
+                                   Style="{StaticResource DescriptionHeaderStyle}" />
                             <Controls:ProgressIndicator Width="100"
                                                         Height="10"
                                                         Margin="0, 10, 0, 0"
                                                         ProgressColour="DeepSkyBlue" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="0">
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="RangeSlider" />
+                            <Label Content="RangeSlider" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
                                                   Margin="0, 10, 0, 0" />
@@ -430,7 +426,7 @@
                 </TabItem>
                 <TabItem Header="tabcontrol">
                     <StackPanel Margin="15">
-                        <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Default TabControl" />
+                        <Label Content="Default TabControl" Style="{StaticResource DescriptionHeaderStyle}" />
                         <TabControl Margin="0, 10, 0, 0">
                             <Controls:MetroTabItem Header="headers" HeaderFontSize="20">
                                 <TextBlock FontSize="30" Text="Content" />
@@ -451,9 +447,9 @@
                                 <TextBlock FontSize="30" Text="This is not content (it is)" />
                             </Controls:MetroTabItem>
                         </TabControl>
-                        <TextBlock Margin="0, 40, 0, 0"
-                                   Style="{StaticResource DescriptionHeaderStyle}"
-                                   Text="MetroAnimatedTabControl" />
+                        <Label Margin="0, 40, 0, 0"
+                               Content="MetroAnimatedTabControl"
+                               Style="{StaticResource DescriptionHeaderStyle}" />
                         <Grid>
                             <Grid.Resources>
                                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
@@ -470,9 +466,9 @@
                                 </TabItem>
                             </Controls:MetroAnimatedSingleRowTabControl>
                         </Grid>
-                        <TextBlock Margin="0, 40, 0, 0"
-                                   Style="{StaticResource DescriptionHeaderStyle}"
-                                   Text="MetroAnimatedSingleRowTabControl" />
+                        <Label Margin="0, 40, 0, 0"
+                               Content="MetroAnimatedSingleRowTabControl"
+                               Style="{StaticResource DescriptionHeaderStyle}" />
                         <Grid>
                             <Grid.Resources>
                                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
@@ -501,7 +497,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <StackPanel>
-                            <TextBlock Style="{StaticResource DescriptionHeaderStyle}" Text="Transitions" />
+                            <Label Content="Transitions" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Controls:TransitioningContentControl x:Name="transitioning"
                                                                   Width="250"
                                                                   Height="50"
