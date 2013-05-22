@@ -89,10 +89,13 @@ namespace MahApps.Metro.Controls
             headers.SelectedIndex = internalIndex;
 
             RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
+            var horizontalOffset = scroller.HorizontalOffset;
 
-            mediator.HorizontalOffset = scroller.HorizontalOffset;
+            mediator.SetCurrentValue(ScrollViewerOffsetMediator.HorizontalOffsetProperty, horizontalOffset);
+
             var sb = mediator.Resources["Storyboard1"] as Storyboard;
             var frame = (EasingDoubleKeyFrame)mediator.FindName("edkf");
+
             frame.Value = widthToScroll;
             sb.Completed -= sb_Completed;
             sb.Completed += sb_Completed;
