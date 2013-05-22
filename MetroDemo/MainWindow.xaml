@@ -463,6 +463,16 @@
                         <TextBlock Text="{Binding SelectedIndex}" />
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="DataGrid">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="0"/>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="1" Style="{DynamicResource AzureDataGrid}"/>
+                    </Grid>                    
+                </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
         </Grid>
     </Controls:MetroContentControl>
