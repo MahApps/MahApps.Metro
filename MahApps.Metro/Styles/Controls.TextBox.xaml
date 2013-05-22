@@ -126,7 +126,7 @@
                             <Setter TargetName="Message" Property="Visibility" Value="Visible" />
                         </DataTrigger>
                         
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}" Value="True">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Controls:TextboxHelper.ClearTextButton}" Value="True">
                             <Setter TargetName="PART_ContentHost" Property="Margin" Value="2,2,20,2" />
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
