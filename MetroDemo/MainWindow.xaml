@@ -38,25 +38,10 @@
 
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Content="things" />
-            <Button Content="stuff" />
+            <Button Content="Launch VS Demo" Click="LaunchVisualStudioDemo" />
+            <Button Content="Launch Flyout Demo" Click="LaunchFlyoutDemo" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
-
-    <Controls:MetroWindow.Flyouts>
-        <Controls:Flyout Header="hiiiii">
-            <Button Content="hi" />
-        </Controls:Flyout>
-        <Controls:Flyout Background="#9f000000"
-                         Header="Bakery"
-                         Position="Right">
-            <StackPanel>
-                <Controls:Tile Title="My _Cupcakes" Count="23">
-                    <Controls:MetroImage Source="{StaticResource appbar_cupcake}" />
-                </Controls:Tile>
-            </StackPanel>
-        </Controls:Flyout>
-    </Controls:MetroWindow.Flyouts>
 
     <Controls:MetroContentControl>
         <Grid>
@@ -68,7 +53,7 @@
                 <MenuItem Header="Appearance">
                     <MenuItem Header="Theme">
                         <MenuItem Click="ThemeLight" Header="Light" />
-                        <MenuItem Click="AccentDark" Header="Dark" />
+                        <MenuItem Click="ThemeDark" Header="Dark" />
                     </MenuItem>
                     <MenuItem Header="Accent">
                         <MenuItem Click="AccentBlue" Header="Blue" />

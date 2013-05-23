@@ -66,10 +66,20 @@ namespace MetroDemo
             ThemeManager.ChangeTheme(this, this.currentAccent, Theme.Light);
         }
 
-        private void AccentDark(object sender, RoutedEventArgs e)
+        private void ThemeDark(object sender, RoutedEventArgs e)
         {
             this.currentTheme = Theme.Dark;
             ThemeManager.ChangeTheme(this, this.currentAccent, Theme.Dark);
+        }
+
+        private void LaunchVisualStudioDemo(object sender, RoutedEventArgs e)
+        {
+            new VSDemo().Show();
+        }
+
+        private void LaunchFlyoutDemo(object sender, RoutedEventArgs e)
+        {
+            new FlyoutDemo().Show();
         }
     }
 }

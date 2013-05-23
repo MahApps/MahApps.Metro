@@ -75,6 +75,9 @@
       <DependentUpon>ChildWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomWindowPlacementSettings.cs" />
+    <Compile Include="FlyoutDemo.xaml.cs">
+      <DependentUpon>FlyoutDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IconsWindow.xaml.cs">
       <DependentUpon>IconsWindow.xaml</DependentUpon>
     </Compile>
@@ -92,6 +95,10 @@
     <Page Include="ChildWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FlyoutDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="IconsWindow.xaml">
       <SubType>Designer</SubType>
