@@ -71,10 +71,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ChildWindow.xaml.cs">
-      <DependentUpon>ChildWindow.xaml</DependentUpon>
+    <Compile Include="FlyoutDemo.xaml.cs">
+      <DependentUpon>FlyoutDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomWindowPlacementSettings.cs" />
     <Compile Include="IconsWindow.xaml.cs">
       <DependentUpon>IconsWindow.xaml</DependentUpon>
     </Compile>
@@ -82,16 +81,12 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Genre.cs" />
-    <Compile Include="ViewModels\ValidationExampleViewModel.cs" />
-    <Compile Include="Views\ValidationExampleView.xaml.cs">
-      <DependentUpon>ValidationExampleView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
-    <Page Include="ChildWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="FlyoutDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="IconsWindow.xaml">
       <SubType>Designer</SubType>
@@ -117,10 +112,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
-    </Page>
-    <Page Include="Views\ValidationExampleView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VSDemo.xaml">
       <SubType>Designer</SubType>
