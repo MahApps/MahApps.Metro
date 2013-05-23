@@ -202,6 +202,9 @@ namespace MetroDemo.Models
                 new Artist { Name = "Zeca Pagodinho" }
             };
 
+            int i = 0;
+            Artists.ForEach(x => x.ArtistId = ++i);
+
             Albums = new List<Album>
                 {
                     new Album {Title = "The Best Of Men At Work", Genre = Genres.Single(g => g.Name == "Rock"), Price = 8.99M, Artist = Artists.Single(a => a.Name == "Men At Work"), AlbumArtUrl = "/Content/Images/placeholder.gif"},

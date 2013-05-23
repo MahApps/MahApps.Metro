@@ -1,11 +1,10 @@
 ﻿using System.Windows;
-using MahApps.Metro.Controls;
 
-namespace FlyoutDemo
+namespace MetroDemo
 {
-    public partial class MainWindow : MetroWindow
+    public partial class FlyoutDemo
     {
-        public MainWindow() {
+        public FlyoutDemo() {
             this.InitializeComponent();
         }
 

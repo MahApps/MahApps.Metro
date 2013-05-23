@@ -11,6 +11,9 @@ namespace MetroDemo
 {
     public partial class MainWindow
     {
+        private Theme currentTheme = Theme.Light;
+        private Accent currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Blue");
+
         public MainWindow()
         {
             DataContext = new MainWindowViewModel();
@@ -25,99 +28,68 @@ namespace MetroDemo
             customTransitioning.Content = new TextBlock {Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true};
         }
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
+        private void ChangeAccent(string accentName)
         {
-            var x = pivot.Items;
-            pb.IsIndeterminate = !pb.IsIndeterminate;
-            Flyouts[0].IsOpen = !Flyouts[0].IsOpen;
-            Flyouts[1].IsOpen = !Flyouts[1].IsOpen;
+            this.currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == accentName);
+
+            ThemeManager.ChangeTheme(this, this.currentAccent, this.currentTheme);
         }
 
-        private void MiLightRed(object sender, RoutedEventArgs e)
+        private void AccentRed(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Red"), Theme.Light);
+            this.ChangeAccent("Red");
         }
 
-        private void MiDarkRed(object sender, RoutedEventArgs e)
+        private void AccentGreen(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Red"), Theme.Dark);
+            this.ChangeAccent("Green");
         }
 
-        private void MiLightGreen(object sender, RoutedEventArgs e)
+        private void AccentBlue(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Light);
+            this.ChangeAccent("Blue");
         }
 
-        private void MiDarkGreen(object sender, RoutedEventArgs e)
+        private void AccentPurple(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Green"), Theme.Dark);
+            this.ChangeAccent("Purple");
         }
 
-        private void MiLightBlue(object sender, RoutedEventArgs e)
+        private void AccentOrange(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), Theme.Light);
+            this.ChangeAccent("Orange");
         }
 
-        private void MiDarkBlue(object sender, RoutedEventArgs e)
+        private void ThemeLight(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Blue"), Theme.Dark);
+            this.currentTheme = Theme.Light;
+            ThemeManager.ChangeTheme(this, this.currentAccent, Theme.Light);
         }
 
-        private void MiLightPurple(object sender, RoutedEventArgs e)
+        private void ThemeDark(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), Theme.Light);
+            this.currentTheme = Theme.Dark;
+            ThemeManager.ChangeTheme(this, this.currentAccent, Theme.Dark);
         }
 
-        private void MiDarkPurple(object sender, RoutedEventArgs e)
-        {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Purple"), Theme.Dark);
-        }
-
-        private void BtnPanoramaClick(object sender, RoutedEventArgs e)
-        {
-            //new ChildWindow().ShowDialog();
-            new PanoramaDemo().Show();
-            
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            //pivot.GoToItem(pi3);
-            ((MainWindowViewModel) this.DataContext).SelectedIndex = 2;
-        }
-
-        private void BtnVSClick(object sender, RoutedEventArgs e)
+        private void LaunchVisualStudioDemo(object sender, RoutedEventArgs e)
         {
             new VSDemo().Show();
         }
 
-        private void BtnIconsClick(object sender, RoutedEventArgs e)
+        private void LaunchFlyoutDemo(object sender, RoutedEventArgs e)
+        {
+            new FlyoutDemo().Show();
+        }
+
+        private void LaunchPanoramaDemo(object sender, RoutedEventArgs e)
+        {
+            new PanoramaDemo().Show();
+        }
+
+        private void LaunchIcons(object sender, RoutedEventArgs e)
         {
             new IconsWindow().Show();
-        }
-
-        private void MiDarkOrange(object sender, RoutedEventArgs e)
-        {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Orange"), Theme.Dark);
-        }
-
-        private void MiLightOrange(object sender, RoutedEventArgs e)
-        {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(a => a.Name == "Orange"), Theme.Light);
-        }
-
-        private void IgnoreTaskbarOnMaximizedClick(object sender, RoutedEventArgs e)
-        {
-            this.IgnoreTaskbarOnMaximize = !this.IgnoreTaskbarOnMaximize;
-        }
-
-        private void ToggleSwitch_OnIsCheckedChanged(object sender, EventArgs e)
-        {
-            var toggle = sender as ToggleSwitch;
-            if (toggle != null)
-            {
-                Console.WriteLine("Value changed to '{0}'", toggle.IsChecked);    
-            }
         }
     }
 }
