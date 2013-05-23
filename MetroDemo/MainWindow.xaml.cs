@@ -81,5 +81,10 @@ namespace MetroDemo
         {
             new FlyoutDemo().Show();
         }
+
+        private void LaunchPanoramaDemo(object sender, RoutedEventArgs e)
+        {
+            new PanoramaDemo().Show();
+        }
     }
 }
