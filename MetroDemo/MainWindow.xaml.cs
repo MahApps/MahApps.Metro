@@ -86,5 +86,10 @@ namespace MetroDemo
         {
             new PanoramaDemo().Show();
         }
+
+        private void LaunchIcons(object sender, RoutedEventArgs e)
+        {
+            new IconsWindow().Show();
+        }
     }
 }

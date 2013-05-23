@@ -41,6 +41,7 @@
             <Button Click="LaunchVisualStudioDemo" Content="VS Demo" />
             <Button Click="LaunchFlyoutDemo" Content="Flyout Demo" />
             <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
+            <Button Click="LaunchIcons" Content="Icons" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 

@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using MahApps.Metro.Controls;
 using MetroDemo.Models;
-using MetroDemo.ViewModels;
 
 namespace MetroDemo
 {
@@ -32,8 +31,6 @@ namespace MetroDemo
             _artists.SetSource(SampleData.Artists.Take(25));
             _albums.SetSource(SampleData.Albums.Take(25));
 
-            ValidationExampleViewModel = new ValidationExampleViewModel();
-
             Busy = false;
         }
 
@@ -43,7 +40,6 @@ namespace MetroDemo
         public int SelectedIndex { get; set; }
         public List<Album> Albums { get; set; }
         public List<Artist> Artists { get; set; }
-        public ValidationExampleViewModel ValidationExampleViewModel { get; set; }
 
         public int? IntegerGreater10Property
         {
