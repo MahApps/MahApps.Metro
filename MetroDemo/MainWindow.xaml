@@ -40,7 +40,7 @@
         <Controls:WindowCommands>
             <Button Click="LaunchVisualStudioDemo" Content="VS Demo" />
             <Button Click="LaunchFlyoutDemo" Content="Flyout Demo" />
-            <Button Content="Panorama Demo" Click="LaunchPanoramaDemo"></Button>
+            <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
@@ -219,6 +219,13 @@
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      Text="Clear button" />
                             <TextBox Margin="0, 10, 0, 0"
+                                     VerticalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Number smaller than 10"
+                                     Text="{Binding IntegerGreater10Property,
+                                                    ValidatesOnDataErrors=True,
+                                                    UpdateSourceTrigger=PropertyChanged,
+                                                    NotifyOnValidationError=True}" />
+                            <TextBox Margin="0, 10, 0, 0"
                                      IsEnabled="False"
                                      Text="Disabled" />
                             <TextBox Margin="0, 10, 0, 0"
@@ -231,6 +238,14 @@
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      IsEnabled="False"
                                      Text="Clear button" />
+                            <TextBox Margin="0, 10, 0, 0"
+                                     VerticalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Number smaller than 10"
+                                     IsEnabled="False"
+                                     Text="{Binding IntegerGreater10Property,
+                                                    ValidatesOnDataErrors=True,
+                                                    UpdateSourceTrigger=PropertyChanged,
+                                                    NotifyOnValidationError=True}" />
                         </StackPanel>
                         <StackPanel Grid.Column="1" Width="150">
                             <Label Content="RichTextBox" Style="{StaticResource DescriptionHeaderStyle}" />

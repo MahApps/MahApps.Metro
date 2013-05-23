@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -8,10 +9,11 @@ using MetroDemo.ViewModels;
 
 namespace MetroDemo
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         readonly PanoramaGroup _albums;
         readonly PanoramaGroup _artists;
+        int? _integerGreater10Property;
 
         public MainWindowViewModel()
         {
@@ -43,6 +45,21 @@ namespace MetroDemo
         public List<Artist> Artists { get; set; }
         public ValidationExampleViewModel ValidationExampleViewModel { get; set; }
 
+        public int? IntegerGreater10Property
+        {
+            get { return this._integerGreater10Property; }
+            set
+            {
+                if (Equals(value, _integerGreater10Property))
+                {
+                    return;
+                }
+
+                _integerGreater10Property = value;
+                RaisePropertyChanged("IntegerGreater10Property");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -56,5 +73,20 @@ namespace MetroDemo
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                if (columnName == "IntegerGreater10Property" && this.IntegerGreater10Property < 10)
+                {
+                    return "Number is not greater than 10!";
+                }
+
+                return null;
+            }
+        }
+
+        public string Error { get { return string.Empty; } }
     }
 }
