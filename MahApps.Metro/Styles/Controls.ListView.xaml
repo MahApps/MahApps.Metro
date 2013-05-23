@@ -23,8 +23,6 @@
           Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
           Value="Auto" />
-        <!--<Setter Property="ScrollViewer.CanContentScroll"
-          Value="true" />-->
         <Setter Property="VerticalContentAlignment"
           Value="Center" />
         <Setter Property="Template">
