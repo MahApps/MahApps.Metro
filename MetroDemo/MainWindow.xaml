@@ -526,6 +526,10 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
                         <StackPanel>
                             <Label Content="Transitions" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Controls:TransitioningContentControl x:Name="transitioning"
@@ -566,6 +570,25 @@
                                 <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
                             </Controls:Tile>
                         </StackPanel>
+                        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                            <Label Content="Context menu" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Label HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalContentAlignment="Center"
+                                   Content="Right click here to open a context menu">
+                                <Label.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Menu 1">
+                                            <MenuItem Header="Submenu 1" />
+                                            <MenuItem Header="Submenu 2" />
+                                        </MenuItem>
+                                        <MenuItem Header="Menu 2" />
+                                        <MenuItem Header="Menu 3" />
+                                    </ContextMenu>
+                                </Label.ContextMenu>
+                            </Label>
+                        </Grid>
                     </Grid>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
