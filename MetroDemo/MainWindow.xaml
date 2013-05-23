@@ -171,12 +171,21 @@
                                       Content="Enabled"
                                       IsChecked="True" />
                             <CheckBox Margin="0, 10, 0, 0"
+                                      Content="Enabled" 
+                                      IsChecked="{x:Null}"
+                                      IsThreeState="True" />
+                            <CheckBox Margin="0, 10, 0, 0"
                                       Content="Disabled"
                                       IsEnabled="False" />
                             <CheckBox Margin="0, 10, 0, 0"
                                       Content="Disabled"
                                       IsChecked="True"
                                       IsEnabled="False" />
+                            <CheckBox Margin="0, 10, 0, 0"
+                                      Content="Enabled" 
+                                      IsEnabled="False"
+                                      IsChecked="{x:Null}"
+                                      IsThreeState="True" />
                         </StackPanel>
                         <StackPanel Grid.Row="1"
                                     Grid.Column="2"
