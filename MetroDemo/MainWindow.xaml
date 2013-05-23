@@ -283,6 +283,34 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
+                <TabItem Header="dates">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="date picker"
+                                       Margin="0,5"
+                                       FontSize="20"
+                                       HorizontalAlignment="Center" />
+                            <DatePicker Width="150"
+                                        HorizontalAlignment="Center"
+                                        Controls:TextboxHelper.Watermark="Select a date" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" >
+                            <TextBlock Text="calendar"
+                                       Margin="0,5"
+                                       FontSize="20"
+                                       HorizontalAlignment="Center" />
+                            <Calendar />
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="selection">
                     <Grid>
                         <Grid.ColumnDefinitions>
