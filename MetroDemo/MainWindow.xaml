@@ -350,6 +350,15 @@
                             </ComboBox>
                             <ComboBox Width="200"
                                       Margin="0, 10, 0, 0"
+                                      Controls:TextboxHelper.Watermark="Autocompletion"
+                                      DisplayMemberPath="Title"
+                                      IsEditable="True"
+                                      ItemsSource="{Binding Albums}"
+                                      MaxDropDownHeight="50"
+                                      Text="{Binding Path=Title,
+                                                     Mode=TwoWay}" />
+                            <ComboBox Width="200"
+                                      Margin="0, 10, 0, 0"
                                       IsEnabled="False"
                                       SelectedIndex="0">
                                 <ComboBoxItem Content="Item 1" />
@@ -357,6 +366,16 @@
                                 <ComboBoxItem Content="Item 3" />
                                 <ComboBoxItem Content="Item 4" />
                             </ComboBox>
+                            <ComboBox Width="200"
+                                      Margin="0, 10, 0, 0"
+                                      Controls:TextboxHelper.Watermark="Autocompletion"
+                                      DisplayMemberPath="Title"
+                                      IsEditable="True"
+                                      IsEnabled="False"
+                                      ItemsSource="{Binding Albums}"
+                                      MaxDropDownHeight="50"
+                                      Text="{Binding Path=Title,
+                                                     Mode=TwoWay}" />
                         </StackPanel>
                     </Grid>
                 </TabItem>
