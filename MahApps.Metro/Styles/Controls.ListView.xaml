@@ -31,7 +31,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListView">
                     <Border Name="Border"
-                BorderThickness="1">
+                BorderThickness="{TemplateBinding BorderThickness}">
                         <Border.Background>
                             <SolidColorBrush Color="{DynamicResource Gray2}" />
                         </Border.Background>
