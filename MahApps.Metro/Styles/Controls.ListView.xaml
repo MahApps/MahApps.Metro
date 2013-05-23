@@ -13,6 +13,58 @@
         <Setter Property="BorderThickness" Value="0 1 0 0" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="AlternationCount" Value="2" />
+        
+        <!-- Things taken from the original template. -->
+        <Setter Property="SnapsToDevicePixels"
+          Value="true" />
+        <Setter Property="OverridesDefaultStyle"
+          Value="true" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+          Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+          Value="Auto" />
+        <Setter Property="ScrollViewer.CanContentScroll"
+          Value="true" />
+        <Setter Property="VerticalContentAlignment"
+          Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListView">
+                    <Border Name="Border"
+                BorderThickness="1">
+                        <Border.Background>
+                            <SolidColorBrush Color="{DynamicResource Gray2}" />
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{DynamicResource Gray3}" />
+                        </Border.BorderBrush>
+                        <ScrollViewer Style="{DynamicResource
+                        {x:Static GridView.GridViewScrollViewerStyleKey}}">
+                            <ItemsPresenter />
+                            <ScrollViewer.Background>
+                                <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                            </ScrollViewer.Background>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsGrouping"
+                   Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll"
+                    Value="false" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                   Value="false">
+                            <Setter TargetName="Border"
+                    Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource Gray2}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="VirtualisedMetroListView" TargetType="{x:Type ListView}" BasedOn="{StaticResource MetroListView}">
@@ -42,6 +94,13 @@
                                             <DataTrigger
                                                 Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
                                                 <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" Value="False">
+                                                <Setter Property="Foreground">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="{DynamicResource GrayNormal}"/>
+                                                    </Setter.Value>
+                                                </Setter>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
