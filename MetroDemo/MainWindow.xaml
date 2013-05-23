@@ -38,8 +38,8 @@
 
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Content="Launch VS Demo" Click="LaunchVisualStudioDemo" />
-            <Button Content="Launch Flyout Demo" Click="LaunchFlyoutDemo" />
+            <Button Click="LaunchVisualStudioDemo" Content="Launch VS Demo" />
+            <Button Click="LaunchFlyoutDemo" Content="Launch Flyout Demo" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
@@ -78,7 +78,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Column="0" Width="150">
+                        <StackPanel Grid.Column="0">
                             <Label Content="Default button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Button Width="100"
                                     Margin="0, 10, 0, 0"
@@ -88,7 +88,7 @@
                                     Content="Disabled"
                                     IsEnabled="False" />
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Width="150">
+                        <StackPanel Grid.Column="1">
                             <Label Content="Square button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Button Width="100"
                                     Margin="0, 10, 0, 0"
@@ -100,7 +100,7 @@
                                     IsEnabled="False"
                                     Style="{StaticResource SquareButtonStyle}" />
                         </StackPanel>
-                        <StackPanel Grid.Column="2" Width="150">
+                        <StackPanel Grid.Column="2">
                             <Label Content="Toggle button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ToggleButton Width="100"
                                           Margin="0, 10, 0, 0"
@@ -110,7 +110,7 @@
                                           Content="Disabled"
                                           IsEnabled="False" />
                         </StackPanel>
-                        <StackPanel Grid.Column="3" Width="100">
+                        <StackPanel Grid.Column="3">
                             <StackPanel.Resources>
                                 <ResourceDictionary>
                                     <ResourceDictionary.MergedDictionaries>
@@ -119,12 +119,15 @@
                                 </ResourceDictionary>
                             </StackPanel.Resources>
                             <Label Content="Flat button" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Button Margin="0, 10, 0, 0" Content="Enabled" />
-                            <Button Margin="0, 10, 0, 0"
+                            <Button Width="100"
+                                    Margin="0, 10, 0, 0"
+                                    Content="Enabled" />
+                            <Button Width="100"
+                                    Margin="0, 10, 0, 0"
                                     Content="Disabled"
                                     IsEnabled="False" />
                         </StackPanel>
-                        <StackPanel Grid.Column="4" Width="100">
+                        <StackPanel Grid.Column="4">
                             <Label Content="Circle button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Button Width="50"
                                     Height="50"
@@ -435,9 +438,9 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="tabcontrol">
-                    <StackPanel Margin="15">
+                    <StackPanel Margin="15, 10, 15, 0">
                         <Label Content="Default TabControl" Style="{StaticResource DescriptionHeaderStyle}" />
-                        <TabControl Margin="0, 10, 0, 0">
+                        <TabControl>
                             <Controls:MetroTabItem Header="headers" HeaderFontSize="20">
                                 <TextBlock FontSize="30" Text="Content" />
                             </Controls:MetroTabItem>
@@ -464,7 +467,7 @@
                             <Grid.Resources>
                                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
                             </Grid.Resources>
-                            <Controls:MetroAnimatedSingleRowTabControl Margin="0, 10, 0, 0">
+                            <Controls:MetroAnimatedSingleRowTabControl>
                                 <TabItem Header="this tabcontrol">
                                     <TextBlock FontSize="30" Text="Cool transition" />
                                 </TabItem>
@@ -483,7 +486,7 @@
                             <Grid.Resources>
                                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                             </Grid.Resources>
-                            <Controls:MetroAnimatedSingleRowTabControl Margin="0, 10, 0, 0">
+                            <Controls:MetroAnimatedSingleRowTabControl>
                                 <TabItem Header="this tabcontrols tabs">
                                     <TextBlock FontSize="30" Text="Content" />
                                 </TabItem>
