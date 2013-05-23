@@ -305,6 +305,8 @@
     <Style TargetType="ComboBoxItem" x:Key="MetroComboBoxItem">
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding" Value="2" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
@@ -349,6 +351,10 @@
                         <Rectangle x:Name="SelectedRectangle" IsHitTestVisible="False" Opacity="0" Fill="{DynamicResource HighlightBrush}" />
                         <Rectangle x:Name="MouseOverRectangle" IsHitTestVisible="False" Opacity="0" Fill="{DynamicResource HighlightBrush}" />
                         <ContentControl >
+                            <ContentControl.Foreground>
+                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{DynamicResource NormalForegroundColor}" />
+                            </ContentControl.Foreground>
+
                             <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </ContentControl>
                         <Rectangle x:Name="FocusVisualElement" Stroke="{DynamicResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed" />
