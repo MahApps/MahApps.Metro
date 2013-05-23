@@ -303,7 +303,11 @@
     </Style>
 
     <Style TargetType="ComboBoxItem" x:Key="MetroComboBoxItem">
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource NormalForegroundColor}"/>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Padding" Value="2" />
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="BorderThickness" Value="1" />
@@ -346,13 +350,29 @@
                                 <VisualState x:Name="Unfocused" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
+<<<<<<< HEAD
                         <Rectangle x:Name="SelectedRectangle" IsHitTestVisible="False" Opacity="0" Fill="{DynamicResource HighlightBrush}" />
                         <Rectangle x:Name="MouseOverRectangle" IsHitTestVisible="False" Opacity="0" Fill="{DynamicResource HighlightBrush}" />
                         <ContentControl >
+=======
+                        <Rectangle x:Name="SelectedRectangle" IsHitTestVisible="False" Opacity="0" Fill="{DynamicResource AccentColorBrush}" />
+                        <Rectangle x:Name="MouseOverRectangle" IsHitTestVisible="False" Opacity="0">
+                            <Rectangle.Fill>
+                                <SolidColorBrush Color="{DynamicResource AccentColor3}"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <ContentControl Foreground="{TemplateBinding Foreground}">
+>>>>>>> upstream/master
                             <ContentPresenter x:Name="contentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </ContentControl>
                         <Rectangle x:Name="FocusVisualElement" Stroke="{DynamicResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed" />
                     </Grid>
+                    
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
