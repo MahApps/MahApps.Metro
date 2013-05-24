@@ -584,7 +584,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="0"/>
-                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="1" Style="{DynamicResource AzureDataGrid}"/>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="1" IsEnabled="False" />
                     </Grid>
                 </TabItem>
                 <TabItem Header="others">
