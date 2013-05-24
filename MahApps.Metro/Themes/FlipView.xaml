@@ -16,6 +16,17 @@
                         <Button x:Name="PART_ForwardButton" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource ControlButton}">
                             <Path Width="16" Height="18" Canvas.Left="15.9063" Canvas.Top="14.75" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z " />
                         </Button>
+                        
+                        <Grid VerticalAlignment="Bottom" Height="0" x:Name="PART_BannerGrid" Panel.ZIndex="6" Opacity="0.9">
+                            <Grid.Background>
+                                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
+                            </Grid.Background>
+                            <Label FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" Content="{TemplateBinding BannerText}">
+                                <Label.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource WhiteColor}" />
+                                </Label.Foreground>
+                            </Label>
+                        </Grid>
                     </Grid>
                     <Controls:TransitioningContentControl Content="{TemplateBinding SelectedItem}"
                                                   ContentTemplate="{TemplateBinding ItemTemplate}" x:Name="PART_Presenter" Panel.ZIndex="1"/>
@@ -54,11 +65,18 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Storyboard x:Key="ShowBannerStoryboard">
+                <DoubleAnimation From="0.0" To="30.0" AccelerationRatio="0.9" BeginTime="0:0:0" Storyboard.TargetProperty="Height"/>
+            </Storyboard>
+            <Storyboard x:Key="HideBannerStoryboard">
+                <DoubleAnimation From="30.0" To="0.0" AccelerationRatio="0.9" BeginTime="0:0:0" Storyboard.TargetProperty="Height"/>
+            </Storyboard>
         </ControlTemplate.Resources>
     </ControlTemplate>
     <Style TargetType="{x:Type Controls:FlipView}">
         <Setter Property="MinHeight" Value="100"/>
         <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="FontSize" Value="16"/>
         <Setter Property="Selector.IsSynchronizedWithCurrentItem" Value="True"/>
         <Setter Property="Template" Value="{StaticResource FlipViewTemplate}"/>
     </Style>
