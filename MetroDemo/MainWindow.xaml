@@ -576,6 +576,16 @@
                         </Grid>
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="datagrid">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="0"/>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="1" Style="{DynamicResource AzureDataGrid}"/>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="others">
                     <Grid>
                         <Grid.ColumnDefinitions>
