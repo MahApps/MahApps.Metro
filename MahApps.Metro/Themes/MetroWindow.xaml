@@ -12,6 +12,9 @@
             <AdornerDecorator>
                 <Controls:MetroContentControl IsTabStop="False" FocusVisualStyle="{x:Null}">
                     <Grid>
+                        <Grid.Background>
+                            <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                        </Grid.Background>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
@@ -85,11 +88,6 @@
         <Setter Property="Foreground">
             <Setter.Value>
                 <SolidColorBrush Color="{DynamicResource BlackColor}"/>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
