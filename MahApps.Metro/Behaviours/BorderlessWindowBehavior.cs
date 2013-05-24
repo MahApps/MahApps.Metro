@@ -273,8 +273,7 @@ namespace MahApps.Metro.Behaviours
                          * "does not repaint the nonclient area to reflect the state change." */
                         returnval = UnsafeNativeMethods.DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
 
-                        if (!ShouldHaveBorder())
-
+                        if (ShouldHaveBorder())
                             if (wParam == IntPtr.Zero)
                                 AddBorder();
                             else

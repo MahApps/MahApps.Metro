@@ -9,6 +9,7 @@
                       Height="600"
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
+                      BorderThickness="1"
                       mc:Ignorable="d">
 
     <Window.Resources>
@@ -25,6 +26,10 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+
+    <Controls:MetroWindow.BorderBrush>
+        <SolidColorBrush Color="{DynamicResource AccentColor}" />
+    </Controls:MetroWindow.BorderBrush>
 
     <Controls:MetroWindow.Flyouts>
         <Controls:Flyout Header="settings" Position="Right">
