@@ -581,6 +581,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -645,6 +646,19 @@
                                 </Label.ContextMenu>
                             </Label>
                         </Grid>
+                        <StackPanel Grid.Column="2">
+                            <Label Content="FlipView" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Controls:FlipView SelectedIndex="0" Height="200">
+                                <Controls:FlipView.Items>
+                                    <Grid Background="Black">
+                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
+                                    </Grid>
+                                    <Grid Background="Black">
+                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_xbox}" />
+                                    </Grid>
+                                </Controls:FlipView.Items>
+                            </Controls:FlipView>
+                        </StackPanel>
                     </Grid>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
