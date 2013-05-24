@@ -266,7 +266,7 @@
                                     BorderBrush="{DynamicResource ComboBoxPopupBrush}"
                                     Background="{DynamicResource WhiteBrush}">
                                 <ScrollViewer x:Name="DropDownScrollViewer" BorderThickness="0" Margin="2" Padding="1">
-                                    <VirtualizingStackPanel x:Name="ItemsPresenter" IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
                             </Border>
                         </Popup>
