@@ -440,6 +440,15 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
+                <TabItem Header="ButtonTest">
+                    <StackPanel>
+                        <Button Content="Test MetroAccent" Style="{DynamicResource MetroAccentButton}" Width="Auto" HorizontalAlignment="Center"></Button>
+                        <Button Content="Test SquareMetro" Style="{DynamicResource SquareMetroButton}" Width="Auto" HorizontalAlignment="Center"></Button>
+                        <Button Content="Test SquareButton" Style="{DynamicResource SquareButtonStyle}" Width="Auto" HorizontalAlignment="Center"></Button>
+                        <Button Content="Test Chromeless" Style="{DynamicResource ChromelessButtonStyle}" Width="Auto" HorizontalAlignment="Center"></Button>
+                        <Button Content="Normal Button" Width="Auto" HorizontalAlignment="Center"></Button>
+                    </StackPanel>
+                </TabItem>
                 <TabItem Header="Validation Examples">
                     <views:ValidationExampleView x:Name="validationExample"
                                                  DataContext="{Binding ValidationExampleViewModel, Mode=OneWay}" />
