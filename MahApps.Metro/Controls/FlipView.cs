@@ -44,9 +44,44 @@ namespace MahApps.Metro.Controls
             this.Unloaded += FlipView_Unloaded;
         }
 
+        void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DetectControlButtonsStatus();
+
+        }
+
+        private void DetectControlButtonsStatus()
+        {
+            if (Items.Count > 0)
+            {
+                if (SelectedIndex == 0)
+                {
+                    backButton.Visibility = System.Windows.Visibility.Hidden;
+                    forwardButton.Visibility = System.Windows.Visibility.Visible;
+                }
+                else
+                    if (SelectedIndex == Items.Count - 1)
+                    {
+                        backButton.Visibility = System.Windows.Visibility.Visible;
+                        forwardButton.Visibility = System.Windows.Visibility.Hidden;
+                    }
+                    else
+                    {
+                        backButton.Visibility = System.Windows.Visibility.Visible;
+                        forwardButton.Visibility = System.Windows.Visibility.Visible;
+                    }
+            }
+            else
+            {
+                backButton.Visibility = System.Windows.Visibility.Hidden;
+                forwardButton.Visibility = System.Windows.Visibility.Hidden;
+            }
+        }
+
         void FlipView_Unloaded(object sender, RoutedEventArgs e)
         {
             this.Unloaded -= FlipView_Unloaded;
+            this.SelectionChanged -= FlipView_SelectionChanged;
 
             backButton.Click -= backButton_Click;
             forwardButton.Click -= forwardButton_Click;
@@ -64,8 +99,12 @@ namespace MahApps.Metro.Controls
             backButton.Click += backButton_Click;
             forwardButton.Click += forwardButton_Click;
 
+            this.SelectionChanged += FlipView_SelectionChanged;
+
             ShowBannerStoryboard = (Storyboard)this.Template.Resources["ShowBannerStoryboard"];
             HideBannerStoryboard = (Storyboard)this.Template.Resources["HideBannerStoryboard"];
+
+            DetectControlButtonsStatus();
 
             if (!string.IsNullOrWhiteSpace(BannerText))
                 ShowBanner();
@@ -95,15 +134,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ShowBanner()
-        {
-            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText) && bannerGrid.Height == 0) bannerGrid.BeginStoryboard(ShowBannerStoryboard);
-        }
-
-        private void HideBanner()
-        {
-            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText) && bannerGrid.Height > 0) bannerGrid.BeginStoryboard(HideBannerStoryboard);
-        }
         public void GoForward()
         {
             if (SelectedIndex < Items.Count - 1)
@@ -116,6 +146,16 @@ namespace MahApps.Metro.Controls
 
                 ShowBanner();
             }
+        }
+
+        private void ShowBanner()
+        {
+            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText) && bannerGrid.Height == 0) bannerGrid.BeginStoryboard(ShowBannerStoryboard);
+        }
+
+        private void HideBanner()
+        {
+            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText) && bannerGrid.Height > 0) bannerGrid.BeginStoryboard(HideBannerStoryboard);
         }
 
         public static readonly DependencyProperty BannerTextProperty =

@@ -656,6 +656,9 @@
                                     <Grid Background="Green">
                                         <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_xbox}" />
                                     </Grid>
+                                    <Grid Background="Red">
+                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_chess_horse}" />
+                                    </Grid>
                                 </Controls:FlipView.Items>
                             </Controls:FlipView>
                         </StackPanel>
