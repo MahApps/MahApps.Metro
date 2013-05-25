@@ -166,7 +166,7 @@ namespace MahApps.Metro.Controls
 
         private string _lastBannerText = null;
         public static readonly DependencyProperty BannerTextProperty =
-            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new PropertyMetadata(string.Empty, new PropertyChangedCallback((d, e) =>
+            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new PropertyMetadata("Banner", new PropertyChangedCallback((d, e) =>
             {
                 if (((FlipView)d).IsLoaded)
                     ((FlipView)d).ChangeBannerText();
@@ -205,7 +205,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty IsBannerEnabledProperty =
-            DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(false, new PropertyChangedCallback((d, e) =>
+            DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, new PropertyChangedCallback((d, e) =>
                 {
                     if ((bool)e.NewValue && !string.IsNullOrWhiteSpace(((FlipView)d).BannerText))
                         ((FlipView)d).ShowBanner();
