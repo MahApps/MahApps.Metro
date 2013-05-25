@@ -67,7 +67,8 @@ namespace MahApps.Metro.Controls
             ShowBannerStoryboard = (Storyboard)this.Template.Resources["ShowBannerStoryboard"];
             HideBannerStoryboard = (Storyboard)this.Template.Resources["HideBannerStoryboard"];
 
-            ShowBanner();
+            if (!string.IsNullOrWhiteSpace(BannerText))
+                ShowBanner();
         }
 
         void forwardButton_Click(object sender, RoutedEventArgs e)
@@ -96,12 +97,12 @@ namespace MahApps.Metro.Controls
 
         private void ShowBanner()
         {
-            if (IsBannerEnabled) bannerGrid.BeginStoryboard(ShowBannerStoryboard);
+            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText) && bannerGrid.Height == 0) bannerGrid.BeginStoryboard(ShowBannerStoryboard);
         }
 
         private void HideBanner()
         {
-            if (IsBannerEnabled) bannerGrid.BeginStoryboard(HideBannerStoryboard);
+            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText) && bannerGrid.Height > 0) bannerGrid.BeginStoryboard(HideBannerStoryboard);
         }
         public void GoForward()
         {
@@ -118,7 +119,7 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty BannerTextProperty =
-            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new UIPropertyMetadata("Banner"));
+            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new UIPropertyMetadata());
 
         public string BannerText
         {
@@ -136,7 +137,7 @@ namespace MahApps.Metro.Controls
             {
                 SetValue(IsBannerEnabledProperty, value);
 
-                if (value)
+                if (value && !string.IsNullOrWhiteSpace(BannerText))
                     ShowBanner();
                 else
                     HideBanner();
