@@ -172,11 +172,11 @@
     <Resource Include="mahapps.metro.logo2.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MahApps.Metro.Resources\MahApps.Metro.Resources.csproj">
+    <ProjectReference Include="..\..\MahApps.Metro.Resources\MahApps.Metro.Resources.csproj">
       <Project>{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}</Project>
       <Name>MahApps.Metro.Resources</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.NET45.csproj">
+    <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.NET45.csproj">
       <Project>{942d11c4-29f5-46c4-8c14-4b976d56c637}</Project>
       <Name>MahApps.Metro.NET45</Name>
     </ProjectReference>

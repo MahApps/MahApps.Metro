@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro", "MahApps.Metro\MahApps.Metro.csproj", "{5B1710D2-5DC8-4754-91B2-19165DE49B3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo", "MetroDemo\MetroDemo.csproj", "{56E8080F-FFEB-47CD-ADB9-92245F92565B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo", "samples\MetroDemo\MetroDemo.csproj", "{56E8080F-FFEB-47CD-ADB9-92245F92565B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Resources", "MahApps.Metro.Resources\MahApps.Metro.Resources.csproj", "{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccentColorRepro", "AccentColorRepro\AccentColorRepro.csproj", "{E74223AD-91C0-433D-A202-ED0EAF2C122A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccentColorRepro", "samples\AccentColorRepro\AccentColorRepro.csproj", "{E74223AD-91C0-433D-A202-ED0EAF2C122A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demos", "Demos", "{72C27A3B-930A-45E7-B073-C9D7BF046E4B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{72C27A3B-930A-45E7-B073-C9D7BF046E4B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.NET45", "MahApps.Metro\MahApps.Metro.NET45.csproj", "{942D11C4-29F5-46C4-8C14-4B976D56C637}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F80ABB
 		.build\MSBuild.Community.Tasks.targets = .build\MSBuild.Community.Tasks.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo.NET45", "MetroDemo\MetroDemo.NET45.csproj", "{67174E59-0A40-4E8F-A82B-02FD317DD801}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo.NET45", "samples\MetroDemo\MetroDemo.NET45.csproj", "{67174E59-0A40-4E8F-A82B-02FD317DD801}"
 	ProjectSection(ProjectDependencies) = postProject
 		{56E8080F-FFEB-47CD-ADB9-92245F92565B} = {56E8080F-FFEB-47CD-ADB9-92245F92565B}
 	EndProjectSection
