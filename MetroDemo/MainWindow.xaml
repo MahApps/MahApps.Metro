@@ -649,6 +649,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -713,6 +714,25 @@
                                 </Label.ContextMenu>
                             </Label>
                         </Grid>
+                        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
+                            <Label Content="FlipView" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <StackPanel Orientation="Horizontal" Height="20" Margin="0 0 0 5">
+                                <CheckBox Height="20" Content="Show Banner?" x:Name="ShowBannerCheckBox" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                            <Controls:FlipView SelectedIndex="0" Height="200" IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="FlipView_SelectionChanged">
+                                <Controls:FlipView.Items>
+                                    <Grid Background="Blue">
+                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
+                                    </Grid>
+                                    <Grid Background="Green">
+                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_xbox}" />
+                                    </Grid>
+                                    <Grid Background="Red">
+                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_chess_horse}" />
+                                    </Grid>
+                                </Controls:FlipView.Items>
+                            </Controls:FlipView>
+                        </StackPanel>
                     </Grid>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
