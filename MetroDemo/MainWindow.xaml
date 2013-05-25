@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
@@ -593,6 +594,55 @@
                             </Controls:MetroAnimatedSingleRowTabControl>
                         </Grid>
                     </StackPanel>
+                </TabItem>
+                <TabItem Header="datagrid">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" 
+                                  Grid.Row="0"
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
+                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" 
+                                  Grid.Row="1" 
+                                  IsEnabled="False" 
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
+                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="0" Grid.Column="1" Style="{StaticResource AzureDataGrid}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
+                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="1" IsEnabled="False" Grid.Column="1" Style="{StaticResource AzureDataGrid}"  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
+                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="others">
                     <Grid>
