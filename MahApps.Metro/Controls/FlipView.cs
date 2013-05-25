@@ -119,8 +119,8 @@ namespace MahApps.Metro.Controls
 
             DetectControlButtonsStatus();
 
-            if (!string.IsNullOrWhiteSpace(BannerText))
-                ShowBanner();
+
+            ShowBanner();
         }
 
         void forwardButton_Click(object sender, RoutedEventArgs e)
@@ -153,7 +153,7 @@ namespace MahApps.Metro.Controls
 
         private void ShowBanner()
         {
-            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText))
+            if (IsBannerEnabled)
                 bannerGrid.BeginStoryboard(ShowBannerStoryboard);
             bannerLabel.Content = BannerText;
         }
@@ -168,8 +168,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty BannerTextProperty =
             DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new PropertyMetadata("Banner", new PropertyChangedCallback((d, e) =>
             {
-                if (((FlipView)d).IsLoaded)
-                    ((FlipView)d).ChangeBannerText();
+                if (e.OldValue != e.NewValue)
+                    ExecuteWhenLoaded(((FlipView)d), () =>
+                        ((FlipView)d).ChangeBannerText());
             })));
 
         public string BannerText
@@ -186,37 +187,56 @@ namespace MahApps.Metro.Controls
         {
             if (IsBannerEnabled)
             {
+                if (HideControlStoryboard_CompletedHandler != null)
+                    HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
+
                 HideControlStoryboard_CompletedHandler = new EventHandler((sender, e) =>
                 {
-                    //SetValue(BannerTextProperty, value);
+                    SetValue(BannerTextProperty, value);
 
                     HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
 
                     bannerLabel.Content = value != null ? value : BannerText;
 
-                    bannerLabel.BeginStoryboard(ShowControlStoryboard);
+                    bannerLabel.BeginStoryboard(ShowControlStoryboard, HandoffBehavior.SnapshotAndReplace);
                 });
 
 
                 HideControlStoryboard.Completed += HideControlStoryboard_CompletedHandler;
 
-                bannerLabel.BeginStoryboard(HideControlStoryboard);
+                bannerLabel.BeginStoryboard(HideControlStoryboard, HandoffBehavior.SnapshotAndReplace);
             }
+            else
+                ExecuteWhenLoaded(this, () =>
+                    {
+                        bannerLabel.Content = value != null ? value : BannerText;
+                    });
         }
 
         public static readonly DependencyProperty IsBannerEnabledProperty =
             DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, new PropertyChangedCallback((d, e) =>
                 {
-                    if (!((FlipView)d).IsLoaded)
+                    var flipview = ((FlipView)d);
+
+                    if (!flipview.IsLoaded)
                     {
                         //wait to be loaded?
+                        ExecuteWhenLoaded(flipview, () =>
+                            {
+                                flipview.ApplyTemplate();
+
+                                if ((bool)e.NewValue)
+                                    flipview.ShowBanner();
+                                else
+                                    flipview.HideBanner();
+                            });
                     }
                     else
                     {
-                        if ((bool)e.NewValue && !string.IsNullOrWhiteSpace(((FlipView)d).BannerText))
-                            ((FlipView)d).ShowBanner();
+                        if ((bool)e.NewValue)
+                            flipview.ShowBanner();
                         else
-                            ((FlipView)d).HideBanner();
+                            flipview.HideBanner();
                     }
                 })));
 
@@ -226,6 +246,23 @@ namespace MahApps.Metro.Controls
             set
             {
                 SetValue(IsBannerEnabledProperty, value);
+            }
+        }
+
+        private static void ExecuteWhenLoaded(FlipView flipview, Action body)
+        {
+            if (flipview.IsLoaded)
+                body();
+            else
+            {
+                RoutedEventHandler handler = null;
+                handler = new RoutedEventHandler((o, a) =>
+                {
+                    flipview.Loaded -= handler;
+                    body();
+                });
+
+                flipview.Loaded += handler;
             }
         }
     }
