@@ -21,7 +21,7 @@
                             <Grid.Background>
                                 <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Grid.Background>
-                            <Label FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" Content="{TemplateBinding BannerText}">
+                            <Label FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" x:Name="PART_BannerLabel">
                                 <Label.Foreground>
                                     <SolidColorBrush Color="{DynamicResource WhiteColor}" />
                                 </Label.Foreground>
@@ -66,10 +66,16 @@
                 </Setter>
             </Style>
             <Storyboard x:Key="ShowBannerStoryboard">
-                <DoubleAnimation From="0.0" To="30.0" AccelerationRatio="0.9" BeginTime="0:0:0" Storyboard.TargetProperty="Height"/>
+                <DoubleAnimation From="0.0" To="30.0" AccelerationRatio="1.0" SpeedRatio="2.5" Storyboard.TargetProperty="Height"/>
             </Storyboard>
             <Storyboard x:Key="HideBannerStoryboard">
-                <DoubleAnimation From="30.0" To="0.0" AccelerationRatio="0.9" BeginTime="0:0:0" Storyboard.TargetProperty="Height"/>
+                <DoubleAnimation From="30.0" To="0.0" AccelerationRatio="1.0" SpeedRatio="2.5" Storyboard.TargetProperty="Height"/>
+            </Storyboard>
+            <Storyboard x:Key="HideControlStoryboard">
+                <DoubleAnimation From="1.0" To="0.0" AccelerationRatio="1.0" SpeedRatio="2.5" Storyboard.TargetProperty="Opacity"/>
+            </Storyboard>
+            <Storyboard x:Key="ShowControlStoryboard">
+                <DoubleAnimation From="0.0" To="1.0" AccelerationRatio="1.0" SpeedRatio="2.5" Storyboard.TargetProperty="Opacity"/>
             </Storyboard>
         </ControlTemplate.Resources>
     </ControlTemplate>

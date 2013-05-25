@@ -648,7 +648,12 @@
                         </Grid>
                         <StackPanel Grid.Column="2">
                             <Label Content="FlipView" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:FlipView SelectedIndex="0" Height="200" IsBannerEnabled="True">
+                            <StackPanel Orientation="Horizontal" Height="20" Margin="0 0 0 5">
+                                <TextBox Controls:TextboxHelper.Watermark="Type a banner message." Controls:TextboxHelper.ClearTextButton="True" Height="20" x:Name="BannerTextBox" Text="Testing" Width="100"/>
+                                <CheckBox Height="20" Content="Show Banner?" x:Name="ShowBannerCheckBox"/>
+                            </StackPanel>
+                            <Controls:FlipView SelectedIndex="0" Height="200" IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                                               BannerText="{Binding ElementName=BannerTextBox, Path=Text, UpdateSourceTrigger=PropertyChanged,BindsDirectlyToSource=True}">
                                 <Controls:FlipView.Items>
                                     <Grid Background="Blue">
                                         <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />

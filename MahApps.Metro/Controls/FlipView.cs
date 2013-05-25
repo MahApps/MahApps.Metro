@@ -20,20 +20,27 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_ForwardButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_BannerGrid", Type = typeof(Grid))]
+    [TemplatePart(Name = "PART_BannerLabel", Type = typeof(Label))]
     public class FlipView : Selector
     {
         private const string PART_Presenter = "PART_Presenter";
         private const string PART_BackButton = "PART_BackButton";
         private const string PART_ForwardButton = "PART_ForwardButton";
         private const string PART_BannerGrid = "PART_BannerGrid";
+        private const string PART_BannerLabel = "PART_BannerLabel";
 
         private TransitioningContentControl presenter = null;
         private Button backButton = null;
         private Button forwardButton = null;
         private Grid bannerGrid = null;
+        private Label bannerLabel = null;
 
         private Storyboard ShowBannerStoryboard = null;
         private Storyboard HideBannerStoryboard = null;
+        private Storyboard HideControlStoryboard = null;
+        private Storyboard ShowControlStoryboard = null;
+
+        private EventHandler HideControlStoryboard_CompletedHandler = null;
 
         static FlipView()
         {
@@ -47,7 +54,6 @@ namespace MahApps.Metro.Controls
         void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DetectControlButtonsStatus();
-
         }
 
         private void DetectControlButtonsStatus()
@@ -85,6 +91,9 @@ namespace MahApps.Metro.Controls
 
             backButton.Click -= backButton_Click;
             forwardButton.Click -= forwardButton_Click;
+
+            if (HideControlStoryboard_CompletedHandler != null)
+                HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
         }
 
         public override void OnApplyTemplate()
@@ -95,14 +104,18 @@ namespace MahApps.Metro.Controls
             backButton = this.Template.FindName(PART_BackButton, this) as Button;
             forwardButton = this.Template.FindName(PART_ForwardButton, this) as Button;
             bannerGrid = this.Template.FindName(PART_BannerGrid, this) as Grid;
+            bannerLabel = this.Template.FindName(PART_BannerLabel, this) as Label;
 
             backButton.Click += backButton_Click;
             forwardButton.Click += forwardButton_Click;
 
             this.SelectionChanged += FlipView_SelectionChanged;
 
-            ShowBannerStoryboard = (Storyboard)this.Template.Resources["ShowBannerStoryboard"];
-            HideBannerStoryboard = (Storyboard)this.Template.Resources["HideBannerStoryboard"];
+            ShowBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
+            HideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
+
+            ShowControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
+            HideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
 
             DetectControlButtonsStatus();
 
@@ -125,12 +138,7 @@ namespace MahApps.Metro.Controls
             if (SelectedIndex > 0)
             {
                 presenter.Transition = "RightReplaceTransition";
-
-                HideBanner();
-
                 SelectedIndex--;
-
-                ShowBanner();
             }
         }
 
@@ -139,36 +147,71 @@ namespace MahApps.Metro.Controls
             if (SelectedIndex < Items.Count - 1)
             {
                 presenter.Transition = "LeftReplaceTransition";
-
-                HideBanner();
-
                 SelectedIndex++;
-
-                ShowBanner();
             }
         }
 
         private void ShowBanner()
         {
-            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText) && bannerGrid.Height == 0) bannerGrid.BeginStoryboard(ShowBannerStoryboard);
+            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText))
+                bannerGrid.BeginStoryboard(ShowBannerStoryboard);
+            bannerLabel.Content = BannerText;
         }
 
         private void HideBanner()
         {
-            if (IsBannerEnabled && !string.IsNullOrWhiteSpace(BannerText) && bannerGrid.Height > 0) bannerGrid.BeginStoryboard(HideBannerStoryboard);
+            if (this.Height > 0.0)
+                bannerGrid.BeginStoryboard(HideBannerStoryboard);
         }
 
+        private string _lastBannerText = null;
         public static readonly DependencyProperty BannerTextProperty =
-            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new UIPropertyMetadata());
+            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new PropertyMetadata(string.Empty, new PropertyChangedCallback((d, e) =>
+            {
+                if (((FlipView)d).IsLoaded)
+                    ((FlipView)d).ChangeBannerText();
+            })));
 
         public string BannerText
         {
             get { return (string)GetValue(BannerTextProperty); }
-            set { SetValue(BannerTextProperty, value); }
+            set
+            {
+                //SetValue(BannerTextProperty, value);
+                ChangeBannerText();
+            }
+        }
+
+        private void ChangeBannerText()
+        {
+            if (IsBannerEnabled)
+            {
+                HideControlStoryboard_CompletedHandler = new EventHandler((sender, e) =>
+                {
+                    //SetValue(BannerTextProperty, value);
+
+                    HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
+
+                    bannerLabel.Content = BannerText;
+
+                    bannerLabel.BeginStoryboard(ShowControlStoryboard);
+                });
+
+
+                HideControlStoryboard.Completed += HideControlStoryboard_CompletedHandler;
+
+                bannerLabel.BeginStoryboard(HideControlStoryboard);
+            }
         }
 
         public static readonly DependencyProperty IsBannerEnabledProperty =
-            DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(false));
+            DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(false, new PropertyChangedCallback((d, e) =>
+                {
+                    if ((bool)e.NewValue && !string.IsNullOrWhiteSpace(((FlipView)d).BannerText))
+                        ((FlipView)d).ShowBanner();
+                    else
+                        ((FlipView)d).HideBanner();
+                })));
 
         public bool IsBannerEnabled
         {
@@ -176,11 +219,6 @@ namespace MahApps.Metro.Controls
             set
             {
                 SetValue(IsBannerEnabledProperty, value);
-
-                if (value && !string.IsNullOrWhiteSpace(BannerText))
-                    ShowBanner();
-                else
-                    HideBanner();
             }
         }
     }
