@@ -311,12 +311,30 @@
                                         HorizontalAlignment="Center"
                                         Controls:TextboxHelper.Watermark="Select a date" />
                         </StackPanel>
+                        <StackPanel Grid.Row="1">
+                            <TextBlock Text="disabled date picker"
+                                       Margin="0,5"
+                                       FontSize="20"
+                                       HorizontalAlignment="Center" />
+                            <DatePicker Width="150"
+                                        HorizontalAlignment="Center"
+                                        Controls:TextboxHelper.Watermark="Select a date" 
+                                        IsEnabled="False"/>
+                        </StackPanel>
                         <StackPanel Grid.Column="1" >
                             <TextBlock Text="calendar"
                                        Margin="0,5"
                                        FontSize="20"
                                        HorizontalAlignment="Center" />
                             <Calendar />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="disabled calendar"
+                                       Margin="0,5"
+                                       FontSize="20"
+                                       HorizontalAlignment="Center" />
+                            <Calendar IsEnabled="False"/>
                         </StackPanel>
                     </Grid>
                 </TabItem>

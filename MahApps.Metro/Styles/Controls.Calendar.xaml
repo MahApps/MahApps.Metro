@@ -89,7 +89,7 @@
                                 <VisualState x:Name="Active" />
                                 <VisualState x:Name="Inactive">
                                     <Storyboard>
-                                        <ColorAnimation Duration="0" To="#FF777777"
+                                        <ColorAnimation Duration="0" To="{DynamicResource Gray2}"
                                                         Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
                                                         Storyboard.TargetName="NormalText" />
                                     </Storyboard>
@@ -104,7 +104,7 @@
                                     <Storyboard>
                                         <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity"
                                                          Storyboard.TargetName="TodayBackground" />
-                                        <ColorAnimation Duration="0" To="#FFFFFFFF"
+                                        <ColorAnimation Duration="0" To="{DynamicResource WhiteColor}"
                                                         Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
                                                         Storyboard.TargetName="NormalText" />
                                     </Storyboard>
@@ -132,17 +132,27 @@
                         <Border BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}" />
-                        <Rectangle x:Name="HighlightBackground" Fill="#FFBADDE9" Opacity="0" />
-                        <ContentPresenter x:Name="NormalText" TextElement.Foreground="#FF333333"
+                        <Rectangle x:Name="HighlightBackground" Opacity="0">
+                            <Rectangle.Fill><SolidColorBrush Color="{DynamicResource AccentColor4}"/></Rectangle.Fill>
+                        </Rectangle>
+                        <ContentPresenter x:Name="NormalText"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="5,1,5,1"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <TextElement.Foreground>
+                                <SolidColorBrush Color="{DynamicResource Gray3}"/>
+                            </TextElement.Foreground>
+                        </ContentPresenter>
                         <Path x:Name="Blackout"
                               Data="M8.1772461,11.029181 L10.433105,11.029181 L11.700684,12.801641 L12.973633,11.029181 L15.191895,11.029181 L12.844727,13.999395 L15.21875,17.060919 L12.962891,17.060919 L11.673828,15.256231 L10.352539,17.060919 L8.1396484,17.060919 L10.519043,14.042364 z"
-                              Fill="#FF000000" HorizontalAlignment="Stretch" Margin="3" Opacity="0"
-                              RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Stretch" />
-                        <Rectangle x:Name="DayButtonFocusVisual" IsHitTestVisible="false" Stroke="#FF45D6FA"
-                                   Visibility="Collapsed" />
+                              HorizontalAlignment="Stretch" Margin="3" Opacity="0"
+                              RenderTransformOrigin="0.5,0.5" Stretch="Fill" VerticalAlignment="Stretch">
+                            <Path.Fill><SolidColorBrush Color="{DynamicResource WhiteColor}"/></Path.Fill>
+                        </Path>
+                        <Rectangle x:Name="DayButtonFocusVisual" IsHitTestVisible="false"
+                                   Visibility="Collapsed">
+                            <Rectangle.Stroke><SolidColorBrush Color="{DynamicResource AccentColor3}"/></Rectangle.Stroke>
+                        </Rectangle>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -157,10 +167,14 @@
                     <ControlTemplate.Resources>
                         <!-- Used for day names-->
                         <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
-                            <TextBlock Foreground="#FF333333" FontWeight="Bold"
+                            <TextBlock FontWeight="Bold"
                                        FontFamily="{DynamicResource DefaultFont}" FontSize="9.5"
                                        HorizontalAlignment="Center" Margin="0,6,0,6" Text="{Binding}"
-                                       VerticalAlignment="Center" />
+                                       VerticalAlignment="Center">
+                                <TextBlock.Foreground>
+                                    <SolidColorBrush Color="{DynamicResource Gray3}"/>
+                                </TextBlock.Foreground>
+                            </TextBlock>
                         </DataTemplate>
                     </ControlTemplate.Resources>
                     <Grid x:Name="PART_Root">
@@ -182,8 +196,8 @@
                         <Border BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}">
-                            <Border BorderBrush="#FFFFFFFF" BorderThickness="2">
-                                <Grid>
+                            <Border BorderThickness="0">
+                                <Grid Margin="2">
                                     <Grid.Resources>
                                         <ControlTemplate x:Key="PreviousButtonTemplate" TargetType="{x:Type Button}">
                                             <Grid Cursor="Hand">
@@ -281,10 +295,11 @@
                                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                                   Content="{TemplateBinding Content}"
                                                                   TextElement.FontFamily="{DynamicResource DefaultFont}"
-                                                                  TextElement.Foreground="white"
                                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                   Margin="1,4,1,9"
-                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                                    <TextElement.Foreground><SolidColorBrush Color="White"/></TextElement.Foreground>
+                                                </ContentPresenter>
                                             </Grid>
                                         </ControlTemplate>
                                     </Grid.Resources>
@@ -425,7 +440,7 @@
                                 <VisualState x:Name="Active" />
                                 <VisualState x:Name="Inactive">
                                     <Storyboard>
-                                        <ColorAnimation Duration="0" To="#FF777777"
+                                        <ColorAnimation Duration="0" To="{DynamicResource Gray2}"
                                                         Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
                                                         Storyboard.TargetName="NormalText" />
                                     </Storyboard>
@@ -465,12 +480,20 @@
                         </VisualStateManager.VisualStateGroups>
                         <Rectangle x:Name="SelectedBackground" Fill="{TemplateBinding Background}" Opacity="0" />
                         <Rectangle x:Name="Background" Fill="{TemplateBinding Background}" Opacity="0" />
-                        <ContentPresenter x:Name="NormalText" TextElement.Foreground="#FF333333"
+                        <ContentPresenter x:Name="NormalText"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="1,0,1,1"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        <Rectangle x:Name="CalendarButtonFocusVisual" IsHitTestVisible="false" Stroke="#FF45D6FA"
-                                   Visibility="Collapsed" />
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <TextElement.Foreground>
+                                <SolidColorBrush Color="{DynamicResource Gray3}"/>
+                            </TextElement.Foreground>
+                        </ContentPresenter>
+                        <Rectangle x:Name="CalendarButtonFocusVisual" IsHitTestVisible="false"
+                                   Visibility="Collapsed">
+                            <Rectangle.Stroke>
+                                <SolidColorBrush Color="{DynamicResource AccentColor3}" />
+                            </Rectangle.Stroke>
+                        </Rectangle>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused" Value="True">
@@ -493,8 +516,8 @@
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="{DynamicResource AccentColor}" Offset="0" />
                     <GradientStop Color="{DynamicResource AccentColor}" Offset="0.16" />
-                    <GradientStop Color="#FFFCFCFD" Offset="0.16" />
-                    <GradientStop Color="#FFFFFFFF" Offset="1" />
+                    <GradientStop Color="{DynamicResource Gray7}" Offset="0.16" />
+                    <GradientStop Color="{DynamicResource WhiteColor}" Offset="1" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
@@ -503,7 +526,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Calendar}">
-                    <StackPanel x:Name="PART_Root" HorizontalAlignment="Center" Background="White">
+                    <StackPanel x:Name="PART_Root" HorizontalAlignment="Center">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                        </StackPanel.Background>
                         <CalendarItem x:Name="PART_CalendarItem" BorderBrush="{TemplateBinding BorderBrush}"
                                       BorderThickness="{TemplateBinding BorderThickness}"
                                       Background="{TemplateBinding Background}"
