@@ -646,11 +646,11 @@
                                 </Label.ContextMenu>
                             </Label>
                         </Grid>
-                        <StackPanel Grid.Column="2">
+                        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
                             <Label Content="FlipView" Style="{StaticResource DescriptionHeaderStyle}" />
                             <StackPanel Orientation="Horizontal" Height="20" Margin="0 0 0 5">
                                 <TextBox Controls:TextboxHelper.Watermark="Type a banner message." Controls:TextboxHelper.ClearTextButton="True" Height="20" x:Name="BannerTextBox" Text="Testing" Width="100"/>
-                                <CheckBox Height="20" Content="Show Banner?" x:Name="ShowBannerCheckBox"/>
+                                <CheckBox Height="20" Content="Show Banner?" x:Name="ShowBannerCheckBox" HorizontalAlignment="Right"/>
                             </StackPanel>
                             <Controls:FlipView SelectedIndex="0" Height="200" IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                                BannerText="{Binding ElementName=BannerTextBox, Path=Text, UpdateSourceTrigger=PropertyChanged,BindsDirectlyToSource=True}">
