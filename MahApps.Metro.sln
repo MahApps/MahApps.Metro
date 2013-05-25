@@ -24,6 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F80ABB
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo.NET45", "MetroDemo\MetroDemo.NET45.csproj", "{67174E59-0A40-4E8F-A82B-02FD317DD801}"
+	ProjectSection(ProjectDependencies) = postProject
+		{56E8080F-FFEB-47CD-ADB9-92245F92565B} = {56E8080F-FFEB-47CD-ADB9-92245F92565B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
