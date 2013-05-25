@@ -84,7 +84,7 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex > 0)
             {
-                presenter.Transition = "RightTransition";
+                presenter.Transition = "RightReplaceTransition";
 
                 HideBanner();
 
@@ -107,7 +107,7 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex < Items.Count - 1)
             {
-                presenter.Transition = "LeftTransition";
+                presenter.Transition = "LeftReplaceTransition";
 
                 HideBanner();
 
