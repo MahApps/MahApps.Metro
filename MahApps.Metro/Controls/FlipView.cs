@@ -178,11 +178,11 @@ namespace MahApps.Metro.Controls
             set
             {
                 //SetValue(BannerTextProperty, value);
-                ChangeBannerText();
+                ChangeBannerText(value);
             }
         }
 
-        private void ChangeBannerText()
+        private void ChangeBannerText(string value = null)
         {
             if (IsBannerEnabled)
             {
@@ -192,7 +192,7 @@ namespace MahApps.Metro.Controls
 
                     HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
 
-                    bannerLabel.Content = BannerText;
+                    bannerLabel.Content = value != null ? value : BannerText;
 
                     bannerLabel.BeginStoryboard(ShowControlStoryboard);
                 });
@@ -207,10 +207,17 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsBannerEnabledProperty =
             DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, new PropertyChangedCallback((d, e) =>
                 {
-                    if ((bool)e.NewValue && !string.IsNullOrWhiteSpace(((FlipView)d).BannerText))
-                        ((FlipView)d).ShowBanner();
+                    if (!((FlipView)d).IsLoaded)
+                    {
+                        //wait to be loaded?
+                    }
                     else
-                        ((FlipView)d).HideBanner();
+                    {
+                        if ((bool)e.NewValue && !string.IsNullOrWhiteSpace(((FlipView)d).BannerText))
+                            ((FlipView)d).ShowBanner();
+                        else
+                            ((FlipView)d).HideBanner();
+                    }
                 })));
 
         public bool IsBannerEnabled
