@@ -114,6 +114,11 @@ namespace MahApps.Metro.Controls
         public MetroWindow()
         {
             Flyouts = new ObservableCollection<Flyout>();
+            Loaded += this.MetroWindow_Loaded;
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e) {
+            VisualStateManager.GoToState(this, "AfterLoaded", true);
         }
 
         static MetroWindow()
