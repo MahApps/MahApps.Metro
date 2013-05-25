@@ -5,13 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{56E8080F-FFEB-47CD-ADB9-92245F92565B}</ProjectGuid>
+    <ProjectGuid>{67174E59-0A40-4E8F-A82B-02FD317DD801}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MetroDemo</RootNamespace>
-    <AssemblyName>MetroDemo</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <AssemblyName>MetroDemo.NET45</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -23,7 +22,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\NET45\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,7 +31,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>bin\NET45\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -52,7 +51,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\NET40\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\Lib\NET45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -173,13 +172,13 @@
     <Resource Include="mahapps.metro.logo2.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MahApps.Metro.Resources\MahApps.Metro.Resources.csproj">
+    <ProjectReference Include="..\..\MahApps.Metro.Resources\MahApps.Metro.Resources.csproj">
       <Project>{E708AC99-605B-42A0-8D20-ABCA8FE42DD2}</Project>
       <Name>MahApps.Metro.Resources</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj">
-      <Project>{5B1710D2-5DC8-4754-91B2-19165DE49B3D}</Project>
-      <Name>MahApps.Metro</Name>
+    <ProjectReference Include="..\..\MahApps.Metro\MahApps.Metro.NET45.csproj">
+      <Project>{942d11c4-29f5-46c4-8c14-4b976d56c637}</Project>
+      <Name>MahApps.Metro.NET45</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
