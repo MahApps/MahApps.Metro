@@ -178,10 +178,13 @@ namespace MahApps.Metro.Controls
             get { return (string)GetValue(BannerTextProperty); }
             set
             {
-                if (IsBannerEnabled)
-                    ChangeBannerText(value);
-                else
-                    SetValue(BannerTextProperty, value);
+                ExecuteWhenLoaded(this, () =>
+                {
+                    if (IsBannerEnabled)
+                        ChangeBannerText(value);
+                    else
+                        SetValue(BannerTextProperty, value);
+                });
 
             }
         }
@@ -211,34 +214,23 @@ namespace MahApps.Metro.Controls
             }
             else
                 ExecuteWhenLoaded(this, () =>
-                    {
-                        bannerLabel.Content = value != null ? value : BannerText;
-                    });
+                {
+                    bannerLabel.Content = value != null ? value : BannerText;
+                });
         }
 
         public static readonly DependencyProperty IsBannerEnabledProperty =
             DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, new PropertyChangedCallback((d, e) =>
+            {
+                var flipview = ((FlipView)d);
+
+                if (!flipview.IsLoaded)
                 {
-                    var flipview = ((FlipView)d);
-
-                    if (!flipview.IsLoaded)
+                    //wait to be loaded?
+                    ExecuteWhenLoaded(flipview, () =>
                     {
-                        //wait to be loaded?
-                        ExecuteWhenLoaded(flipview, () =>
-                            {
-                                flipview.ApplyTemplate();
+                        flipview.ApplyTemplate();
 
-                                if ((bool)e.NewValue)
-                                {
-                                    flipview.ChangeBannerText(flipview.BannerText);
-                                    flipview.ShowBanner();
-                                }
-                                else
-                                    flipview.HideBanner();
-                            });
-                    }
-                    else
-                    {
                         if ((bool)e.NewValue)
                         {
                             flipview.ChangeBannerText(flipview.BannerText);
@@ -246,8 +238,19 @@ namespace MahApps.Metro.Controls
                         }
                         else
                             flipview.HideBanner();
+                    });
+                }
+                else
+                {
+                    if ((bool)e.NewValue)
+                    {
+                        flipview.ChangeBannerText(flipview.BannerText);
+                        flipview.ShowBanner();
                     }
-                })));
+                    else
+                        flipview.HideBanner();
+                }
+            })));
 
         public bool IsBannerEnabled
         {
