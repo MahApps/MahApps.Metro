@@ -117,8 +117,9 @@ namespace MahApps.Metro.Controls
             ShowControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
             HideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
 
-            DetectControlButtonsStatus();
+            SelectedIndex = 0;
 
+            DetectControlButtonsStatus();
 
             ShowBanner();
         }
