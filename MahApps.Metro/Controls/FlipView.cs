@@ -89,6 +89,7 @@ namespace MahApps.Metro.Controls
             this.Unloaded -= FlipView_Unloaded;
             this.SelectionChanged -= FlipView_SelectionChanged;
 
+            this.KeyDown -= FlipView_KeyDown;
             backButton.Click -= backButton_Click;
             forwardButton.Click -= forwardButton_Click;
 
@@ -110,6 +111,7 @@ namespace MahApps.Metro.Controls
             forwardButton.Click += forwardButton_Click;
 
             this.SelectionChanged += FlipView_SelectionChanged;
+            this.KeyDown += FlipView_KeyDown;
 
             ShowBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
             HideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
@@ -122,6 +124,23 @@ namespace MahApps.Metro.Controls
             DetectControlButtonsStatus();
 
             ShowBanner();
+        }
+
+        void FlipView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Left)
+            {
+                GoBack();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Right)
+            {
+                GoForward();
+                e.Handled = true;
+            }
+
+            if (e.Handled)
+                this.Focus();
         }
 
         protected override void OnItemsSourceChanged(System.Collections.IEnumerable oldValue, System.Collections.IEnumerable newValue)
