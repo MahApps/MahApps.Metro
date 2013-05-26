@@ -34,5 +34,10 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty CloseTabCommandProperty =
             DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroTabControl), new PropertyMetadata(null));
+            
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new MetroTabItem(); //Overrides the TabControl's default behavior and returns a MetroTabItem instead of a regular one.
+        }
     }
 }
