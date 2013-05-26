@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style TargetType="RibbonTabHeader">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Padding" Value="20,4,20,4" />
+        <Setter Property="BorderThickness" Value="1,1,1,0" />
+        <Setter Property="Margin" Value="1,0,1,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RibbonTabHeader">
+                    <ControlTemplate.Resources>
+                        <SolidColorBrush x:Key="CheckedBackground" Color="#FFF5F6F7" />
+                        <SolidColorBrush x:Key="CheckedBorderBrush" Color="#FFDBDCDD" />
+                        <SolidColorBrush x:Key="FocusedBackground" Color="#FFFDFDFF" />
+                        <SolidColorBrush x:Key="FocusedBorderBrush" Color="#FFEDEEEE" />
+                        <SolidColorBrush x:Key="MouseOverBackground" Color="#FFFDFDFF" />
+                        <SolidColorBrush x:Key="MouseOverBorderBrush" Color="#FFEDEEEE" />
+                    </ControlTemplate.Resources>
+
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
+						BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center" 
+							ContentSource="{Binding Label}" RecognizesAccessKey="True"/>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsRibbonTabSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource CheckedBackground}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource CheckedBorderBrush}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsRibbonTabSelected" Value="False" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="{DynamicResource MouseOverBackground}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource MouseOverBorderBrush}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

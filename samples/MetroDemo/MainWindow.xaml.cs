@@ -92,6 +92,15 @@ namespace MetroDemo
             new IconsWindow().Show();
         }
 
+        private void LaunchRibbonDemo(object sender, RoutedEventArgs e)
+        {
+#if NET_4_5
+            new RibbonDemo().Show();
+#else
+            MessageBox.Show("Ribbon is only supported on .NET 4.5 or higher.");
+#endif
+        }
+
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var flipview = ((FlipView)sender);
