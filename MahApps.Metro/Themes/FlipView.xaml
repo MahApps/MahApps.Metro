@@ -21,7 +21,7 @@
                             <Grid.Background>
                                 <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Grid.Background>
-                            <Label FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" x:Name="PART_BannerLabel">
+                            <Label FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" x:Name="PART_BannerLabel" IsTabStop="False">
                                 <Label.Foreground>
                                     <SolidColorBrush Color="{DynamicResource WhiteColor}" />
                                 </Label.Foreground>
@@ -29,7 +29,7 @@
                         </Grid>
                     </Grid>
                     <Controls:TransitioningContentControl Content="{TemplateBinding SelectedItem}"
-                                                  ContentTemplate="{TemplateBinding ItemTemplate}" x:Name="PART_Presenter" Panel.ZIndex="1"/>
+                                                  ContentTemplate="{TemplateBinding ItemTemplate}" x:Name="PART_Presenter" Panel.ZIndex="1" IsTabStop="False"/>
                 </Grid>
             </Border>
         </Grid>
@@ -39,6 +39,7 @@
                 <Setter Property="Width" Value="50"/>
                 <Setter Property="Opacity" Value="0.4"/>
                 <Setter Property="Panel.ZIndex" Value="5"/>
+                <Setter Property="IsTabStop" Value="False"/>
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
