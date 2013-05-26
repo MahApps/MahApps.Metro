@@ -236,7 +236,6 @@ namespace MahApps.Metro.Controls
                 bannerGrid.BeginStoryboard(HideBannerStoryboard);
         }
 
-        private string _lastBannerText = null;
         public static readonly DependencyProperty BannerTextProperty =
             DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new PropertyMetadata("Banner", new PropertyChangedCallback((d, e) =>
             {
@@ -267,7 +266,7 @@ namespace MahApps.Metro.Controls
             {
                 var newValue = value != null ? value : BannerText;
 
-                if (newValue == GetValue(BannerTextProperty)) return;
+                if (newValue == (string)GetValue(BannerTextProperty)) return;
 
                 if (HideControlStoryboard_CompletedHandler != null)
                     HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
