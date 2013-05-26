@@ -40,6 +40,7 @@
                 <Setter Property="Opacity" Value="0.4"/>
                 <Setter Property="Panel.ZIndex" Value="5"/>
                 <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="Focusable" Value="True"/>
                 <Setter Property="Background">
                     <Setter.Value>
                         <SolidColorBrush Color="{DynamicResource WhiteColor}"/>

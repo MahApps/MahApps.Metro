@@ -41,6 +41,10 @@ namespace MahApps.Metro.Controls
         private Storyboard ShowControlStoryboard = null;
 
         private EventHandler HideControlStoryboard_CompletedHandler = null;
+        /// <summary>
+        /// To counteract the double Loaded event issue.
+        /// </summary>
+        private bool loaded = false;
 
         static FlipView()
         {
@@ -49,7 +53,17 @@ namespace MahApps.Metro.Controls
         public FlipView()
         {
             this.Unloaded += FlipView_Unloaded;
+            this.Loaded += FlipView_Loaded;
         }
+        ~FlipView()
+        {
+            Dispatcher.Invoke(new EmptyDelegate(() =>
+            {
+                this.Loaded -= FlipView_Loaded;
+            }));
+        }
+
+        private delegate void EmptyDelegate();
 
         void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -83,29 +97,16 @@ namespace MahApps.Metro.Controls
                 forwardButton.Visibility = System.Windows.Visibility.Hidden;
             }
         }
-
-        void FlipView_Unloaded(object sender, RoutedEventArgs e)
+        void FlipView_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Unloaded -= FlipView_Unloaded;
-            this.SelectionChanged -= FlipView_SelectionChanged;
+            /* Loaded event fires twice if its a child of a TabControl.
+             * Once because the TabControl seems to initiali(z|s)e everything.
+             * And a second time when the Tab (housing the FlipView) is switched to. */
 
-            this.KeyDown -= FlipView_KeyDown;
-            backButton.Click -= backButton_Click;
-            forwardButton.Click -= forwardButton_Click;
+            if (backButton == null) //OnApplyTemplate hasn't been called yet.
+                ApplyTemplate();
 
-            if (HideControlStoryboard_CompletedHandler != null)
-                HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            presenter = GetTemplateChild(PART_Presenter) as TransitioningContentControl;
-            backButton = GetTemplateChild(PART_BackButton) as Button;
-            forwardButton = GetTemplateChild(PART_ForwardButton) as Button;
-            bannerGrid = GetTemplateChild(PART_BannerGrid) as Grid;
-            bannerLabel = GetTemplateChild(PART_BannerLabel) as Label;
+            if (loaded) return; //Counteracts the double 'Loaded' event issue.
 
             backButton.Click += backButton_Click;
             forwardButton.Click += forwardButton_Click;
@@ -124,6 +125,33 @@ namespace MahApps.Metro.Controls
             DetectControlButtonsStatus();
 
             ShowBanner();
+
+            loaded = true;
+        }
+        void FlipView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.Unloaded -= FlipView_Unloaded;
+            this.SelectionChanged -= FlipView_SelectionChanged;
+
+            this.KeyDown -= FlipView_KeyDown;
+            backButton.Click -= backButton_Click;
+            forwardButton.Click -= forwardButton_Click;
+
+            if (HideControlStoryboard_CompletedHandler != null)
+                HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
+
+            loaded = false;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            presenter = GetTemplateChild(PART_Presenter) as TransitioningContentControl;
+            backButton = GetTemplateChild(PART_BackButton) as Button;
+            forwardButton = GetTemplateChild(PART_ForwardButton) as Button;
+            bannerGrid = GetTemplateChild(PART_BannerGrid) as Grid;
+            bannerLabel = GetTemplateChild(PART_BannerLabel) as Label;
         }
 
         void FlipView_KeyDown(object sender, KeyEventArgs e)
