@@ -101,11 +101,11 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            presenter = this.Template.FindName(PART_Presenter, this) as TransitioningContentControl;
-            backButton = this.Template.FindName(PART_BackButton, this) as Button;
-            forwardButton = this.Template.FindName(PART_ForwardButton, this) as Button;
-            bannerGrid = this.Template.FindName(PART_BannerGrid, this) as Grid;
-            bannerLabel = this.Template.FindName(PART_BannerLabel, this) as Label;
+            presenter = GetTemplateChild(PART_Presenter) as TransitioningContentControl;
+            backButton = GetTemplateChild(PART_BackButton) as Button;
+            forwardButton = GetTemplateChild(PART_ForwardButton) as Button;
+            bannerGrid = GetTemplateChild(PART_BannerGrid) as Grid;
+            bannerLabel = GetTemplateChild(PART_BannerLabel) as Label;
 
             backButton.Click += backButton_Click;
             forwardButton.Click += forwardButton_Click;
@@ -176,6 +176,23 @@ namespace MahApps.Metro.Controls
                 presenter.Transition = "LeftReplaceTransition";
                 SelectedIndex++;
             }
+        }
+
+        public void ShowControlButtons()
+        {
+            ExecuteWhenLoaded(this, () =>
+                {
+                    backButton.Visibility = System.Windows.Visibility.Visible;
+                    forwardButton.Visibility = System.Windows.Visibility.Visible;
+                });
+        }
+        public void HideControlButtons()
+        {
+            ExecuteWhenLoaded(this, () =>
+                {
+                    backButton.Visibility = System.Windows.Visibility.Hidden;
+                    forwardButton.Visibility = System.Windows.Visibility.Hidden;
+                });
         }
 
         private void ShowBanner()
