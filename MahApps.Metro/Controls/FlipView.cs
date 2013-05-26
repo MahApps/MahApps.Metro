@@ -178,8 +178,11 @@ namespace MahApps.Metro.Controls
             get { return (string)GetValue(BannerTextProperty); }
             set
             {
-                //SetValue(BannerTextProperty, value);
-                ChangeBannerText(value);
+                if (IsBannerEnabled)
+                    ChangeBannerText(value);
+                else
+                    SetValue(BannerTextProperty, value);
+
             }
         }
 
@@ -226,7 +229,10 @@ namespace MahApps.Metro.Controls
                                 flipview.ApplyTemplate();
 
                                 if ((bool)e.NewValue)
+                                {
+                                    flipview.ChangeBannerText(flipview.BannerText);
                                     flipview.ShowBanner();
+                                }
                                 else
                                     flipview.HideBanner();
                             });
@@ -234,7 +240,10 @@ namespace MahApps.Metro.Controls
                     else
                     {
                         if ((bool)e.NewValue)
+                        {
+                            flipview.ChangeBannerText(flipview.BannerText);
                             flipview.ShowBanner();
+                        }
                         else
                             flipview.HideBanner();
                     }
