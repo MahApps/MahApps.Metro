@@ -123,6 +123,13 @@ namespace MahApps.Metro.Controls
             ShowBanner();
         }
 
+        protected override void OnItemsSourceChanged(System.Collections.IEnumerable oldValue, System.Collections.IEnumerable newValue)
+        {
+            base.OnItemsSourceChanged(oldValue, newValue);
+
+            SelectedIndex = 0;
+        }
+
         void forwardButton_Click(object sender, RoutedEventArgs e)
         {
             GoForward();
