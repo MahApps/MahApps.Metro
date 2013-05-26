@@ -237,12 +237,16 @@ namespace MahApps.Metro.Controls
         {
             if (IsBannerEnabled)
             {
+                var newValue = value != null ? value : BannerText;
+
+                if (newValue == GetValue(BannerTextProperty)) return;
+
                 if (HideControlStoryboard_CompletedHandler != null)
                     HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
 
                 HideControlStoryboard_CompletedHandler = new EventHandler((sender, e) =>
                 {
-                    SetValue(BannerTextProperty, value);
+                    SetValue(BannerTextProperty, newValue);
 
                     HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
 
