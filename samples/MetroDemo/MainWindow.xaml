@@ -719,7 +719,7 @@
                             <StackPanel Orientation="Horizontal" Height="20" Margin="0 0 0 5">
                                 <CheckBox Height="20" Content="Show Banner?" x:Name="ShowBannerCheckBox" HorizontalAlignment="Right"/>
                             </StackPanel>
-                            <Controls:FlipView SelectedIndex="0" Height="200" IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="FlipView_SelectionChanged">
+                            <Controls:FlipView Height="200" IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="FlipView_SelectionChanged">
                                 <Controls:FlipView.Items>
                                     <Grid Background="Blue">
                                         <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
