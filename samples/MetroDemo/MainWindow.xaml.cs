@@ -19,6 +19,8 @@ namespace MetroDemo
             DataContext = new MainWindowViewModel();
             InitializeComponent();
             var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
+
+            new CleanWindowDemo().Show();
         }
 
         void Tick(object sender, EventArgs e)
