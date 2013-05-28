@@ -9,9 +9,30 @@
 
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
         <Grid Background="{TemplateBinding Background}">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="LayoutStates">
+                    <VisualState x:Name="AfterLoaded">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                           Storyboard.TargetName="PART_Border">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                      Value="0" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.800"
+                                                      Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="BeforeLoaded" />
+                    <VisualState x:Name="BeforeUnloaded" />
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
             <AdornerDecorator>
                 <Controls:MetroContentControl IsTabStop="False" FocusVisualStyle="{x:Null}">
                     <Grid>
+                        <Grid.Background>
+                            <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                        </Grid.Background>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
@@ -64,7 +85,7 @@
                     </Grid>
                 </Controls:MetroContentControl>
             </AdornerDecorator>
-            <Border x:Name="PART_Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Border x:Name="PART_Border" Opacity="0" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" IsTabStop="false" Visibility="Collapsed" VerticalAlignment="Bottom"/>
         </Grid>
         <ControlTemplate.Triggers>
@@ -85,11 +106,6 @@
         <Setter Property="Foreground">
             <Setter.Value>
                 <SolidColorBrush Color="{DynamicResource BlackColor}"/>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">

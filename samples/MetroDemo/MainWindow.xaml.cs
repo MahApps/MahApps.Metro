@@ -91,5 +91,22 @@ namespace MetroDemo
         {
             new IconsWindow().Show();
         }
+
+        private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var flipview = ((FlipView)sender);
+            switch (flipview.SelectedIndex)
+            {
+                case 0:
+                    flipview.BannerText = "Cupcakes!";
+                    break;
+                case 1:
+                    flipview.BannerText = "Xbox!";
+                    break;
+                case 2:
+                    flipview.BannerText = "Chess!";
+                    break;
+            }
+        }
     }
 }

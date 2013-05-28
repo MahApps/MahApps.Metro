@@ -52,3 +52,4 @@ packages
 CommonAssemblyInfo.cs
 
 *.orig
+*.DotSettings

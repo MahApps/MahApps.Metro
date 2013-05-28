@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
@@ -311,12 +312,30 @@
                                         HorizontalAlignment="Center"
                                         Controls:TextboxHelper.Watermark="Select a date" />
                         </StackPanel>
+                        <StackPanel Grid.Row="1">
+                            <TextBlock Text="disabled date picker"
+                                       Margin="0,5"
+                                       FontSize="20"
+                                       HorizontalAlignment="Center" />
+                            <DatePicker Width="150"
+                                        HorizontalAlignment="Center"
+                                        Controls:TextboxHelper.Watermark="Select a date" 
+                                        IsEnabled="False"/>
+                        </StackPanel>
                         <StackPanel Grid.Column="1" >
                             <TextBlock Text="calendar"
                                        Margin="0,5"
                                        FontSize="20"
                                        HorizontalAlignment="Center" />
                             <Calendar />
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Grid.Row="1">
+                            <TextBlock Text="disabled calendar"
+                                       Margin="0,5"
+                                       FontSize="20"
+                                       HorizontalAlignment="Center" />
+                            <Calendar IsEnabled="False"/>
                         </StackPanel>
                     </Grid>
                 </TabItem>
@@ -576,9 +595,59 @@
                         </Grid>
                     </StackPanel>
                 </TabItem>
+                <TabItem Header="datagrid">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" 
+                                  Grid.Row="0"
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
+                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" 
+                                  Grid.Row="1" 
+                                  IsEnabled="False" 
+                                  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
+                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="0" Grid.Column="1" Style="{StaticResource AzureDataGrid}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
+                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="1" IsEnabled="False" Grid.Column="1" Style="{StaticResource AzureDataGrid}"  AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
+                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
+                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
+                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
                 <TabItem Header="others">
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
@@ -645,6 +714,25 @@
                                 </Label.ContextMenu>
                             </Label>
                         </Grid>
+                        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
+                            <Label Content="FlipView" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <StackPanel Orientation="Horizontal" Height="20" Margin="0 0 0 5">
+                                <CheckBox Height="20" Content="Show Banner?" x:Name="ShowBannerCheckBox" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                            <Controls:FlipView Height="200" IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="FlipView_SelectionChanged">
+                                <Controls:FlipView.Items>
+                                    <Grid Background="Blue">
+                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
+                                    </Grid>
+                                    <Grid Background="Green">
+                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_xbox}" />
+                                    </Grid>
+                                    <Grid Background="Red">
+                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_chess_horse}" />
+                                    </Grid>
+                                </Controls:FlipView.Items>
+                            </Controls:FlipView>
+                        </StackPanel>
                     </Grid>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>

@@ -12,8 +12,8 @@ namespace MahApps.Metro.Behaviours
 {
     public class BorderlessWindowBehavior : Behavior<Window>
     {
-        public static DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
-        public static DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
+        public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
+        public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
 
         public bool ResizeWithGrip
         {
@@ -70,6 +70,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
             AssociatedObject.WindowStyle = WindowStyle.None;
+            AssociatedObject.AllowsTransparency = true;
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
 
             if (AssociatedObject is MetroWindow)
@@ -256,8 +257,9 @@ namespace MahApps.Metro.Behaviours
                                 UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
                             }
 
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(0);
+                            // i think we don't need this, cause after minimizing on taskbar, no border is shown
+                            //if (Border != null)
+                                //Border.BorderThickness = new Thickness(0);
                         }
                         else
                         {
@@ -272,12 +274,13 @@ namespace MahApps.Metro.Behaviours
                          * "does not repaint the nonclient area to reflect the state change." */
                         returnval = UnsafeNativeMethods.DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
 
-                        if (!ShouldHaveBorder())
-
+                        MetroWindow w = AssociatedObject as MetroWindow;
+                        if ((w != null && w.GlowBrush != null) || ShouldHaveBorder()) {
                             if (wParam == IntPtr.Zero)
                                 AddBorder();
                             else
                                 RemoveBorder();
+                        }
 
                         handled = true;
                     }
