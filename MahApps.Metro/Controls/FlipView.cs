@@ -237,11 +237,10 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty BannerTextProperty =
-            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new PropertyMetadata("Banner", new PropertyChangedCallback((d, e) =>
+            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender ,new PropertyChangedCallback((d, e) =>
             {
-                if (e.OldValue != e.NewValue)
-                    ExecuteWhenLoaded(((FlipView)d), () =>
-                        ((FlipView)d).ChangeBannerText());
+                ExecuteWhenLoaded(((FlipView)d), () =>
+                    ((FlipView)d).ChangeBannerText((string)e.NewValue));
             })));
 
         public string BannerText
@@ -249,13 +248,7 @@ namespace MahApps.Metro.Controls
             get { return (string)GetValue(BannerTextProperty); }
             set
             {
-                ExecuteWhenLoaded(this, () =>
-                {
-                    if (IsBannerEnabled)
-                        ChangeBannerText(value);
-                    else
-                        SetValue(BannerTextProperty, value);
-                });
+                SetValue(BannerTextProperty, value);
 
             }
         }
@@ -266,20 +259,26 @@ namespace MahApps.Metro.Controls
             {
                 var newValue = value != null ? value : BannerText;
 
-                if (newValue == (string)GetValue(BannerTextProperty)) return;
+                //if (newValue == (string)GetValue(BannerTextProperty)) return;
+
+                if (newValue == null) return;
 
                 if (HideControlStoryboard_CompletedHandler != null)
                     HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
 
                 HideControlStoryboard_CompletedHandler = new EventHandler((sender, e) =>
                 {
-                    SetValue(BannerTextProperty, newValue);
+                    try
+                    {
+                        HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
 
-                    HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
+                        bannerLabel.Content = newValue;
 
-                    bannerLabel.Content = value != null ? value : BannerText;
-
-                    bannerLabel.BeginStoryboard(ShowControlStoryboard, HandoffBehavior.SnapshotAndReplace);
+                        bannerLabel.BeginStoryboard(ShowControlStoryboard, HandoffBehavior.SnapshotAndReplace);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 });
 
 
@@ -339,14 +338,20 @@ namespace MahApps.Metro.Controls
         private static void ExecuteWhenLoaded(FlipView flipview, Action body)
         {
             if (flipview.IsLoaded)
-                body();
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(new EmptyDelegate(() =>
+                {
+                    body();
+                }));
             else
             {
                 RoutedEventHandler handler = null;
                 handler = new RoutedEventHandler((o, a) =>
                 {
                     flipview.Loaded -= handler;
-                    body();
+                    System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(new EmptyDelegate(() =>
+                        {
+                            body();
+                        }));
                 });
 
                 flipview.Loaded += handler;
