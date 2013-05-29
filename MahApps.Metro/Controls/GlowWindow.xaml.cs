@@ -16,7 +16,6 @@ namespace MahApps.Metro.Controls
         private readonly Func<double> getLeft;
         private readonly Func<double> getTop;
         private readonly Func<double> getWidth;
-        private readonly Window owner;
         private const double edgeSize = 20.0;
         private const double glowSize = 9.0;
         private IntPtr handle;
@@ -27,7 +26,7 @@ namespace MahApps.Metro.Controls
         {
             InitializeComponent();
 
-            this.owner = owner;
+            this.Owner = owner;
             glow.Visibility = Visibility.Collapsed;
 
             var b = new Binding("GlowBrush.Color");
@@ -169,13 +168,13 @@ namespace MahApps.Metro.Controls
 
         public void Update()
         {
-            if (owner.WindowState == WindowState.Normal)
+            if (Owner.WindowState == WindowState.Normal)
             {
                 Visibility = Visibility.Visible;
 
                 UpdateCore();
             }
-            else if (owner.Visibility == Visibility.Hidden)
+            else if (Owner.Visibility == Visibility.Hidden)
             {
                 Visibility = Visibility.Hidden;
 
@@ -191,7 +190,7 @@ namespace MahApps.Metro.Controls
         {
             if (ownerHandle == IntPtr.Zero)
             {
-                ownerHandle = new WindowInteropHelper(owner).Handle;
+                ownerHandle = new WindowInteropHelper(Owner).Handle;
             }
 
             NativeMethods.SetWindowPos(
