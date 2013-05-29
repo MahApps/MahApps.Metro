@@ -12,8 +12,8 @@ namespace MahApps.Metro.Behaviours
 {
     public class BorderlessWindowBehavior : Behavior<Window>
     {
-        public static DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
-        public static DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
+        public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
+        public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
 
         public bool ResizeWithGrip
         {
@@ -70,6 +70,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
             AssociatedObject.WindowStyle = WindowStyle.None;
+            AssociatedObject.AllowsTransparency = true;
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
 
             if (AssociatedObject is MetroWindow)
@@ -154,9 +155,9 @@ namespace MahApps.Metro.Behaviours
                 bool ignoreTaskBar = AssociatedObject as MetroWindow != null && ((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize;
                 var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
                 var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
-                var cx = ignoreTaskBar ? monitorInfo.rcWork.right : Math.Abs(monitorInfo.rcWork.right - x);
-                var cy = ignoreTaskBar ? monitorInfo.rcMonitor.bottom : Math.Abs(monitorInfo.rcWork.bottom - y);
-                UnsafeNativeMethods.SetWindowPos(_mHWND, new IntPtr(-2), x, y, cx, cy-1, 0x0040);
+                var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
+                var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y - 1);
+                UnsafeNativeMethods.SetWindowPos(_mHWND, new IntPtr(-2), x, y, cx, cy, 0x0040);
             }
         }
 
@@ -247,13 +248,18 @@ namespace MahApps.Metro.Behaviours
                     {
                         if (!ShouldHaveBorder())
                         {
-                            var val = 2;
-                            UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
-                            var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
-                            UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
+                            MetroWindow w = AssociatedObject as MetroWindow;
+                            if (!(w != null && w.GlowBrush != null))
+                            {
+                                var val = 2;
+                                UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
+                                var m = new MARGINS {bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1};
+                                UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
+                            }
 
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(0);
+                            // i think we don't need this, cause after minimizing on taskbar, no border is shown
+                            //if (Border != null)
+                                //Border.BorderThickness = new Thickness(0);
                         }
                         else
                         {
@@ -268,12 +274,13 @@ namespace MahApps.Metro.Behaviours
                          * "does not repaint the nonclient area to reflect the state change." */
                         returnval = UnsafeNativeMethods.DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
 
-                        if (!ShouldHaveBorder())
-
+                        MetroWindow w = AssociatedObject as MetroWindow;
+                        if ((w != null && w.GlowBrush != null) || ShouldHaveBorder()) {
                             if (wParam == IntPtr.Zero)
                                 AddBorder();
                             else
                                 RemoveBorder();
+                        }
 
                         handled = true;
                     }

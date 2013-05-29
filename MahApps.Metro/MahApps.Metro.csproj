@@ -16,6 +16,10 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <Version>$(BUILD_NUMBER)</Version>
+    <!-- dev config -->
+    <Version Condition=" '$(Version)' == '' ">1.0.0.9999</Version>
+    <SolutionDir Condition=" '$(SolutionDir)' == '' ">..</SolutionDir>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,7 +45,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\Lib\System.Windows.Interactivity.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\NET40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -57,12 +62,23 @@
     <Compile Include="Actions\CloseTabItemAction.cs" />
     <Compile Include="Actions\SetFlyoutOpenAction.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
+    <Compile Include="Behaviours\GlowWindowBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
+    <Compile Include="Controls\FlipView.cs" />
     <Compile Include="Controls\Flyout.cs" />
+    <Compile Include="Controls\Glow.cs" />
+    <Compile Include="Controls\GlowDirection.cs" />
+    <Compile Include="Controls\GlowWindow.xaml.cs">
+      <DependentUpon>GlowWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IPanoramaTile.cs" />
+    <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
+    <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroProgressBar.cs" />
+    <Compile Include="Controls\MetroTabControl.cs" />
+    <Compile Include="Controls\MetroTabItem.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
@@ -83,7 +99,15 @@
     <Compile Include="Controls\WindowCommands.cs" />
     <Compile Include="Converters\PanoramaGroupWidthConverter.cs" />
     <Compile Include="Converters\PanoramaGroupHeightConverter.cs" />
+    <Compile Include="Converters\PanoramaGroupHeaderConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
+    <Compile Include="Models\Win32\GWL.cs" />
+    <Compile Include="Models\Win32\HitTestValues.cs" />
+    <Compile Include="Models\Win32\NativeMethods.cs" />
+    <Compile Include="Models\Win32\SWP.cs" />
+    <Compile Include="Models\Win32\WM.cs" />
+    <Compile Include="Models\Win32\WS.cs" />
+    <Compile Include="Models\Win32\WSEX.cs" />
     <Compile Include="Native\WINDOWPLACEMENT.cs" />
     <Compile Include="Controls\WindowSettings.cs" />
     <Compile Include="Native\Constants.cs" />
@@ -112,12 +136,15 @@
     <Compile Include="Converters\MarkupConverter.cs" />
     <Compile Include="Converters\ToUpperConverter.cs" />
     <Compile Include="Native\UnsafeNativeMethods.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\CommonAssemblyInfo.cs" Condition="EXISTS('Properties\CommonAssemblyInfo.cs')" />
     <Compile Include="Theme.cs" />
     <Compile Include="ThemeManager.cs" />
     <AppDesigner Include="Properties\" />
+    <Page Include="Controls\GlowWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Controls.AnimatedSingleRowTabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +159,16 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.ContextMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.DatePicker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.DataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>
@@ -232,7 +269,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\FlipView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Flyout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroAnimatedTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Glow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,6 +298,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroProgressBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroTabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroTabItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -358,6 +419,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\Controls.RadioButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Page Include="Styles\Controls.Calendar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <DependentUpon>Controls.xaml</DependentUpon>

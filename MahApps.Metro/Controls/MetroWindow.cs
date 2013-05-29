@@ -25,7 +25,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
-        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbarOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
 
         bool isDragging;
 
@@ -99,6 +100,12 @@ namespace MahApps.Metro.Controls
             set { SetValue(TitleCapsProperty, value); }
         }
 
+        public SolidColorBrush GlowBrush
+        {
+            get { return (SolidColorBrush)GetValue(GlowBrushProperty); }
+            set { SetValue(GlowBrushProperty, value); }
+        }
+
         public string WindowTitle
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
@@ -107,6 +114,11 @@ namespace MahApps.Metro.Controls
         public MetroWindow()
         {
             Flyouts = new ObservableCollection<Flyout>();
+            Loaded += this.MetroWindow_Loaded;
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e) {
+            VisualStateManager.GoToState(this, "AfterLoaded", true);
         }
 
         static MetroWindow()
@@ -132,6 +144,8 @@ namespace MahApps.Metro.Controls
             else
             {
                 MouseDown += TitleBarMouseDown;
+                MouseUp += TitleBarMouseUp;
+                MouseMove += TitleBarMouseMove;
             }
         }
 
@@ -165,12 +179,17 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    if (e.ClickCount == 1)
-                    {
-                        isDragging = true;
-                        DragMove();
-                    }
-                    else if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize))
+                    IntPtr windowHandle = new WindowInteropHelper(this).Handle;
+                    UnsafeNativeMethods.ReleaseCapture();
+
+                    var wpfPoint = PointToScreen(Mouse.GetPosition(this));
+                    short x = Convert.ToInt16(wpfPoint.X);
+                    short y = Convert.ToInt16(wpfPoint.Y);
+
+                    int lParam = x | (y << 16);
+
+                    UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
+                    if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize))
                     {
                         WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
                     }
@@ -203,6 +222,10 @@ namespace MahApps.Metro.Controls
                 double width = RestoreBounds.Width;
                 double left = mouseAbsolute.X - width / 2;
 
+                // Check if the mouse is at the top of the screen if TitleBar is not visible
+                if(!ShowTitleBar && mouseAbsolute.Y > TitlebarHeight)
+                    return;
+
                 // Aligning window's position to fit the screen.
                 double virtualScreenWidth = SystemParameters.VirtualScreenWidth;
                 left = left + width > virtualScreenWidth ? virtualScreenWidth - width : left;
@@ -216,8 +239,6 @@ namespace MahApps.Metro.Controls
 
                 // Restore window to normal state.
                 WindowState = WindowState.Normal;
-
-                DragMove();
             }
         }
 
