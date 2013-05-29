@@ -246,11 +246,7 @@ namespace MahApps.Metro.Controls
         public string BannerText
         {
             get { return (string)GetValue(BannerTextProperty); }
-            set
-            {
-                SetValue(BannerTextProperty, value);
-
-            }
+            set { SetValue(BannerTextProperty, value); }
         }
 
         private void ChangeBannerText(string value = null)
@@ -258,8 +254,6 @@ namespace MahApps.Metro.Controls
             if (IsBannerEnabled)
             {
                 var newValue = value != null ? value : BannerText;
-
-                //if (newValue == (string)GetValue(BannerTextProperty)) return;
 
                 if (newValue == null) return;
 
