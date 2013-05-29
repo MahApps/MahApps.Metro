@@ -20,7 +20,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty MouseScrollEnabledProperty = DependencyProperty.Register("MouseScrollEnabled", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
         public static readonly DependencyProperty HorizontalScrollBarEnabledProperty = DependencyProperty.Register("HorizontalScrollBarEnabled", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
         public static readonly DependencyProperty DynamicGroupHeaderProperty = DependencyProperty.Register("DynamicGroupHeader", typeof(bool), typeof(Panorama), new FrameworkPropertyMetadata(true));
-  
+
         public double Friction
         {
             get { return 1.0 - friction; }
@@ -93,6 +93,8 @@ namespace MahApps.Metro.Controls
         private static int PixelsToMoveToBeConsideredScroll = 5;
         private static int PixelsToMoveToBeConsideredClick = 2;
         private IPanoramaTile tile;
+        private bool touchCaptured = false;
+        private Point lastTouchPosition;
 
         public Panorama()
         {
@@ -113,6 +115,7 @@ namespace MahApps.Metro.Controls
             {
                 animationTimer.Stop();
             };
+            lastTouchPosition = new Point();
         }
 
         static Panorama()
@@ -139,9 +142,15 @@ namespace MahApps.Metro.Controls
             if (isInDesignMode)
                 return;
 
-            if (IsMouseCaptured)
+            if (IsMouseCaptured || touchCaptured)
             {
-                Point currentPoint = Mouse.GetPosition(this);
+                Point currentPoint;
+
+                if (IsMouseCaptured)
+                    currentPoint = Mouse.GetPosition(this);
+                else
+                    currentPoint = lastTouchPosition;
+
                 velocity = previousPoint - currentPoint;
                 previousPoint = currentPoint;
             }
@@ -211,31 +220,41 @@ namespace MahApps.Metro.Controls
         {
             if (sv.IsMouseOver)
             {
-                tile = null;
-
                 // Save starting point, used later when determining how much to scroll.
                 scrollStartPoint = e.GetPosition(this);
-                scrollStartOffset.X = sv.HorizontalOffset;
-                scrollStartOffset.Y = sv.VerticalOffset;
-
                 // Update the cursor if can scroll or not.
                 Cursor = (sv.ExtentWidth > sv.ViewportWidth) || (sv.ExtentHeight > sv.ViewportHeight) ? Cursors.ScrollAll : Cursors.Arrow;
-
-                //store Control if one was found, so we can call its command later
-                var x = TreeHelper.TryFindFromPoint<ListBoxItem>(this, scrollStartPoint);
-                if (x != null)
-                {
-                    x.IsSelected = !x.IsSelected;
-                    ItemsControl tiles = ItemsControlFromItemContainer(x);
-                    var data = tiles.ItemContainerGenerator.ItemFromContainer(x);
-                    if (data != null && data is IPanoramaTile)
-                    {
-                        tile = (IPanoramaTile)data;
-                    }
-                }
+                HandleMouseDown();
             }
 
             base.OnPreviewMouseDown(e);
+        }
+
+        protected override void OnPreviewTouchDown(TouchEventArgs e)
+        {
+            scrollStartPoint = e.GetTouchPoint(this).Position;
+            HandleMouseDown();
+        }
+
+        private void HandleMouseDown()
+        {
+            tile = null;
+
+            scrollStartOffset.X = sv.HorizontalOffset;
+            scrollStartOffset.Y = sv.VerticalOffset;
+
+            //store Control if one was found, so we can call its command later
+            var x = TreeHelper.TryFindFromPoint<ListBoxItem>(this, scrollStartPoint);
+            if (x != null)
+            {
+                x.IsSelected = !x.IsSelected;
+                ItemsControl tiles = ItemsControlFromItemContainer(x);
+                var data = tiles.ItemContainerGenerator.ItemFromContainer(x);
+                if (data != null && data is IPanoramaTile)
+                {
+                    tile = (IPanoramaTile)data;
+                }
+            }
         }
 
         protected override void OnPreviewMouseMove(MouseEventArgs e)
@@ -243,34 +262,71 @@ namespace MahApps.Metro.Controls
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 Point currentPoint = e.GetPosition(this);
-
-                // Determine the new amount to scroll.
-                var delta = new Point(scrollStartPoint.X - currentPoint.X, scrollStartPoint.Y - currentPoint.Y);
-
-                if (Math.Abs(delta.X) < PixelsToMoveToBeConsideredScroll &&
-                    Math.Abs(delta.Y) < PixelsToMoveToBeConsideredScroll)
-                    return;
-
-                scrollTarget.X = scrollStartOffset.X + delta.X;
-                scrollTarget.Y = scrollStartOffset.Y + delta.Y;
-
-                // Scroll to the new position.
-                sv.ScrollToHorizontalOffset(scrollTarget.X);
-                sv.ScrollToVerticalOffset(scrollTarget.Y);
-                CaptureMouse();
+                if (HandleMouseMove(currentPoint))
+                {
+                    CaptureMouse();
+                }
             }
 
             base.OnPreviewMouseMove(e);
         }
 
+        protected override void OnPreviewTouchMove(TouchEventArgs e)
+        {
+            Point currentPoint = e.GetTouchPoint(this).Position;
+            if (HandleMouseMove(currentPoint))
+            {
+                touchCaptured = true;
+                lastTouchPosition = currentPoint;
+            }
+        }
+
+        private bool HandleMouseMove(Point currentPoint)
+        {
+            // Determine the new amount to scroll.
+            var delta = new Point(scrollStartPoint.X - currentPoint.X, scrollStartPoint.Y - currentPoint.Y);
+
+            if (Math.Abs(delta.X) < PixelsToMoveToBeConsideredScroll &&
+                Math.Abs(delta.Y) < PixelsToMoveToBeConsideredScroll)
+                return false;
+
+            scrollTarget.X = scrollStartOffset.X + delta.X;
+            scrollTarget.Y = scrollStartOffset.Y + delta.Y;
+
+            // Scroll to the new position.
+            sv.ScrollToHorizontalOffset(scrollTarget.X);
+            sv.ScrollToVerticalOffset(scrollTarget.Y);
+            return true;
+        }
+
         protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
         {
+            Point currentPoint = e.GetPosition(this);
+
             if (IsMouseCaptured)
             {
                 ReleaseMouseCapture();
             }
             Cursor = Cursors.Arrow;
-            Point currentPoint = e.GetPosition(this);
+            HandleMouseUp(currentPoint);
+
+            base.OnPreviewMouseUp(e);
+        }
+
+        protected override void OnPreviewTouchUp(TouchEventArgs e)
+        {
+            if (touchCaptured)
+            {
+                touchCaptured = false;
+            }
+            Point currentPoint = e.GetTouchPoint(this).Position;
+            HandleMouseUp(currentPoint);
+
+            base.OnPreviewTouchUp(e);
+        }
+
+        private void HandleMouseUp(Point currentPoint)
+        {
 
             // Determine the new amount to scroll.
             var delta = new Point(scrollStartPoint.X - currentPoint.X, scrollStartPoint.Y - currentPoint.Y);
@@ -285,8 +341,6 @@ namespace MahApps.Metro.Controls
                         tile.TileClickedCommand.Execute(null);
                     }
             }
-
-            base.OnPreviewMouseUp(e);
         }
 
         protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
