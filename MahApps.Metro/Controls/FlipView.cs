@@ -46,6 +46,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private bool loaded = false;
 
+        private bool controls_visibility_override = false;
+
         static FlipView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FlipView), new FrameworkPropertyMetadata(typeof(FlipView)));
@@ -72,6 +74,8 @@ namespace MahApps.Metro.Controls
 
         private void DetectControlButtonsStatus()
         {
+            if (controls_visibility_override) return;
+
             if (Items.Count > 0)
             {
                 backButton.Visibility = SelectedIndex == 0 ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
@@ -201,6 +205,8 @@ namespace MahApps.Metro.Controls
 
         public void ShowControlButtons()
         {
+            controls_visibility_override = false;
+
             ExecuteWhenLoaded(this, () =>
                 {
                     backButton.Visibility = System.Windows.Visibility.Visible;
@@ -209,6 +215,7 @@ namespace MahApps.Metro.Controls
         }
         public void HideControlButtons()
         {
+            controls_visibility_override = true;
             ExecuteWhenLoaded(this, () =>
                 {
                     backButton.Visibility = System.Windows.Visibility.Hidden;
