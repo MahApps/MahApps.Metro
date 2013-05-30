@@ -74,22 +74,8 @@ namespace MahApps.Metro.Controls
         {
             if (Items.Count > 0)
             {
-                if (SelectedIndex == 0)
-                {
-                    backButton.Visibility = System.Windows.Visibility.Hidden;
-                    forwardButton.Visibility = System.Windows.Visibility.Visible;
-                }
-                else
-                    if (SelectedIndex == Items.Count - 1)
-                    {
-                        backButton.Visibility = System.Windows.Visibility.Visible;
-                        forwardButton.Visibility = System.Windows.Visibility.Hidden;
-                    }
-                    else
-                    {
-                        backButton.Visibility = System.Windows.Visibility.Visible;
-                        forwardButton.Visibility = System.Windows.Visibility.Visible;
-                    }
+                backButton.Visibility = SelectedIndex == 0 ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
+                forwardButton.Visibility = SelectedIndex == (Items.Count - 1) ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
             }
             else
             {
@@ -176,6 +162,13 @@ namespace MahApps.Metro.Controls
             base.OnItemsSourceChanged(oldValue, newValue);
 
             SelectedIndex = 0;
+        }
+
+        protected override void OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            base.OnItemsChanged(e);
+
+            DetectControlButtonsStatus();
         }
 
         void forwardButton_Click(object sender, RoutedEventArgs e)
