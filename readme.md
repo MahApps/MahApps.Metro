@@ -12,6 +12,10 @@ You can help keep the documentation up to date by submitting a pull request on t
 
 If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request!
 
+### IRC chatroom
+
+Drop in on the IRC room - `#mametro` on [Freenode](http://freenode.net/) - if you want to ask a question.
+
 ### Bug Reports
 
 Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-Reports) before submitting an issue.
