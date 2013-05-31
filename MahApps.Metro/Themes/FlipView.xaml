@@ -17,7 +17,7 @@
                             <Path Width="16" Height="18" Canvas.Left="15.9063" Canvas.Top="14.75" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z " />
                         </Button>
                         
-                        <Grid VerticalAlignment="Bottom" Height="0" x:Name="PART_BannerGrid" Panel.ZIndex="6" Opacity="0.9">
+                        <Grid VerticalAlignment="Bottom" Height="0" x:Name="PART_BannerGrid" Panel.ZIndex="6" Opacity="0.85">
                             <Grid.Background>
                                 <SolidColorBrush Color="{DynamicResource BlackColor}"/>
                             </Grid.Background>
