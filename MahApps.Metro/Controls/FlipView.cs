@@ -76,6 +76,8 @@ namespace MahApps.Metro.Controls
         {
             if (controls_visibility_override) return;
 
+            if (backButton == null || forwardButton == null) return;
+
             if (Items.Count > 0)
             {
                 backButton.Visibility = SelectedIndex == 0 ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
