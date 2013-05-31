@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Windows.Shell</id>
+    <version>3.0.1.0</version>
+    <title>Microsoft.Windows.Shell</title>
+    <authors>Gareth Evans</authors>
+    <owners>Gareth Evans</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Provides Windows Chrome and Taskbar integration facilities</description>
+    <releaseNotes />
+    <copyright />
+    <language />
+  </metadata>
+</package>
