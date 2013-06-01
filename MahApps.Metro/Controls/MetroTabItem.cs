@@ -19,5 +19,14 @@ namespace MahApps.Metro.Controls
         // Using a DependencyProperty as the backing store for HeaderSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HeaderFontSizeProperty =
             DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(MetroTabItem), new PropertyMetadata(26.67));
+
+        public bool CloseButtonEnabled
+        {
+            get { return (bool)GetValue(CloseButtonEnabledProperty);}
+            set { SetValue(CloseButtonEnabledProperty, value); }
+        }
+
+        public static readonly DependencyProperty CloseButtonEnabledProperty =
+            DependencyProperty.Register("CloseButtonEnabled", typeof(bool), typeof(MetroTabItem), new PropertyMetadata(false));
     }
 }
