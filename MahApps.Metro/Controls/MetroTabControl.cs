@@ -33,6 +33,26 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =
-            DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroTabControl), new PropertyMetadata(null));
+            DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroTabControl), new PropertyMetadata(new DefaultCloseTabCommand()));
+
+        internal class DefaultCloseTabCommand : ICommand
+        {
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public event System.EventHandler CanExecuteChanged;
+
+            public void Execute(object parameter)
+            {
+                if (parameter != null && parameter is MetroTabItem)
+                {
+                    var tabItem = (MetroTabItem)parameter;
+
+                    ((TabControl)tabItem.Parent).Items.Remove(tabItem);
+                }
+            }
+        }
     }
 }

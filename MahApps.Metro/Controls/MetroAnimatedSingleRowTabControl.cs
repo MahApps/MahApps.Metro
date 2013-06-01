@@ -33,6 +33,6 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseTabCommandProperty =
-            DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroAnimatedSingleRowTabControl), new PropertyMetadata(null));
+            DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroAnimatedSingleRowTabControl), new PropertyMetadata(new MahApps.Metro.Controls.MetroTabControl.DefaultCloseTabCommand()));
     }
 }
