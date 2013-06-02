@@ -26,6 +26,7 @@
 		font-size: 2.25em;
 		margin: 0 0 1.1em 0;
 		line-height: 1em;
+		font-weight: 400;
 	}
 	
 	h3
@@ -200,7 +201,9 @@
 		position: absolute;
 		right: 0;
 		top: 0;
-		font-size: 0.9em;
+		font-size: 1.5em;
+		font-weight: 400;
+		font-family: "Segoe UI Light","Helvetica Neue",'RobotoLight',"Segoe UI","Segoe WP",sans-serif;
 	}
 	
 		#nav ul
@@ -210,8 +213,8 @@
 			#nav ul li
 			{
 				float: left;
-				line-height: 5.5em;
-				padding-left: 0.5em;
+				line-height: 3em;
+				padding-left: 0.25em;
 			}
 
 				#nav ul li a
@@ -259,15 +262,18 @@
 
 		#banner h2
 		{
+			text-align: center;
 			font-size: 3.5em;
 			margin: 0.1em 0 0.35em 0;
+			font-family: "Segoe UI Light","Helvetica Neue",'RobotoLight',"Segoe UI","Segoe WP",sans-serif;
 		}
 
 		#banner p
 		{
+			text-align: center;
 			font-size: 2.75em;
 			line-height: 1.35em;
-			margin: 0;
+			margin: 0 0 1em 0;
 		}
 		
 		#banner .button
@@ -296,7 +302,17 @@
 		#banner .nuget-button-commandWrapper 
 		{
 			max-width: 600px;
+			margin: 0;
+			margin-left: auto;
+			margin-right: auto;
 		}
+
+		#banner #home-container
+		{
+			margin-left: auto;
+			margin-right: auto;
+		}
+
 
 /*********************************************************************************/
 /* Content                                                                       */
@@ -329,3 +345,14 @@
 		padding: 4em 0 0 0;
 		text-align: center;
 	}
+
+
+/*********************************************************************************/
+/* Footer                                                                        */
+/*********************************************************************************/
+
+
+#home-container {
+	margin-bottom: 20px;
+}
+
