@@ -13,6 +13,7 @@
 		min-width: 1200px;
 		line-height: 2.25em;
 		min-height: 100%;
+		font-family: "Calibri", "Open Sans", sans-serif;
 	}
 
 	h1, h2, h3, h4, h5, h6
@@ -356,3 +357,20 @@
 	margin-bottom: 20px;
 }
 
+
+article p {
+	font-size: 1.2em;
+}
+
+article h2 {
+	font-size: 3em;
+}
+
+article h3 {
+	font-size: 2.25em;
+}
+
+article ul {
+	list-style-type: disc;
+	margin-left: 20px;
+}
