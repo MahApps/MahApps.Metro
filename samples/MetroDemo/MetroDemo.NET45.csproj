@@ -64,7 +64,6 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\NET45\System.Windows.Interactivity.dll</HintPath>
@@ -96,9 +95,6 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Genre.cs" />
-    <Compile Include="RibbonDemo.xaml.cs">
-      <DependentUpon>RibbonDemo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
@@ -130,10 +126,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
-    </Page>
-    <Page Include="RibbonDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VSDemo.xaml">
       <SubType>Designer</SubType>
