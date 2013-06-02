@@ -1,0 +1,318 @@
+/*
+	Verti 2.0 by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+
+/*********************************************************************************/
+/* Basic                                                                         */
+/*********************************************************************************/
+
+	body
+	{
+		min-width: 1200px;
+		line-height: 2.25em;
+		min-height: 100%;
+	}
+
+	h1, h2, h3, h4, h5, h6
+	{
+		color: #444;
+		font-weight: 800;
+	}
+
+	h2
+	{
+		font-size: 2.25em;
+		margin: 0 0 1.1em 0;
+		line-height: 1em;
+	}
+	
+	h3
+	{
+		font-size: 1.35em;
+		margin: 0 0 2.25em 0;
+	}
+
+	.pad-right
+	{
+		margin-right: 1.5em;
+	}
+
+	.pad-left
+	{
+		margin-left: 1.5em;
+	}
+	
+	body.left-sidebar,
+	body.homepage
+	{
+	}
+
+		body.left-sidebar #content,
+		body.homepage #content
+		{
+			padding-left: 1.75em;
+		}
+
+	body.right-sidebar
+	{
+	}
+
+		body.right-sidebar #content
+		{
+			padding-right: 1.75em;
+		}
+	
+	.button
+	{
+		font-size: 1.35em;
+		padding: 0.8em 1.5em 0.8em 1.5em;
+	}
+
+		.button-big
+		{
+			font-size: 2.25em;
+			padding: 0.8em 0.9em 0.8em 0.9em;
+		}
+	
+	.box
+	{
+		padding: 2em;
+	}
+		
+	.box-feature
+	{
+		padding: 0;
+	}
+		
+		.box-feature .inner
+		{
+			padding: 4em 2em 3em 2em;
+		}
+		
+		.box-feature h2
+		{
+			font-size: 1.35em;
+		}
+
+		.box-feature p
+		{
+			margin: 0;
+		}
+
+		.box-feature .image
+		{
+			position: relative;
+			margin: 0;
+		}
+
+			.box-feature .image img
+			{
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+
+/*********************************************************************************/
+/* Widgets                                                                       */
+/*********************************************************************************/
+
+	.widget-thumbnails
+	{
+	}
+
+		.widget-thumbnails .image
+		{
+			margin: 0;
+		}
+	
+		.widget-thumbnails .x
+		{
+			padding: 1em 0.5em 0 0;
+		}
+	
+		.widget-thumbnails .y
+		{
+			padding: 1em 0 0 0.5em;
+		}
+
+		.widget-thumbnails .row:first-child .x,
+		.widget-thumbnails .row:first-child .y
+		{
+			padding-top: 0;
+		}	
+
+/*********************************************************************************/
+/* Wrappers                                                                      */
+/*********************************************************************************/
+
+	#header-wrapper
+	{
+		padding: 4.5em 0 1em 0;
+	}
+	
+	#features-wrapper
+	{
+		padding: 3em 0 3em 0;
+	}
+	
+	#main-wrapper
+	{
+		padding: 5em 0 5em 0;
+	}
+	
+	#footer-wrapper
+	{
+		padding: 6em 0 8em 0;
+	}
+
+/*********************************************************************************/
+/* Logo                                                                          */
+/*********************************************************************************/
+
+	#logo
+	{
+	}
+
+		#logo h1
+		{
+			float: left;
+			margin: 0 0.35em 0 0;
+			padding: 0.25em 0.2em 0.25em 0.2em;
+			font-size: 3.25em;
+			letter-spacing: 0.05em;
+		}
+
+		#logo span
+		{
+			line-height: 4.5em;
+			letter-spacing: 0.025em;
+			font-size: 0.9em;
+		}
+
+/*********************************************************************************/
+/* Nav                                                                           */
+/*********************************************************************************/
+
+	#nav
+	{
+		position: absolute;
+		right: 0;
+		top: 0;
+		font-size: 0.9em;
+	}
+	
+		#nav ul
+		{
+		}
+			
+			#nav ul li
+			{
+				float: left;
+				line-height: 4.5em;
+				padding-left: 1.5em;
+			}
+
+				#nav ul li a
+				{
+					font-weight: 800;
+					letter-spacing: 0.025em;
+					color: #696969;
+					text-decoration: none;
+					border-radius: 6px;
+					padding: 0.5em 1em 0.5em 1em;
+					-moz-transition: background-color .25s ease-in-out;
+					-webkit-transition: background-color .25s ease-in-out;
+					-o-transition: background-color .25s ease-in-out;
+					-ms-transition: background-color .25s ease-in-out;
+					transition: background-color .25s ease-in-out;
+				}
+
+			#nav ul li:hover
+			{
+			}
+
+				#nav ul li:hover a
+				{
+					background: rgba(255,255,255,0.5);
+				}
+
+			#nav ul li.current_page_item
+			{
+			}
+
+				#nav ul li.current_page_item a
+				{
+					background: #444;
+					color: #fff;
+				}
+
+/*********************************************************************************/
+/* Banner                                                                        */
+/*********************************************************************************/
+
+	#banner
+	{
+		padding: 6.25% 6.25% 3.5% 6.25%;
+	}
+
+		#banner h2
+		{
+			font-size: 3.5em;
+			margin: 0.1em 0 0.35em 0;
+		}
+
+		#banner p
+		{
+			font-size: 2.75em;
+			line-height: 1.35em;
+			margin: 0;
+		}
+		
+		#banner .button
+		{
+			width: 100%;
+			margin-bottom: 0.5em;
+		}
+
+		#banner .button-alt
+		{
+			margin-bottom: 0;
+		}
+		
+		#banner ul
+		{
+			margin-left: 2em;
+		}
+
+/*********************************************************************************/
+/* Content                                                                       */
+/*********************************************************************************/
+
+	#content
+	{
+	}
+
+		#content h3
+		{
+			margin-top: 2.25em;
+		}
+
+/*********************************************************************************/
+/* Footer                                                                        */
+/*********************************************************************************/
+
+	#footer
+	{
+	}
+	
+		#footer h2
+		{
+			font-size: 1.35em;
+		}
+
+	#copyright
+	{
+		padding: 4em 0 0 0;
+		text-align: center;
+	}
