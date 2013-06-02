@@ -44,6 +44,10 @@
 									<div class="row">
 										<div class="12u">
 											<h2>make your desktop apps awesome</h2>
+											<div id="container">
+ 												<div><img alt="before" src="/images/home-title-light.png" height="366" /></div>
+ 												<div><img alt="after" src="/images/home-title-dark.png" height="366" /></div>
+											</div>
 											<p>1. install this into your WPF project</p>
 											<pre class="nuget-button">Install-Package MahApps.Metro</pre>
 											<p>2. read through the <a href="/guides/quick-start.html">quick start</a></p>
@@ -239,4 +243,17 @@
 			</div>
 
 	</body>
+
+
+<script type="text/javascript" src="/js/jquery.beforeafter-1.4.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#container').beforeAfter({
+		animateIntro : true,
+        introDelay : 2000,
+        introDuration : 500,
+        showFullLinks : false
+	});
+});
+</script>
 </html>
