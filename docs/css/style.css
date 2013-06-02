@@ -388,16 +388,19 @@
 
 		#logo h1
 		{
-			background: #ff4486;
+			background: #0071BC;
 			color: #fff;
 			border-radius: 6px;
-			font-family: 'Oleo Script', serif;
-			font-weight: 400;
+			font-family: "Segoe UI Light","Helvetica Neue",'RobotoLight',"Segoe UI","Segoe WP",sans-serif;
+			font-weight: 100;
+			margin-top: 5px;
+			margin-bottom: 0px;
+			text-transform: lowercase;
 		}
 		
 		#logo span
 		{
-			font-weight: 800;
+			font-weight: 100;
 		}
 	
 /*********************************************************************************/
