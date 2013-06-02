@@ -7,15 +7,14 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Native;
+#if NET_4
+using Microsoft.Windows.Shell;
+#else
+using System.Windows.Shell;
+#endif
 
 namespace MahApps.Metro.Behaviours
 {
-    using System.Windows.Shell;
-
-#if NET_4
-    using Microsoft.Windows.Shell;
-#endif
-
     public class BorderlessWindowBehavior : Behavior<Window>
     {
         public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
