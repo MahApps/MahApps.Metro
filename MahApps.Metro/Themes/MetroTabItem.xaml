@@ -24,7 +24,7 @@
                                 HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" FontSize="17" Margin="0 0 2 0"
                                 Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(CloseButtonEnabled), Converter={StaticResource BooleanToVisibilityConverter}}" 
                                 IsTabStop="False" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=CloseTabCommand}" 
-                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}}" VerticalAlignment="Top" />
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabItem}}}" VerticalAlignment="Top" />                       
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
@@ -48,6 +48,9 @@
                                     <SolidColorBrush Color="{DynamicResource GrayHover}" />
                                 </Setter.Value>
                             </Setter>
+                        </Trigger>
+                        <Trigger SourceName="PART_CloseButton" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
