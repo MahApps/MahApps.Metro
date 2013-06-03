@@ -416,7 +416,7 @@
                                       DisplayMemberPath="Title"
                                       IsEditable="True"
                                       ItemsSource="{Binding Albums}"
-                                      MaxDropDownHeight="50"
+                                      MaxDropDownHeight="125"
                                       Text="{Binding Path=Title,
                                                      Mode=TwoWay}" />
                             <ComboBox Width="200"
