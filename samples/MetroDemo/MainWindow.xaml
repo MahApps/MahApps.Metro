@@ -435,7 +435,6 @@
                                       IsEditable="True"
                                       IsEnabled="False"
                                       ItemsSource="{Binding Albums}"
-                                      MaxDropDownHeight="50"
                                       Text="{Binding Path=Title,
                                                      Mode=TwoWay}" />
                         </StackPanel>
