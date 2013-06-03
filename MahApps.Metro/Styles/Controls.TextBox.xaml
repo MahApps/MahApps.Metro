@@ -148,8 +148,8 @@
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource BlackBrush}" />
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
-                        </Trigger>
-
+                        </Trigger> 
+                        
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="Controls:TextboxHelper.HasText" Value="False"/>
