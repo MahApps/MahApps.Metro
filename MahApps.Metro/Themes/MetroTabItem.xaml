@@ -49,6 +49,9 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
+                        <Trigger SourceName="PART_CloseButton" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
