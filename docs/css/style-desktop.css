@@ -160,7 +160,7 @@
 	
 	#main-wrapper
 	{
-		padding: 5em 0 5em 0;
+		padding: 0em 0 5em 0;
 	}
 	
 	#footer-wrapper
@@ -325,7 +325,7 @@
 
 		#content h3
 		{
-			margin-top: 2.25em;
+			/*margin-top: 2.25em;*/
 		}
 
 /*********************************************************************************/
@@ -358,7 +358,7 @@
 }
 
 
-article p {
+article {
 	font-size: 1.2em;
 }
 
@@ -370,7 +370,20 @@ article h3 {
 	font-size: 2.25em;
 }
 
+article h4 {
+	font-size: 1.5em;
+}
+
 article ul {
 	list-style-type: disc;
-	margin-left: 20px;
+	margin-left: 30px;
+}
+
+#content h2,
+#content h3,
+#content h4, 
+#content p,
+#content ul {
+	padding: 0.5em 0 0.5em 0;
+	margin-bottom: 0;
 }

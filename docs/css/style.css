@@ -48,6 +48,7 @@
 	{
 		color: #444;
 		font-weight: 800;
+		font-family: "Segoe UI Light","Helvetica Neue",'RobotoLight',"Segoe UI","Segoe WP",sans-serif;
 	}
 	
 	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
@@ -391,7 +392,6 @@
 			background: #0071BC;
 			color: #fff;
 			border-radius: 6px;
-			font-family: "Segoe UI Light","Helvetica Neue",'RobotoLight',"Segoe UI","Segoe WP",sans-serif;
 			font-weight: 100;
 			margin-top: 5px;
 			margin-bottom: 0px;
@@ -434,3 +434,8 @@
 		{
 			color: inherit;
 		}
+
+
+strong {
+	font-weight: 800;
+}
