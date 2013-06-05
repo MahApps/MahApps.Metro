@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <BooleanToVisibilityConverter x:Key="VisiableConverter" />
+
+    <Style TargetType="RibbonTab">
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RibbonTab">
+                    <!-- Change Style, just made it render right -->
+                    <Grid Background="Yellow" 
+                          Visibility="{TemplateBinding Property=IsSelected, Converter={StaticResource VisiableConverter}}">
+                        <ItemsPresenter Margin="2" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -14,6 +14,20 @@ namespace MahApps.Metro.Behaviours
     {
         public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
         public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
+        public static readonly DependencyProperty EnableDWMDropShadowProperty =
+            DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false, new PropertyChangedCallback((obj, args) =>
+            {
+                var behaviorClass = ((BorderlessWindowBehavior)obj);
+
+                if (behaviorClass.AssociatedObject != null)
+                    behaviorClass.AssociatedObject.AllowsTransparency = !(bool)args.NewValue;
+            })));
+
+        public bool EnableDWMDropShadow
+        {
+            get { return (bool)GetValue(EnableDWMDropShadowProperty); }
+            set { SetValue(EnableDWMDropShadowProperty, value); }
+        }
 
         public bool ResizeWithGrip
         {
@@ -70,7 +84,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
             AssociatedObject.WindowStyle = WindowStyle.None;
-            AssociatedObject.AllowsTransparency = true;
+            AssociatedObject.AllowsTransparency = !EnableDWMDropShadow;
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
 
             if (AssociatedObject is MetroWindow)
@@ -253,13 +267,13 @@ namespace MahApps.Metro.Behaviours
                             {
                                 var val = 2;
                                 UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
-                                var m = new MARGINS {bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1};
+                                var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
                                 UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
                             }
 
                             // i think we don't need this, cause after minimizing on taskbar, no border is shown
                             //if (Border != null)
-                                //Border.BorderThickness = new Thickness(0);
+                            //Border.BorderThickness = new Thickness(0);
                         }
                         else
                         {
@@ -275,7 +289,8 @@ namespace MahApps.Metro.Behaviours
                         returnval = UnsafeNativeMethods.DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
 
                         MetroWindow w = AssociatedObject as MetroWindow;
-                        if ((w != null && w.GlowBrush != null) || ShouldHaveBorder()) {
+                        if ((w != null && w.GlowBrush != null) || ShouldHaveBorder())
+                        {
                             if (wParam == IntPtr.Zero)
                                 AddBorder();
                             else

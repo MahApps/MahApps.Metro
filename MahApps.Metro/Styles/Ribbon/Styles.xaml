@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Ribbon.xaml"/>
+        <ResourceDictionary Source="RibbonGroup.xaml"/>
+        <ResourceDictionary Source="RibbonTab.xaml"/>
+        <ResourceDictionary Source="RibbonTabHeader.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

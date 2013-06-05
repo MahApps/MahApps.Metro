@@ -21,10 +21,6 @@ namespace MahApps.Metro.Behaviours
                 right = new GlowWindow(this.AssociatedObject, GlowDirection.Right);
                 top = new GlowWindow(this.AssociatedObject, GlowDirection.Top);
                 bottom = new GlowWindow(this.AssociatedObject, GlowDirection.Bottom);
-                left.Owner = (MetroWindow)sender;
-                right.Owner = (MetroWindow)sender;
-                top.Owner = (MetroWindow)sender;
-                bottom.Owner = (MetroWindow)sender;
 
                 Show();
 

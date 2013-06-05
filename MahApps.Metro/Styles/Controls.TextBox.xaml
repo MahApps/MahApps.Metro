@@ -143,6 +143,7 @@
                         </Trigger>
                         <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource GrayBrush5}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
                         </Trigger>
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource BlackBrush}" />
