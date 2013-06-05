@@ -274,6 +274,17 @@ namespace MahApps.Metro.Behaviours
                         {
                             this.AddBorder();
                         }
+                        else if (EnableDWMDropShadow)
+                        {
+                            var metroWindow = AssociatedObject as MetroWindow;
+                            if (!(metroWindow != null && metroWindow.GlowBrush != null))
+                            {
+                                var val = 2;
+                                UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
+                                var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
+                                UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
+                            }
+                        }
 
                         handled = true;
                     }
