@@ -6,7 +6,7 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       Title="MahApps.Metro.Demo"
-                      Width="800"
+                      Width="960"
                       Height="600"
                       Icon="mahapps.metro.logo2.ico"
                       ShowIconOnTitleBar="true"
@@ -44,6 +44,7 @@
             <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
             <Button Click="LaunchIcons" Content="Icons" />
             <Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />
+            <Button Click="InteropDemo" Content="Interop Demo" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
