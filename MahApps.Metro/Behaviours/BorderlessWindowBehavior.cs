@@ -89,7 +89,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
             AssociatedObject.WindowStyle = WindowStyle.None;
-            AssociatedObject.AllowsTransparency = true;
+            AssociatedObject.AllowsTransparency = !EnableDWMDropShadow;
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
             AssociatedObject.SetValue(WindowChrome.GlassFrameThicknessProperty, new Thickness(-1));
 
