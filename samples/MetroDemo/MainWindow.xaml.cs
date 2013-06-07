@@ -117,5 +117,10 @@ namespace MetroDemo
                     break;
             }
         }
+
+        private void InteropDemo(object sender, RoutedEventArgs e)
+        {
+            new InteropDemo().Show();
+        }
     }
 }

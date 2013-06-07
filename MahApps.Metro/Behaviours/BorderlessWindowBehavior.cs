@@ -7,6 +7,11 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Native;
+#if NET_4
+using Microsoft.Windows.Shell;
+#else
+using System.Windows.Shell;
+#endif
 
 namespace MahApps.Metro.Behaviours
 {
@@ -86,6 +91,7 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.WindowStyle = WindowStyle.None;
             AssociatedObject.AllowsTransparency = !EnableDWMDropShadow;
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
+            AssociatedObject.SetValue(WindowChrome.GlassFrameThicknessProperty, new Thickness(-1));
 
             if (AssociatedObject is MetroWindow)
             {
@@ -97,6 +103,10 @@ namespace MahApps.Metro.Behaviours
                                                    Border = ancestors;
                                                    if (ShouldHaveBorder())
                                                        AddBorder();
+                                                   var titleBar = window.GetPart<Grid>("PART_TitleBar");
+                                                   titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                                                   var windowCommands = window.GetPart<ContentPresenter>("PART_WindowCommands");
+                                                   windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
                                                };
 
                 switch (AssociatedObject.ResizeMode)
@@ -260,25 +270,22 @@ namespace MahApps.Metro.Behaviours
                     break;
                 case Constants.WM_NCPAINT:
                     {
-                        if (!ShouldHaveBorder())
+                        if (ShouldHaveBorder())
                         {
-                            MetroWindow w = AssociatedObject as MetroWindow;
-                            if (!(w != null && w.GlowBrush != null))
+                            this.AddBorder();
+                        }
+                        else if (EnableDWMDropShadow)
+                        {
+                            var metroWindow = AssociatedObject as MetroWindow;
+                            if (!(metroWindow != null && metroWindow.GlowBrush != null))
                             {
                                 var val = 2;
                                 UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
                                 var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
                                 UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
                             }
+                        }
 
-                            // i think we don't need this, cause after minimizing on taskbar, no border is shown
-                            //if (Border != null)
-                            //Border.BorderThickness = new Thickness(0);
-                        }
-                        else
-                        {
-                            AddBorder();
-                        }
                         handled = true;
                     }
                     break;

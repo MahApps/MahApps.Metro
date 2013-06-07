@@ -22,4 +22,9 @@
     <file src="bin\Release\NET45\System.Windows.Interactivity.dll" target="lib\net45\System.Windows.Interactivity.dll" />
 	<file src="tools\install.ps1" target="tools\install.ps1" />
   </files>
+   <dependencies>
+      <group targetFramework="net40">
+        <dependency id="Microsoft.Windows.Shell" version="3.0.1.0" />
+      </group>
+    </dependencies>
 </package>
