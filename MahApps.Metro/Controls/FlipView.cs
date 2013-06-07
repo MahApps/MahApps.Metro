@@ -46,6 +46,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         private bool loaded = false;
 
+        private bool controls_visibility_override = false;
+
         static FlipView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FlipView), new FrameworkPropertyMetadata(typeof(FlipView)));
@@ -72,24 +74,14 @@ namespace MahApps.Metro.Controls
 
         private void DetectControlButtonsStatus()
         {
+            if (controls_visibility_override) return;
+
+            if (backButton == null || forwardButton == null) return;
+
             if (Items.Count > 0)
             {
-                if (SelectedIndex == 0)
-                {
-                    backButton.Visibility = System.Windows.Visibility.Hidden;
-                    forwardButton.Visibility = System.Windows.Visibility.Visible;
-                }
-                else
-                    if (SelectedIndex == Items.Count - 1)
-                    {
-                        backButton.Visibility = System.Windows.Visibility.Visible;
-                        forwardButton.Visibility = System.Windows.Visibility.Hidden;
-                    }
-                    else
-                    {
-                        backButton.Visibility = System.Windows.Visibility.Visible;
-                        forwardButton.Visibility = System.Windows.Visibility.Visible;
-                    }
+                backButton.Visibility = SelectedIndex == 0 ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
+                forwardButton.Visibility = SelectedIndex == (Items.Count - 1) ? System.Windows.Visibility.Hidden : System.Windows.Visibility.Visible;
             }
             else
             {
@@ -178,6 +170,13 @@ namespace MahApps.Metro.Controls
             SelectedIndex = 0;
         }
 
+        protected override void OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            base.OnItemsChanged(e);
+
+            DetectControlButtonsStatus();
+        }
+
         void forwardButton_Click(object sender, RoutedEventArgs e)
         {
             GoForward();
@@ -208,6 +207,8 @@ namespace MahApps.Metro.Controls
 
         public void ShowControlButtons()
         {
+            controls_visibility_override = false;
+
             ExecuteWhenLoaded(this, () =>
                 {
                     backButton.Visibility = System.Windows.Visibility.Visible;
@@ -216,6 +217,7 @@ namespace MahApps.Metro.Controls
         }
         public void HideControlButtons()
         {
+            controls_visibility_override = true;
             ExecuteWhenLoaded(this, () =>
                 {
                     backButton.Visibility = System.Windows.Visibility.Hidden;
@@ -237,27 +239,16 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty BannerTextProperty =
-            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new PropertyMetadata("Banner", new PropertyChangedCallback((d, e) =>
+            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender ,new PropertyChangedCallback((d, e) =>
             {
-                if (e.OldValue != e.NewValue)
-                    ExecuteWhenLoaded(((FlipView)d), () =>
-                        ((FlipView)d).ChangeBannerText());
+                ExecuteWhenLoaded(((FlipView)d), () =>
+                    ((FlipView)d).ChangeBannerText((string)e.NewValue));
             })));
 
         public string BannerText
         {
             get { return (string)GetValue(BannerTextProperty); }
-            set
-            {
-                ExecuteWhenLoaded(this, () =>
-                {
-                    if (IsBannerEnabled)
-                        ChangeBannerText(value);
-                    else
-                        SetValue(BannerTextProperty, value);
-                });
-
-            }
+            set { SetValue(BannerTextProperty, value); }
         }
 
         private void ChangeBannerText(string value = null)
@@ -266,20 +257,24 @@ namespace MahApps.Metro.Controls
             {
                 var newValue = value != null ? value : BannerText;
 
-                if (newValue == (string)GetValue(BannerTextProperty)) return;
+                if (newValue == null) return;
 
                 if (HideControlStoryboard_CompletedHandler != null)
                     HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
 
                 HideControlStoryboard_CompletedHandler = new EventHandler((sender, e) =>
                 {
-                    SetValue(BannerTextProperty, newValue);
+                    try
+                    {
+                        HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
 
-                    HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
+                        bannerLabel.Content = newValue;
 
-                    bannerLabel.Content = value != null ? value : BannerText;
-
-                    bannerLabel.BeginStoryboard(ShowControlStoryboard, HandoffBehavior.SnapshotAndReplace);
+                        bannerLabel.BeginStoryboard(ShowControlStoryboard, HandoffBehavior.SnapshotAndReplace);
+                    }
+                    catch (Exception)
+                    {
+                    }
                 });
 
 
@@ -339,14 +334,20 @@ namespace MahApps.Metro.Controls
         private static void ExecuteWhenLoaded(FlipView flipview, Action body)
         {
             if (flipview.IsLoaded)
-                body();
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(new EmptyDelegate(() =>
+                {
+                    body();
+                }));
             else
             {
                 RoutedEventHandler handler = null;
                 handler = new RoutedEventHandler((o, a) =>
                 {
                     flipview.Loaded -= handler;
-                    body();
+                    System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(new EmptyDelegate(() =>
+                        {
+                            body();
+                        }));
                 });
 
                 flipview.Loaded += handler;

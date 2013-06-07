@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using MahApps.Metro.Controls;
 using MetroDemo.Models;
+using System.Windows.Input;
 
 namespace MetroDemo
 {
@@ -84,5 +85,22 @@ namespace MetroDemo
         }
 
         public string Error { get { return string.Empty; } }
+
+        public ICommand CloseTabCommand { get { return new ExampleCloseCommand(); } }
+
+        public class ExampleCloseCommand : ICommand
+        {
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public void Execute(object parameter)
+            {
+                System.Windows.MessageBox.Show("You tried to close the '" + ((MetroTabItem)parameter).Header + "' tab!");
+            }
+        }
     }
 }

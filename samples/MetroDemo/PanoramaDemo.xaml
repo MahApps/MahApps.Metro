@@ -54,7 +54,7 @@
 
     </Window.Resources>
     <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" />
+        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" EnableDWMDropShadow="True" />
     </i:Interaction.Behaviors>
     <Grid>
     	<Grid.Background>

@@ -233,23 +233,19 @@
                     </Setter>
                 </MultiTrigger.Setters>
             </MultiTrigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsMouseOver" Value="True"/>
-                    <Condition Property="IsSelected" Value="True"/>
-                </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="{DynamicResource AccentColor3}"/>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}"/>
-                </MultiTrigger.Setters>
-            </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
             </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled" Value="False" />
+                    <Condition Property="IsSelected" Value="True" />
+                </MultiTrigger.Conditions>
+                <MultiTrigger.Setters>
+                    <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
+                    <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
         </Style.Triggers>
     </Style>
 
