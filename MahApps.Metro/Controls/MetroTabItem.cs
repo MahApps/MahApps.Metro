@@ -64,5 +64,7 @@ namespace MahApps.Metro.Controls
 
             rootLabel = GetTemplateChild("root") as Label;
         }
+
+        public TabControl OwningTabControl { get; internal set; }
     }
 }
