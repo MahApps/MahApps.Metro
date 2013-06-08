@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -18,6 +19,32 @@ namespace MahApps.Metro.Controls
         public BaseMetroTabControl()
         {
             InternalCloseTabCommand = new DefaultCloseTabCommand(this);
+
+            this.Loaded += BaseMetroTabControl_Loaded;
+            this.Unloaded += BaseMetroTabControl_Unloaded;
+        }
+
+        void BaseMetroTabControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= BaseMetroTabControl_Loaded;
+            this.Unloaded -= BaseMetroTabControl_Unloaded;
+        }
+
+        void BaseMetroTabControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Loaded += BaseMetroTabControl_Loaded;
+
+            //Ensure each tabitem knows what the owning tab is.
+            try
+            {
+                if (ItemsSource == null)
+                    foreach (TabItem item in Items)
+                        if (item is MetroTabItem)
+                        ((MetroTabItem)item).OwningTabControl = this;
+            }
+            catch (Exception)
+            {
+            }
         }
 
         public Thickness TabStripMargin
@@ -50,7 +77,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseTabCommandProperty =
             DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
 
-        private ICommand InternalCloseTabCommand
+        internal ICommand InternalCloseTabCommand
         {
             get { return (ICommand)GetValue(InternalCloseTabCommandProperty); }
             set { SetValue(InternalCloseTabCommandProperty, value); }
@@ -78,13 +105,15 @@ namespace MahApps.Metro.Controls
             {
                 if (parameter != null)
                 {
-                    if (owner.CloseTabCommand != null)
-                        owner.CloseTabCommand.Execute(parameter);
+                    Tuple<object, MetroTabItem> paramData = (Tuple<object, MetroTabItem>)parameter;
+
+                    if (owner.CloseTabCommand != null && !(paramData.Item1 is TextBlock)) //best way I could tell if the tabitem is from databinding or not.
+                        owner.CloseTabCommand.Execute(paramData.Item1);
                     else
                     {
-                        if (parameter is MetroTabItem)
+                        if (paramData.Item2 is MetroTabItem)
                         {
-                            var tabItem = (MetroTabItem)parameter;
+                            var tabItem = (MetroTabItem)paramData.Item2;
                             owner.Items.Remove(tabItem);
                         }
                     }
