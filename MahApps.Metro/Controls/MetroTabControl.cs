@@ -55,6 +55,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TabStripMarginProperty =
             DependencyProperty.Register("TabStripMargin", typeof(Thickness), typeof(BaseMetroTabControl), new PropertyMetadata(new Thickness(0)));
 
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            return item is TabItem;
+        }
+
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new MetroTabItem() { OwningTabControl = this }; //Overrides the TabControl's default behavior and returns a MetroTabItem instead of a regular one.
