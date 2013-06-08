@@ -26,11 +26,23 @@ namespace MahApps.Metro.Controls
 
         void MetroTabItem_Unloaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= MetroTabItem_Loaded;
             this.Unloaded -= MetroTabItem_Unloaded;
             closeButton.Click -= closeButton_Click;
 
             closeButtonClickUnloaded = true;
+        }
+
+        private delegate void EmptyDelegate();
+        ~MetroTabItem()
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(new EmptyDelegate(() =>
+                {
+                    this.Loaded -= MetroTabItem_Loaded;
+                }));
+            }
+            catch (Exception) { }
         }
 
         public double HeaderFontSize
