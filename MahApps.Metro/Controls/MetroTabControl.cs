@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,13 +9,14 @@ namespace MahApps.Metro.Controls
 {
     public class MetroTabControl : BaseMetroTabControl
     {
-        public MetroTabControl():base()
+        public MetroTabControl()
+            : base()
         {
-            DefaultStyleKey = typeof(MetroTabControl);         
+            DefaultStyleKey = typeof(MetroTabControl);
         }
     }
 
-    public abstract class BaseMetroTabControl: TabControl
+    public abstract class BaseMetroTabControl : TabControl
     {
         public BaseMetroTabControl()
         {
@@ -35,16 +37,12 @@ namespace MahApps.Metro.Controls
             this.Loaded += BaseMetroTabControl_Loaded;
 
             //Ensure each tabitem knows what the owning tab is.
-            try
-            {
-                if (ItemsSource == null)
-                    foreach (TabItem item in Items)
-                        if (item is MetroTabItem)
+
+            if (ItemsSource == null)
+                foreach (TabItem item in Items)
+                    if (item is MetroTabItem)
                         ((MetroTabItem)item).OwningTabControl = this;
-            }
-            catch (Exception)
-            {
-            }
+
         }
 
         public Thickness TabStripMargin
@@ -86,6 +84,32 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("InternalCloseTabCommand", typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
 
 
+        public delegate void TabItemClosingEventHandler(object sender, TabItemClosingEventArgs e);
+        public event TabItemClosingEventHandler TabItemClosingEvent;
+
+        internal bool RaiseTabItemClosingEvent(MetroTabItem closingItem)
+        {
+            foreach (TabItemClosingEventHandler subHandler in TabItemClosingEvent.GetInvocationList())
+            {
+                TabItemClosingEventArgs args = new TabItemClosingEventArgs(closingItem);
+                subHandler.Invoke(this, args);
+                if (args.Cancel)
+                    return true;
+            }
+
+            return false;
+        }
+
+        public class TabItemClosingEventArgs : CancelEventArgs
+        {
+            internal TabItemClosingEventArgs(MetroTabItem item)
+            {
+                ClosingTabItem = item;
+            }
+
+            public MetroTabItem ClosingTabItem { get; private set; }
+        }
+
         internal class DefaultCloseTabCommand : ICommand
         {
             private BaseMetroTabControl owner = null;
@@ -113,8 +137,11 @@ namespace MahApps.Metro.Controls
                     {
                         if (paramData.Item2 is MetroTabItem)
                         {
-                            var tabItem = (MetroTabItem)paramData.Item2;
-                            owner.Items.Remove(tabItem);
+                            if (!owner.RaiseTabItemClosingEvent((MetroTabItem)paramData.Item2)) //Allows the user to cancel closing a tab.
+                            {
+                                var tabItem = (MetroTabItem)paramData.Item2;
+                                owner.Items.Remove(tabItem);
+                            }
                         }
                     }
                 }
