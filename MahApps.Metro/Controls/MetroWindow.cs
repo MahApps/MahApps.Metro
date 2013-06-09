@@ -27,10 +27,15 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbarOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FreezableCollection<Flyout>), typeof(MetroWindow), new PropertyMetadata(null));
 
         bool isDragging;
 
-        public ObservableCollection<Flyout> Flyouts { get; set; }
+        public FreezableCollection<Flyout> Flyouts
+        {
+            get { return (FreezableCollection<Flyout>)GetValue(FlyoutsProperty); }
+            set { SetValue(FlyoutsProperty, value); }
+        }
 
         public WindowCommands WindowCommands { get; set; }
 
@@ -113,11 +118,12 @@ namespace MahApps.Metro.Controls
 
         public MetroWindow()
         {
-            Flyouts = new ObservableCollection<Flyout>();
+            Flyouts = new FreezableCollection<Flyout>();
             Loaded += this.MetroWindow_Loaded;
         }
 
-        private void MetroWindow_Loaded(object sender, RoutedEventArgs e) {
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
             VisualStateManager.GoToState(this, "AfterLoaded", true);
         }
 
@@ -223,7 +229,7 @@ namespace MahApps.Metro.Controls
                 double left = mouseAbsolute.X - width / 2;
 
                 // Check if the mouse is at the top of the screen if TitleBar is not visible
-                if(!ShowTitleBar && mouseAbsolute.Y > TitlebarHeight)
+                if (!ShowTitleBar && mouseAbsolute.Y > TitlebarHeight)
                     return;
 
                 // Aligning window's position to fit the screen.
