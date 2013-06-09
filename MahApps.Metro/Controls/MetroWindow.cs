@@ -131,6 +131,8 @@ namespace MahApps.Metro.Controls
                 ThemeManager.ChangeTheme(this, themeData.Item2, themeData.Item1);
 
                 this.Resources = ThemeManager.ApplyEssentialResourceDictionaries(this.Resources, themeData.Item1, themeData.Item2);
+
+                this.ApplyTemplate();
             }
         }
 

@@ -149,9 +149,10 @@ a:          var enumerator = Application.Current.Resources.MergedDictionaries.Ge
             rd.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml") });
             rd.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") });
 
+            rd.MergedDictionaries.Add(accent.Resources);
+
             var themeResource = (theme == Theme.Light) ? LightResource : DarkResource;
             rd.MergedDictionaries.Add(themeResource);
-            rd.MergedDictionaries.Add(accent.Resources);
 
             return rd;
         }
