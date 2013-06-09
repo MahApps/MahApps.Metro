@@ -162,7 +162,47 @@ namespace MahApps.Metro.Controls
                     passbox.Loaded -= PassBoxLoaded;
                 }
             }
+            var combobox = d as ComboBox;
+            if (combobox != null)
+            {
+                if ((bool)e.NewValue)
+                {
+                    combobox.Loaded += ComboBoxLoaded;
+                }
+                else
+                {
+                    combobox.Loaded -= ComboBoxLoaded;
+                }
+            }
         }
+
+        private static void ComboBoxLoaded(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is ComboBox))
+                return;
+
+            var passbox = sender as ComboBox;
+            if (passbox.Style == null)
+                return;
+
+            var template = passbox.Template;
+            if (template == null)
+                return;
+
+            var button = template.FindName("PART_ClearText", passbox) as Button;
+            if (button == null)
+                return;
+
+            if (GetClearTextButton(passbox))
+            {
+                button.Click += ClearCheckClicked;
+            }
+            else
+            {
+                button.Click -= ClearCheckClicked;
+            }
+        }
+
 
         static void PassBoxLoaded(object sender, RoutedEventArgs e)
         {
@@ -241,6 +281,19 @@ namespace MahApps.Metro.Controls
             }
 
             ((PasswordBox)parent).Clear();
+        }
+
+
+        static void ClearCheckClicked(object sender, RoutedEventArgs e)
+        {
+            var button = ((Button)sender);
+            var parent = VisualTreeHelper.GetParent(button);
+            while (!(parent is ComboBox))
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            ((ComboBox)parent).SelectedItem = null;
         }
     }
 
