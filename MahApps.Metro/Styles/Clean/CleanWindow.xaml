@@ -18,9 +18,9 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Grid x:Name="PART_TitleBar">
+                                    <Grid x:Name="PART_TitleBar" Panel.ZIndex="100">
 
-                                        <Label Panel.ZIndex="100" HorizontalAlignment="Center" VerticalAlignment="Top" Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" FontSize="14"/>
+                                        <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" FontSize="14"/>
 
                                         <!--<Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
