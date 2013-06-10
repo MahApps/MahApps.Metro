@@ -68,7 +68,7 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
-            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
+            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1" TabStripPlacement="Left">
                 <TabItem Header="buttons">
                     <Grid>
                         <Grid.ColumnDefinitions>
