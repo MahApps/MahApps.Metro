@@ -113,6 +113,26 @@
                                           Margin="0, 10, 0, 0"
                                           Content="Disabled"
                                           IsEnabled="False" />
+                            <ToggleButton Width="50"
+                                          Height="50"
+                                          Margin="0, 10, 0, 0"
+                                          Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                                <Rectangle Width="20" Height="20">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </ToggleButton>
+                            <ToggleButton Width="50"
+                                          Height="50"
+                                          Margin="0, 10, 0, 0"
+                                          IsEnabled="False" Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                                <Rectangle Width="20" Height="20">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </ToggleButton>
                         </StackPanel>
                         <StackPanel Grid.Column="3">
                             <StackPanel.Resources>
