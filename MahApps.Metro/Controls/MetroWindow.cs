@@ -125,6 +125,21 @@ namespace MahApps.Metro.Controls
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "AfterLoaded", true);
+
+            Theme foundTheme;
+            ResourceDictionary rd;
+            if (ThemeManager.DetectThemeFromAppResources(out foundTheme, out rd))
+            {
+                var themeData = ThemeManager.GetThemeFromAppResources(foundTheme);
+
+                ThemeManager.RemoveThemeFromAppResources();
+
+                ThemeManager.ChangeTheme(this, themeData.Item2, themeData.Item1);
+
+                this.Resources = ThemeManager.ApplyEssentialResourceDictionaries(this.Resources, themeData.Item1, themeData.Item2);
+
+                this.ApplyTemplate();
+            }
         }
 
         static MetroWindow()

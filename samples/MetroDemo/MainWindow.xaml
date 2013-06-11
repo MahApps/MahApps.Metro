@@ -17,15 +17,6 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="22" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -97,12 +88,12 @@
                             <Button Width="100"
                                     Margin="0, 10, 0, 0"
                                     Content="Enabled"
-                                    Style="{StaticResource SquareButtonStyle}" />
+                                    Style="{DynamicResource SquareButtonStyle}" />
                             <Button Width="100"
                                     Margin="0, 10, 0, 0"
                                     Content="Disabled"
                                     IsEnabled="False"
-                                    Style="{StaticResource SquareButtonStyle}" />
+                                    Style="{DynamicResource SquareButtonStyle}" />
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <Label Content="Toggle button" Style="{StaticResource DescriptionHeaderStyle}" />
@@ -669,7 +660,7 @@
                                 <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="0" Grid.Column="1" Style="{StaticResource AzureDataGrid}" AutoGenerateColumns="False">
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="0" Grid.Column="1" Style="{DynamicResource AzureDataGrid}" AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
                                 <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
@@ -677,7 +668,7 @@
                                 <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
                             </DataGrid.Columns>
                         </DataGrid>
-                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="1" IsEnabled="False" Grid.Column="1" Style="{StaticResource AzureDataGrid}"  AutoGenerateColumns="False">
+                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="1" IsEnabled="False" Grid.Column="1" Style="{DynamicResource AzureDataGrid}"  AutoGenerateColumns="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
                                 <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
