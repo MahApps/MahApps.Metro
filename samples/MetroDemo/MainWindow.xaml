@@ -6,7 +6,7 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       Title="MahApps.Metro.Demo"
-                      Width="800"
+                      Width="960"
                       Height="600"
                       Icon="mahapps.metro.logo2.ico"
                       ShowIconOnTitleBar="true"
@@ -25,6 +25,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="22" />
@@ -44,6 +45,7 @@
             <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
             <Button Click="LaunchIcons" Content="Icons" />
             <Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />
+            <Button Click="InteropDemo" Content="Interop Demo" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
@@ -113,6 +115,26 @@
                                           Margin="0, 10, 0, 0"
                                           Content="Disabled"
                                           IsEnabled="False" />
+                            <ToggleButton Width="50"
+                                          Height="50"
+                                          Margin="0, 10, 0, 0"
+                                          Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                                <Rectangle Width="20" Height="20">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </ToggleButton>
+                            <ToggleButton Width="50"
+                                          Height="50"
+                                          Margin="0, 10, 0, 0"
+                                          IsEnabled="False" Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                                <Rectangle Width="20" Height="20">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </ToggleButton>
                         </StackPanel>
                         <StackPanel Grid.Column="3">
                             <StackPanel.Resources>
@@ -184,7 +206,7 @@
                                       IsChecked="True"
                                       IsEnabled="False" />
                             <CheckBox Margin="0, 10, 0, 0"
-                                      Content="Enabled" 
+                                      Content="Disabled" 
                                       IsEnabled="False"
                                       IsChecked="{x:Null}"
                                       IsThreeState="True" />
@@ -220,18 +242,28 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Width="150">
-                            <Label Content="Textbox" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Label Content="TextBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <TextBox Margin="0, 10, 0, 0" Text="Enabled" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
-                                     Controls:TextboxHelper.Watermark="Watermark" />
+                                     Controls:TextboxHelper.Watermark="Watermark"
+                                     ToolTip="Default alignment" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Watermark"
+                                     ToolTip="Text and watermark at center" />
+                            <TextBox Margin="0, 10, 0, 0"
+                                     HorizontalContentAlignment="Right"
+                                     TextAlignment="Left"
+                                     Controls:TextboxHelper.Watermark="Watermark"
+                                     ToolTip="Text at left, watermark at right" />
+                            <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.ClearTextButton="True"
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      Text="Clear button" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Search style"
+                                     Style="{DynamicResource SearchMetroTextBox}" />
+                            <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Number smaller than 10"
                                      Text="{Binding IntegerGreater10Property,
                                                     ValidatesOnDataErrors=True,
@@ -241,17 +273,18 @@
                                      IsEnabled="False"
                                      Text="Disabled" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      IsEnabled="False" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
                                      Controls:TextboxHelper.ClearTextButton="True"
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      IsEnabled="False"
                                      Text="Clear button" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Search style"
+                                     IsEnabled="False"
+                                     Style="{DynamicResource SearchMetroTextBox}" />
+                            <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Number smaller than 10"
                                      IsEnabled="False"
                                      Text="{Binding IntegerGreater10Property,
@@ -279,7 +312,7 @@
                             </RichTextBox>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Width="150">
-                            <Label Content="Passwordbox" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Label Content="PasswordBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <PasswordBox Margin="0, 10, 0, 0" Password="Password" />
                             <PasswordBox Margin="0, 10, 0, 0"
                                          Controls:TextboxHelper.ClearTextButton="True"
@@ -453,14 +486,14 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0">
                             <Label Content="Horizontal Slider" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Slider Width="200" Margin="0, 10, 0, 0" />
-                            <Slider Width="200"
+                            <Slider Width="200" Margin="0, 10, 0, 0"/>
+                            <Slider Width="200" Style="{StaticResource FlatSlider}"
                                     Margin="0, 10, 0, 0"
                                     Value="50" />
                             <Slider Width="200"
                                     Margin="0, 10, 0, 0"
                                     IsEnabled="False" />
-                            <Slider Width="200"
+                            <Slider Width="200" Style="{StaticResource FlatSlider}"
                                     Margin="0, 10, 0, 0"
                                     IsEnabled="False"
                                     Value="50" />
@@ -471,15 +504,15 @@
                                 <Slider Orientation="Vertical" Height="200" />
                                 <Slider Orientation="Vertical"
                                         Margin="10, 0, 0, 0"
-                                        Height="200" 
+                                        Height="200"  Style="{StaticResource FlatSlider}"
                                         Value="50" />
-                                <Slider Orientation="Vertical" 
+                                <Slider Orientation="Vertical"
                                         Height="200"
                                         Margin="10, 0, 0, 0"
                                         IsEnabled="False" />
                                 <Slider Orientation="Vertical"
                                         Margin="10, 0, 0, 0"
-                                        Height="200" 
+                                        Height="200" Style="{StaticResource FlatSlider}"
                                         Value="50"
                                         IsEnabled="False" />
                             </StackPanel>
@@ -518,7 +551,16 @@
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1">
                             <Label Content="ProgressRing" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:ProgressRing Margin="0, 10, 0, 0" IsActive="True" />
+                            <Grid Margin="20, 0, 20, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Controls:ProgressRing Grid.Column="0" IsActive="True" />
+                                <Controls:ProgressRing Grid.Column="1" IsActive="True" Width="40" Height="40" />
+                                <Controls:ProgressRing Grid.Column="2" IsActive="True" Width="20" Height="20" />
+                            </Grid>
                             <Label Margin="0, 10, 0, 0"
                                    Content="ProgressIndicator"
                                    Style="{StaticResource DescriptionHeaderStyle}" />
@@ -595,13 +637,16 @@
                                 </Controls:MetroAnimatedSingleRowTabControl>
                             </Grid>
                             <Label Content="TabControl w/ Closable Items" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:MetroTabControl>
-                                <!-- CloseTabCommand="{Binding CloseTabCommand}"-->
-                                <Controls:MetroTabItem Header="headers" HeaderFontSize="20" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="Content" />
+                            <Controls:MetroTabControl TabItemClosingEvent="MetroTabControl_TabItemClosingEvent">
+                                <Controls:MetroTabItem Header="headers" HeaderFontSize="20" CloseButtonEnabled="True" 
+                                                       CloseTabCommand="{Binding SingleCloseTabCommand}"
+                                                       CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}">
+                                    <TextBlock FontSize="30" Text="you can bind to a command" />
                                 </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="can" HeaderFontSize="22" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="More content" />
+                                <Controls:MetroTabItem Header="can" HeaderFontSize="22" CloseButtonEnabled="True"
+                                                       CloseTabCommand="{Binding NeverCloseTabCommand}"
+                                                       CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}">
+                                    <TextBlock FontSize="30" Text="and ensure the command never closes" />
                                 </Controls:MetroTabItem>
                                 <Controls:MetroTabItem Header="have" HeaderFontSize="24" CloseButtonEnabled="True">
                                     <TextBlock FontSize="30" Text="More more content" />
@@ -613,9 +658,27 @@
                                     <TextBlock FontSize="30" Text="Content!" />
                                 </Controls:MetroTabItem>
                                 <Controls:MetroTabItem Header="sizes" HeaderFontSize="30" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="This is not content (it is)" />
+                                    <TextBlock FontSize="30" Text="This is not content (it is). This one won't close." />
                                 </Controls:MetroTabItem>
                             </Controls:MetroTabControl>
+                            <TabControl TabStripPlacement="Left" Style="{DynamicResource MetroTabControl}">
+                                <TabItem Header="LeftItem0" Content="This is left content 0" />
+                                <TabItem Header="LeftItem1" Content="This is left content 1" />
+                                <TabItem Header="LeftItem2" Content="This is left content 2" />
+                            </TabControl>
+                            <!--
+                            Right & Bottom are both work, no need to show them all
+                            <TabControl TabStripPlacement="Right" Style="{DynamicResource MetroTabControl}">
+                                <TabItem Header="RightItem0" Content="This is Right content 0" />
+                                <TabItem Header="RightItem1" Content="This is Right content 1" />
+                                <TabItem Header="RightItem2" Content="This is Right content 2" />
+                            </TabControl>
+                            <TabControl TabStripPlacement="Bottom" Style="{DynamicResource MetroTabControl}">
+                                <TabItem Header="BottomItem0" Content="This is Bottom content 0" />
+                                <TabItem Header="BottomItem1" Content="This is Bottom content 1" />
+                                <TabItem Header="BottomItem2" Content="This is Bottom content 2" />
+                            </TabControl>
+                            -->
                         </StackPanel>
 
                     </ScrollViewer>

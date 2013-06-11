@@ -119,5 +119,17 @@ namespace MetroDemo
                     break;
             }
         }
+
+        private void MetroTabControl_TabItemClosingEvent(object sender, BaseMetroTabControl.TabItemClosingEventArgs e)
+        {
+            if (e.ClosingTabItem.Header.ToString().StartsWith("sizes"))
+                e.Cancel = true;
+        }
+
+        private void InteropDemo(object sender, RoutedEventArgs e)
+        {
+            new InteropDemo().Show();
+
+        }
     }
 }
