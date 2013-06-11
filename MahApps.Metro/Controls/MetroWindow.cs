@@ -125,6 +125,13 @@ namespace MahApps.Metro.Controls
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "AfterLoaded", true);
+
+            if (!ShowTitleBar)
+            {
+                //Disables the system menu for reasons other than clicking an invisible titlebar.
+                IntPtr handle = new WindowInteropHelper(this).Handle;
+                UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
+            }
         }
 
         static MetroWindow()
@@ -167,6 +174,8 @@ namespace MahApps.Metro.Controls
 
         protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (!ShowTitleBar) return;
+
             var mousePosition = e.GetPosition(this);
             bool isIconClick = ShowIconOnTitleBar && mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight;
 
