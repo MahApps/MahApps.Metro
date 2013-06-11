@@ -119,6 +119,13 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e) {
             VisualStateManager.GoToState(this, "AfterLoaded", true);
+
+            if (!ShowTitleBar)
+            {
+                //Disables the system menu for reasons other than clicking an invisible titlebar.
+                IntPtr handle = new WindowInteropHelper(this).Handle;
+                UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
+            }
         }
 
         static MetroWindow()
