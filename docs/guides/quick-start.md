@@ -1,6 +1,6 @@
 ---
 layout: no-sidebar
-title: Getting Started
+title: Mahapps.Metro Quick Start
 ---
 
 This is basically the "Hello World" example, so it should give you enough familiarity with how MahApps.Metro works and how to plug it into your app.
