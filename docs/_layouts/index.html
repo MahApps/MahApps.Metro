@@ -203,4 +203,14 @@
 		});
 	});
 	</script>
+	<script type="text/javascript">
+    (function () {
+        var nb = document.createElement('script');
+        nb.type = 'text/javascript';
+        nb.async = true;
+        nb.src = '{{site.baseurl}}js/nuget.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(nb, s);
+    })();
+</script>
 </html>

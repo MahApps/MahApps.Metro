@@ -7,24 +7,24 @@ This guide will introduce you to how *MahApps.Metro* works and how to incorporat
 
 ## Installation
 
-You can install MahApps.Metro via the NuGet GUI (right click on your project, click **Manage NuGet Packages**, select **Online** and search for 'MahApps.Metro') or with the Package Manager Console:
+You can install MahApps.Metro via the NuGet GUI (right click on your project, click **Manage NuGet Packages**, select **Online** and search for **MahApps.Metro**) or with the Package Manager Console:
 
 <pre class="nuget-button">Install-Package MahApps.Metro</pre>
 
-If you wish to use the pre-release packages of MahApps.Metro, you need to specify **Include Prerelease**:
+If you want to use the pre-release packages of MahApps.Metro (these have the latest code and newest features), you need to enable **Include Prerelease** in the GUI:
 
 ![]({{site.baseurl}}images/include_prerelease.png)
 
-<!-- TODO: i suspect this library doesn't actually work work when you have multiple nuget-button links. will confirm. -->
+or use the Package Manager Console:
 
-or use the Package Manager Console (`PM> Install-Package MahApps.Metro -Pre`)
+<pre class="nuget-button">Install-Package MahApps.Metro -Pre</pre>
 
 ## Style the Window
 
 There's two ways you can style your Window using MahApps.Metro:
 
  -  using the included `MetroWindow` control, or
- -  rolling your own window
+ -  design your own window
 
 For now we'll use `MetroWindow`, as this approach will work for a good percentage of apps and is the quickest and easiest way to get going. If you want to learn about rolling your own window, check out [the guide](advanced-guide.html).
 
