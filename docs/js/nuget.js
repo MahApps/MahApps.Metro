@@ -91,13 +91,12 @@
                 text(command, "PM> " + installPackageText + ' ');
                 if (link === 'false') {
                     text(command, packageName);
-                    appendOtherCharacters(command, str)
                 } else {
                     anchor.setAttribute('href', link === 'true' ? 'http://nuget.org/List/Packages/' + packageName : link);
                     text(anchor, packageName);
                     command.appendChild(anchor);
-                    appendOtherCharacters(command, str);
                 }
+                appendOtherCharacters(command, str)
                 commandPrompt.appendChild(command);
                 pre.parentNode.replaceChild(commandWrapper, pre);
             }
