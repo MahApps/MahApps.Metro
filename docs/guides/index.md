@@ -3,9 +3,9 @@ layout: no-sidebar
 title: Guides
 ---
 
-### Work in progress
+#### NOTE: Work in progress
 
-These are the existing pages. They need to be tidied up or replaced with more relevant stuff.
+These are the existing pages. They need to be tidied up or replaced with more relevant content.
 
 
  - [Quick Start](quick-start.html)
