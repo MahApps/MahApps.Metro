@@ -33,7 +33,7 @@ All of our issues are tracked on GitHub.
 
 Questions occassionally come up on StackOverflow, but we always try and bring the discussion back to GitHub. 
 
-  - **StackOverflow questions need to be focused** - the format does not lend itself to things that are subjective or UI-related.
-  - **StackOverflow is just awful for discussions** - quite often contributors need to diagnose the issue before an answer can be provided. This is made hard by the various design decisions that StackOverflow has made to adhere to a Q&A format.
+ - **StackOverflow questions need to be focused** - the format does not lend itself to things that are subjective or UI-related.
+ - **StackOverflow is just awful for discussions** - quite often contributors need to diagnose the issue before an answer can be provided. This is made hard by the various design decisions that StackOverflow has made to adhere to a Q&A format.
 
 So we prefer GitHub for tracking issues and bugfixes, as the discussion is free-flowing and more flexible - and it's much easier to associate changes and bugfixes with issues.
