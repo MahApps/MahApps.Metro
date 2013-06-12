@@ -6,7 +6,6 @@
     <Color x:Key="HoverValueColor">#219297</Color>
     <Color x:Key="PressedValueColor">#25BBC4</Color>
 
-    <Color x:Key="ThumbColor">#FFFFFF</Color>
     <Color x:Key="DisabledThumbColor">#7E7E7E</Color>
 
     <Color x:Key="TrackColor">#6C6C6C</Color>
@@ -83,7 +82,7 @@
                 <Track.Thumb>
                     <Thumb Height="{TemplateBinding Slider.MinHeight}" Width="{TemplateBinding Slider.MinHeight}" Style="{StaticResource SliderThumbStyle}">
                         <Thumb.Background>
-                            <SolidColorBrush x:Name="ThumbBrush" Color="{StaticResource ThumbColor}" />
+                            <SolidColorBrush x:Name="ThumbBrush" Color="{DynamicResource BlackColor}" />
                         </Thumb.Background>
                     </Thumb>
                 </Track.Thumb>
@@ -140,7 +139,7 @@
                 <Track.Thumb>
                     <Thumb Height="{TemplateBinding Slider.MinWidth}" Width="{TemplateBinding Slider.MinWidth}" Style="{StaticResource SliderThumbStyle}">
                         <Thumb.Background>
-                            <SolidColorBrush x:Name="ThumbBrush" Color="{StaticResource ThumbColor}" />
+                            <SolidColorBrush x:Name="ThumbBrush" Color="{DynamicResource BlackColor}" />
                         </Thumb.Background>
                     </Thumb>
                 </Track.Thumb>
