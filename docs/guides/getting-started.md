@@ -1,9 +1,9 @@
 ---
-layout: default
+layout: no-sidebar
 title: Getting Started - MahApps.Metro
 ---
 
-##Getting Started
+<!-- TODO: yes, these links don't work. and that's OK. i'll probably drop this soon -->
 
 - [Installing MahApps.Metro](#installing_mahappsmetro)
 - [Styling a Window](#styling_a_window)
@@ -19,17 +19,26 @@ You can install MahApps.Metro via Nuget using the GUI (right click on your proje
 
 If you wish to use the *alpha* releases of MahApps.Metro, you need to include "pre" releases in Nuget (1.7 and above) 
 
-![](images/include_prerelease.png)
+![]({{site.baseurl}}images/include_prerelease.png)
 
-or use the console (`PM> Install-Package MahApps.Metro -Pre`)
+<!-- TODO: i suspect this library doesn't actually work work when you have multiple nuget-button links. will confirm. -->
+
+or use the Package Manager Console (`PM> Install-Package MahApps.Metro -Pre`)
 
 ## Styling a Window
 
-There are two main approaches you can take with MahApps.Metro to style a Window, using the `MetroWindow` control, or rolling your own. For the getting started guide, we'll use `MetroWindow`, as this approach will work for a good percentage of apps and is the quickest and easiest way to get going. Rolling your own styling is covered in the later "Advanced" section.
+There are two main approaches you can take with MahApps.Metro to style a Window:
+
+ -  using the `MetroWindow` control, or
+ -  rolling your own 
+
+For now we'll use `MetroWindow`, as this approach will work for a good percentage of apps and is the quickest and easiest way to get going. 
+
+Rolling your own styling is covered in the later "Advanced" section.
 
 A default WPF Window with a few controls looks like the following:
 
-![](/images/01_UnstyledWindow.png)
+![]({{site.baseurl}}images/01_UnstyledWindow.png)
 
 After installing MahApps.Metro:
 
@@ -38,29 +47,31 @@ After installing MahApps.Metro:
 `xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"`
  - change `<Window ...` to `<Controls:MetroWindow ...` (remember to change the closing tag!)
 
-You'll need to change the codebehind `MainWindow.xaml.cs` file (right-click the designer and select 'View Code' or press `F7`) so that the base class for `MainWindow` matches the new XAML tree:
+You'll need to modify the `MainWindow.xaml.cs` file  so that the base class for `MainWindow` matches the MetroWindow type:
 
     public partial class MainWindow : MetroWindow
     {
 
     }
 
-In most cases you can just drop the inheritance on a partial declaration:
+But in most cases you can just drop the base class (because this is a `partial` class the XAML should take care of this):
 
     public partial class MainWindow
     {
     	
     }
 
- This basic MetroWindow will look like this:
+ Which will give us this:
 
-![](/images/02_PartiallyStyledWindow.png)
+![]({{site.baseurl}}images/02_PartiallyStyledWindow.png)
 
-This doesn't look very 'metro'-ish yet because the resources and styles need to be included. Unfortunately you need to include these resources in each Window.
+Which looks different - but we're on the right track. 
+
+Next we need to add the resources and styles. Unfortunately these need to be specified with each Window.
 
 > We have tried embedding the resources and styles in `MetroWindow`, but then you lose all ability to dynamically change the theme.
 
-Just under the opening MetroWindow tag, add the following
+Just under the opening MetroWindow tag, add the following:
 	
 	   <Window.Resources>
 	        <ResourceDictionary>
@@ -74,13 +85,13 @@ Just under the opening MetroWindow tag, add the following
 	        </ResourceDictionary>
 	    </Window.Resources>
 	
-![](/images/03_StyledWindow.png)
+![]({{site.baseurl}}images/03_StyledWindow.png)
 
 And now we have a semi-decent looking window!
 
 ## Explaining the MetroWindow elements
 
-![](/images/04_ExplainedStyledWindow.png)
+![]({{site.baseurl}}images/04_ExplainedStyledWindow.png)
 
 If you don't like the elements that are labelled, fear not, they're all optional.
 
@@ -120,7 +131,7 @@ Including this within the `MetroWindow` tag (under the `Window.Resources` sectio
 
 Produces this window titlebar:
 
-![](/images/05_WindowCommands.png)
+![]({{site.baseurl}}images/05_WindowCommands.png)
 
 The foreground (link) colour of `WindowCommands` will always be white, *unless* the titlebar is disabled, in which case it will be the reverse of whatever theme you have selected. For example, using the White/Light theme, the foreground colour will be black.
 
