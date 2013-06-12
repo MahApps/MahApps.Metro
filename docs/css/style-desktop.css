@@ -244,7 +244,7 @@
 
 				#nav ul li:hover a
 				{
-					background: rgba(255,255,255,0.5);
+					background: rgba(255,255,255,0.75);
 				}
 
 			#nav ul li.current_page_item
