@@ -3,13 +3,13 @@ layout: no-sidebar
 title: Getting Started
 ---
 
-<!-- TODO: yes, these links don't work. and that's OK. i'll probably drop this soon -->
-
 This is basically the "Hello World" example, so it should give you enough familiarity with how MahApps.Metro works and how to plug it into your app.
 
+TODO: Yes, these links don't work. Just scroll, it'll be fine.
+
 - [Installing MahApps.Metro](#installing_mahappsmetro)
-- [Styling a Window](#styling_a_window)
-- [Explaining the MetroWindow elements](#explaining_the_metrowindow_elements)
+- [Styling the Window](#styling_a_window)
+- [What's a MetroWindow?](#explaining_the_metrowindow_elements)
 - [Customisation](#customisation)
 
 
@@ -71,9 +71,13 @@ Which looks different - but we're on the right track.
 
 Next we need to add the resources and styles. Unfortunately these need to be specified with each Window.
 
-> We have tried embedding the resources and styles in `MetroWindow`, but then you lose all ability to dynamically change the theme.
+> **A note from the team**
 
-Just under the opening MetroWindow tag, add the following:
+> We have tried embedding the resources and styles in `MetroWindow` and in `App`, but you sacrifice all ability to dynamically change the theme.
+
+> We are looking into improving this in an upcoming release. Stay tuned.
+
+Just after the opening MetroWindow tag, add the following:
 	
 	   <Window.Resources>
 	        <ResourceDictionary>
@@ -89,18 +93,20 @@ Just under the opening MetroWindow tag, add the following:
 	
 ![]({{site.baseurl}}images/03_StyledWindow.png)
 
-And now we have a semi-decent looking window!
+And now we have something much better!
 
-## Explaining the MetroWindow elements
+## What's a MetroWindow?
+
+The default `MetroWindow` is made up of a few components:
 
 ![]({{site.baseurl}}images/04_ExplainedStyledWindow.png)
 
 If you don't like the elements that are labelled, fear not, they're all optional.
 
-1. The titlebar is what sets `MetroWindow` apart from rolling your own. `ShowTitleBar="true|false"`
-2. Instead of using static images, this uses a font called **Marlett**.
-3. The resize grip is no longer (from 0.8 onwards) the *only* way to resize a `MetroWindow` - all edges and corners can be gripped, but given a metro window doesn't have a noticeable window "chrome" like an aero window, the resize grip can help reassure users
-4. `ShowIconOnTitleBar="true|false"` 
+- The titlebar is what sets `MetroWindow` apart from rolling your own. `ShowTitleBar="true|false"`
+- The resize grip is not the *only* way to resize a `MetroWindow` - all edges and corners can be gripped, but given a `MetroWindow` doesn't have a noticeable window "chrome" like an aero window, the resize grip can help reassure users.
+- Instead of using static images, the icons for minimize/maximize/close are a font called **Marlett**. To explain why this is so requires a walk down memory lane, or at least a visit to [the Wikipedia article](http://en.wikipedia.org/wiki/Marlett) about it.
+- You can even hide the icons on the title bar by setting the  `ShowIconOnTitleBar="true|false"` 
 
 ## Customisation
 
