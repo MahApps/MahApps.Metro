@@ -1,4 +1,5 @@
 ---
+layout: no-sidebar
 title: Icons and Resources - MahApps.Metro
 ---
 
@@ -12,7 +13,7 @@ You can install this package using nuget:
 
 Currently, this consists of [Entypo](http://www.entypo.com/) and [Temparian's Windows Phone Icon pack](http://templarian.com/project_windows_phone_icons/)
 
-![](/images/6_Resources.png)
+![]({{site.baseurl}}images/6_Resources.png)
 
 ## Usage
 The resources are simply `Canvas`'s wrapping one or more `Path`s. To use these sorts of elements, you can just use WPF's `VisualBrush`.

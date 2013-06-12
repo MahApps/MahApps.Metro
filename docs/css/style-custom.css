@@ -1,0 +1,13 @@
+pre, code {
+	font-family: 'Source Code Pro', sans-serif;
+	font-weight: 500;
+	font-size: 0.9em;
+}
+
+blockquote {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  padding-left: 15px;
+  border-left: 2px solid #0071BC;
+} 
