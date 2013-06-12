@@ -595,7 +595,7 @@
                                 </Controls:MetroAnimatedSingleRowTabControl>
                             </Grid>
                             <Label Content="TabControl w/ Closable Items" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:MetroTabControl>
+                            <Controls:MetroTabControl TabItemClosingEvent="MetroTabControl_TabItemClosingEvent">
                                 <!-- CloseTabCommand="{Binding CloseTabCommand}"-->
                                 <Controls:MetroTabItem Header="headers" HeaderFontSize="20" CloseButtonEnabled="True">
                                     <TextBlock FontSize="30" Text="Content" />
@@ -613,9 +613,27 @@
                                     <TextBlock FontSize="30" Text="Content!" />
                                 </Controls:MetroTabItem>
                                 <Controls:MetroTabItem Header="sizes" HeaderFontSize="30" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="This is not content (it is)" />
+                                    <TextBlock FontSize="30" Text="This is not content (it is). This one won't close." />
                                 </Controls:MetroTabItem>
                             </Controls:MetroTabControl>
+                            <TabControl TabStripPlacement="Left" Style="{DynamicResource MetroTabControl}">
+                                <TabItem Header="LeftItem0" Content="This is left content 0" />
+                                <TabItem Header="LeftItem1" Content="This is left content 1" />
+                                <TabItem Header="LeftItem2" Content="This is left content 2" />
+                            </TabControl>
+                            <!--
+                            Right & Bottom are both work, no need to show them all
+                            <TabControl TabStripPlacement="Right" Style="{DynamicResource MetroTabControl}">
+                                <TabItem Header="RightItem0" Content="This is Right content 0" />
+                                <TabItem Header="RightItem1" Content="This is Right content 1" />
+                                <TabItem Header="RightItem2" Content="This is Right content 2" />
+                            </TabControl>
+                            <TabControl TabStripPlacement="Bottom" Style="{DynamicResource MetroTabControl}">
+                                <TabItem Header="BottomItem0" Content="This is Bottom content 0" />
+                                <TabItem Header="BottomItem1" Content="This is Bottom content 1" />
+                                <TabItem Header="BottomItem2" Content="This is Bottom content 2" />
+                            </TabControl>
+                            -->
                         </StackPanel>
 
                     </ScrollViewer>
