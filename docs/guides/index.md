@@ -1,4 +1,4 @@
 ---
 layout: no-sidebar
-title: Controls 
+title: Guides
 ---
