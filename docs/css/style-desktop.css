@@ -298,21 +298,6 @@
 			margin-left: 2em;
 		}
 
-		#banner .nuget-button-command 
-		{
-			font-size: 1.5em;
-			line-height: 1.5em;
-			margin: .8em .5em;
-		}
-
-		#banner .nuget-button-commandWrapper 
-		{
-			max-width: 600px;
-			margin: 0;
-			margin-left: auto;
-			margin-right: auto;
-		}
-
 		#banner #home-container
 		{
 			margin-left: auto;
