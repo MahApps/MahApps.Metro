@@ -1,15 +1,17 @@
 ---
 layout: no-sidebar
-title: Getting Started - MahApps.Metro
+title: Getting Started
 ---
 
 <!-- TODO: yes, these links don't work. and that's OK. i'll probably drop this soon -->
+
+This is basically the "Hello World" example, so it should give you enough familiarity with how MahApps.Metro works and how to plug it into your app.
 
 - [Installing MahApps.Metro](#installing_mahappsmetro)
 - [Styling a Window](#styling_a_window)
 - [Explaining the MetroWindow elements](#explaining_the_metrowindow_elements)
 - [Customisation](#customisation)
-- [Advanced](#advanced)
+
 
 ## Installation
 
@@ -34,7 +36,7 @@ There are two main approaches you can take with MahApps.Metro to style a Window:
 
 For now we'll use `MetroWindow`, as this approach will work for a good percentage of apps and is the quickest and easiest way to get going. 
 
-Rolling your own styling is covered in the later "Advanced" section.
+If you want to learn about rolling your own window, check out [the guide](advanced-guide.html).
 
 A default WPF Window with a few controls looks like the following:
 
@@ -134,26 +136,3 @@ Produces this window titlebar:
 ![]({{site.baseurl}}images/05_WindowCommands.png)
 
 The foreground (link) colour of `WindowCommands` will always be white, *unless* the titlebar is disabled, in which case it will be the reverse of whatever theme you have selected. For example, using the White/Light theme, the foreground colour will be black.
-
-## Advanced
-
-### Roll your own Window
-
-The roll your own approach is very relevant, depending on what style of app you're going for. A good example is [code52's MarkPad](http://code52.org/DownmarkerWPF/), where we needed the flexibility of rolling our own window while still using MahApps.Metro as an underlying visual framework. The key elements used were the `WindowCommands` (discussed [above](#windowcommands)), and `BorderlessWindowBehavior`.
-
-#### BorderlessWindowBehavior
-
-Add some namespace references to the opening `Window` tag:
-
-	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-	xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
-
-Then somewhere within the `Window`, add
-
-    <i:Interaction.Behaviors>
-        <Behaviours:BorderlessWindowBehavior/>
-    </i:Interaction.Behaviors>
-
-And you're done! `BorderlessWindowBehavior` has a few options, such as `ResizeWithGrip` and `AutoSizeToContent`:
-
-	<Behaviours:BorderlessWindowBehavior ResizeWithGrip="False" />
