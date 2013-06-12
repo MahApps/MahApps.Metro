@@ -193,6 +193,11 @@
 			font-family: "Segoe UI Light","Helvetica Neue",'RobotoLight',"Segoe UI","Segoe WP",sans-serif;
 		}
 
+		#logo a:hover
+		{
+			text-decoration: none;	
+		}
+
 /*********************************************************************************/
 /* Nav                                                                           */
 /*********************************************************************************/
