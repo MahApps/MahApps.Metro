@@ -1,25 +1,17 @@
 ---
 layout: no-sidebar
-title: Mahapps.Metro Quick Start
+title: Mahapps.Metro - Quick Start
 ---
 
-This is basically the "Hello World" example, so it should give you enough familiarity with how MahApps.Metro works and how to plug it into your app.
-
-TODO: Yes, these links don't work. Just scroll, it'll be fine.
-
-- [Installing MahApps.Metro](#installing_mahappsmetro)
-- [Styling the Window](#styling_a_window)
-- [What's a MetroWindow?](#explaining_the_metrowindow_elements)
-- [Customisation](#customisation)
-
+This guide will introduce you to how *MahApps.Metro* works and how to incorporate it into your app.
 
 ## Installation
 
-You can install MahApps.Metro via Nuget using the GUI (right click on your project, Manage Nuget References, search for 'MahApps.Metro') or via the console:
+You can install MahApps.Metro via the NuGet GUI (right click on your project, click **Manage NuGet Packages**, select **Online** and search for 'MahApps.Metro') or with the Package Manager Console:
 
 <pre class="nuget-button">Install-Package MahApps.Metro</pre>
 
-If you wish to use the *alpha* releases of MahApps.Metro, you need to include "pre" releases in Nuget (1.7 and above) 
+If you wish to use the pre-release packages of MahApps.Metro, you need to specify **Include Prerelease**:
 
 ![]({{site.baseurl}}images/include_prerelease.png)
 
@@ -27,16 +19,14 @@ If you wish to use the *alpha* releases of MahApps.Metro, you need to include "p
 
 or use the Package Manager Console (`PM> Install-Package MahApps.Metro -Pre`)
 
-## Styling a Window
+## Style the Window
 
-There are two main approaches you can take with MahApps.Metro to style a Window:
+There's two ways you can style your Window using MahApps.Metro:
 
- -  using the `MetroWindow` control, or
- -  rolling your own 
+ -  using the included `MetroWindow` control, or
+ -  rolling your own window
 
-For now we'll use `MetroWindow`, as this approach will work for a good percentage of apps and is the quickest and easiest way to get going. 
-
-If you want to learn about rolling your own window, check out [the guide](advanced-guide.html).
+For now we'll use `MetroWindow`, as this approach will work for a good percentage of apps and is the quickest and easiest way to get going. If you want to learn about rolling your own window, check out [the guide](advanced-guide.html).
 
 A default WPF Window with a few controls looks like the following:
 
@@ -45,22 +35,33 @@ A default WPF Window with a few controls looks like the following:
 After installing MahApps.Metro:
 
  - open up `MainWindow.xaml`
- - add a namespace reference in the opening Window tag:  
+ - add this attribute inside the opening Window tag (it's how you can reference other namespaces in XAML):  
 `xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"`
- - change `<Window ...` to `<Controls:MetroWindow ...` (remember to change the closing tag!)
+ - change `<Window ...` to `<Controls:MetroWindow ...` (remember to change the closing tag too!)
+
+You should have something like this (don't copy and paste this):
+
+    <controls:MetroWindow x:Class="WpfApplication2.MainWindow"
+                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                          Title="MainWindow" 
+                          Height="350" 
+                          Width="525">
+        <!-- your layout here -->
+    </controls:MetroWindow>
+
 
 You'll need to modify the `MainWindow.xaml.cs` file  so that the base class for `MainWindow` matches the MetroWindow type:
 
     public partial class MainWindow : MetroWindow
     {
-
     }
 
 But in most cases you can just drop the base class (because this is a `partial` class the XAML should take care of this):
 
     public partial class MainWindow
     {
-    	
     }
 
  Which will give us this:
