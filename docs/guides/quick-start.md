@@ -5,7 +5,7 @@ title: Mahapps.Metro - Quick Start
 
 This guide will introduce you to how *MahApps.Metro* works and how to incorporate it into your app.
 
-## Installation
+### Installation
 
 You can install MahApps.Metro via the NuGet GUI (right click on your project, click **Manage NuGet Packages**, select **Online** and search for **MahApps.Metro**) or with the Package Manager Console:
 
@@ -19,7 +19,7 @@ or use the Package Manager Console:
 
 <pre class="nuget-button">Install-Package MahApps.Metro -Pre</pre>
 
-## Style the Window
+### Style the Window
 
 There's two ways you can style your Window using MahApps.Metro:
 
@@ -96,7 +96,7 @@ Just after the opening MetroWindow tag, add the following:
 
 And now we have something much better!
 
-## What's a MetroWindow?
+### What's a MetroWindow?
 
 The default `MetroWindow` is made up of a few components:
 
@@ -109,9 +109,9 @@ If you don't like the elements that are labelled, fear not, they're all optional
 - Instead of using static images, the icons for minimize/maximize/close are a font called **Marlett**. To explain why this is so requires a walk down memory lane, or at least a visit to [the Wikipedia article](http://en.wikipedia.org/wiki/Marlett) about it.
 - You can even hide the icons on the title bar by setting the  `ShowIconOnTitleBar="true|false"` 
 
-## Customisation
+### Customisation
 
-### WindowCommands
+#### WindowCommands
 
 `WindowCommands` are the minimise, maximise/restore, and close buttons. You can add your own controls to `WindowsCommands` - by default, buttons have a style automatically applied to them to make them fit in with the rest of the `WindowsCommands`. As of 0.9, you are no longer limited to just buttons, but any control. Be aware, you're responsible for styling anything other than buttons.
 
