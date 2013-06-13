@@ -18,12 +18,7 @@
     </Controls:MetroWindow.BorderBrush>
 
     <Controls:MetroWindow.Flyouts>
-        <Controls:FlyoutsControl ItemsSource="{Binding Flyouts}">
-            <Controls:FlyoutsControl.ItemTemplate>
-                <DataTemplate>
-                    <ContentControl cal:View.Model="{Binding}" />
-                </DataTemplate>
-            </Controls:FlyoutsControl.ItemTemplate>
+        <Controls:FlyoutsControl x:Name="Flyouts">
             <Controls:FlyoutsControl.ItemContainerStyle>
                 <Style BasedOn="{StaticResource {x:Type Controls:Flyout}}" TargetType="{x:Type Controls:Flyout}">
                     <Setter Property="Header" Value="{Binding Header}" />
@@ -55,7 +50,8 @@
                     Margin="2"
                     cal:Message.Attach="[Event Click] = [Action ToggleFlyout(3)]"
                     Content="Settings" />
-            <Button MinWidth="90"
+            <Button x:Name="Close"
+                    MinWidth="90"
                     Margin="2"
                     Content="Close" />
         </StackPanel>
