@@ -2,42 +2,56 @@
 
 namespace MetroDemo
 {
+    using MahApps.Metro.Controls;
+
     public partial class FlyoutDemo
     {
         public FlyoutDemo() {
             this.InitializeComponent();
         }
 
-        private void ShowFirst(object sender, RoutedEventArgs e) {
-            this.Flyouts[0].IsOpen = !this.Flyouts[0].IsOpen;
+        private void ShowFirst(object sender, RoutedEventArgs e)
+        {
+            ToggleFlyout(0);
         }
 
         private void ShowSecond(object sender, RoutedEventArgs e) {
-            this.Flyouts[1].IsOpen = !this.Flyouts[1].IsOpen;
+            ToggleFlyout(1);
         }
 
         private void ShowThird(object sender, RoutedEventArgs e) {
-            this.Flyouts[2].IsOpen = !this.Flyouts[2].IsOpen;
+            ToggleFlyout(2);
         }
 
         private void ShowSettings(object sender, RoutedEventArgs e) {
-            this.Flyouts[3].IsOpen = !this.Flyouts[3].IsOpen;
+            ToggleFlyout(3);
         }
 
         private void ShowLeft(object sender, RoutedEventArgs e) {
-            this.Flyouts[4].IsOpen = !this.Flyouts[4].IsOpen;
+            ToggleFlyout(4);
         }
 
         private void ShowTop(object sender, RoutedEventArgs e) {
-            this.Flyouts[5].IsOpen = !this.Flyouts[5].IsOpen;
+            ToggleFlyout(5);
         }
 
         private void ShowBottom(object sender, RoutedEventArgs e) {
-            this.Flyouts[6].IsOpen = !this.Flyouts[6].IsOpen;
+            ToggleFlyout(6);
         }
 
         private void CloseMe(object sender, RoutedEventArgs e) {
             this.Close();
+        }
+
+        private void ToggleFlyout(int index)
+        {
+            var flyout = this.Flyouts.Items[index] as Flyout;
+            if (flyout == null)
+            {
+                return;
+            }
+
+            flyout.IsOpen = !flyout.IsOpen;
         }
     }
 }

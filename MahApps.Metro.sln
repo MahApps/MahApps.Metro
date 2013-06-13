@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo.NET45", "samples\
 		{56E8080F-FFEB-47CD-ADB9-92245F92565B} = {56E8080F-FFEB-47CD-ADB9-92245F92565B}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caliburn.Metro.Demo", "Caliburn.Metro.Demo\Caliburn.Metro.Demo.csproj", "{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,16 @@ Global
 		{67174E59-0A40-4E8F-A82B-02FD317DD801}.Release|Mixed Platforms.Build.0 = Release|x86
 		{67174E59-0A40-4E8F-A82B-02FD317DD801}.Release|x86.ActiveCfg = Release|x86
 		{67174E59-0A40-4E8F-A82B-02FD317DD801}.Release|x86.Build.0 = Release|x86
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,5 +118,6 @@ Global
 		{E74223AD-91C0-433D-A202-ED0EAF2C122A} = {72C27A3B-930A-45E7-B073-C9D7BF046E4B}
 		{56E8080F-FFEB-47CD-ADB9-92245F92565B} = {72C27A3B-930A-45E7-B073-C9D7BF046E4B}
 		{67174E59-0A40-4E8F-A82B-02FD317DD801} = {72C27A3B-930A-45E7-B073-C9D7BF046E4B}
+		{9F9B7559-E8B6-43C3-BEE8-9A977BACE0FB} = {72C27A3B-930A-45E7-B073-C9D7BF046E4B}
 	EndGlobalSection
 EndGlobal
