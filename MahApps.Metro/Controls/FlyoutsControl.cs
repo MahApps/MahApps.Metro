@@ -15,5 +15,10 @@ namespace MahApps.Metro.Controls
         {
             return new Flyout();
         }
+
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            return item is Flyout;
+        } 
     }
 }
