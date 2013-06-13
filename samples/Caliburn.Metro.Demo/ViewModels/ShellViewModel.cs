@@ -29,6 +29,11 @@ namespace Caliburn.Metro.Demo.ViewModels
 
         #region Public Methods and Operators
 
+        public void Close()
+        {
+            this.TryClose();
+        }
+
         public void ToggleFlyout(int index)
         {
             var flyout = this.flyouts[index];

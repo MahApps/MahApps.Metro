@@ -11,8 +11,6 @@ namespace Caliburn.Metro.Demo
     using Caliburn.Metro.Demo.Controls;
     using Caliburn.Micro;
 
-    using ViewLocator = Caliburn.Micro.ViewLocator;
-
     public class AppBootstrapper : Bootstrapper<IShell>
     {
         #region Fields
@@ -69,9 +67,11 @@ namespace Caliburn.Metro.Demo
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            var viewLocator = (IViewLocator)this.GetInstance(typeof(IViewLocator), null);
-
-            ViewLocator.GetOrCreateViewType = viewLocator.GetOrCreateViewType;
+            var startupTasks =
+                this.GetAllInstances(typeof(StartupTask))
+                    .Cast<ExportedDelegate>()
+                    .Select(exportedDelegate => (StartupTask)exportedDelegate.CreateDelegate(typeof(StartupTask)));
+            startupTasks.Apply(s => s());
             base.OnStartup(sender, e);
         }
 
