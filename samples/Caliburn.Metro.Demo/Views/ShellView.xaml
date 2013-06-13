@@ -12,7 +12,7 @@
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
                       mc:Ignorable="d">
-    
+
     <Controls:MetroWindow.BorderBrush>
         <SolidColorBrush Color="{DynamicResource AccentColor}" />
     </Controls:MetroWindow.BorderBrush>

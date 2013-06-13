@@ -33,7 +33,7 @@
                 }
 
                 this.header = value;
-                this.NotifyOfPropertyChange();
+                this.NotifyOfPropertyChange(() => this.Header);
             }
         }
 
@@ -52,7 +52,7 @@
                 }
 
                 this.isOpen = value;
-                this.NotifyOfPropertyChange();
+                this.NotifyOfPropertyChange(() => this.IsOpen);
             }
         }
 
@@ -71,7 +71,7 @@
                 }
 
                 this.position = value;
-                this.NotifyOfPropertyChange();
+                this.NotifyOfPropertyChange(() => this.Position);
             }
         }
 
