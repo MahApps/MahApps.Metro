@@ -8,6 +8,8 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
+    using System.Collections;
+
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(Flyout))]
     public class FlyoutsControl : ItemsControl
     {
@@ -40,17 +42,17 @@ namespace MahApps.Metro.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    this.AttachHandlers(e.NewItems.Cast<Flyout>());
+                    this.AttachHandlers(this.GetFlyouts(e.NewItems));
                     break;
                 case NotifyCollectionChangedAction.Replace:
-                    this.AttachHandlers(e.NewItems.Cast<Flyout>());
-                    this.DetachHandlers(e.OldItems.Cast<Flyout>());
+                    this.AttachHandlers(this.GetFlyouts(e.NewItems));
+                    this.DetachHandlers(this.GetFlyouts(e.OldItems));
                     break;
                 case NotifyCollectionChangedAction.Remove:
-                    this.DetachHandlers(e.OldItems.Cast<Flyout>());
+                    this.DetachHandlers(this.GetFlyouts(e.OldItems));
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    this.AttachHandlers(this.Items.Cast<Flyout>());
+                    this.AttachHandlers(this.GetFlyouts(this.Items));
                     break;
             }
         }
@@ -85,12 +87,28 @@ namespace MahApps.Metro.Controls
 
         private void FlyoutIsOpenChanged(object sender, EventArgs e)
         {
-            this.ReorderZIndices((Flyout)sender);
+            this.ReorderZIndices(this.GetFlyout(sender));
+        }
+
+        private Flyout GetFlyout(object item)
+        {
+            var flyout = item as Flyout;
+            if (flyout != null)
+            {
+                return flyout;
+            }
+
+            return (Flyout)this.ItemContainerGenerator.ContainerFromItem(item);
+        }
+
+        private IEnumerable<Flyout> GetFlyouts(IEnumerable items)
+        {
+            return from object item in items select this.GetFlyout(item);
         }
 
         private void ReorderZIndices(Flyout lastChanged)
         {
-            var openFlyouts = this.Items.Cast<Flyout>().Where(i => i.IsOpen && i != lastChanged).OrderBy(Panel.GetZIndex);
+            var openFlyouts = this.GetFlyouts(this.Items).Where(i => i.IsOpen && i != lastChanged).OrderBy(Panel.GetZIndex);
             var index = 0;
             foreach (var openFlyout in openFlyouts)
             {
