@@ -27,13 +27,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbarOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FreezableCollection<Flyout>), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
 
         bool isDragging;
 
-        public FreezableCollection<Flyout> Flyouts
+        public FlyoutsControl Flyouts
         {
-            get { return (FreezableCollection<Flyout>)GetValue(FlyoutsProperty); }
+            get { return (FlyoutsControl)GetValue(FlyoutsProperty); }
             set { SetValue(FlyoutsProperty, value); }
         }
 
@@ -118,7 +118,6 @@ namespace MahApps.Metro.Controls
 
         public MetroWindow()
         {
-            Flyouts = new FreezableCollection<Flyout>();
             Loaded += this.MetroWindow_Loaded;
         }
 
@@ -131,6 +130,11 @@ namespace MahApps.Metro.Controls
                 //Disables the system menu for reasons other than clicking an invisible titlebar.
                 IntPtr handle = new WindowInteropHelper(this).Handle;
                 UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
+            }
+
+            if (this.Flyouts == null)
+            {
+                this.Flyouts = new FlyoutsControl();
             }
         }
 

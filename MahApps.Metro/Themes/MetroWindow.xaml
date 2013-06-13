@@ -70,18 +70,14 @@
 								Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
                         <ContentPresenter Grid.Row="1"/>
 
-                        <ItemsControl Grid.Row="0"
-                                      Grid.RowSpan="2"
-                                      Panel.ZIndex="2"
-                                      KeyboardNavigation.TabNavigation="None"
-                                      ItemsSource="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                      VerticalAlignment="Stretch">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <Grid TextElement.Foreground="{DynamicResource FlyoutWhiteBrush}" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                        <ContentControl 
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Panel.ZIndex="2"
+                                    KeyboardNavigation.TabNavigation="None"
+                                    Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                    VerticalAlignment="Stretch">
+                        </ContentControl>
                     </Grid>
                 </Controls:MetroContentControl>
             </AdornerDecorator>

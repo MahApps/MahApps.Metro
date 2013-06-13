@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Caliburn.Micro.Start</id>
+    <version>1.5.1</version>
+    <title>Caliburn.Micro.Start</title>
+    <authors>Rob Eisenberg,  Marco Amendola,  Chin Bae,  Ryan Cromwell,  Nigel Sampson,  Thomas Ibel,  Matt Hidinger</authors>
+    <owners>Rob Eisenberg,  Marco Amendola,  Chin Bae,  Ryan Cromwell,  Nigel Sampson,  Thomas Ibel,  Matt Hidinger</owners>
+    <licenseUrl>http://caliburnmicro.codeplex.com/license</licenseUrl>
+    <projectUrl>http://caliburnmicro.codeplex.com/</projectUrl>
+    <iconUrl>http://www.caliburnproject.org/CaliburnIcon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A startup sample for Caliburn.Micro.</description>
+    <releaseNotes />
+    <copyright />
+    <language>en-US</language>
+    <tags>MVVM Silverlight WPF WP7 WP71 WP8 WinRT Metro SL4 SL5 SL MVC CoC Convention MVP PM Screen Coroutine Behavior Model-View-ViewModel Presentation UI ViewModel Phone Caliburn</tags>
+    <dependencies>
+      <dependency id="Caliburn.Micro" version="1.5.1" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.Phone.Controls" targetFramework="WindowsPhone7.1" />
+      <frameworkAssembly assemblyName="System.ComponentModel.Composition" targetFramework=".NETFramework4.0, Silverlight4.0, Silverlight5.0" />
+      <frameworkAssembly assemblyName="System.ComponentModel.Composition.Initialization" targetFramework="Silverlight4.0, Silverlight5.0" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
