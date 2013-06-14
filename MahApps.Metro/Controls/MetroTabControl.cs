@@ -139,7 +139,7 @@ namespace MahApps.Metro.Controls
                 {
                     Tuple<object, MetroTabItem> paramData = (Tuple<object, MetroTabItem>)parameter;
 
-                    if (owner.CloseTabCommand != null && !(paramData.Item1 is TextBlock)) //best way I could tell if the tabitem is from databinding or not.
+                    if (owner.CloseTabCommand != null && !(paramData.Item1 is TextBlock)) //best way I could tell if the tabitem is from databinding or not.  
                         owner.CloseTabCommand.Execute(paramData.Item1);
                     else
                     {
