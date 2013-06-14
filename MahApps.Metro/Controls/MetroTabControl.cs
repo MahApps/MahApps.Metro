@@ -145,9 +145,12 @@ namespace MahApps.Metro.Controls
                     {
                         if (paramData.Item2 is MetroTabItem)
                         {
-                            if (!owner.RaiseTabItemClosingEvent((MetroTabItem)paramData.Item2)) //Allows the user to cancel closing a tab.
+                            var tabItem = (MetroTabItem)paramData.Item2;
+
+                            if (!owner.RaiseTabItemClosingEvent(tabItem)) //Allows the user to cancel closing a tab.
                             {
-                                var tabItem = (MetroTabItem)paramData.Item2;
+                                if (tabItem.CloseTabCommand != null) return;
+
                                 owner.Items.Remove(tabItem);
                             }
                         }
