@@ -96,13 +96,14 @@ namespace MahApps.Metro.Controls
 
         internal bool RaiseTabItemClosingEvent(MetroTabItem closingItem)
         {
-            foreach (TabItemClosingEventHandler subHandler in TabItemClosingEvent.GetInvocationList())
-            {
-                TabItemClosingEventArgs args = new TabItemClosingEventArgs(closingItem);
-                subHandler.Invoke(this, args);
-                if (args.Cancel)
-                    return true;
-            }
+            if (TabItemClosingEvent != null)
+                foreach (TabItemClosingEventHandler subHandler in TabItemClosingEvent.GetInvocationList())
+                {
+                    TabItemClosingEventArgs args = new TabItemClosingEventArgs(closingItem);
+                    subHandler.Invoke(this, args);
+                    if (args.Cancel)
+                        return true;
+                }
 
             return false;
         }
