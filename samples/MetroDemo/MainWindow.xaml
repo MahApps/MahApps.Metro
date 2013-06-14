@@ -595,9 +595,9 @@
                                 </Controls:MetroAnimatedSingleRowTabControl>
                             </Grid>
                             <Label Content="TabControl w/ Closable Items" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:MetroTabControl TabItemClosingEvent="MetroTabControl_TabItemClosingEvent">
+                            <Controls:MetroTabControl>
                                 <!-- CloseTabCommand="{Binding CloseTabCommand}"-->
-                                <Controls:MetroTabItem Header="headers" HeaderFontSize="20" CloseButtonEnabled="True">
+                                <Controls:MetroTabItem Header="headers" HeaderFontSize="20" CloseButtonEnabled="True" CloseTabCommand="{Binding SingleCloseTabCommand}">
                                     <TextBlock FontSize="30" Text="Content" />
                                 </Controls:MetroTabItem>
                                 <Controls:MetroTabItem Header="can" HeaderFontSize="22" CloseButtonEnabled="True">
