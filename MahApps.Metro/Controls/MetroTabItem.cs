@@ -115,12 +115,13 @@ namespace MahApps.Metro.Controls
             // Click command fires BEFORE the command does so we have time to set and handle the event before hand.
             if (CloseTabCommand != null)
             {
-                closeButton.CommandParameter = this.DataContext; // Not sure how to get the 'contained' data. If it doesn't 'contain' any data, it inherits the tabcontrol's datacontext (like it should). See ItemsControl.GetContainerForItemOverride() and ItemsControl.PrepareContainerForItemOverride()
+                closeButton.CommandParameter = OwningTabControl.ItemContainerGenerator.ItemFromContainer(this); // Not sure how to get the 'contained' data. If it doesn't 'contain' any data, it inherits the tabcontrol's datacontext (like it should). See ItemsControl.GetContainerForItemOverride() and ItemsControl.PrepareContainerForItemOverride()
                 e.Handled = false;
             }
             else
             {
-                OwningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(this.Content, this));
+                var data = OwningTabControl.ItemContainerGenerator.ItemFromContainer(this) == DependencyProperty.UnsetValue ? this.Content : OwningTabControl.ItemContainerGenerator.ItemFromContainer(this);
+                OwningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(data, this));
                 e.Handled = true;
             }
         }
