@@ -36,14 +36,13 @@ namespace MahApps.Metro.Controls
         private delegate void EmptyDelegate();
         ~MetroTabItem()
         {
-            try
+            if (Application.Current != null)
             {
                 Application.Current.Dispatcher.Invoke(new EmptyDelegate(() =>
                 {
                     this.Loaded -= MetroTabItem_Loaded;
                 }));
             }
-            catch (Exception) { }
         }
 
         public double HeaderFontSize
