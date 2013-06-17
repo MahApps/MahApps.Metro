@@ -409,15 +409,15 @@
     </Style>
     
     <Style TargetType="{x:Type Button}" x:Key="SquareMetroButton">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="BorderThickness" Value="2" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentSelectedColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
         <Setter Property="Padding" Value="12,4,12,4" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontFamily" Value="{DynamicResource DefaultFont}" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="BorderThickness" Value="2" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -427,23 +427,26 @@
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         Storyboard.TargetName="MouseOverRectangle"
-                                                         To="0.4" Duration="0"/>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MouseOverBorder">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                        </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         Storyboard.TargetName="PressedRectangle"
-                                                         To="1" Duration="0"/>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PressedBorder">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                        </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         Storyboard.TargetName="Border"
-                                                         To="0.5" Duration="0"/>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MouseOverBorder">
+                                            <SplineDoubleKeyFrame KeyTime="0" Value="0.3" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentPresenter">
+                                            <EasingDoubleKeyFrame KeyTime="0" Value="0.7" />
+                                        </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -461,26 +464,20 @@
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unfocused" />
-                                <VisualState x:Name="PointerFocused" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        
-                        <Rectangle x:Name="MouseOverRectangle" Fill="{DynamicResource WhiteBrush}" Opacity="0"/>
-                        <Rectangle x:Name="PressedRectangle" Fill="{DynamicResource BlackBrush}" Opacity="0"/>
-                        
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}">
-                        
-                            <ContentPresenter x:Name="ContentPresenter"
-                                              TextBlock.Foreground="{TemplateBinding Foreground}"
-                                              Content="{TemplateBinding Content}"
+
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="contentPresenter"
+                                              RecognizesAccessKey="True"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Margin="{TemplateBinding Padding}"
+                                              Content="{TemplateBinding Content}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                         </Border>
+                        <Rectangle x:Name="MouseOverBorder" Fill="{DynamicResource WhiteColorBrush}" Opacity="0"/>
+                        <Rectangle x:Name="PressedBorder" Fill="{DynamicResource BlackColorBrush}" Opacity="0"/>
                         
                         <Rectangle x:Name="FocusVisualWhite"
                                IsHitTestVisible="False"
@@ -497,12 +494,6 @@
                                Opacity="0"
                                StrokeDashOffset="0.5" />
                     </Grid>
-
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
