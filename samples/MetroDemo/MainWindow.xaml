@@ -595,15 +595,16 @@
                                 </Controls:MetroAnimatedSingleRowTabControl>
                             </Grid>
                             <Label Content="TabControl w/ Closable Items" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:MetroTabControl>
-                                <!-- CloseTabCommand="{Binding CloseTabCommand}"-->
+                            <Controls:MetroTabControl TabItemClosingEvent="MetroTabControl_TabItemClosingEvent">
                                 <Controls:MetroTabItem Header="headers" HeaderFontSize="20" CloseButtonEnabled="True" 
                                                        CloseTabCommand="{Binding SingleCloseTabCommand}"
                                                        CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}">
-                                    <TextBlock FontSize="30" Text="Content" />
+                                    <TextBlock FontSize="30" Text="you can bind to a command" />
                                 </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="can" HeaderFontSize="22" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="More content" />
+                                <Controls:MetroTabItem Header="can" HeaderFontSize="22" CloseButtonEnabled="True"
+                                                       CloseTabCommand="{Binding NeverCloseTabCommand}"
+                                                       CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}">
+                                    <TextBlock FontSize="30" Text="and ensure the command never closes" />
                                 </Controls:MetroTabItem>
                                 <Controls:MetroTabItem Header="have" HeaderFontSize="24" CloseButtonEnabled="True">
                                     <TextBlock FontSize="30" Text="More more content" />
