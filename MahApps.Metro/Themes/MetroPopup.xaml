@@ -102,7 +102,7 @@
 
             <Rectangle Fill="Black" Opacity="0.6"/>
             
-            <Grid x:Name="AccentGrid" VerticalAlignment="Center" MinHeight="300" Height="Auto" Background="{DynamicResource WhiteColorBrush}">
+            <Grid x:Name="AccentGrid" VerticalAlignment="Center" MinHeight="250" Height="Auto" Background="{DynamicResource WhiteColorBrush}">
                 <Rectangle Fill="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             
 
