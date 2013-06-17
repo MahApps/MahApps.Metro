@@ -113,7 +113,7 @@ namespace MetroDemo
 
             public void Execute(object parameter)
             {
-                System.Windows.MessageBox.Show("You tried to close the '" + ((MetroTabItem)parameter).Header + "' tab!");
+                System.Windows.MessageBox.Show("You are now closing the '" + parameter + "' tab!");
             }
         }
     }
