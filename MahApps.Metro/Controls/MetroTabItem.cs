@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -111,8 +112,22 @@ namespace MahApps.Metro.Controls
         void closeButton_Click(object sender, RoutedEventArgs e)
         {
             //Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=InternalCloseTabCommand
-            OwningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(this.Content, this));
+            // Click command fires BEFORE the command does so we have time to set and handle the event before hand.
+            if (CloseTabCommand != null)
+            {
+                closeButton.CommandParameter = OwningTabControl.ItemContainerGenerator.ItemFromContainer(this); // Not sure how to get the 'contained' data. If it doesn't 'contain' any data, it inherits the tabcontrol's datacontext (like it should). See ItemsControl.GetContainerForItemOverride() and ItemsControl.PrepareContainerForItemOverride()
+                e.Handled = false;
+            }
+            else
+            {
+                var data = OwningTabControl.ItemContainerGenerator.ItemFromContainer(this) == DependencyProperty.UnsetValue ? this.Content : OwningTabControl.ItemContainerGenerator.ItemFromContainer(this);
+                OwningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(data, this));
+                e.Handled = true;
+            }
         }
+
+        public ICommand CloseTabCommand { get { return (ICommand)GetValue(CloseTabCommandProperty); } set { SetValue(CloseTabCommandProperty, value); } }
+        public static readonly DependencyProperty CloseTabCommandProperty = DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroTabItem));
 
         public BaseMetroTabControl OwningTabControl { get; internal set; }
 
