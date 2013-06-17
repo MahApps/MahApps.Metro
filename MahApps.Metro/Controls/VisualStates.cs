@@ -67,6 +67,24 @@ namespace MahApps.Metro.Controls
         public const string StateHidden = "Hidden";
         public const string GroupVisibility = "VisibilityStates";
 
+        #region PopupButtons
+        public const string PopupButtonsGroup = "PopupButtonsGroup";
+        public const string NoneButton = "NoneButton";
+        public const string OK = "OK";
+        public const string OKCancel = "OKCancel";
+        public const string YesNo = "YesNo";
+        public const string YesNoCancel = "YesNoCancel";
+        #endregion
+
+        #region PopupImages
+        public const string PopupImagesGroup = "PopupImagesGroup";
+        public const string NoneImage = "NoneImage";
+        public const string Error = "Error";
+        public const string Question = "Question";
+        public const string Warning = "Warning";
+        public const string Information = "Information";
+        #endregion
+
         public static void GoToState(Control control, bool useTransitions, params string[] stateNames)
         {
             Debug.Assert(control != null, "control should not be null!");

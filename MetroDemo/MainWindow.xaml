@@ -453,6 +453,23 @@
                     <views:ValidationExampleView x:Name="validationExample"
                                                  DataContext="{Binding ValidationExampleViewModel, Mode=OneWay}" />
                 </TabItem>
+                <TabItem Header="Popups">
+                    <Grid>
+                        <StackPanel>
+                            <Button x:Name="ShowPopup" Click="ShowPopup_OnClick" Height="25" Width="100">Show Popup</Button>
+                            <Button x:Name="ShowHorizontalPopup" Click="ShowHorizontalPopup_OnClick" Height="25" Width="100">Show Horizontal Popup</Button>
+                            <Button x:Name="ShowMessagePopup" Click="ShowMessagePopup_OnClick" Height="25" Width="100">Show Message Popup</Button>
+                        </StackPanel>
+
+                        <Controls:MetroPopup x:Name="TextBoxPopup" Header="Input Text" PopupButton="OKCancel" Closed="TextBoxPopup_OnClosed">
+                            <TextBox Width="400"></TextBox>
+                        </Controls:MetroPopup>
+
+                        <Controls:MetroPopup x:Name="TextBoxHorizontalPopup" Header="Input Text" PopupButton="OKCancel" ButtonOrientation="Horizontal">
+                            <TextBox Width="400"></TextBox>
+                        </Controls:MetroPopup>
+                    </Grid>
+                </TabItem>
                 <TabItem>
                     <StackPanel>
                         <Controls:Pivot x:Name="pivot" Header="this is my header" Height="250" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}">

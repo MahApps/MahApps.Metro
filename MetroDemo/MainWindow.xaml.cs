@@ -119,5 +119,27 @@ namespace MetroDemo
                 Console.WriteLine("Value changed to '{0}'", toggle.IsChecked);    
             }
         }
+
+        private void ShowPopup_OnClick(object sender, RoutedEventArgs e)
+        {
+            TextBoxPopup.IsOpen = true;
+        }
+
+        private void ShowHorizontalPopup_OnClick(object sender, RoutedEventArgs e)
+        {
+            TextBoxHorizontalPopup.ShowDialog();
+        }
+
+        private void ShowMessagePopup_OnClick(object sender, RoutedEventArgs e)
+        {
+            var result = MetroPopup.Show("This is a Test Message Popup", "Popup", PopupButton.YesNoCancel, PopupImage.Information);
+
+
+        }
+
+        private void TextBoxPopup_OnClosed(object sender, PopupClosedEventArgs eventargs)
+        {
+            var result = eventargs.PopupResult;
+        }
     }
 }

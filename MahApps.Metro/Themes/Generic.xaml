@@ -8,6 +8,7 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Flyout.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroContentControl.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroImage.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroPopup.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroProgressBar.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroWindow.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Pivot.xaml" />
