@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -8,22 +9,14 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
-    using System.Collections;
-
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(Flyout))]
     public class FlyoutsControl : ItemsControl
     {
-        #region Constructors and Destructors
-
         static FlyoutsControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
                 typeof(FlyoutsControl), new FrameworkPropertyMetadata(typeof(FlyoutsControl)));
         }
-
-        #endregion
-
-        #region Methods
 
         protected override DependencyObject GetContainerForItemOverride()
         {
@@ -121,7 +114,5 @@ namespace MahApps.Metro.Controls
                 Panel.SetZIndex(lastChanged, index);
             }
         }
-
-        #endregion
     }
 }
