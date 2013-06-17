@@ -86,7 +86,6 @@ namespace MetroDemo
 
         public string Error { get { return string.Empty; } }
 
-        //public ICommand CloseTabCommand { get { return new ExampleCloseCommand(); } }
         public ICommand SingleCloseTabCommand { get { return new ExampleSingleTabCloseCommand(); } }
 
         public class ExampleCloseCommand : ICommand

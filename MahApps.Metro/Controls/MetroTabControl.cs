@@ -97,6 +97,7 @@ namespace MahApps.Metro.Controls
         internal bool RaiseTabItemClosingEvent(MetroTabItem closingItem)
         {
             if (TabItemClosingEvent != null)
+            {
                 foreach (TabItemClosingEventHandler subHandler in TabItemClosingEvent.GetInvocationList())
                 {
                     TabItemClosingEventArgs args = new TabItemClosingEventArgs(closingItem);
@@ -104,6 +105,7 @@ namespace MahApps.Metro.Controls
                     if (args.Cancel)
                         return true;
                 }
+            }
 
             return false;
         }
@@ -139,7 +141,7 @@ namespace MahApps.Metro.Controls
                 {
                     Tuple<object, MetroTabItem> paramData = (Tuple<object, MetroTabItem>)parameter;
 
-                    if (owner.CloseTabCommand != null && !(paramData.Item1 is TextBlock)) //best way I could tell if the tabitem is from databinding or not.  
+                    if (owner.CloseTabCommand != null && !(paramData.Item1 is TextBlock)) //best way I could tell if the tabitem is from databinding or not.
                         owner.CloseTabCommand.Execute(paramData.Item1);
                     else
                     {
