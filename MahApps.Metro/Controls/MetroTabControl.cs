@@ -87,6 +87,7 @@ namespace MahApps.Metro.Controls
             get { return (ICommand)GetValue(InternalCloseTabCommandProperty); }
             set { SetValue(InternalCloseTabCommandProperty, value); }
         }
+
         private static readonly DependencyProperty InternalCloseTabCommandProperty =
             DependencyProperty.Register("InternalCloseTabCommand", typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
 
@@ -141,8 +142,8 @@ namespace MahApps.Metro.Controls
                 {
                     Tuple<object, MetroTabItem> paramData = (Tuple<object, MetroTabItem>)parameter;
 
-                    if (owner.CloseTabCommand != null && !(paramData.Item1 is TextBlock)) //best way I could tell if the tabitem is from databinding or not.
-                        owner.CloseTabCommand.Execute(paramData.Item1);
+                    if (owner.CloseTabCommand != null) // TODO: let MetroTabControl define parameter to pass to command
+                        owner.CloseTabCommand.Execute(null);
                     else
                     {
                         if (paramData.Item2 is MetroTabItem)
@@ -151,8 +152,6 @@ namespace MahApps.Metro.Controls
 
                             if (!owner.RaiseTabItemClosingEvent(tabItem)) //Allows the user to cancel closing a tab.
                             {
-                                if (tabItem.CloseTabCommand != null) return;
-
                                 owner.Items.Remove(tabItem);
                             }
                         }

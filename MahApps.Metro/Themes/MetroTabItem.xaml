@@ -22,7 +22,8 @@
                         </Label>
                         <Button x:Name="PART_CloseButton" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" Width="20"  
                                 HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" FontSize="17" Margin="0 0 2 0"
-                                IsTabStop="False" VerticalAlignment="Top" Command="{TemplateBinding CloseTabCommand}" />
+                                IsTabStop="False" VerticalAlignment="Top"
+                                Command="{TemplateBinding CloseTabCommand}" CommandParameter="{TemplateBinding CloseTabCommandParameter}"/>
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
