@@ -192,7 +192,7 @@
                                                 </Path.Fill>
                                             </Path>
                                         </ToggleButton>
-                                        <Button x:Name="PART_ClearText" Margin="0,0,23,0" FontSize="16" VerticalAlignment="Center" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False" />
+                                        <Button x:Name="PART_ClearText" Margin="0,0,18,0" FontSize="16" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False" />
                                     </Grid>
                                 </Border>
 
