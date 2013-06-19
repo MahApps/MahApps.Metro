@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
@@ -256,17 +256,34 @@ namespace MahApps.Metro.Controls
 
         #region IsOpen
         public static readonly DependencyProperty IsOpenProperty =
-            DependencyProperty.Register("IsOpen", typeof(bool), typeof(MetroPopup), new PropertyMetadata(default(bool)));
+                DependencyProperty.Register(
+                        "IsOpen",
+                        typeof(bool),
+                        typeof(MetroPopup),
+                        new FrameworkPropertyMetadata(false,
+                                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault) { CoerceValueCallback = CoerceIsOpen });
 
+        private static object CoerceIsOpen(DependencyObject d, object basevalue)
+        {
+            var metroPopup = d as MetroPopup;
+            var value = (bool)basevalue;
+
+            if (metroPopup == null)
+                return basevalue;
+
+            metroPopup.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+
+            return basevalue;
+        }
+
+        /// <summary>
+        /// Indicates whether the Popup is visible.
+        /// </summary>
+        [Bindable(true), Category("Appearance")]
         public bool IsOpen
         {
             get { return (bool)GetValue(IsOpenProperty); }
-            set
-            {
-                Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-
-                SetValue(IsOpenProperty, value);
-            }
+            set { SetValue(IsOpenProperty, value); }
         }
         #endregion // IsOpen
 
@@ -495,12 +512,17 @@ namespace MahApps.Metro.Controls
 
             layer.Add(contentAd);
 
+            FocusManager.SetIsFocusScope(messageBox, true);
+            FocusManager.GetFocusScope(messageBox);
+
             // Disable Closing of window while dialog is shown
             Application.Current.MainWindow.Closing += MainWindow_Closing;
 
             messageBox.ShowDialog();
 
             Application.Current.MainWindow.Closing -= MainWindow_Closing;
+
+            FocusManager.SetIsFocusScope(messageBox, false);
 
             layer.Remove(contentAd);
 
@@ -629,8 +651,6 @@ namespace MahApps.Metro.Controls
 
                     if (OKCommand != null)
                         OKCommand.Execute(OKCommandParameter);
-
-                    Close();
                     break;
                 case PART_YesButton:
                     _result = true;
@@ -638,8 +658,6 @@ namespace MahApps.Metro.Controls
 
                     if (YesCommand != null)
                         YesCommand.Execute(YesCommandParameter);
-
-                    Close();
                     break;
                 case PART_NoButton:
                     _result = false;
@@ -647,18 +665,16 @@ namespace MahApps.Metro.Controls
 
                     if (NoCommand != null)
                         NoCommand.Execute(NoCommandParameter);
-
-                    Close();
                     break;
                 case PART_CancelButton:
                     PopupResult = PopupResult.Cancel;
 
                     if (CancelCommand != null)
                         CancelCommand.Execute(CancelCommandParameter);
-
-                    Close();
                     break;
             }
+
+            Close();
 
             e.Handled = true;
         }
@@ -714,7 +730,7 @@ namespace MahApps.Metro.Controls
         {
             _child.Measure(constraint);
             //return _child.DesiredSize;
-            return constraint;
+            return AdornedElement.RenderSize;
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -722,7 +738,7 @@ namespace MahApps.Metro.Controls
             _child.Arrange(new Rect(new Point(0, 0), finalSize));
             //return new Size(_child.ActualWidth, _child.ActualHeight);
 
-            return finalSize;
+            return AdornedElement.RenderSize;
         }
     }
 
