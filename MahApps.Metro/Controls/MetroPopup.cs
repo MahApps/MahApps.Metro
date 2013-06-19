@@ -512,17 +512,12 @@ namespace MahApps.Metro.Controls
 
             layer.Add(contentAd);
 
-            FocusManager.SetIsFocusScope(messageBox, true);
-            FocusManager.GetFocusScope(messageBox);
-
             // Disable Closing of window while dialog is shown
             Application.Current.MainWindow.Closing += MainWindow_Closing;
 
             messageBox.ShowDialog();
 
             Application.Current.MainWindow.Closing -= MainWindow_Closing;
-
-            FocusManager.SetIsFocusScope(messageBox, false);
 
             layer.Remove(contentAd);
 
