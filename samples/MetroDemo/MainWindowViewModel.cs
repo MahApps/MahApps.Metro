@@ -86,9 +86,9 @@ namespace MetroDemo
 
         public string Error { get { return string.Empty; } }
 
-        public ICommand CloseTabCommand { get { return new ExampleCloseCommand(); } }
+        public ICommand SingleCloseTabCommand { get { return new ExampleSingleTabCloseCommand(); } }
 
-        public class ExampleCloseCommand : ICommand
+        public class ExampleSingleTabCloseCommand : ICommand
         {
             public bool CanExecute(object parameter)
             {
@@ -99,7 +99,24 @@ namespace MetroDemo
 
             public void Execute(object parameter)
             {
-                System.Windows.MessageBox.Show("You tried to close the '" + ((MetroTabItem)parameter).Header + "' tab!");
+                System.Windows.MessageBox.Show("You are now closing the '" + parameter + "' tab!");
+            }
+        }
+
+        public ICommand NeverCloseTabCommand { get { return new AlwaysInvalidCloseCommand(); } }
+
+        public class AlwaysInvalidCloseCommand : ICommand
+        {
+            public bool CanExecute(object parameter)
+            {
+                return false;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public void Execute(object parameter)
+            {
+
             }
         }
     }

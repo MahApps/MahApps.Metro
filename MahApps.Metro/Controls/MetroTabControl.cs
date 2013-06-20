@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -87,6 +88,7 @@ namespace MahApps.Metro.Controls
             get { return (ICommand)GetValue(InternalCloseTabCommandProperty); }
             set { SetValue(InternalCloseTabCommandProperty, value); }
         }
+
         private static readonly DependencyProperty InternalCloseTabCommandProperty =
             DependencyProperty.Register("InternalCloseTabCommand", typeof(ICommand), typeof(BaseMetroTabControl), new PropertyMetadata(null));
 
@@ -96,12 +98,15 @@ namespace MahApps.Metro.Controls
 
         internal bool RaiseTabItemClosingEvent(MetroTabItem closingItem)
         {
-            foreach (TabItemClosingEventHandler subHandler in TabItemClosingEvent.GetInvocationList())
+            if (TabItemClosingEvent != null)
             {
-                TabItemClosingEventArgs args = new TabItemClosingEventArgs(closingItem);
-                subHandler.Invoke(this, args);
-                if (args.Cancel)
-                    return true;
+                foreach (TabItemClosingEventHandler subHandler in TabItemClosingEvent.GetInvocationList())
+                {
+                    TabItemClosingEventArgs args = new TabItemClosingEventArgs(closingItem);
+                    subHandler.Invoke(this, args);
+                    if (args.Cancel)
+                        return true;
+                }
             }
 
             return false;
@@ -138,16 +143,42 @@ namespace MahApps.Metro.Controls
                 {
                     Tuple<object, MetroTabItem> paramData = (Tuple<object, MetroTabItem>)parameter;
 
-                    if (owner.CloseTabCommand != null && !(paramData.Item1 is TextBlock)) //best way I could tell if the tabitem is from databinding or not.
-                        owner.CloseTabCommand.Execute(paramData.Item1);
+                    if (owner.CloseTabCommand != null) // TODO: let MetroTabControl define parameter to pass to command
+                        owner.CloseTabCommand.Execute(null);
                     else
                     {
                         if (paramData.Item2 is MetroTabItem)
                         {
-                            if (!owner.RaiseTabItemClosingEvent((MetroTabItem)paramData.Item2)) //Allows the user to cancel closing a tab.
+                            var tabItem = (MetroTabItem)paramData.Item2;
+
+                            // KIDS: don't try this at home
+                            // this is not good MVVM habits and I'm only doing it
+                            // because I want the demos to be absolutely bitching
+
+                            // the control is allowed to cancel this event
+                            if (owner.RaiseTabItemClosingEvent(tabItem)) return;
+
+                            if (owner.ItemsSource == null)
                             {
-                                var tabItem = (MetroTabItem)paramData.Item2;
+                                // if the list is hard-coded (i.e. has no ItemsSource)
+                                // then we remove the item from the collection
                                 owner.Items.Remove(tabItem);
+                            }
+                            else
+                            {
+                                // if ItemsSource is something we cannot work with, bail out
+                                var collection = owner.ItemsSource as IList;
+                                if (collection == null) return;
+
+                                // find the item and kill it (I mean, remove it)
+                                foreach (var item in owner.ItemsSource)
+                                {
+                                    if (tabItem.DataContext == item)
+                                    {
+                                        collection.Remove(item);
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }

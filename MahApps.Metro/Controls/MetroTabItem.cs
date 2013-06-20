@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -35,14 +36,13 @@ namespace MahApps.Metro.Controls
         private delegate void EmptyDelegate();
         ~MetroTabItem()
         {
-            try
+            if (Application.Current != null)
             {
                 Application.Current.Dispatcher.Invoke(new EmptyDelegate(() =>
                 {
                     this.Loaded -= MetroTabItem_Loaded;
                 }));
             }
-            catch (Exception) { }
         }
 
         public double HeaderFontSize
@@ -111,8 +111,30 @@ namespace MahApps.Metro.Controls
         void closeButton_Click(object sender, RoutedEventArgs e)
         {
             //Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TabControl}}, Path=InternalCloseTabCommand
-            OwningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(this.Content, this));
+            // Click event fires BEFORE the command does so we have time to set and handle the event before hand.
+
+            if (CloseTabCommand != null)
+            {
+                // force the command handler to run
+                CloseTabCommand.Execute(CloseTabCommandParameter);
+                // cheat and dereference the handler now
+                CloseTabCommand = null;
+                CloseTabCommandParameter = null;
+            }
+
+            // run the command handler for the TabControl
+            var itemFromContainer = OwningTabControl.ItemContainerGenerator.ItemFromContainer(this);
+
+            var data = itemFromContainer == DependencyProperty.UnsetValue ? this.Content : itemFromContainer;
+            OwningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(data, this));
         }
+
+        public ICommand CloseTabCommand { get { return (ICommand)GetValue(CloseTabCommandProperty); } set { SetValue(CloseTabCommandProperty, value); } }
+        public static readonly DependencyProperty CloseTabCommandProperty = DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroTabItem));
+
+        public object CloseTabCommandParameter { get { return GetValue(CloseTabCommandParameterProperty); } set { SetValue(CloseTabCommandParameterProperty, value); } }
+        public static readonly DependencyProperty CloseTabCommandParameterProperty =
+            DependencyProperty.Register("CloseTabCommandParameter", typeof(object), typeof(MetroTabItem), new PropertyMetadata(null));
 
         public BaseMetroTabControl OwningTabControl { get; internal set; }
 
