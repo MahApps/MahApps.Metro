@@ -28,7 +28,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
             <AdornerDecorator>
-                <Controls:MetroContentControl IsTabStop="False" FocusVisualStyle="{x:Null}">
+                <Controls:MetroContentControl IsTabStop="False" FocusVisualStyle="{x:Null}" TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
                     <Grid>
                         <Grid.Background>
                             <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
