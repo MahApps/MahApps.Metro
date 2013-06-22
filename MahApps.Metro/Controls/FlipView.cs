@@ -104,7 +104,7 @@ namespace MahApps.Metro.Controls
             forwardButton.Click += forwardButton_Click;
 
             this.SelectionChanged += FlipView_SelectionChanged;
-            this.KeyDown += FlipView_KeyDown;
+            this.PreviewKeyDown += FlipView_PreviewKeyDown;
 
             ShowBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
             HideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
@@ -125,7 +125,7 @@ namespace MahApps.Metro.Controls
             this.Unloaded -= FlipView_Unloaded;
             this.SelectionChanged -= FlipView_SelectionChanged;
 
-            this.KeyDown -= FlipView_KeyDown;
+            this.PreviewKeyDown -= FlipView_PreviewKeyDown;
             backButton.Click -= backButton_Click;
             forwardButton.Click -= forwardButton_Click;
 
@@ -135,18 +135,7 @@ namespace MahApps.Metro.Controls
             loaded = false;
         }
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            presenter = GetTemplateChild(PART_Presenter) as TransitioningContentControl;
-            backButton = GetTemplateChild(PART_BackButton) as Button;
-            forwardButton = GetTemplateChild(PART_ForwardButton) as Button;
-            bannerGrid = GetTemplateChild(PART_BannerGrid) as Grid;
-            bannerLabel = GetTemplateChild(PART_BannerLabel) as Label;
-        }
-
-        void FlipView_KeyDown(object sender, KeyEventArgs e)
+        void FlipView_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Left)
             {
@@ -161,6 +150,17 @@ namespace MahApps.Metro.Controls
 
             if (e.Handled)
                 this.Focus();
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            presenter = GetTemplateChild(PART_Presenter) as TransitioningContentControl;
+            backButton = GetTemplateChild(PART_BackButton) as Button;
+            forwardButton = GetTemplateChild(PART_ForwardButton) as Button;
+            bannerGrid = GetTemplateChild(PART_BannerGrid) as Grid;
+            bannerLabel = GetTemplateChild(PART_BannerLabel) as Label;
         }
 
         protected override void OnItemsSourceChanged(System.Collections.IEnumerable oldValue, System.Collections.IEnumerable newValue)

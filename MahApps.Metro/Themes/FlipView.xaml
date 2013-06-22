@@ -4,7 +4,7 @@
 
 
     <ControlTemplate x:Key="FlipViewTemplate" TargetType="{x:Type Controls:FlipView}">
-        <Grid x:Name="root">
+        <Grid x:Name="root" FocusVisualStyle="{x:Null}">
             <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
@@ -86,6 +86,7 @@
         <Setter Property="MinWidth" Value="100"/>
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Selector.IsSynchronizedWithCurrentItem" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template" Value="{StaticResource FlipViewTemplate}"/>
     </Style>
 </ResourceDictionary>
