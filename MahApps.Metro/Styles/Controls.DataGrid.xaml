@@ -88,7 +88,8 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"/>
 
                         <ContentPresenter x:Name="HeaderContent"
-                                          Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
                                           TextBlock.FontWeight="SemiBold"
                                           Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -151,6 +152,13 @@
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate DataType="{x:Type system:String}">
+                    <TextBlock Text="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"/>
+                </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>
