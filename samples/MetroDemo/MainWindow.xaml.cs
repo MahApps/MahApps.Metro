@@ -98,6 +98,11 @@ namespace MetroDemo
 #endif
         }
 
+        private void LaunchTabBarDemo(object sender, RoutedEventArgs e)
+        {
+            new TabBarWindow().Show();
+        }
+
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var flipview = ((FlipView)sender);

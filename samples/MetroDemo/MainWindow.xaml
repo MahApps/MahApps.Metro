@@ -44,6 +44,7 @@
             <Button Click="LauchCleanDemo" Content="Clean Demo" />
             <Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />
             <Button Click="InteropDemo" Content="Interop Demo" />
+            <Button Click="LaunchTabBarDemo" Content="TabBar Demo"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
@@ -85,6 +86,7 @@
                     </MenuItem>
                 </MenuItem>
             </Menu>
+
             <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
                 <TabItem Header="buttons">
                     <Grid>
@@ -993,6 +995,7 @@
                     </Grid>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
+
         </Grid>
     </Controls:MetroContentControl>
 </Controls:MetroWindow>

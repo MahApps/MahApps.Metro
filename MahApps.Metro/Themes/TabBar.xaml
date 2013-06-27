@@ -1,0 +1,69 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+
+
+    <ControlTemplate x:Key="TabBarTemplate" TargetType="{x:Type Controls:TabBar}">
+        <Grid x:Name="root">
+            <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ScrollViewer Grid.Column="0" Width="{TemplateBinding SidebarWidth}" VerticalScrollBarVisibility="Hidden">
+                        <StackPanel>
+                            <StackPanel.Background>
+                                <SolidColorBrush Color="#FF252525"/>
+                            </StackPanel.Background>
+                            <ContentPresenter ContentSource="UpperTabBarContent" MinHeight="100" Height="Auto"/>
+                            <ListBox x:Name="PART_TabItems" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                     Height="Auto" MinHeight="100" BorderThickness="0" Width="{TemplateBinding SidebarWidth}" Background="Transparent">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border>
+                                             <Label Content="{Binding Header}" Foreground="White" FontSize="15" Padding="10 0 0 0" Margin="0 5 0 5"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <ContentPresenter ContentSource="LowerTabBarContent" MinHeight="50" Height="Auto"/>
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <ContentPresenter Content="{TemplateBinding SelectedItem}" Grid.Column="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_Presenter" />
+                </Grid>
+            </Border>
+        </Grid>
+    </ControlTemplate>
+    <Style TargetType="{x:Type Controls:TabBar}">
+        <Setter Property="MinHeight" Value="100"/>
+        <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Selector.IsSynchronizedWithCurrentItem" Value="True"/>
+        <Setter Property="Template" Value="{StaticResource TabBarTemplate}"/>
+    </Style>
+    <Style TargetType="{x:Type Controls:TabBarItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:TabBarItem}">
+                    <Border 
+                        Name="Border"
+                        Margin="0,0,-4,0"
+                        BorderThickness="1,1,1,1" 
+                        CornerRadius="2,12,0,0" >
+                        <ContentPresenter x:Name="ContentSite"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          ContentSource="Content"
+                          Margin="12,2,12,2"
+                          RecognizesAccessKey="True"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
