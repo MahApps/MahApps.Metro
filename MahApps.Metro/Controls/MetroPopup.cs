@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,6 +47,15 @@ namespace MahApps.Metro.Controls
 
         private bool? _result;
 
+        private Button _okButton;
+
+        private Button _yesButton;
+
+        private Button _noButton;
+
+        private Button _cancelButton;
+
+
         private EventHandler _canExecuteChangedHandler;
         #endregion //Private Members
 
@@ -77,29 +88,29 @@ namespace MahApps.Metro.Controls
 
         #region OkButtonContent
         public static readonly DependencyProperty OkButtonContentProperty =
-            DependencyProperty.Register("OkButtonContent", typeof(object), typeof(MetroPopup), new UIPropertyMetadata("OK"));
+            DependencyProperty.Register("OkButtonContent", typeof(object), typeof(MetroPopup), new UIPropertyMetadata(SystemStrings.OK));
 
         public object OkButtonContent
         {
             get { return GetValue(OkButtonContentProperty); }
             set { SetValue(OkButtonContentProperty, value); }
         }
-        #endregion //OkButtonContent      
+        #endregion //OkButtonContent
 
         #region YesButtonContent
         public static readonly DependencyProperty YesButtonContentProperty =
-            DependencyProperty.Register("YesButtonContent", typeof(object), typeof(MetroPopup), new UIPropertyMetadata("Yes"));
+            DependencyProperty.Register("YesButtonContent", typeof(object), typeof(MetroPopup), new UIPropertyMetadata(SystemStrings.Yes));
 
         public object YesButtonContent
         {
             get { return GetValue(YesButtonContentProperty); }
             set { SetValue(YesButtonContentProperty, value); }
         }
-        #endregion //YesButtonContent       
+        #endregion //YesButtonContent
 
         #region NoButtonContent
         public static readonly DependencyProperty NoButtonContentProperty =
-            DependencyProperty.Register("NoButtonContent", typeof(object), typeof(MetroPopup), new UIPropertyMetadata("No"));
+            DependencyProperty.Register("NoButtonContent", typeof(object), typeof(MetroPopup), new UIPropertyMetadata(SystemStrings.No));
 
         public object NoButtonContent
         {
@@ -110,7 +121,7 @@ namespace MahApps.Metro.Controls
 
         #region CancelButtonContent
         public static readonly DependencyProperty CancelButtonContentProperty =
-            DependencyProperty.Register("CancelButtonContent", typeof(object), typeof(MetroPopup), new UIPropertyMetadata("Cancel"));
+            DependencyProperty.Register("CancelButtonContent", typeof(object), typeof(MetroPopup), new UIPropertyMetadata(SystemStrings.Cancel));
 
         public object CancelButtonContent
         {
@@ -268,10 +279,8 @@ namespace MahApps.Metro.Controls
             var metroPopup = d as MetroPopup;
             var value = (bool)basevalue;
 
-            if (metroPopup == null)
-                return basevalue;
-
-            metroPopup.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+            if (metroPopup != null)
+                metroPopup.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
 
             return basevalue;
         }
@@ -381,8 +390,13 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            ChangeVisualState(PopupButton.ToString(), true);
-            ChangeVisualState(GetVisualState(PopupImage), true);
+            _okButton = GetTemplateChild(PART_OkButton) as Button;
+            _yesButton = GetTemplateChild(PART_YesButton) as Button;
+            _noButton = GetTemplateChild(PART_NoButton) as Button;
+            _cancelButton = GetTemplateChild(PART_CancelButton) as Button;
+
+            ChangeVisualState(PopupButton == PopupButton.None ? VisualStates.NoneButton : PopupButton.ToString(), true);
+            ChangeVisualState(PopupImage == PopupImage.None ? VisualStates.NoneImage : PopupImage.ToString(), true);
 
             SetDefaultResult();
         }
@@ -413,22 +427,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private string GetVisualState(PopupImage image)
-        {
-            switch (image)
-            {
-                case PopupImage.Error:
-                    return VisualStates.Error;
-                case PopupImage.Question:
-                    return VisualStates.Question;
-                case PopupImage.Warning:
-                    return VisualStates.Warning;
-                case PopupImage.Information:
-                    return VisualStates.Information;
-                default:
-                    return VisualStates.NoneImage;
-            }
-        }
 
         /// <summary>
         /// Gets the default button from the _defaultResult.
@@ -436,26 +434,21 @@ namespace MahApps.Metro.Controls
         /// <returns>The default button that represents the defaultResult</returns>
         private Button GetDefaultButtonFromDefaultResult()
         {
-            object defaultButton = null;
             switch (_defaultResult)
             {
-                case PopupResult.Cancel:
-                    defaultButton = GetTemplateChild(PART_CancelButton);
-                    break;
-                case PopupResult.No:
-                    defaultButton = GetTemplateChild(PART_NoButton);
-                    break;
                 case PopupResult.OK:
-                    defaultButton = GetTemplateChild(PART_OkButton);
-                    break;
+                    return _okButton;
                 case PopupResult.Yes:
-                    defaultButton = GetTemplateChild(PART_YesButton);
-                    break;
+                    return _yesButton;
+                case PopupResult.No:
+                    return _noButton;
+                case PopupResult.Cancel:
+                    return _cancelButton;
                 case PopupResult.None:
-                    defaultButton = GetDefaultButton();
-                    break;
+                    return GetDefaultButton();
             }
-            return defaultButton as Button;
+
+            return null;
         }
 
         /// <summary>
@@ -465,19 +458,17 @@ namespace MahApps.Metro.Controls
         /// <returns>The button to use as the default</returns>
         private Button GetDefaultButton()
         {
-            object defaultButton = null;
             switch (PopupButton)
             {
                 case PopupButton.OK:
                 case PopupButton.OKCancel:
-                    defaultButton = GetTemplateChild(PART_OkButton);
-                    break;
+                    return _okButton;
                 case PopupButton.YesNo:
                 case PopupButton.YesNoCancel:
-                    defaultButton = GetTemplateChild(PART_YesButton);
-                    break;
+                    return _yesButton;
             }
-            return defaultButton as Button;
+
+            return null;
         }
 
         /// <summary>
@@ -492,7 +483,9 @@ namespace MahApps.Metro.Controls
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">Static methods for MessageBoxes are not available in XBAP.
         /// Use the instance ShowMessageBox methods instead.</exception>
-        private static PopupResult ShowCore(string messageText, string caption, PopupButton button, PopupImage icon, PopupResult defaultResult, Style messageBoxStyle)
+        private static PopupResult ShowCore(string messageText, string caption,
+                                            PopupButton button, PopupImage icon, PopupResult defaultResult,
+                                            Style messageBoxStyle)
         {
             if (System.Windows.Interop.BrowserInteropHelper.IsBrowserHosted)
                 throw new InvalidOperationException("Static methods for MessageBoxes are not available in XBAP. Use the instance ShowMessageBox methods instead.");
@@ -505,7 +498,7 @@ namespace MahApps.Metro.Controls
                 messageBox.Style = messageBoxStyle;
 
             if (Application.Current.MainWindow.Content as Visual == null)
-                return PopupResult.None;            
+                return PopupResult.None;
 
             var layer = AdornerLayer.GetAdornerLayer(Application.Current.MainWindow.Content as Visual);
             var contentAd = new ControlAdorner(Application.Current.MainWindow.Content as UIElement) { Child = messageBox };
@@ -566,7 +559,6 @@ namespace MahApps.Metro.Controls
             messageBox.HookUpCommand((ICommand)e.OldValue, (ICommand)e.NewValue);
         }
 
-
         /// <summary>
         /// Add a new command to the Command Property.
         /// </summary>
@@ -592,31 +584,23 @@ namespace MahApps.Metro.Controls
         {
             if (sender == OKCommand)
             {
-                var button = GetTemplateChild(PART_OkButton) as Button;
-
-                if (button != null)
-                    button.IsEnabled = OKCommand.CanExecute(OKCommandParameter);
+                if (_okButton != null)
+                    _okButton.IsEnabled = OKCommand.CanExecute(OKCommandParameter);
             }
             else if (sender == YesCommand)
             {
-                var button = GetTemplateChild(PART_YesButton) as Button;
-
-                if (button != null)
-                    button.IsEnabled = YesCommand.CanExecute(YesCommandParameter);
+                if (_yesButton != null)
+                    _yesButton.IsEnabled = YesCommand.CanExecute(YesCommandParameter);
             }
             else if (sender == NoCommand)
             {
-                var button = GetTemplateChild(PART_NoButton) as Button;
-
-                if (button != null)
-                    button.IsEnabled = NoCommand.CanExecute(NoCommandParameter);
+                if (_noButton != null)
+                    _noButton.IsEnabled = NoCommand.CanExecute(NoCommandParameter);
             }
             else if (sender == CancelCommand)
             {
-                var button = GetTemplateChild(PART_CancelButton) as Button;
-
-                if (button != null)
-                    button.IsEnabled = CancelCommand.CanExecute(CancelCommandParameter);
+                if (_cancelButton != null)
+                    _cancelButton.IsEnabled = CancelCommand.CanExecute(CancelCommandParameter);
             }
         }
         #endregion //Private
@@ -667,11 +651,12 @@ namespace MahApps.Metro.Controls
                     if (CancelCommand != null)
                         CancelCommand.Execute(CancelCommandParameter);
                     break;
+                default:
+                    return;
             }
 
-            Close();
-
             e.Handled = true;
+            Close();
         }
 
         private static void MainWindow_Closing(object sender, CancelEventArgs e)
@@ -771,6 +756,98 @@ namespace MahApps.Metro.Controls
         public PopupClosedEventArgs(PopupResult popupResult)
         {
             PopupResult = popupResult;
+        }
+    }
+
+    internal static class SystemStrings
+    {
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern int LoadString(IntPtr hInstance, uint uID, StringBuilder lpBuffer, int nBufferMax);
+        [DllImport("kernel32")]
+        static extern IntPtr LoadLibrary(string lpFileName);
+
+        private const uint OK_CAPTION = 800;
+        private const uint CANCEL_CAPTION = 801;
+        private const uint ABORT_CAPTION = 802;
+        private const uint RETRY_CAPTION = 803;
+        private const uint IGNORE_CAPTION = 804;
+        private const uint YES_CAPTION = 805;
+        private const uint NO_CAPTION = 806;
+        private const uint CLOSE_CAPTION = 807;
+        private const uint HELP_CAPTION = 808;
+        private const uint TRYAGAIN_CAPTION = 809;
+        private const uint CONTINUE_CAPTION = 810;
+
+        private static readonly StringBuilder StringBuilder;
+
+        private static readonly IntPtr User32;
+
+        static SystemStrings()
+        {
+            StringBuilder = new StringBuilder(256);
+
+            User32 = LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+        }
+
+        public static string OK
+        {
+            get { return GetString(OK_CAPTION); }
+        }
+
+        public static string Cancel
+        {
+            get { return GetString(CANCEL_CAPTION); }
+        }
+
+        public static string Abort
+        {
+            get { return GetString(ABORT_CAPTION); }
+        }
+
+        public static string Retry
+        {
+            get { return GetString(RETRY_CAPTION); }
+        }
+
+        public static string Ignore
+        {
+            get { return GetString(IGNORE_CAPTION); }
+        }
+
+        public static string Yes
+        {
+            get { return GetString(YES_CAPTION); }
+        }
+
+        public static string No
+        {
+            get { return GetString(NO_CAPTION); }
+        }
+
+        public static string Close
+        {
+            get { return GetString(CLOSE_CAPTION); }
+        }
+
+        public static string Help
+        {
+            get { return GetString(HELP_CAPTION); }
+        }
+
+        public static string TryAgain
+        {
+            get { return GetString(TRYAGAIN_CAPTION); }
+        }
+
+        public static string Continue
+        {
+            get { return GetString(CONTINUE_CAPTION); }
+        }
+
+        private static string GetString(uint code)
+        {
+            LoadString(User32, code, StringBuilder, StringBuilder.Capacity);
+            return StringBuilder.ToString().Trim('&');
         }
     }
 }
