@@ -4,6 +4,9 @@
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters"
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours">
 
+    <Controls:MetroAnimatedSingleRowTabControlVerticalScrollMargin x:Key="MetroAnimatedSingleRowTabControlVerticalScrollMargin" />
+    <Controls:MetroAnimatedSingleRowTabControlHorizontalScrollMargin x:Key="MetroAnimatedSingleRowTabControlHorizontalScrollMargin" />
+
     <ControlTemplate x:Key="HorizontalScrollBarTemplate" TargetType="{x:Type ScrollBar}">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -22,7 +25,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                    <Border Background="{x:Null}" Height="18" Width="18" >
+                                    <Border Background="{x:Null}" Height="18" Width="18" VerticalAlignment="Center">
                                         <Path Data=" M 8 15 L 8 3 L 2 9 Z" Fill="{DynamicResource BlackBrush}" />
                                     </Border>
                                 </ControlTemplate>
@@ -42,7 +45,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                    <Border Background="{x:Null}" Height="18" Width="18" >
+                                    <Border Background="{x:Null}" Height="18" Width="18" VerticalAlignment="Center">
                                         <Path Data=" M 9 15 L 9 3 L 15 9 Z" Fill="{DynamicResource BlackBrush}" />
                                     </Border>
                                 </ControlTemplate>
@@ -72,7 +75,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                    <Border Background="{x:Null}" Height="18" Width="18" >
+                                    <Border Background="{x:Null}" HorizontalAlignment="Center">
                                         <Path Data=" M 2 9 L 14 9 L 8 3 Z" Fill="{DynamicResource BlackBrush}" />
                                     </Border>
                                 </ControlTemplate>
@@ -92,7 +95,7 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                    <Border Background="{x:Null}" Height="18" Width="18" >
+                                    <Border Background="{x:Null}" HorizontalAlignment="Center">
                                         <Path Data=" M 2 10 L 14 10 L 8 16 Z" Fill="{DynamicResource BlackBrush}" />
                                     </Border>
                                 </ControlTemplate>
@@ -115,7 +118,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <ScrollBar x:Name="PART_HorizontalScrollBar" Height="14" Cursor="Arrow" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Grid.Column="0" Grid.Row="0" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" AutomationProperties.AutomationId="HorizontalScrollBar" Template="{DynamicResource HorizontalScrollBarTemplate}"/>
-            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Margin="15,2,15,0" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Grid.Column="0" Grid.Row="0" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False"/>
+            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" VerticalAlignment="Center" Margin="{TemplateBinding ComputedHorizontalScrollBarVisibility, Converter={StaticResource MetroAnimatedSingleRowTabControlHorizontalScrollMargin}}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Grid.Column="0" Grid.Row="0" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False"/>
         </Grid>
     </ControlTemplate>
 
@@ -130,7 +133,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <ScrollBar x:Name="PART_VerticalScrollBar" Width="14" Cursor="Arrow" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Grid.Column="0" Grid.Row="0" Orientation="Vertical" ViewportSize="{TemplateBinding ViewportHeight}" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" AutomationProperties.AutomationId="VerticalScrollBar" Template="{DynamicResource VerticalScrollBarTemplate}"/>
-            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" Margin="0,20,0,20" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Grid.Column="0" Grid.Row="0" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False"/>
+            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" HorizontalAlignment="Center" Margin="{TemplateBinding ComputedVerticalScrollBarVisibility, Converter={StaticResource MetroAnimatedSingleRowTabControlVerticalScrollMargin}}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Grid.Column="0" Grid.Row="0" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False"/>
         </Grid>
     </ControlTemplate>
 
