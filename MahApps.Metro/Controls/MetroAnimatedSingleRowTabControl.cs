@@ -19,7 +19,7 @@ namespace MahApps.Metro.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((Visibility)value) == Visibility.Collapsed ? new Thickness(0, 2, 0, 2) : new Thickness(0, 15, 0, 15);
+            return ((Visibility)value) == Visibility.Collapsed ? new Thickness(0, 2, 0, 2) : new Thickness(0, 20, 0, 20);
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -31,7 +31,7 @@ namespace MahApps.Metro.Controls
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((Visibility)value) == Visibility.Collapsed ? new Thickness(2, 2, 2, 0) : new Thickness(15, 2, 15, 0);
+            return ((Visibility)value) == Visibility.Collapsed ? new Thickness(2, 2, 2, 0) : new Thickness(20, 2, 20, 0);
         }
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

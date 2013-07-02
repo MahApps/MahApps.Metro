@@ -14,7 +14,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition MaxWidth="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarButtonWidthKey}}"/>
             </Grid.ColumnDefinitions>
-            <RepeatButton IsEnabled="{TemplateBinding IsMouseOver}" Command="ScrollBar.PageLeftCommand">
+            <RepeatButton IsEnabled="{TemplateBinding IsMouseOver}" Command="ScrollBar.PageLeftCommand" Width="18" MinHeight="24">
                 <RepeatButton.Style>
                     <Style TargetType="{x:Type RepeatButton}">
                         <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -25,8 +25,8 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                    <Border Background="{x:Null}" Height="18" Width="18" VerticalAlignment="Center">
-                                        <Path Data=" M 8 15 L 8 3 L 2 9 Z" Fill="{DynamicResource BlackBrush}" />
+                                    <Border Background="Transparent">
+                                        <Path Data=" M 6 15 L 6 3 L 0 9 Z" Fill="{DynamicResource BlackBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -34,7 +34,7 @@
                     </Style>
                 </RepeatButton.Style>
             </RepeatButton>
-            <RepeatButton IsEnabled="{TemplateBinding IsMouseOver}" Command="ScrollBar.PageRightCommand" Grid.Column="2">
+            <RepeatButton IsEnabled="{TemplateBinding IsMouseOver}" Command="ScrollBar.PageRightCommand" Grid.Column="2" Width="18" MinHeight="24">
                 <RepeatButton.Style>
                     <Style TargetType="{x:Type RepeatButton}">
                         <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -45,8 +45,8 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                    <Border Background="{x:Null}" Height="18" Width="18" VerticalAlignment="Center">
-                                        <Path Data=" M 9 15 L 9 3 L 15 9 Z" Fill="{DynamicResource BlackBrush}" />
+                                    <Border Background="Transparent">
+                                        <Path Data=" M 0 15 L 0 3 L 6 9 Z" Fill="{DynamicResource BlackBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -64,7 +64,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition MaxHeight="{DynamicResource {x:Static SystemParameters.VerticalScrollBarButtonHeightKey}}"/>
             </Grid.RowDefinitions>
-            <RepeatButton IsEnabled="{TemplateBinding IsMouseOver}" Command="ScrollBar.PageUpCommand">
+            <RepeatButton IsEnabled="{TemplateBinding IsMouseOver}" Command="ScrollBar.PageUpCommand" Height="18" MinWidth="24">
                 <RepeatButton.Style>
                     <Style TargetType="{x:Type RepeatButton}">
                         <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -75,8 +75,8 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                    <Border Background="{x:Null}" HorizontalAlignment="Center">
-                                        <Path Data=" M 2 9 L 14 9 L 8 3 Z" Fill="{DynamicResource BlackBrush}" />
+                                    <Border Background="Transparent">
+                                        <Path Data=" M 2 6 L 14 6 L 8 0 Z" Fill="{DynamicResource BlackBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -84,7 +84,7 @@
                     </Style>
                 </RepeatButton.Style>
             </RepeatButton>
-            <RepeatButton IsEnabled="{TemplateBinding IsMouseOver}" Command="ScrollBar.PageDownCommand" Grid.Row="2">
+            <RepeatButton IsEnabled="{TemplateBinding IsMouseOver}" Command="ScrollBar.PageDownCommand" Grid.Row="2" Height="18" MinWidth="24">
                 <RepeatButton.Style>
                     <Style TargetType="{x:Type RepeatButton}">
                         <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -95,8 +95,8 @@
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                    <Border Background="{x:Null}" HorizontalAlignment="Center">
-                                        <Path Data=" M 2 10 L 14 10 L 8 16 Z" Fill="{DynamicResource BlackBrush}" />
+                                    <Border Background="Transparent">
+                                        <Path Data=" M 2 0 L 14 0 L 8 6 Z" Fill="{DynamicResource BlackBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -117,7 +117,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ScrollBar x:Name="PART_HorizontalScrollBar" Height="14" Cursor="Arrow" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Grid.Column="0" Grid.Row="0" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" AutomationProperties.AutomationId="HorizontalScrollBar" Template="{DynamicResource HorizontalScrollBarTemplate}"/>
+            <ScrollBar x:Name="PART_HorizontalScrollBar" Height="{TemplateBinding Height}" Cursor="Arrow" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Grid.Column="0" Grid.Row="0" Orientation="Horizontal" ViewportSize="{TemplateBinding ViewportWidth}" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" AutomationProperties.AutomationId="HorizontalScrollBar" Template="{DynamicResource HorizontalScrollBarTemplate}"/>
             <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" VerticalAlignment="Center" Margin="{TemplateBinding ComputedHorizontalScrollBarVisibility, Converter={StaticResource MetroAnimatedSingleRowTabControlHorizontalScrollMargin}}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Grid.Column="0" Grid.Row="0" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False"/>
         </Grid>
     </ControlTemplate>
@@ -132,7 +132,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ScrollBar x:Name="PART_VerticalScrollBar" Width="14" Cursor="Arrow" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Grid.Column="0" Grid.Row="0" Orientation="Vertical" ViewportSize="{TemplateBinding ViewportHeight}" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" AutomationProperties.AutomationId="VerticalScrollBar" Template="{DynamicResource VerticalScrollBarTemplate}"/>
+            <ScrollBar x:Name="PART_VerticalScrollBar" Width="{TemplateBinding Width}" Cursor="Arrow" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Grid.Column="0" Grid.Row="0" Orientation="Vertical" ViewportSize="{TemplateBinding ViewportHeight}" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" AutomationProperties.AutomationId="VerticalScrollBar" Template="{DynamicResource VerticalScrollBarTemplate}"/>
             <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" HorizontalAlignment="Center" Margin="{TemplateBinding ComputedVerticalScrollBarVisibility, Converter={StaticResource MetroAnimatedSingleRowTabControlVerticalScrollMargin}}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Grid.Column="0" Grid.Row="0" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False"/>
         </Grid>
     </ControlTemplate>
