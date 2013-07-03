@@ -28,7 +28,8 @@ namespace MahApps.Metro.Controls
         void MetroTabItem_Unloaded(object sender, RoutedEventArgs e)
         {
             this.Unloaded -= MetroTabItem_Unloaded;
-            closeButton.Click -= closeButton_Click;
+            if (closeButton != null)
+                closeButton.Click -= closeButton_Click;
 
             closeButtonClickUnloaded = true;
         }
