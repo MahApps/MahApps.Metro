@@ -17,7 +17,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">
                     <StackPanel x:Name="rootpanel" Orientation="Horizontal">
-                        <Label x:Name="root" FontSize="{TemplateBinding HeaderFontSize}">
+                        <Label x:Name="root" FontSize="{TemplateBinding HeaderFontSize}" FontStretch="{TemplateBinding HeaderFontStretch}" FontWeight="{TemplateBinding HeaderFontWeight}">
                             <ContentPresenter ContentSource="Header"  RecognizesAccessKey="True" />
                         </Label>
                         <Button x:Name="PART_CloseButton" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" Width="20"

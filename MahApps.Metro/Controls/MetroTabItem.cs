@@ -77,6 +77,25 @@ namespace MahApps.Metro.Controls
 
                 })));
 
+        public FontStretch HeaderFontStretch
+        {
+            get { return (FontStretch)GetValue(HeaderFontStretchProperty); }
+            set { SetValue(HeaderFontStretchProperty, value); }
+        }
+
+        public static readonly DependencyProperty HeaderFontStretchProperty =
+            DependencyProperty.Register("HeaderFontStretch", typeof(FontStretch), typeof(MetroTabItem), new PropertyMetadata(FontStretches.Normal));
+
+
+        public FontWeight HeaderFontWeight
+        {
+            get { return (FontWeight)GetValue(HeaderFontWeightProperty); }
+            set { SetValue(HeaderFontWeightProperty, value); }
+        }
+
+        public static readonly DependencyProperty HeaderFontWeightProperty =
+            DependencyProperty.Register("HeaderFontWeight", typeof(FontWeight), typeof(MetroTabItem), new PropertyMetadata(FontWeights.Normal));
+
         public bool CloseButtonEnabled
         {
             get { return (bool)GetValue(CloseButtonEnabledProperty); }
