@@ -15,4 +15,8 @@
 
     <Color x:Key="GrayNormal">#FF7D7D7D</Color>
     <Color x:Key="GrayHover">#FFAAAAAA</Color>
+
+    <SolidColorBrush x:Key="GrayNormalBrush" Color="{StaticResource GrayNormal}" />
+    <SolidColorBrush x:Key="GrayHoverBrush" Color="{StaticResource GrayHover}" />
+    
 </ResourceDictionary>
