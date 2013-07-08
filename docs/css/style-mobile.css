@@ -1,0 +1,324 @@
+/*
+	Verti 2.0 by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+
+/*********************************************************************************/
+/* Basic                                                                         */
+/*********************************************************************************/
+
+	body
+	{
+		line-height: 1.75em;
+		font-size: 10pt;
+		letter-spacing: 0;
+	}
+
+	h2, h3, h4, h5, h6
+	{
+		font-size: 13pt;
+		margin: 0 0 1em 0;
+	}
+
+	section,
+	article
+	{
+		clear: both;
+		margin-bottom: 3em !important;
+	}
+	
+	section.last,
+	article.last
+	{
+		margin-bottom: 0 !important;
+	}
+
+	.image-left
+	{
+		width: 25%;
+		margin-bottom: 2em !important;
+	}
+	
+	.button
+	{
+		width: 100%;
+		text-align: center;
+		font-size: 1.35em;
+		padding: 1.1em 0 1.1em 0;
+	}
+
+	.box
+	{
+		padding: 15px 15px 15px 15px;
+		margin: 0;
+	}		
+
+	.box-feature
+	{
+		margin: 20px 0 0 0 !important;
+		padding: 0;
+	}
+	
+		.box-feature .inner
+		{
+			padding: 30px 15px 30px 15px;
+		}
+		
+		.box-feature p
+		{
+			margin: 0;
+		}
+
+		.box-feature .image
+		{
+			position: relative;
+			margin: 0;
+		}
+
+			.box-feature .image img
+			{
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+
+/*********************************************************************************/
+/* Widgets                                                                       */
+/*********************************************************************************/
+
+	.widget-thumbnails
+	{
+	}
+
+		.widget-thumbnails .image
+		{
+			margin: 0;
+		}
+	
+		.widget-thumbnails .x
+		{
+			padding: 1em 0.5em 0 0;
+		}
+	
+		.widget-thumbnails .y
+		{
+			padding: 1em 0 0 0.5em;
+		}
+
+		.widget-thumbnails .row:first-child .x,
+		.widget-thumbnails .row:first-child .y
+		{
+			padding-top: 0;
+		}	
+
+/*********************************************************************************/
+/* Mobile UI                                                                     */
+/*********************************************************************************/
+
+	#titleBar
+	{
+	}
+
+		#titleBar .title
+		{
+			display: none;
+		}
+
+		#titleBar .toggle
+		{
+			text-indent: -9999em;
+			width: 70px;
+			height: 50px;
+			opacity: 0.35;
+		}
+
+			#titleBar .toggle:before
+			{
+				content: '';
+				position: absolute;
+				left: 6px;
+				top: 6px;
+				background: rgba(0,0,0,0.5);
+				width: 58px;
+				height: 38px;
+				border-radius: 6px;
+			}
+
+			#titleBar .toggle:after
+			{
+				content: '';
+				position: absolute;
+				left: 21px;
+				top: 20px;
+				width: 44px;
+				height: 44px;
+				background: url('images/mobileUI-site-nav-opener-bg.svg') 0 0 no-repeat;
+			}
+
+			#titleBar .toggle:active
+			{
+				opacity: 0.75;
+			}
+
+	#navPanel
+	{
+		background: #fff;
+		box-shadow: inset -3px 0px 0px 0px #dfdfdf;
+		padding: 0 23px 0 20px;
+	}
+
+		#navPanel .link
+		{
+			display: block;
+			text-decoration: none;
+			height: 54px;
+			line-height: 54px;
+			border-top: solid 1px #e8e8e8;
+			font-weight: 800;
+		}
+		
+			#navPanel .link:first-child
+			{
+				border-top: 0;
+			}
+
+/*********************************************************************************/
+/* Wrappers                                                                      */
+/*********************************************************************************/
+
+	#header-wrapper
+	{
+		padding: 44px 0 0px 0;
+	}
+	
+	#banner-wrapper
+	{
+		padding: 0 15px 0 15px;
+	}
+	
+	#features-wrapper
+	{
+		padding: 0 15px 40px 15px;
+	}
+	
+	#main-wrapper
+	{
+		padding: 40px 30px 40px 30px;
+	}
+	
+	#footer-wrapper
+	{
+		padding: 40px 30px 40px 30px;
+	}
+
+/*********************************************************************************/
+/* Logo                                                                          */
+/*********************************************************************************/
+
+	#logo
+	{
+		text-align: center;
+	}
+
+		#logo h1
+		{
+			display: inline-block;
+			margin: 0 0 0.2em 0;
+			padding: 0.25em 0.2em 0.25em 0.2em;
+			font-size: 3.25em;
+			letter-spacing: 0.05em;
+		}
+
+		#logo span
+		{
+			display: block;
+			letter-spacing: 0.025em;
+			font-size: 0.9em;
+			margin: 0;
+		}
+
+/*********************************************************************************/
+/* Nav                                                                           */
+/*********************************************************************************/
+
+	#nav
+	{
+		display: none;
+	}
+
+/*********************************************************************************/
+/* Banner                                                                        */
+/*********************************************************************************/
+
+	#banner
+	{
+		text-align: center;
+	}
+	
+		#banner h2
+		{
+			font-size: 2em;
+			margin: 0.75em 0 0.5em 0;
+		}
+		
+		#banner p
+		{
+			font-size: 1.5em;
+			line-height: 1.5em;
+			margin: 0;
+		}
+
+		#banner ul
+		{
+			margin: 0;
+		}
+		
+		#banner .button
+		{
+			margin: 1em 0 0 0;
+		}
+
+/*********************************************************************************/
+/* Content                                                                       */
+/*********************************************************************************/
+
+	#content
+	{
+	}
+
+		body.left-sidebar #content,
+		body.right-sidebar #content
+		{
+			border-bottom: solid 1px #e8e8e8;
+			padding-bottom: 3em;
+			margin-bottom: 3em !important;
+		}
+
+/*********************************************************************************/
+/* Footer                                                                        */
+/*********************************************************************************/
+
+	#footer
+	{
+	}
+
+		#footer section
+		{
+			border-bottom: solid 1px #ccc;
+			padding-bottom: 2em;
+			margin-bottom: 2em !important;
+		}
+		
+			#footer section.last
+			{
+				padding-bottom: 0;
+				border-bottom: 0;
+				margin-bottom: 0 !important;
+			}
+
+	#copyright
+	{
+		padding: 2em 0 0 0;
+		border-top: solid 1px #ccc;
+		margin: 4em 0 0 0;
+	}

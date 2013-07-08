@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="en-au" http-equiv="Content-Language" />
+		<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<title>{{page.title}}</title>
+		<link rel="stylesheet" type="text/css" href="/css/metro.blue.css" />
+		<link rel="stylesheet" type="text/css" href="/css/style-old.css" />
+		<link rel="shortcut icon" href="/favicon.png" />
+		<script src="//code.jquery.com/jquery.min.js" type="text/javascript"></script>
+		<script src="/js/mustache.js" ></script>
+		<script src="/js/site.js" ></script>
+		<script id="contributorTemplate" type="text/x-jQuery-tmpl">
+			{{each contributors}}
+				<h3 style="margin-top:0px;"><img src="http://gravatar.com/avatar/${gravatar_id}?s=25" alt="${ name }" /> <a href="https://github.com/${login}">${name || login}</a> - (${contributions} commits)</h3>
+			{{/each}}
+		</script>
+	</head>
+	<body id="top">
+		<div id="content">
+			{{content}}
+
+			<script type="text/javascript">
+
+			</script>
+		</div>
+		<div class="current-section">
+			<p class="name"></p>
+			<a href="#top">Scroll to top</a>
+		</div>
+	</body>
+</html>

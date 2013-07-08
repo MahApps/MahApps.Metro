@@ -28,6 +28,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo.NET45", "samples\
 		{56E8080F-FFEB-47CD-ADB9-92245F92565B} = {56E8080F-FFEB-47CD-ADB9-92245F92565B}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{89937712-2A68-4082-8A3E-72A1BBCAD94D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
