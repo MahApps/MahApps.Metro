@@ -54,7 +54,7 @@ namespace MahApps.Metro.Behaviours
             return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
         }
 
-        private static void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
+        private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
             var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
 
@@ -71,6 +71,15 @@ namespace MahApps.Metro.Behaviours
                 mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
                 mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
                 mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+
+                bool ignoreTaskBar = AssociatedObject as MetroWindow != null && ((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize;
+
+                if (!ignoreTaskBar)
+                {
+                    mmi.ptMaxTrackSize.X = mmi.ptMaxSize.X;
+                    mmi.ptMaxTrackSize.Y = mmi.ptMaxSize.Y;
+                    mmi = AdjustWorkingAreaForAutoHide(monitor, mmi);
+                }
             }
 
             Marshal.StructureToPtr(mmi, lParam, true);
@@ -170,11 +179,70 @@ namespace MahApps.Metro.Behaviours
                 var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
                 var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
                 var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
-
-                // Pull off one pixel as a taskbar set to auto-hide wouldn't reappear otherwise
-                var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y - 1);
+                var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
                 UnsafeNativeMethods.SetWindowPos(_mHWND, new IntPtr(-2), x, y, cx, cy, 0x0040);
             }
+        }
+
+        private static int GetEdge(RECT rc)
+        {
+            int uEdge;
+            if (rc.top == rc.left && rc.bottom > rc.right)
+                uEdge = (int)ABEdge.ABE_LEFT;
+            else if (rc.top == rc.left && rc.bottom < rc.right)
+                uEdge = (int)ABEdge.ABE_TOP;
+            else if (rc.top > rc.left)
+                uEdge = (int)ABEdge.ABE_BOTTOM;
+            else
+                uEdge = (int)ABEdge.ABE_RIGHT;
+            return uEdge;
+        }
+
+        /// <summary>
+        /// This method handles the window size if the taskbar is set to auto-hide.
+        /// </summary>
+        private static MINMAXINFO AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, MINMAXINFO mmi)
+        {
+            IntPtr hwnd = UnsafeNativeMethods.FindWindow("Shell_TrayWnd", null);
+            IntPtr monitorWithTaskbarOnIt = UnsafeNativeMethods.MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
+
+            if (!monitorContainingApplication.Equals(monitorWithTaskbarOnIt))
+                return mmi;
+
+            var abd = new APPBARDATA();
+            abd.cbSize = Marshal.SizeOf(abd);
+            abd.hWnd = hwnd;
+            UnsafeNativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, ref abd);
+            int uEdge = GetEdge(abd.rc);
+            bool autoHide = Convert.ToBoolean(UnsafeNativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETSTATE, ref abd));
+
+            if (!autoHide)
+                return mmi;
+
+            switch (uEdge)
+            {
+                case (int)ABEdge.ABE_LEFT:
+                    mmi.ptMaxPosition.X += 2;
+                    mmi.ptMaxTrackSize.X -= 2;
+                    mmi.ptMaxSize.X -= 2;
+                    break;
+                case (int)ABEdge.ABE_RIGHT:
+                    mmi.ptMaxSize.X -= 2;
+                    mmi.ptMaxTrackSize.X -= 2;
+                    break;
+                case (int)ABEdge.ABE_TOP:
+                    mmi.ptMaxPosition.Y += 2;
+                    mmi.ptMaxTrackSize.Y -= 2;
+                    mmi.ptMaxSize.Y -= 2;
+                    break;
+                case (int)ABEdge.ABE_BOTTOM:
+                    mmi.ptMaxSize.Y -= 2;
+                    mmi.ptMaxTrackSize.Y -= 2;
+                    break;
+                default:
+                    return mmi;
+            }
+            return mmi;
         }
 
         protected override void OnDetaching()
