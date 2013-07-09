@@ -232,6 +232,10 @@
                                      Text="Clear button" />
                             <TextBox Margin="0, 10, 0, 0"
                                      VerticalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Search style"
+                                     Style="{DynamicResource SearchMetroTextBox}" />
+                            <TextBox Margin="0, 10, 0, 0"
+                                     VerticalContentAlignment="Center"
                                      Controls:TextboxHelper.Watermark="Number smaller than 10"
                                      Text="{Binding IntegerGreater10Property,
                                                     ValidatesOnDataErrors=True,
@@ -250,6 +254,11 @@
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      IsEnabled="False"
                                      Text="Clear button" />
+                            <TextBox Margin="0, 10, 0, 0"
+                                     VerticalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Search style"
+                                     IsEnabled="False"
+                                     Style="{DynamicResource SearchMetroTextBox}" />
                             <TextBox Margin="0, 10, 0, 0"
                                      VerticalContentAlignment="Center"
                                      Controls:TextboxHelper.Watermark="Number smaller than 10"
