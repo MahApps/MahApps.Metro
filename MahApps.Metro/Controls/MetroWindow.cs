@@ -28,8 +28,15 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbarOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FreezableCollection<Flyout>), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         bool isDragging;
+
+        public bool WindowTransitionsEnabled
+        {
+            get { return (bool)this.GetValue(WindowTransitionsEnabledProperty); }
+            set { SetValue(WindowTransitionsEnabledProperty, value); }
+        }
 
         public FreezableCollection<Flyout> Flyouts
         {
