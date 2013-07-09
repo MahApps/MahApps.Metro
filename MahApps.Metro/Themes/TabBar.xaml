@@ -25,7 +25,7 @@
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Border>
-                                             <Label Content="{Binding Header}" Foreground="White" FontSize="15" Padding="10 0 0 0" Margin="0 5 0 5"/>
+                                             <Label Content="{Binding Header}" Foreground="White" FontSize="15" Padding="10 0 0 0" Margin="20 5 0 5"/>
                                         </Border>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
@@ -34,7 +34,7 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <ContentPresenter Content="{TemplateBinding SelectedItem}" Grid.Column="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_Presenter" />
+                    <Controls:MetroContentControl Content="{TemplateBinding SelectedItem}" Grid.Column="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_Presenter" />
                 </Grid>
             </Border>
         </Grid>

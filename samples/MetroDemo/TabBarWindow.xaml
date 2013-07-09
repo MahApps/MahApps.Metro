@@ -19,15 +19,25 @@
     <Grid>
         <Controls:TabBar VerticalAlignment="Stretch">
             <Controls:TabBar.UpperTabBarContent>
-                <StackPanel Height="100">
+                <StackPanel Height="100" Margin="0 20 0 0">
                     <Rectangle Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Rectangle.Fill>
                             <VisualBrush Visual="{StaticResource appbar_cupcake}" Stretch="Fill"/>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBox Controls:TextboxHelper.Watermark="Search..." Background="Transparent" Foreground="White"/>
+                    <TextBox Controls:TextboxHelper.Watermark="Search..." Background="Transparent" Foreground="White" Margin="10 0 10 0"/>
                 </StackPanel>
             </Controls:TabBar.UpperTabBarContent>
+            <Controls:TabBar.LowerTabBarContent>
+                <StackPanel>
+                    <Separator/>
+                    <ListBox x:Name="randomListBox">
+                        <ListBox.Foreground>
+                            <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                        </ListBox.Foreground>
+                    </ListBox>
+                </StackPanel>
+            </Controls:TabBar.LowerTabBarContent>
             <Controls:TabBarItem Header="Discover">
                 <Grid>
                     <TextBlock Text="Hello World!"/>

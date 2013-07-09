@@ -53,7 +53,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();       
 
-            PART_Presenter = (ContentPresenter)GetTemplateChild("PART_Presenter");
+            PART_Presenter = (MetroContentControl)GetTemplateChild("PART_Presenter");
             PART_TabItems = (ListBox)GetTemplateChild("PART_TabItems");
 
             if (HasItems)
@@ -83,7 +83,7 @@ namespace MahApps.Metro.Controls
             base.OnRender(drawingContext);
         }
 
-        internal ContentPresenter PART_Presenter = null;
+        internal MetroContentControl PART_Presenter = null;
         private ListBox PART_TabItems = null;
     }
     public class TabBarItem : HeaderedContentControl

@@ -22,6 +22,9 @@ namespace MetroDemo
         public TabBarWindow()
         {
             InitializeComponent();
+
+            for (int i = 0; i < 5; i++)
+                randomListBox.Items.Add(new Random().Next(0, 101));
         }
     }
 }
