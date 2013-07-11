@@ -34,7 +34,8 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <Controls:MetroContentControl Content="{TemplateBinding SelectedItem}" Grid.Column="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_Presenter" />
+                    <Controls:MetroContentControl Content="{TemplateBinding SelectedItem}" ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                  Grid.Column="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_Presenter" />
                 </Grid>
             </Border>
         </Grid>

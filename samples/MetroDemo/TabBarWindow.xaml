@@ -30,7 +30,10 @@
             </Controls:TabBar.UpperTabBarContent>
             <Controls:TabBar.LowerTabBarContent>
                 <StackPanel>
-                    <Separator/>
+                    <Grid>
+                        <Separator/>
+                        <Label Panel.ZIndex="1" Content="Separator" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource AccentColorBrush}"/>
+                    </Grid>
                     <ListBox x:Name="randomListBox">
                         <ListBox.Foreground>
                             <SolidColorBrush Color="{DynamicResource WhiteColor}"/>

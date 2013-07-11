@@ -38,6 +38,13 @@ namespace MahApps.Metro.Controls
             get { return (object)GetValue(LowerTabBarContentProperty); }
             set { SetValue(LowerTabBarContentProperty, value); }
         }
+        public static readonly DependencyProperty ContentTemplateProperty =
+            DependencyProperty.Register("ContentTemplate", typeof(DataTemplate), typeof(TabBar), new PropertyMetadata(null));
+        public DataTemplate ContentTemplate
+        {
+            get { return (DataTemplate)GetValue(ContentTemplateProperty); }
+            set { SetValue(ContentTemplateProperty, value); }
+        }
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
