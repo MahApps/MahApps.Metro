@@ -379,7 +379,7 @@
                             </Setter>
                             <Setter Property="Foreground">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource WhiteColor}" />
+                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="Background">
