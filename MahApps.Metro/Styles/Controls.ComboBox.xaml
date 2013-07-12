@@ -3,6 +3,7 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Style TargetType="{x:Type ComboBox}" x:Key="MetroComboBox">
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -11,7 +12,8 @@
                 <SolidColorBrush Color="{DynamicResource Gray7}" />
             </Setter.Value>
         </Setter>
-        
+
+
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="1" />
@@ -165,29 +167,34 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="ContentPresenterBorder">
                             <Grid>
-                                <ToggleButton x:Name="DropDownToggle"
-                                              BorderBrush="{TemplateBinding BorderBrush}"
-                                              BorderThickness="{TemplateBinding BorderThickness}"
-                                              Background="{TemplateBinding Background}"
-                                              HorizontalAlignment="Stretch"
-                                              HorizontalContentAlignment="Right"
-                                              Margin="0"
-                                              Style="{DynamicResource comboToggleStyle}"
-                                              IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                              VerticalAlignment="Stretch"
-                                              KeyboardNavigation.IsTabStop="False">
-                                    <Path x:Name="BtnArrow"
-                                          Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
-                                          HorizontalAlignment="Right"
-                                          Height="4"
-                                          Margin="0,0,6,0"
-                                          Stretch="Uniform"
-                                          Width="8">
-                                        <Path.Fill>
-                                            <SolidColorBrush x:Name="BtnArrowColor" Color="{DynamicResource Gray3}" />
-                                        </Path.Fill>
-                                    </Path>
-                                </ToggleButton>
+                                <Border x:Name="DropDownToggleBorder" HorizontalAlignment="Stretch" 
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}" >
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="DropDownToggle"  BorderThickness="0"
+                                          Background="{TemplateBinding Background}"
+                                          HorizontalAlignment="Stretch"
+                                          HorizontalContentAlignment="Right"
+                                          Margin="0"
+                                          Style="{DynamicResource comboToggleStyle}"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          VerticalAlignment="Stretch"
+                                          KeyboardNavigation.IsTabStop="False">
+                                            <Path x:Name="BtnArrow"
+                                      Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
+                                      HorizontalAlignment="Right"
+                                      Height="4"
+                                      Margin="0,0,6,0"
+                                      Stretch="Uniform"
+                                      Width="8">
+                                                <Path.Fill>
+                                                    <SolidColorBrush x:Name="BtnArrowColor" Color="{DynamicResource Gray3}" />
+                                                </Path.Fill>
+                                            </Path>
+                                        </ToggleButton>
+                                        <Button x:Name="PART_ClearText" Margin="0,0,18,0" FontSize="16" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False" />
+                                    </Grid>
+                                </Border>
 
                                 <Border x:Name="EditableTextBoxBorder"
                                             Visibility="Collapsed"
@@ -272,16 +279,32 @@
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource GrayBrush5}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
+                        </Trigger>
+                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
+                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource BlackBrush}" />
+                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                        </Trigger>
+
                         <Trigger Property="IsEditable" Value="True">
                             <Setter Property="IsTabStop" Value="false"/>
                             <Setter TargetName="EditableTextBoxBorder" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
-                            <Setter TargetName="DropDownToggle" Property="Focusable" Value="False"/>
-                            <Setter TargetName="DropDownToggle" Property="HorizontalAlignment" Value="Right" />
+                            <Setter TargetName="DropDownToggleBorder" Property="Focusable" Value="False"/>
+                            <Setter TargetName="DropDownToggleBorder" Property="HorizontalAlignment" Value="Right" />
                             <Setter TargetName="DropDownToggle" Property="Background" Value="Transparent" />
-                            <Setter TargetName="DropDownToggle" Property="Width" Value="23" />
-                            <Setter TargetName="DropDownToggle" Property="BorderThickness" Value="0,1,1,1" />
+                            <Setter TargetName="DropDownToggleBorder" Property="Width" Value="40" />
+                            <Setter TargetName="DropDownToggleBorder" Property="BorderThickness" Value="0,1,1,1" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEditable" Value="True" />
+                                <Condition Property="Controls:TextboxHelper.ClearTextButton" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="EditableTextBoxBorder" Property="Margin" Value="0,0,40,0" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
