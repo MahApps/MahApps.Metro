@@ -19,8 +19,6 @@ namespace MetroDemo
             DataContext = new MainWindowViewModel();
             InitializeComponent();
             var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
-
-            new CleanWindowDemo().Show();
         }
 
         void Tick(object sender, EventArgs e)
@@ -92,6 +90,11 @@ namespace MetroDemo
         private void LaunchIcons(object sender, RoutedEventArgs e)
         {
             new IconsWindow().Show();
+        }
+
+        private void LauchCleanDemo(object sender, RoutedEventArgs e)
+        {
+            new CleanWindowDemo().Show();
         }
 
         private void LaunchRibbonDemo(object sender, RoutedEventArgs e)
