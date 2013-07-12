@@ -19,14 +19,22 @@ namespace MahApps.Metro.Behaviours
     {
         public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
         public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
-        public static readonly DependencyProperty EnableDWMDropShadowProperty =
-            DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false, new PropertyChangedCallback((obj, args) =>
+        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
+
+        public static readonly DependencyProperty AllowsTransparencyProperty =
+            DependencyProperty.Register("AllowsTransparency", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true, new PropertyChangedCallback((obj, args) =>
             {
                 var behaviorClass = ((BorderlessWindowBehavior)obj);
 
                 if (behaviorClass.AssociatedObject != null)
-                    behaviorClass.AssociatedObject.AllowsTransparency = !(bool)args.NewValue;
+                    behaviorClass.AssociatedObject.AllowsTransparency = (bool)args.NewValue;
             })));
+
+        public bool AllowsTransparency
+        {
+            get { return (bool)GetValue(AllowsTransparencyProperty); }
+            set { SetValue(AllowsTransparencyProperty, value); }
+        }
 
         public bool EnableDWMDropShadow
         {
@@ -89,7 +97,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
             AssociatedObject.WindowStyle = WindowStyle.None;
-            AssociatedObject.AllowsTransparency = !EnableDWMDropShadow;
+            AssociatedObject.AllowsTransparency = AllowsTransparency;
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
             AssociatedObject.SetValue(WindowChrome.GlassFrameThicknessProperty, new Thickness(-1));
 
