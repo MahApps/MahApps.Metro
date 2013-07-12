@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="TabBarWindow" Height="500" Width="600" ShowTitleBar="False" ShowActivated="True">
+        xmlns:Local="clr-namespace:MetroDemo"
+        Title="TabBarWindow" Height="500" Width="600" ShowTitleBar="False" ShowActivated="True" x:Name="thisWindow">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,43 +15,81 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="DefaultAlbumsDataTemplate">
+                <Label VerticalAlignment="Center" HorizontalAlignment="Center">Choose an album from the left.</Label>
+            </DataTemplate>
+            <DataTemplate x:Key="AlbumsDataTemplate">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <GroupBox Header="Album Cover">
+                            <Image Source="{Binding AlbumArtUrl}" Width="300"/>
+                        </GroupBox>
+                        <GroupBox Header="Info">
+                            <StackPanel>
+                                <Label FontSize="25" Content="{Binding Title}"/>
+                                <Label Content="{Binding Artist.Name}" ContentStringFormat="Artist: {0}"/>
+                                <Label Content="{Binding Genre.Name}" ContentStringFormat="Genre: {0}"/>
+                                <Label Content="{Binding Price}" ContentStringFormat="Price: {0}"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    <GroupBox Header="Songs included">
+                        <ListBox>
+                            <ListBoxItem>Random Song</ListBoxItem>
+                            <ListBoxItem>Random Song</ListBoxItem>
+                            <ListBoxItem>Random Song</ListBoxItem>
+                        </ListBox>
+                    </GroupBox>
+                </StackPanel>
+            </DataTemplate>
+            <DataTemplate x:Key="DefaultArtistDataTemplate">
+                <Label VerticalAlignment="Center" HorizontalAlignment="Center">Choose an artist from the left.</Label>
+            </DataTemplate>
+            <DataTemplate x:Key="ArtistDataTemplate">
+                <Label VerticalAlignment="Center" HorizontalAlignment="Center" Content="{Binding Name}" ContentStringFormat="Artist: {0}"/>
+            </DataTemplate>
+            <Local:SampleTemplateSelector x:Key="AlbumTemplateSelector" DefaultTemplate="{StaticResource DefaultAlbumsDataTemplate}" ItemTemplate="{StaticResource AlbumsDataTemplate}"/>
+            <Local:SampleTemplateSelector x:Key="ArtistTemplateSelector" DefaultTemplate="{StaticResource DefaultArtistDataTemplate}" ItemTemplate="{StaticResource ArtistDataTemplate}"/>
+
+
+            <DataTemplate x:Key="ArtistListBoxTemplate">
+                <Label Content="{Binding Name}">
+                    <Label.Foreground>
+                        <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                    </Label.Foreground>
+                </Label>
+            </DataTemplate>
+            <DataTemplate x:Key="AlbumListBoxTemplate">
+                <Label Content="{Binding Title}">
+                    <Label.Foreground>
+                        <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                    </Label.Foreground>
+                </Label>
+            </DataTemplate>
+            <Local:SampleDataTemplateSelector x:Key="ListBoxItemTemplateSelector" AlbumTemplate="{StaticResource AlbumListBoxTemplate}"
+                                              ArtistTemplate="{StaticResource ArtistListBoxTemplate}"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Controls:TabBar VerticalAlignment="Stretch">
-            <Controls:TabBar.UpperTabBarContent>
-                <StackPanel Height="100" Margin="0 20 0 0">
-                    <Rectangle Height="35" Width="35" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Rectangle.Fill>
-                            <VisualBrush Visual="{StaticResource appbar_cupcake}" Stretch="Fill"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBox Controls:TextboxHelper.Watermark="Search..." Background="Transparent" Foreground="White" Margin="10 0 10 0"/>
-                </StackPanel>
-            </Controls:TabBar.UpperTabBarContent>
+        <Controls:TabBar VerticalAlignment="Stretch" x:Name="tabBar">
+            <Controls:TabBarItem Header="Albums" ContentTemplateSelector="{StaticResource AlbumTemplateSelector}" 
+                                 Content="{Binding ElementName=itemListBox, Path=SelectedItem}" x:Name="albumTab">
+
+            </Controls:TabBarItem>
+            <Controls:TabBarItem Header="Artist" ContentTemplateSelector="{StaticResource ArtistTemplateSelector}" 
+                                 Content="{Binding ElementName=itemListBox, Path=SelectedItem}" x:Name="artistTab">
+
+            </Controls:TabBarItem>
+
             <Controls:TabBar.LowerTabBarContent>
                 <StackPanel>
-                    <Grid>
-                        <Separator/>
-                        <Label Panel.ZIndex="1" Content="Separator" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{DynamicResource AccentColorBrush}"/>
-                    </Grid>
-                    <ListBox x:Name="randomListBox">
-                        <ListBox.Foreground>
-                            <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
-                        </ListBox.Foreground>
+                    <Separator />
+                    <ListBox ItemsSource="{Binding SelectedItem.DataContext, ElementName=tabBar, UpdateSourceTrigger=PropertyChanged}" 
+                             x:Name="itemListBox" Height="Auto" MaxHeight="800" ItemTemplateSelector="{StaticResource ListBoxItemTemplateSelector}">
                     </ListBox>
                 </StackPanel>
             </Controls:TabBar.LowerTabBarContent>
-            <Controls:TabBarItem Header="Discover">
-                <Grid>
-                    <TextBlock Text="Hello World!"/>
-                </Grid>
-            </Controls:TabBarItem>
-            <Controls:TabBarItem Header="Explore">
-                <Grid>
-                    <TextBlock Text="Dora the Explorer!"/>
-                </Grid>
-            </Controls:TabBarItem>
         </Controls:TabBar>
     </Grid>
 </Controls:MetroWindow>
