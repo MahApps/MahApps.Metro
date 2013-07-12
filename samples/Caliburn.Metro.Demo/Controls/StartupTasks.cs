@@ -1,37 +1,25 @@
-﻿namespace Caliburn.Metro.Demo.Controls
+﻿using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.Linq;
+using System.Reflection;
+using System.Windows;
+using Caliburn.Metro.Demo.Services;
+using Caliburn.Micro;
+using MahApps.Metro.Controls;
+
+namespace Caliburn.Metro.Demo.Controls
 {
-    using System.Collections.Generic;
-    using System.ComponentModel.Composition;
-    using System.Linq;
-    using System.Reflection;
-    using System.Windows;
-
-    using Caliburn.Metro.Demo.Services;
-    using Caliburn.Micro;
-
-    using MahApps.Metro.Controls;
-
     public delegate void StartupTask();
 
     public class StartupTasks
     {
-        #region Fields
-
         private readonly IServiceLocator serviceLocator;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         [ImportingConstructor]
         public StartupTasks(IServiceLocator serviceLocator)
         {
             this.serviceLocator = serviceLocator;
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         [Export(typeof(StartupTask))]
         public void ApplyBindingScopeOverride()
@@ -66,7 +54,5 @@
             var viewLocator = this.serviceLocator.GetInstance<IViewLocator>();
             Micro.ViewLocator.GetOrCreateViewType = viewLocator.GetOrCreateViewType;
         }
-
-        #endregion
     }
 }

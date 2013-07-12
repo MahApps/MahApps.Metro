@@ -1,14 +1,10 @@
-﻿namespace Caliburn.Metro.Demo.Controls
-{
-    using System;
-    using System.Windows;
+﻿using System;
+using System.Windows;
 
+namespace Caliburn.Metro.Demo.Controls
+{
     public interface IViewLocator
     {
-        #region Public Methods and Operators
-
         UIElement GetOrCreateViewType(Type viewType);
-
-        #endregion
     }
 }

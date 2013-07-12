@@ -1,19 +1,13 @@
-﻿namespace Caliburn.Metro.Demo.Controls
-{
-    using System;
-    using System.ComponentModel.Composition;
-    using System.Windows;
+﻿using System;
+using System.ComponentModel.Composition;
+using System.Windows;
 
+namespace Caliburn.Metro.Demo.Controls
+{
     [Export(typeof(IThemeManager))]
     public class ThemeManager : IThemeManager
     {
-        #region Fields
-
         private readonly ResourceDictionary themeResources;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         public ThemeManager()
         {
@@ -24,15 +18,9 @@
                                       };
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         public ResourceDictionary GetThemeResources()
         {
             return this.themeResources;
         }
-
-        #endregion
     }
 }

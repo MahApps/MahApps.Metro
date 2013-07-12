@@ -1,22 +1,15 @@
-﻿namespace Caliburn.Metro.Demo.ViewModels
+﻿using Caliburn.Micro;
+using MahApps.Metro.Controls;
+
+namespace Caliburn.Metro.Demo.ViewModels
 {
-    using Caliburn.Micro;
-
-    using MahApps.Metro.Controls;
-
     public abstract class FlyoutBaseViewModel : PropertyChangedBase
     {
-        #region Fields
-
         private string header;
 
         private bool isOpen;
 
         private Position position;
-
-        #endregion
-
-        #region Public Properties
 
         public string Header
         {
@@ -74,7 +67,5 @@
                 this.NotifyOfPropertyChange(() => this.Position);
             }
         }
-
-        #endregion
     }
 }

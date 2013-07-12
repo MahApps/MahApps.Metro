@@ -1,33 +1,22 @@
-﻿namespace Caliburn.Metro.Demo.Controls
+﻿using System;
+using System.ComponentModel.Composition;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using Caliburn.Micro;
+
+namespace Caliburn.Metro.Demo.Controls
 {
-    using System;
-    using System.ComponentModel.Composition;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Controls;
-
-    using Caliburn.Micro;
-
     [Export(typeof(IViewLocator))]
     public class ViewLocator : IViewLocator
     {
-        #region Fields
-
         private readonly IThemeManager themeManager;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         [ImportingConstructor]
         public ViewLocator(IThemeManager themeManager)
         {
             this.themeManager = themeManager;
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         public UIElement GetOrCreateViewType(Type viewType)
         {
@@ -53,7 +42,5 @@
             Micro.ViewLocator.InitializeComponent(newInstance);
             return newInstance;
         }
-
-        #endregion
     }
 }

@@ -1,21 +1,14 @@
+using System.ComponentModel.Composition;
+using Caliburn.Metro.Demo.ViewModels.Flyouts;
+using Caliburn.Micro;
+
 namespace Caliburn.Metro.Demo.ViewModels
 {
-    using System.ComponentModel.Composition;
-
-    using Caliburn.Metro.Demo.ViewModels.Flyouts;
-    using Caliburn.Micro;
-
     [Export(typeof(IShell))]
     public class ShellViewModel : Screen, IShell
     {
-        #region Fields
-
         private readonly IObservableCollection<FlyoutBaseViewModel> flyouts =
             new BindableCollection<FlyoutBaseViewModel>();
-
-        #endregion
-
-        #region Public Properties
 
         public IObservableCollection<FlyoutBaseViewModel> Flyouts
         {
@@ -24,10 +17,6 @@ namespace Caliburn.Metro.Demo.ViewModels
                 return this.flyouts;
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         public void Close()
         {
@@ -39,10 +28,6 @@ namespace Caliburn.Metro.Demo.ViewModels
             var flyout = this.flyouts[index];
             flyout.IsOpen = !flyout.IsOpen;
         }
-
-        #endregion
-
-        #region Methods
 
         protected override void OnInitialize()
         {
@@ -56,7 +41,5 @@ namespace Caliburn.Metro.Demo.ViewModels
             this.flyouts.Add(new FlyoutTopViewModel());
             this.flyouts.Add(new FlyoutBottomViewModel());
         }
-
-        #endregion
     }
 }

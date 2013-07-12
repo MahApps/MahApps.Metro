@@ -1,17 +1,13 @@
-﻿namespace Caliburn.Metro.Demo.ViewModels.Flyouts
-{
-    using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 
+namespace Caliburn.Metro.Demo.ViewModels.Flyouts
+{
     public class FlyoutTopViewModel : FlyoutBaseViewModel
     {
-        #region Constructors and Destructors
-
         public FlyoutTopViewModel()
         {
             this.Header = "Top";
             this.Position = Position.Top;
         }
-
-        #endregion
     }
 }

@@ -1,17 +1,13 @@
-﻿namespace Caliburn.Metro.Demo.ViewModels.Flyouts
-{
-    using MahApps.Metro.Controls;
+﻿using MahApps.Metro.Controls;
 
+namespace Caliburn.Metro.Demo.ViewModels.Flyouts
+{
     public class FlyoutLeftViewModel : FlyoutBaseViewModel
     {
-        #region Constructors and Destructors
-
         public FlyoutLeftViewModel()
         {
             this.Header = "left";
             this.Position = Position.Left;
         }
-
-        #endregion
     }
 }

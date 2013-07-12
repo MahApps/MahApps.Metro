@@ -1,25 +1,18 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Primitives;
+using System.Linq;
+using System.Windows;
+using Caliburn.Metro.Demo.Controls;
+using Caliburn.Micro;
+
 namespace Caliburn.Metro.Demo
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.Composition;
-    using System.ComponentModel.Composition.Hosting;
-    using System.ComponentModel.Composition.Primitives;
-    using System.Linq;
-    using System.Windows;
-
-    using Caliburn.Metro.Demo.Controls;
-    using Caliburn.Micro;
-
     public class AppBootstrapper : Bootstrapper<IShell>
     {
-        #region Fields
-
         private CompositionContainer container;
-
-        #endregion
-
-        #region Methods
 
         protected override void BuildUp(object instance)
         {
@@ -74,7 +67,5 @@ namespace Caliburn.Metro.Demo
             startupTasks.Apply(s => s());
             base.OnStartup(sender, e);
         }
-
-        #endregion
     }
 }

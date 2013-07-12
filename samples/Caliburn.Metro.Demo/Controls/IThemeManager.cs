@@ -1,13 +1,9 @@
-﻿namespace Caliburn.Metro.Demo.Controls
-{
-    using System.Windows;
+﻿using System.Windows;
 
+namespace Caliburn.Metro.Demo.Controls
+{
     public interface IThemeManager
     {
-        #region Public Methods and Operators
-
         ResourceDictionary GetThemeResources();
-
-        #endregion
     }
 }
