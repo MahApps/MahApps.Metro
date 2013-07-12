@@ -122,6 +122,9 @@ namespace MahApps.Metro.Controls
                 CloseTabCommandParameter = null;
             }
 
+            if (OwningTabControl == null) // see #555
+                throw new InvalidOperationException();
+
             // run the command handler for the TabControl
             var itemFromContainer = OwningTabControl.ItemContainerGenerator.ItemFromContainer(this);
 
