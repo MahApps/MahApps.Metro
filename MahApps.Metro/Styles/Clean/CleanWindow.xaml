@@ -21,7 +21,7 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Grid x:Name="PART_TitleBar" Panel.ZIndex="100" 
+                                    <Grid x:Name="PART_TitleBar" Panel.ZIndex="100" HorizontalAlignment="Stretch" Width="{TemplateBinding ActualWidth}"
                                           Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}">
                                         <Image
                                             Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -29,7 +29,7 @@
                                             RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
 
-                                        <Label HorizontalAlignment="Center" VerticalAlignment="Top" 
+                                        <Label HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Top" 
                                                Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" FontSize="14"/>
 
                                         <ContentPresenter 
