@@ -43,9 +43,6 @@
     <AssemblyOriginatorKeyFile>mahapps.metro.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Windows.Shell">
-      <HintPath>..\packages\Microsoft.Windows.Shell.3.0.1.0\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -105,6 +102,21 @@
     <Compile Include="Converters\PanoramaGroupHeightConverter.cs" />
     <Compile Include="Converters\PanoramaGroupHeaderConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\Debug.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\DoubleUtil.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\DpiHelper.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\ErrorCodes.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\MessageWindow.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\NativeMethods.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\ShellProvider.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\StreamHelper.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\Utilities.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\Verify.cs" />
+    <Compile Include="Microsoft.Windows.Shell\SystemCommands.cs" />
+    <Compile Include="Microsoft.Windows.Shell\SystemParameters2.cs" />
+    <Compile Include="Microsoft.Windows.Shell\WindowChrome.cs" />
+    <Compile Include="Microsoft.Windows.Shell\WindowChromeWorker.cs" />
     <Compile Include="Models\Win32\GWL.cs" />
     <Compile Include="Models\Win32\HitTestValues.cs" />
     <Compile Include="Models\Win32\NativeMethods.cs" />

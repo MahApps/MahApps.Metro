@@ -14,11 +14,6 @@
     <summary>The goal of MahApps.Metro is to allow devs to quickly and easily cobble togther a "Metro" UI for their WPF4+ apps, with minimal effort.</summary>
     <releaseNotes></releaseNotes>
 	  <tags>WPF UI Metro</tags>
-    <dependencies>
-        <group targetFramework="net40">
-          <dependency id="Microsoft.Windows.Shell" version="3.0.1.0" />
-        </group>
-      </dependencies>
     </metadata>
     <files>
       <file src="bin\Release\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />
