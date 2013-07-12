@@ -39,6 +39,7 @@ namespace MahApps.Metro
         public static void ChangeTheme(ResourceDictionary r, Accent accent, Theme theme)
         {
             ThemeIsDark = (theme == Theme.Dark);
+            ThemeAccent = accent;
             var themeResource = (theme == Theme.Light) ? LightResource : DarkResource;
             ApplyResourceDictionary(themeResource, r);
             ApplyResourceDictionary(accent.Resources, r);
@@ -55,6 +56,93 @@ namespace MahApps.Metro
 
                 oldRd.Add(r.Key, r.Value);
             }
+        }
+
+        public static Accent ThemeAccent { get; private set; }
+
+        /// <summary>
+        /// Scans the application resources and the optional window's resources and updates the ThemeIsDark and ThemeAccent properties.
+        /// </summary>
+        /// <param name="window">The optional window to check. This can be null.</param>
+        /// <returns></returns>
+        public static bool DetectTheme(MahApps.Metro.Controls.MetroWindow window = null)
+        {
+            Theme currentTheme = Theme.Light;
+            ResourceDictionary themeDictionary = null;
+            Tuple<Theme, Accent> detectedAccentTheme = null;
+
+            if (window != null)
+            {
+                if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, window.Resources))
+                {
+                    detectedAccentTheme = GetThemeFromResources(currentTheme, window.Resources);
+                }
+            }
+            else
+            {
+                if (DetectThemeFromAppResources(out currentTheme, out themeDictionary))
+                {
+                    detectedAccentTheme = GetThemeFromResources(currentTheme, Application.Current.Resources);
+                }
+            }
+
+            if (detectedAccentTheme != null)
+            {
+                ThemeAccent = detectedAccentTheme.Item2;
+                ThemeIsDark = detectedAccentTheme.Item1 == Theme.Dark;
+
+                return true;
+            }
+            else
+                return false;
+        }
+
+        internal static bool DetectThemeFromAppResources(out Theme detectedTheme, out ResourceDictionary themeRd)
+        {
+            detectedTheme = Theme.Light;
+            themeRd = null;
+
+            return DetectThemeFromResources(ref detectedTheme, ref themeRd, Application.Current.Resources);
+        }
+
+        private static bool DetectThemeFromResources(ref Theme detectedTheme, ref ResourceDictionary themeRd, ResourceDictionary dict)
+        {
+            var enumerator = dict.MergedDictionaries.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var currentRd = enumerator.Current;
+
+                if (currentRd.Source == LightResource.Source || currentRd.Source == DarkResource.Source)
+                {
+                    detectedTheme = currentRd.Source == LightResource.Source ? Theme.Light : Theme.Dark;
+                    themeRd = currentRd;
+
+                    enumerator.Dispose();
+                    return true;
+                }
+            }
+
+            enumerator.Dispose();
+            return false;
+        }
+        internal static Tuple<Theme, Accent> GetThemeFromResources(Theme presetTheme, ResourceDictionary dict)
+        {
+            Theme currentTheme = 0;
+            Accent currentAccent = null;
+
+            currentTheme = presetTheme;
+
+            foreach (ResourceDictionary rd in dict.MergedDictionaries)
+            {
+                Accent matched = null;
+                if ((matched = ((List<Accent>)_accents).Find(x => x.Resources.Source == rd.Source)) != null)
+                {
+                    currentAccent = matched;
+                    break;
+                }
+            }
+
+            return Tuple.Create<Theme, Accent>(currentTheme, currentAccent);
         }
     }
 }
