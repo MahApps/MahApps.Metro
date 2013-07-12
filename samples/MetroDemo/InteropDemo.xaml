@@ -9,7 +9,7 @@
                       Height="800" 
                       Width="800">
     <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" EnableDWMDropShadow="True" />
+        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" AllowsTransparency="False" />
     </i:Interaction.Behaviors>
 
     <Window.Resources>
