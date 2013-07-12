@@ -7,6 +7,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroWindow}">
+                    <ControlTemplate.Resources>
+                        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+                    </ControlTemplate.Resources>
                     <Grid Background="{TemplateBinding Background}">
                         <AdornerDecorator>
                             <Controls:MetroContentControl IsTabStop="False" FocusVisualStyle="{x:Null}">
@@ -18,37 +21,24 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Grid x:Name="PART_TitleBar" Panel.ZIndex="100">
+                                    <Grid x:Name="PART_TitleBar" Panel.ZIndex="100" 
+                                          Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}">
+                                        <Image
+                                            Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                            Source="{TemplateBinding Icon}"
+                                            RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
-                                        <Label HorizontalAlignment="Center" VerticalAlignment="Top" Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" FontSize="14"/>
 
-                                        <!--<Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>-->
-                                        <!--<Image
-                                        Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                        Source="{TemplateBinding Icon}"
-                                        RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality"/>
-                                        <TextBlock
-                                        x:Name="WindowTitleTextBlock"
-                                        Grid.Column="1"
-                                        Text="{TemplateBinding Title}"
-                                        HorizontalAlignment="Left" 
-                                        TextTrimming="CharacterEllipsis"
-                                        VerticalAlignment="Center" 
-                                        Margin="8 -1 0 0" 
-                                        FontSize="16" 
-                                        FontFamily="{DynamicResource HeaderFontFamily}"
-                                        Foreground="{TemplateBinding TitleForeground}"/>-->
+                                        <Label HorizontalAlignment="Center" VerticalAlignment="Top" 
+                                               Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" FontSize="14"/>
+
+                                        <ContentPresenter 
+                                            Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 
+                                            x:Name="PART_WindowCommands"
+                                            Panel.ZIndex="1"
+								            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right" />
                                     </Grid>
-                                    <ContentPresenter 
-                                    Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 
-                                    x:Name="PART_WindowCommands"
-                                    Panel.ZIndex="1"
-								    VerticalAlignment="Top"
-                                    HorizontalAlignment="Right"
-								    Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
                                     <ContentPresenter Grid.Row="1"/>
 
                                     <ItemsControl Grid.Row="0"
