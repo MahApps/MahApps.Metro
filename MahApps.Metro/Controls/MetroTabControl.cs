@@ -35,8 +35,6 @@ namespace MahApps.Metro.Controls
 
         void BaseMetroTabControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded += BaseMetroTabControl_Loaded;
-
             //Ensure each tabitem knows what the owning tab is.
 
             if (ItemsSource == null)
