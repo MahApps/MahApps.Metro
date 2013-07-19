@@ -19,7 +19,14 @@ namespace MahApps.Metro.Behaviours
     {
         public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
         public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
-        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
+        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false, new PropertyChangedCallback((obj, args) =>
+        {
+            var behaviorClass = ((BorderlessWindowBehavior)obj);
+
+            if (behaviorClass.AssociatedObject != null)
+                if ((bool)args.NewValue && behaviorClass.AssociatedObject.AllowsTransparency)
+                    throw new InvalidOperationException("EnableDWMDropShadow cannot be set to True when AllowsTransparency is True.");
+        })));
 
         public static readonly DependencyProperty AllowsTransparencyProperty =
             DependencyProperty.Register("AllowsTransparency", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true, new PropertyChangedCallback((obj, args) =>
@@ -27,7 +34,12 @@ namespace MahApps.Metro.Behaviours
                 var behaviorClass = ((BorderlessWindowBehavior)obj);
 
                 if (behaviorClass.AssociatedObject != null)
-                    behaviorClass.AssociatedObject.AllowsTransparency = (bool)args.NewValue;
+                {
+                    if ((bool)args.NewValue && (bool)behaviorClass.AssociatedObject.GetValue(BorderlessWindowBehavior.EnableDWMDropShadowProperty))
+                        throw new InvalidOperationException("AllowsTransparency cannot be set to True when EnableDWMDropShadow is True.");
+                    else
+                        behaviorClass.AssociatedObject.AllowsTransparency = (bool)args.NewValue;
+                }
             })));
 
         public bool AllowsTransparency
@@ -95,6 +107,9 @@ namespace MahApps.Metro.Behaviours
                 AddHwndHook();
             else
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
+
+            if (AllowsTransparency && EnableDWMDropShadow)
+                throw new InvalidOperationException("EnableDWMDropShadow cannot be set to True when AllowsTransparency is True.");
 
             AssociatedObject.WindowStyle = WindowStyle.None;
             AssociatedObject.AllowsTransparency = AllowsTransparency;
