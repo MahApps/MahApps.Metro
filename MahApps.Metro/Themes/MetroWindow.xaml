@@ -33,13 +33,18 @@
                         <Grid.Background>
                             <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
                         </Grid.Background>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid x:Name="PART_TitleBar"
                                   Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" Background="{DynamicResource WindowTitleColorBrush}">
+                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" Background="{DynamicResource WindowTitleColorBrush}"
+                                  Grid.Column="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -64,14 +69,18 @@
                                 Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 
                                 x:Name="PART_WindowCommands"
                                 Panel.ZIndex="1"
-                                Grid.RowSpan="2"
+                                Grid.Column="1"
 								VerticalAlignment="Top"
                                 HorizontalAlignment="Right"
 								Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
-                        <ContentPresenter Grid.Row="1"/>
+                        <ContentPresenter Grid.Row="1"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="2" />
 
                         <ContentControl
                                     Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
                                     Grid.RowSpan="2"
                                     Panel.ZIndex="2"
                                     KeyboardNavigation.TabNavigation="None"
@@ -127,7 +136,8 @@
                     <ControlTemplate.Resources>
                         <ResourceDictionary>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="#02FFFFFF" />
+                                <!-- TODO: introduce resource to make background slightly more opaque? -->
+                                <Setter Property="Background" Value="{DynamicResource WindowTitleColorBrush}" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
                                 <Setter Property="Padding" Value="1" />
@@ -188,6 +198,7 @@
                         <Button x:Name="PART_Min"
                             IsTabStop="False"
                             Width="34"
+                            Background="{DynamicResource WindowTitleColorBrush}" 
                             Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                             MaxHeight="34"    
                             Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
@@ -200,6 +211,7 @@
                         <Button x:Name="PART_Max"
                             IsTabStop="False"
                             Width="34"
+                            Background="{DynamicResource WindowTitleColorBrush}" 
                             Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                             MaxHeight="34"
                             Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
@@ -216,6 +228,7 @@
                         <Button x:Name="PART_Close"
                             IsTabStop="False"
                             Width="34"
+                            Background="{DynamicResource WindowTitleColorBrush}" 
                             Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                             MaxHeight="34"
                             Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
