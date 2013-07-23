@@ -38,14 +38,10 @@ namespace MahApps.Metro
 
         public static void ChangeTheme(ResourceDictionary r, Accent accent, Theme theme)
         {
-            ThemeIsDark = (theme == Theme.Dark);
-            ThemeAccent = accent;
             var themeResource = (theme == Theme.Light) ? LightResource : DarkResource;
             ApplyResourceDictionary(themeResource, r);
             ApplyResourceDictionary(accent.Resources, r);
         }
-
-        public static bool ThemeIsDark { get; private set; }
 
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
         {
@@ -58,38 +54,12 @@ namespace MahApps.Metro
             }
         }
 
-        public static Accent ThemeAccent { get; private set; }
-
-        /// <summary>
-        /// Scans the Application resources and updates the ThemeIsDark and ThemeAccent properties.
-        /// </summary>
-        /// <param name="window">The optional window to check. This can be null.</param>
-        /// <returns></returns>
-        public static void DetectTheme()
-        {
-            Theme currentTheme = Theme.Light;
-            ResourceDictionary themeDictionary = null;
-            Tuple<Theme, Accent> detectedAccentTheme = null;
-
-
-            if (DetectThemeFromAppResources(out currentTheme, out themeDictionary))
-            {
-                detectedAccentTheme = GetThemeFromResources(currentTheme, Application.Current.Resources);
-            }
-
-
-            if (detectedAccentTheme != null)
-            {
-                ThemeAccent = detectedAccentTheme.Item2;
-                ThemeIsDark = detectedAccentTheme.Item1 == Theme.Dark;
-            }
-        }
         /// <summary>
         /// Scans a Window's resources and returns it's accent and theme.
         /// </summary>
         /// <param name="window">The Window to check.</param>
         /// <returns></returns>
-        public static Tuple<Theme, Accent> DetectThemeForWindow(MahApps.Metro.Controls.MetroWindow window)
+        public static Tuple<Theme, Accent> DetectTheme(MahApps.Metro.Controls.MetroWindow window)
         {
             if (window == null) throw new ArgumentNullException("window");
 
