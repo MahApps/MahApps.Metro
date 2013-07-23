@@ -35,7 +35,7 @@ namespace MahApps.Metro.Behaviours
 
                 if (behaviorClass.AssociatedObject != null)
                 {
-                    if ((bool)args.NewValue && (bool)behaviorClass.AssociatedObject.GetValue(BorderlessWindowBehavior.EnableDWMDropShadowProperty))
+                    if ((bool)args.NewValue && behaviorClass.EnableDWMDropShadow)
                         throw new InvalidOperationException("AllowsTransparency cannot be set to True when EnableDWMDropShadow is True.");
                     else
                         behaviorClass.AssociatedObject.AllowsTransparency = (bool)args.NewValue;
