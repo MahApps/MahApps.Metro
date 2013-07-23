@@ -28,7 +28,8 @@ namespace MahApps.Metro.Controls
         void MetroTabItem_Unloaded(object sender, RoutedEventArgs e)
         {
             this.Unloaded -= MetroTabItem_Unloaded;
-            closeButton.Click -= closeButton_Click;
+            if (closeButton != null)
+                closeButton.Click -= closeButton_Click;
 
             closeButtonClickUnloaded = true;
         }
@@ -76,6 +77,25 @@ namespace MahApps.Metro.Controls
 
                 })));
 
+        public FontStretch HeaderFontStretch
+        {
+            get { return (FontStretch)GetValue(HeaderFontStretchProperty); }
+            set { SetValue(HeaderFontStretchProperty, value); }
+        }
+
+        public static readonly DependencyProperty HeaderFontStretchProperty =
+            DependencyProperty.Register("HeaderFontStretch", typeof(FontStretch), typeof(MetroTabItem), new PropertyMetadata(FontStretches.Normal));
+
+
+        public FontWeight HeaderFontWeight
+        {
+            get { return (FontWeight)GetValue(HeaderFontWeightProperty); }
+            set { SetValue(HeaderFontWeightProperty, value); }
+        }
+
+        public static readonly DependencyProperty HeaderFontWeightProperty =
+            DependencyProperty.Register("HeaderFontWeight", typeof(FontWeight), typeof(MetroTabItem), new PropertyMetadata(FontWeights.Normal));
+
         public bool CloseButtonEnabled
         {
             get { return (bool)GetValue(CloseButtonEnabledProperty); }
@@ -103,7 +123,7 @@ namespace MahApps.Metro.Controls
                 closeButton.Click += closeButton_Click;
 
 
-            closeButton.Visibility = CloseButtonEnabled ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            closeButton.Visibility = CloseButtonEnabled ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
             rootLabel = GetTemplateChild("root") as Label;
         }
@@ -153,7 +173,7 @@ namespace MahApps.Metro.Controls
         protected override void OnUnselected(RoutedEventArgs e)
         {
             if (closeButton != null)
-                closeButton.Visibility = System.Windows.Visibility.Hidden;
+                closeButton.Visibility = System.Windows.Visibility.Collapsed;
 
             base.OnUnselected(e);
         }
@@ -172,7 +192,7 @@ namespace MahApps.Metro.Controls
             if (!this.IsSelected)
                 if (closeButton != null)
                     if (CloseButtonEnabled)
-                        closeButton.Visibility = System.Windows.Visibility.Hidden;
+                        closeButton.Visibility = System.Windows.Visibility.Collapsed;
 
             base.OnMouseLeave(e);
         }

@@ -16,37 +16,30 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">
-                    <StackPanel Orientation="Horizontal">
-                        <Label x:Name="root" FontSize="{TemplateBinding HeaderFontSize}">
+                    <StackPanel x:Name="rootpanel" Orientation="Horizontal">
+                        <Label x:Name="root" FontSize="{TemplateBinding HeaderFontSize}" FontStretch="{TemplateBinding HeaderFontStretch}" FontWeight="{TemplateBinding HeaderFontWeight}">
                             <ContentPresenter ContentSource="Header"  RecognizesAccessKey="True" />
                         </Label>
-                        <Button x:Name="PART_CloseButton" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" Width="20"  
+                        <Button x:Name="PART_CloseButton" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" Width="20"
                                 HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" FontSize="17" Margin="0 0 2 0"
                                 IsTabStop="False" VerticalAlignment="Top"
                                 Command="{TemplateBinding CloseTabCommand}" CommandParameter="{TemplateBinding CloseTabCommandParameter}"/>
-                    </StackPanel>
+                    </StackPanel>                
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="true">
-                            <Setter TargetName="root" Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                                </Setter.Value>
-                            </Setter>
+                        <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter Property="Orientation" TargetName="rootpanel" Value="Vertical"/>
                         </Trigger>
-
+                        <Trigger Property="TabStripPlacement" Value="Right">
+                            <Setter Property="Orientation" TargetName="rootpanel" Value="Vertical"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="root" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
                         <Trigger Property="IsSelected" Value="false">
-                            <Setter  TargetName="root" Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource GrayNormal}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter  TargetName="root" Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         <Trigger SourceName="root" Property="IsMouseOver" Value="True">
-                            <Setter  TargetName="root" Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource GrayHover}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter  TargetName="root" Property="Foreground" Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
                         <Trigger SourceName="PART_CloseButton" Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
