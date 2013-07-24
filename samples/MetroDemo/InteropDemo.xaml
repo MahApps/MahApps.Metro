@@ -5,6 +5,7 @@
                       xmlns:winForms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
                       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                       xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
+                      WindowTransitionsEnabled="False"
                       Title="Interop Demo" 
                       Height="800" 
                       Width="800">
