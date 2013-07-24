@@ -60,13 +60,15 @@ namespace MahApps.Metro.Controls
                 var root = ((Grid)GetTemplateChild("root"));
                 root.Opacity = 1.0;
                 var transform = ((System.Windows.Media.TranslateTransform) root.RenderTransform);
-                if (!transform.IsFrozen)
+                if (transform.IsFrozen)
                 {
-                    transform.X = 0;
+                    var modifiedTransform = transform.Clone();
+                    modifiedTransform.X = 0;
+                    root.RenderTransform = modifiedTransform;
                 }
                 else
                 {
-                    // TODO: tell someone about the fact that this went down
+                    transform.X = 0;
                 }
             }
         }
