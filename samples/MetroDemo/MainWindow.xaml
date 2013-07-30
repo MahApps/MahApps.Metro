@@ -548,7 +548,16 @@
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1">
                             <Label Content="ProgressRing" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:ProgressRing Margin="0, 10, 0, 0" IsActive="True" />
+                            <Grid Margin="20, 0, 20, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Controls:ProgressRing Grid.Column="0" IsActive="True" />
+                                <Controls:ProgressRing Grid.Column="1" IsActive="True" Width="40" Height="40" />
+                                <Controls:ProgressRing Grid.Column="2" IsActive="True" Width="20" Height="20" />
+                            </Grid>
                             <Label Margin="0, 10, 0, 0"
                                    Content="ProgressIndicator"
                                    Style="{StaticResource DescriptionHeaderStyle}" />
