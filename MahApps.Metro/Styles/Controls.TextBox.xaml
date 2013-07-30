@@ -80,9 +80,10 @@
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0" />
                             <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}" />
                             <TextBlock x:Name="Message" Text="{TemplateBinding Controls:TextboxHelper.Watermark}" Visibility="Collapsed"
-                                       Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Opacity="0.6" HorizontalAlignment="Left" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Margin="6,0,0,0"/>
-
+                                       Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Opacity="0.6"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Margin="6,2,6,2" />
                             <Button x:Name="PART_ClearText" Style="{DynamicResource ChromelessButtonStyle}" FontSize="16" Foreground="{TemplateBinding Foreground}" Width="20"  HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
@@ -250,9 +251,10 @@
                             <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0" />
                             <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}" />
                             <TextBlock x:Name="Message" Text="{TemplateBinding Controls:TextboxHelper.Watermark}" Visibility="Collapsed"
-                                       Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Opacity="0.6" HorizontalAlignment="Left" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Margin="6,0,0,0"/>
-
+                                       Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Opacity="0.6"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       Margin="6,2,6,2" />
                             <Button x:Name="PART_ClearText" Style="{DynamicResource ChromelessButtonStyle}" FontSize="16" Foreground="{TemplateBinding Foreground}" Width="20"  HorizontalAlignment="Right"  FontFamily="Marlett" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False">
                                 <Canvas Width="15" Height="15" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
                                     <!-- x:Key="appbar_magnify"-->
