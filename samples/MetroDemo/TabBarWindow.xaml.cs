@@ -73,6 +73,14 @@ namespace MetroDemo
         {
             tabBar.IsCollapsed = !tabBar.IsCollapsed;
         }
+
+        private void tabBar_CollapsedStateChanged(object sender, TabBarCollapsedStateChangedEventArgs e)
+        {
+            searchTextBox.Visibility = e.IsCollapsed ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+
+            itemListBox.Visibility = e.IsCollapsed ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+            collapsedItemListBoxButton.Visibility = itemListBox.Visibility == System.Windows.Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 
     public class SampleTemplateSelector : DataTemplateSelector

@@ -45,7 +45,11 @@ namespace MahApps.Metro.Controls
         public bool IsCollapsed
         {
             get { return (bool)GetValue(IsCollapsedProperty); }
-            set { SetValue(IsCollapsedProperty, value); }
+            set { SetValue(IsCollapsedProperty, value);
+
+                if (CollapsedStateChanged != null)
+                    CollapsedStateChanged(this, new TabBarCollapsedStateChangedEventArgs(value));
+            }
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)
@@ -92,8 +96,19 @@ namespace MahApps.Metro.Controls
             base.OnRender(drawingContext);
         }
 
+        public delegate void TabBarCollapsedStateChangedHandler(object sender, TabBarCollapsedStateChangedEventArgs e);
+        public event TabBarCollapsedStateChangedHandler CollapsedStateChanged;
+
         internal MetroContentControl PART_Presenter = null;
         private ListBox PART_TabItems = null;
+    }
+    public class TabBarCollapsedStateChangedEventArgs: EventArgs
+    {
+        internal TabBarCollapsedStateChangedEventArgs(bool state)
+        {
+            IsCollapsed = state;
+        }
+        public bool IsCollapsed {get;private set;}
     }
     public class TabBarItem : HeaderedContentControl
     {

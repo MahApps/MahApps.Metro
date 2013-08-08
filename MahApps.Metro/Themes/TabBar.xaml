@@ -35,9 +35,9 @@
                                  Grid.Row="1">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
-                                    <Border>
+                                    <Border ToolTip="{Binding Header}">
                                         <StackPanel Orientation="Horizontal">
-                                            <ContentPresenter Content="{Binding Icon}" x:Name="Icon" ToolTip="{Binding Header}"/>
+                                            <ContentPresenter Content="{Binding Icon}" x:Name="Icon"/>
                                             
                                             <Label Content="{Binding Header}" x:Name="HeaderLabel" FontSize="15" Padding="10 0 0 0" Margin="20 5 0 5">
                                                 <Label.Foreground>

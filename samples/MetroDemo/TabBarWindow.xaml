@@ -69,6 +69,12 @@
             </DataTemplate>
             <Local:SampleDataTemplateSelector x:Key="ListBoxItemTemplateSelector" AlbumTemplate="{StaticResource AlbumListBoxTemplate}"
                                               ArtistTemplate="{StaticResource ArtistListBoxTemplate}"/>
+
+            <Style x:Key="ItemListBoxStyle" TargetType="ListBox" BasedOn="{StaticResource MetroListBox}">
+                <Setter Property="ItemsSource" Value="{Binding SelectedItem.DataContext, ElementName=tabBar, UpdateSourceTrigger=PropertyChanged}"/>
+                <Setter Property="Height" Value="Auto"/>
+                <Setter Property="ItemTemplateSelector" Value="{StaticResource ListBoxItemTemplateSelector}"/>
+            </Style>
         </ResourceDictionary>
     </Window.Resources>
     <Controls:MetroWindow.GlowBrush>
@@ -79,7 +85,7 @@
                    Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=StackPanel},Path=ActualWidth}"
                    TextWrapping="Wrap" Foreground="{DynamicResource AccentColorBrush}" TextAlignment="Center" FontSize="15" 
                    HorizontalAlignment="Right" VerticalAlignment="Bottom" Panel.ZIndex="1"/>
-        <Controls:TabBar VerticalAlignment="Stretch" x:Name="tabBar" HorizontalAlignment="Stretch">
+        <Controls:TabBar VerticalAlignment="Stretch" x:Name="tabBar" HorizontalAlignment="Stretch" CollapsedStateChanged="tabBar_CollapsedStateChanged">
             <Controls:TabBar.UpperTabBarContent>
                 <StackPanel Orientation="Vertical" Margin="0 10 0 10">
                     <Button x:Name="tabBar_CollapseToggle" Click="tabBar_CollapseToggle_Click">
@@ -136,11 +142,11 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Separator BorderThickness=".9" Grid.Row="0">
+                    <Separator BorderThickness=".7" Grid.Row="0">
                         <Separator.Style>
                             <Style TargetType="{x:Type Separator}">
                                 <!--<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>-->
-                                <Setter Property="Margin" Value="0,2,0,2"/>
+                                <Setter Property="Margin" Value="6,2,6,2"/>
                                 <Setter Property="Focusable" Value="false"/>
                                 <Setter Property="Template">
                                     <Setter.Value>
@@ -161,10 +167,31 @@
                         </Separator.Background>
                     </Separator>
 
-                    <ListBox ItemsSource="{Binding SelectedItem.DataContext, ElementName=tabBar, UpdateSourceTrigger=PropertyChanged}" 
-                             x:Name="itemListBox" Height="Auto" MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=StackPanel},Path=ActualHeight}" 
-                             ItemTemplateSelector="{StaticResource ListBoxItemTemplateSelector}" Grid.Row="1">
-                    </ListBox>
+                    <Grid Grid.Row="1">
+                        <ListBox x:Name="itemListBox" Style="{StaticResource ItemListBoxStyle}" 
+                             MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Grid},Path=ActualHeight}">
+                        </ListBox>
+
+                        <ToggleButton x:Name="collapsedItemListBoxButton" Visibility="Collapsed"
+                                      Style="{DynamicResource MetroCircleToggleButtonStyle}" Background="Transparent" Height="47"
+                                      VerticalAlignment="Top" Width="47">
+                            <Rectangle Width="30" Height="30">
+                                <Rectangle.Resources>
+                                    <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource AccentColor}" />
+                                </Rectangle.Resources>
+                                <Rectangle.Fill>
+                                    <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_chevron_right}" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </ToggleButton>
+                        <Popup IsOpen="{Binding ElementName=collapsedItemListBoxButton,Path=IsChecked}" 
+                           PlacementTarget="{Binding ElementName=collapsedItemListBoxButton}"
+                           Placement="Right" Height="300">
+                            <ListBox x:Name="itemListBox2" Style="{DynamicResource ItemListBoxStyle}" 
+                                 SelectedItem="{Binding ElementName=itemListBox,Path=SelectedItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                            </ListBox>
+                        </Popup>
+                    </Grid>
                 </Grid>
             </Controls:TabBar.LowerTabBarContent>
         </Controls:TabBar>
