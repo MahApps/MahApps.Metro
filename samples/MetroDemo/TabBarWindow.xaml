@@ -72,7 +72,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Controls:TabBar VerticalAlignment="Stretch" x:Name="tabBar">
+        <Controls:TabBar VerticalAlignment="Stretch" x:Name="tabBar" HorizontalAlignment="Stretch">
             <Controls:TabBar.UpperTabBarContent>
                 <StackPanel Orientation="Vertical" Margin="0 10 0 5">
                     <Rectangle Width="40" Height="40">
@@ -96,8 +96,13 @@
             </Controls:TabBarItem>
 
             <Controls:TabBar.LowerTabBarContent>
-                <StackPanel>
-                    <Separator BorderThickness=".9">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <Separator BorderThickness=".9" Grid.Row="0">
                         <Separator.Style>
                             <Style TargetType="{x:Type Separator}">
                                 <!--<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>-->
@@ -121,10 +126,12 @@
                             <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
                         </Separator.Background>
                     </Separator>
+                    
                     <ListBox ItemsSource="{Binding SelectedItem.DataContext, ElementName=tabBar, UpdateSourceTrigger=PropertyChanged}" 
-                             x:Name="itemListBox" Height="Auto" MaxHeight="800" ItemTemplateSelector="{StaticResource ListBoxItemTemplateSelector}">
+                             x:Name="itemListBox" Height="Auto" MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=StackPanel},Path=ActualHeight}" 
+                             ItemTemplateSelector="{StaticResource ListBoxItemTemplateSelector}" Grid.Row="1">
                     </ListBox>
-                </StackPanel>
+                </Grid>
             </Controls:TabBar.LowerTabBarContent>
         </Controls:TabBar>
     </Grid>

@@ -14,25 +14,38 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <ScrollViewer Grid.Column="0" Width="{TemplateBinding SidebarWidth}" VerticalScrollBarVisibility="Hidden">
-                        <StackPanel>
-                            <StackPanel.Background>
-                                <SolidColorBrush Color="#FF252525"/>
-                            </StackPanel.Background>
-                            <ContentPresenter ContentSource="UpperTabBarContent" Height="Auto"/>
-                            <ListBox x:Name="PART_TabItems" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
-                                     Height="Auto" MinHeight="75" BorderThickness="0" Width="{TemplateBinding SidebarWidth}" Background="Transparent">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border>
-                                             <Label Content="{Binding Header}" Foreground="White" FontSize="15" Padding="10 0 0 0" Margin="20 5 0 5"/>
-                                        </Border>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                            <ContentPresenter ContentSource="LowerTabBarContent" MinHeight="50" Height="Auto"/>
-                        </StackPanel>
-                    </ScrollViewer>
+                    <Grid Grid.Column="0" Width="{TemplateBinding SidebarWidth}">
+                        <Grid.Background>
+                            <SolidColorBrush Color="#FF252525"/>
+                        </Grid.Background>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/> <!--20%-->
+                            <RowDefinition Height="Auto"/> <!--60%-->
+                            <RowDefinition Height="*"/> <!--20%-->
+                        </Grid.RowDefinitions>
+
+                        <ContentPresenter ContentSource="UpperTabBarContent" Height="Auto" Grid.Row="0"/>
+
+                        <ListBox x:Name="PART_TabItems" SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" 
+                                 Height="Auto" MinHeight="75" BorderThickness="0" Width="{TemplateBinding SidebarWidth}" Background="Transparent"
+                                 Grid.Row="1">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border>
+                                        <Label Content="{Binding Header}" FontSize="15" Padding="10 0 0 0" Margin="20 5 0 5">
+                                            <Label.Foreground>
+                                                <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                                            </Label.Foreground>
+                                        </Label>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <ContentPresenter ContentSource="LowerTabBarContent" MinHeight="50" Height="Auto" Grid.Row="2"/>
+
+                    </Grid>
 
                     <Controls:MetroContentControl Content="{TemplateBinding SelectedItem}" Grid.Column="1" 
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_Presenter" />
