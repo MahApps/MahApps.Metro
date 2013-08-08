@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -31,6 +32,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         bool isDragging;
+        ContentPresenter WindowCommandsPresenter = null;
 
         public bool WindowTransitionsEnabled
         {
@@ -171,6 +173,8 @@ namespace MahApps.Metro.Controls
                 MouseUp += TitleBarMouseUp;
                 MouseMove += TitleBarMouseMove;
             }
+
+            WindowCommandsPresenter = GetTemplateChild("PART_WindowCommands") as ContentPresenter;
         }
 
         protected override void OnStateChanged(EventArgs e)
@@ -284,6 +288,14 @@ namespace MahApps.Metro.Controls
             var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD, (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
                 UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
+        }
+
+        internal void HandleFlyoutStatusChange(Flyout flyout)
+        {
+            if (flyout.Position == Position.Right && flyout.IsOpen)
+                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 3);
+            else
+                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 1); //in the style, the default is 1
         }
     }
 }
