@@ -71,11 +71,37 @@
                                               ArtistTemplate="{StaticResource ArtistListBoxTemplate}"/>
         </ResourceDictionary>
     </Window.Resources>
+    <Controls:MetroWindow.GlowBrush>
+        <SolidColorBrush Color="{DynamicResource AccentColor}" />
+    </Controls:MetroWindow.GlowBrush>
     <Grid>
         <Controls:TabBar VerticalAlignment="Stretch" x:Name="tabBar" HorizontalAlignment="Stretch">
             <Controls:TabBar.UpperTabBarContent>
                 <StackPanel Orientation="Vertical" Margin="0 10 0 5">
-                    <Rectangle Width="40" Height="40">
+                    <TextBlock Text="Click the cupcake to toggle between full and collapsed/slim views." 
+                               Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=StackPanel},Path=ActualWidth}"
+                               TextWrapping="Wrap" Foreground="{DynamicResource WhiteBrush}" TextAlignment="Center" FontSize="15"/>
+                    <Button x:Name="tabBar_CollapseToggle" Click="tabBar_CollapseToggle_Click">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Rectangle Width="40" Height="40">
+                                    <Rectangle.Resources>
+                                        <SolidColorBrush x:Key="BlackBrush" Color="White" />
+                                    </Rectangle.Resources>
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Controls:TabBar.UpperTabBarContent>
+
+            <Controls:TabBarItem Header="Albums" ContentTemplateSelector="{StaticResource AlbumTemplateSelector}" 
+                                 Content="{Binding ElementName=itemListBox, Path=SelectedItem}" x:Name="albumTab">
+                <Controls:TabBarItem.Icon>
+                    <Rectangle Width="20" Height="20">
                         <Rectangle.Resources>
                             <SolidColorBrush x:Key="BlackBrush" Color="White" />
                         </Rectangle.Resources>
@@ -83,16 +109,20 @@
                             <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
                         </Rectangle.Fill>
                     </Rectangle>
-                </StackPanel>
-            </Controls:TabBar.UpperTabBarContent>
-            
-            <Controls:TabBarItem Header="Albums" ContentTemplateSelector="{StaticResource AlbumTemplateSelector}" 
-                                 Content="{Binding ElementName=itemListBox, Path=SelectedItem}" x:Name="albumTab">
-
+                </Controls:TabBarItem.Icon>
             </Controls:TabBarItem>
             <Controls:TabBarItem Header="Artist" ContentTemplateSelector="{StaticResource ArtistTemplateSelector}" 
                                  Content="{Binding ElementName=itemListBox, Path=SelectedItem}" x:Name="artistTab">
-
+                <Controls:TabBarItem.Icon>
+                    <Rectangle Width="20" Height="20">
+                        <Rectangle.Resources>
+                            <SolidColorBrush x:Key="BlackBrush" Color="White" />
+                        </Rectangle.Resources>
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_xbox}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </Controls:TabBarItem.Icon>
             </Controls:TabBarItem>
 
             <Controls:TabBar.LowerTabBarContent>
@@ -101,7 +131,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    
+
                     <Separator BorderThickness=".9" Grid.Row="0">
                         <Separator.Style>
                             <Style TargetType="{x:Type Separator}">
@@ -126,7 +156,7 @@
                             <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
                         </Separator.Background>
                     </Separator>
-                    
+
                     <ListBox ItemsSource="{Binding SelectedItem.DataContext, ElementName=tabBar, UpdateSourceTrigger=PropertyChanged}" 
                              x:Name="itemListBox" Height="Auto" MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=StackPanel},Path=ActualHeight}" 
                              ItemTemplateSelector="{StaticResource ListBoxItemTemplateSelector}" Grid.Row="1">

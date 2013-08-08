@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Shapes;
 
 namespace MahApps.Metro.Controls
 {
@@ -39,6 +40,14 @@ namespace MahApps.Metro.Controls
             set { SetValue(LowerTabBarContentProperty, value); }
         }
 
+        public static readonly DependencyProperty IsCollapsedProperty =
+            DependencyProperty.Register("IsCollapsed", typeof(bool), typeof(TabBar), new PropertyMetadata(false));
+        public bool IsCollapsed
+        {
+            get { return (bool)GetValue(IsCollapsedProperty); }
+            set { SetValue(IsCollapsedProperty, value); }
+        }
+
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is TabBarItem;
@@ -51,7 +60,7 @@ namespace MahApps.Metro.Controls
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();       
+            base.OnApplyTemplate();
 
             PART_Presenter = (MetroContentControl)GetTemplateChild("PART_Presenter");
             PART_TabItems = (ListBox)GetTemplateChild("PART_TabItems");
@@ -62,7 +71,7 @@ namespace MahApps.Metro.Controls
                     PART_TabItems.ItemsSource = Items;
                 else
                     PART_TabItems.ItemsSource = ItemsSource;
-                
+
                 SelectedIndex = 0;
             }
 
@@ -91,6 +100,14 @@ namespace MahApps.Metro.Controls
         static TabBarItem()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TabBarItem), new FrameworkPropertyMetadata(typeof(TabBarItem)));
+        }
+
+        public static readonly DependencyProperty IconProperty =
+            DependencyProperty.Register("Icon", typeof(object), typeof(TabBarItem), new PropertyMetadata(null));
+        public object Icon
+        {
+            get { return GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
         }
     }
 }

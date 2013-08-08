@@ -43,6 +43,11 @@ namespace MetroDemo
             get;
             set;
         }
+
+        private void tabBar_CollapseToggle_Click(object sender, RoutedEventArgs e)
+        {
+            tabBar.IsCollapsed = !tabBar.IsCollapsed;
+        }
     }
 
     public class SampleTemplateSelector : DataTemplateSelector

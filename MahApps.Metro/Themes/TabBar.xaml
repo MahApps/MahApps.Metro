@@ -11,18 +11,21 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Column="0" Width="{TemplateBinding SidebarWidth}">
+                    <Grid Grid.Column="0" Width="{TemplateBinding SidebarWidth}" x:Name="SideBarGrid">
                         <Grid.Background>
                             <SolidColorBrush Color="#FF252525"/>
                         </Grid.Background>
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/> <!--20%-->
-                            <RowDefinition Height="Auto"/> <!--60%-->
-                            <RowDefinition Height="*"/> <!--20%-->
+                            <RowDefinition Height="Auto"/>
+                            <!--20%-->
+                            <RowDefinition Height="Auto"/>
+                            <!--60%-->
+                            <RowDefinition Height="*"/>
+                            <!--20%-->
                         </Grid.RowDefinitions>
 
                         <ContentPresenter ContentSource="UpperTabBarContent" Height="Auto" Grid.Row="0"/>
@@ -33,12 +36,23 @@
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Border>
-                                        <Label Content="{Binding Header}" FontSize="15" Padding="10 0 0 0" Margin="20 5 0 5">
-                                            <Label.Foreground>
-                                                <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
-                                            </Label.Foreground>
-                                        </Label>
+                                        <StackPanel Orientation="Horizontal">
+                                            <ContentPresenter Content="{Binding Icon}" x:Name="Icon" ToolTip="{Binding Header}"/>
+                                            
+                                            <Label Content="{Binding Header}" x:Name="HeaderLabel" FontSize="15" Padding="10 0 0 0" Margin="20 5 0 5">
+                                                <Label.Foreground>
+                                                    <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                                                </Label.Foreground>
+                                            </Label>
+                                        </StackPanel>
                                     </Border>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Controls:TabBar},Path=IsCollapsed}" Value="True">
+                                            <Setter TargetName="HeaderLabel" Property="Visibility" Value="Collapsed"/>
+                                            <Setter TargetName="Icon" Property="HorizontalAlignment" Value="Center"/>
+                                            <Setter TargetName="Icon" Property="Margin" Value="30 0 0 0"/>
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
@@ -47,11 +61,17 @@
 
                     </Grid>
 
-                    <Controls:MetroContentControl Content="{TemplateBinding SelectedItem}" Grid.Column="1" 
+                    <Controls:MetroContentControl Content="{TemplateBinding SelectedItem}" Grid.Column="1"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_Presenter" />
                 </Grid>
             </Border>
         </Grid>
+        
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsCollapsed, RelativeSource={RelativeSource Self}}" Value="True">
+                <Setter TargetName="SideBarGrid" Property="Width" Value="100"/>
+            </DataTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
     <Style TargetType="{x:Type Controls:TabBar}">
         <Setter Property="MinHeight" Value="100"/>
