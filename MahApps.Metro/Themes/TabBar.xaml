@@ -93,7 +93,7 @@
                           VerticalAlignment="Stretch"
                           HorizontalAlignment="Stretch"
                           ContentSource="Content"
-                          Margin="12,2,12,2"
+                          Margin="0.1"
                           RecognizesAccessKey="True"/>
                     </Border>
                 </ControlTemplate>
