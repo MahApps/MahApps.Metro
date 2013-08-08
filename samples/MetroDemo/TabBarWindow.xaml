@@ -101,7 +101,7 @@
             <Controls:TabBarItem Header="Albums" ContentTemplateSelector="{StaticResource AlbumTemplateSelector}" 
                                  Content="{Binding ElementName=itemListBox, Path=SelectedItem}" x:Name="albumTab">
                 <Controls:TabBarItem.Icon>
-                    <Rectangle Width="20" Height="20">
+                    <Rectangle Width="30" Height="30">
                         <Rectangle.Resources>
                             <SolidColorBrush x:Key="BlackBrush" Color="White" />
                         </Rectangle.Resources>
@@ -114,7 +114,7 @@
             <Controls:TabBarItem Header="Artist" ContentTemplateSelector="{StaticResource ArtistTemplateSelector}" 
                                  Content="{Binding ElementName=itemListBox, Path=SelectedItem}" x:Name="artistTab">
                 <Controls:TabBarItem.Icon>
-                    <Rectangle Width="20" Height="20">
+                    <Rectangle Width="30" Height="30">
                         <Rectangle.Resources>
                             <SolidColorBrush x:Key="BlackBrush" Color="White" />
                         </Rectangle.Resources>
