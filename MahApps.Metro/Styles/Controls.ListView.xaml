@@ -223,7 +223,6 @@
                         <Border Name="HeaderBorder"
                                 Padding="{TemplateBinding Padding}">
                             <ContentPresenter Name="HeaderContent"
-                                              Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"
                                               TextBlock.FontWeight="SemiBold"
                                             Margin="0,0,0,1"
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
