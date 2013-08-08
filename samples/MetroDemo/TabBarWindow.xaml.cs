@@ -44,6 +44,27 @@ namespace MetroDemo
             set;
         }
 
+        private string searchFilter = string.Empty;
+        public string SearchFilter
+        {
+            get { return searchFilter; }
+            set
+            {
+                searchFilter = value;
+
+                CollectionViewSource.GetDefaultView(tabBar.SelectedIndex == 0 ? (object)Albums : (object)Artists).Filter =
+                    string.IsNullOrWhiteSpace(searchFilter) ? null : new Predicate<object>((o) =>
+                        {
+                            if (o == null) return false;
+
+                            if (o is Album)
+                                return ((Album)o).Title.ToLower().Contains(SearchFilter.ToLower());
+                            else if (o is Artist)
+                                return ((Artist)o).Name.ToLower().Contains(SearchFilter.ToLower());
+                        });
+            }
+        }
+
         private void tabBar_CollapseToggle_Click(object sender, RoutedEventArgs e)
         {
             tabBar.IsCollapsed = !tabBar.IsCollapsed;
