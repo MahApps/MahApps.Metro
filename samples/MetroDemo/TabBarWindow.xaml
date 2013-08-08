@@ -96,6 +96,9 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
+
+                    <TextBox x:Name="searchTextBox" Style="{DynamicResource SearchMetroTextBox}" HorizontalAlignment="Stretch" 
+                             Margin="5 10 5 0" Background="Transparent" Foreground="{DynamicResource WhiteBrush}"/>
                 </StackPanel>
             </Controls:TabBar.UpperTabBarContent>
 

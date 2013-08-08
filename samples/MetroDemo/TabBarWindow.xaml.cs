@@ -31,6 +31,8 @@ namespace MetroDemo
 
             artistTab.SetBinding(TabBarItem.DataContextProperty, new Binding() { Source = Artists });
             albumTab.SetBinding(TabBarItem.DataContextProperty, new Binding() { Source = Albums });
+
+            searchTextBox.SetBinding(TextBox.TextProperty, new Binding() { Source = this, Path = new PropertyPath("SearchFilter"), UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
         }
 
         public ObservableCollection<Models.Album> Albums
@@ -61,6 +63,8 @@ namespace MetroDemo
                                 return ((Album)o).Title.ToLower().Contains(SearchFilter.ToLower());
                             else if (o is Artist)
                                 return ((Artist)o).Name.ToLower().Contains(SearchFilter.ToLower());
+
+                            return false;
                         });
             }
         }
