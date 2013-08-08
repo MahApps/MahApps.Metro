@@ -26,8 +26,8 @@ namespace MetroDemo
             InitializeComponent();
 
             //Ideally, you would do this via MVVM but for the sake of simplicity, I'm faking MVVM.
-            Albums = new ObservableCollection<Album>(SampleData.Albums.Take(10));
-            Artists = new ObservableCollection<Artist>(SampleData.Artists.Take(10));
+            Albums = new ObservableCollection<Album>(SampleData.Albums.Take(30));
+            Artists = new ObservableCollection<Artist>(SampleData.Artists.Take(30));
 
             artistTab.SetBinding(TabBarItem.DataContextProperty, new Binding() { Source = Artists });
             albumTab.SetBinding(TabBarItem.DataContextProperty, new Binding() { Source = Albums });

@@ -73,6 +73,19 @@
     </Window.Resources>
     <Grid>
         <Controls:TabBar VerticalAlignment="Stretch" x:Name="tabBar">
+            <Controls:TabBar.UpperTabBarContent>
+                <StackPanel Orientation="Vertical" Margin="0 10 0 5">
+                    <Rectangle Width="40" Height="40">
+                        <Rectangle.Resources>
+                            <SolidColorBrush x:Key="BlackBrush" Color="White" />
+                        </Rectangle.Resources>
+                        <Rectangle.Fill>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </StackPanel>
+            </Controls:TabBar.UpperTabBarContent>
+            
             <Controls:TabBarItem Header="Albums" ContentTemplateSelector="{StaticResource AlbumTemplateSelector}" 
                                  Content="{Binding ElementName=itemListBox, Path=SelectedItem}" x:Name="albumTab">
 
@@ -84,7 +97,30 @@
 
             <Controls:TabBar.LowerTabBarContent>
                 <StackPanel>
-                    <Separator />
+                    <Separator BorderThickness=".9">
+                        <Separator.Style>
+                            <Style TargetType="{x:Type Separator}">
+                                <!--<Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>-->
+                                <Setter Property="Margin" Value="0,2,0,2"/>
+                                <Setter Property="Focusable" Value="false"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Separator}">
+                                            <Border 
+                                                BorderBrush="{TemplateBinding Background}" 
+                                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                                Background="{TemplateBinding Background}" 
+                                                Height="Auto" 
+                                                SnapsToDevicePixels="true"/>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Separator.Style>
+                        <Separator.Background>
+                            <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                        </Separator.Background>
+                    </Separator>
                     <ListBox ItemsSource="{Binding SelectedItem.DataContext, ElementName=tabBar, UpdateSourceTrigger=PropertyChanged}" 
                              x:Name="itemListBox" Height="Auto" MaxHeight="800" ItemTemplateSelector="{StaticResource ListBoxItemTemplateSelector}">
                     </ListBox>
