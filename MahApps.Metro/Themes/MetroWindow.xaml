@@ -177,7 +177,7 @@
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
                     
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" >
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                         <ItemsControl IsTabStop="False" ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
