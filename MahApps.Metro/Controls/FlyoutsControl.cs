@@ -80,7 +80,13 @@ namespace MahApps.Metro.Controls
 
         private void FlyoutIsOpenChanged(object sender, EventArgs e)
         {
-            this.ReorderZIndices(this.GetFlyout(sender));
+            Flyout flyout = this.GetFlyout(sender); //Get the flyout that raised the handler.
+
+            this.ReorderZIndices(flyout);
+
+            MetroWindow parentWindow = this.TryFindParent<MetroWindow>();
+            if (parentWindow != null)
+                parentWindow.HandleFlyoutStatusChange(flyout);
         }
 
         private Flyout GetFlyout(object item)
