@@ -25,19 +25,51 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty UpperTabBarContentProperty =
-            DependencyProperty.Register("UpperTabBarContent", typeof(object), typeof(TabBar), new PropertyMetadata(null));
+            DependencyProperty.Register("UpperTabBarContent", typeof(object), typeof(TabBar), new PropertyMetadata(null, OnUpperTabBarContentChanged));
         public object UpperTabBarContent
         {
             get { return (object)GetValue(UpperTabBarContentProperty); }
             set { SetValue(UpperTabBarContentProperty, value); }
         }
+        private static void OnUpperTabBarContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((TabBar)d).OnUpperTabBarContentChanged(e);
+        }
+        protected virtual void OnUpperTabBarContentChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != null)
+            {
+                RemoveLogicalChild(e.OldValue);
+            }
+
+            if (e.NewValue != null)
+            {
+                AddLogicalChild(e.NewValue);
+            }
+        }
 
         public static readonly DependencyProperty LowerTabBarContentProperty =
-            DependencyProperty.Register("LowerTabBarContent", typeof(object), typeof(TabBar), new PropertyMetadata(null));
+            DependencyProperty.Register("LowerTabBarContent", typeof(object), typeof(TabBar), new PropertyMetadata(null, OnLowerTabBarContentChanged));
         public object LowerTabBarContent
         {
             get { return (object)GetValue(LowerTabBarContentProperty); }
             set { SetValue(LowerTabBarContentProperty, value); }
+        }
+        private static void OnLowerTabBarContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((TabBar)d).OnLowerTabBarContentChanged(e);
+        }
+        protected virtual void OnLowerTabBarContentChanged(DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != null)
+            {
+                RemoveLogicalChild(e.OldValue);
+            }
+
+            if (e.NewValue != null)
+            {
+                AddLogicalChild(e.NewValue);
+            }
         }
 
         public static readonly DependencyProperty IsCollapsedProperty =
@@ -45,7 +77,9 @@ namespace MahApps.Metro.Controls
         public bool IsCollapsed
         {
             get { return (bool)GetValue(IsCollapsedProperty); }
-            set { SetValue(IsCollapsedProperty, value);
+            set
+            {
+                SetValue(IsCollapsedProperty, value);
 
                 if (CollapsedStateChanged != null)
                     CollapsedStateChanged(this, new TabBarCollapsedStateChangedEventArgs(value));
@@ -102,13 +136,13 @@ namespace MahApps.Metro.Controls
         internal MetroContentControl PART_Presenter = null;
         private ListBox PART_TabItems = null;
     }
-    public class TabBarCollapsedStateChangedEventArgs: EventArgs
+    public class TabBarCollapsedStateChangedEventArgs : EventArgs
     {
         internal TabBarCollapsedStateChangedEventArgs(bool state)
         {
             IsCollapsed = state;
         }
-        public bool IsCollapsed {get;private set;}
+        public bool IsCollapsed { get; private set; }
     }
     public class TabBarItem : HeaderedContentControl
     {
