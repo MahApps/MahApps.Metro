@@ -153,9 +153,6 @@
                 </Track.IncreaseRepeatButton>
             </Track>
         </Grid>
-        <ControlTemplate.Triggers>
-
-        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style x:Key="FlatSlider" TargetType="{x:Type Slider}">
