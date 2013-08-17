@@ -123,5 +123,11 @@ namespace MetroDemo
             if (e.ClosingTabItem.Header.ToString().StartsWith("sizes"))
                 e.Cancel = true;
         }
+
+        private void InteropDemo(object sender, RoutedEventArgs e)
+        {
+            new InteropDemo().Show();
+
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -27,13 +28,21 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbarOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FreezableCollection<Flyout>), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         bool isDragging;
+        ContentPresenter WindowCommandsPresenter = null;
 
-        public FreezableCollection<Flyout> Flyouts
+        public bool WindowTransitionsEnabled
         {
-            get { return (FreezableCollection<Flyout>)GetValue(FlyoutsProperty); }
+            get { return (bool)this.GetValue(WindowTransitionsEnabledProperty); }
+            set { SetValue(WindowTransitionsEnabledProperty, value); }
+        }
+
+        public FlyoutsControl Flyouts
+        {
+            get { return (FlyoutsControl)GetValue(FlyoutsProperty); }
             set { SetValue(FlyoutsProperty, value); }
         }
 
@@ -118,7 +127,6 @@ namespace MahApps.Metro.Controls
 
         public MetroWindow()
         {
-            Flyouts = new FreezableCollection<Flyout>();
             Loaded += this.MetroWindow_Loaded;
         }
 
@@ -131,6 +139,11 @@ namespace MahApps.Metro.Controls
                 //Disables the system menu for reasons other than clicking an invisible titlebar.
                 IntPtr handle = new WindowInteropHelper(this).Handle;
                 UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
+            }
+
+            if (this.Flyouts == null)
+            {
+                this.Flyouts = new FlyoutsControl();
             }
         }
 
@@ -160,6 +173,8 @@ namespace MahApps.Metro.Controls
                 MouseUp += TitleBarMouseUp;
                 MouseMove += TitleBarMouseMove;
             }
+
+            WindowCommandsPresenter = GetTemplateChild("PART_WindowCommands") as ContentPresenter;
         }
 
         protected override void OnStateChanged(EventArgs e)
@@ -195,14 +210,15 @@ namespace MahApps.Metro.Controls
                     IntPtr windowHandle = new WindowInteropHelper(this).Handle;
                     UnsafeNativeMethods.ReleaseCapture();
 
-                    var wpfPoint = PointToScreen(Mouse.GetPosition(this));
+                    var mPoint = Mouse.GetPosition(this);
+                    var wpfPoint = PointToScreen(mPoint);
                     short x = Convert.ToInt16(wpfPoint.X);
                     short y = Convert.ToInt16(wpfPoint.Y);
 
                     int lParam = x | (y << 16);
 
                     UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
-                    if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize))
+                    if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize) && mPoint.Y <= TitlebarHeight)
                     {
                         WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
                     }
@@ -273,6 +289,14 @@ namespace MahApps.Metro.Controls
             var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD, (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
                 UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
+        }
+
+        internal void HandleFlyoutStatusChange(Flyout flyout)
+        {
+            if (flyout.Position == Position.Right && flyout.IsOpen)
+                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 3);
+            else
+                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 1); //in the style, the default is 1
         }
     }
 }

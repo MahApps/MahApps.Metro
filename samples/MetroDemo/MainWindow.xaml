@@ -6,7 +6,7 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       Title="MahApps.Metro.Demo"
-                      Width="800"
+                      Width="960"
                       Height="600"
                       Icon="mahapps.metro.logo2.ico"
                       ShowIconOnTitleBar="true"
@@ -45,6 +45,7 @@
             <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
             <Button Click="LaunchIcons" Content="Icons" />
             <Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />
+            <Button Click="InteropDemo" Content="Interop Demo" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
@@ -114,6 +115,26 @@
                                           Margin="0, 10, 0, 0"
                                           Content="Disabled"
                                           IsEnabled="False" />
+                            <ToggleButton Width="50"
+                                          Height="50"
+                                          Margin="0, 10, 0, 0"
+                                          Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                                <Rectangle Width="20" Height="20">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </ToggleButton>
+                            <ToggleButton Width="50"
+                                          Height="50"
+                                          Margin="0, 10, 0, 0"
+                                          IsEnabled="False" Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                                <Rectangle Width="20" Height="20">
+                                    <Rectangle.Fill>
+                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </ToggleButton>
                         </StackPanel>
                         <StackPanel Grid.Column="3">
                             <StackPanel.Resources>
@@ -185,7 +206,7 @@
                                       IsChecked="True"
                                       IsEnabled="False" />
                             <CheckBox Margin="0, 10, 0, 0"
-                                      Content="Enabled" 
+                                      Content="Disabled" 
                                       IsEnabled="False"
                                       IsChecked="{x:Null}"
                                       IsThreeState="True" />
@@ -221,18 +242,28 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Width="150">
-                            <Label Content="Textbox" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Label Content="TextBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <TextBox Margin="0, 10, 0, 0" Text="Enabled" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
-                                     Controls:TextboxHelper.Watermark="Watermark" />
+                                     Controls:TextboxHelper.Watermark="Watermark"
+                                     ToolTip="Default alignment" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
+                                     HorizontalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Watermark"
+                                     ToolTip="Text and watermark at center" />
+                            <TextBox Margin="0, 10, 0, 0"
+                                     HorizontalContentAlignment="Right"
+                                     TextAlignment="Left"
+                                     Controls:TextboxHelper.Watermark="Watermark"
+                                     ToolTip="Text at left, watermark at right" />
+                            <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.ClearTextButton="True"
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      Text="Clear button" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Search style"
+                                     Style="{DynamicResource SearchMetroTextBox}" />
+                            <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Number smaller than 10"
                                      Text="{Binding IntegerGreater10Property,
                                                     ValidatesOnDataErrors=True,
@@ -242,17 +273,18 @@
                                      IsEnabled="False"
                                      Text="Disabled" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      IsEnabled="False" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
                                      Controls:TextboxHelper.ClearTextButton="True"
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      IsEnabled="False"
                                      Text="Clear button" />
                             <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
+                                     Controls:TextboxHelper.Watermark="Search style"
+                                     IsEnabled="False"
+                                     Style="{DynamicResource SearchMetroTextBox}" />
+                            <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Number smaller than 10"
                                      IsEnabled="False"
                                      Text="{Binding IntegerGreater10Property,
@@ -280,7 +312,7 @@
                             </RichTextBox>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Width="150">
-                            <Label Content="Passwordbox" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Label Content="PasswordBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <PasswordBox Margin="0, 10, 0, 0" Password="Password" />
                             <PasswordBox Margin="0, 10, 0, 0"
                                          Controls:TextboxHelper.ClearTextButton="True"
@@ -519,7 +551,16 @@
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1">
                             <Label Content="ProgressRing" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:ProgressRing Margin="0, 10, 0, 0" IsActive="True" />
+                            <Grid Margin="20, 0, 20, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Controls:ProgressRing Grid.Column="0" IsActive="True" />
+                                <Controls:ProgressRing Grid.Column="1" IsActive="True" Width="40" Height="40" />
+                                <Controls:ProgressRing Grid.Column="2" IsActive="True" Width="20" Height="20" />
+                            </Grid>
                             <Label Margin="0, 10, 0, 0"
                                    Content="ProgressIndicator"
                                    Style="{StaticResource DescriptionHeaderStyle}" />
