@@ -486,11 +486,11 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0">
                             <Label Content="Horizontal Slider" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Slider Width="200" Margin="0, 10, 0, 0" Style="{StaticResource FlatSlider}"/>
+                            <Slider Width="200" Margin="0, 10, 0, 0"/>
                             <Slider Width="200" Style="{StaticResource FlatSlider}"
                                     Margin="0, 10, 0, 0"
                                     Value="50" />
-                            <Slider Width="200" Style="{StaticResource FlatSlider}"
+                            <Slider Width="200"
                                     Margin="0, 10, 0, 0"
                                     IsEnabled="False" />
                             <Slider Width="200" Style="{StaticResource FlatSlider}"
@@ -501,12 +501,12 @@
                         <StackPanel Grid.Column="1">
                             <Label Content="Vertical Slider" Style="{StaticResource DescriptionHeaderStyle}" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Slider Orientation="Vertical" Height="200" Style="{StaticResource FlatSlider}" />
+                                <Slider Orientation="Vertical" Height="200" />
                                 <Slider Orientation="Vertical"
                                         Margin="10, 0, 0, 0"
                                         Height="200"  Style="{StaticResource FlatSlider}"
                                         Value="50" />
-                                <Slider Orientation="Vertical" Style="{StaticResource FlatSlider}"
+                                <Slider Orientation="Vertical"
                                         Height="200"
                                         Margin="10, 0, 0, 0"
                                         IsEnabled="False" />
