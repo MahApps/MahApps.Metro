@@ -43,63 +43,7 @@
 
     <ControlTemplate x:Key="HorizontalSlider" TargetType="{x:Type Slider}">
         <Grid>
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup Name="CommonStates">
-                    <VisualState Name="Normal" />
-                    <VisualState Name="MouseOver">
-                        <Storyboard>
-                            <ColorAnimation Storyboard.TargetName="RepeatButtonValueBrush" Storyboard.TargetProperty="Color" To="{StaticResource HoverValueColor}" Duration="0"/>
-                            <ColorAnimation Storyboard.TargetName="RepeatButtonRestBrush" Storyboard.TargetProperty="Color" To="{StaticResource HoverTrackColor}" Duration="0"/>
-                        </Storyboard>
-                    </VisualState>
-                    <VisualState Name="Pressed">
-                        <Storyboard>
-                            <ColorAnimation Storyboard.TargetName="RepeatButtonValueBrush" Storyboard.TargetProperty="Color" To="{StaticResource PressedValueColor}" Duration="0"/>
-                            <ColorAnimation Storyboard.TargetName="RepeatButtonRestBrush" Storyboard.TargetProperty="Color" To="{StaticResource PressedTrackColor}" Duration="0"/>
-                        </Storyboard>
-                    </VisualState>
-                    <VisualState Name="Disabled">
-                        <Storyboard>
-                            <ColorAnimation Storyboard.TargetName="RepeatButtonValueBrush" Storyboard.TargetProperty="Color" To="{StaticResource DisabledValueColor}" Duration="0"/>
-                            <ColorAnimation Storyboard.TargetName="RepeatButtonRestBrush" Storyboard.TargetProperty="Color" To="{StaticResource DisabledTrackColor}" Duration="0"/>
-                            <ColorAnimation Storyboard.TargetName="ThumbBrush" Storyboard.TargetProperty="Color" To="{StaticResource DisabledThumbColor}" Duration="0"/>
-                        </Storyboard>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>            
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto" MinHeight="{TemplateBinding Slider.MinHeight}"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Track Grid.Row="1" Name="PART_Track">
-                <Track.DecreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge">
-                        <RepeatButton.Background>
-                            <SolidColorBrush x:Name="RepeatButtonValueBrush" Color="{StaticResource ValueColor}" />
-                        </RepeatButton.Background>
-                    </RepeatButton>
-                </Track.DecreaseRepeatButton>
-                <Track.Thumb>
-                    <Thumb Height="{TemplateBinding Slider.MinHeight}" Width="{TemplateBinding Slider.MinHeight}" Style="{StaticResource SliderThumbStyle}">
-                        <Thumb.Background>
-                            <SolidColorBrush x:Name="ThumbBrush" Color="{DynamicResource BlackColor}" />
-                        </Thumb.Background>
-                    </Thumb>
-                </Track.Thumb>
-                <Track.IncreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge">
-                        <RepeatButton.Background>
-                            <SolidColorBrush x:Name="RepeatButtonRestBrush" Color="{StaticResource TrackColor}" />
-                        </RepeatButton.Background>
-                    </RepeatButton>
-                </Track.IncreaseRepeatButton>
-            </Track>
-        </Grid>
-    </ControlTemplate>
-
-    <ControlTemplate x:Key="VerticalSlider" TargetType="{x:Type Slider}">
-        <Grid>
+            <!--
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup Name="CommonStates">
                     <VisualState Name="Normal" />
@@ -124,6 +68,28 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
+            -->       
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="{TemplateBinding Slider.MinHeight}"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Track Grid.Row="1" Name="PART_Track">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge" Background="{TemplateBinding Slider.Foreground}" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Height="{TemplateBinding Slider.MinHeight}" Width="{TemplateBinding Slider.MinHeight}" Style="{StaticResource SliderThumbStyle}"  Background="{TemplateBinding Slider.BorderBrush}"/>
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge" Background="{TemplateBinding Slider.Background}" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="VerticalSlider" TargetType="{x:Type Slider}">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding Slider.MinWidth}"/>
@@ -131,25 +97,13 @@
             </Grid.ColumnDefinitions>
             <Track Grid.Column="1" Name="PART_Track">
                 <Track.DecreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge">
-                        <RepeatButton.Background>
-                            <SolidColorBrush x:Name="RepeatButtonValueBrush" Color="{StaticResource ValueColor}" />
-                        </RepeatButton.Background>
-                    </RepeatButton>
+                    <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge" Background="{TemplateBinding Slider.Foreground}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Height="{TemplateBinding Slider.MinWidth}" Width="{TemplateBinding Slider.MinWidth}" Style="{StaticResource SliderThumbStyle}">
-                        <Thumb.Background>
-                            <SolidColorBrush x:Name="ThumbBrush" Color="{DynamicResource BlackColor}" />
-                        </Thumb.Background>
-                    </Thumb>
+                    <Thumb Height="{TemplateBinding Slider.MinWidth}" Width="{TemplateBinding Slider.MinWidth}" Style="{StaticResource SliderThumbStyle}" Background="{TemplateBinding Slider.BorderBrush}"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
-                    <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge">
-                        <RepeatButton.Background>
-                            <SolidColorBrush x:Name="RepeatButtonRestBrush" Color="{StaticResource TrackColor}" />
-                        </RepeatButton.Background>
-                    </RepeatButton>
+                    <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge" Background="{TemplateBinding Slider.Background}" />
                 </Track.IncreaseRepeatButton>
             </Track>
         </Grid>
@@ -161,7 +115,27 @@
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
         <Setter Property="Value" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SliderTrackNormal}" />
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource BlackColor}" />
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource SliderValueDisabled}" />
+                <Setter Property="Background" Value="{DynamicResource SliderTrackDisabled}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource SliderThumbDisabled}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{DynamicResource AccentColor2}" />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background" Value="{DynamicResource SliderTrackHover}" />
+            </Trigger>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="MinWidth" Value="100" />
                 <Setter Property="MinHeight" Value="12" />
