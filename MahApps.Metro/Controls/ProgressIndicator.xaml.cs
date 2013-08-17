@@ -27,7 +27,7 @@ namespace MahApps.Metro.Controls
         public ProgressIndicator()
         {
             InitializeComponent();
-            this.DataContext = this;
+
             IsVisibleChanged += (s, e) => ((ProgressIndicator)s).StartStopAnimation();
             DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor.FromProperty(VisibilityProperty, GetType());
             dpd.AddValueChanged(this, (s, e) => ((ProgressIndicator)s).StartStopAnimation());
