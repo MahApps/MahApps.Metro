@@ -20,6 +20,7 @@
     <!-- dev config -->
     <Version Condition=" '$(Version)' == '' ">1.0.0.9999</Version>
     <SolutionDir Condition=" '$(SolutionDir)' == '' ">..</SolutionDir>
+    <ExpressionBlendVersion>5.0.30709.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -253,6 +254,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\FlatSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\VS\Button.xaml">
       <SubType>Designer</SubType>

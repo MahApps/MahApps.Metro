@@ -25,6 +25,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="22" />
@@ -485,14 +486,14 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0">
                             <Label Content="Horizontal Slider" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Slider Width="200" Margin="0, 10, 0, 0" />
-                            <Slider Width="200"
+                            <Slider Width="200" Margin="0, 10, 0, 0"/>
+                            <Slider Width="200" Style="{StaticResource FlatSlider}"
                                     Margin="0, 10, 0, 0"
                                     Value="50" />
                             <Slider Width="200"
                                     Margin="0, 10, 0, 0"
                                     IsEnabled="False" />
-                            <Slider Width="200"
+                            <Slider Width="200" Style="{StaticResource FlatSlider}"
                                     Margin="0, 10, 0, 0"
                                     IsEnabled="False"
                                     Value="50" />
@@ -503,15 +504,15 @@
                                 <Slider Orientation="Vertical" Height="200" />
                                 <Slider Orientation="Vertical"
                                         Margin="10, 0, 0, 0"
-                                        Height="200" 
+                                        Height="200"  Style="{StaticResource FlatSlider}"
                                         Value="50" />
-                                <Slider Orientation="Vertical" 
+                                <Slider Orientation="Vertical"
                                         Height="200"
                                         Margin="10, 0, 0, 0"
                                         IsEnabled="False" />
                                 <Slider Orientation="Vertical"
                                         Margin="10, 0, 0, 0"
-                                        Height="200" 
+                                        Height="200" Style="{StaticResource FlatSlider}"
                                         Value="50"
                                         IsEnabled="False" />
                             </StackPanel>
