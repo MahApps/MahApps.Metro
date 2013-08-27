@@ -92,6 +92,11 @@ namespace MetroDemo
             new IconsWindow().Show();
         }
 
+        private void LauchCleanDemo(object sender, RoutedEventArgs e)
+        {
+            new CleanWindowDemo().Show();
+        }
+
         private void LaunchRibbonDemo(object sender, RoutedEventArgs e)
         {
 #if NET_4_5
