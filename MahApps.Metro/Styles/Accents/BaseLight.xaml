@@ -14,4 +14,12 @@
 
     <Color x:Key="GrayNormal">#FFBEBEBE</Color>
     <Color x:Key="GrayHover">#FF333333</Color>
+
+    <SolidColorBrush x:Key="SliderValueDisabled" Color="#FFBABABA" />
+    <SolidColorBrush x:Key="SliderTrackDisabled" Color="#FFDBDBDB" />
+    <SolidColorBrush x:Key="SliderThumbDisabled" Color="#FFA0A0A0" />
+
+    <SolidColorBrush x:Key="SliderTrackHover" Color="#FFD0D0D0" />
+
+    <SolidColorBrush x:Key="SliderTrackNormal" Color="#FFC6C6C6" />
 </ResourceDictionary>
