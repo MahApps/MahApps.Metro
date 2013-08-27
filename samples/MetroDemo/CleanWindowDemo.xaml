@@ -1,0 +1,32 @@
+﻿<Controls:MetroWindow x:Class="MetroDemo.CleanWindowDemo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Icon="mahapps.metro.logo2.ico" ShowIconOnTitleBar="True"
+        Title="CleanWindowDemo" Height="300" Width="300" Style="{DynamicResource CleanWindowStyleKey}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Controls:MetroWindow.WindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="Test"/>
+            <Button Content="Another Test"/>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.WindowCommands>
+    <Grid>
+        <GroupBox Header="Hello">
+            <Button Content="Test" Height="20" Width="40"/>
+        </GroupBox>
+    </Grid>
+</Controls:MetroWindow>
