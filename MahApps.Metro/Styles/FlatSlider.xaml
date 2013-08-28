@@ -33,6 +33,11 @@
                 <RowDefinition Height="Auto" MinHeight="{TemplateBinding Slider.MinHeight}"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <TickBar x:Name="TopTick" Visibility="Collapsed" Placement="Top" Height="6" Grid.Row="0" Margin="0,0,0,3">
+                <TickBar.Fill>
+                    <SolidColorBrush Color="{DynamicResource BlackColor}" />
+                </TickBar.Fill>
+            </TickBar>
             <Track Grid.Row="1" Name="PART_Track">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge" Background="{TemplateBinding Slider.Foreground}" />
@@ -44,7 +49,24 @@
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge" Background="{TemplateBinding Slider.Background}" />
                 </Track.IncreaseRepeatButton>
             </Track>
+            <TickBar x:Name="BottomTick" Visibility="Collapsed" Placement="Bottom" Height="6" Grid.Row="2" Margin="0,3,0,0">
+                <TickBar.Fill>
+                    <SolidColorBrush Color="{DynamicResource BlackColor}" />
+                </TickBar.Fill>
+            </TickBar>
         </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>             
+            </Trigger>        
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate x:Key="VerticalSlider" TargetType="{x:Type Slider}">
@@ -54,6 +76,11 @@
                 <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding Slider.MinWidth}"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
+            <TickBar x:Name="TopTick" Visibility="Collapsed" Placement="Left" Width="6" Grid.Column="0" Margin="0,0,3,0">
+                <TickBar.Fill>
+                    <SolidColorBrush Color="{DynamicResource BlackColor}" />
+                </TickBar.Fill>
+            </TickBar>
             <Track Grid.Column="1" Name="PART_Track">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge" Background="{TemplateBinding Slider.Foreground}" />
@@ -65,7 +92,24 @@
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge" Background="{TemplateBinding Slider.Background}" />
                 </Track.IncreaseRepeatButton>
             </Track>
+            <TickBar x:Name="BottomTick" Visibility="Collapsed" Placement="Right" Width="6" Grid.Column="2" Margin="3,0,0,0">
+                <TickBar.Fill>
+                    <SolidColorBrush Color="{DynamicResource BlackColor}" />
+                </TickBar.Fill>
+            </TickBar>
         </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style x:Key="FlatSlider" TargetType="{x:Type Slider}">
