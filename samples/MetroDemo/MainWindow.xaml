@@ -568,16 +568,16 @@
                             <Controls:ProgressIndicator Width="100"
                                                         Height="10"
                                                         Margin="0, 10, 0, 0"
-                                                        ProgressColour="DeepSkyBlue" />
+                                                        ProgressColour="{DynamicResource AccentColorBrush}" />
                         </StackPanel>
                         <Grid Grid.Row="2" Grid.Column="2">
                             <Label VerticalAlignment="top" HorizontalAlignment="Center" Content="Sliders TickPlacement" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="34" Width="132" Margin="122,39,0,0"  TickPlacement="Both" TickFrequency="25"/>
-                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="32" Width="132" Margin="122,112,0,0"  TickPlacement="BottomRight" TickFrequency="25" Value="50"/>
-                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="32" Width="132" Margin="122,207,0,0"  TickPlacement="TopLeft" TickFrequency="25" Value="50"/>
-                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Width="30" Margin="10,44,0,0"  TickPlacement="Both" TickFrequency="25" Value="50" Orientation="Vertical"/>
-                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Width="30" Margin="40,126,0,0"  TickPlacement="BottomRight" TickFrequency="25" Value="50" Orientation="Vertical"/>
-                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Width="30" Margin="70,44,0,0"  TickPlacement="TopLeft" TickFrequency="25" Value="50" Orientation="Vertical"/>
+                            <Slider Style="{DynamicResource FlatSlider}" VerticalAlignment="top" HorizontalAlignment="Left" Width="132" Margin="122,39,0,0"  TickPlacement="Both" TickFrequency="25"/>
+                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Width="132" Margin="122,112,0,0"  TickPlacement="BottomRight" TickFrequency="25" Value="50"/>
+                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Width="132" Margin="122,207,0,0"  TickPlacement="TopLeft" TickFrequency="25" Value="50"/>
+                            <Slider Style="{DynamicResource FlatSlider}" VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="10,44,0,0"  TickPlacement="Both" TickFrequency="25" Value="50" Orientation="Vertical"/>
+                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="40,126,0,0"  TickPlacement="BottomRight" TickFrequency="25" Value="50" Orientation="Vertical"/>
+                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="70,44,0,0"  TickPlacement="TopLeft" TickFrequency="25" Value="50" Orientation="Vertical"/>
                         </Grid>
                     </Grid>
                 </TabItem>
