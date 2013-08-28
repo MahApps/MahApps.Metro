@@ -259,14 +259,14 @@
             </VisualStateManager.VisualStateGroups>
             <Grid x:Name="HorizontalTemplate"
                   Background="{TemplateBinding Background}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Track x:Name="PART_Track"
-                        Grid.ColumnSpan="3"
-                        Grid.Column="0"
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding Slider.MinHeight}"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TickBar x:Name="TopTick" Visibility="Collapsed" Fill="{TemplateBinding Foreground}" Placement="Top" Height="4" Grid.Row="0"/>
+                <TickBar x:Name="BottomTick" Visibility="Collapsed" Fill="{TemplateBinding Foreground}" Placement="Bottom" Height="4" Grid.Row="2"/>
+                <Track x:Name="PART_Track" Grid.Row="1"                       
                         Height="18">
                     <Track.DecreaseRepeatButton>
                         <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
@@ -277,8 +277,7 @@
                                       Style="{StaticResource HorizontalTrackLargeDecrease}" />
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb x:Name="HorizontalThumb"
-                                Grid.Column="1"
+                        <Thumb x:Name="HorizontalThumb"                                
                                 Height="18"
                                 IsTabStop="True"
                                 Width="10"
@@ -288,17 +287,15 @@
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="TickPlacement"
-                      Value="TopLeft">
-                <Setter Property="Style"
-                        TargetName="HorizontalThumb"
-                        Value="{StaticResource HorizontalSliderThumb}" />
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
             </Trigger>
-            <Trigger Property="TickPlacement"
-                      Value="BottomRight">
-                <Setter Property="Style"
-                        TargetName="HorizontalThumb"
-                        Value="{StaticResource HorizontalSliderThumb}" />
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -323,14 +320,14 @@
             </VisualStateManager.VisualStateGroups>
             <Grid x:Name="HorizontalTemplate"
                   Background="{TemplateBinding Background}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Track x:Name="PART_Track"
-                        Grid.RowSpan="3"
-                        Grid.Row="0"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding Slider.MinWidth}"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TickBar x:Name="TopTick" Visibility="Collapsed" Fill="{TemplateBinding Foreground}" Placement="Left" Width="4" Grid.Column="0"/>
+                <TickBar x:Name="BottomTick" Visibility="Collapsed" Fill="{TemplateBinding Foreground}" Placement="Right" Width="4" Grid.Column="2"/>
+                <Track x:Name="PART_Track" Grid.Column="1"                    
                         Width="18">
                     <Track.DecreaseRepeatButton>
                         <RepeatButton Command="{x:Static Slider.DecreaseLarge}"
@@ -341,8 +338,7 @@
                                       Style="{StaticResource VerticalTrackLargeDecrease}" />
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb x:Name="VerticalThumb"
-                                Grid.Row="1"
+                        <Thumb x:Name="VerticalThumb"                               
                                 Width="18"
                                 IsTabStop="True"
                                 Height="10"
@@ -352,17 +348,15 @@
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger Property="TickPlacement"
-                      Value="TopLeft">
-                <Setter Property="Style"
-                        TargetName="VerticalThumb"
-                        Value="{StaticResource VerticalSliderThumb}" />
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
             </Trigger>
-            <Trigger Property="TickPlacement"
-                      Value="BottomRight">
-                <Setter Property="Style"
-                        TargetName="VerticalThumb"
-                        Value="{StaticResource VerticalSliderThumb}" />
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible"/>
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
