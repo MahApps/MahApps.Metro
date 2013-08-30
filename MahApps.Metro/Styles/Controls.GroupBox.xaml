@@ -28,7 +28,7 @@
                                               RecognizesAccessKey="True">
                                 <ContentPresenter.Resources>
                                     <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                                        <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GroupBox}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                                         <Setter Property="VerticalAlignment" Value="Center" />
                                     </Style>
                                 </ContentPresenter.Resources>
