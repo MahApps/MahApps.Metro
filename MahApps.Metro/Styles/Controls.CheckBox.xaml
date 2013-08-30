@@ -131,8 +131,8 @@
                                 </ToolTip>
                             </ToolTipService.ToolTip>
                             <Grid Background="Transparent" HorizontalAlignment="Right" Height="10" Margin="0,-4,-4,0" VerticalAlignment="Top" Width="10">
-                                <Path Data="M 1,0 L5,0 A 2,2 90 0 1 7,2 L7,6 z" Fill="{DynamicResource ValidationBrush5}" Margin="0,3,0,0" />
-                                <Path Data="M 0,0 L2,0 L 7,5 L7,7" Fill="{DynamicResource WhiteColorBrush}" Margin="0,3,0,0" />
+                                <Path Data="M 1,0 L5,0 A 2,2 90 0 1 7,2 L7,6 z" Fill="{StaticResource ValidationBrush5}" Margin="0,3,0,0" />
+                                <Path Data="M 0,0 L2,0 L 7,5 L7,7" Fill="{StaticResource WhiteColorBrush}" Margin="0,3,0,0" />
                             </Grid>
                         </Border>
                         <Path x:Name="checkBox" Height="10" Width="12" Stretch="Fill" Opacity="0" Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z" Fill="{DynamicResource HighlightBrush}" UseLayoutRounding="False" />
