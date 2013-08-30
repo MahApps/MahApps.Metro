@@ -90,6 +90,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CleanWindowDemo.xaml.cs">
+      <DependentUpon>CleanWindowDemo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutDemo.xaml.cs">
       <DependentUpon>FlyoutDemo.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,10 @@
     <Compile Include="VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
+    <Page Include="CleanWindowDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="FlyoutDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
