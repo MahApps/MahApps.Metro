@@ -16,8 +16,8 @@ namespace MahApps.Metro.Controls
 
 		public Color GlowColor
 		{
-			get { return (Color)this.GetValue(Glow.GlowColorProperty); }
-			set { this.SetValue(Glow.GlowColorProperty, value); }
+			get { return (Color)this.GetValue(GlowColorProperty); }
+			set { this.SetValue(GlowColorProperty, value); }
 		}
 		public static readonly DependencyProperty GlowColorProperty = DependencyProperty.Register("GlowColor", typeof(Color), typeof(Glow), new UIPropertyMetadata(Colors.Transparent));
 
@@ -27,8 +27,8 @@ namespace MahApps.Metro.Controls
 
 		public bool IsGlow
 		{
-			get { return (bool)this.GetValue(Glow.IsGlowProperty); }
-			set { this.SetValue(Glow.IsGlowProperty, value); }
+			get { return (bool)this.GetValue(IsGlowProperty); }
+			set { this.SetValue(IsGlowProperty, value); }
 		}
 		public static readonly DependencyProperty IsGlowProperty =
 			DependencyProperty.Register("IsGlow", typeof(bool), typeof(Glow), new UIPropertyMetadata(true));
@@ -39,8 +39,8 @@ namespace MahApps.Metro.Controls
 
 		public Orientation Orientation
 		{
-			get { return (Orientation)this.GetValue(Glow.OrientationProperty); }
-			set { this.SetValue(Glow.OrientationProperty, value); }
+			get { return (Orientation)this.GetValue(OrientationProperty); }
+			set { this.SetValue(OrientationProperty, value); }
 		}
 		public static readonly DependencyProperty OrientationProperty =
 			DependencyProperty.Register("Orientation", typeof(Orientation), typeof(Glow), new UIPropertyMetadata(Orientation.Vertical));

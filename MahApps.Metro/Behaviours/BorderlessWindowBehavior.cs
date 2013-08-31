@@ -130,16 +130,16 @@ namespace MahApps.Metro.Behaviours
                 var window = ((MetroWindow)AssociatedObject);
                 //MetroWindow already has a border we can use
                 AssociatedObject.Loaded += (s, e) =>
-                                               {
-                                                   var ancestors = window.GetPart<Border>("PART_Border");
-                                                   Border = ancestors;
-                                                   if (ShouldHaveBorder())
-                                                       AddBorder();
-                                                   var titleBar = window.GetPart<Grid>("PART_TitleBar");
-                                                   titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-                                                   var windowCommands = window.GetPart<ContentPresenter>("PART_WindowCommands");
-                                                   windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-                                               };
+                {
+                    var ancestors = window.GetPart<Border>("PART_Border");
+                    Border = ancestors;
+                    if (ShouldHaveBorder())
+                        AddBorder();
+                    var titleBar = window.GetPart<Grid>("PART_TitleBar");
+                    titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    var windowCommands = window.GetPart<ContentPresenter>("PART_WindowCommands");
+                    windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                };
 
                 switch (AssociatedObject.ResizeMode)
                 {
@@ -167,10 +167,10 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Content = null;
 
                 Border = new Border
-                            {
-                                Child = content,
-                                BorderBrush = new SolidColorBrush(Colors.Black)
-                            };
+                {
+                    Child = content,
+                    BorderBrush = new SolidColorBrush(Colors.Black)
+                };
 
                 AssociatedObject.Content = Border;
             }
@@ -180,15 +180,12 @@ namespace MahApps.Metro.Behaviours
 
             if (AutoSizeToContent)
                 AssociatedObject.Loaded += (s, e) =>
-                                               {
-                                                   //Temp fix, thanks @lynnx
-                                                   AssociatedObject.SizeToContent = SizeToContent.Height;
-                                                   AssociatedObject.SizeToContent = AutoSizeToContent
-                                                                                        ? SizeToContent.WidthAndHeight
-                                                                                        : SizeToContent.Manual;
-                                               };
-
-
+                {
+                    //Temp fix, thanks @lynnx
+                    AssociatedObject.SizeToContent = SizeToContent.Height;
+                    AssociatedObject.SizeToContent = AutoSizeToContent ? 
+                        SizeToContent.WidthAndHeight : SizeToContent.Manual;
+                };
 
             base.OnAttached();
         }
@@ -310,10 +307,7 @@ namespace MahApps.Metro.Behaviours
             if (Environment.OSVersion.Version.Major < 6)
                 return true;
 
-            if (!UnsafeNativeMethods.DwmIsCompositionEnabled())
-                return true;
-
-            return false;
+            return !UnsafeNativeMethods.DwmIsCompositionEnabled();
         }
 
         readonly SolidColorBrush _borderColour = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
@@ -495,9 +489,6 @@ namespace MahApps.Metro.Behaviours
                     }
                     break;
             }
-
-
-
 
             return returnval;
         }

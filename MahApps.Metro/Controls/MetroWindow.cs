@@ -32,7 +32,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         bool isDragging;
-        ContentPresenter WindowCommandsPresenter = null;
+        ContentPresenter WindowCommandsPresenter;
         UIElement titleBar;
 
         public bool WindowTransitionsEnabled

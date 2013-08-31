@@ -85,7 +85,7 @@ namespace MahApps.Metro.Controls
         public static FrameworkElement GetImplementationRoot(DependencyObject dependencyObject)
         {
             Debug.Assert(dependencyObject != null, "DependencyObject should not be null.");
-            return (1 == VisualTreeHelper.GetChildrenCount(dependencyObject)) ?
+            return (VisualTreeHelper.GetChildrenCount(dependencyObject) == 1) ?
                 VisualTreeHelper.GetChild(dependencyObject, 0) as FrameworkElement :
                 null;
         }

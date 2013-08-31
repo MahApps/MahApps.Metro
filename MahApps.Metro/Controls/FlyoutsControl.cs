@@ -84,7 +84,7 @@ namespace MahApps.Metro.Controls
 
             this.ReorderZIndices(flyout);
 
-            MetroWindow parentWindow = this.TryFindParent<MetroWindow>();
+            var parentWindow = this.TryFindParent<MetroWindow>();
             if (parentWindow != null)
                 parentWindow.HandleFlyoutStatusChange(flyout);
         }

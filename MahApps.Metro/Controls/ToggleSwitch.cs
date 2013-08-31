@@ -109,10 +109,8 @@ namespace MahApps.Metro.Controls
 
         void ToggleSwitch_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
-         
-                if (e.Key == System.Windows.Input.Key.Space && e.OriginalSource == sender)
-                    IsChecked = !IsChecked;
-            
+            if (e.Key == System.Windows.Input.Key.Space && e.OriginalSource == sender)
+                IsChecked = !IsChecked;       
         }
 
         private void SetDefaultContent()
@@ -156,8 +154,7 @@ namespace MahApps.Metro.Controls
                 _toggleButton.Unchecked += UncheckedHandler;
                 _toggleButton.Indeterminate += IndeterminateHandler;
                 _toggleButton.Click += ClickHandler;
-                Binding binding = new Binding("IsChecked");
-                binding.Source = this;
+                var binding = new Binding("IsChecked") { Source = this };
                 _toggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
             }
             ChangeVisualState(false);

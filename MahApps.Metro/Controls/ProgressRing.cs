@@ -80,14 +80,14 @@ namespace MahApps.Metro.Controls
                 return;
 
             var action = new Action(() =>
-                                           {
-                                               ring.SetEllipseDiameter(
-                                                   (double) dependencyPropertyChangedEventArgs.NewValue);
-                                               ring.SetEllipseOffset(
-                                                   (double) dependencyPropertyChangedEventArgs.NewValue);
-                                               ring.SetMaxSideLength(
-                                                   (double) dependencyPropertyChangedEventArgs.NewValue);
-                                           });
+            {
+                ring.SetEllipseDiameter(
+                    (double) dependencyPropertyChangedEventArgs.NewValue);
+                ring.SetEllipseOffset(
+                    (double) dependencyPropertyChangedEventArgs.NewValue);
+                ring.SetMaxSideLength(
+                    (double) dependencyPropertyChangedEventArgs.NewValue);
+            });
 
             if (ring._deferredActions != null)
                 ring._deferredActions.Add(action);
@@ -104,7 +104,6 @@ namespace MahApps.Metro.Controls
         {
             EllipseDiameter = width / 8;
         }
-
 
         private void SetEllipseOffset(double width)
         {
