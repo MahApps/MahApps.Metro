@@ -81,11 +81,11 @@ namespace MetroDemo
             {
                 if (parameter is TextBox)
                 {
-                    MessageBox.Show("TextBox Button was clicked!");
+                    MessageBox.Show("TextBox Button was clicked!" + Environment.NewLine + "Text: " + ((TextBox)parameter).Text);
                 }
                 else if (parameter is PasswordBox)
                 {
-                    MessageBox.Show("PasswordBox Button was clicked!");
+                    MessageBox.Show("PasswordBox Button was clicked!" + Environment.NewLine + "Text: " + ((PasswordBox)parameter).Password);
                 }
             }
         }
