@@ -16,6 +16,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextboxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextboxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextboxHelper), new FrameworkPropertyMetadata("r"));
+        public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextboxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
 
         private static readonly DependencyProperty hasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
@@ -146,6 +148,26 @@ namespace MahApps.Metro.Controls
         public static void SetButtonCommand(DependencyObject obj, ICommand value)
         {
             obj.SetValue(ButtonCommandProperty, value);
+        }
+
+        public static object GetButtonContent(DependencyObject d)
+        {
+            return (object)d.GetValue(ButtonContentProperty);
+        }
+
+        public static void SetButtonContent(DependencyObject obj, object value)
+        {
+            obj.SetValue(ButtonContentProperty, value);
+        }
+
+        public static ControlTemplate GetButtonTemplate(DependencyObject d)
+        {
+            return (ControlTemplate)d.GetValue(ButtonTemplateProperty);
+        }
+
+        public static void SetButtonTemplate(DependencyObject obj, ControlTemplate value)
+        {
+            obj.SetValue(ButtonTemplateProperty, value);
         }
 
         private static void ButtonCommandOrClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
