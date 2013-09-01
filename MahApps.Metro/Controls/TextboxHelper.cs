@@ -168,11 +168,8 @@ namespace MahApps.Metro.Controls
 
         static void PassBoxLoaded(object sender, RoutedEventArgs e)
         {
-            if (!(sender is PasswordBox))
-                return;
-
             var passbox = sender as PasswordBox;
-            if (passbox.Style == null)
+            if (passbox == null || passbox.Style == null)
                 return;
 
             var template = passbox.Template;
@@ -183,32 +180,22 @@ namespace MahApps.Metro.Controls
             if (button == null)
                 return;
 
-            if (GetButtonCommand(passbox) != null)
+            if (GetButtonCommand(passbox) != null || GetClearTextButton(passbox))
             {
-                button.Click += ButtonCommandClicked;
+                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
+                button.Click -= ButtonClicked;
+                button.Click += ButtonClicked;
             }
             else
             {
-                button.Click -= ButtonCommandClicked;
-            }
-            if (GetClearTextButton(passbox))
-            {
-                button.Click += ClearPassClicked;
-            }
-            else
-            {
-                button.Click -= ClearPassClicked;
+                button.Click -= ButtonClicked;
             }
         }
 
-
         static void TextBoxLoaded(object sender, RoutedEventArgs e)
         {
-            if (!(sender is TextBox))
-                return;
-
             var textbox = sender as TextBox;
-            if (textbox.Style == null)
+            if (textbox == null || textbox.Style == null)
                 return;
 
             var template = textbox.Template;
@@ -219,25 +206,19 @@ namespace MahApps.Metro.Controls
             if (button == null)
                 return;
 
-            if (GetButtonCommand(textbox) != null)
+            if (GetButtonCommand(textbox) != null || GetClearTextButton(textbox))
             {
-                button.Click += ButtonCommandClicked;
+                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
+                button.Click -= ButtonClicked;
+                button.Click += ButtonClicked;
             }
             else
             {
-                button.Click -= ButtonCommandClicked;
-            }
-            if (GetClearTextButton(textbox))
-            {
-                button.Click += ClearTextClicked;
-            }
-            else
-            {
-                button.Click -= ClearTextClicked;
+                button.Click -= ButtonClicked;
             }
         }
 
-        static void ButtonCommandClicked(object sender, RoutedEventArgs e)
+        static void ButtonClicked(object sender, RoutedEventArgs e)
         {
             var button = ((Button)sender);
             var parent = VisualTreeHelper.GetParent(button);
@@ -245,34 +226,24 @@ namespace MahApps.Metro.Controls
             {
                 parent = VisualTreeHelper.GetParent(parent);
             }
+            
             var command = GetButtonCommand(parent);
-            if (command != null && command.CanExecute(parent)) {
+            if (command != null && command.CanExecute(parent))
+            {
                 command.Execute(parent);
             }
-        }
 
-        static void ClearTextClicked(object sender, RoutedEventArgs e)
-        {
-            var button = ((Button)sender);
-            var parent = VisualTreeHelper.GetParent(button);
-            while (!(parent is TextBox))
+            if (GetClearTextButton(parent))
             {
-                parent = VisualTreeHelper.GetParent(parent);
+                if (parent is TextBox)
+                {
+                    ((TextBox)parent).Clear();
+                }
+                else if (parent is PasswordBox)
+                {
+                    ((PasswordBox)parent).Clear();
+                }
             }
-
-            ((TextBox)parent).Clear();
-        }
-
-        static void ClearPassClicked(object sender, RoutedEventArgs e)
-        {
-            var button = ((Button)sender);
-            var parent = VisualTreeHelper.GetParent(button);
-            while (!(parent is PasswordBox))
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
-
-            ((PasswordBox)parent).Clear();
         }
     }
 
