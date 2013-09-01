@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -13,7 +14,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMonitoringProperty = DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false, OnIsMonitoringChanged));
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextboxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextboxHelper), new UIPropertyMetadata(0));
-        public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ClearTextChanged));
+        public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextboxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
 
         private static readonly DependencyProperty hasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
@@ -136,31 +138,31 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ClearTextButtonProperty, value);
         }
 
-        private static void ClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static ICommand GetButtonCommand(DependencyObject d)
+        {
+            return (ICommand)d.GetValue(ButtonCommandProperty);
+        }
+
+        public static void SetButtonCommand(DependencyObject obj, ICommand value)
+        {
+            obj.SetValue(ButtonCommandProperty, value);
+        }
+
+        private static void ButtonCommandOrClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var textbox = d as TextBox;
             if (textbox != null)
             {
-                if ((bool)e.NewValue)
-                {
-                    textbox.Loaded += TextBoxLoaded;
-                }
-                else
-                {
-                    textbox.Loaded -= TextBoxLoaded;
-                }
+                // only one loaded event
+                textbox.Loaded -= TextBoxLoaded;
+                textbox.Loaded += TextBoxLoaded;
             }
             var passbox = d as PasswordBox;
             if (passbox != null)
             {
-                if ((bool)e.NewValue)
-                {
-                    passbox.Loaded += PassBoxLoaded;
-                }
-                else
-                {
-                    passbox.Loaded -= PassBoxLoaded;
-                }
+                // only one loaded event
+                passbox.Loaded -= PassBoxLoaded;
+                passbox.Loaded += PassBoxLoaded;
             }
         }
 
@@ -181,6 +183,14 @@ namespace MahApps.Metro.Controls
             if (button == null)
                 return;
 
+            if (GetButtonCommand(passbox) != null)
+            {
+                button.Click += ButtonCommandClicked;
+            }
+            else
+            {
+                button.Click -= ButtonCommandClicked;
+            }
             if (GetClearTextButton(passbox))
             {
                 button.Click += ClearPassClicked;
@@ -209,6 +219,14 @@ namespace MahApps.Metro.Controls
             if (button == null)
                 return;
 
+            if (GetButtonCommand(textbox) != null)
+            {
+                button.Click += ButtonCommandClicked;
+            }
+            else
+            {
+                button.Click -= ButtonCommandClicked;
+            }
             if (GetClearTextButton(textbox))
             {
                 button.Click += ClearTextClicked;
@@ -216,6 +234,20 @@ namespace MahApps.Metro.Controls
             else
             {
                 button.Click -= ClearTextClicked;
+            }
+        }
+
+        static void ButtonCommandClicked(object sender, RoutedEventArgs e)
+        {
+            var button = ((Button)sender);
+            var parent = VisualTreeHelper.GetParent(button);
+            while (!(parent is TextBox || parent is PasswordBox))
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+            var command = GetButtonCommand(parent);
+            if (command != null && command.CanExecute(parent)) {
+                command.Execute(parent);
             }
         }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MetroDemo.Models;
 using System.Windows.Input;
@@ -54,6 +56,37 @@ namespace MetroDemo
 
                 _integerGreater10Property = value;
                 RaisePropertyChanged("IntegerGreater10Property");
+            }
+        }
+
+        private ICommand textBoxButtonCmd;
+
+        public ICommand TextBoxButtonCmd
+        {
+            get
+            {
+                return this.textBoxButtonCmd ?? (this.textBoxButtonCmd = new TextBoxButtonCommand());
+            }
+        }
+
+        public class TextBoxButtonCommand : ICommand
+        {
+            public bool CanExecute(object parameter) {
+                return true;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public void Execute(object parameter)
+            {
+                if (parameter is TextBox)
+                {
+                    MessageBox.Show("TextBox Button was clicked!");
+                }
+                else if (parameter is PasswordBox)
+                {
+                    MessageBox.Show("PasswordBox Button was clicked!");
+                }
             }
         }
 
