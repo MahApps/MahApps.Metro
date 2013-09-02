@@ -84,7 +84,16 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
-                            <Button x:Name="PART_ClearText" Style="{DynamicResource ChromelessButtonStyle}" FontSize="16" Foreground="{TemplateBinding Foreground}" Width="20"  HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False" />
+                            <Button x:Name="PART_ClearText"
+                                    Style="{DynamicResource ChromelessButtonStyle}"
+                                    FontSize="16"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Width="20"
+                                    HorizontalAlignment="Right"
+                                    FontFamily="Marlett"
+                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonContent), Mode=OneWay}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    IsTabStop="False" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
                                    Stroke="{DynamicResource ControlsDisabledBrush}"
@@ -178,7 +187,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type TextBox}" x:Key="SearchMetroTextBox">
+    <Style TargetType="{x:Type TextBox}" x:Key="ButtonCommandMetroTextBox">
         <Setter Property="Controls:TextboxHelper.IsMonitoring" Value="True"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource HighlightBrush}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
@@ -189,6 +198,7 @@
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="Controls:TextboxHelper.ButtonTemplate" Value="{DynamicResource ChromelessButtonTemplate}" />
         <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
@@ -254,13 +264,16 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
-                            <Button x:Name="PART_ClearText" Style="{DynamicResource ChromelessButtonStyle}" FontSize="16" Foreground="{TemplateBinding Foreground}" Width="20"  HorizontalAlignment="Right"  FontFamily="Marlett"  IsTabStop="False">
-                                <Canvas Width="15" Height="15" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
-                                    <!-- x:Key="appbar_magnify"-->
-                                    <Path Width="15.7781" Height="15.7781" Stretch="Fill" Fill="{Binding ElementName=PART_ClearText, Path=Foreground, Mode=OneWay}" 
-                                          Data="F1 M 14.8076,31.1139L 20.0677,25.9957C 19.3886,24.8199 19.25,23.4554 19.25,22C 19.25,17.5817 22.5817,14 27,14C 31.4183,14 35,17.5817 35,22C 35,26.4183 31.4183,29.75 27,29.75C 25.6193,29.75 24.3204,29.6502 23.1868,29.0345L 17.8861,34.1924C 17.105,34.9734 15.5887,34.9734 14.8076,34.1924C 14.0266,33.4113 14.0266,31.895 14.8076,31.1139 Z M 27,17C 24.2386,17 22,19.2386 22,22C 22,24.7614 24.2386,27 27,27C 29.7614,27 32,24.7614 32,22C 32,19.2386 29.7614,17 27,17 Z " />
-                                </Canvas>
-                            </Button>
+                            <Button x:Name="PART_ClearText"
+                                    Style="{DynamicResource ChromelessButtonStyle}"
+                                    FontSize="16"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    Width="20"
+                                    HorizontalAlignment="Right"
+                                    FontFamily="Marlett"
+                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonContent), Mode=OneWay}"
+                                    Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonTemplate), Mode=OneWay}"
+                                    IsTabStop="False" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
                                    Stroke="{DynamicResource ControlsDisabledBrush}"
@@ -322,6 +335,45 @@
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource BlackBrush}" />
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" x:Key="SearchMetroTextBox" BasedOn="{StaticResource ButtonCommandMetroTextBox}">
+        <Setter Property="Controls:TextboxHelper.ButtonTemplate">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid x:Name="contentPresenter"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              Margin="{TemplateBinding Padding}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              Opacity="0.75">
+                            <Canvas Width="15"
+                                    Height="15"
+                                    Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
+                                <!-- x:Key="appbar_magnify"-->
+                                <Path Width="15.7781"
+                                      Height="15.7781"
+                                      Stretch="Fill"
+                                      Fill="{TemplateBinding Foreground}"
+                                      Data="F1 M 14.8076,31.1139L 20.0677,25.9957C 19.3886,24.8199 19.25,23.4554 19.25,22C 19.25,17.5817 22.5817,14 27,14C 31.4183,14 35,17.5817 35,22C 35,26.4183 31.4183,29.75 27,29.75C 25.6193,29.75 24.3204,29.6502 23.1868,29.0345L 17.8861,34.1924C 17.105,34.9734 15.5887,34.9734 14.8076,34.1924C 14.0266,33.4113 14.0266,31.895 14.8076,31.1139 Z M 27,17C 24.2386,17 22,19.2386 22,22C 22,24.7614 24.2386,27 27,27C 29.7614,27 32,24.7614 32,22C 32,19.2386 29.7614,17 27,17 Z " />
+                            </Canvas>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="contentPresenter" Property="Opacity" Value=".5" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#ADADAD" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
