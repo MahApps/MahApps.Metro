@@ -9,8 +9,9 @@ namespace MahApps.Metro
         public string Name { get; set; }
 
         public Accent()
-        { }
-
+        {
+            
+        }
         public Accent(string name, Uri resourceAddress)
         {
             Name = name;

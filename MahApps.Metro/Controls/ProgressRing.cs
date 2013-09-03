@@ -80,14 +80,14 @@ namespace MahApps.Metro.Controls
                 return;
 
             var action = new Action(() =>
-            {
-                ring.SetEllipseDiameter(
-                    (double) dependencyPropertyChangedEventArgs.NewValue);
-                ring.SetEllipseOffset(
-                    (double) dependencyPropertyChangedEventArgs.NewValue);
-                ring.SetMaxSideLength(
-                    (double) dependencyPropertyChangedEventArgs.NewValue);
-            });
+                                           {
+                                               ring.SetEllipseDiameter(
+                                                   (double) dependencyPropertyChangedEventArgs.NewValue);
+                                               ring.SetEllipseOffset(
+                                                   (double) dependencyPropertyChangedEventArgs.NewValue);
+                                               ring.SetMaxSideLength(
+                                                   (double) dependencyPropertyChangedEventArgs.NewValue);
+                                           });
 
             if (ring._deferredActions != null)
                 ring._deferredActions.Add(action);
@@ -97,17 +97,32 @@ namespace MahApps.Metro.Controls
 
         private void SetMaxSideLength(double width)
         {
-            MaxSideLength = width <= 20 ? 20 : width;
+            MaxSideLength = width <= 60 ? 60.0 : width;
         }
 
         private void SetEllipseDiameter(double width)
         {
-            EllipseDiameter = width / 8;
+            if (width <= 60)
+            {
+                EllipseDiameter = 6.0;
+            }
+            else
+            {
+                EllipseDiameter = width * 0.1 + 6;
+            }
         }
+
 
         private void SetEllipseOffset(double width)
         {
-            EllipseOffset = new Thickness(0, width / 2, 0, 0);
+            if (width <= 60)
+            {
+                EllipseOffset = new Thickness(0, 24, 0, 0);
+            }
+            else
+            {
+                EllipseOffset = new Thickness(0, width * 0.4 + 24, 0, 0);
+            }
         }
 
         private static void IsLargeChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -185,7 +200,7 @@ namespace MahApps.Metro.Controls
             if (value is double)
             {
                 var width = (double)value;
-                return width <= 20 ? 20 : width;
+                return width <= 60 ? 60.0 : width;
             }
 
             return null;

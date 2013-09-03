@@ -2,15 +2,19 @@
 using System.Windows;
 using System.Windows.Media;
 
+/// <summary>
+/// This class was obtained from Philip Sumi (a fellow WPF Discples blog)
+/// http://www.hardcodet.net/uploads/2009/06/UIHelper.cs
+/// </summary>
 namespace MahApps.Metro.Controls
 {
     /// <summary>
     /// Helper methods for UI-related tasks.
-    /// This class was obtained from Philip Sumi (a fellow WPF Disciples blog)
-    /// http://www.hardcodet.net/uploads/2009/06/UIHelper.cs
     /// </summary>
     public static class TreeHelper
     {
+        #region find parent
+
         /// <summary>
         /// Finds a parent of a given item on the visual tree.
         /// </summary>
@@ -31,7 +35,15 @@ namespace MahApps.Metro.Controls
 
             //check if the parent matches the type we're looking for
             T parent = parentObject as T;
-            return parent ?? TryFindParent<T>(parentObject);
+            if (parent != null)
+            {
+                return parent;
+            }
+            else
+            {
+                //use recursion to proceed with next level
+                return TryFindParent<T>(parentObject);
+            }
         }
 
         /// <summary>
@@ -48,18 +60,18 @@ namespace MahApps.Metro.Controls
             if (child == null) return null;
 
             //handle content elements separately
-            var contentElement = child as ContentElement;
+            ContentElement contentElement = child as ContentElement;
             if (contentElement != null)
             {
                 DependencyObject parent = ContentOperations.GetParent(contentElement);
                 if (parent != null) return parent;
 
-                var fce = contentElement as FrameworkContentElement;
+                FrameworkContentElement fce = contentElement as FrameworkContentElement;
                 return fce != null ? fce.Parent : null;
             }
 
             //also try searching for parent in framework elements (such as DockPanel, etc)
-            var frameworkElement = child as FrameworkElement;
+            FrameworkElement frameworkElement = child as FrameworkElement;
             if (frameworkElement != null)
             {
                 DependencyObject parent = frameworkElement.Parent;
@@ -69,6 +81,10 @@ namespace MahApps.Metro.Controls
             //if it's not a ContentElement/FrameworkElement, rely on VisualTreeHelper
             return VisualTreeHelper.GetParent(child);
         }
+
+        #endregion
+
+        #region find children
 
         /// <summary>
         /// Analyzes both visual and logical tree in order to find all elements of a given
@@ -99,6 +115,7 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
+
 
         /// <summary>
         /// This method is an alternative to WPF's
@@ -132,6 +149,10 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        #endregion
+
+        #region find from point
+
         /// <summary>
         /// Tries to locate a given item within the visual tree,
         /// starting with the dependency object at a given position. 
@@ -144,13 +165,13 @@ namespace MahApps.Metro.Controls
         public static T TryFindFromPoint<T>(UIElement reference, Point point)
             where T : DependencyObject
         {
-            var element = reference.InputHitTest(point) as DependencyObject;
+            DependencyObject element = reference.InputHitTest(point) as DependencyObject;
 
-            if (element == null) 
-                return null;
-            if (element is T) 
-                return (T)element;
-            return TryFindParent<T>(element);
+            if (element == null) return null;
+            else if (element is T) return (T)element;
+            else return TryFindParent<T>(element);
         }
+
+        #endregion
     }
 }

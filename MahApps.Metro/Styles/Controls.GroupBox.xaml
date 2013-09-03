@@ -7,7 +7,6 @@
     <Style x:Key="MetroGroupBox"
            TargetType="{x:Type GroupBox}">
         <Setter Property="Margin" Value="5" />
-        <Setter Property="Padding" Value="5" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}"/>
         <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}"/>
@@ -23,7 +22,7 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="1">
-                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                            <ContentPresenter Margin="{TemplateBinding Margin}"
                                               ContentSource="Header"
                                               RecognizesAccessKey="True">
                                 <ContentPresenter.Resources>
@@ -43,7 +42,7 @@
                                 Background="Transparent"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="1,0,1,1">
-                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                            <ContentPresenter Margin="{TemplateBinding Margin}"
                                               Content="{TemplateBinding Content}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               Cursor="{TemplateBinding Cursor}" />

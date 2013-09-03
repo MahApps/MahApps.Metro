@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,15 +14,18 @@ namespace MahApps.Metro.Behaviours
         public static readonly DependencyProperty KeepDraggingProperty =
             DependencyProperty.Register("KeepDragging", typeof(bool), typeof(TiltBehavior), new PropertyMetadata(true));
 
+
         public static readonly DependencyProperty TiltFactorProperty =
             DependencyProperty.Register("TiltFactor", typeof(Int32), typeof(TiltBehavior), new PropertyMetadata(20));
 
         private bool IsPressed;
 
+
         private Thickness OriginalMargin;
         private Panel OriginalPanel;
         private Size OriginalSize;
         private FrameworkElement attachedElement;
+
 
         private Point current = new Point(-99, -99);
         private Int32 times = -1;
@@ -57,20 +59,28 @@ namespace MahApps.Metro.Behaviours
             if (attachedElement as Panel != null)
             {
                 var y = (attachedElement as ItemsControl);
-                y.Items.CurrentChanging += (s, e) => Console.WriteLine("foo");
-
+                y.Items.CurrentChanging += (s, e) =>
+                                               {
+                                                   Console.WriteLine("foo");
+                                               };
                 (attachedElement as Panel).Loaded += (sl, el) =>
-                {
-                    var elements = (attachedElement as Panel).Children.Cast<UIElement>().ToList();
+                                                         {
+                                                             List<UIElement> elements = new List<UIElement>();
 
-                    elements.ForEach(element =>
-                        Interaction.GetBehaviors(element).Add(
-                            new TiltBehavior
-                            {
-                                KeepDragging = KeepDragging,
-                                TiltFactor = TiltFactor
-                            }));
-                };
+                                                             foreach (
+                                                                 UIElement ui in (attachedElement as Panel).Children)
+                                                             {
+                                                                 elements.Add(ui);
+                                                             }
+                                                             elements.ForEach(
+                                                                 (element) =>
+                                                                 Interaction.GetBehaviors(element).Add(
+                                                                     new TiltBehavior
+                                                                         {
+                                                                             KeepDragging = KeepDragging,
+                                                                             TiltFactor = TiltFactor
+                                                                         }));
+                                                         };
 
                 return;
             }
@@ -87,14 +97,15 @@ namespace MahApps.Metro.Behaviours
             VerticalAlignment va = attachedElement.VerticalAlignment;
             HorizontalAlignment ha = attachedElement.HorizontalAlignment;
 
+
             RotatorParent = new Planerator
-            {
-                Margin = OriginalMargin,
-                Width = OriginalSize.Width,
-                Height = OriginalSize.Height,
-                VerticalAlignment = va,
-                HorizontalAlignment = ha
-            };
+                                {
+                                    Margin = OriginalMargin,
+                                    Width = OriginalSize.Width,
+                                    Height = OriginalSize.Height,
+                                    VerticalAlignment = va,
+                                    HorizontalAlignment = ha
+                                };
 
             RotatorParent.SetValue(Canvas.LeftProperty, left);
             RotatorParent.SetValue(Canvas.RightProperty, right);
@@ -181,9 +192,11 @@ namespace MahApps.Metro.Behaviours
         private static Panel GetParentPanel(DependencyObject element)
         {
             var parent = VisualTreeHelper.GetParent(element);
-            var panel = parent as Panel;
-
-            return panel ?? (parent == null ? null : GetParentPanel(parent));
+            if (parent is Panel)
+                return (Panel)parent;
+            return parent == null ? null : GetParentPanel(parent);
         }
     }
+
+
 }

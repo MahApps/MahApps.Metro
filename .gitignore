@@ -48,8 +48,3 @@ MetroDemo/publish/*
 *.ncrunch*
 
 packages
-
-CommonAssemblyInfo.cs
-
-*.orig
-*.DotSettings

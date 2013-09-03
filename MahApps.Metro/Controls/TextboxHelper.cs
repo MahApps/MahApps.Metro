@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -14,10 +13,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsMonitoringProperty = DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false, OnIsMonitoringChanged));
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextboxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextboxHelper), new UIPropertyMetadata(0));
-        public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
-        public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextboxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
-        public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextboxHelper), new FrameworkPropertyMetadata("r"));
-        public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextboxHelper), new FrameworkPropertyMetadata(null));
+        public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ClearTextChanged));
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
 
         private static readonly DependencyProperty hasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
@@ -140,58 +136,41 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ClearTextButtonProperty, value);
         }
 
-        public static ICommand GetButtonCommand(DependencyObject d)
-        {
-            return (ICommand)d.GetValue(ButtonCommandProperty);
-        }
-
-        public static void SetButtonCommand(DependencyObject obj, ICommand value)
-        {
-            obj.SetValue(ButtonCommandProperty, value);
-        }
-
-        public static object GetButtonContent(DependencyObject d)
-        {
-            return (object)d.GetValue(ButtonContentProperty);
-        }
-
-        public static void SetButtonContent(DependencyObject obj, object value)
-        {
-            obj.SetValue(ButtonContentProperty, value);
-        }
-
-        public static ControlTemplate GetButtonTemplate(DependencyObject d)
-        {
-            return (ControlTemplate)d.GetValue(ButtonTemplateProperty);
-        }
-
-        public static void SetButtonTemplate(DependencyObject obj, ControlTemplate value)
-        {
-            obj.SetValue(ButtonTemplateProperty, value);
-        }
-
-        private static void ButtonCommandOrClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void ClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var textbox = d as TextBox;
             if (textbox != null)
             {
-                // only one loaded event
-                textbox.Loaded -= TextBoxLoaded;
-                textbox.Loaded += TextBoxLoaded;
+                if ((bool)e.NewValue)
+                {
+                    textbox.Loaded += TextBoxLoaded;
+                }
+                else
+                {
+                    textbox.Loaded -= TextBoxLoaded;
+                }
             }
             var passbox = d as PasswordBox;
             if (passbox != null)
             {
-                // only one loaded event
-                passbox.Loaded -= PassBoxLoaded;
-                passbox.Loaded += PassBoxLoaded;
+                if ((bool)e.NewValue)
+                {
+                    passbox.Loaded += PassBoxLoaded;
+                }
+                else
+                {
+                    passbox.Loaded -= PassBoxLoaded;
+                }
             }
         }
 
         static void PassBoxLoaded(object sender, RoutedEventArgs e)
         {
+            if (!(sender is PasswordBox))
+                return;
+
             var passbox = sender as PasswordBox;
-            if (passbox == null || passbox.Style == null)
+            if (passbox.Style == null)
                 return;
 
             var template = passbox.Template;
@@ -202,22 +181,24 @@ namespace MahApps.Metro.Controls
             if (button == null)
                 return;
 
-            if (GetButtonCommand(passbox) != null || GetClearTextButton(passbox))
+            if (GetClearTextButton(passbox))
             {
-                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
-                button.Click -= ButtonClicked;
-                button.Click += ButtonClicked;
+                button.Click += ClearPassClicked;
             }
             else
             {
-                button.Click -= ButtonClicked;
+                button.Click -= ClearPassClicked;
             }
         }
 
+
         static void TextBoxLoaded(object sender, RoutedEventArgs e)
         {
+            if (!(sender is TextBox))
+                return;
+
             var textbox = sender as TextBox;
-            if (textbox == null || textbox.Style == null)
+            if (textbox.Style == null)
                 return;
 
             var template = textbox.Template;
@@ -228,44 +209,38 @@ namespace MahApps.Metro.Controls
             if (button == null)
                 return;
 
-            if (GetButtonCommand(textbox) != null || GetClearTextButton(textbox))
+            if (GetClearTextButton(textbox))
             {
-                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
-                button.Click -= ButtonClicked;
-                button.Click += ButtonClicked;
+                button.Click += ClearTextClicked;
             }
             else
             {
-                button.Click -= ButtonClicked;
+                button.Click -= ClearTextClicked;
             }
         }
 
-        static void ButtonClicked(object sender, RoutedEventArgs e)
+        static void ClearTextClicked(object sender, RoutedEventArgs e)
         {
             var button = ((Button)sender);
             var parent = VisualTreeHelper.GetParent(button);
-            while (!(parent is TextBox || parent is PasswordBox))
+            while (!(parent is TextBox))
             {
                 parent = VisualTreeHelper.GetParent(parent);
             }
-            
-            var command = GetButtonCommand(parent);
-            if (command != null && command.CanExecute(parent))
+
+            ((TextBox)parent).Clear();
+        }
+
+        static void ClearPassClicked(object sender, RoutedEventArgs e)
+        {
+            var button = ((Button)sender);
+            var parent = VisualTreeHelper.GetParent(button);
+            while (!(parent is PasswordBox))
             {
-                command.Execute(parent);
+                parent = VisualTreeHelper.GetParent(parent);
             }
 
-            if (GetClearTextButton(parent))
-            {
-                if (parent is TextBox)
-                {
-                    ((TextBox)parent).Clear();
-                }
-                else if (parent is PasswordBox)
-                {
-                    ((PasswordBox)parent).Clear();
-                }
-            }
+            ((PasswordBox)parent).Clear();
         }
     }
 
