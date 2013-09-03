@@ -1,0 +1,68 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+    
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+    <Style TargetType="{x:Type Controls:MetroTabItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="6,2,6,2" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="MinWidth" Value="5" />
+        <Setter Property="MinHeight" Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">
+                    <StackPanel Orientation="Horizontal">
+                        <Label x:Name="root" FontSize="{TemplateBinding HeaderFontSize}">
+                            <ContentPresenter ContentSource="Header"  RecognizesAccessKey="True" />
+                        </Label>
+                        <Button x:Name="PART_CloseButton" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" Width="20"  
+                                HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" FontSize="17" Margin="0 0 2 0"
+                                IsTabStop="False" VerticalAlignment="Top"
+                                Command="{TemplateBinding CloseTabCommand}" CommandParameter="{TemplateBinding CloseTabCommandParameter}"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="root" Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="false">
+                            <Setter  TargetName="root" Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource GrayNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger SourceName="root" Property="IsMouseOver" Value="True">
+                            <Setter  TargetName="root" Property="Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource GrayHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger SourceName="PART_CloseButton" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--<Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <AdornerDecorator>
+                        <ContentPresenter Content="{Binding}"/>
+                    </AdornerDecorator>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>-->
+    </Style>
+</ResourceDictionary>

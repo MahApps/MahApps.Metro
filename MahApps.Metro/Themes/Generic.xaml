@@ -1,11 +1,13 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
 
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/AppBarButton.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/FlipView.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Flyout.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/FlyoutsControl.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroContentControl.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroImage.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroProgressBar.xaml" />
@@ -14,8 +16,12 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Panorama.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/RangeSlider.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroAnimatedSingleRowTabControl.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroTabControl.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroTabItem.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Tile.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/Glow.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

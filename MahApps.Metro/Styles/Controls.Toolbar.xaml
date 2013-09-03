@@ -68,8 +68,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border Background="Transparent" SnapsToDevicePixels="True">
-                        <Rectangle Width="5">
+                    <Border Background="Transparent" SnapsToDevicePixels="True" Margin="0,3,0,3">
+                        <Rectangle Width="4.9">
                             <Rectangle.Fill>
                                 <!--Brush similar to visual studio, can be improved-->
                                 <DrawingBrush ViewportUnits="Absolute" ViewboxUnits="Absolute" Viewport="0,0,5,4" Viewbox="0,0,5,4" TileMode="Tile">

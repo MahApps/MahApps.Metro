@@ -9,26 +9,45 @@
 
     <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
         <Grid Background="{TemplateBinding Background}">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="LayoutStates">
+                    <VisualState x:Name="AfterLoaded">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                           Storyboard.TargetName="PART_Border">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                      Value="0" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.800"
+                                                      Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="BeforeLoaded" />
+                    <VisualState x:Name="BeforeUnloaded" />
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
             <AdornerDecorator>
-                <Controls:MetroContentControl IsTabStop="False" FocusVisualStyle="{x:Null}">
+                <Controls:MetroContentControl IsTabStop="False" FocusVisualStyle="{x:Null}" TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
                     <Grid>
+                        <Grid.Background>
+                            <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                        </Grid.Background>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid x:Name="PART_TitleBar"
                                   Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <Grid.Background>
-                                <SolidColorBrush Color="{DynamicResource AccentColor}"/>
-                            </Grid.Background>
+                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" Background="{DynamicResource WindowTitleColorBrush}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Image
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    Source="{TemplateBinding Icon}"/>
+                                    Source="{TemplateBinding Icon}"
+                                    RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality"/>
                             <TextBlock
                                     x:Name="WindowTitleTextBlock"
                                     Grid.Column="1"
@@ -51,21 +70,18 @@
 								Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
                         <ContentPresenter Grid.Row="1"/>
 
-                        <ItemsControl Grid.Row="0"
-                                      Grid.RowSpan="2"
-                                      Panel.ZIndex="2"
-                                      ItemsSource="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                      VerticalAlignment="Stretch">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <Grid TextElement.Foreground="{DynamicResource FlyoutWhiteBrush}" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                        <ContentControl
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Panel.ZIndex="2"
+                                    KeyboardNavigation.TabNavigation="None"
+                                    Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                    VerticalAlignment="Stretch">
+                        </ContentControl>
                     </Grid>
                 </Controls:MetroContentControl>
             </AdornerDecorator>
-            <Border x:Name="PART_Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            <Border x:Name="PART_Border" Opacity="0" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" IsTabStop="false" Visibility="Collapsed" VerticalAlignment="Bottom"/>
         </Grid>
         <ControlTemplate.Triggers>
@@ -88,16 +104,12 @@
                 <SolidColorBrush Color="{DynamicResource BlackColor}"/>
             </Setter.Value>
         </Setter>
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
-            </Setter.Value>
-        </Setter>
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>
                     <Behaviours:BorderlessWindowBehavior/>
                     <Behaviours:WindowsSettingBehaviour/>
+                    <Behaviours:GlowWindowBehavior/>
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
@@ -108,6 +120,7 @@
     <Style TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:WindowCommands">
@@ -164,7 +177,7 @@
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
                     
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" >
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
                         <ItemsControl IsTabStop="False" ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

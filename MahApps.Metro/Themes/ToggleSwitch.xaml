@@ -15,7 +15,16 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="disabled">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="disabledTumb">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="hover">
@@ -69,6 +78,7 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="border">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
                                         </ObjectAnimationUsingKeyFrames>
+                                        <ThicknessAnimation Duration="0" To="1" Storyboard.TargetProperty="(Border.Margin)" Storyboard.TargetName="checked"/>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -87,10 +97,11 @@
                                     </Rectangle>
                                     <Border BorderThickness="2" BorderBrush="{DynamicResource GrayBrush9}">
                                         <Grid Margin="2">
-                                            <Border BorderThickness="0" Background="{DynamicResource AccentColorBrush}" Margin="0" />
+                                            <Border x:Name="checked" BorderThickness="0" Background="{DynamicResource AccentColorBrush}" Margin="0" />
                                             <Border x:Name="border" BorderThickness="0" Background="{DynamicResource GrayBrush9}" Visibility="Collapsed" Margin="0" />
                                             <Border x:Name="pressed" BorderThickness="0" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Opacity="0.25" Visibility="Collapsed" Margin="0" />
                                             <Border x:Name="hover" BorderThickness="0" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Opacity="0.15" Visibility="Collapsed" Margin="0" />
+                                            <Border x:Name="disabled" BorderThickness="0" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Opacity="0.5" Visibility="Collapsed" Margin="0" />
                                         </Grid>
                                     </Border>
                                 </Grid>
@@ -109,7 +120,10 @@
                                             <TranslateTransform x:Name="SwitchThumbTranslate"/>
                                         </TransformGroup>
                                     </Border.RenderTransform>
-                                    <Border x:Name="ThumbCenter" BorderBrush="{TemplateBinding Foreground}" BorderThickness="0" Background="{DynamicResource BlackBrush}" />
+                                    <Grid>
+                                        <Border x:Name="ThumbCenter" BorderBrush="{TemplateBinding Foreground}" BorderThickness="0" Background="{DynamicResource BlackBrush}" />
+                                        <Border x:Name="disabledTumb" BorderBrush="{TemplateBinding Foreground}" BorderThickness="0" Background="{DynamicResource WhiteBrush}" Opacity="0.5" Visibility="Collapsed" />
+                                    </Grid>
                                 </Border>
                             </Grid>
                         </Grid>
