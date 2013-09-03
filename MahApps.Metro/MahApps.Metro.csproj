@@ -105,6 +105,7 @@
     <Compile Include="Converters\PanoramaGroupHeightConverter.cs" />
     <Compile Include="Converters\PanoramaGroupHeaderConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
+    <Compile Include="Converters\TreeViewMarginConverter.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\Debug.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\DoubleUtil.cs" />
@@ -255,6 +256,11 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.Tooltip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.TreeView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <DependentUpon>Controls.xaml</DependentUpon>
