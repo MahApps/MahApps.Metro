@@ -387,6 +387,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -394,7 +395,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.RowSpan="2"
                                     Grid.Column="0"
-                                    Width="350">
+                                    Width="300">
                             <Label Content="List/GridView" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ListView Height="200"
                                       Margin="0, 10, 0, 0"
@@ -422,7 +423,55 @@
                                 </ListView.View>
                             </ListView>
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Width="150">
+                        <Grid Grid.Column="1" Grid.RowSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            
+                            <Label Content="TreeView" Style="{StaticResource DescriptionHeaderStyle}" />
+                            
+                            <TreeView Grid.Row="1">
+                                <TreeViewItem Header="Item 1">
+                                    <TreeViewItem Header="Item 1.1">
+                                        <TreeViewItem Header="Item 1.1.1"/>
+                                        <TreeViewItem Header="Item 1.1.2"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Item 1.2"/>
+                                    <TreeViewItem Header="Item 1.3"/>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Item 22"/>
+                                <TreeViewItem Header="Item 3">
+                                    <TreeViewItem Header="Item 3.1">
+                                        <TreeViewItem Header="Item 3.1.1"/>
+                                        <TreeViewItem Header="Item 3.1.2"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Item 3.2"/>
+                                    <TreeViewItem Header="Item 3.3"/>
+                                </TreeViewItem>
+                            </TreeView>
+                            <TreeView IsEnabled="False" Grid.Row="2">
+                                <TreeViewItem Header="Item 1">
+                                    <TreeViewItem Header="Item 1.1">
+                                        <TreeViewItem Header="Item 1.1.1"/>
+                                        <TreeViewItem Header="Item 1.1.2"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Item 1.2" />
+                                    <TreeViewItem Header="Item 1.3"/>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Item 22"/>
+                                <TreeViewItem Header="Item 3" IsExpanded="True" IsSelected="True">
+                                    <TreeViewItem Header="Item 3.1" IsExpanded="True">
+                                        <TreeViewItem Header="Item 3.1.1" IsExpanded="True"/>
+                                        <TreeViewItem Header="Item 3.1.2"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Item 3.2"/>
+                                    <TreeViewItem Header="Item 3.3"/>
+                                </TreeViewItem>
+                            </TreeView>
+                        </Grid>
+                        <StackPanel Grid.Column="2" Width="150">
                             <Label Content="ListBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ListBox Grid.Row="0"
                                      Grid.Column="1"
@@ -442,7 +491,7 @@
                                 <ListBoxItem Content="Item 3" />
                             </ListBox>
                         </StackPanel>
-                        <StackPanel Grid.Row="1" Grid.Column="1">
+                        <StackPanel Grid.Row="1" Grid.Column="2">
                             <Label Content="ComboBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ComboBox Width="200"
                                       Margin="0, 10, 0, 0"
