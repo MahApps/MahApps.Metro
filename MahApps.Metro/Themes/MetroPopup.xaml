@@ -9,13 +9,14 @@
 
     <ControlTemplate x:Key="MetroPopupTemplate" TargetType="{x:Type controls:MetroPopup}">
         <ControlTemplate.Resources>
-            <Style x:Key="PopupButtonTemplate"  TargetType="{x:Type Button}" BasedOn="{StaticResource MetroAccentButton}">
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroAccentButton}">
                 <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}"/>
             </Style>
         </ControlTemplate.Resources>
         <Grid x:Name="PART_METRO_MESSAGEGRID"
-              Visibility="{TemplateBinding Visibility}">
-
+              Visibility="{TemplateBinding Visibility}"
+              Margin="{TemplateBinding Padding}">
+            
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="PopupButtonsGroup">
                     <VisualState x:Name="NoneButton">
@@ -106,13 +107,10 @@
             </VisualStateManager.VisualStateGroups>
 
             <Rectangle Fill="{DynamicResource BlackColorBrush}" Opacity="0.6"/>
-
-            <Grid x:Name="AccentGrid" VerticalAlignment="Center"
-                  MinHeight="300" Height="Auto" Margin="{TemplateBinding Padding}"
-                  Background="{DynamicResource WhiteColorBrush}">
-
+            
+            <Grid x:Name="AccentGrid" VerticalAlignment="Center" MinHeight="280" Height="Auto" Background="{DynamicResource WhiteColorBrush}">
                 <Rectangle Fill="{DynamicResource AccentColorBrush}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-
+            
 
                 <Grid x:Name="ContentGrid" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20" MinWidth="300">
                     <Grid.RowDefinitions>
@@ -120,24 +118,14 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-
+                
                     <ContentPresenter ContentSource="Header"
                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
                                       TextBlock.Foreground="{TemplateBinding Foreground}"
                                       TextBlock.FontFamily="{TemplateBinding FontFamily}"
                                       Margin="5"/>
 
-                    <Grid x:Name="ContentPanel" Grid.Row="1">
-                        <!--Orientation="{TemplateBinding ButtonOrientation}">-->
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
+                    <StackPanel x:Name="ContentPanel" Grid.Row="1" Orientation="{TemplateBinding ButtonOrientation}">
                         <Grid Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -179,27 +167,18 @@
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                         </Grid>
 
-                        <StackPanel x:Name="ButtonPanel" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,5,5,5" Grid.Row="1">
-                            <Button x:Name="PART_OkButton" MinWidth="65" Margin="6,0,0,0" Visibility="Collapsed" Content="{TemplateBinding OkButtonContent}" Style="{StaticResource PopupButtonTemplate}" />
-                            <Button x:Name="PART_YesButton" MinWidth="65" Margin="6,0,0,0" Visibility="Collapsed" Content="{TemplateBinding YesButtonContent}" Style="{StaticResource PopupButtonTemplate}" />
-                            <Button x:Name="PART_NoButton" MinWidth="65" Margin="6,0,0,0" Visibility="Collapsed" Content="{TemplateBinding NoButtonContent}" Style="{StaticResource PopupButtonTemplate}" />
-                            <Button x:Name="PART_CancelButton" MinWidth="65" Margin="6,0,0,0" Visibility="Collapsed" Content="{TemplateBinding CancelButtonContent}" IsCancel="True" Style="{StaticResource PopupButtonTemplate}" />
+                        <StackPanel x:Name="ButtonPanel" HorizontalAlignment="Right" Orientation="Horizontal" Margin="0,5,5,5">
+                            <Button x:Name="PART_OkButton" MinWidth="65" Margin="6,0,0,0" Visibility="Collapsed" Content="{TemplateBinding OkButtonContent}" />
+                            <Button x:Name="PART_YesButton" MinWidth="65" Margin="6,0,0,0" Visibility="Collapsed" Content="{TemplateBinding YesButtonContent}" />
+                            <Button x:Name="PART_NoButton" MinWidth="65" Margin="6,0,0,0" Visibility="Collapsed" Content="{TemplateBinding NoButtonContent}" />
+                            <Button x:Name="PART_CancelButton" MinWidth="65" Margin="6,0,0,0" Visibility="Collapsed" Content="{TemplateBinding CancelButtonContent}" IsCancel="True" />
                         </StackPanel>
-
-                        <StackPanel Orientation="{TemplateBinding ButtonOrientation}" x:Name="Test"></StackPanel>
-                    </Grid>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Grid>
-
-        <ControlTemplate.Triggers>
-            <Trigger Property="ButtonOrientation" Value="Horizontal">
-                <Setter TargetName="ButtonPanel" Property="Grid.Row" Value="0"/>
-                <Setter TargetName="ButtonPanel" Property="Grid.Column" Value="1"/>
-            </Trigger>
-        </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
     <Style TargetType="{x:Type controls:MetroPopup}">
         <Style.Resources>
             <DataTemplate DataType="{x:Type system:String}">
