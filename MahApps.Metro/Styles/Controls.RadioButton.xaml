@@ -90,7 +90,7 @@
                             <ColumnDefinition Width="18" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Rectangle Fill="{StaticResource TransparentWhiteBrush}" Margin="-6,0" />
+                        <Rectangle Fill="{DynamicResource TransparentWhiteBrush}" Margin="-6,0" />
                         <Ellipse x:Name="normal" Opacity="1" Stroke="{DynamicResource CheckBoxBrush}" StrokeThickness="1" Fill="{DynamicResource WhiteBrush}" Width="18" Height="18" />
                         <Ellipse x:Name="hover" Stroke="{DynamicResource CheckBoxMouseOverBrush}" StrokeThickness="1" Fill="{DynamicResource WhiteBrush}" Opacity="0" Width="18" Height="18" />
                         <Ellipse x:Name="pressed" Opacity="0" Stroke="{DynamicResource HighlightBrush}" StrokeThickness="1" Fill="{DynamicResource WhiteBrush}" Width="18" Height="18" />
