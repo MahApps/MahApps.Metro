@@ -10,7 +10,9 @@
 
     <DataTemplate x:Key="HeaderTemplate"
                   x:Shared="False">
-        <DockPanel Margin="10"
+        <DockPanel x:Name="dpHeader"
+                   Margin="10"
+                   VerticalAlignment="Top"
                    LastChildFill="True">
             <Button x:Name="nav"
                     DockPanel.Dock="Left"
@@ -75,14 +77,32 @@
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
+                         Value="Top">
+                <Setter TargetName="nav"
+                        Property="LayoutTransform">
+                    <Setter.Value>
+                        <RotateTransform Angle="-90" />
+                    </Setter.Value>
+                </Setter>
+                <Setter TargetName="dpHeader" Property="VerticalAlignment" Value="Bottom" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
+                         Value="Bottom">
+                <Setter TargetName="nav"
+                        Property="LayoutTransform">
+                    <Setter.Value>
+                        <RotateTransform Angle="90" />
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
 
     <ControlTemplate x:Key="FlyoutTemplate"
                      TargetType="{x:Type Controls:Flyout}">
         <Grid x:Name="root"
-              Background="{TemplateBinding Background}"
-              HorizontalAlignment="Left">
+              Background="{TemplateBinding Background}">
             <Grid.RenderTransform>
                 <TranslateTransform />
             </Grid.RenderTransform>
@@ -95,8 +115,19 @@
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
                                 <EasingDoubleKeyFrame KeyTime="00:00:00.500"
-                                                      Value="1"
+                                                      Value="0"
                                                       x:Name="hideFrame">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut" />
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                                           Storyboard.TargetName="root">
+                                <EasingDoubleKeyFrame KeyTime="00:00:00.500"
+                                                      Value="0"
+                                                      x:Name="hideFrameY">
                                     <EasingDoubleKeyFrame.EasingFunction>
                                         <CubicEase EasingMode="EaseOut" />
                                     </EasingDoubleKeyFrame.EasingFunction>
@@ -107,11 +138,23 @@
                     <VisualState x:Name="Show">
                         <Storyboard>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           x:Name="trabslateShow"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
                                 <EasingDoubleKeyFrame KeyTime="00:00:00.600"
-                                                      Value="1"
+                                                      Value="0"
                                                       x:Name="showFrame">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <CubicEase EasingMode="EaseOut" />
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
+                                                           Storyboard.TargetName="root">
+                                <EasingDoubleKeyFrame KeyTime="00:00:00.600"
+                                                      Value="0"
+                                                      x:Name="showFrameY">
                                     <EasingDoubleKeyFrame.EasingFunction>
                                         <CubicEase EasingMode="EaseOut" />
                                     </EasingDoubleKeyFrame.EasingFunction>
@@ -131,6 +174,26 @@
                 </ContentPresenter>
             </DockPanel>
         </Grid>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}"
+                         Value="Top">
+                <Setter TargetName="PART_Header"
+                        Property="DockPanel.Dock"
+                        Value="Left" />
+                <Setter TargetName="PART_Content"
+                        Property="DockPanel.Dock"
+                        Value="Right" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}"
+                         Value="Bottom">
+                <Setter TargetName="PART_Header"
+                        Property="DockPanel.Dock"
+                        Value="Left" />
+                <Setter TargetName="PART_Content"
+                        Property="DockPanel.Dock"
+                        Value="Right" />
+            </DataTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Flyout}">
@@ -150,5 +213,7 @@
                 Value="#FF252525" />
         <Setter Property="Template"
                 Value="{StaticResource FlyoutTemplate}" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
     </Style>
 </ResourceDictionary>

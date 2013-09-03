@@ -13,6 +13,56 @@
         <Setter Property="BorderThickness" Value="0 1 0 0" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="AlternationCount" Value="2" />
+        
+        <!-- Things taken from the original template. -->
+        <Setter Property="SnapsToDevicePixels"
+          Value="true" />
+        <Setter Property="OverridesDefaultStyle"
+          Value="true" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+          Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+          Value="Auto" />
+        <Setter Property="VerticalContentAlignment"
+          Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListView">
+                    <Border Name="Border"
+                BorderThickness="{TemplateBinding BorderThickness}">
+                        <Border.Background>
+                            <SolidColorBrush Color="{DynamicResource Gray2}" />
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{DynamicResource Gray3}" />
+                        </Border.BorderBrush>
+                        <ScrollViewer Style="{DynamicResource
+                        {x:Static GridView.GridViewScrollViewerStyleKey}}">
+                            <ItemsPresenter />
+                            <ScrollViewer.Background>
+                                <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                            </ScrollViewer.Background>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsGrouping"
+                   Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll"
+                    Value="false" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                   Value="false">
+                            <Setter TargetName="Border"
+                    Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource Gray2}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="VirtualisedMetroListView" TargetType="{x:Type ListView}" BasedOn="{StaticResource MetroListView}">
@@ -43,6 +93,22 @@
                                                 Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True">
                                                 <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" Value="False">
+                                                <Setter Property="Foreground">
+                                                    <Setter.Value>
+                                                        <SolidColorBrush Color="{DynamicResource GrayNormal}"/>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}" Value="False" />
+                                                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}" Value="True" />
+                                                </MultiDataTrigger.Conditions>
+                                                <MultiDataTrigger.Setters>
+                                                    <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                                                </MultiDataTrigger.Setters>
+                                            </MultiDataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </GridViewRowPresenter.Resources>
@@ -78,6 +144,15 @@
                             </Setter>
                             <Setter Property="BorderBrush" TargetName="Bd" Value="#FF143c65" />
                             <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsEnabled" Value="False" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush5}" />
+                            </MultiTrigger.Setters>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -136,7 +211,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type GridViewColumnHeader}" TargetType="GridViewColumnHeader">
+    <Style x:Key="MetroGridViewColumnHeader" TargetType="GridViewColumnHeader">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="4 2 4 2" />
@@ -190,4 +265,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    
+    <Style TargetType="{x:Type GridViewColumnHeader}" BasedOn="{StaticResource MetroGridViewColumnHeader}"/>
 </ResourceDictionary>

@@ -5,6 +5,7 @@
 
     <converters:PanoramaGroupWidthConverter x:Key="conv" />
     <converters:PanoramaGroupHeightConverter x:Key="PanoramaGroupHeightConverter" />
+    <converters:PanoramaGroupHeaderConverter x:Key="PanoramaGroupHeaderConverter" />
 
     <Style x:Key="headerLabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}, Mode=FindAncestor}, Path=HeaderFontSize}" />
@@ -22,7 +23,21 @@
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="Margin" Value="10,0,0,20" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}},Path=DynamicGroupHeader}" Value="False">
+                <Setter Property="Margin" Value="10,0,0,20" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Panorama}},Path=DynamicGroupHeader}" Value="True">
+                <Setter Property="Margin">
+                    <Setter.Value>
+                        <MultiBinding Converter="{StaticResource PanoramaGroupHeaderConverter}">
+                            <Binding RelativeSource="{RelativeSource Self}" />
+                            <Binding RelativeSource="{RelativeSource AncestorType=ScrollViewer}" Path="ContentHorizontalOffset" />
+                        </MultiBinding>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <DataTemplate DataType="{x:Type Controls:PanoramaGroup}">

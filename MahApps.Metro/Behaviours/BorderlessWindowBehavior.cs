@@ -7,13 +7,52 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Native;
+#if NET_4
+using Microsoft.Windows.Shell;
+#else
+using System.Windows.Shell;
+#endif
 
 namespace MahApps.Metro.Behaviours
 {
     public class BorderlessWindowBehavior : Behavior<Window>
     {
-        public static DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
-        public static DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
+        public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
+        public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
+        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false, new PropertyChangedCallback((obj, args) =>
+        {
+            var behaviorClass = ((BorderlessWindowBehavior)obj);
+
+            if (behaviorClass.AssociatedObject != null)
+                if ((bool)args.NewValue && behaviorClass.AssociatedObject.AllowsTransparency)
+                    throw new InvalidOperationException("EnableDWMDropShadow cannot be set to True when AllowsTransparency is True.");
+        })));
+
+        public static readonly DependencyProperty AllowsTransparencyProperty =
+            DependencyProperty.Register("AllowsTransparency", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true, new PropertyChangedCallback((obj, args) =>
+            {
+                var behaviorClass = ((BorderlessWindowBehavior)obj);
+
+                if (behaviorClass.AssociatedObject != null)
+                {
+                    if ((bool)args.NewValue && behaviorClass.EnableDWMDropShadow)
+                        throw new InvalidOperationException("AllowsTransparency cannot be set to True when EnableDWMDropShadow is True.");
+                    else
+                        behaviorClass.AssociatedObject.AllowsTransparency = (bool)args.NewValue;
+                }
+            })));
+
+        public bool AllowsTransparency
+        {
+            get { return (bool)GetValue(AllowsTransparencyProperty); }
+            set { SetValue(AllowsTransparencyProperty, value); }
+        }
+
+        public bool EnableDWMDropShadow
+        {
+            get { return (bool)GetValue(EnableDWMDropShadowProperty); }
+            set { SetValue(EnableDWMDropShadowProperty, value); }
+        }
 
         public bool ResizeWithGrip
         {
@@ -40,7 +79,7 @@ namespace MahApps.Metro.Behaviours
             return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
         }
 
-        private static void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
+        private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
             var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
 
@@ -57,6 +96,15 @@ namespace MahApps.Metro.Behaviours
                 mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
                 mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
                 mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+
+                bool ignoreTaskBar = AssociatedObject as MetroWindow != null && ((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize;
+
+                if (!ignoreTaskBar)
+                {
+                    mmi.ptMaxTrackSize.X = mmi.ptMaxSize.X;
+                    mmi.ptMaxTrackSize.Y = mmi.ptMaxSize.Y;
+                    mmi = AdjustWorkingAreaForAutoHide(monitor, mmi);
+                }
             }
 
             Marshal.StructureToPtr(mmi, lParam, true);
@@ -69,20 +117,29 @@ namespace MahApps.Metro.Behaviours
             else
                 AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
 
+            if (AllowsTransparency && EnableDWMDropShadow)
+                throw new InvalidOperationException("EnableDWMDropShadow cannot be set to True when AllowsTransparency is True.");
+
             AssociatedObject.WindowStyle = WindowStyle.None;
+            AssociatedObject.AllowsTransparency = AllowsTransparency;
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
+            AssociatedObject.SetValue(WindowChrome.GlassFrameThicknessProperty, new Thickness(-1));
 
             if (AssociatedObject is MetroWindow)
             {
                 var window = ((MetroWindow)AssociatedObject);
                 //MetroWindow already has a border we can use
                 AssociatedObject.Loaded += (s, e) =>
-                                               {
-                                                   var ancestors = window.GetPart<Border>("PART_Border");
-                                                   Border = ancestors;
-                                                   if (ShouldHaveBorder())
-                                                       AddBorder();
-                                               };
+                {
+                    var ancestors = window.GetPart<Border>("PART_Border");
+                    Border = ancestors;
+                    if (ShouldHaveBorder())
+                        AddBorder();
+                    var titleBar = window.GetPart<Grid>("PART_TitleBar");
+                    titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    var windowCommands = window.GetPart<ContentPresenter>("PART_WindowCommands");
+                    windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                };
 
                 switch (AssociatedObject.ResizeMode)
                 {
@@ -110,10 +167,10 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Content = null;
 
                 Border = new Border
-                            {
-                                Child = content,
-                                BorderBrush = new SolidColorBrush(Colors.Black)
-                            };
+                {
+                    Child = content,
+                    BorderBrush = new SolidColorBrush(Colors.Black)
+                };
 
                 AssociatedObject.Content = Border;
             }
@@ -123,15 +180,12 @@ namespace MahApps.Metro.Behaviours
 
             if (AutoSizeToContent)
                 AssociatedObject.Loaded += (s, e) =>
-                                               {
-                                                   //Temp fix, thanks @lynnx
-                                                   AssociatedObject.SizeToContent = SizeToContent.Height;
-                                                   AssociatedObject.SizeToContent = AutoSizeToContent
-                                                                                        ? SizeToContent.WidthAndHeight
-                                                                                        : SizeToContent.Manual;
-                                               };
-
-
+                {
+                    //Temp fix, thanks @lynnx
+                    AssociatedObject.SizeToContent = SizeToContent.Height;
+                    AssociatedObject.SizeToContent = AutoSizeToContent ? 
+                        SizeToContent.WidthAndHeight : SizeToContent.Manual;
+                };
 
             base.OnAttached();
         }
@@ -154,10 +208,71 @@ namespace MahApps.Metro.Behaviours
                 bool ignoreTaskBar = AssociatedObject as MetroWindow != null && ((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize;
                 var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
                 var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
-                var cx = ignoreTaskBar ? monitorInfo.rcWork.right : Math.Abs(monitorInfo.rcWork.right - x);
-                var cy = ignoreTaskBar ? monitorInfo.rcMonitor.bottom : Math.Abs(monitorInfo.rcWork.bottom - y);
-                UnsafeNativeMethods.SetWindowPos(_mHWND, new IntPtr(-2), x, y, cx, cy-1, 0x0040);
+                var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
+                var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
+                UnsafeNativeMethods.SetWindowPos(_mHWND, new IntPtr(-2), x, y, cx, cy, 0x0040);
             }
+        }
+
+        private static int GetEdge(RECT rc)
+        {
+            int uEdge;
+            if (rc.top == rc.left && rc.bottom > rc.right)
+                uEdge = (int)ABEdge.ABE_LEFT;
+            else if (rc.top == rc.left && rc.bottom < rc.right)
+                uEdge = (int)ABEdge.ABE_TOP;
+            else if (rc.top > rc.left)
+                uEdge = (int)ABEdge.ABE_BOTTOM;
+            else
+                uEdge = (int)ABEdge.ABE_RIGHT;
+            return uEdge;
+        }
+
+        /// <summary>
+        /// This method handles the window size if the taskbar is set to auto-hide.
+        /// </summary>
+        private static MINMAXINFO AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, MINMAXINFO mmi)
+        {
+            IntPtr hwnd = UnsafeNativeMethods.FindWindow("Shell_TrayWnd", null);
+            IntPtr monitorWithTaskbarOnIt = UnsafeNativeMethods.MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
+
+            if (!monitorContainingApplication.Equals(monitorWithTaskbarOnIt))
+                return mmi;
+
+            var abd = new APPBARDATA();
+            abd.cbSize = Marshal.SizeOf(abd);
+            abd.hWnd = hwnd;
+            UnsafeNativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, ref abd);
+            int uEdge = GetEdge(abd.rc);
+            bool autoHide = Convert.ToBoolean(UnsafeNativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETSTATE, ref abd));
+
+            if (!autoHide)
+                return mmi;
+
+            switch (uEdge)
+            {
+                case (int)ABEdge.ABE_LEFT:
+                    mmi.ptMaxPosition.X += 2;
+                    mmi.ptMaxTrackSize.X -= 2;
+                    mmi.ptMaxSize.X -= 2;
+                    break;
+                case (int)ABEdge.ABE_RIGHT:
+                    mmi.ptMaxSize.X -= 2;
+                    mmi.ptMaxTrackSize.X -= 2;
+                    break;
+                case (int)ABEdge.ABE_TOP:
+                    mmi.ptMaxPosition.Y += 2;
+                    mmi.ptMaxTrackSize.Y -= 2;
+                    mmi.ptMaxSize.Y -= 2;
+                    break;
+                case (int)ABEdge.ABE_BOTTOM:
+                    mmi.ptMaxSize.Y -= 2;
+                    mmi.ptMaxTrackSize.Y -= 2;
+                    break;
+                default:
+                    return mmi;
+            }
+            return mmi;
         }
 
         protected override void OnDetaching()
@@ -192,10 +307,7 @@ namespace MahApps.Metro.Behaviours
             if (Environment.OSVersion.Version.Major < 6)
                 return true;
 
-            if (!UnsafeNativeMethods.DwmIsCompositionEnabled())
-                return true;
-
-            return false;
+            return !UnsafeNativeMethods.DwmIsCompositionEnabled();
         }
 
         readonly SolidColorBrush _borderColour = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
@@ -245,20 +357,22 @@ namespace MahApps.Metro.Behaviours
                     break;
                 case Constants.WM_NCPAINT:
                     {
-                        if (!ShouldHaveBorder())
+                        if (ShouldHaveBorder())
                         {
-                            var val = 2;
-                            UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
-                            var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
-                            UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
+                            this.AddBorder();
+                        }
+                        else if (EnableDWMDropShadow)
+                        {
+                            var metroWindow = AssociatedObject as MetroWindow;
+                            if (!(metroWindow != null && metroWindow.GlowBrush != null))
+                            {
+                                var val = 2;
+                                UnsafeNativeMethods.DwmSetWindowAttribute(_mHWND, 2, ref val, 4);
+                                var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
+                                UnsafeNativeMethods.DwmExtendFrameIntoClientArea(_mHWND, ref m);
+                            }
+                        }
 
-                            if (Border != null)
-                                Border.BorderThickness = new Thickness(0);
-                        }
-                        else
-                        {
-                            AddBorder();
-                        }
                         handled = true;
                     }
                     break;
@@ -268,12 +382,14 @@ namespace MahApps.Metro.Behaviours
                          * "does not repaint the nonclient area to reflect the state change." */
                         returnval = UnsafeNativeMethods.DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
 
-                        if (!ShouldHaveBorder())
-
+                        MetroWindow w = AssociatedObject as MetroWindow;
+                        if ((w != null && w.GlowBrush != null) || ShouldHaveBorder())
+                        {
                             if (wParam == IntPtr.Zero)
                                 AddBorder();
                             else
                                 RemoveBorder();
+                        }
 
                         handled = true;
                     }
@@ -373,9 +489,6 @@ namespace MahApps.Metro.Behaviours
                     }
                     break;
             }
-
-
-
 
             return returnval;
         }

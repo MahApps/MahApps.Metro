@@ -101,6 +101,12 @@ namespace MahApps.Metro.Native
         [DllImport("user32.dll")]
         internal static extern uint EnableMenuItem(IntPtr hMenu, uint itemId, uint uEnable);
 
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
+
         internal static void PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam)
         {
             if (!_PostMessage(hWnd, Msg, wParam, lParam))
@@ -135,5 +141,18 @@ namespace MahApps.Metro.Native
         {
             return (short)(i & 0xFFFF);
         }
+
+        internal const int GWL_STYLE = -16;
+        internal const int WS_SYSMENU = 0x80000;
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll")]
+        internal static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern int SHAppBarMessage(int dwMessage, ref APPBARDATA pData);
     }
 }
