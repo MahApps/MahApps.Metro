@@ -114,6 +114,7 @@
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
+        <Setter Property="TitleForeground" Value="White" />
         <Setter Property="Template" Value="{StaticResource WindowTemplateKey}"/>
     </Style>
 
