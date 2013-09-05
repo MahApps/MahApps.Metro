@@ -158,7 +158,7 @@
         <Setter Property="ContentTemplate">
             <Setter.Value>
                 <DataTemplate DataType="{x:Type system:String}">
-                    <TextBlock Text="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"/>
+                    <TextBlock Text="{Binding Converter={StaticResource ToUpperConverter}}"/>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
