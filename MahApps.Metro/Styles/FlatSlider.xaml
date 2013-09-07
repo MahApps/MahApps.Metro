@@ -65,7 +65,7 @@
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge" Background="{TemplateBinding Slider.Foreground}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Height="{TemplateBinding Slider.MinHeight}" Width="{TemplateBinding Slider.Height}" Style="{StaticResource SliderThumbStyle}"  Background="{TemplateBinding Slider.BorderBrush}"/>
+                    <Thumb Height="{TemplateBinding Slider.MinHeight}" Width="{TemplateBinding Slider.MinHeight}" Style="{StaticResource SliderThumbStyle}"  Background="{TemplateBinding Slider.BorderBrush}"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge" Background="{TemplateBinding Slider.Background}" />
@@ -100,7 +100,7 @@
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge" Background="{TemplateBinding Slider.Foreground}"/>
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Height="{TemplateBinding Slider.MinWidth}" Width="{TemplateBinding Slider.Width}" Style="{StaticResource SliderThumbStyle}" Background="{TemplateBinding Slider.BorderBrush}"/>
+                    <Thumb Height="{TemplateBinding Slider.MinWidth}" Width="{TemplateBinding Slider.MinWidth}" Style="{StaticResource SliderThumbStyle}" Background="{TemplateBinding Slider.BorderBrush}"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.IncreaseLarge" Background="{TemplateBinding Slider.Background}"/>
@@ -128,6 +128,7 @@
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
         <Setter Property="Value" Value="0" />
+        <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource SliderTrackNormal}" />
         <Setter Property="BorderBrush">
@@ -150,13 +151,13 @@
                 <Setter Property="Background" Value="{DynamicResource SliderTrackHover}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="MinWidth" Value="100" />
-                <Setter Property="Height" Value="12" />
+                <Setter Property="Width" Value="100" />
+                <Setter Property="MinHeight" Value="12" />
                 <Setter Property="Template" Value="{StaticResource HorizontalSlider}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Width" Value="12" />
-                <Setter Property="MinHeight" Value="100" />
+                <Setter Property="MinWidth" Value="12" />
+                <Setter Property="Height" Value="100" />
                 <Setter Property="Template" Value="{StaticResource VerticalSlider}" />
             </Trigger>
         </Style.Triggers>
