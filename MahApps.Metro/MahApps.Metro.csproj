@@ -78,11 +78,11 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\IPanoramaTile.cs" />
-    <Compile Include="Controls\MessegeBox.xaml.cs">
-      <DependentUpon>MessegeBox.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
+    <Compile Include="Controls\MetroMessageBox.xaml.cs">
+      <DependentUpon>MetroMessageBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MetroProgressBar.cs" />
     <Compile Include="Controls\MetroTabControl.cs" />
     <Compile Include="Controls\MetroTabItem.cs" />
@@ -172,7 +172,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\MessegeBox.xaml">
+    <Page Include="Controls\MetroMessageBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

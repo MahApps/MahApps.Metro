@@ -18,14 +18,15 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// Interaction logic for MessegeBox.xaml
     /// </summary>
-    public partial class MessegeBox : Window
+    public partial class MetroMessageBox : Window
     {
-        public MessegeBox()
+        public MetroMessageBox()
         {
             InitializeComponent();
+            
         }
         protected override void OnActivated(EventArgs e)
-        {
+        {   
             if (Owner != null)
             {
                 if (Owner.WindowState == WindowState.Maximized)
@@ -33,8 +34,6 @@ namespace MahApps.Metro.Controls
                     Left = 0;
                     Top = 200;
                     Width = System.Windows.SystemParameters.PrimaryScreenWidth;
-
-
                 }
                 else
                 {
@@ -148,28 +147,30 @@ namespace MahApps.Metro.Controls
         #endregion
 
 
-        public MessageBoxResult Show(string message)
+        public MessageBoxResult Show(string message,Window owner)
         {
-            return Show(message, string.Empty, MessageBoxButton.OK);
+            this.Owner = owner;
+            return Show(message, string.Empty, MessageBoxButton.OK, owner);
         }
 
-        public MessageBoxResult Show(string message, string caption)
+        public MessageBoxResult Show(string message, string caption,Window owner)
         {
-            return Show(message, caption, MessageBoxButton.OK);
+            this.Owner = owner;
+            return Show(message, caption, MessageBoxButton.OK, owner);
+        }
+        public MessageBoxResult Show(string message, MessageBoxButton buttons, Window owner)
+        {
+            this.Owner = owner;
+            return Show(message,string.Empty, buttons, owner);
         }
 
-        public MessageBoxResult Show(string message, string caption, MessageBoxButton buttons)
+        public MessageBoxResult Show(string message, string caption, MessageBoxButton buttons,Window owner)
         {
-
+            this.Owner = owner;
             MessageBoxResult result = MessageBoxResult.None;
-
-
-
-
             title.Text = caption;
             tbMessage.Text = message;
             Buttons = buttons;
-            // If just an OK button, allow the user to just move away from the dialog
             if (buttons == MessageBoxButton.OK)
                 this.ShowDialog();
             else
@@ -177,7 +178,6 @@ namespace MahApps.Metro.Controls
                 this.ShowDialog();
                 result = this.Result;
             }
-
             return result;
         }
 

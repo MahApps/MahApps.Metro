@@ -13,8 +13,7 @@ namespace MetroDemo
     {
         private Theme currentTheme = Theme.Light;
         private Accent currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Blue");
-         MahApps.Metro.Controls.MessegeBox m = new MessegeBox();
-           
+
         public MainWindow()
         {
             DataContext = new MainWindowViewModel();
@@ -103,9 +102,7 @@ namespace MetroDemo
 #if NET_4_5
             //new RibbonDemo().Show();
 #else
-            m.Owner = this;
-            m.Show("Ribbon is only supported on .NET 4.5 or higher.");
-            //MessageBox.
+            new MetroMessageBox().Show("Ribbon is only supported on .NET 4.5 or higher.",this);
 #endif
         }
 
@@ -139,10 +136,9 @@ namespace MetroDemo
         }
         private void MessageBox(object sender, RoutedEventArgs e)
         {
-            MahApps.Metro.Controls.MessegeBox m = new MessegeBox();
-            m.Owner = this;
-            m.Show("hii");
-
+            new MetroMessageBox().Show("Metro Style Message Box", this);
+            //MahApps.Metro.Controls.MetroMessageBox m = new MetroMessageBox();
+            //m.Show("Metro Style Message Box", this);
         }
     }
 }
