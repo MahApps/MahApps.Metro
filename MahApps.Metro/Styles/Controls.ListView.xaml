@@ -11,7 +11,9 @@
     <Style x:Key="MetroListView"
            TargetType="{x:Type ListView}">
         <Setter Property="BorderBrush"
-                Value="{DynamicResource HighlightBrush}" />
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="BorderThickness"
                 Value="0 1 0 0" />
         <Setter Property="ScrollViewer.CanContentScroll"
@@ -34,18 +36,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListView">
                     <Border Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <Border.Background>
-                            <SolidColorBrush Color="{DynamicResource Gray2}" />
-                        </Border.Background>
-                        <Border.BorderBrush>
-                            <SolidColorBrush Color="{DynamicResource Gray3}" />
-                        </Border.BorderBrush>
                         <ScrollViewer Style="{DynamicResource {x:Static GridView.GridViewScrollViewerStyleKey}}">
                             <ItemsPresenter />
-                            <ScrollViewer.Background>
-                                <SolidColorBrush Color="{DynamicResource WhiteColor}" />
-                            </ScrollViewer.Background>
                         </ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -57,9 +52,9 @@
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter TargetName="Border"
-                                    Property="Background">
+                                    Property="BorderBrush">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray2}" />
+                                    <SolidColorBrush Color="{DynamicResource Gray13}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
