@@ -4,13 +4,36 @@
     <Style x:Key="MetroListBox"
            TargetType="{x:Type ListBox}">
         <Setter Property="BorderBrush"
-                Value="Transparent" />
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteColorBrush}" />
+        <!-- default to 0 -->
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <ScrollViewer>
-                        <ItemsPresenter />
-                    </ScrollViewer>
+                    <Border Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer>
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Border"
+                                    Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource Gray13}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
