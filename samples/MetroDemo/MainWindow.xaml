@@ -383,7 +383,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="selection">
-                    <Grid>
+                    <Grid Margin="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -471,25 +471,57 @@
                                 </TreeViewItem>
                             </TreeView>
                         </Grid>
-                        <StackPanel Grid.Column="2" Width="150">
-                            <Label Content="ListBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <ListBox Grid.Row="0"
-                                     Grid.Column="1"
-                                     Margin="0, 10, 0, 0"
-                                     SelectedIndex="0">
-                                <ListBoxItem Content="Item 1" />
-                                <ListBoxItem Content="Item 2" />
-                                <ListBoxItem Content="Item 3" />
-                            </ListBox>
-                            <ListBox Grid.Row="0"
-                                     Grid.Column="1"
-                                     Margin="0, 10, 0, 0"
-                                     IsEnabled="False"
-                                     SelectedIndex="0">
-                                <ListBoxItem Content="Item 1" />
-                                <ListBoxItem Content="Item 2" />
-                                <ListBoxItem Content="Item 3" />
-                            </ListBox>
+                        <StackPanel Grid.Column="2" Width="300">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.ColumnSpan="2"
+                                       Content="ListBox"
+                                       Style="{StaticResource DescriptionHeaderStyle}" />
+                                <ListBox Grid.Row="1"
+                                         Grid.Column="0"
+                                         Margin="1"
+                                         SelectedIndex="0">
+                                    <ListBoxItem Content="Item 1" />
+                                    <ListBoxItem Content="Item 2" />
+                                    <ListBoxItem Content="Item 3" />
+                                </ListBox>
+                                <ListBox Grid.Row="2"
+                                         Grid.Column="0"
+                                         Margin="1"
+                                         IsEnabled="False"
+                                         SelectedIndex="0">
+                                    <ListBoxItem Content="Item 1" />
+                                    <ListBoxItem Content="Item 2" />
+                                    <ListBoxItem Content="Item 3" />
+                                </ListBox>
+                                <ListBox Grid.Row="1"
+                                         Grid.Column="1"
+                                         BorderThickness="1"
+                                         Margin="1"
+                                         SelectedIndex="0">
+                                    <ListBoxItem Content="Item 1" />
+                                    <ListBoxItem Content="Item 2" />
+                                    <ListBoxItem Content="Item 3" />
+                                </ListBox>
+                                <ListBox Grid.Row="2"
+                                         Grid.Column="1"
+                                         BorderThickness="1"
+                                         Margin="1"
+                                         IsEnabled="False"
+                                         SelectedIndex="0">
+                                    <ListBoxItem Content="Item 1" />
+                                    <ListBoxItem Content="Item 2" />
+                                    <ListBoxItem Content="Item 3" />
+                                </ListBox>
+                            </Grid>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="2">
                             <Label Content="ComboBox" Style="{StaticResource DescriptionHeaderStyle}" />
