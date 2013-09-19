@@ -32,7 +32,7 @@ namespace MahApps.Metro.Controls
                 if (Owner.WindowState == WindowState.Maximized)
                 {
                     Left = 0;
-                    Top = 200;
+                    Top = (System.Windows.SystemParameters.PrimaryScreenHeight-200)/2;
                     Width = System.Windows.SystemParameters.PrimaryScreenWidth;
                 }
                 else
