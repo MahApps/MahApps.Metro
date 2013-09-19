@@ -278,6 +278,8 @@
 
     <Style x:Key="MetroGridViewColumnHeader"
            TargetType="GridViewColumnHeader">
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
@@ -290,11 +292,11 @@
                     <Grid>
                         <Rectangle Fill="Transparent"
                                    IsHitTestVisible="True" />
-                        <Border Name="HeaderBorder"
+                        <Border x:Name="HeaderBorder"
                                 Padding="{TemplateBinding Padding}">
-                            <ContentPresenter Name="HeaderContent"
-                                              Content="{TemplateBinding Content, Converter={StaticResource ToUpperConverter}}"
-                                              TextBlock.FontWeight="SemiBold"
+                            <ContentPresenter x:Name="HeaderContent"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
                                               Margin="0,0,0,1"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -323,6 +325,14 @@
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock TextBlock.FontWeight="SemiBold"
+                               Text="{Binding Converter={StaticResource ToUpperConverter}}" />
+                </DataTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
