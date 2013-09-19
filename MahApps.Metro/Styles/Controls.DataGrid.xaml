@@ -133,7 +133,6 @@
                         <ContentPresenter x:Name="HeaderContent"
                                           Content="{TemplateBinding Content}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          TextBlock.FontWeight="SemiBold"
                                           Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -220,8 +219,9 @@
         </Setter>
         <Setter Property="ContentTemplate">
             <Setter.Value>
-                <DataTemplate DataType="{x:Type system:String}">
-                    <TextBlock Text="{Binding Converter={StaticResource ToUpperConverter}}" />
+                <DataTemplate>
+                    <TextBlock TextBlock.FontWeight="SemiBold"
+                               Text="{Binding Converter={StaticResource ToUpperConverter}}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
