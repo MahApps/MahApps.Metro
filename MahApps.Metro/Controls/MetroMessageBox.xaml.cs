@@ -28,7 +28,7 @@ namespace MahApps.Metro.Controls
         protected override void OnActivated(EventArgs e)
         {   
             if (Owner != null)
-            {
+            {                
                 if (Owner.WindowState == WindowState.Maximized)
                 {
                     Left = 0;
@@ -164,23 +164,50 @@ namespace MahApps.Metro.Controls
             return Show(message,string.Empty, buttons, owner);
         }
 
-        public MessageBoxResult Show(string message, string caption, MessageBoxButton buttons,Window owner)
+        public class DarkenAdorner : Adorner
         {
-            this.Owner = owner;
-            MessageBoxResult result = MessageBoxResult.None;
-            title.Text = caption;
-            tbMessage.Text = message;
-            Buttons = buttons;
-            if (buttons == MessageBoxButton.OK)
-                this.ShowDialog();
-            else
+            public Brush DarkenBrush { get; set; }
+            public DarkenAdorner(UIElement adornedElement): base(adornedElement)
+                {
+                    Brush darkenBrush = new SolidColorBrush(new Color() { R = 0, G = 0, B = 0, A = 100 });
+                    darkenBrush.Freeze();
+                    DarkenBrush = darkenBrush;
+                }
+
+            protected override void OnRender(DrawingContext drawingContext)
             {
-                this.ShowDialog();
-                result = this.Result;
-            }
-            return result;
+                drawingContext.DrawRectangle(DarkenBrush, null, new Rect(0, 0, AdornedElement.RenderSize.Width, AdornedElement.RenderSize.Height));
+            }       
         }
 
+    
+        public MessageBoxResult Show(string message, string caption, MessageBoxButton buttons,Window owner)
+        {
+
+            this.Owner = owner;
+            MessageBoxResult result = MessageBoxResult.None;
+            UIElement rootVisual = this.Owner.Content as UIElement;
+            AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(rootVisual);
+            if ( rootVisual!=null && adornerLayer!=null)
+            {
+                DarkenAdorner darkenAdorner = new DarkenAdorner(rootVisual);
+                adornerLayer.Add(darkenAdorner);
+
+                title.Text = caption;
+                tbMessage.Text = message;
+                Buttons = buttons;
+                if (buttons == MessageBoxButton.OK)
+                    this.ShowDialog();
+                else
+                {
+                    this.ShowDialog();
+                    result = this.Result;
+                }
+                adornerLayer.Remove(darkenAdorner);
+            }
+
+            return result;
+         }
     
     }
 }
