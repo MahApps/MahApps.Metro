@@ -136,9 +136,7 @@ namespace MetroDemo
         }
         private void MessageBox(object sender, RoutedEventArgs e)
         {
-            new MetroMessageBox().Show("Metro Style Message Box", this);
-            //MahApps.Metro.Controls.MetroMessageBox m = new MetroMessageBox();
-            //m.Show("Metro Style Message Box", this);
+            new MetroMessageBox().Show("Metro Style Message Box","Title", this);
         }
     }
 }
