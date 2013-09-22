@@ -9,7 +9,7 @@
     <Style x:Key="MetroCircleButtonStyle"
            TargetType="{x:Type Button}">
         <Setter Property="Background"
-                Value="{DynamicResource ButtonNormalBackground}" />
+                Value="Transparent" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource ButtonNormalBorder}" />
         <Setter Property="BorderThickness"
@@ -24,7 +24,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid x:Name="grid"
-                          Background="#02FFFFFF">
+                          Background="{TemplateBinding Background}">
                         <Ellipse x:Name="ellipsebg"
                                  Margin="4"
                                  Stroke="{TemplateBinding Foreground}"
