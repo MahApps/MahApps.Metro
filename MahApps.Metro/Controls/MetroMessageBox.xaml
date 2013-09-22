@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             mc:Ignorable="d" 
-             BorderThickness="0,3,0,3"
+            BorderThickness="0,3,0,3"
              Height="200"
         WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False"
        SnapsToDevicePixels="True" HorizontalContentAlignment="Stretch" 
@@ -32,15 +32,15 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="title" FontSize="20" FontWeight="Bold"  />
+            <TextBlock x:Name="title" FontSize="24" FontWeight="SemiBold" Margin="5,10,0,0" />
 
-            <TextBlock Grid.Row="1" x:Name="tbMessage" TextWrapping="Wrap" FontSize="16" Margin="5"  />
+            <TextBlock Grid.Row="1" x:Name="tbMessage" TextWrapping="Wrap"  Margin="5"  />
 
             <StackPanel Grid.Row="2" HorizontalAlignment="Right"  Orientation="Horizontal">
-                    <Button Width="70" IsDefault="True" x:Name="btnYes" Margin="10" Style="{DynamicResource BlackSquareButtonStyle}"  Content="Yes" Click="btnYes_Click" />
-                    <Button Width="70" IsCancel="True" x:Name="btnNo" Margin="10" Style="{DynamicResource BlackSquareButtonStyle}" Content="No" Click="btnNo_Click" />
-                    <Button Width="70" IsDefault="True" x:Name="btnOk" Margin="10" Style="{DynamicResource BlackSquareButtonStyle}" Content="OK" Click="btnOk_Click"  />
-                    <Button Width="70"   x:Name="btnCancel" Margin="10" IsCancel="True" Style="{DynamicResource BlackSquareButtonStyle}" Content="Cancel" Click="btnCancel_Click" />
+                    <Button Width="70" IsDefault="True" x:Name="btnYes" Margin="10" Style="{DynamicResource BlackSquareButtonStyle}" Content="_Yes" Click="btnYes_Click" />
+                    <Button Width="70" IsCancel="True" x:Name="btnNo" Margin="10" Style="{DynamicResource BlackSquareButtonStyle}" Content="_No" Click="btnNo_Click" />
+                    <Button Width="70" IsDefault="True" x:Name="btnOk" Margin="10" Style="{DynamicResource BlackSquareButtonStyle}" Content="_OK" Click="btnOk_Click"  />
+                    <Button Width="70"   x:Name="btnCancel" Margin="10" IsCancel="True" Style="{DynamicResource BlackSquareButtonStyle}" Content="_Cancel" Click="btnCancel_Click" />
             </StackPanel>
         </Grid>
     </Border>
