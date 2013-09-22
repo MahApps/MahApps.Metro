@@ -102,7 +102,7 @@ namespace MetroDemo
 #if NET_4_5
             //new RibbonDemo().Show();
 #else
-            MessageBox.Show("Ribbon is only supported on .NET 4.5 or higher.");
+            new MetroMessageBox().Show("Ribbon is only supported on .NET 4.5 or higher.",this);
 #endif
         }
 
@@ -133,6 +133,10 @@ namespace MetroDemo
         {
             new InteropDemo().Show();
 
+        }
+        private void MessageBox(object sender, RoutedEventArgs e)
+        {
+            new MetroMessageBox().Show("Metro Style Message Box","Title", this);
         }
     }
 }

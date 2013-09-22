@@ -18,7 +18,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+               
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
@@ -47,6 +47,7 @@
             <Button Click="LauchCleanDemo" Content="Clean Demo" />
             <Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />
             <Button Click="InteropDemo" Content="Interop Demo" />
+            <Button Click="MessageBox" Content="Message Box" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
