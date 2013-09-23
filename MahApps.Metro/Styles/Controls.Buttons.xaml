@@ -10,7 +10,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Control}">
                     <Grid Margin="8">
-                        <Ellipse Stroke="Black"
+                        <Ellipse Stroke="{TemplateBinding Foreground}"
                                  StrokeDashArray="2 2"
                                  StrokeThickness="1" />
                         <Border Width="{TemplateBinding ActualWidth}"
@@ -26,14 +26,10 @@
     <!-- style for WP7/Circle button -->
     <Style x:Key="MetroCircleButtonStyle"
            TargetType="{x:Type Button}">
-        <Setter Property="OverridesDefaultStyle"
-                Value="True" />
         <Setter Property="FocusVisualStyle"
                 Value="{StaticResource MetroCircleButtonFocusVisual}" />
         <Setter Property="Background"
                 Value="Transparent" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource ButtonNormalBorder}" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="HorizontalContentAlignment"
@@ -49,7 +45,6 @@
                         <Ellipse x:Name="ellipsebg"
                                  Fill="{TemplateBinding Background}"
                                  Margin="4"
-                                 Stroke="{TemplateBinding Foreground}"
                                  StrokeThickness="0"
                                  VerticalAlignment="Stretch" />
                         <Ellipse x:Name="ellipse"
@@ -86,10 +81,6 @@
                                     Property="Opacity"
                                     Value=".5" />
                         </Trigger>
-                        <Trigger Property="IsKeyboardFocused"
-                                 Value="true" />
-                        <Trigger Property="ToggleButton.IsChecked"
-                                 Value="true" />
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter Property="Foreground"
@@ -454,14 +445,10 @@
 
     <Style x:Key="MetroCircleToggleButtonStyle"
            TargetType="{x:Type ToggleButton}">
-        <Setter Property="OverridesDefaultStyle"
-                Value="True" />
         <Setter Property="FocusVisualStyle"
                 Value="{StaticResource MetroCircleButtonFocusVisual}" />
         <Setter Property="Background"
                 Value="Transparent" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource ButtonNormalBorder}" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="HorizontalContentAlignment"
@@ -477,7 +464,6 @@
                         <Ellipse x:Name="ellipsebg"
                                  Fill="{TemplateBinding Background}"
                                  Margin="4"
-                                 Stroke="{TemplateBinding Foreground}"
                                  StrokeThickness="0"
                                  VerticalAlignment="Stretch" />
                         <Ellipse x:Name="ellipse"
@@ -522,8 +508,6 @@
                                     Property="Opacity"
                                     Value=".5" />
                         </Trigger>
-                        <Trigger Property="IsKeyboardFocused"
-                                 Value="true" />
                         <Trigger Property="ToggleButton.IsChecked"
                                  Value="true">
                             <Setter TargetName="ellipsebg"
