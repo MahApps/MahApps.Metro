@@ -9,15 +9,10 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Control}">
-                    <Grid Margin="8">
-                        <Ellipse Stroke="{TemplateBinding Foreground}"
-                                 StrokeDashArray="2 2"
-                                 StrokeThickness="1" />
-                        <Border Width="{TemplateBinding ActualWidth}"
-                                Height="{TemplateBinding ActualHeight}"
-                                BorderThickness="1"
-                                CornerRadius="2" />
-                    </Grid>
+                    <Ellipse Margin="8"
+                             Stroke="{TemplateBinding Foreground}"
+                             StrokeDashArray="2 2"
+                             StrokeThickness="1" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
