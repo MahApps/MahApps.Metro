@@ -5,9 +5,31 @@
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
     <Converters:ToLowerConverter x:Key="ToLowerConverter" />
 
+    <Style x:Key="MetroCircleButtonFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Control}">
+                    <Grid Margin="8">
+                        <Ellipse Stroke="Black"
+                                 StrokeDashArray="2 2"
+                                 StrokeThickness="1" />
+                        <Border Width="{TemplateBinding ActualWidth}"
+                                Height="{TemplateBinding ActualHeight}"
+                                BorderThickness="1"
+                                CornerRadius="2" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <!-- style for WP7/Circle button -->
     <Style x:Key="MetroCircleButtonStyle"
            TargetType="{x:Type Button}">
+        <Setter Property="OverridesDefaultStyle"
+                Value="True" />
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource MetroCircleButtonFocusVisual}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
@@ -23,9 +45,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid x:Name="grid"
-                          Background="{TemplateBinding Background}">
+                    <Grid>
                         <Ellipse x:Name="ellipsebg"
+                                 Fill="{TemplateBinding Background}"
                                  Margin="4"
                                  Stroke="{TemplateBinding Foreground}"
                                  StrokeThickness="0"
@@ -35,7 +57,8 @@
                                  Stroke="{TemplateBinding Foreground}"
                                  StrokeThickness="2"
                                  VerticalAlignment="Stretch" />
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        <ContentPresenter x:Name="content"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
                                           RecognizesAccessKey="True"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -431,8 +454,12 @@
 
     <Style x:Key="MetroCircleToggleButtonStyle"
            TargetType="{x:Type ToggleButton}">
+        <Setter Property="OverridesDefaultStyle"
+                Value="True" />
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource MetroCircleButtonFocusVisual}" />
         <Setter Property="Background"
-                Value="{DynamicResource ButtonNormalBackground}" />
+                Value="Transparent" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource ButtonNormalBorder}" />
         <Setter Property="BorderThickness"
@@ -446,9 +473,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Grid x:Name="grid"
-                          Background="#02FFFFFF">
+                    <Grid>
                         <Ellipse x:Name="ellipsebg"
+                                 Fill="{TemplateBinding Background}"
                                  Margin="4"
                                  Stroke="{TemplateBinding Foreground}"
                                  StrokeThickness="0"
