@@ -474,16 +474,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Grid>
-                        <Ellipse x:Name="ellipsebg"
-                                 Fill="{TemplateBinding Background}"
+                        <Ellipse Fill="{TemplateBinding Background}"
                                  Margin="4"
-                                 StrokeThickness="0"
-                                 VerticalAlignment="Stretch" />
+                                 StrokeThickness="0" />
+                        <Ellipse x:Name="ellipsebg"
+                                 Fill="{DynamicResource BlackBrush}"
+                                 Opacity="0"
+                                 Margin="4"
+                                 StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
                                  Stroke="{TemplateBinding Foreground}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}"
-                                 VerticalAlignment="Stretch" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
                                           RecognizesAccessKey="True"
@@ -491,54 +493,47 @@
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed"
+                        <Trigger Property="ToggleButton.IsChecked"
                                  Value="True">
-                            <Setter TargetName="ellipsebg"
-                                    Property="Fill">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ellipsebg"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         From="0"
+                                                         To="0.3"
+                                                         Duration="0:0:0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <!-- some out fading -->
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ellipsebg"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter Property="Foreground">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray2}" />
+                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="ellipsebg"
-                                    Property="Opacity"
-                                    Value="0.2" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="ellipse"
                                     Property="Opacity"
                                     Value="1" />
-                            <Setter TargetName="ellipsebg"
-                                    Property="Fill">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray5}" />
-                                </Setter.Value>
-                            </Setter>
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="False">
                             <Setter TargetName="ellipse"
                                     Property="Opacity"
                                     Value=".5" />
-                        </Trigger>
-                        <Trigger Property="ToggleButton.IsChecked"
-                                 Value="true">
-                            <Setter TargetName="ellipsebg"
-                                    Property="Fill">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray2}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                                </Setter.Value>
-                            </Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
