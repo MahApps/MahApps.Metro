@@ -119,6 +119,7 @@
                             <DatePickerTextBox x:Name="PART_TextBox"
                                                Foreground="{TemplateBinding Foreground}"
                                                Focusable="{TemplateBinding Focusable}"
+                                               FontSize="{TemplateBinding FontSize}"
                                                HorizontalContentAlignment="Stretch"
                                                VerticalContentAlignment="Stretch" />
 
