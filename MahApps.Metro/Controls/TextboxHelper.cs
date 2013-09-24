@@ -21,7 +21,18 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
 
         private static readonly DependencyProperty hasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
-
+        public static readonly DependencyProperty IsWaitingForDataProperty = DependencyProperty.RegisterAttached("IsWaitingForData", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false));
+        
+        
+        public static void SetIsWaitingForData(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsWaitingForDataProperty, value);
+        }
+        public static bool GetIsWaitingForData(DependencyObject obj)
+        {
+            return (bool) obj.GetValue(IsWaitingForDataProperty);
+        }
+        
         public static void SetSelectAllOnFocus(DependencyObject obj, bool value)
         {
             obj.SetValue(SelectAllOnFocusProperty, value);

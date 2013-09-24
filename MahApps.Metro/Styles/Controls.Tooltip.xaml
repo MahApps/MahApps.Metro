@@ -4,7 +4,7 @@
     <!--Tooltip Style-->
     <Style x:Key="MetroToolTip" TargetType="ToolTip">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Padding" Value="3,1,3,1" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource ItemSelectedBrush}" />
@@ -13,7 +13,7 @@
                 <ControlTemplate TargetType="ToolTip">
                     <Border x:Name="Root"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{DynamicResource BlackBrush}"
+                            Background="{DynamicResource WhiteColorBrush}"
                             Effect="{DynamicResource DropShadowBrush}"
                             Opacity="0">
                         <VisualStateManager.VisualStateGroups>
@@ -43,7 +43,7 @@
                                 <Storyboard x:Key="Normal State" />
                             </Border.Resources>
                             <Border.Background>
-                                <DynamicResource ResourceKey="BlackBrush" />
+                                <DynamicResource ResourceKey="WhiteColorBrush" />
                             </Border.Background>
                             <ContentPresenter Cursor="{TemplateBinding Cursor}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
