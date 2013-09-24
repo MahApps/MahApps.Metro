@@ -37,16 +37,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid>
-                        <Ellipse x:Name="ellipsebg"
-                                 Fill="{TemplateBinding Background}"
+                        <Ellipse Fill="{TemplateBinding Background}"
                                  Margin="4"
-                                 StrokeThickness="0"
-                                 VerticalAlignment="Stretch" />
+                                 StrokeThickness="0" />
+                        <Ellipse x:Name="ellipsebg"
+                                 Fill="{DynamicResource BlackBrush}"
+                                 Opacity="0"
+                                 Margin="4"
+                                 StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
                                  Stroke="{TemplateBinding Foreground}"
-                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}"
-                                 VerticalAlignment="Stretch" />
+                                 StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
                         <ContentPresenter x:Name="content"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
@@ -57,12 +59,28 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed"
                                  Value="True">
-                            <Setter TargetName="ellipsebg"
-                                    Property="Fill"
-                                    Value="{DynamicResource BlackBrush}" />
-                            <Setter TargetName="ellipsebg"
-                                    Property="Opacity"
-                                    Value="0.2" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ellipsebg"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         From="0"
+                                                         To="0.3"
+                                                         Duration="0:0:0" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <!-- some out fading -->
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="ellipsebg"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
