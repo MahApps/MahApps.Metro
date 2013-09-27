@@ -8,9 +8,9 @@
         <Setter Property="MinHeight"
                 Value="5" />
         <Setter Property="FontSize"
-                Value="10" />
+                Value="{DynamicResource ContentFontSize}" />
         <Setter Property="FontFamily"
-                Value="{DynamicResource DefaultFont}" />
+                Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
@@ -211,7 +211,7 @@
                         <!-- Used for day names-->
                         <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
                             <TextBlock FontWeight="Bold"
-                                       FontFamily="{DynamicResource DefaultFont}"
+                                       FontFamily="{DynamicResource ContentFontFamily}"
                                        FontSize="9.5"
                                        HorizontalAlignment="Center"
                                        Margin="0,6,0,6"
@@ -364,7 +364,7 @@
                                                                   Opacity="0.7"
                                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                                   Content="{TemplateBinding Content}"
-                                                                  TextElement.FontFamily="{DynamicResource DefaultFont}"
+                                                                  TextElement.FontFamily="{DynamicResource ContentFontFamily}"
                                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                   Margin="1,4,1,9"
                                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
@@ -395,7 +395,7 @@
                                     <Button x:Name="PART_HeaderButton"
                                             Grid.Column="1"
                                             FontWeight="Bold"
-                                            FontFamily="{DynamicResource DefaultFont}"
+                                            FontFamily="{DynamicResource ContentFontFamily}"
                                             Focusable="False"
                                             FontSize="10.5"
                                             HorizontalAlignment="Center"
@@ -507,9 +507,9 @@
         <Setter Property="MinHeight"
                 Value="42" />
         <Setter Property="FontSize"
-                Value="10" />
+                Value="{DynamicResource ContentFontSize}" />
         <Setter Property="FontFamily"
-                Value="{DynamicResource DefaultFont}" />
+                Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
