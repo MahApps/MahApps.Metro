@@ -638,6 +638,8 @@
 
     <Style x:Key="MetroCalendar"
            TargetType="{x:Type Calendar}">
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Foreground"
                 Value="white" />
         <Setter Property="CalendarDayButtonStyle"
