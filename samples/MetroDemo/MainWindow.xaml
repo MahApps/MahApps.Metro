@@ -356,7 +356,7 @@
                                         Controls:TextboxHelper.Watermark="Select a date" />
                             <DatePicker Width="300"
                                         Margin="2"
-                                        FontSize="20"
+                                        FontSize="24"
                                         HorizontalAlignment="Center"
                                         Controls:TextboxHelper.Watermark="Select a date" />
                         </StackPanel>
