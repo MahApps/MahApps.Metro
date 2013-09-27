@@ -215,22 +215,22 @@
                                     Property="Opacity"
                                     Value="1" />
                         </Trigger>
-
                         <Trigger Property="IsKeyboardFocusWithin"
                                  Value="True">
                             <Setter TargetName="FocusRectangle"
                                     Property="Opacity"
                                     Value="1" />
                         </Trigger>
-
                         <Trigger SourceName="PART_Button"
                                  Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="PART_Button"
                                     Property="Background"
-                                    Value="{DynamicResource GrayBrush5}" />
+                                    Value="{DynamicResource GrayBrush8}" />
+                            <Setter TargetName="PART_Button"
+                                    Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
-
                         <Trigger SourceName="PART_Button"
                                  Property="IsPressed"
                                  Value="True">
