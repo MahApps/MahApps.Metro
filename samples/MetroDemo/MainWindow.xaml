@@ -358,6 +358,7 @@
                                         Margin="2"
                                         FontSize="24"
                                         HorizontalAlignment="Center"
+                                        SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                                         Controls:TextboxHelper.Watermark="Select a date" />
                         </StackPanel>
                         <StackPanel Grid.Row="1">
