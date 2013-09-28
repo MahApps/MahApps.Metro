@@ -54,51 +54,6 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="SelectionStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0" />
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Unselected" />
-                                <VisualState x:Name="Selected">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         To=".75"
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="SelectedBackground" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="CalendarButtonFocusStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0" />
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="CalendarButtonFocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Duration="0"
-                                                                       Storyboard.TargetProperty="Visibility"
-                                                                       Storyboard.TargetName="DayButtonFocusVisual">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="CalendarButtonUnfocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Duration="0"
-                                                                       Storyboard.TargetProperty="Visibility"
-                                                                       Storyboard.TargetName="DayButtonFocusVisual">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Collapsed</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
                             <VisualStateGroup x:Name="ActiveStates">
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition GeneratedDuration="0" />
@@ -195,6 +150,25 @@
                             </Rectangle.Stroke>
                         </Rectangle>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsToday"
+                                           Value="False" />
+                                <Condition Property="IsSelected"
+                                           Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="NormalText"
+                                    Property="TextElement.Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource HighlightDarkColor}" Opacity="0.8" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="DayButtonFocusVisual"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -212,7 +186,7 @@
                         <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
                             <TextBlock FontWeight="Bold"
                                        FontFamily="{DynamicResource ContentFontFamily}"
-                                       FontSize="9.5"
+                                       FontSize="{DynamicResource ContentFontSize}"
                                        HorizontalAlignment="Center"
                                        Margin="0,6,0,6"
                                        Text="{Binding}"
@@ -278,18 +252,16 @@
                                                         <SolidColorBrush Color="{DynamicResource AccentColor}" />
                                                     </Rectangle.Fill>
                                                 </Rectangle>
-                                                <Grid>
-                                                    <Path x:Name="path"
-                                                          Data="M288.75,232.25 L288.75,240.625 L283,236.625 z"
-                                                          Opacity="0.7"
-                                                          Fill="white"
-                                                          HorizontalAlignment="Left"
-                                                          Height="10"
-                                                          Margin="14,-6,0,0"
-                                                          Stretch="Fill"
-                                                          VerticalAlignment="Center"
-                                                          Width="6" />
-                                                </Grid>
+                                                <Path x:Name="path"
+                                                      Data="M288.75,232.25 L288.75,240.625 L283,236.625 z"
+                                                      Opacity="0.7"
+                                                      Fill="white"
+                                                      HorizontalAlignment="Left"
+                                                      Height="10"
+                                                      Margin="14,-6,0,0"
+                                                      Stretch="Fill"
+                                                      VerticalAlignment="Center"
+                                                      Width="6" />
                                             </Grid>
                                         </ControlTemplate>
                                         <ControlTemplate x:Key="NextButtonTemplate"
@@ -322,18 +294,16 @@
                                                         <SolidColorBrush Color="{DynamicResource AccentColor}" />
                                                     </Rectangle.Fill>
                                                 </Rectangle>
-                                                <Grid>
-                                                    <Path x:Name="path"
-                                                          Data="M282.875,231.875 L282.875,240.375 L288.625,236 z"
-                                                          Opacity="0.7"
-                                                          Fill="white"
-                                                          HorizontalAlignment="Right"
-                                                          Height="10"
-                                                          Margin="0,-6,14,0"
-                                                          Stretch="Fill"
-                                                          VerticalAlignment="Center"
-                                                          Width="6" />
-                                                </Grid>
+                                                <Path x:Name="path"
+                                                      Data="M282.875,231.875 L282.875,240.375 L288.625,236 z"
+                                                      Opacity="0.7"
+                                                      Fill="white"
+                                                      HorizontalAlignment="Right"
+                                                      Height="10"
+                                                      Margin="0,-6,14,0"
+                                                      Stretch="Fill"
+                                                      VerticalAlignment="Center"
+                                                      Width="6" />
                                             </Grid>
                                         </ControlTemplate>
                                         <ControlTemplate x:Key="HeaderButtonTemplate"
@@ -369,7 +339,7 @@
                                                                   Margin="1,4,1,9"
                                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                                     <TextElement.Foreground>
-                                                        <SolidColorBrush Color="White" />
+                                                        <SolidColorBrush Color="{DynamicResource WhiteColor}" />
                                                     </TextElement.Foreground>
                                                 </ContentPresenter>
                                             </Grid>
@@ -377,80 +347,80 @@
                                     </Grid.Resources>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
                                     </Grid.RowDefinitions>
-                                    <Button x:Name="PART_PreviousButton"
-                                            Grid.Column="0"
-                                            Focusable="False"
-                                            HorizontalAlignment="Left"
-                                            Height="20"
-                                            Grid.Row="0"
-                                            Template="{StaticResource PreviousButtonTemplate}"
-                                            Width="28" />
-                                    <Button x:Name="PART_HeaderButton"
-                                            Grid.Column="1"
-                                            FontWeight="Bold"
-                                            FontFamily="{DynamicResource ContentFontFamily}"
-                                            Focusable="False"
-                                            FontSize="10.5"
-                                            HorizontalAlignment="Center"
-                                            Grid.Row="0"
-                                            Template="{StaticResource HeaderButtonTemplate}"
-                                            VerticalAlignment="Center" />
-                                    <Button x:Name="PART_NextButton"
-                                            Grid.Column="2"
-                                            Focusable="False"
-                                            HorizontalAlignment="Right"
-                                            Height="20"
-                                            Grid.Row="0"
-                                            Template="{StaticResource NextButtonTemplate}"
-                                            Width="28" />
+
+                                    <Grid Grid.Row="0"
+                                          HorizontalAlignment="Stretch"
+                                          Background="{DynamicResource AccentColorBrush}">
+                                        <Button x:Name="PART_HeaderButton"
+                                                FontWeight="Bold"
+                                                FontFamily="{DynamicResource ContentFontFamily}"
+                                                Focusable="False"
+                                                FontSize="{DynamicResource ContentFontSize}"
+                                                HorizontalAlignment="Center"
+                                                Grid.Row="0"
+                                                Template="{StaticResource HeaderButtonTemplate}"
+                                                VerticalAlignment="Center" />
+                                        <Button x:Name="PART_PreviousButton"
+                                                Focusable="False"
+                                                HorizontalAlignment="Left"
+                                                Height="20"
+                                                Grid.Row="0"
+                                                Template="{StaticResource PreviousButtonTemplate}"
+                                                Width="28" />
+                                        <Button x:Name="PART_NextButton"
+                                                Focusable="False"
+                                                HorizontalAlignment="Right"
+                                                Height="20"
+                                                Grid.Row="0"
+                                                Template="{StaticResource NextButtonTemplate}"
+                                                Width="28" />
+                                    </Grid>
                                     <Grid x:Name="PART_MonthView"
-                                          Grid.ColumnSpan="3"
-                                          HorizontalAlignment="Center"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
                                           Margin="6,-1,6,6"
                                           Grid.Row="1"
                                           Visibility="Visible">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                     </Grid>
                                     <Grid x:Name="PART_YearView"
-                                          Grid.ColumnSpan="3"
-                                          HorizontalAlignment="Center"
+                                          HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Stretch"
                                           Margin="6,-3,7,6"
                                           Grid.Row="1"
                                           Visibility="Hidden">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                     </Grid>
                                 </Grid>
@@ -648,21 +618,8 @@
                 Value="{DynamicResource MetroCalendarItemStyle}" />
         <Setter Property="CalendarButtonStyle"
                 Value="{DynamicResource MetroCalendarButtonStyle}" />
-        <Setter Property="Background">
-            <Setter.Value>
-                <LinearGradientBrush EndPoint="0.5,1"
-                                     StartPoint="0.5,0">
-                    <GradientStop Color="{DynamicResource AccentColor}"
-                                  Offset="0" />
-                    <GradientStop Color="{DynamicResource AccentColor}"
-                                  Offset="0.16" />
-                    <GradientStop Color="{DynamicResource Gray7}"
-                                  Offset="0.16" />
-                    <GradientStop Color="{DynamicResource WhiteColor}"
-                                  Offset="1" />
-                </LinearGradientBrush>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="BorderThickness"
