@@ -59,6 +59,22 @@ namespace MetroDemo
             }
         }
 
+        DateTime? _datePickerDate;
+        public DateTime? DatePickerDate
+        {
+            get { return this._datePickerDate; }
+            set
+            {
+                if (Equals(value, _datePickerDate))
+                {
+                    return;
+                }
+
+                _datePickerDate = value;
+                RaisePropertyChanged("DatePickerDate");
+            }
+        }
+
         private ICommand textBoxButtonCmd;
 
         public ICommand TextBoxButtonCmd
@@ -111,6 +127,11 @@ namespace MetroDemo
                 if (columnName == "IntegerGreater10Property" && this.IntegerGreater10Property < 10)
                 {
                     return "Number is not greater than 10!";
+                }
+
+                if (columnName == "DatePickerDate" && this.DatePickerDate == null)
+                {
+                    return "No date given!";
                 }
 
                 return null;
