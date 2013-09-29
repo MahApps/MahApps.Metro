@@ -354,6 +354,12 @@
                             <DatePicker Width="150"
                                         HorizontalAlignment="Center"
                                         Controls:TextboxHelper.Watermark="Select a date" />
+                            <DatePicker Width="300"
+                                        Margin="2"
+                                        FontSize="24"
+                                        HorizontalAlignment="Center"
+                                        SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                        Controls:TextboxHelper.Watermark="Select a date" />
                         </StackPanel>
                         <StackPanel Grid.Row="1">
                             <TextBlock Text="disabled date picker"
