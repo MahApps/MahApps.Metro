@@ -181,8 +181,21 @@
                         <StackPanel Grid.Row="1"
                                     Grid.Column="0"
                                     HorizontalAlignment="Center">
+                            <StackPanel.Resources>
+                                <Style x:Key="CustomMetroToggleSwitch"
+                                       TargetType="{x:Type Controls:ToggleSwitch}"
+                                       BasedOn="{StaticResource MetroToggleSwitch}">
+                                    <Setter Property="SwitchForeground"
+                                            Value="Red" />
+                                    <Setter Property="OnLabel"
+                                            Value="True" />
+                                    <Setter Property="OffLabel"
+                                            Value="False" />
+                                </Style>
+                            </StackPanel.Resources>
                             <Label Content="Toggle switch" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Controls:ToggleSwitch IsChecked="True" />
+                            <Controls:ToggleSwitch Style="{StaticResource CustomMetroToggleSwitch}" IsChecked="True" />
                             <Controls:ToggleSwitch />
                             <Controls:ToggleSwitch IsChecked="True" IsEnabled="False" />
                             <Controls:ToggleSwitch IsEnabled="False" />
