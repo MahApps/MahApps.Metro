@@ -194,7 +194,7 @@
                                 </Style>
                             </StackPanel.Resources>
                             <Label Content="Toggle switch" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:ToggleSwitch IsChecked="True" />
+                            <Controls:ToggleSwitch IsChecked="True" Header="With Header" />
                             <Controls:ToggleSwitch Style="{StaticResource CustomMetroToggleSwitch}" IsChecked="True" />
                             <Controls:ToggleSwitch />
                             <Controls:ToggleSwitch IsChecked="True" IsEnabled="False" />

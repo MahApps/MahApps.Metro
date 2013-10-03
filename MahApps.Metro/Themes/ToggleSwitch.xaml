@@ -251,7 +251,7 @@
                                             Margin="0,0,0,5"
                                             Opacity="0.65"
                                             VerticalAlignment="Top"
-                                            Grid.ColumnSpan="3"
+                                            Grid.ColumnSpan="2"
                                             FontSize="16"
                                             BorderThickness="0" />
                             <ContentControl x:Name="Content"
