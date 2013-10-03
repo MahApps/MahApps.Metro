@@ -63,28 +63,28 @@
                         <MenuItem Click="ThemeDark" Header="Dark" />
                     </MenuItem>
                     <MenuItem Header="Accent">
-                        <MenuItem Click="AccentBlue" Header="Blue" />
-                        <MenuItem Click="AccentRed" Header="Red" />
-                        <MenuItem Click="AccentGreen" Header="Green" />
-                        <MenuItem Click="AccentOrange" Header="Orange" />
-                        <MenuItem Click="AccentPurple" Header="Purple" />
-                        <MenuItem Click="ChangeAccent" Header="Lime" />
-                        <MenuItem Click="ChangeAccent" Header="Emerald" />
-                        <MenuItem Click="ChangeAccent" Header="Teal" />
-                        <MenuItem Click="ChangeAccent" Header="Cyan" />
-                        <MenuItem Click="ChangeAccent" Header="Cobalt" />
-                        <MenuItem Click="ChangeAccent" Header="Indigo" />
-                        <MenuItem Click="ChangeAccent" Header="Violet" />
-                        <MenuItem Click="ChangeAccent" Header="Pink" />
-                        <MenuItem Click="ChangeAccent" Header="Magenta" />
-                        <MenuItem Click="ChangeAccent" Header="Crimson" />
-                        <MenuItem Click="ChangeAccent" Header="Amber" />
-                        <MenuItem Click="ChangeAccent" Header="Yellow" />
-                        <MenuItem Click="ChangeAccent" Header="Brown" />
-                        <MenuItem Click="ChangeAccent" Header="Olive" />
-                        <MenuItem Click="ChangeAccent" Header="Steel" />
-                        <MenuItem Click="ChangeAccent" Header="Mauve" />
-                        <MenuItem Click="ChangeAccent" Header="Sienna" />
+                        <MenuItem Click="ChangeAccent" Header="Blue" Background="#FF119EDA"/>
+                        <MenuItem Click="ChangeAccent" Header="Red" Background="#FFE51400"/>
+                        <MenuItem Click="ChangeAccent" Header="Green" Background="#FF60A917"/>
+                        <MenuItem Click="ChangeAccent" Header="Orange" Background="#FFFA6800"/>
+                        <MenuItem Click="ChangeAccent" Header="Purple" Background="#FFb400ff"/>
+                        <MenuItem Click="ChangeAccent" Header="Lime" Background="#FFA4C400"/>
+                        <MenuItem Click="ChangeAccent" Header="Emerald" Background="#FF008A00"/>
+                        <MenuItem Click="ChangeAccent" Header="Teal" Background="#FF00ABA9"/>
+                        <MenuItem Click="ChangeAccent" Header="Cyan" Background="#FF1BA1E2"/>
+                        <MenuItem Click="ChangeAccent" Header="Cobalt" Background="#FF0050EF"/>
+                        <MenuItem Click="ChangeAccent" Header="Indigo" Background="#FF6A00FF"/>
+                        <MenuItem Click="ChangeAccent" Header="Violet" Background="#FFAA00FF"/>
+                        <MenuItem Click="ChangeAccent" Header="Pink" Background="#FFF472D0"/>
+                        <MenuItem Click="ChangeAccent" Header="Magenta" Background="#FFD80073"/>
+                        <MenuItem Click="ChangeAccent" Header="Crimson" Background="#FFA20025"/>
+                        <MenuItem Click="ChangeAccent" Header="Amber" Background="#FFF0A30A"/>
+                        <MenuItem Click="ChangeAccent" Header="Yellow" Background="#FFE6C800"/>
+                        <MenuItem Click="ChangeAccent" Header="Brown" Background="#FF825A2C"/>
+                        <MenuItem Click="ChangeAccent" Header="Olive" Background="#FF6D8764"/>
+                        <MenuItem Click="ChangeAccent" Header="Steel" Background="#FF647687"/>
+                        <MenuItem Click="ChangeAccent" Header="Mauve" Background="#FF76608A"/>
+                        <MenuItem Click="ChangeAccent" Header="Sienna" Background="#FFA0522D"/>
                     </MenuItem>
                 </MenuItem>
             </Menu>

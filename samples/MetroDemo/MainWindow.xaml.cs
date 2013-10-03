@@ -35,31 +35,6 @@ namespace MetroDemo
             ThemeManager.ChangeTheme(this, this.currentAccent, this.currentTheme);
         }
 
-        private void AccentRed(object sender, RoutedEventArgs e)
-        {
-            this.ChangeAccent("Red");
-        }
-
-        private void AccentGreen(object sender, RoutedEventArgs e)
-        {
-            this.ChangeAccent("Green");
-        }
-
-        private void AccentBlue(object sender, RoutedEventArgs e)
-        {
-            this.ChangeAccent("Blue");
-        }
-
-        private void AccentPurple(object sender, RoutedEventArgs e)
-        {
-            this.ChangeAccent("Purple");
-        }
-
-        private void AccentOrange(object sender, RoutedEventArgs e)
-        {
-            this.ChangeAccent("Orange");
-        }
-
         private void ThemeLight(object sender, RoutedEventArgs e)
         {
             this.currentTheme = Theme.Light;
