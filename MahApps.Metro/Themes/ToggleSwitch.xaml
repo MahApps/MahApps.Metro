@@ -256,8 +256,10 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*"
+                                                  x:Name="firstCol" />
+                                <ColumnDefinition Width="Auto"
+                                                  x:Name="secCol" />
                             </Grid.ColumnDefinitions>
                             <ContentControl x:Name="Header"
                                             Grid.ColumnSpan="2"
@@ -288,6 +290,23 @@
                                     Property="Visibility"
                                     Value="Collapsed" />
                         </DataTrigger>
+                        <Trigger Property="ContentDirection"
+                                 Value="RightToLeft">
+                            <Setter Property="HorizontalContentAlignment"
+                                    Value="Right" />
+                            <Setter TargetName="firstCol"
+                                    Property="Width"
+                                    Value="Auto" />
+                            <Setter TargetName="secCol"
+                                    Property="Width"
+                                    Value="*" />
+                            <Setter TargetName="Content"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                            <Setter TargetName="Switch"
+                                    Property="Grid.Column"
+                                    Value="0" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

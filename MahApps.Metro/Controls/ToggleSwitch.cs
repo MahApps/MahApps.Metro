@@ -34,6 +34,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
         public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), null);
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
+        // LeftToRight means content left and button right and RightToLeft vise versa
+        public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
 
         public event EventHandler<RoutedEventArgs> Checked;
         public event EventHandler<RoutedEventArgs> Unchecked;
@@ -71,6 +73,11 @@ namespace MahApps.Metro.Controls
             {
                 SetValue(SwitchForegroundProperty, value);
             }
+        }
+
+        public FlowDirection ContentDirection {
+            get { return (FlowDirection)GetValue(ContentDirectionProperty); }
+            set { SetValue(ContentDirectionProperty, value); }
         }
 
         [TypeConverter(typeof(NullableBoolConverter))]
