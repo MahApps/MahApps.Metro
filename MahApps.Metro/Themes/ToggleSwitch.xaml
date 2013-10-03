@@ -203,9 +203,13 @@
         <Setter Property="HorizontalContentAlignment"
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
-                Value="Top" />
+                Value="Center" />
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
+        <Setter Property="FontFamily"
+                Value="Segoe UI Semibold" />
+        <Setter Property="FontSize"
+                Value="14.667" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:ToggleSwitch}">
@@ -243,35 +247,32 @@
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <ContentControl x:Name="Header"
+                                            Grid.ColumnSpan="2"
                                             FontWeight="Normal"
                                             Content="{TemplateBinding Header}"
                                             ContentTemplate="{TemplateBinding HeaderTemplate}"
                                             HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
                                             IsTabStop="False"
                                             Margin="0,0,0,5"
                                             Opacity="0.65"
-                                            VerticalAlignment="Top"
-                                            Grid.ColumnSpan="2"
                                             FontSize="16"
                                             BorderThickness="0" />
                             <ContentControl x:Name="Content"
                                             Grid.Row="1"
                                             Content="{TemplateBinding Content}"
                                             ContentTemplate="{TemplateBinding ContentTemplate}"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             IsTabStop="False"
-                                            Margin="-1,1,0,-7"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            FontFamily="Segoe UI Semibold"
-                                            FontSize="14.667" />
+                                            FontFamily="{TemplateBinding FontFamily}"
+                                            FontSize="{TemplateBinding FontSize}" />
                             <Controls:ToggleSwitchButton x:Name="Switch"
-                                                         Grid.RowSpan="1"
                                                          Grid.Column="1"
+                                                         Grid.Row="1"
                                                          Background="{TemplateBinding Background}"
                                                          SwitchForeground="{TemplateBinding SwitchForeground}"
-                                                         VerticalAlignment="Bottom"
-                                                         HorizontalAlignment="Right"
-                                                         Grid.Row="1" />
+                                                         VerticalAlignment="Center" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
