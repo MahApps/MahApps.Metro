@@ -210,6 +210,19 @@
                 Value="Segoe UI Semibold" />
         <Setter Property="FontSize"
                 Value="14.667" />
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Mode=OneWay}"
+                               FontWeight="Normal"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Top"
+                               Margin="0,0,0,5"
+                               Opacity="0.65"
+                               FontSize="16" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:ToggleSwitch}">
@@ -248,16 +261,9 @@
                             </Grid.ColumnDefinitions>
                             <ContentControl x:Name="Header"
                                             Grid.ColumnSpan="2"
-                                            FontWeight="Normal"
                                             Content="{TemplateBinding Header}"
                                             ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            IsTabStop="False"
-                                            Margin="0,0,0,5"
-                                            Opacity="0.65"
-                                            FontSize="16"
-                                            BorderThickness="0" />
+                                            IsTabStop="False" />
                             <ContentControl x:Name="Content"
                                             Grid.Row="1"
                                             Content="{TemplateBinding Content}"
@@ -275,6 +281,14 @@
                                                          VerticalAlignment="Center" />
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
+                                     Value="{x:Null}">
+                            <Setter TargetName="Header"
+                                    Property="Visibility"
+                                    Value="Collapsed" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
