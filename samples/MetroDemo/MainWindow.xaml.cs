@@ -134,5 +134,10 @@ namespace MetroDemo
             new InteropDemo().Show();
 
         }
+
+        private void ChangeAccent(object sender, RoutedEventArgs e)
+        {
+            ChangeAccent((string)((MenuItem)sender).Header);
+        }
     }
 }

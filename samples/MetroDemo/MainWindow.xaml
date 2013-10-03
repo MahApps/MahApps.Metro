@@ -68,6 +68,23 @@
                         <MenuItem Click="AccentGreen" Header="Green" />
                         <MenuItem Click="AccentOrange" Header="Orange" />
                         <MenuItem Click="AccentPurple" Header="Purple" />
+                        <MenuItem Click="ChangeAccent" Header="Lime" />
+                        <MenuItem Click="ChangeAccent" Header="Emerald" />
+                        <MenuItem Click="ChangeAccent" Header="Teal" />
+                        <MenuItem Click="ChangeAccent" Header="Cyan" />
+                        <MenuItem Click="ChangeAccent" Header="Cobalt" />
+                        <MenuItem Click="ChangeAccent" Header="Indigo" />
+                        <MenuItem Click="ChangeAccent" Header="Violet" />
+                        <MenuItem Click="ChangeAccent" Header="Pink" />
+                        <MenuItem Click="ChangeAccent" Header="Magenta" />
+                        <MenuItem Click="ChangeAccent" Header="Crimson" />
+                        <MenuItem Click="ChangeAccent" Header="Amber" />
+                        <MenuItem Click="ChangeAccent" Header="Yellow" />
+                        <MenuItem Click="ChangeAccent" Header="Brown" />
+                        <MenuItem Click="ChangeAccent" Header="Olive" />
+                        <MenuItem Click="ChangeAccent" Header="Steel" />
+                        <MenuItem Click="ChangeAccent" Header="Mauve" />
+                        <MenuItem Click="ChangeAccent" Header="Sienna" />
                     </MenuItem>
                 </MenuItem>
             </Menu>
