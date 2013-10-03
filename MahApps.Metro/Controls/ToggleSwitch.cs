@@ -28,12 +28,14 @@ namespace MahApps.Metro.Controls
         private ToggleButton _toggleButton;
         private bool _wasContentSet;
 
-        public static readonly DependencyProperty OnProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
-        public static readonly DependencyProperty OffProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
+        public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
+        public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
         public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), null);
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
+        // LeftToRight means content left and button right and RightToLeft vise versa
+        public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
 
         public event EventHandler<RoutedEventArgs> Checked;
         public event EventHandler<RoutedEventArgs> Unchecked;
@@ -42,14 +44,14 @@ namespace MahApps.Metro.Controls
 
         public string OnLabel
         {
-            get { return (string)GetValue(OnProperty); }
-            set { SetValue(OnProperty, value); }
+            get { return (string)GetValue(OnLabelProperty); }
+            set { SetValue(OnLabelProperty, value); }
         }
 
         public string OffLabel
         {
-            get { return (string)GetValue(OffProperty); }
-            set { SetValue(OffProperty, value); }
+            get { return (string)GetValue(OffLabelProperty); }
+            set { SetValue(OffLabelProperty, value); }
         }
 
         public object Header
@@ -71,6 +73,11 @@ namespace MahApps.Metro.Controls
             {
                 SetValue(SwitchForegroundProperty, value);
             }
+        }
+
+        public FlowDirection ContentDirection {
+            get { return (FlowDirection)GetValue(ContentDirectionProperty); }
+            set { SetValue(ContentDirectionProperty, value); }
         }
 
         [TypeConverter(typeof(NullableBoolConverter))]
