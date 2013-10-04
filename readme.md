@@ -2,6 +2,8 @@
 
 A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
 
+CheckBox and RadioButton styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
+
 ### Documentation
 
 Read it here: [http://mahapps.com/MahApps.Metro/](http://mahapps.com/MahApps.Metro/)
@@ -14,7 +16,7 @@ If you've improved MahApps.Metro and think that other people would enjoy it, sub
 
 ### IRC chatroom
 
-Drop in on the IRC room - `#mametro` on [Freenode](http://freenode.net/) - if you want to ask a question.
+Drop in on the IRC room - `#mametro` on [Freenode](http://freenode.net/) - if you want to ask a question. If no one responds and you have to leave, please post your issue on the [issue tracker](https://github.com/MahApps/MahApps.Metro/issues).
 
 ### Bug Reports
 

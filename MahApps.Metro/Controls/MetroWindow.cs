@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -31,6 +32,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         bool isDragging;
+        ContentPresenter WindowCommandsPresenter;
+        UIElement titleBar;
 
         public bool WindowTransitionsEnabled
         {
@@ -157,9 +160,9 @@ namespace MahApps.Metro.Controls
             if (WindowCommands == null)
                 WindowCommands = new WindowCommands();
 
-            var titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
+            titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
 
-            if (ShowTitleBar && titleBar != null)
+            if (titleBar != null && titleBar.Visibility == System.Windows.Visibility.Visible)
             {
                 titleBar.MouseDown += TitleBarMouseDown;
                 titleBar.MouseUp += TitleBarMouseUp;
@@ -171,6 +174,8 @@ namespace MahApps.Metro.Controls
                 MouseUp += TitleBarMouseUp;
                 MouseMove += TitleBarMouseMove;
             }
+
+            WindowCommandsPresenter = GetTemplateChild("PART_WindowCommands") as ContentPresenter;
         }
 
         protected override void OnStateChanged(EventArgs e)
@@ -206,14 +211,15 @@ namespace MahApps.Metro.Controls
                     IntPtr windowHandle = new WindowInteropHelper(this).Handle;
                     UnsafeNativeMethods.ReleaseCapture();
 
-                    var wpfPoint = PointToScreen(Mouse.GetPosition(this));
+                    var mPoint = Mouse.GetPosition(this);
+                    var wpfPoint = PointToScreen(mPoint);
                     short x = Convert.ToInt16(wpfPoint.X);
                     short y = Convert.ToInt16(wpfPoint.Y);
 
                     int lParam = x | (y << 16);
 
                     UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
-                    if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize))
+                    if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize) && mPoint.Y <= TitlebarHeight)
                     {
                         WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
                     }
@@ -247,7 +253,7 @@ namespace MahApps.Metro.Controls
                 double left = mouseAbsolute.X - width / 2;
 
                 // Check if the mouse is at the top of the screen if TitleBar is not visible
-                if (!ShowTitleBar && mouseAbsolute.Y > TitlebarHeight)
+                if (!(titleBar.Visibility == System.Windows.Visibility.Visible) && mouseAbsolute.Y > TitlebarHeight)
                     return;
 
                 // Aligning window's position to fit the screen.
@@ -284,6 +290,14 @@ namespace MahApps.Metro.Controls
             var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD, (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
                 UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
+        }
+
+        internal void HandleFlyoutStatusChange(Flyout flyout)
+        {
+            if (flyout.Position == Position.Right && flyout.IsOpen)
+                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 3);
+            else
+                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 1); //in the style, the default is 1
         }
     }
 }

@@ -99,7 +99,6 @@ namespace MahApps.Metro.Controls
             switch (position)
             {
                 default:
-                case Position.Left:
                     HorizontalAlignment = HorizontalAlignment.Left;
                     VerticalAlignment = VerticalAlignment.Stretch;
                     hideFrame.Value = -root.DesiredSize.Width;
@@ -158,7 +157,6 @@ namespace MahApps.Metro.Controls
             switch (Position)
             {
                 default:
-                case Position.Left:
                     hideFrame.Value = -root.DesiredSize.Width;
                     break;
                 case Position.Right:

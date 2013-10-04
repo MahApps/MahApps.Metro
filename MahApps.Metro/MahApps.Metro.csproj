@@ -20,12 +20,14 @@
     <!-- dev config -->
     <Version Condition=" '$(Version)' == '' ">1.0.0.9999</Version>
     <SolutionDir Condition=" '$(SolutionDir)' == '' ">..</SolutionDir>
+    <ExpressionBlendVersion>5.0.30709.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
+    <IntermediateOutputPath>obj\NET4\Debug\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;NET_4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,6 +36,7 @@
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
+    <IntermediateOutputPath>obj\NET4\Release\</IntermediateOutputPath>
     <DefineConstants>TRACE;NET_4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -43,9 +46,6 @@
     <AssemblyOriginatorKeyFile>mahapps.metro.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Windows.Shell">
-      <HintPath>..\packages\Microsoft.Windows.Shell.3.0.1.0\lib\net40\Microsoft.Windows.Shell.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -88,6 +88,8 @@
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
+    <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
+    <Compile Include="Converters\FontSizeOffsetConverter.cs" />
     <Compile Include="Converters\OffOnConverter.cs" />
     <Compile Include="Controls\Panorama.cs" />
     <Compile Include="Controls\PanoramaGroup.cs" />
@@ -105,6 +107,22 @@
     <Compile Include="Converters\PanoramaGroupHeightConverter.cs" />
     <Compile Include="Converters\PanoramaGroupHeaderConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
+    <Compile Include="Converters\TreeViewMarginConverter.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\Debug.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\DoubleUtil.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\DpiHelper.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\ErrorCodes.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\MessageWindow.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\NativeMethods.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\ShellProvider.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\StreamHelper.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\Utilities.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\Verify.cs" />
+    <Compile Include="Microsoft.Windows.Shell\SystemCommands.cs" />
+    <Compile Include="Microsoft.Windows.Shell\SystemParameters2.cs" />
+    <Compile Include="Microsoft.Windows.Shell\WindowChrome.cs" />
+    <Compile Include="Microsoft.Windows.Shell\WindowChromeWorker.cs" />
     <Compile Include="Models\Win32\GWL.cs" />
     <Compile Include="Models\Win32\HitTestValues.cs" />
     <Compile Include="Models\Win32\NativeMethods.cs" />
@@ -112,6 +130,9 @@
     <Compile Include="Models\Win32\WM.cs" />
     <Compile Include="Models\Win32\WS.cs" />
     <Compile Include="Models\Win32\WSEX.cs" />
+    <Compile Include="Native\ABEdge.cs" />
+    <Compile Include="Native\ABMsg.cs" />
+    <Compile Include="Native\APPBARDATA.cs" />
     <Compile Include="Native\WINDOWPLACEMENT.cs" />
     <Compile Include="Controls\WindowSettings.cs" />
     <Compile Include="Native\Constants.cs" />
@@ -148,6 +169,78 @@
     <Page Include="Controls\GlowWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Amber.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Brown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Cobalt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Crimson.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Cyan.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Emerald.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Indigo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Lime.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Magenta.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Mauve.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Olive.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Pink.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Sienna.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Steel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Teal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Violet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Yellow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Clean\CleanWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Controls.AnimatedSingleRowTabControl.xaml">
       <SubType>Designer</SubType>
@@ -236,6 +329,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.TreeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\FlatSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\VS\Button.xaml">
       <SubType>Designer</SubType>
@@ -433,7 +535,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <Page Include="Styles\Controls.Calendar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

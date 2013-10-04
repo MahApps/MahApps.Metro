@@ -88,12 +88,12 @@ namespace MahApps.Metro.Controls
         private Point previousPoint;
         private Vector velocity;
         private double friction;
-        private DispatcherTimer animationTimer = new DispatcherTimer(DispatcherPriority.DataBind);
-        private DispatcherTimer scrollBarTimer = new DispatcherTimer(DispatcherPriority.DataBind);
+        private readonly DispatcherTimer animationTimer = new DispatcherTimer(DispatcherPriority.DataBind);
+        private readonly DispatcherTimer scrollBarTimer = new DispatcherTimer(DispatcherPriority.DataBind);
         private static int PixelsToMoveToBeConsideredScroll = 5;
         private static int PixelsToMoveToBeConsideredClick = 2;
         private IPanoramaTile tile;
-        private bool touchCaptured = false;
+        private bool touchCaptured;
         private Point lastTouchPosition;
 
         public Panorama()
@@ -106,15 +106,9 @@ namespace MahApps.Metro.Controls
             scrollBarTimer.Interval = TimeSpan.FromSeconds(1);
             scrollBarTimer.Tick += (s, e) => HideHorizontalScrollBar();
 
-            this.Loaded += (sender, e) =>
-            {
-                animationTimer.Start();
-            };
+            this.Loaded += (sender, e) => animationTimer.Start();
+            this.Unloaded += (sender, e) => animationTimer.Stop();
 
-            this.Unloaded += (sender, e) =>
-            {
-                animationTimer.Stop();
-            };
             lastTouchPosition = new Point();
         }
 
@@ -144,12 +138,7 @@ namespace MahApps.Metro.Controls
 
             if (IsMouseCaptured || touchCaptured)
             {
-                Point currentPoint;
-
-                if (IsMouseCaptured)
-                    currentPoint = Mouse.GetPosition(this);
-                else
-                    currentPoint = lastTouchPosition;
+                Point currentPoint = IsMouseCaptured ? Mouse.GetPosition(this) : lastTouchPosition;
 
                 velocity = previousPoint - currentPoint;
                 previousPoint = currentPoint;

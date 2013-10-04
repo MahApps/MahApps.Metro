@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours">
+                    xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <conv:ToUpperConverter x:Key="ToUpperConverter" />
@@ -63,7 +64,7 @@
                                     Margin="8 -1 0 0" 
                                     FontSize="16" 
                                     FontFamily="{DynamicResource HeaderFontFamily}"
-                                    Foreground="{TemplateBinding TitleForeground}"/>
+                                    Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"/>
                         </Grid>
                         <ContentPresenter 
                                 Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 

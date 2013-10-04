@@ -86,7 +86,7 @@ namespace MahApps.Metro.Controls
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(string.Format("Failed to load window state:\r\n{0}", ex));
+                Debug.WriteLine("Failed to load window state:\r\n{0}", ex);
             }
         }
 

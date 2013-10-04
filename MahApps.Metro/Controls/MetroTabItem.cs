@@ -53,28 +53,28 @@ namespace MahApps.Metro.Controls
 
         // Using a DependencyProperty as the backing store for HeaderSize.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty HeaderFontSizeProperty =
-            DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(MetroTabItem), new PropertyMetadata(26.67, new PropertyChangedCallback((obj, args) =>
+            DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(MetroTabItem), new PropertyMetadata(26.67, (obj, args) =>
+            {
+                var item = (MetroTabItem)obj;
+
+                if (item.closeButton == null)
                 {
-                    MetroTabItem item = (MetroTabItem)obj;
+                    item.ApplyTemplate();
+                }
 
-                    if (item.closeButton == null)
-                    {
-                        item.ApplyTemplate();
-                    }
+                double fontDpiSize = (double)args.NewValue;
 
-                    double fontDpiSize = (double)args.NewValue;
+                double fontHeight = Math.Ceiling(fontDpiSize * item.rootLabel.FontFamily.LineSpacing);
 
-                    double fontHeight = Math.Ceiling(fontDpiSize * item.rootLabel.FontFamily.LineSpacing);
+                var newMargin = (Math.Round(fontHeight) / 2.2) - (item.rootLabel.Padding.Top);
 
-                    var newMargin = (Math.Round(fontHeight) / 2.2) - (item.rootLabel.Padding.Top);
+                var previousMargin = item.closeButton.Margin;
+                item.newButtonMargin = new Thickness(previousMargin.Left, newMargin, previousMargin.Right, previousMargin.Bottom);
+                item.closeButton.Margin = item.newButtonMargin;
 
-                    var previousMargin = item.closeButton.Margin;
-                    item.newButtonMargin = new Thickness(previousMargin.Left, newMargin, previousMargin.Right, previousMargin.Bottom);
-                    item.closeButton.Margin = item.newButtonMargin;
+                item.closeButton.UpdateLayout();
 
-                    item.closeButton.UpdateLayout();
-
-                })));
+            }));
 
         public bool CloseButtonEnabled
         {
@@ -145,7 +145,7 @@ namespace MahApps.Metro.Controls
         {
             if (closeButton != null)
                 if (CloseButtonEnabled)
-                    closeButton.Visibility = System.Windows.Visibility.Visible;
+                    closeButton.Visibility = Visibility.Visible;
 
             base.OnSelected(e);
         }
@@ -153,26 +153,24 @@ namespace MahApps.Metro.Controls
         protected override void OnUnselected(RoutedEventArgs e)
         {
             if (closeButton != null)
-                closeButton.Visibility = System.Windows.Visibility.Hidden;
+                closeButton.Visibility = Visibility.Hidden;
 
             base.OnUnselected(e);
         }
 
-        protected override void OnMouseEnter(System.Windows.Input.MouseEventArgs e)
+        protected override void OnMouseEnter(MouseEventArgs e)
         {
             if (closeButton != null)
                 if (CloseButtonEnabled)
-                    closeButton.Visibility = System.Windows.Visibility.Visible;
+                    closeButton.Visibility = Visibility.Visible;
 
             base.OnMouseEnter(e);
         }
 
-        protected override void OnMouseLeave(System.Windows.Input.MouseEventArgs e)
+        protected override void OnMouseLeave(MouseEventArgs e)
         {
-            if (!this.IsSelected)
-                if (closeButton != null)
-                    if (CloseButtonEnabled)
-                        closeButton.Visibility = System.Windows.Visibility.Hidden;
+            if (!this.IsSelected && closeButton != null && CloseButtonEnabled)
+                closeButton.Visibility = Visibility.Hidden;
 
             base.OnMouseLeave(e);
         }
