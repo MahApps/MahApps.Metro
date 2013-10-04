@@ -4,39 +4,62 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-    <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
     <!--TextBox Style-->
-    <Style TargetType="{x:Type TextBox}" x:Key="MetroTextBox">
-        <Setter Property="Controls:TextboxHelper.IsMonitoring" Value="True"/>
-        <Setter Property="SelectionBrush" Value="{DynamicResource HighlightBrush}" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="MinHeight" Value="26" />
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+    <Style TargetType="{x:Type TextBox}"
+           x:Key="MetroTextBox">
+        <Setter Property="Controls:TextboxHelper.IsMonitoring"
+                Value="True" />
+        <Setter Property="SelectionBrush"
+                Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="MinHeight"
+                Value="26" />
+        <Setter Property="Background"
+                Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextBoxBorderBrush}" />
         <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <ControlTemplate.Resources>
-                        <Storyboard x:Key="enterGotFocus" >
-                            <DoubleAnimation Duration="0:0:0.2" To=".2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
+                        <Storyboard x:Key="enterGotFocus">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             To=".2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
-                        <Storyboard x:Key="exitGotFocus" >
-                            <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
+                        <Storyboard x:Key="exitGotFocus">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
 
-                        <Storyboard x:Key="enterHasText" >
-                            <DoubleAnimation Duration="0:0:0.2" From=".2" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
+                        <Storyboard x:Key="enterHasText">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             From=".2"
+                                             To="0"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
-                        <Storyboard x:Key="exitHasText" >
-                            <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
+                        <Storyboard x:Key="exitHasText">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
@@ -45,7 +68,8 @@
                                 <VisualState x:Name="Valid" />
                                 <VisualState x:Name="InvalidUnfocused">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ValidationErrorElement">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
+                                                                       Storyboard.TargetName="ValidationErrorElement">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Visible</Visibility>
@@ -56,14 +80,16 @@
                                 </VisualState>
                                 <VisualState x:Name="InvalidFocused">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ValidationErrorElement">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
+                                                                       Storyboard.TargetName="ValidationErrorElement">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Visible</Visibility>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsOpen" Storyboard.TargetName="validationTooltip">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsOpen"
+                                                                       Storyboard.TargetName="validationTooltip">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <System:Boolean>True</System:Boolean>
@@ -74,22 +100,47 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="Base" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" Opacity="1" Fill="{TemplateBinding Background}" />
-                        <Rectangle x:Name="FocusRectangle" StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" Opacity="0" Stroke="{DynamicResource BlackBrush}" />
+                        <Rectangle x:Name="Base"
+                                   Stroke="{TemplateBinding BorderBrush}"
+                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
+                                   Opacity="1"
+                                   Fill="{TemplateBinding Background}" />
+                        <Rectangle x:Name="FocusRectangle"
+                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
+                                   Opacity="0"
+                                   Stroke="{DynamicResource BlackBrush}" />
                         <Grid Margin="2">
-                            <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0" />
-                            <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}" />
-                            <TextBlock x:Name="Message" Text="{TemplateBinding Controls:TextboxHelper.Watermark}" Visibility="Collapsed"
-                                       Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Opacity="0.6"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border x:Name="ReadOnlyVisualElement"
+                                    Grid.ColumnSpan="2"
+                                    Background="{x:Null}"
+                                    Opacity="0" />
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Grid.Column="0"
+                                          BorderThickness="0"
+                                          IsTabStop="False"
+                                          Margin="2"
+                                          VerticalAlignment="Stretch"
+                                          Background="{x:Null}" />
+                            <TextBlock x:Name="Message"
+                                       Grid.Column="0"
+                                       Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                       Visibility="Collapsed"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       IsHitTestVisible="False"
+                                       Opacity="0.6"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
                             <Button x:Name="PART_ClearText"
+                                    Grid.Column="1"
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     FontSize="16"
                                     Foreground="{TemplateBinding Foreground}"
-                                    Width="20"
-                                    HorizontalAlignment="Right"
                                     FontFamily="Marlett"
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonContent), Mode=OneWay}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -101,7 +152,10 @@
                                    Fill="{DynamicResource ControlsDisabledBrush}"
                                    IsHitTestVisible="False"
                                    Opacity="0" />
-                        <Border x:Name="ValidationErrorElement" BorderBrush="{DynamicResource ControlsValidationBrush}" BorderThickness="1" Visibility="Collapsed">
+                        <Border x:Name="ValidationErrorElement"
+                                BorderBrush="{DynamicResource ControlsValidationBrush}"
+                                BorderThickness="1"
+                                Visibility="Collapsed">
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Name="validationTooltip"
                                          DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
@@ -125,60 +179,105 @@
                                     </ToolTip.Triggers>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
-                            <Grid Background="Transparent" HorizontalAlignment="Right" Height="12" Margin="1,-4,-4,0" VerticalAlignment="Top" Width="12">
-                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z" Fill="{DynamicResource ValidationBrush5}" Margin="1,3,0,0" />
-                                <Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="{DynamicResource WhiteColorBrush}" Margin="1,3,0,0" />
+                            <Grid Background="Transparent"
+                                  HorizontalAlignment="Right"
+                                  Height="12"
+                                  Margin="1,-4,-4,0"
+                                  VerticalAlignment="Top"
+                                  Width="12">
+                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z"
+                                      Fill="{DynamicResource ValidationBrush5}"
+                                      Margin="1,3,0,0" />
+                                <Path Data="M 0,0 L2,0 L 8,6 L8,8"
+                                      Fill="{DynamicResource WhiteColorBrush}"
+                                      Margin="1,3,0,0" />
                             </Grid>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value="">
-                            <Setter TargetName="Message" Property="Visibility" Value="Visible" />
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                                     Value="">
+                            <Setter TargetName="Message"
+                                    Property="Visibility"
+                                    Value="Visible" />
                         </DataTrigger>
-                        
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}" Value="True">
-                            <Setter TargetName="PART_ContentHost" Property="Margin" Value="2,2,20,2" />
+
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}"
+                                     Value="False">
+                            <Setter TargetName="PART_ContentHost"
+                                    Property="Grid.ColumnSpan"
+                                    Value="2" />
+                            <Setter TargetName="Message"
+                                    Property="Grid.ColumnSpan"
+                                    Value="2" />
                         </DataTrigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="FocusRectangle" Property="Opacity" Value="1" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="1" />
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="DisabledVisualElement"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
-                        <Trigger Property="IsReadOnly" Value="True">
-                            <Setter TargetName="ReadOnlyVisualElement" Property="Opacity" Value="1" />
+                        <Trigger Property="IsReadOnly"
+                                 Value="True">
+                            <Setter TargetName="ReadOnlyVisualElement"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="FocusRectangle" Property="Opacity" Value="1" />
+                        <Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
-                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource GrayBrush5}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
+                        <Trigger SourceName="PART_ClearText"
+                                 Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush8}" />
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
-                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource BlackBrush}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                        <Trigger SourceName="PART_ClearText"
+                                 Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Background"
+                                    Value="{DynamicResource BlackBrush}" />
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Foreground"
+                                    Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
 
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="Controls:TextboxHelper.HasText" Value="False"/>
-                                <Condition Property="IsFocused" Value="True"/>
+                                <Condition Property="Controls:TextboxHelper.HasText"
+                                           Value="False" />
+                                <Condition Property="IsFocused"
+                                           Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterGotFocus}"/>
+                                <BeginStoryboard Storyboard="{StaticResource enterGotFocus}" />
                             </MultiTrigger.EnterActions>
                             <MultiTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitGotFocus}"/>
+                                <BeginStoryboard Storyboard="{StaticResource exitGotFocus}" />
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
-                        <Trigger Property="Controls:TextboxHelper.HasText" Value="True">
+                        <Trigger Property="Controls:TextboxHelper.HasText"
+                                 Value="True">
                             <Trigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource enterHasText}"/>
+                                <BeginStoryboard Storyboard="{StaticResource enterHasText}" />
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource exitHasText}"/>
+                                <BeginStoryboard Storyboard="{StaticResource exitHasText}" />
                             </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -187,36 +286,60 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type TextBox}" x:Key="ButtonCommandMetroTextBox">
-        <Setter Property="Controls:TextboxHelper.IsMonitoring" Value="True"/>
-        <Setter Property="SelectionBrush" Value="{DynamicResource HighlightBrush}" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="MinHeight" Value="26" />
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
-        <Setter Property="Controls:TextboxHelper.ButtonTemplate" Value="{DynamicResource ChromelessButtonTemplate}" />
+    <Style TargetType="{x:Type TextBox}"
+           x:Key="ButtonCommandMetroTextBox">
+        <Setter Property="Controls:TextboxHelper.IsMonitoring"
+                Value="True" />
+        <Setter Property="SelectionBrush"
+                Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="MinHeight"
+                Value="26" />
+        <Setter Property="Background"
+                Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="Controls:TextboxHelper.ButtonTemplate"
+                Value="{DynamicResource ChromelessButtonTemplate}" />
         <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <ControlTemplate.Resources>
-                        <Storyboard x:Key="enterGotFocus" >
-                            <DoubleAnimation Duration="0:0:0.2" To=".2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
+                        <Storyboard x:Key="enterGotFocus">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             To=".2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
-                        <Storyboard x:Key="exitGotFocus" >
-                            <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
+                        <Storyboard x:Key="exitGotFocus">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
 
-                        <Storyboard x:Key="enterHasText" >
-                            <DoubleAnimation Duration="0:0:0.2" From=".2" To="0" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
+                        <Storyboard x:Key="enterHasText">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             From=".2"
+                                             To="0"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
-                        <Storyboard x:Key="exitHasText" >
-                            <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="Message"/>
+                        <Storyboard x:Key="exitHasText">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="Message" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
@@ -225,7 +348,8 @@
                                 <VisualState x:Name="Valid" />
                                 <VisualState x:Name="InvalidUnfocused">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ValidationErrorElement">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
+                                                                       Storyboard.TargetName="ValidationErrorElement">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Visible</Visibility>
@@ -236,14 +360,16 @@
                                 </VisualState>
                                 <VisualState x:Name="InvalidFocused">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ValidationErrorElement">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
+                                                                       Storyboard.TargetName="ValidationErrorElement">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <Visibility>Visible</Visibility>
                                                 </DiscreteObjectKeyFrame.Value>
                                             </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsOpen" Storyboard.TargetName="validationTooltip">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsOpen"
+                                                                       Storyboard.TargetName="validationTooltip">
                                             <DiscreteObjectKeyFrame KeyTime="0">
                                                 <DiscreteObjectKeyFrame.Value>
                                                     <System:Boolean>True</System:Boolean>
@@ -254,22 +380,47 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="Base" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" Opacity="1" Fill="{TemplateBinding Background}" />
-                        <Rectangle x:Name="FocusRectangle" StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" Opacity="0" Stroke="{DynamicResource BlackBrush}" />
+                        <Rectangle x:Name="Base"
+                                   Stroke="{TemplateBinding BorderBrush}"
+                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
+                                   Opacity="1"
+                                   Fill="{TemplateBinding Background}" />
+                        <Rectangle x:Name="FocusRectangle"
+                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
+                                   Opacity="0"
+                                   Stroke="{DynamicResource BlackBrush}" />
                         <Grid Margin="2">
-                            <Border x:Name="ReadOnlyVisualElement" Background="{x:Null}" Opacity="0" />
-                            <ScrollViewer x:Name="PART_ContentHost" BorderThickness="0" IsTabStop="False" Margin="2" VerticalAlignment="Stretch" Background="{x:Null}" />
-                            <TextBlock x:Name="Message" Text="{TemplateBinding Controls:TextboxHelper.Watermark}" Visibility="Collapsed"
-                                       Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Opacity="0.6"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border x:Name="ReadOnlyVisualElement"
+                                    Grid.ColumnSpan="2"
+                                    Background="{x:Null}"
+                                    Opacity="0" />
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Grid.Column="0"
+                                          BorderThickness="0"
+                                          IsTabStop="False"
+                                          Margin="2"
+                                          VerticalAlignment="Stretch"
+                                          Background="{x:Null}" />
+                            <TextBlock x:Name="Message"
+                                       Grid.Column="0"
+                                       Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                       Visibility="Collapsed"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       IsHitTestVisible="False"
+                                       Opacity="0.6"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
                             <Button x:Name="PART_ClearText"
+                                    Grid.Column="1"
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     FontSize="16"
                                     Foreground="{TemplateBinding Foreground}"
-                                    Width="20"
-                                    HorizontalAlignment="Right"
                                     FontFamily="Marlett"
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonContent), Mode=OneWay}"
                                     Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonTemplate), Mode=OneWay}"
@@ -281,7 +432,10 @@
                                    Fill="{DynamicResource ControlsDisabledBrush}"
                                    IsHitTestVisible="False"
                                    Opacity="0" />
-                        <Border x:Name="ValidationErrorElement" BorderBrush="{DynamicResource ControlsValidationBrush}" BorderThickness="1" Visibility="Collapsed">
+                        <Border x:Name="ValidationErrorElement"
+                                BorderBrush="{DynamicResource ControlsValidationBrush}"
+                                BorderThickness="1"
+                                Visibility="Collapsed">
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Name="validationTooltip"
                                          DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
@@ -305,36 +459,72 @@
                                     </ToolTip.Triggers>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
-                            <Grid Background="Transparent" HorizontalAlignment="Right" Height="12" Margin="1,-4,-4,0" VerticalAlignment="Top" Width="12">
-                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z" Fill="{DynamicResource ValidationBrush5}" Margin="1,3,0,0" />
-                                <Path Data="M 0,0 L2,0 L 8,6 L8,8" Fill="{DynamicResource WhiteColorBrush}" Margin="1,3,0,0" />
+                            <Grid Background="Transparent"
+                                  HorizontalAlignment="Right"
+                                  Height="12"
+                                  Margin="1,-4,-4,0"
+                                  VerticalAlignment="Top"
+                                  Width="12">
+                                <Path Data="M 1,0 L6,0 A 2,2 90 0 1 8,2 L8,7 z"
+                                      Fill="{DynamicResource ValidationBrush5}"
+                                      Margin="1,3,0,0" />
+                                <Path Data="M 0,0 L2,0 L 8,6 L8,8"
+                                      Fill="{DynamicResource WhiteColorBrush}"
+                                      Margin="1,3,0,0" />
                             </Grid>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}" Value="">
-                            <Setter TargetName="Message" Property="Visibility" Value="Visible" />
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
+                                     Value="">
+                            <Setter TargetName="Message"
+                                    Property="Visibility"
+                                    Value="Visible" />
                         </DataTrigger>
 
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="FocusRectangle" Property="Opacity" Value="1" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="DisabledVisualElement" Property="Opacity" Value="1" />
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="DisabledVisualElement"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
-                        <Trigger Property="IsReadOnly" Value="True">
-                            <Setter TargetName="ReadOnlyVisualElement" Property="Opacity" Value="1" />
+                        <Trigger Property="IsReadOnly"
+                                 Value="True">
+                            <Setter TargetName="ReadOnlyVisualElement"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="FocusRectangle" Property="Opacity" Value="1" />
+                        <Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
-                        <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource GrayBrush5}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
+                        <Trigger SourceName="PART_ClearText"
+                                 Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush8}" />
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
-                        <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
-                            <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource BlackBrush}" />
-                            <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                        <Trigger SourceName="PART_ClearText"
+                                 Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Background"
+                                    Value="{DynamicResource BlackBrush}" />
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Foreground"
+                                    Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -342,7 +532,9 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type TextBox}" x:Key="SearchMetroTextBox" BasedOn="{StaticResource ButtonCommandMetroTextBox}">
+    <Style TargetType="{x:Type TextBox}"
+           x:Key="SearchMetroTextBox"
+           BasedOn="{StaticResource ButtonCommandMetroTextBox}">
         <Setter Property="Controls:TextboxHelper.ButtonTemplate">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -366,14 +558,22 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="False">
-                            <Setter TargetName="contentPresenter" Property="Opacity" Value=".5" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="False">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Opacity"
+                                    Value=".5" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="#ADADAD" />
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="#ADADAD" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
