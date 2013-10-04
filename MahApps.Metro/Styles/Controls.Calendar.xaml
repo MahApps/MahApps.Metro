@@ -68,24 +68,6 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="DayStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0" />
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="RegularDay" />
-                                <VisualState x:Name="Today">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         To="1"
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="TodayBackground" />
-                                        <ColorAnimation Duration="0"
-                                                        To="{DynamicResource WhiteColor}"
-                                                        Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
-                                                        Storyboard.TargetName="NormalText" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
                             <VisualStateGroup x:Name="BlackoutDayStates">
                                 <VisualStateGroup.Transitions>
                                     <VisualTransition GeneratedDuration="0" />
@@ -168,6 +150,15 @@
                                     Property="Visibility"
                                     Value="Visible" />
                         </MultiTrigger>
+                        <Trigger Property="IsToday"
+                                 Value="True">
+                            <Setter TargetName="TodayBackground"
+                                    Property="Opacity"
+                                    Value="1" />
+                            <Setter TargetName="NormalText"
+                                    Property="TextElement.Foreground"
+                                    Value="{DynamicResource WhiteColorBrush}" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
