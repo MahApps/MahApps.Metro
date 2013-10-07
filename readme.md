@@ -16,7 +16,7 @@ If you've improved MahApps.Metro and think that other people would enjoy it, sub
 
 ### IRC chatroom
 
-Drop in on the IRC room - `#mametro` on [Freenode](http://freenode.net/) - if you want to ask a question.
+Drop in on the IRC room - `#mametro` on [Freenode](http://freenode.net/) - if you want to ask a question. If no one responds and you have to leave, please post your issue on the [issue tracker](https://github.com/MahApps/MahApps.Metro/issues).
 
 ### Bug Reports
 

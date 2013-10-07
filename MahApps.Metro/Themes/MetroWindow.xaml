@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours">
+                    xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <conv:ToUpperConverter x:Key="ToUpperConverter" />
@@ -33,13 +34,18 @@
                         <Grid.Background>
                             <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
                         </Grid.Background>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid x:Name="PART_TitleBar"
                                   Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" Background="{DynamicResource WindowTitleColorBrush}">
+                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" Background="{DynamicResource WindowTitleColorBrush}"
+                                  Grid.Column="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -58,20 +64,24 @@
                                     Margin="8 -1 0 0" 
                                     FontSize="16" 
                                     FontFamily="{DynamicResource HeaderFontFamily}"
-                                    Foreground="{TemplateBinding TitleForeground}"/>
+                                    Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"/>
                         </Grid>
                         <ContentPresenter 
                                 Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 
                                 x:Name="PART_WindowCommands"
                                 Panel.ZIndex="1"
-                                Grid.RowSpan="2"
+                                Grid.Column="1"
 								VerticalAlignment="Top"
                                 HorizontalAlignment="Right"
 								Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
-                        <ContentPresenter Grid.Row="1"/>
+                        <ContentPresenter Grid.Row="1"
+                                          Grid.Column="0"
+                                          Grid.ColumnSpan="2" />
 
                         <ContentControl
                                     Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
                                     Grid.RowSpan="2"
                                     Panel.ZIndex="2"
                                     KeyboardNavigation.TabNavigation="None"
@@ -127,7 +137,7 @@
                     <ControlTemplate.Resources>
                         <ResourceDictionary>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="#02FFFFFF" />
+                                <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
                                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                                 <Setter Property="VerticalContentAlignment" Value="Center" />
                                 <Setter Property="Padding" Value="1" />
@@ -177,7 +187,7 @@
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
                     
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Background="{DynamicResource WindowTitleColorBrush}">
                         <ItemsControl IsTabStop="False" ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>

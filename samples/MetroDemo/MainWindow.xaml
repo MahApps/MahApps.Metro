@@ -5,7 +5,7 @@
                       xmlns:MetroDemo="clr-namespace:MetroDemo"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      Title="MahApps.Metro.Demo"
+                      Title="MahApps.Metro - Demo Application"
                       Width="960"
                       Height="600"
                       Icon="mahapps.metro.logo2.ico"
@@ -63,11 +63,28 @@
                         <MenuItem Click="ThemeDark" Header="Dark" />
                     </MenuItem>
                     <MenuItem Header="Accent">
-                        <MenuItem Click="AccentBlue" Header="Blue" />
-                        <MenuItem Click="AccentRed" Header="Red" />
-                        <MenuItem Click="AccentGreen" Header="Green" />
-                        <MenuItem Click="AccentOrange" Header="Orange" />
-                        <MenuItem Click="AccentPurple" Header="Purple" />
+                        <MenuItem Click="ChangeAccent" Header="Blue" Background="#FF119EDA"/>
+                        <MenuItem Click="ChangeAccent" Header="Red" Background="#FFE51400"/>
+                        <MenuItem Click="ChangeAccent" Header="Green" Background="#FF60A917"/>
+                        <MenuItem Click="ChangeAccent" Header="Orange" Background="#FFFA6800"/>
+                        <MenuItem Click="ChangeAccent" Header="Purple" Background="#FFb400ff"/>
+                        <MenuItem Click="ChangeAccent" Header="Lime" Background="#FFA4C400"/>
+                        <MenuItem Click="ChangeAccent" Header="Emerald" Background="#FF008A00"/>
+                        <MenuItem Click="ChangeAccent" Header="Teal" Background="#FF00ABA9"/>
+                        <MenuItem Click="ChangeAccent" Header="Cyan" Background="#FF1BA1E2"/>
+                        <MenuItem Click="ChangeAccent" Header="Cobalt" Background="#FF0050EF"/>
+                        <MenuItem Click="ChangeAccent" Header="Indigo" Background="#FF6A00FF"/>
+                        <MenuItem Click="ChangeAccent" Header="Violet" Background="#FFAA00FF"/>
+                        <MenuItem Click="ChangeAccent" Header="Pink" Background="#FFF472D0"/>
+                        <MenuItem Click="ChangeAccent" Header="Magenta" Background="#FFD80073"/>
+                        <MenuItem Click="ChangeAccent" Header="Crimson" Background="#FFA20025"/>
+                        <MenuItem Click="ChangeAccent" Header="Amber" Background="#FFF0A30A"/>
+                        <MenuItem Click="ChangeAccent" Header="Yellow" Background="#FFE6C800"/>
+                        <MenuItem Click="ChangeAccent" Header="Brown" Background="#FF825A2C"/>
+                        <MenuItem Click="ChangeAccent" Header="Olive" Background="#FF6D8764"/>
+                        <MenuItem Click="ChangeAccent" Header="Steel" Background="#FF647687"/>
+                        <MenuItem Click="ChangeAccent" Header="Mauve" Background="#FF76608A"/>
+                        <MenuItem Click="ChangeAccent" Header="Sienna" Background="#FFA0522D"/>
                     </MenuItem>
                 </MenuItem>
             </Menu>
@@ -181,8 +198,22 @@
                         <StackPanel Grid.Row="1"
                                     Grid.Column="0"
                                     HorizontalAlignment="Center">
+                            <StackPanel.Resources>
+                                <Style x:Key="CustomMetroToggleSwitch"
+                                       TargetType="{x:Type Controls:ToggleSwitch}"
+                                       BasedOn="{StaticResource MetroToggleSwitch}">
+                                    <Setter Property="SwitchForeground"
+                                            Value="Red" />
+                                    <Setter Property="OnLabel"
+                                            Value="True" />
+                                    <Setter Property="OffLabel"
+                                            Value="False" />
+                                </Style>
+                            </StackPanel.Resources>
                             <Label Content="Toggle switch" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:ToggleSwitch IsChecked="True" />
+                            <Controls:ToggleSwitch IsChecked="True" Header="With Header" />
+                            <Controls:ToggleSwitch IsChecked="True" Header="right to left" ContentDirection="RightToLeft" />
+                            <Controls:ToggleSwitch Style="{StaticResource CustomMetroToggleSwitch}" IsChecked="True" />
                             <Controls:ToggleSwitch />
                             <Controls:ToggleSwitch IsChecked="True" IsEnabled="False" />
                             <Controls:ToggleSwitch IsEnabled="False" />
@@ -263,9 +294,21 @@
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      Text="Clear button" />
                             <TextBox Margin="0, 10, 0, 0"
+                                     FontSize="20"
+                                     Controls:TextboxHelper.ClearTextButton="True"
+                                     Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                     Controls:TextboxHelper.Watermark="Watermark"
+                                     Text="Big" />
+                            <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Search style"
                                      Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                                      Style="{DynamicResource SearchMetroTextBox}" />
+                            <TextBox Margin="0, 10, 0, 0"
+                                     FontSize="18"
+                                     Controls:TextboxHelper.Watermark="Search style"
+                                     Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                     Style="{DynamicResource SearchMetroTextBox}"
+                                     Text="Big search" />
                             <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Custom icon style"
                                      Controls:TextboxHelper.ButtonContent="s"
@@ -354,6 +397,12 @@
                             <DatePicker Width="150"
                                         HorizontalAlignment="Center"
                                         Controls:TextboxHelper.Watermark="Select a date" />
+                            <DatePicker Width="300"
+                                        Margin="2"
+                                        FontSize="24"
+                                        HorizontalAlignment="Center"
+                                        SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                        Controls:TextboxHelper.Watermark="Select a date" />
                         </StackPanel>
                         <StackPanel Grid.Row="1">
                             <TextBlock Text="disabled date picker"
@@ -383,8 +432,9 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="selection">
-                    <Grid>
+                    <Grid Margin="1">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
@@ -394,7 +444,7 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.RowSpan="2"
                                     Grid.Column="0"
-                                    Width="350">
+                                    Width="300">
                             <Label Content="List/GridView" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ListView Height="200"
                                       Margin="0, 10, 0, 0"
@@ -422,27 +472,107 @@
                                 </ListView.View>
                             </ListView>
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Width="150">
-                            <Label Content="ListBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <ListBox Grid.Row="0"
-                                     Grid.Column="1"
-                                     Margin="0, 10, 0, 0"
-                                     SelectedIndex="0">
-                                <ListBoxItem Content="Item 1" />
-                                <ListBoxItem Content="Item 2" />
-                                <ListBoxItem Content="Item 3" />
-                            </ListBox>
-                            <ListBox Grid.Row="0"
-                                     Grid.Column="1"
-                                     Margin="0, 10, 0, 0"
-                                     IsEnabled="False"
-                                     SelectedIndex="0">
-                                <ListBoxItem Content="Item 1" />
-                                <ListBoxItem Content="Item 2" />
-                                <ListBoxItem Content="Item 3" />
-                            </ListBox>
+                        <Grid Grid.Column="1" Grid.RowSpan="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            
+                            <Label Content="TreeView" Style="{StaticResource DescriptionHeaderStyle}" />
+                            
+                            <TreeView Grid.Row="1">
+                                <TreeViewItem Header="Item 1">
+                                    <TreeViewItem Header="Item 1.1">
+                                        <TreeViewItem Header="Item 1.1.1"/>
+                                        <TreeViewItem Header="Item 1.1.2"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Item 1.2"/>
+                                    <TreeViewItem Header="Item 1.3"/>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Item 22"/>
+                                <TreeViewItem Header="Item 3">
+                                    <TreeViewItem Header="Item 3.1">
+                                        <TreeViewItem Header="Item 3.1.1"/>
+                                        <TreeViewItem Header="Item 3.1.2"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Item 3.2"/>
+                                    <TreeViewItem Header="Item 3.3"/>
+                                </TreeViewItem>
+                            </TreeView>
+                            <TreeView IsEnabled="False" Grid.Row="2">
+                                <TreeViewItem Header="Item 1">
+                                    <TreeViewItem Header="Item 1.1">
+                                        <TreeViewItem Header="Item 1.1.1"/>
+                                        <TreeViewItem Header="Item 1.1.2"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Item 1.2" />
+                                    <TreeViewItem Header="Item 1.3"/>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Item 22"/>
+                                <TreeViewItem Header="Item 3" IsExpanded="True" IsSelected="True">
+                                    <TreeViewItem Header="Item 3.1" IsExpanded="True">
+                                        <TreeViewItem Header="Item 3.1.1" IsExpanded="True"/>
+                                        <TreeViewItem Header="Item 3.1.2"/>
+                                    </TreeViewItem>
+                                    <TreeViewItem Header="Item 3.2"/>
+                                    <TreeViewItem Header="Item 3.3"/>
+                                </TreeViewItem>
+                            </TreeView>
+                        </Grid>
+                        <StackPanel Grid.Column="2" Width="300">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.ColumnSpan="2"
+                                       Content="ListBox"
+                                       Style="{StaticResource DescriptionHeaderStyle}" />
+                                <ListBox Grid.Row="1"
+                                         Grid.Column="0"
+                                         Margin="1"
+                                         SelectedIndex="0">
+                                    <ListBoxItem Content="Item 1" />
+                                    <ListBoxItem Content="Item 2" />
+                                    <ListBoxItem Content="Item 3" />
+                                </ListBox>
+                                <ListBox Grid.Row="2"
+                                         Grid.Column="0"
+                                         Margin="1"
+                                         IsEnabled="False"
+                                         SelectedIndex="0">
+                                    <ListBoxItem Content="Item 1" />
+                                    <ListBoxItem Content="Item 2" />
+                                    <ListBoxItem Content="Item 3" />
+                                </ListBox>
+                                <ListBox Grid.Row="1"
+                                         Grid.Column="1"
+                                         BorderThickness="1"
+                                         Margin="1"
+                                         SelectedIndex="0">
+                                    <ListBoxItem Content="Item 1" />
+                                    <ListBoxItem Content="Item 2" />
+                                    <ListBoxItem Content="Item 3" />
+                                </ListBox>
+                                <ListBox Grid.Row="2"
+                                         Grid.Column="1"
+                                         BorderThickness="1"
+                                         Margin="1"
+                                         IsEnabled="False"
+                                         SelectedIndex="0">
+                                    <ListBoxItem Content="Item 1" />
+                                    <ListBoxItem Content="Item 2" />
+                                    <ListBoxItem Content="Item 3" />
+                                </ListBox>
+                            </Grid>
                         </StackPanel>
-                        <StackPanel Grid.Row="1" Grid.Column="1">
+                        <StackPanel Grid.Row="1" Grid.Column="2">
                             <Label Content="ComboBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <ComboBox Width="200"
                                       Margin="0, 10, 0, 0"
@@ -576,8 +706,17 @@
                             <Controls:ProgressIndicator Width="100"
                                                         Height="10"
                                                         Margin="0, 10, 0, 0"
-                                                        ProgressColour="DeepSkyBlue" />
+                                                        ProgressColour="{DynamicResource AccentColorBrush}" />
                         </StackPanel>
+                        <Grid Grid.Row="2" Grid.Column="2">
+                            <Label VerticalAlignment="top" HorizontalAlignment="Center" Content="Sliders TickPlacement" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Slider Style="{DynamicResource FlatSlider}" VerticalAlignment="top" HorizontalAlignment="Left" Width="132" Margin="122,39,0,0"  TickPlacement="Both" TickFrequency="25"/>
+                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Width="132" Margin="122,112,0,0"  TickPlacement="BottomRight" TickFrequency="25" Value="50"/>
+                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Width="132" Margin="122,207,0,0"  TickPlacement="TopLeft" TickFrequency="25" Value="50"/>
+                            <Slider Style="{DynamicResource FlatSlider}" VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="10,44,0,0"  TickPlacement="Both" TickFrequency="25" Value="50" Orientation="Vertical"/>
+                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="40,126,0,0"  TickPlacement="BottomRight" TickFrequency="25" Value="50" Orientation="Vertical"/>
+                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="70,44,0,0"  TickPlacement="TopLeft" TickFrequency="25" Value="50" Orientation="Vertical"/>
+                        </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="tabcontrol">
