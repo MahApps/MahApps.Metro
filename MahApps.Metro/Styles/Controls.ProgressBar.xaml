@@ -58,7 +58,7 @@
                                            Opacity="1"
                                            RenderTransformOrigin="0.5,0.5"
                                            StrokeThickness="0"
-                                           Fill="{DynamicResource BrandingBrush}" />
+                                           Fill="{DynamicResource ProgressBrush}" />
                                 <Rectangle x:Name="IndeterminateGradientFill"
                                            Margin="{TemplateBinding BorderThickness}"
                                            Opacity="0.7"
@@ -89,7 +89,7 @@
                             <Grid x:Name="DeterminateRoot"
                                   Margin="1">
                                 <Border x:Name="PART_Indicator"
-                                        Background="{DynamicResource BrandingBrush}"
+                                        Background="{DynamicResource ProgressBrush}"
                                         HorizontalAlignment="Left"
                                         Margin="-1">
                                     <Rectangle x:Name="GradientFill"
@@ -120,7 +120,6 @@
                                 </Border>
                             </Grid>
                         </Grid>
-
                     </Grid>
 
                     <ControlTemplate.Triggers>
