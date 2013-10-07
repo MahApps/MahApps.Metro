@@ -4,18 +4,23 @@
     <!--Tooltip Style-->
     <Style x:Key="MetroToolTip" TargetType="ToolTip">
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Padding" Value="3,1,3,1" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource ItemSelectedBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToolTip">
-                    <Border x:Name="Root"
+                    <Border x:Name="Root" BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{DynamicResource BlackBrush}"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}" 
                             Effect="{DynamicResource DropShadowBrush}"
                             Opacity="0">
+                        <Border.Resources>
+                            <Storyboard x:Key="Visible State" />
+                            <Storyboard x:Key="Normal State" />
+                        </Border.Resources>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>
@@ -37,19 +42,10 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border Padding="{TemplateBinding Padding}">
-                            <Border.Resources>
-                                <Storyboard x:Key="Visible State" />
-                                <Storyboard x:Key="Normal State" />
-                            </Border.Resources>
-                            <Border.Background>
-                                <DynamicResource ResourceKey="BlackBrush" />
-                            </Border.Background>
-                            <ContentPresenter Cursor="{TemplateBinding Cursor}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Content="{TemplateBinding Content}"
-                                              Margin="{TemplateBinding Padding}" />
-                        </Border>
+                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}" Cursor="{TemplateBinding Cursor}"
+                                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                                            Content="{TemplateBinding Content}"
+                                            Margin="{TemplateBinding Padding}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
