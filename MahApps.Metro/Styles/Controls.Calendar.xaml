@@ -61,10 +61,11 @@
                                 <VisualState x:Name="Active" />
                                 <VisualState x:Name="Inactive">
                                     <Storyboard>
-                                        <ColorAnimation Duration="0"
-                                                        To="{DynamicResource Gray2}"
-                                                        Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
-                                                        Storyboard.TargetName="NormalText" />
+                                        <ObjectAnimationUsingKeyFrames Duration="0"
+                                                                       Storyboard.TargetName="NormalText"
+                                                                       Storyboard.TargetProperty="(TextElement.Foreground)">
+                                            <DiscreteObjectKeyFrame Value="{DynamicResource GrayBrush2}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -119,11 +120,8 @@
                               Opacity="0"
                               RenderTransformOrigin="0.5,0.5"
                               Stretch="Fill"
-                              VerticalAlignment="Stretch">
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource WhiteColor}" />
-                            </Path.Fill>
-                        </Path>
+                              VerticalAlignment="Stretch"
+                              Fill="{DynamicResource WhiteColorBrush}" />
                         <Rectangle x:Name="DayButtonFocusVisual"
                                    IsHitTestVisible="false"
                                    Visibility="Collapsed">
@@ -141,11 +139,8 @@
                                            Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="NormalText"
-                                    Property="TextElement.Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource HighlightDarkColor}" Opacity="0.8" />
-                                </Setter.Value>
-                            </Setter>
+                                    Property="TextElement.Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
                             <Setter TargetName="DayButtonFocusVisual"
                                     Property="Visibility"
                                     Value="Visible" />
@@ -157,7 +152,7 @@
                                     Value="1" />
                             <Setter TargetName="NormalText"
                                     Property="TextElement.Foreground"
-                                    Value="{DynamicResource WhiteColorBrush}" />
+                                    Value="{DynamicResource AccentSelectedColorBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -175,17 +170,15 @@
                     <ControlTemplate.Resources>
                         <!-- Used for day names-->
                         <DataTemplate x:Key="{x:Static CalendarItem.DayTitleTemplateResourceKey}">
-                            <TextBlock FontWeight="Bold"
+                            <TextBlock Text="{Binding}"
+                                       FontWeight="Bold"
                                        FontFamily="{DynamicResource ContentFontFamily}"
                                        FontSize="{DynamicResource ContentFontSize}"
                                        HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
                                        Margin="0,6,0,6"
-                                       Text="{Binding}"
-                                       VerticalAlignment="Center">
-                                <TextBlock.Foreground>
-                                    <SolidColorBrush Color="{DynamicResource Gray3}" />
-                                </TextBlock.Foreground>
-                            </TextBlock>
+                                       Foreground="{DynamicResource BlackColorBrush}"
+                                       Opacity="0.8" />
                         </DataTemplate>
                     </ControlTemplate.Resources>
                     <Grid x:Name="PART_Root">
@@ -325,16 +318,23 @@
                                                                   Opacity="0.7"
                                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                                   Content="{TemplateBinding Content}"
-                                                                  TextElement.FontFamily="{DynamicResource ContentFontFamily}"
-                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                   Margin="1,4,1,9"
-                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                                    <TextElement.Foreground>
-                                                        <SolidColorBrush Color="{DynamicResource WhiteColor}" />
-                                                    </TextElement.Foreground>
-                                                </ContentPresenter>
+                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                  TextElement.FontFamily="{DynamicResource ContentFontFamily}"
+                                                                  TextElement.Foreground="{DynamicResource AccentSelectedColorBrush}" />
                                             </Grid>
                                         </ControlTemplate>
+
+                                        <Style x:Key="PreviousCalendarButtonStyle" TargetType="{x:Type Button}">
+                                            <Setter Property="Template" Value="{StaticResource PreviousButtonTemplate}" />
+                                        </Style>
+                                        <Style x:Key="NextCalendarButtonStyle" TargetType="{x:Type Button}">
+                                            <Setter Property="Template" Value="{StaticResource NextButtonTemplate}" />
+                                        </Style>
+                                        <Style x:Key="HeaderCalendarButtonStyle" TargetType="{x:Type Button}">
+                                            <Setter Property="Template" Value="{StaticResource HeaderButtonTemplate}" />
+                                        </Style>
                                     </Grid.Resources>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" />
@@ -354,22 +354,22 @@
                                                 FontSize="{DynamicResource ContentFontSize}"
                                                 HorizontalAlignment="Center"
                                                 Grid.Row="0"
-                                                Template="{StaticResource HeaderButtonTemplate}"
+                                                Style="{StaticResource HeaderCalendarButtonStyle}"
                                                 VerticalAlignment="Center" />
                                         <Button x:Name="PART_PreviousButton"
                                                 Focusable="False"
                                                 HorizontalAlignment="Left"
                                                 Height="20"
+                                                Width="28"
                                                 Grid.Row="0"
-                                                Template="{StaticResource PreviousButtonTemplate}"
-                                                Width="28" />
+                                                Style="{StaticResource PreviousCalendarButtonStyle}" />
                                         <Button x:Name="PART_NextButton"
                                                 Focusable="False"
                                                 HorizontalAlignment="Right"
                                                 Height="20"
+                                                Width="28"
                                                 Grid.Row="0"
-                                                Template="{StaticResource NextButtonTemplate}"
-                                                Width="28" />
+                                                Style="{StaticResource NextCalendarButtonStyle}" />
                                     </Grid>
                                     <Grid x:Name="PART_MonthView"
                                           HorizontalAlignment="Stretch"
@@ -432,8 +432,9 @@
                                     TargetName="PART_DisabledVisual"
                                     Value="Visible" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}"
-                                     Value="Year">
+                        <DataTrigger
+                            Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}"
+                            Value="Year">
                             <Setter Property="Visibility"
                                     TargetName="PART_MonthView"
                                     Value="Hidden" />
@@ -441,8 +442,9 @@
                                     TargetName="PART_YearView"
                                     Value="Visible" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}"
-                                     Value="Decade">
+                        <DataTrigger
+                            Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}"
+                            Value="Decade">
                             <Setter Property="Visibility"
                                     TargetName="PART_MonthView"
                                     Value="Hidden" />
@@ -523,10 +525,12 @@
                                 <VisualState x:Name="Active" />
                                 <VisualState x:Name="Inactive">
                                     <Storyboard>
-                                        <ColorAnimation Duration="0"
-                                                        To="{DynamicResource Gray2}"
-                                                        Storyboard.TargetProperty="(TextElement.Foreground).(SolidColorBrush.Color)"
-                                                        Storyboard.TargetName="NormalText" />
+
+                                        <ObjectAnimationUsingKeyFrames Duration="0"
+                                                                       Storyboard.TargetName="NormalText"
+                                                                       Storyboard.TargetProperty="(TextElement.Foreground)">
+                                            <DiscreteObjectKeyFrame Value="{DynamicResource GrayBrush2}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -571,11 +575,8 @@
                         <ContentPresenter x:Name="NormalText"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="1,0,1,1"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <TextElement.Foreground>
-                                <SolidColorBrush Color="{DynamicResource Gray3}" />
-                            </TextElement.Foreground>
-                        </ContentPresenter>
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          TextElement.Foreground="{DynamicResource GrayBrush3}" />
                         <Rectangle x:Name="CalendarButtonFocusVisual"
                                    IsHitTestVisible="false"
                                    Visibility="Collapsed">
@@ -619,10 +620,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Calendar}">
                     <StackPanel x:Name="PART_Root"
-                                HorizontalAlignment="Center">
-                        <StackPanel.Background>
-                            <SolidColorBrush Color="{DynamicResource WhiteColor}" />
-                        </StackPanel.Background>
+                                HorizontalAlignment="Center"
+                                Background="{DynamicResource WhiteColorBrush}">
                         <CalendarItem x:Name="PART_CalendarItem"
                                       BorderBrush="{TemplateBinding BorderBrush}"
                                       BorderThickness="{TemplateBinding BorderThickness}"
@@ -633,5 +632,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>
