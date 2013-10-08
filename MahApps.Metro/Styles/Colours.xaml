@@ -91,7 +91,7 @@
     <!--<SolidColorBrush x:Key="PageBorderBrush" Color="#FFB2B2B2" />-->
     <!--<SolidColorBrush x:Key="BodyTextColorBrush" Color="#FF313131"/>-->
     <SolidColorBrush x:Key="ControlsDisabledBrush" Color="{DynamicResource TransparentLightLightColor}"/>
-    <SolidColorBrush x:Key="DisabledWhiteColorBrush" Color="{DynamicResource WhiteColor}" />   
+    <SolidColorBrush x:Key="DisabledWhiteBrush" Color="{DynamicResource WhiteColor}" />   
     <SolidColorBrush x:Key="TransparentWhiteBrush" Color="{DynamicResource TransparentWhiteColor}"/>
     <SolidColorBrush x:Key="SemiTransparentWhiteBrush" Color="{DynamicResource SemiTransparentWhiteColor}"/>
 

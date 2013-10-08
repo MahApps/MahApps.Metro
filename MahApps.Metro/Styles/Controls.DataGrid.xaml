@@ -97,7 +97,7 @@
         <Setter Property="MinHeight"
                 Value="25" />
         <Setter Property="Foreground"
-                Value="{DynamicResource BlackColorBrush}" />
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Cursor"
                 Value="Hand" />
         <Setter Property="HorizontalContentAlignment"
@@ -163,7 +163,7 @@
                                  Value="{x:Null}">
                             <Setter TargetName="BackgroundBorder"
                                     Property="Background"
-                                    Value="{DynamicResource WhiteColorBrush}" />
+                                    Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -359,7 +359,7 @@
         <Setter Property="GridLinesVisibility"
                 Value="None" />
         <Setter Property="Background"
-                Value="{DynamicResource WhiteColorBrush}" />
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness"

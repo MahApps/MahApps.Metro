@@ -60,7 +60,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions> 
             <TickBar x:Name="TopTick" Style="{StaticResource SliderTickBarStyle}" Placement="Top" />
-            <Track Grid.Row="1" Name="PART_Track">
+            <Track Grid.Row="1" x:Name="PART_Track">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge" Background="{TemplateBinding Slider.Foreground}" />
                 </Track.DecreaseRepeatButton>
@@ -95,7 +95,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TickBar x:Name="TopTick"  Style="{StaticResource SliderTickBarStyle}" Placement="Left" />
-            <Track Grid.Column="1" Name="PART_Track">
+            <Track Grid.Column="1" x:Name="PART_Track">
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}" Command="Slider.DecreaseLarge" Background="{TemplateBinding Slider.Foreground}"/>
                 </Track.DecreaseRepeatButton>
@@ -131,11 +131,7 @@
         <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Background" Value="{DynamicResource SliderTrackNormal}" />
-        <Setter Property="BorderBrush">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource SliderValueDisabled}" />

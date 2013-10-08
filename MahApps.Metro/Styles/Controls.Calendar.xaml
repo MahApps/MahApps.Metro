@@ -105,11 +105,8 @@
                         <ContentPresenter x:Name="NormalText"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="5,1,5,1"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <TextElement.Foreground>
-                                <SolidColorBrush Color="{DynamicResource Gray3}" />
-                            </TextElement.Foreground>
-                        </ContentPresenter>
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          TextElement.Foreground="{DynamicResource GrayBrush3}" />
                         <Path x:Name="Blackout"
                               Data="M8.1772461,11.029181 L10.433105,11.029181 L11.700684,12.801641 L12.973633,11.029181 L15.191895,11.029181 L12.844727,13.999395 L15.21875,17.060919 L12.962891,17.060919 L11.673828,15.256231 L10.352539,17.060919 L8.1396484,17.060919 L10.519043,14.042364 z"
                               HorizontalAlignment="Stretch"
@@ -118,7 +115,7 @@
                               RenderTransformOrigin="0.5,0.5"
                               Stretch="Fill"
                               VerticalAlignment="Stretch"
-                              Fill="{DynamicResource WhiteColorBrush}" />
+                              Fill="{DynamicResource WhiteBrush}" />
                         <Rectangle x:Name="DayButtonFocusVisual"
                                    IsHitTestVisible="false"
                                    Visibility="Collapsed"
@@ -171,7 +168,7 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Margin="0,6,0,6"
-                                       Foreground="{DynamicResource BlackColorBrush}"
+                                       Foreground="{DynamicResource BlackBrush}"
                                        Opacity="0.8" />
                         </DataTemplate>
                     </ControlTemplate.Resources>
@@ -609,7 +606,7 @@
                 <ControlTemplate TargetType="{x:Type Calendar}">
                     <StackPanel x:Name="PART_Root"
                                 HorizontalAlignment="Center"
-                                Background="{DynamicResource WhiteColorBrush}">
+                                Background="{DynamicResource WhiteBrush}">
                         <CalendarItem x:Name="PART_CalendarItem"
                                       BorderBrush="{TemplateBinding BorderBrush}"
                                       BorderThickness="{TemplateBinding BorderThickness}"

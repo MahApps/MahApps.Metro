@@ -54,11 +54,8 @@
                         <Path Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
                               Height="6"
                               Stretch="Uniform"
-                              Width="4">
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource Gray3}" />
-                            </Path.Fill>
-                        </Path>
+                              Width="4"
+                              Fill="{DynamicResource GrayBrush3}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
                               Height="6"
@@ -66,11 +63,8 @@
                               Width="4"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,1,0,0">
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                            </Path.Fill>
-                        </Path>
+                              Margin="1,1,0,0"
+                              Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
                               Height="6"
@@ -78,16 +72,14 @@
                               Width="4"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,1,0,0">
+                              Margin="1,1,0,0"
+                              Fill="{DynamicResource BlackBrush}">
                             <Path.Effect>
                                 <BlurEffect />
                             </Path.Effect>
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                            </Path.Fill>
                         </Path>
                         <Rectangle x:Name="DisabledElement"
-                                   Fill="{DynamicResource WhiteColorBrush}"
+                                   Fill="{DynamicResource WhiteBrush}"
                                    Opacity="0"
                                    RadiusY="2"
                                    RadiusX="2" />
@@ -129,11 +121,10 @@
                         <Path Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
                               Height="6"
                               Stretch="Uniform"
-                              Width="4">
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource Gray3}" />
-                            </Path.Fill>
-                        </Path>
+                              Width="4"
+                              Fill="{DynamicResource GrayBrush3}"/>
+                            
+                        
                         <Path x:Name="HoverPath"
                               Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
                               Height="6"
@@ -141,11 +132,8 @@
                               Width="4"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="0,1,0,0">
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                            </Path.Fill>
-                        </Path>
+                              Margin="0,1,0,0"
+                              Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
                               Height="6"
@@ -153,16 +141,14 @@
                               Width="4"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="0,1,0,0">
+                              Margin="0,1,0,0"
+                              Fill="{DynamicResource BlackBrush}">
                             <Path.Effect>
                                 <BlurEffect />
                             </Path.Effect>
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                            </Path.Fill>
                         </Path>
                         <Rectangle x:Name="DisabledElement"
-                                   Fill="{DynamicResource WhiteColorBrush}"
+                                   Fill="{DynamicResource WhiteBrush}"
                                    Opacity="0"
                                    RadiusY="2"
                                    RadiusX="2" />
@@ -246,11 +232,8 @@
                         Grid.RowSpan="1"
                         Margin="0,0,0,-1"
                         Grid.ColumnSpan="5"
-                        Visibility="Collapsed">
-                    <Border.BorderBrush>
-                        <SolidColorBrush Color="{DynamicResource Gray4}" />
-                    </Border.BorderBrush>
-                </Border>
+                        Visibility="Collapsed"
+                        BorderBrush="{DynamicResource GrayBrush4}" />
                 <RepeatButton x:Name="HorizontalSmallDecrease"
                               Command="ScrollBar.LineLeftCommand"
                               Width="16"
@@ -350,12 +333,8 @@
                         <Path Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
                               Height="4"
                               Stretch="Uniform"
-                              Width="6">
-                            <Path.Fill>
-                                <SolidColorBrush x:Name="ButtonColor"
-                                                 Color="{DynamicResource Gray3}" />
-                            </Path.Fill>
-                        </Path>
+                              Width="6"
+                              Fill="{DynamicResource GrayBrush3}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
                               Height="4"
@@ -363,11 +342,8 @@
                               Width="6"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0">
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                            </Path.Fill>
-                        </Path>
+                              Margin="1,0,0,0"
+                              Fill="{DynamicResource BlackBrush}"/>
                         <Path x:Name="Blur"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
                               Height="4"
@@ -375,16 +351,14 @@
                               Width="6"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0">
+                              Margin="1,0,0,0"
+                              Fill="{DynamicResource BlackBrush}">
                             <Path.Effect>
                                 <BlurEffect />
                             </Path.Effect>
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                            </Path.Fill>
                         </Path>
                         <Rectangle x:Name="DisabledElement"
-                                   Fill="{DynamicResource WhiteColorBrush}"
+                                   Fill="{DynamicResource WhiteBrush}"
                                    Opacity="0"
                                    RadiusY="2"
                                    RadiusX="2" />
@@ -427,11 +401,8 @@
                         <Path Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
                               Height="4"
                               Stretch="Uniform"
-                              Width="6">
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource Gray3}" />
-                            </Path.Fill>
-                        </Path>
+                              Width="6"
+                              Fill="{DynamicResource GrayBrush3}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
                               Height="4"
@@ -439,11 +410,8 @@
                               Width="6"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0">
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                            </Path.Fill>
-                        </Path>
+                              Margin="1,0,0,0"
+                              Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
                               Height="4"
@@ -451,16 +419,14 @@
                               Width="6"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0">
+                              Margin="1,0,0,0"
+                              Fill="{DynamicResource BlackBrush}">
                             <Path.Effect>
                                 <BlurEffect />
                             </Path.Effect>
-                            <Path.Fill>
-                                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                            </Path.Fill>
                         </Path>
                         <Rectangle x:Name="DisabledElement"
-                                   Fill="{DynamicResource WhiteColorBrush}"
+                                   Fill="{DynamicResource WhiteBrush}"
                                    Opacity="0"
                                    RadiusY="2"
                                    RadiusX="2" />
@@ -544,11 +510,8 @@
                 <Border BorderThickness="0,0,1,0"
                         Margin="0,0,-1,0"
                         Grid.RowSpan="5"
-                        Visibility="Collapsed">
-                    <Border.BorderBrush>
-                        <SolidColorBrush Color="{DynamicResource Gray4}" />
-                    </Border.BorderBrush>
-                </Border>
+                        Visibility="Collapsed"
+                        BorderBrush="{DynamicResource GrayBrush4}" />
                 <RepeatButton x:Name="VerticalSmallDecrease"
                               Command="ScrollBar.LineUpCommand"
                               Height="16"

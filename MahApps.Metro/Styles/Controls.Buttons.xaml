@@ -422,7 +422,7 @@
                         <Border x:Name="Background"
                                 BorderBrush="{DynamicResource BlackBrush}"
                                 BorderThickness="2"
-                                Background="{DynamicResource WhiteColorBrush}" />
+                                Background="{DynamicResource WhiteBrush}" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
                                    IsHitTestVisible="false"
@@ -448,7 +448,7 @@
                         <Trigger Property="IsPressed"
                                  Value="true">
                             <Setter Property="Foreground"
-                                    Value="{DynamicResource WhiteColorBrush}" />
+                                    Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -647,7 +647,7 @@
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="3" />
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource WhiteColorBrush}"
+                                   Fill="{DynamicResource WhiteBrush}"
                                    IsHitTestVisible="false"
                                    Opacity="0"
                                    RadiusY="3"

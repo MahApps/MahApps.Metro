@@ -13,7 +13,7 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
-                Value="{DynamicResource WhiteColorBrush}" />
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderThickness"
                 Value="0 1 0 0" />
         <Setter Property="ScrollViewer.CanContentScroll"
@@ -35,7 +35,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListView">
-                    <Border Name="Border"
+                    <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
@@ -52,11 +52,8 @@
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter TargetName="Border"
-                                    Property="BorderBrush">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray13}" />
-                                </Setter.Value>
-                            </Setter>
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource GrayBrush13}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -90,7 +87,7 @@
         <Setter Property="Margin"
                 Value="0,0,0,0" />
         <Setter Property="Border.BorderBrush"
-                Value="{DynamicResource Gray3}" />
+                Value="{DynamicResource GrayBrush3}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -212,7 +209,7 @@
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="Border.BorderBrush"
-                Value="{DynamicResource Gray3}" />
+                Value="{DynamicResource GrayBrush3}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">

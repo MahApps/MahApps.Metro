@@ -6,7 +6,7 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
-                Value="{DynamicResource WhiteColorBrush}" />
+                Value="{DynamicResource WhiteBrush}" />
         <!-- default to 0 -->
         <Setter Property="BorderThickness"
                 Value="0" />
