@@ -33,11 +33,8 @@
                         <Trigger Property="IsPressed"
                                  Value="True">
                             <Setter Property="Fill"
-                                    TargetName="Border">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                </Setter.Value>
-                            </Setter>
+                                    TargetName="Border"
+                                    Value="{DynamicResource AccentColorBrush2}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
@@ -265,11 +262,8 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -324,11 +318,8 @@
             </Trigger>
             <Trigger Property="IsMouseOver"
                      Value="True">
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush3}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -338,11 +329,8 @@
                                Value="True" />
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Background"
+                            Value="{DynamicResource AccentColorBrush2}" />
                 </MultiTrigger.Setters>
             </MultiTrigger>
             <Trigger Property="IsEnabled"
@@ -537,11 +525,8 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Column.DisplayIndex}"
                          Value="0">
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource AccentColor4}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush4}" />
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -550,11 +535,8 @@
                     <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsSelected}"
                                Value="True" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush2}" />
             </MultiDataTrigger>
         </Style.Triggers>
     </Style>
