@@ -100,11 +100,8 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}" />
                         <Rectangle x:Name="HighlightBackground"
-                                   Opacity="0">
-                            <Rectangle.Fill>
-                                <SolidColorBrush Color="{DynamicResource AccentColor4}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
+                                   Opacity="0"
+                                   Fill="{DynamicResource AccentColorBrush4}" />
                         <ContentPresenter x:Name="NormalText"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="5,1,5,1"
@@ -124,11 +121,8 @@
                               Fill="{DynamicResource WhiteColorBrush}" />
                         <Rectangle x:Name="DayButtonFocusVisual"
                                    IsHitTestVisible="false"
-                                   Visibility="Collapsed">
-                            <Rectangle.Stroke>
-                                <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                            </Rectangle.Stroke>
-                        </Rectangle>
+                                   Visibility="Collapsed"
+                                   Stroke="{DynamicResource AccentColorBrush3}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -460,11 +454,8 @@
 
     <Style x:Key="MetroCalendarButtonStyle"
            TargetType="{x:Type CalendarButton}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource AccentColor4}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background"
+                Value="{DynamicResource AccentColorBrush4}" />
         <Setter Property="MinWidth"
                 Value="40" />
         <Setter Property="MinHeight"
@@ -579,11 +570,8 @@
                                           TextElement.Foreground="{DynamicResource GrayBrush3}" />
                         <Rectangle x:Name="CalendarButtonFocusVisual"
                                    IsHitTestVisible="false"
-                                   Visibility="Collapsed">
-                            <Rectangle.Stroke>
-                                <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                            </Rectangle.Stroke>
-                        </Rectangle>
+                                   Visibility="Collapsed"
+                                   Stroke ="{DynamicResource AccentColorBrush3}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused"

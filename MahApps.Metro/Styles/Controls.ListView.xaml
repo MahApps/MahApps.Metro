@@ -158,11 +158,8 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="Bd"
-                                    Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                </Setter.Value>
-                            </Setter>
+                                    Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -172,11 +169,8 @@
                                            Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter Property="Background"
-                                    TargetName="Bd">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                </Setter.Value>
-                            </Setter>
+                                    TargetName="Bd"
+                                    Value="{DynamicResource AccentColorBrush2}" />
                             <Setter Property="BorderBrush"
                                     TargetName="Bd"
                                     Value="#FF143c65" />

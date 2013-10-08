@@ -143,11 +143,8 @@
                 <Setter Property="BorderBrush" Value="{DynamicResource SliderThumbDisabled}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Foreground"
+                        Value="{DynamicResource AccentColorBrush2}" />
                 <Setter Property="Background" Value="{DynamicResource SliderTrackHover}" />
             </Trigger>
             <Trigger Property="Orientation" Value="Horizontal">
