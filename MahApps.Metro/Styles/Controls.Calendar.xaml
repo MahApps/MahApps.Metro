@@ -326,14 +326,20 @@
                                             </Grid>
                                         </ControlTemplate>
 
-                                        <Style x:Key="PreviousCalendarButtonStyle" TargetType="{x:Type Button}">
-                                            <Setter Property="Template" Value="{StaticResource PreviousButtonTemplate}" />
+                                        <Style x:Key="PreviousCalendarButtonStyle"
+                                               TargetType="{x:Type Button}">
+                                            <Setter Property="Template"
+                                                    Value="{StaticResource PreviousButtonTemplate}" />
                                         </Style>
-                                        <Style x:Key="NextCalendarButtonStyle" TargetType="{x:Type Button}">
-                                            <Setter Property="Template" Value="{StaticResource NextButtonTemplate}" />
+                                        <Style x:Key="NextCalendarButtonStyle"
+                                               TargetType="{x:Type Button}">
+                                            <Setter Property="Template"
+                                                    Value="{StaticResource NextButtonTemplate}" />
                                         </Style>
-                                        <Style x:Key="HeaderCalendarButtonStyle" TargetType="{x:Type Button}">
-                                            <Setter Property="Template" Value="{StaticResource HeaderButtonTemplate}" />
+                                        <Style x:Key="HeaderCalendarButtonStyle"
+                                               TargetType="{x:Type Button}">
+                                            <Setter Property="Template"
+                                                    Value="{StaticResource HeaderButtonTemplate}" />
                                         </Style>
                                     </Grid.Resources>
                                     <Grid.ColumnDefinitions>
@@ -432,9 +438,8 @@
                                     TargetName="PART_DisabledVisual"
                                     Value="Visible" />
                         </Trigger>
-                        <DataTrigger
-                            Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}"
-                            Value="Year">
+                        <DataTrigger Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}"
+                                     Value="Year">
                             <Setter Property="Visibility"
                                     TargetName="PART_MonthView"
                                     Value="Hidden" />
@@ -442,9 +447,8 @@
                                     TargetName="PART_YearView"
                                     Value="Visible" />
                         </DataTrigger>
-                        <DataTrigger
-                            Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}"
-                            Value="Decade">
+                        <DataTrigger Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}"
+                                     Value="Decade">
                             <Setter Property="Visibility"
                                     TargetName="PART_MonthView"
                                     Value="Hidden" />
