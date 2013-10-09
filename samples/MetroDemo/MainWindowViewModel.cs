@@ -36,6 +36,38 @@ namespace MetroDemo
 
             Busy = false;
         }
+        private bool _toggleTest;
+        public bool ToggleTest
+        {
+            get
+            {
+                return _toggleTest;
+            }
+            set
+            {
+                //otherwise we wouldn't see the error
+                //if (_toggleTest == value)
+                //    return;
+                _toggleTest = value;
+                RaisePropertyChanged("ToggleTest");
+                NumberSet++;
+            }
+        }
+        private int _nubmerSet;
+        public int NumberSet
+        {
+            get
+            {
+                return _nubmerSet;
+            }
+            set
+            {
+                if (_nubmerSet == value)
+                    return;
+                _nubmerSet = value;
+                RaisePropertyChanged("NumberSet");
+            }
+        }
 
         public ObservableCollection<PanoramaGroup> Groups { get; set; }
         public bool Busy { get; set; }
