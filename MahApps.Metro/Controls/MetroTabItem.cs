@@ -14,6 +14,15 @@ namespace MahApps.Metro.Controls
             this.Unloaded += MetroTabItem_Unloaded;
             this.Loaded += MetroTabItem_Loaded;
         }
+        
+         public MetroTabItem(BaseMetroTabControl OwningTabControl)
+        {
+            DefaultStyleKey = typeof(MetroTabItem);
+            this.Unloaded += MetroTabItem_Unloaded;
+            this.Loaded += MetroTabItem_Loaded;
+            this.OwningTabControl = OwningTabControl;
+        }
+
 
         void MetroTabItem_Loaded(object sender, RoutedEventArgs e)
         {
