@@ -211,11 +211,7 @@
                                 </Style>
                             </StackPanel.Resources>
                             <Label Content="Toggle switch" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <TextBlock>
-                                <Run Text="ToggleSwitch IsChecked count:"/>
-                                <Run Text="{Binding Path=NumberSet}"/>
-                            </TextBlock>
-                            <Controls:ToggleSwitch IsChecked="{Binding Path=ToggleTest}" Header="Toggle This to see bug." />
+                            <Controls:ToggleSwitch IsChecked="True" Header="With Header" />
                             <Controls:ToggleSwitch IsChecked="True" Header="right to left" ContentDirection="RightToLeft" />
                             <Controls:ToggleSwitch Style="{StaticResource CustomMetroToggleSwitch}" IsChecked="True" />
                             <Controls:ToggleSwitch />
