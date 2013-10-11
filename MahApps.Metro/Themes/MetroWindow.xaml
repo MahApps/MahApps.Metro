@@ -46,11 +46,17 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
+                        <Rectangle Fill="{DynamicResource WindowTitleColorBrush}"
+                                   Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                   Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   StrokeThickness="0" />
+
                         <!-- the title bar -->
                         <Grid x:Name="PART_TitleBar"
                               Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-                              Background="{DynamicResource WindowTitleColorBrush}"
                               Grid.Column="0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto" />
@@ -63,7 +69,6 @@
                             <TextBlock x:Name="WindowTitleTextBlock"
                                        Grid.Column="1"
                                        Text="{TemplateBinding Title}"
-                                       HorizontalAlignment="Left"
                                        TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"
                                        Margin="8 -1 0 0"
@@ -71,7 +76,7 @@
                                        FontFamily="{DynamicResource HeaderFontFamily}"
                                        Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                         </Grid>
-
+                        
                         <!-- the window commands -->
                         <ContentPresenter Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                           x:Name="PART_WindowCommands"
@@ -155,8 +160,6 @@
     <Style TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Background"
-                Value="{DynamicResource WindowTitleColorBrush}" />
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="VerticalAlignment"
@@ -233,8 +236,7 @@
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
 
-                    <StackPanel Orientation="Horizontal"
-                                Background="{TemplateBinding Background}">
+                    <StackPanel Orientation="Horizontal">
                         <ItemsControl IsTabStop="False"
                                       ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                             <ItemsControl.ItemsPanel>
