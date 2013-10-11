@@ -3,6 +3,7 @@
 
     <Color x:Key="BlackColor">#FFFFFFFF</Color>
     <Color x:Key="WhiteColor">#FF252525</Color>
+    <Color x:Key="SemiTransparentWhiteColor">#55FFFFFF</Color>
 
     <Color x:Key="NormalForegroundColor">#FFFFFFFF</Color>
     <Color x:Key="HoverForegroundColor">#FF000000</Color>

@@ -45,6 +45,8 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
+
+                        <!-- the title bar -->
                         <Grid x:Name="PART_TitleBar"
                               Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -69,17 +71,22 @@
                                        FontFamily="{DynamicResource HeaderFontFamily}"
                                        Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                         </Grid>
+
+                        <!-- the window commands -->
                         <ContentPresenter Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                           x:Name="PART_WindowCommands"
                                           Panel.ZIndex="1"
                                           Grid.Column="1"
+                                          Grid.RowSpan="2"
                                           VerticalAlignment="Top"
-                                          HorizontalAlignment="Right"
                                           Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+
+                        <!-- the main window content -->
                         <ContentPresenter Grid.Row="1"
                                           Grid.Column="0"
                                           Grid.ColumnSpan="2" />
 
+                        <!-- flyouts -->
                         <ContentControl Grid.Row="0"
                                         Grid.Column="0"
                                         Grid.ColumnSpan="2"
@@ -87,8 +94,7 @@
                                         Panel.ZIndex="2"
                                         KeyboardNavigation.TabNavigation="None"
                                         Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                        VerticalAlignment="Stretch">
-                        </ContentControl>
+                                        VerticalAlignment="Stretch" />
                     </Grid>
                 </Controls:MetroContentControl>
             </AdornerDecorator>
@@ -149,10 +155,14 @@
     <Style TargetType="{x:Type Controls:WindowCommands}">
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WindowTitleColorBrush}" />
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="VerticalAlignment"
                 Value="Center" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:WindowCommands">
@@ -183,7 +193,7 @@
                                                            SnapsToDevicePixels="True"
                                                            IsHitTestVisible="False"
                                                            Opacity="0.25"
-                                                           Width="0"
+                                                           Width="1"
                                                            Height="15"
                                                            VerticalAlignment="Stretch"
                                                            HorizontalAlignment="Right"
@@ -203,21 +213,11 @@
                                                             Property="Opacity"
                                                             Value=".5" />
                                                 </Trigger>
-                                                <Trigger Property="IsKeyboardFocused"
-                                                         Value="true" />
-                                                <Trigger Property="ToggleButton.IsChecked"
-                                                         Value="true" />
                                                 <Trigger Property="IsEnabled"
                                                          Value="false">
                                                     <Setter Property="Foreground"
                                                             Value="#ADADAD" />
                                                 </Trigger>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}"
-                                                             Value="{x:Null}">
-                                                    <Setter TargetName="border"
-                                                            Property="Rectangle.Width"
-                                                            Value="1" />
-                                                </DataTrigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
                                     </Setter.Value>
@@ -234,8 +234,7 @@
                     </ControlTemplate.Resources>
 
                     <StackPanel Orientation="Horizontal"
-                                VerticalAlignment="Top"
-                                Background="{DynamicResource WindowTitleColorBrush}">
+                                Background="{TemplateBinding Background}">
                         <ItemsControl IsTabStop="False"
                                       ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                             <ItemsControl.ItemsPanel>
@@ -244,6 +243,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
+
                         <Button x:Name="PART_Min"
                                 IsTabStop="False"
                                 Width="34"
@@ -303,6 +303,11 @@
                          Value="True">
                 <Setter Property="Foreground"
                         Value="White" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                         Value="False">
+                <Setter Property="Background"
+                        Value="Transparent" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
