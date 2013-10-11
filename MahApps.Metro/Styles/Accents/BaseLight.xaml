@@ -24,6 +24,4 @@
 
     <SolidColorBrush x:Key="SliderTrackNormal" Color="#FFC6C6C6" />
 
-    <SolidColorBrush x:Key="IronicallyNamedChromelessButtonMouseOverBrush" Color="{DynamicResource WhiteColor}" Opacity="0.2" />
-
 </ResourceDictionary>
