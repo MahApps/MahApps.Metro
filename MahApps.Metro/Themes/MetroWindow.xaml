@@ -5,10 +5,11 @@
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <conv:ToUpperConverter x:Key="ToUpperConverter" />
 
-    <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Controls:MetroWindow}">
+    <ControlTemplate x:Key="WindowTemplateKey"
+                     TargetType="{x:Type Controls:MetroWindow}">
         <Grid Background="{TemplateBinding Background}">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="LayoutStates">
@@ -29,81 +30,108 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
             <AdornerDecorator>
-                <Controls:MetroContentControl IsTabStop="False" FocusVisualStyle="{x:Null}" TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
+                <Controls:MetroContentControl IsTabStop="False"
+                                              FocusVisualStyle="{x:Null}"
+                                              TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
                     <Grid>
                         <Grid.Background>
-                            <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                            <SolidColorBrush Color="{DynamicResource WhiteColor}" />
                         </Grid.Background>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
+
+                        <Rectangle Fill="{DynamicResource WindowTitleColorBrush}"
+                                   Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                   Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                   Grid.Column="0"
+                                   Grid.ColumnSpan="2"
+                                   StrokeThickness="0" />
+
+                        <!-- the title bar -->
                         <Grid x:Name="PART_TitleBar"
-                                  Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                  Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" Background="{DynamicResource WindowTitleColorBrush}"
-                                  Grid.Column="0">
+                              Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                              Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Grid.Column="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Image
-                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    Source="{TemplateBinding Icon}"
-                                    RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality"/>
-                            <TextBlock
-                                    x:Name="WindowTitleTextBlock"
-                                    Grid.Column="1"
-                                    Text="{TemplateBinding Title}"
-                                    HorizontalAlignment="Left" 
-                                    TextTrimming="CharacterEllipsis"
-                                    VerticalAlignment="Center" 
-                                    Margin="8 -1 0 0" 
-                                    FontSize="16" 
-                                    FontFamily="{DynamicResource HeaderFontFamily}"
-                                    Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"/>
+                            <Image Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                   Source="{TemplateBinding Icon}"
+                                   RenderOptions.EdgeMode="Aliased"
+                                   RenderOptions.BitmapScalingMode="HighQuality" />
+                            <TextBlock x:Name="WindowTitleTextBlock"
+                                       Grid.Column="1"
+                                       Text="{TemplateBinding Title}"
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center"
+                                       Margin="8 -1 0 0"
+                                       FontSize="16"
+                                       FontFamily="{DynamicResource HeaderFontFamily}"
+                                       Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                         </Grid>
-                        <ContentPresenter 
-                                Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" 
-                                x:Name="PART_WindowCommands"
-                                Panel.ZIndex="1"
-                                Grid.Column="1"
-								VerticalAlignment="Top"
-                                HorizontalAlignment="Right"
-								Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                        
+                        <!-- the window commands -->
+                        <ContentPresenter Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                          x:Name="PART_WindowCommands"
+                                          Panel.ZIndex="1"
+                                          Grid.Column="1"
+                                          Grid.RowSpan="2"
+                                          VerticalAlignment="Top"
+                                          Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+
+                        <!-- the main window content -->
                         <ContentPresenter Grid.Row="1"
                                           Grid.Column="0"
                                           Grid.ColumnSpan="2" />
 
-                        <ContentControl
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="2"
-                                    Grid.RowSpan="2"
-                                    Panel.ZIndex="2"
-                                    KeyboardNavigation.TabNavigation="None"
-                                    Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                    VerticalAlignment="Stretch">
-                        </ContentControl>
+                        <!-- flyouts -->
+                        <ContentControl Grid.Row="0"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Grid.RowSpan="2"
+                                        Panel.ZIndex="2"
+                                        KeyboardNavigation.TabNavigation="None"
+                                        Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                        VerticalAlignment="Stretch" />
                     </Grid>
                 </Controls:MetroContentControl>
             </AdornerDecorator>
-            <Border x:Name="PART_Border" Opacity="0" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-            <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" IsTabStop="false" Visibility="Collapsed" VerticalAlignment="Bottom"/>
+            <Border x:Name="PART_Border"
+                    Opacity="0"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch" />
+            <ResizeGrip x:Name="WindowResizeGrip"
+                        HorizontalAlignment="Right"
+                        IsTabStop="false"
+                        Visibility="Collapsed"
+                        VerticalAlignment="Bottom" />
         </Grid>
         <ControlTemplate.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="ResizeMode" Value="CanResizeWithGrip"/>
-                    <Condition Property="WindowState" Value="Normal"/>
+                    <Condition Property="ResizeMode"
+                               Value="CanResizeWithGrip" />
+                    <Condition Property="WindowState"
+                               Value="Normal" />
                 </MultiTrigger.Conditions>
-                <Setter Property="Visibility" TargetName="WindowResizeGrip" Value="Visible"/>
+                <Setter Property="Visibility"
+                        TargetName="WindowResizeGrip"
+                        Value="Visible" />
             </MultiTrigger>
-            <Trigger Property="TitleCaps" Value="True">
-                <Setter TargetName="WindowTitleTextBlock" Property="Text" Value="{Binding Path=Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Trigger Property="TitleCaps"
+                     Value="True">
+                <Setter TargetName="WindowTitleTextBlock"
+                        Property="Text"
+                        Value="{Binding Path=Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -111,128 +139,161 @@
     <Style TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
+                <SolidColorBrush Color="{DynamicResource BlackColor}" />
             </Setter.Value>
         </Setter>
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>
-                    <Behaviours:BorderlessWindowBehavior/>
-                    <Behaviours:WindowsSettingBehaviour/>
-                    <Behaviours:GlowWindowBehavior/>
+                    <Behaviours:BorderlessWindowBehavior />
+                    <Behaviours:WindowsSettingBehaviour />
+                    <Behaviours:GlowWindowBehavior />
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
-        <Setter Property="TitleForeground" Value="White" />
-        <Setter Property="Template" Value="{StaticResource WindowTemplateKey}"/>
+        <Setter Property="TitleForeground"
+                Value="White" />
+        <Setter Property="Template"
+                Value="{StaticResource WindowTemplateKey}" />
     </Style>
 
     <Style TargetType="{x:Type Controls:WindowCommands}">
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="IsTabStop"
+                Value="False" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:WindowCommands">
                     <ControlTemplate.Resources>
                         <ResourceDictionary>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
-                                <Setter Property="HorizontalContentAlignment" Value="Center" />
-                                <Setter Property="VerticalContentAlignment" Value="Center" />
-                                <Setter Property="Padding" Value="1" />
+                                <Setter Property="Background"
+                                        Value="{DynamicResource TransparentWhiteBrush}" />
+                                <Setter Property="HorizontalContentAlignment"
+                                        Value="Center" />
+                                <Setter Property="VerticalContentAlignment"
+                                        Value="Center" />
+                                <Setter Property="Padding"
+                                        Value="1" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type Button}">
                                             <Grid Background="{TemplateBinding Background}">
                                                 <ContentPresenter x:Name="contentPresenter"
-                                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                            RecognizesAccessKey="True"
-                                                            Opacity="0.75" Margin="11,1,11,1" />
+                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                                  RecognizesAccessKey="True"
+                                                                  Opacity="0.75"
+                                                                  Margin="11,1,11,1" />
 
-                                                <Rectangle x:Name="border" 
-                                                               SnapsToDevicePixels="True"
-                                                               IsHitTestVisible="False" 
-                                                               Opacity="0.25"
-                                                               Width="0" Height="15" VerticalAlignment="Stretch" HorizontalAlignment="Right" 
-                                                               Fill="{TemplateBinding Foreground}" Margin="10,0,0,0" />
+                                                <Rectangle x:Name="border"
+                                                           SnapsToDevicePixels="True"
+                                                           IsHitTestVisible="False"
+                                                           Opacity="0.25"
+                                                           Width="1"
+                                                           Height="15"
+                                                           VerticalAlignment="Stretch"
+                                                           HorizontalAlignment="Right"
+                                                           Fill="{TemplateBinding Foreground}"
+                                                           Margin="10,0,0,0" />
                                             </Grid>
                                             <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
+                                                <Trigger Property="IsMouseOver"
+                                                         Value="True">
+                                                    <Setter TargetName="contentPresenter"
+                                                            Property="Opacity"
+                                                            Value="1" />
                                                 </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="False">
-                                                    <Setter TargetName="contentPresenter" Property="Opacity" Value=".5" />
+                                                <Trigger Property="IsMouseOver"
+                                                         Value="False">
+                                                    <Setter TargetName="contentPresenter"
+                                                            Property="Opacity"
+                                                            Value=".5" />
                                                 </Trigger>
-                                                <Trigger Property="IsKeyboardFocused" Value="true" />
-                                                <Trigger Property="ToggleButton.IsChecked" Value="true" />
-                                                <Trigger Property="IsEnabled" Value="false">
-                                                    <Setter Property="Foreground" Value="#ADADAD" />
+                                                <Trigger Property="IsEnabled"
+                                                         Value="false">
+                                                    <Setter Property="Foreground"
+                                                            Value="#ADADAD" />
                                                 </Trigger>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource PreviousData}}" Value="{x:Null}">
-                                                    <Setter TargetName="border" Property="Rectangle.Width" Value="1"/>
-                                                </DataTrigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" Value="True">
-                                        <Setter Property="Foreground" Value="White" />
+                                    <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                                 Value="True">
+                                        <Setter Property="Foreground"
+                                                Value="White" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
-                    
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Background="{DynamicResource WindowTitleColorBrush}">
-                        <ItemsControl IsTabStop="False" ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
+
+                    <StackPanel Orientation="Horizontal">
+                        <ItemsControl IsTabStop="False"
+                                      ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <StackPanel Orientation="Horizontal" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
+
                         <Button x:Name="PART_Min"
-                            IsTabStop="False"
-                            Width="34"
-                            Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
-                            MaxHeight="34"    
-                            Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
-                            Padding="0"
-                            ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
-                            Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <Path Data="F1M0,6L0,9 9,9 9,6 0,6z" SnapsToDevicePixels="True"  Fill="{TemplateBinding Foreground}"/>
+                                IsTabStop="False"
+                                Width="34"
+                                Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
+                                MaxHeight="34"
+                                Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
+                                Padding="0"
+                                ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
+                                Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
+                                  SnapsToDevicePixels="True"
+                                  Fill="{TemplateBinding Foreground}" />
                         </Button>
 
                         <Button x:Name="PART_Max"
-                            IsTabStop="False"
-                            Width="34"
-                            Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
-                            MaxHeight="34"
-                            Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
-                            Padding="0"
-                            Foreground="{TemplateBinding Foreground}"
-                            Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
+                                IsTabStop="False"
+                                Width="34"
+                                Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
+                                MaxHeight="34"
+                                Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
+                                Padding="0"
+                                Foreground="{TemplateBinding Foreground}"
+                                Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                             <Grid>
-                                <Path x:Name="MaximisePath" SnapsToDevicePixels="True" Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z" Fill="{TemplateBinding Foreground}"/>
-                                <Path x:Name="RestorePath" SnapsToDevicePixels="True" Data="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z"  Fill="{TemplateBinding Foreground}"/>
+                                <Path x:Name="MaximisePath"
+                                      SnapsToDevicePixels="True"
+                                      Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
+                                      Fill="{TemplateBinding Foreground}" />
+                                <Path x:Name="RestorePath"
+                                      SnapsToDevicePixels="True"
+                                      Data="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z"
+                                      Fill="{TemplateBinding Foreground}" />
                             </Grid>
                         </Button>
 
                         <Button x:Name="PART_Close"
-                            IsTabStop="False"
-                            Width="34"
-                            Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
-                            MaxHeight="34"
-                            Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
-                            ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
-                            Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Foreground="{TemplateBinding Foreground}">
-                            <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"  SnapsToDevicePixels="True"  Fill="{TemplateBinding Foreground}"/>
+                                IsTabStop="False"
+                                Width="34"
+                                Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
+                                MaxHeight="34"
+                                Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
+                                ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
+                                Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                Foreground="{TemplateBinding Foreground}">
+                            <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
+                                  SnapsToDevicePixels="True"
+                                  Fill="{TemplateBinding Foreground}" />
                         </Button>
                     </StackPanel>
 
@@ -240,8 +301,15 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" Value="True">
-                <Setter Property="Foreground" Value="White" />
+            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                         Value="True">
+                <Setter Property="Foreground"
+                        Value="White" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                         Value="False">
+                <Setter Property="Background"
+                        Value="Transparent" />
             </DataTrigger>
         </Style.Triggers>
     </Style>

@@ -23,4 +23,5 @@
     <SolidColorBrush x:Key="SliderTrackHover" Color="#FF737373" />
 
     <SolidColorBrush x:Key="SliderTrackNormal" Color="#FF6C6C6C" />
+
 </ResourceDictionary>
