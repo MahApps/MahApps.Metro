@@ -24,6 +24,9 @@ namespace MahApps.Metro.Controls
         public WindowApplicationSettings(Window window)
             : base(window.GetType().FullName) {
         }
+        public WindowApplicationSettings(IMetroWindow window)
+            : base(window.GetType().FullName) {
+        }
 
         [UserScopedSetting]
         public WINDOWPLACEMENT? Placement {

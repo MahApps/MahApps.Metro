@@ -1,0 +1,120 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:conv="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
+    <!-- Merges Back and Forward Navigation Stacks -->
+
+    <JournalEntryUnifiedViewConverter x:Key="JournalEntryUnifiedViewConverter" />
+
+    <!-- SimpleStyles: NavigationWindow -->
+
+    <Style x:Key="{x:Type Controls:MetroNavigationWindow}"
+       TargetType="{x:Type Controls:MetroNavigationWindow}">
+        <Setter Property="SnapsToDevicePixels"
+          Value="true" />
+        <Setter Property="Foreground">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource BlackColor}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}"/>
+        <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
+            <Setter.Value>
+                <Behaviours:StylizedBehaviorCollection>
+                    <Behaviours:BorderlessWindowBehavior AllowsTransparency="False"/>
+                    <Behaviours:WindowsSettingBehaviour/>
+                    <Behaviours:GlowWindowBehavior/>
+                </Behaviours:StylizedBehaviorCollection>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Controls:MetroNavigationWindow}">
+                    <ControlTemplate.Resources>
+                        <ResourceDictionary Source="/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+                    </ControlTemplate.Resources>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.Background>
+                            <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
+                        </Grid.Background>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                <Menu x:Name="NavMenu" Grid.ColumnSpan="3" Height="20" Margin="1,0,0,0" VerticalAlignment="Center">
+                                    <MenuItem IsSubmenuOpen="{Binding (MenuItem.IsSubmenuOpen), Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <MenuItem.ItemsSource>
+                                            <MultiBinding Converter="{StaticResource JournalEntryUnifiedViewConverter}">
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                               Path="BackStack" />
+                                                <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                               Path="ForwardStack" />
+                                            </MultiBinding>
+                                        </MenuItem.ItemsSource>
+                                    </MenuItem>
+                                </Menu>
+
+                                <Button 
+                              Command="NavigationCommands.BrowseBack"
+                              Margin="3,1.5,2,1.5"
+                              Height="35"
+                              Width="35"
+                              Style="{DynamicResource MetroCircleButtonStyle}">
+                                    <Path Width="16" Height="18" Canvas.Left="15.9063" Canvas.Top="14.75" Stretch="Fill" Fill="{DynamicResource BlackBrush}" 
+                                      Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z " />
+                                </Button>
+                                <Button 
+                              Command="NavigationCommands.BrowseForward"
+                              Margin="2,1.5,0,1.5"
+                              Height="35"
+                              Width="35"
+                              Style="{DynamicResource MetroCircleButtonStyle}">
+                                    <Path Width="16" Height="18" Canvas.Left="15.9063" Canvas.Top="14.75" Stretch="Fill" Fill="{DynamicResource BlackBrush}" 
+                                      Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z " />
+                                </Button>
+                            </StackPanel>
+
+                            <ContentPresenter 
+                                Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroNavigationWindow}}}" 
+                                x:Name="PART_WindowCommands"
+                                Panel.ZIndex="1"
+                                Grid.Column="1"
+								VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                MinHeight="35"
+                                Height="Auto"/>
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <ContentPresenter x:Name="PART_NavWinCP"
+                                  ClipToBounds="true" />
+
+                            <ResizeGrip x:Name="WindowResizeGrip"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Visibility="Collapsed"
+                        IsTabStop="false" />
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ResizeMode"
+                   Value="CanResizeWithGrip">
+                            <Setter TargetName="WindowResizeGrip"
+                    Property="Visibility"
+                    Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

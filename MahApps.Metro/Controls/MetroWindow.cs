@@ -11,7 +11,7 @@ namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
-    public class MetroWindow : Window
+    public class MetroWindow : Window, IMetroWindow
     {
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowCommands = "PART_WindowCommands";
@@ -299,5 +299,12 @@ namespace MahApps.Metro.Controls
             else
                 WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 1); //in the style, the default is 1
         }
+    }
+
+    public interface IMetroWindow //Inheritance... ugh.
+    {
+        IWindowPlacementSettings WindowPlacementSettings { get; set; }
+        bool SaveWindowPosition { get; set; }
+        WindowCommands WindowCommands { get; set; }
     }
 }
