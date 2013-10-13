@@ -219,7 +219,7 @@
         <Setter Property="FontWeight"
                 Value="Bold" />
         <Setter Property="FontSize"
-                Value="10" />
+                Value="{DynamicResource UpperCaseContentFontSize}" />
         <Setter Property="FontFamily"
                 Value="{DynamicResource DefaultFont}" />
         <Setter Property="Background"
@@ -557,7 +557,7 @@
         <Setter Property="FontFamily"
                 Value="{DynamicResource DefaultFont}" />
         <Setter Property="FontSize"
-                Value="10" />
+                Value="{DynamicResource UpperCaseContentFontSize}" />
         <Setter Property="FontWeight"
                 Value="Bold" />
         <Setter Property="Padding"

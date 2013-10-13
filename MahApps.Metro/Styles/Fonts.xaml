@@ -9,4 +9,5 @@
     <System:Double x:Key="SubHeaderFontSize">29.333</System:Double>
     <System:Double x:Key="NormalFontSize">14</System:Double>
     <System:Double x:Key="ContentFontSize">12</System:Double>
+    <System:Double x:Key="UpperCaseContentFontSize">10</System:Double>
 </ResourceDictionary>
