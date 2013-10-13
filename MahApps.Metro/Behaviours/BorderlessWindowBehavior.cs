@@ -125,9 +125,9 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
             AssociatedObject.SetValue(WindowChrome.GlassFrameThicknessProperty, new Thickness(-1));
 
-            if (AssociatedObject is MetroWindow)
+            var window = AssociatedObject as MetroWindow;
+            if (window != null)
             {
-                var window = ((MetroWindow)AssociatedObject);
                 //MetroWindow already has a border we can use
                 AssociatedObject.Loaded += (s, e) =>
                 {
