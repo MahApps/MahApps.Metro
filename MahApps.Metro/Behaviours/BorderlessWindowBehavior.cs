@@ -136,9 +136,15 @@ namespace MahApps.Metro.Behaviours
                     if (ShouldHaveBorder())
                         AddBorder();
                     var titleBar = window.GetPart<Grid>("PART_TitleBar");
-                    titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    if (titleBar != null)
+                    {
+                        titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    }
                     var windowCommands = window.GetPart<ContentPresenter>("PART_WindowCommands");
-                    windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    if (windowCommands != null)
+                    {
+                        windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    }
                 };
 
                 switch (AssociatedObject.ResizeMode)
