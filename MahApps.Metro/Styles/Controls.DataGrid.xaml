@@ -15,12 +15,12 @@
                             <Rectangle.Resources>
                                 <Style TargetType="{x:Type Rectangle}">
                                     <Setter Property="Fill"
-                                            Value="{DynamicResource GrayBrush5}" />
+                                            Value="{DynamicResource GrayBrush7}" />
                                 </Style>
                             </Rectangle.Resources>
                         </Rectangle>
                         <Polygon x:Name="Arrow"
-                                 Fill="{DynamicResource GrayBrush3}"
+                                 Fill="{DynamicResource GrayBrush1}"
                                  HorizontalAlignment="Right"
                                  Margin="8,8,3,3"
                                  Opacity="0.15"
@@ -52,7 +52,7 @@
         <Setter Property="Width"
                 Value="8" />
         <Setter Property="Background"
-                Value="{DynamicResource GrayBrush4}" />
+                Value="{DynamicResource GrayBrush5}" />
         <Setter Property="Cursor"
                 Value="SizeWE" />
         <Setter Property="Template">
@@ -109,7 +109,7 @@
         <Setter Property="Margin"
                 Value="0,0,0,0" />
         <Setter Property="BorderBrush"
-                Value="{DynamicResource GrayBrush4}" />
+                Value="{DynamicResource GrayBrush5}" />
         <Setter Property="Background"
                 Value="{DynamicResource GrayBrush8}" />
         <Setter Property="Template">
@@ -228,7 +228,7 @@
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
-                Value="{DynamicResource GrayBrush4}" />
+                Value="{DynamicResource GrayBrush5}" />
         <Setter Property="BorderThickness"
                 Value="0,0,1,0" />
         <Setter Property="Margin"
@@ -335,7 +335,7 @@
             <Trigger Property="IsEnabled"
                      Value="False">
                 <Setter Property="Foreground"
-                        Value="{DynamicResource GrayBrush5}" />
+                        Value="{DynamicResource GrayBrush7}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -346,7 +346,7 @@
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
                     <Setter Property="Background"
-                            Value="{DynamicResource GrayBrush5}" />
+                            Value="{DynamicResource GrayBrush7}" />
                     <Setter Property="Foreground"
                             Value="{DynamicResource AccentSelectedColorBrush}" />
                 </MultiTrigger.Setters>
@@ -378,7 +378,7 @@
             <Setter.Value>
                 <Style TargetType="Separator">
                     <Setter Property="Background"
-                            Value="{DynamicResource GrayBrush5}" />
+                            Value="{DynamicResource GrayBrush7}" />
                     <Setter Property="Width"
                             Value="2" />
                     <Setter Property="Template">

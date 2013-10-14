@@ -3,7 +3,7 @@
     <!--ProgressBar Style-->
     <Style TargetType="ProgressBar" x:Key="MetroProgressBar">
         <Setter Property="Foreground" Value="{DynamicResource HighlightBrush}" />
-        <Setter Property="Background" Value="{DynamicResource GrayBrush4}" />
+        <Setter Property="Background" Value="{DynamicResource GrayBrush5}" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Height" Value="10" />
         <Setter Property="IsTabStop" Value="False" />

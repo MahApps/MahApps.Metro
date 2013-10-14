@@ -7,11 +7,11 @@
     <Color x:Key="NormalForegroundColor">#FFFFFFFF</Color>
     <Color x:Key="HoverForegroundColor">#FF000000</Color>
 
+    <Color x:Key="Gray1">#FFF9F9F9</Color>
     <Color x:Key="Gray2">#FF7F7F7F</Color>
-    <Color x:Key="Gray3">#FFF9F9F9</Color>
-    <Color x:Key="Gray5">#FF7E7E7E</Color>
-    <Color x:Key="Gray7">#FF2F2F2F</Color>
+    <Color x:Key="Gray7">#FF7E7E7E</Color>
     <Color x:Key="Gray8">#FF454545</Color>
+    <Color x:Key="Gray10">#FF2F2F2F</Color>
 
     <Color x:Key="GrayNormal">#FF7D7D7D</Color>
     <Color x:Key="GrayHover">#FFAAAAAA</Color>

@@ -55,7 +55,7 @@
                               Height="6"
                               Stretch="Uniform"
                               Width="4"
-                              Fill="{DynamicResource GrayBrush3}" />
+                              Fill="{DynamicResource GrayBrush1}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
                               Height="6"
@@ -122,7 +122,7 @@
                               Height="6"
                               Stretch="Uniform"
                               Width="4"
-                              Fill="{DynamicResource GrayBrush3}"/>
+                              Fill="{DynamicResource GrayBrush1}"/>
                             
                         
                         <Path x:Name="HoverPath"
@@ -233,7 +233,7 @@
                         Margin="0,0,0,-1"
                         Grid.ColumnSpan="5"
                         Visibility="Collapsed"
-                        BorderBrush="{DynamicResource GrayBrush4}" />
+                        BorderBrush="{DynamicResource GrayBrush5}" />
                 <RepeatButton x:Name="HorizontalSmallDecrease"
                               Command="ScrollBar.LineLeftCommand"
                               Width="16"
@@ -334,7 +334,7 @@
                               Height="4"
                               Stretch="Uniform"
                               Width="6"
-                              Fill="{DynamicResource GrayBrush3}" />
+                              Fill="{DynamicResource GrayBrush1}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
                               Height="4"
@@ -402,7 +402,7 @@
                               Height="4"
                               Stretch="Uniform"
                               Width="6"
-                              Fill="{DynamicResource GrayBrush3}" />
+                              Fill="{DynamicResource GrayBrush1}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
                               Height="4"
@@ -511,7 +511,7 @@
                         Margin="0,0,-1,0"
                         Grid.RowSpan="5"
                         Visibility="Collapsed"
-                        BorderBrush="{DynamicResource GrayBrush4}" />
+                        BorderBrush="{DynamicResource GrayBrush5}" />
                 <RepeatButton x:Name="VerticalSmallDecrease"
                               Command="ScrollBar.LineUpCommand"
                               Height="16"

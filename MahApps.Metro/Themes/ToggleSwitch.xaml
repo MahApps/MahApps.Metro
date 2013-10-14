@@ -127,7 +127,7 @@
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
                                     <Border BorderThickness="2"
-                                            BorderBrush="{DynamicResource GrayBrush9}">
+                                            BorderBrush="{DynamicResource GrayBrush4}">
                                         <Grid Margin="2">
                                             <Border x:Name="checked"
                                                     BorderThickness="0"
@@ -135,7 +135,7 @@
                                                     Margin="0" />
                                             <Border x:Name="border"
                                                     BorderThickness="0"
-                                                    Background="{DynamicResource GrayBrush9}"
+                                                    Background="{DynamicResource GrayBrush4}"
                                                     Visibility="Collapsed"
                                                     Margin="0" />
                                             <Border x:Name="pressed"

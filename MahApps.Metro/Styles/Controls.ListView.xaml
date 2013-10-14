@@ -53,7 +53,7 @@
                                  Value="false">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{DynamicResource GrayBrush13}" />
+                                    Value="{DynamicResource GrayBrush9}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -87,7 +87,7 @@
         <Setter Property="Margin"
                 Value="0,0,0,0" />
         <Setter Property="Border.BorderBrush"
-                Value="{DynamicResource GrayBrush3}" />
+                Value="{DynamicResource GrayBrush1}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -184,7 +184,7 @@
                             <MultiTrigger.Setters>
                                 <Setter TargetName="Bd"
                                         Property="Background"
-                                        Value="{DynamicResource GrayBrush5}" />
+                                        Value="{DynamicResource GrayBrush7}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
@@ -209,7 +209,7 @@
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="Border.BorderBrush"
-                Value="{DynamicResource GrayBrush3}" />
+                Value="{DynamicResource GrayBrush1}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListViewItem}">

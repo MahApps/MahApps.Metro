@@ -6,12 +6,6 @@
     <Color x:Key="NormalForegroundColor">#FF000000</Color>
     <Color x:Key="HoverForegroundColor">#FFFFFFFF</Color>
 
-    <Color x:Key="Gray2">#FF7F7F7F</Color>
-    <Color x:Key="Gray3">#FF333333</Color>
-    <Color x:Key="Gray5">#FFD8D8D9</Color>
-    <Color x:Key="Gray7">#FFF7F7F7</Color>
-    <Color x:Key="Gray8">#FFE0E0E0</Color>
-
     <Color x:Key="GrayNormal">#FFBEBEBE</Color>
     <Color x:Key="GrayHover">#FF333333</Color>
 

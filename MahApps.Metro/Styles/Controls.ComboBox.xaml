@@ -6,7 +6,7 @@
     <Style TargetType="{x:Type ComboBox}" x:Key="MetroComboBox">
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-        <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
+        <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
         
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -25,7 +25,7 @@
                         <Grid.Resources>
                             <Style x:Key="comboToggleStyle" TargetType="{x:Type ToggleButton}">
                                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-                                <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
+                                <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
                                 <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Setter Property="Padding" Value="3" />
@@ -78,7 +78,7 @@
                                                 <Border x:Name="Background" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" />
                                                 <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource WhiteBrush}" IsHitTestVisible="false" Opacity="0" />
                                                 <Border x:Name="MouseOverBorder" Background="{DynamicResource GrayBrush8}" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0" />
-                                                <Border x:Name="PressedBorder" Background="{DynamicResource GrayBrush5}" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0" />
+                                                <Border x:Name="PressedBorder" Background="{DynamicResource GrayBrush7}" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0" />
                                                 <Rectangle x:Name="FocusRectangle" Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" Opacity="0" />
                                                 <Rectangle x:Name="CheckedRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{DynamicResource TextBoxMouseOverBorderBrush}" />
                                                 <Rectangle x:Name="FocusVisualElement" IsHitTestVisible="false" Margin="1" Stroke="{DynamicResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed" />
@@ -179,7 +179,7 @@
                                           Margin="0,0,6,0"
                                           Stretch="Uniform"
                                           Width="8"
-                                          Fill="{DynamicResource GrayBrush3}" />
+                                          Fill="{DynamicResource GrayBrush1}" />
                                 </ToggleButton>
 
                                 <Border x:Name="EditableTextBoxBorder"

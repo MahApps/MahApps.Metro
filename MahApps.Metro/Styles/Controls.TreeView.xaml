@@ -108,7 +108,7 @@
                             <Setter Property="Foreground" Value="White"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -116,7 +116,7 @@
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
                                 <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>

@@ -136,7 +136,7 @@
                             </Grid>
                         </Border>
                         <Path x:Name="checkBox" Height="10" Width="12" Stretch="Fill" Opacity="0" Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z" Fill="{DynamicResource HighlightBrush}" UseLayoutRounding="False" />
-                        <Rectangle x:Name="IndeterminateCheck" Fill="{DynamicResource GrayBrush6}" Height="3" Width="8" Opacity="0" />
+                        <Rectangle x:Name="IndeterminateCheck" Fill="{DynamicResource GrayBrush3}" Height="3" Width="8" Opacity="0" />
                         <Rectangle x:Name="disabled" Opacity="0" StrokeThickness="1" Fill="{DynamicResource SemiTransparentWhiteBrush}" Width="18" Height="18" />
                         <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
