@@ -186,7 +186,7 @@
                                     Value="1" />
                             <Setter TargetName="grid"
                                     Property="Background"
-                                    Value="{DynamicResource SemiTransparentWhiteBrush}" />
+                                    Value="{DynamicResource SemiTransparentWhiteBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="False">

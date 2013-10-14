@@ -97,13 +97,10 @@ namespace MahApps.Metro.Controls
                 var oldValue = (bool?)e.OldValue;
                 var newValue = (bool?)e.NewValue;
 
-                toggleSwitch._toggleButton.IsChecked = newValue;
-
-                if (oldValue != newValue
-                    && toggleSwitch.IsCheckedChanged != null)
-                    {
-                        toggleSwitch.IsCheckedChanged(toggleSwitch, EventArgs.Empty);
-                    }
+                if (oldValue != newValue && toggleSwitch.IsCheckedChanged != null)
+                {
+                    toggleSwitch.IsCheckedChanged(toggleSwitch, EventArgs.Empty);
+                }
             }
         }
 
@@ -169,19 +166,16 @@ namespace MahApps.Metro.Controls
 
         private void CheckedHandler(object sender, RoutedEventArgs e)
         {
-            IsChecked = true;
             SafeRaise.Raise(Checked, this, e);
         }
 
         private void UncheckedHandler(object sender, RoutedEventArgs e)
         {
-            IsChecked = false;
             SafeRaise.Raise(Unchecked, this, e);
         }
 
         private void IndeterminateHandler(object sender, RoutedEventArgs e)
         {
-            IsChecked = null;
             SafeRaise.Raise(Indeterminate, this, e);
         }
 
