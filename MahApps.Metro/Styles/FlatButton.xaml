@@ -8,7 +8,7 @@
     <Setter Property="Foreground"
             Value="#222222" />
     <Setter Property="FontSize"
-            Value="16" />
+            Value="{DynamicResource ContentFontSize}" />
     <Setter Property="Padding"
             Value="10,5,10,5" />
     <Setter Property="BorderThickness"
