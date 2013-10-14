@@ -72,7 +72,7 @@
                                        TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"
                                        Margin="8 -1 0 0"
-                                       FontSize="16"
+                                       FontSize="{DynamicResource WindowTitleFontSize}"
                                        FontFamily="{DynamicResource HeaderFontFamily}"
                                        Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                         </Grid>
