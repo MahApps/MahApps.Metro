@@ -158,15 +158,7 @@
     <SolidColorBrush x:Key="ValidationBrush4" Color="{DynamicResource ValidationColor4}"/>
     <SolidColorBrush x:Key="ValidationBrush5" Color="{DynamicResource ValidationColor5}"/>
 
-
-    <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
-        <GradientStop Color="#F3F3F3" Offset="0"/>
-        <GradientStop Color="#EBEBEB" Offset="0.5"/>
-        <GradientStop Color="#DDDDDD" Offset="0.5"/>
-        <GradientStop Color="#CDCDCD" Offset="1"/>
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF707070"/>
-    <!-- WPF default colours -->
+    <!-- WPF default colors -->
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{DynamicResource WhiteColor}" />
     <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{DynamicResource BlackColor}" />
 </ResourceDictionary>

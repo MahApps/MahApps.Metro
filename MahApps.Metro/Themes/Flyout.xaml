@@ -5,7 +5,7 @@
                     xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate x:Key="HeaderTemplate"

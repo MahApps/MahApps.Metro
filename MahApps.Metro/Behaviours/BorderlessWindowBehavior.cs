@@ -310,7 +310,7 @@ namespace MahApps.Metro.Behaviours
             return !UnsafeNativeMethods.DwmIsCompositionEnabled();
         }
 
-        readonly SolidColorBrush _borderColour = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
+        readonly SolidColorBrush _borderColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
 
         private void AddBorder()
         {
@@ -318,7 +318,7 @@ namespace MahApps.Metro.Behaviours
                 return;
 
             Border.BorderThickness = new Thickness(1);
-            Border.BorderBrush = _borderColour;
+            Border.BorderBrush = _borderColor;
         }
 
         private void RemoveBorder()
