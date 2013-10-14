@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
     <Color x:Key="BlackColor">#FF000000</Color>
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
 
@@ -22,4 +23,5 @@
     <SolidColorBrush x:Key="SliderTrackHover" Color="#FFD0D0D0" />
 
     <SolidColorBrush x:Key="SliderTrackNormal" Color="#FFC6C6C6" />
+
 </ResourceDictionary>
