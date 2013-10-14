@@ -75,7 +75,7 @@
                                        TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"
                                        Margin="8 -1 0 0"
-                                       FontSize="16"
+                                       FontSize="{DynamicResource WindowTitleFontSize}"
                                        FontFamily="{DynamicResource HeaderFontFamily}">
                                 <TextBlock.Foreground>
                                     <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
@@ -89,7 +89,7 @@
                                 </TextBlock.Foreground>
                             </TextBlock>
                         </Grid>
-
+                        
                         <!-- the window commands -->
                         <ContentPresenter x:Name="PART_WindowCommands"
                                           Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
@@ -258,15 +258,15 @@
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
 
-                    <ItemsControl IsTabStop="False"
+                        <ItemsControl IsTabStop="False"
                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
-                                  ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
+                                      ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

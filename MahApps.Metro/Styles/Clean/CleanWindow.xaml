@@ -39,7 +39,7 @@
                                                HorizontalContentAlignment="Center"
                                                VerticalAlignment="Top"
                                                Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                               FontSize="{DynamicResource NormalFontSize}" />
+                                               FontSize="{DynamicResource WindowTitleFontSize}" />
 
                                         <Grid VerticalAlignment="Top"
                                               HorizontalAlignment="Right">
