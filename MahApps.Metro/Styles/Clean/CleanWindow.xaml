@@ -41,7 +41,7 @@
                                                HorizontalContentAlignment="Center"
                                                VerticalAlignment="Top"
                                                Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                               FontSize="14" />
+                                               FontSize="{DynamicResource NormalFontSize}" />
 
                                         <ContentPresenter Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                                           x:Name="PART_WindowCommands"
