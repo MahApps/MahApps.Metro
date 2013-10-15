@@ -81,6 +81,11 @@ namespace MetroDemo
 #endif
         }
 
+        private void LaunchNavigationDemo(object sender, RoutedEventArgs e)
+        {
+            new Navigation.NavigationWindowDemo().Show();
+        }
+
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var flipview = ((FlipView)sender);
