@@ -31,6 +31,13 @@
         <SolidColorBrush Color="{DynamicResource AccentColor}" />
     </Controls:MetroWindow.BorderBrush>
 
+    <Controls:MetroWindow.WindowCommands>
+        <Controls:WindowCommands>
+            <Button FontFamily="Wingdings" FontSize="20" Content="B" />
+            <Button FontFamily="Wingdings" FontSize="20" Content="C" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.WindowCommands>
+
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
             <Controls:Flyout Header="settings" Position="Right">
