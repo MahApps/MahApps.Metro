@@ -209,6 +209,8 @@
             <SolidColorBrush x:Key="LabelTextBrush"
                              Color="{StaticResource FlyoutWhiteColor}" />
         </Style.Resources>
+        <Setter Property="TextElement.Foreground"
+                Value="{DynamicResource FlyoutWhiteBrush}" />
         <Setter Property="KeyboardNavigation.TabNavigation"
                 Value="Cycle" />
         <Setter Property="VerticalAlignment"
