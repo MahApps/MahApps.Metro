@@ -11,10 +11,12 @@ namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
+    [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
     public class MetroWindow : Window
     {
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowCommands = "PART_WindowCommands";
+        private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -33,6 +35,7 @@ namespace MahApps.Metro.Controls
 
         bool isDragging;
         ContentPresenter WindowCommandsPresenter;
+        WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
 
         public bool WindowTransitionsEnabled
@@ -159,6 +162,8 @@ namespace MahApps.Metro.Controls
 
             if (WindowCommands == null)
                 WindowCommands = new WindowCommands();
+            WindowCommandsPresenter = GetTemplateChild("PART_WindowCommands") as ContentPresenter;
+            WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
 
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
 
@@ -174,15 +179,13 @@ namespace MahApps.Metro.Controls
                 MouseUp += TitleBarMouseUp;
                 MouseMove += TitleBarMouseMove;
             }
-
-            WindowCommandsPresenter = GetTemplateChild("PART_WindowCommands") as ContentPresenter;
         }
 
         protected override void OnStateChanged(EventArgs e)
         {
-            if (WindowCommands != null)
+            if (WindowButtonCommands != null)
             {
-                WindowCommands.RefreshMaximiseIconState();
+                WindowButtonCommands.RefreshMaximiseIconState();
             }
 
             base.OnStateChanged(e);
@@ -295,9 +298,15 @@ namespace MahApps.Metro.Controls
         internal void HandleFlyoutStatusChange(Flyout flyout)
         {
             if (flyout.Position == Position.Right && flyout.IsOpen)
+            {
                 WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 3);
+                WindowButtonCommands.SetValue(Panel.ZIndexProperty, 3);
+            }
             else
+            {
                 WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 1); //in the style, the default is 1
+                WindowButtonCommands.SetValue(Panel.ZIndexProperty, 1); //in the style, the default is 1
+            }
         }
     }
 }

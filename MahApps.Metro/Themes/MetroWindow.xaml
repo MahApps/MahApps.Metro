@@ -40,6 +40,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -50,7 +51,7 @@
                                    Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                    Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                    Grid.Column="0"
-                                   Grid.ColumnSpan="2"
+                                   Grid.ColumnSpan="3"
                                    StrokeThickness="0" />
 
                         <!-- the title bar -->
@@ -76,25 +77,32 @@
                                        FontFamily="{DynamicResource HeaderFontFamily}"
                                        Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                         </Grid>
-                        
+
                         <!-- the window commands -->
-                        <ContentPresenter Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                          x:Name="PART_WindowCommands"
+                        <ContentPresenter x:Name="PART_WindowCommands"
+                                          Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                           Panel.ZIndex="1"
                                           Grid.Column="1"
                                           Grid.RowSpan="2"
                                           VerticalAlignment="Top"
                                           Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                        <!-- the window button commands -->
+                        <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
+                                                       Panel.ZIndex="1"
+                                                       Grid.Column="2"
+                                                       Grid.RowSpan="2"
+                                                       VerticalAlignment="Top"
+                                                       Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
 
                         <!-- the main window content -->
                         <ContentPresenter Grid.Row="1"
                                           Grid.Column="0"
-                                          Grid.ColumnSpan="2" />
+                                          Grid.ColumnSpan="3" />
 
                         <!-- flyouts -->
                         <ContentControl Grid.Row="0"
                                         Grid.Column="0"
-                                        Grid.ColumnSpan="2"
+                                        Grid.ColumnSpan="3"
                                         Grid.RowSpan="2"
                                         Panel.ZIndex="2"
                                         KeyboardNavigation.TabNavigation="None"
@@ -236,15 +244,44 @@
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
 
+                    <ItemsControl IsTabStop="False"
+                                  ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                         Value="True">
+                <Setter Property="Foreground"
+                        Value="White" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                         Value="False">
+                <Setter Property="Background"
+                        Value="Transparent" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Controls:WindowButtonCommands}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="IsTabStop"
+                Value="False" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Controls:WindowButtonCommands">
                     <StackPanel Orientation="Horizontal">
-                        <ItemsControl IsTabStop="False"
-                                      ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
 
                         <Button x:Name="PART_Min"
                                 IsTabStop="False"
@@ -253,7 +290,7 @@
                                 MaxHeight="34"
                                 Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
                                 Padding="0"
-                                ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
+                                ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
                                 Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
                                   SnapsToDevicePixels="True"
@@ -269,7 +306,7 @@
                                 Padding="0"
                                 Foreground="{TemplateBinding Foreground}"
                                 Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
+                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
                             <Grid>
                                 <Path x:Name="MaximisePath"
                                       SnapsToDevicePixels="True"
@@ -288,7 +325,7 @@
                                 Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 MaxHeight="34"
                                 Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
-                                ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
+                                ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
                                 Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
                                 Foreground="{TemplateBinding Foreground}">
                             <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
