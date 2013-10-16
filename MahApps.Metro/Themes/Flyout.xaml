@@ -22,7 +22,7 @@
                     Width="40"
                     FontFamily="Segoe UI Symbol"
                     FontSize="16"
-                    VerticalAlignment="Top">
+                    VerticalAlignment="Bottom">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
@@ -56,9 +56,15 @@
                        Foreground="{DynamicResource FlyoutWhiteBrush}"
                        FontSize="20"
                        Margin="15,0,0,0"
-                       VerticalAlignment="Center" />
+                       VerticalAlignment="Bottom" />
         </DockPanel>
         <DataTemplate.Triggers>
+            <!--<DataTrigger Binding="{Binding ShowWindowCommandsOnTop, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
+                         Value="True">
+                <Setter TargetName="PART_BackButton"
+                        Property="VerticalAlignment"
+                        Value="Bottom" />
+            </DataTrigger>-->
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
                          Value="Left">
                 <Setter TargetName="nav"
@@ -85,7 +91,9 @@
                         <RotateTransform Angle="-90" />
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="dpHeader" Property="VerticalAlignment" Value="Bottom" />
+                <Setter TargetName="dpHeader"
+                        Property="VerticalAlignment"
+                        Value="Bottom" />
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
                          Value="Bottom">
@@ -201,6 +209,8 @@
             <SolidColorBrush x:Key="LabelTextBrush"
                              Color="{StaticResource FlyoutWhiteColor}" />
         </Style.Resources>
+        <Setter Property="TextElement.Foreground"
+                Value="{DynamicResource FlyoutWhiteBrush}" />
         <Setter Property="KeyboardNavigation.TabNavigation"
                 Value="Cycle" />
         <Setter Property="VerticalAlignment"
