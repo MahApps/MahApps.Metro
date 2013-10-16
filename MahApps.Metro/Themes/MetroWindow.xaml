@@ -245,6 +245,7 @@
                     </ControlTemplate.Resources>
 
                     <ItemsControl IsTabStop="False"
+                                  Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                   ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
