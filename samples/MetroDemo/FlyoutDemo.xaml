@@ -10,7 +10,8 @@
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
                       BorderThickness="1"
-                      mc:Ignorable="d">
+                      mc:Ignorable="d"
+                      x:Name="flyoutsDemo">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -180,6 +181,8 @@
 
     <Grid>
         <StackPanel Margin="10" HorizontalAlignment="Left">
+            <CheckBox Content="ShowWindowCommandsOnTop"
+                      IsChecked="{Binding ElementName=flyoutsDemo, Path=ShowWindowCommandsOnTop}" />
             <TextBlock Margin="10"
                        FontSize="30"
                        Text="Some Flyout Tests..." />
