@@ -32,11 +32,18 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         bool isDragging;
         ContentPresenter WindowCommandsPresenter;
         WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
+
+        public bool ShowWindowCommandsOnTop
+        {
+            get { return (bool)this.GetValue(ShowWindowCommandsOnTopProperty); }
+            set { SetValue(ShowWindowCommandsOnTopProperty, value); }
+        }
 
         public bool WindowTransitionsEnabled
         {
@@ -295,17 +302,15 @@ namespace MahApps.Metro.Controls
                 UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
         }
 
-        internal void HandleFlyoutStatusChange(Flyout flyout)
+        internal void HandleFlyoutStatusChange(Flyout flyout, int visibleFlyouts)
         {
-            if (flyout.Position == Position.Right && flyout.IsOpen)
+            if (flyout.Position == Position.Right || flyout.Position == Position.Top)
             {
-                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 3);
-                WindowButtonCommands.SetValue(Panel.ZIndexProperty, 3);
-            }
-            else
-            {
-                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 1); //in the style, the default is 1
-                WindowButtonCommands.SetValue(Panel.ZIndexProperty, 1); //in the style, the default is 1
+                var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts + 2;
+                if (this.ShowWindowCommandsOnTop) {
+                    WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, zIndex);
+                }
+                WindowButtonCommands.SetValue(Panel.ZIndexProperty, zIndex);
             }
         }
     }
