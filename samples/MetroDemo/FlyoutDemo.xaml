@@ -41,8 +41,9 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Header="settings" Position="Right">
-                <Grid Margin="24">
+            <Controls:Flyout Header="Settings" Position="Right">
+                <Grid Margin="10"
+                      Width="250">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
@@ -75,19 +76,25 @@
                 </Grid>
             </Controls:Flyout>
 
-            <Controls:Flyout Header="new goodness" Position="Right">
-                <StackPanel Orientation="Vertical">
+            <Controls:Flyout Header="New Goodness" Position="Right">
+                <StackPanel Orientation="Vertical"
+                            Margin="10"
+                            Width="250">
                     <Button Content="create" />
                     <Button Content="cancel" />
                 </StackPanel>
             </Controls:Flyout>
 
-            <Controls:Flyout Header="third" Position="Right">
-                <TextBlock Text="a third for testing" />
+            <Controls:Flyout Header="Third" Position="Right">
+                <Grid Margin="10"
+                      Width="250">
+                    <TextBlock Text="a third for testing" />
+                </Grid>
             </Controls:Flyout>
 
-            <Controls:Flyout Header="settings" Position="Right">
-                <Grid>
+            <Controls:Flyout Header="Cool" Position="Right">
+                <Grid Margin="10"
+                      Width="250">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -119,7 +126,7 @@
                 </Grid>
             </Controls:Flyout>
 
-            <Controls:Flyout Header="left" Position="Left">
+            <Controls:Flyout Header="Left" Position="Left">
                 <StackPanel Width="150" Margin="5,5,5,5">
                     <TextBlock Text="a test for left" />
                     <CheckBox Content="a simple checkbox" />
@@ -133,7 +140,7 @@
             </Controls:Flyout>
 
             <Controls:Flyout Header="Top" Position="Top">
-                <StackPanel Height="80"
+                <StackPanel Height="100"
                         Margin="5,5,5,5"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
