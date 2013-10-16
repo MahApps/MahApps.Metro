@@ -105,6 +105,7 @@
                                         Grid.ColumnSpan="3"
                                         Grid.RowSpan="2"
                                         Panel.ZIndex="2"
+                                        Focusable="False"
                                         KeyboardNavigation.TabNavigation="None"
                                         Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                         VerticalAlignment="Stretch" />
