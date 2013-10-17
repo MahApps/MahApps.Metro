@@ -6,6 +6,16 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <StackPanel Height="80"
                 Margin="5,5,5,5"
                 HorizontalAlignment="Right"
@@ -17,9 +27,6 @@
                 Foreground="{DynamicResource FlyoutWhiteBrush}"
                 Style="{DynamicResource MetroCircleButtonStyle}">
             <Rectangle Width="20" Height="20">
-                <Rectangle.Resources>
-                    <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource FlyoutWhiteColor}" />
-                </Rectangle.Resources>
                 <Rectangle.Fill>
                     <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
                 </Rectangle.Fill>

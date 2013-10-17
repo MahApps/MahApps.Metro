@@ -6,9 +6,11 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
+
     <UserControl.Resources>
-        <SolidColorBrush x:Key="LabelTextBrush" Color="{StaticResource FlyoutWhiteColor}" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
     </UserControl.Resources>
+
     <StackPanel Width="150" Margin="5,5,5,5">
         <TextBlock Text="a test for left" />
         <CheckBox Content="a simple checkbox" />
