@@ -88,9 +88,8 @@ namespace MahApps.Metro
 
             if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, window.Resources))
             {
-                detectedAccentTheme = GetThemeFromResources(currentTheme, window.Resources);
-
-                return new Tuple<Theme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
+                if (GetThemeFromResources(currentTheme, window.Resources, ref detectedAccentTheme))
+                    return new Tuple<Theme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
             }
 
             return null;
@@ -119,29 +118,36 @@ namespace MahApps.Metro
                     enumerator.Dispose();
                     return true;
                 }
+
+                if (DetectThemeFromResources(ref detectedTheme, ref themeRd, currentRd)) {
+                    return true;
+                }
             }
 
             enumerator.Dispose();
             return false;
         }
-        internal static Tuple<Theme, Accent> GetThemeFromResources(Theme presetTheme, ResourceDictionary dict)
+        
+        internal static bool GetThemeFromResources(Theme presetTheme, ResourceDictionary dict, ref Tuple<Theme, Accent> detectedAccentTheme)
         {
-            Theme currentTheme = 0;
+            Theme currentTheme = presetTheme;
             Accent currentAccent = null;
 
-            currentTheme = presetTheme;
+            Accent matched = null;
+            if ((matched = ((List<Accent>)DefaultAccents).Find(x => x.Resources.Source == dict.Source)) != null)
+            {
+                currentAccent = matched;
+                detectedAccentTheme = Tuple.Create<Theme, Accent>(currentTheme, currentAccent);
+                return true;
+            }
 
             foreach (ResourceDictionary rd in dict.MergedDictionaries)
             {
-                Accent matched = null;
-                if ((matched = ((List<Accent>)_accents).Find(x => x.Resources.Source == rd.Source)) != null)
-                {
-                    currentAccent = matched;
-                    break;
-                }
+                if (GetThemeFromResources(presetTheme, rd, ref detectedAccentTheme))
+                    return true;
             }
 
-            return Tuple.Create<Theme, Accent>(currentTheme, currentAccent);
+            return false;
         }
     }
 }
