@@ -4,10 +4,6 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
 
-    <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
-    </ResourceDictionary.MergedDictionaries>
-
     <DataTemplate x:Key="HeaderTemplate"
                   x:Shared="False">
         <DockPanel x:Name="dpHeader"
@@ -205,12 +201,6 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Flyout}">
-        <Style.Resources>
-            <SolidColorBrush x:Key="LabelTextBrush"
-                             Color="{StaticResource FlyoutWhiteColor}" />
-        </Style.Resources>
-        <Setter Property="TextElement.Foreground"
-                Value="{DynamicResource FlyoutWhiteBrush}" />
         <Setter Property="KeyboardNavigation.TabNavigation"
                 Value="Cycle" />
         <Setter Property="VerticalAlignment"
