@@ -30,6 +30,7 @@
                                           HorizontalAlignment="Stretch"
                                           Width="{TemplateBinding ActualWidth}"
                                           Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}">
+
                                         <Image Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                                Source="{TemplateBinding Icon}"
                                                RenderOptions.EdgeMode="Aliased"
@@ -43,12 +44,26 @@
                                                Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                                FontSize="14" />
 
-                                        <ContentPresenter Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                                          x:Name="PART_WindowCommands"
-                                                          Panel.ZIndex="1"
-                                                          VerticalAlignment="Top"
-                                                          HorizontalAlignment="Right" />
+                                        <Grid VerticalAlignment="Top"
+                                              HorizontalAlignment="Right">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- the window commands -->
+                                            <ContentPresenter Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                                              x:Name="PART_WindowCommands"
+                                                              Panel.ZIndex="1"
+                                                              Grid.Column="0" />
+                                            <!-- the window button commands -->
+                                            <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
+                                                                           Panel.ZIndex="1"
+                                                                           Grid.Column="1" />
+                                        </Grid>
+
                                     </Grid>
+                                    
                                     <ContentPresenter Grid.Row="1" />
 
                                     <ItemsControl Grid.Row="0"
