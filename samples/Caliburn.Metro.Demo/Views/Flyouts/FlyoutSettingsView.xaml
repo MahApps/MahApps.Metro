@@ -23,7 +23,7 @@
 
         <Label Grid.Row="0"
                Grid.Column="0"
-               Margin="5" Foreground="{DynamicResource FlyoutWhiteBrush}"
+               Margin="5"
                VerticalAlignment="Center"
                Content="Download language:" />
         <ComboBox x:Name="flyoutSettingsComboboxDownloadlanguage"

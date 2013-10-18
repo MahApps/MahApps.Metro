@@ -144,12 +144,8 @@
                         Height="40"
                         FontFamily="Segoe UI Symbol"
                         FontSize="16"
-                        Foreground="{DynamicResource FlyoutWhiteBrush}"
                         Style="{DynamicResource MetroCircleButtonStyle}">
                         <Rectangle Width="20" Height="20">
-                            <Rectangle.Resources>
-                                <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource FlyoutWhiteColor}" />
-                            </Rectangle.Resources>
                             <Rectangle.Fill>
                                 <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
                             </Rectangle.Fill>
@@ -166,12 +162,8 @@
                         Height="40"
                         FontFamily="Segoe UI Symbol"
                         FontSize="16"
-                        Foreground="{DynamicResource FlyoutWhiteBrush}"
                         Style="{DynamicResource MetroCircleButtonStyle}">
                         <Rectangle Width="20" Height="20">
-                            <Rectangle.Resources>
-                                <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource FlyoutWhiteColor}" />
-                            </Rectangle.Resources>
                             <Rectangle.Fill>
                                 <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
                             </Rectangle.Fill>

@@ -24,7 +24,6 @@
                 Height="40"
                 FontFamily="Segoe UI Symbol"
                 FontSize="16"
-                Foreground="{DynamicResource FlyoutWhiteBrush}"
                 Style="{DynamicResource MetroCircleButtonStyle}">
             <Rectangle Width="20" Height="20">
                 <Rectangle.Fill>
