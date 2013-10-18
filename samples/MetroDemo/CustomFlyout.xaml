@@ -8,7 +8,8 @@
                  d:DesignHeight="300"
                  d:DesignWidth="300"
                  Width="250"
-                 x:Name="customFlyout">
+                 x:Name="customFlyout"
+                 CloseCommand="{Binding ElementName=customFlyout, Path=CloseCmd}">
 
     <controls:Flyout.Resources>
         <ResourceDictionary>
@@ -41,6 +42,10 @@
 
     <StackPanel Orientation="Vertical"
                 Margin="10">
+
+        <CheckBox Content="CanCloseFlyout"
+                  IsChecked="{Binding ElementName=customFlyout, Path=CanCloseFlyout}"
+                  Margin="5" />
 
         <Slider Style="{StaticResource FlatSlider}"
                 Margin="5"
