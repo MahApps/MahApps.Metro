@@ -13,10 +13,29 @@
     <controls:Flyout.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListView.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
             <!-- for testing -->
-            <SolidColorBrush x:Key="ListViewBackground" Color="Transparent" />
+            <SolidColorBrush x:Key="ListViewBackground" Color="White" />
+            
+            <Style x:Key="CustomListViewItemStyle"
+                   TargetType="{x:Type ListViewItem}"
+                   BasedOn="{StaticResource MetroListViewItem}">
+                <Setter Property="Foreground"
+                        Value="Black" />
+            </Style>
+            <Style x:Key="CustomGridViewColumnHeader"
+                   TargetType="{x:Type GridViewColumnHeader}"
+                   BasedOn="{StaticResource MetroGridViewColumnHeader}">
+                <Style.Resources>
+                    <SolidColorBrush x:Key="GrayBrush8"
+                                     Color="#FFE0E0E0" />
+                </Style.Resources>
+                <Setter Property="Foreground"
+                        Value="Black" />
+            </Style>
         </ResourceDictionary>
     </controls:Flyout.Resources>
 
@@ -29,12 +48,28 @@
 
         <ListView Height="200"
                   Margin="0, 10, 0, 0"
-                  Background="{StaticResource ListViewBackground}"
                   BorderThickness="0"
                   ItemsSource="{Binding ElementName=customFlyout, Path=Artists}"
                   SelectedIndex="0">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding ArtistId}"
+                                    Header="ID" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}"
+                                    Header="artist" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <ListView Height="200"
+                  Margin="0, 10, 0, 0"
+                  BorderThickness="0"
+                  ItemContainerStyle="{StaticResource CustomListViewItemStyle}"
+                  Background="{StaticResource ListViewBackground}"
+                  ItemsSource="{Binding ElementName=customFlyout, Path=Artists}"
+                  SelectedIndex="0">
+            <ListView.View>
+                <GridView ColumnHeaderContainerStyle="{StaticResource CustomGridViewColumnHeader}">
                     <GridViewColumn DisplayMemberBinding="{Binding ArtistId}"
                                     Header="ID" />
                     <GridViewColumn DisplayMemberBinding="{Binding Name}"
