@@ -11,6 +11,7 @@
                    VerticalAlignment="Center"
                    LastChildFill="True">
             <Button x:Name="nav"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommand, Mode=OneWay}"
                     DockPanel.Dock="Left"
                     Style="{DynamicResource MetroCircleButtonStyle}"
                     Height="40"
