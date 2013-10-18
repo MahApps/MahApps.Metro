@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -94,7 +92,7 @@ namespace MahApps.Metro.Controls
             this.Resources.BeginInit();
             try {
                 var idx = -1;
-                foreach (var rd in mainResDictionaries)
+                foreach (var rd in ThemeManager.MainResourceDictionaries)
                 {
                     var md = this.Resources.MergedDictionaries.FirstOrDefault(d => d.Source == rd.Source);
                     if (md != null)
@@ -108,16 +106,6 @@ namespace MahApps.Metro.Controls
                 resDictAlreadyChecked = true;
             }
         }
-
-        private readonly List<ResourceDictionary> mainResDictionaries =
-            new List<ResourceDictionary>(new[] {
-                                                   new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml") },
-                                                   new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") },
-                                                   new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") },
-                                                   new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml") },
-                                                   new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml") }
-                                               });
-
 
         static Flyout()
         {
