@@ -209,7 +209,7 @@
         <Setter Property="HeaderTemplate"
                 Value="{StaticResource HeaderTemplate}" />
         <Setter Property="Background"
-                Value="#FF252525" />
+                Value="{DynamicResource FlyoutBackgroundBrush}" />
         <Setter Property="Template"
                 Value="{StaticResource FlyoutTemplate}" />
         <Setter Property="FocusVisualStyle"

@@ -45,6 +45,7 @@
     <Color x:Key="SemiTransparentWhiteColor">#55FFFFFF</Color>
     <Color x:Key="TransparentLightLightColor">#A5FFFFFF</Color>
 
+    <Color x:Key="FlyoutBackgroundColor">#FF252525</Color>
 
     <!-- CORE CONTROL COLORS-->
     <Color x:Key="ValidationColor1">#052A2E31</Color>
@@ -71,6 +72,7 @@
     <!--PROJECT TEMPLATE BRUSHES -->
 
     <!--FLYOUT BRUSHES -->
+    <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="{DynamicResource FlyoutBackgroundColor}" />
 
     <!-- UNIVERSAL CONTROL BRUSHES -->
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource WhiteColor}"/>
