@@ -20,7 +20,6 @@
     <!--BASE COLORS-->
     <Color x:Key="BlackColor">#FF000000</Color>
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
-    <Color x:Key="FlyoutWhiteColor">White</Color>
     <Color x:Key="Gray1">#FFCCCCCC</Color>
     <Color x:Key="Gray2">#FF7F7F7F</Color>
     <Color x:Key="Gray3">#FF333333</Color>
@@ -46,6 +45,7 @@
     <Color x:Key="SemiTransparentWhiteColor">#55FFFFFF</Color>
     <Color x:Key="TransparentLightLightColor">#A5FFFFFF</Color>
 
+    <Color x:Key="FlyoutBackgroundColor">#FF252525</Color>
 
     <!-- CORE CONTROL COLORS-->
     <Color x:Key="ValidationColor1">#052A2E31</Color>
@@ -72,7 +72,7 @@
     <!--PROJECT TEMPLATE BRUSHES -->
 
     <!--FLYOUT BRUSHES -->
-    <SolidColorBrush x:Key="FlyoutWhiteBrush" Color="{DynamicResource FlyoutWhiteColor}" />
+    <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="{DynamicResource FlyoutBackgroundColor}" />
 
     <!-- UNIVERSAL CONTROL BRUSHES -->
     <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource WhiteColor}"/>

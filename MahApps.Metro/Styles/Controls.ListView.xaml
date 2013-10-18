@@ -102,7 +102,7 @@
                                 <GridViewRowPresenter.Resources>
                                     <Style TargetType="{x:Type TextBlock}">
                                         <Setter Property="Foreground"
-                                                Value="{DynamicResource LabelTextBrush}" />
+                                                Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=Foreground}" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}}"
                                                          Value="True">
@@ -278,6 +278,8 @@
 
     <Style x:Key="MetroGridViewColumnHeader"
            TargetType="GridViewColumnHeader">
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="HorizontalContentAlignment"
