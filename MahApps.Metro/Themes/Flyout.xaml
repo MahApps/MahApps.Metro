@@ -7,8 +7,8 @@
     <DataTemplate x:Key="HeaderTemplate"
                   x:Shared="False">
         <DockPanel x:Name="dpHeader"
-                   Margin="10"
-                   VerticalAlignment="Top"
+                   Margin="10,25,10,10"
+                   VerticalAlignment="Center"
                    LastChildFill="True">
             <Button x:Name="nav"
                     DockPanel.Dock="Left"
@@ -51,15 +51,9 @@
                        Foreground="{DynamicResource BlackBrush}"
                        FontSize="20"
                        Margin="15,0,0,0"
-                       VerticalAlignment="Bottom" />
+                       VerticalAlignment="Center" />
         </DockPanel>
         <DataTemplate.Triggers>
-            <!--<DataTrigger Binding="{Binding ShowWindowCommandsOnTop, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
-                         Value="True">
-                <Setter TargetName="PART_BackButton"
-                        Property="VerticalAlignment"
-                        Value="Bottom" />
-            </DataTrigger>-->
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
                          Value="Left">
                 <Setter TargetName="nav"
@@ -80,18 +74,21 @@
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
                          Value="Top">
+                <Setter TargetName="dpHeader"
+                        Property="Margin"
+                        Value="10" />
                 <Setter TargetName="nav"
                         Property="LayoutTransform">
                     <Setter.Value>
                         <RotateTransform Angle="-90" />
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="dpHeader"
-                        Property="VerticalAlignment"
-                        Value="Bottom" />
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
                          Value="Bottom">
+                <Setter TargetName="dpHeader"
+                        Property="Margin"
+                        Value="10" />
                 <Setter TargetName="nav"
                         Property="LayoutTransform">
                     <Setter.Value>
