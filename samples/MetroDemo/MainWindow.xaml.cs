@@ -32,7 +32,13 @@ namespace MetroDemo
         {
             this.currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == accentName);
 
-            ThemeManager.ChangeTheme(this, this.currentAccent, this.currentTheme);
+            //ThemeManager.ChangeTheme(this, this.currentAccent, this.currentTheme);
+            // changes from @spiritdead, try to change all open windows
+            foreach (object w in System.Windows.Application.Current.Windows)
+            {
+                if (w.GetType() != typeof(GlowWindow))
+                    ThemeManager.ChangeTheme((Window)w, this.currentAccent, this.currentTheme);
+            }
         }
 
         private void ThemeLight(object sender, RoutedEventArgs e)
