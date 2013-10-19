@@ -12,6 +12,7 @@
                       ShowIconOnTitleBar="True"
                       ShowTitleBar="True"
                       WindowStartupLocation="CenterScreen"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
                       mc:Ignorable="d">
 
@@ -33,10 +34,6 @@
             </Style>
         </ResourceDictionary>
     </Window.Resources>
-
-    <Controls:MetroWindow.GlowBrush>
-        <SolidColorBrush Color="{DynamicResource AccentColor}" />
-    </Controls:MetroWindow.GlowBrush>
 
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
