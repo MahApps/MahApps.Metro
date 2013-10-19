@@ -12,6 +12,7 @@
                       WindowStartupLocation="CenterScreen"
                       BorderThickness="1"
                       BorderBrush="{DynamicResource AccentColorBrush}"
+                      InheritAccentColorsAndTheme="True"
                       mc:Ignorable="d"
                       x:Name="flyoutsDemo">
 
