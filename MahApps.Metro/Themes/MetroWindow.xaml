@@ -33,10 +33,7 @@
                 <Controls:MetroContentControl IsTabStop="False"
                                               FocusVisualStyle="{x:Null}"
                                               TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
-                    <Grid>
-                        <Grid.Background>
-                            <SolidColorBrush Color="{DynamicResource WhiteColor}" />
-                        </Grid.Background>
+                    <Grid Background="{TemplateBinding Background}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
@@ -146,11 +143,8 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource BlackColor}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>

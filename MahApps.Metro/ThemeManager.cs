@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace MahApps.Metro
@@ -67,14 +69,58 @@ namespace MahApps.Metro
 
         public static void ChangeTheme(Window window, Accent accent, Theme theme)
         {
-            ChangeTheme(window.Resources, accent, theme);
+            window.Resources.BeginInit();
+
+            var detectedTheme = DetectTheme((MetroWindow)window);
+            if (detectedTheme != null)
+            {
+                if (detectedTheme.Item2 != null)
+                {
+                    var accentResource = window.Resources.MergedDictionaries.FirstOrDefault(d => d.Source == detectedTheme.Item2.Resources.Source);
+                    if (accentResource != null) {
+                        var ok = window.Resources.MergedDictionaries.Remove(accentResource);
+
+                        foreach (DictionaryEntry r in accentResource)
+                        {
+                            if (window.Resources.Contains(r.Key))
+                                window.Resources.Remove(r.Key);
+                        }
+
+                        window.Resources.MergedDictionaries.Add(accent.Resources);
+                    }
+                }
+                if (detectedTheme.Item1 != null)
+                {
+                    var themeResource = (detectedTheme.Item1 == Theme.Light) ? LightResource : DarkResource;
+                    var md = window.Resources.MergedDictionaries.FirstOrDefault(d => d.Source == themeResource.Source);
+                    if (md != null)
+                    {
+                        window.Resources.MergedDictionaries.Remove(md);
+                        var newThemeResource = (theme == Theme.Light) ? LightResource : DarkResource;
+
+                        foreach (DictionaryEntry r in themeResource)
+                        {
+                            if (window.Resources.Contains(r.Key))
+                                window.Resources.Remove(r.Key);
+                        }
+
+                        window.Resources.MergedDictionaries.Add(newThemeResource);
+                    }
+                }
+            }
+            else
+            {
+                ChangeTheme(window.Resources, accent, theme);
+            }
+
+            window.Resources.EndInit();
         }
 
         public static void ChangeTheme(ResourceDictionary r, Accent accent, Theme theme)
         {
             var themeResource = (theme == Theme.Light) ? LightResource : DarkResource;
-            ApplyResourceDictionary(themeResource, r);
             ApplyResourceDictionary(accent.Resources, r);
+            ApplyResourceDictionary(themeResource, r);
         }
 
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
