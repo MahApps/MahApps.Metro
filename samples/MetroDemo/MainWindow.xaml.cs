@@ -7,6 +7,7 @@ using System.Windows.Threading;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using System.Collections.Generic;
+using System.Windows.Data;
 
 namespace MetroDemo
 {
@@ -20,6 +21,8 @@ namespace MetroDemo
             DataContext = new MainWindowViewModel();
             InitializeComponent();
             var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
+
+            CollectionViewSource.GetDefaultView(groupingComboBox.ItemsSource).GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
         }
 
         void Tick(object sender, EventArgs e)
