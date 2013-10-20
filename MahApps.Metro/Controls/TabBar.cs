@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
 namespace MahApps.Metro.Controls
@@ -79,10 +80,38 @@ namespace MahApps.Metro.Controls
             get { return (bool)GetValue(IsCollapsedProperty); }
             set
             {
-                SetValue(IsCollapsedProperty, value);
+                if ((bool)GetValue(IsCollapsedProperty) != value)
+                {
+                    if (value)
+                    {
+                        //((DoubleAnimation)AnimationStoryboard.Children[0]).From = SidebarWidth;
+                        ((DoubleAnimation)AnimationStoryboard.Children[0]).To = 100;
+                    }
+                    else
+                    {
+                        ((DoubleAnimation)AnimationStoryboard.Children[0]).To = SidebarWidth;
+                        //((DoubleAnimation)AnimationStoryboard.Children[0]).From = 100;
+                    }
 
-                if (CollapsedStateChanged != null)
-                    CollapsedStateChanged(this, new TabBarCollapsedStateChangedEventArgs(value));
+
+                    if (!animating)
+                    {
+                        animating = true;
+                        BeginStoryboardAsync(AnimationStoryboard).ContinueWith(x =>
+                        {
+                            Dispatcher.BeginInvoke(new Action(() =>
+                                {
+                                    animating = false;
+
+                                    SetValue(IsCollapsedProperty, value);
+
+                                    if (CollapsedStateChanged != null)
+                                        CollapsedStateChanged(this, new TabBarCollapsedStateChangedEventArgs(value));
+                                }));
+                        });
+                    }
+
+                }
             }
         }
 
@@ -115,6 +144,12 @@ namespace MahApps.Metro.Controls
 
             PART_TabItems.SelectionChanged += PART_TabItems_SelectionChanged;
 
+            AnimationStoryboard = this.Template.Resources["AnimationStoryboard"] as Storyboard;
+            var x = AnimationStoryboard.Clone();
+            x.SetValue(Storyboard.TargetNameProperty, null);
+            x.SetValue(Storyboard.TargetProperty, GetTemplateChild("SideBarGrid"));
+            AnimationStoryboard = x;
+
             //PART_Presenter.Margin = new Thickness(SidebarWidth,0,0,0);
         }
 
@@ -135,6 +170,26 @@ namespace MahApps.Metro.Controls
 
         internal MetroContentControl PART_Presenter = null;
         private ListBox PART_TabItems = null;
+        private volatile bool animating = false;
+        private Storyboard AnimationStoryboard = null;
+
+        private System.Threading.Tasks.Task BeginStoryboardAsync(Storyboard sb)
+        {
+            System.Threading.Tasks.TaskCompletionSource<object> tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
+            EventHandler eh = null;
+            eh = new EventHandler((o, e) =>
+                 {
+                     sb.Completed -= eh;
+                     tcs.TrySetResult(null);
+                 });
+
+            sb.Completed += eh;
+
+            this.BeginStoryboard(sb);
+
+            return tcs.Task;
+        }
     }
     public class TabBarCollapsedStateChangedEventArgs : EventArgs
     {

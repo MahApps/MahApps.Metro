@@ -67,11 +67,11 @@
             </Border>
         </Grid>
         
-        <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding IsCollapsed, RelativeSource={RelativeSource Self}}" Value="True">
-                <Setter TargetName="SideBarGrid" Property="Width" Value="100"/>
-            </DataTrigger>
-        </ControlTemplate.Triggers>
+        <ControlTemplate.Resources>
+            <Storyboard Storyboard.TargetName="SideBarGrid" Storyboard.TargetProperty="(Grid.Width)" x:Key="AnimationStoryboard">
+                <DoubleAnimation To="100" Duration="0:0:0.35" AccelerationRatio=".9" BeginTime="0:0:0"/>
+            </Storyboard>
+        </ControlTemplate.Resources>
     </ControlTemplate>
     <Style TargetType="{x:Type Controls:TabBar}">
         <Setter Property="MinHeight" Value="100"/>
