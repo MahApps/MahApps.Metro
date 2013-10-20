@@ -38,7 +38,7 @@
                                     <Border ToolTip="{Binding Header}">
                                         <StackPanel Orientation="Horizontal">
                                             <ContentPresenter Content="{Binding Icon}" x:Name="Icon"/>
-                                            
+
                                             <Label Content="{Binding Header}" x:Name="HeaderLabel" FontSize="15" Padding="10 0 0 0" Margin="20 5 0 5">
                                                 <Label.Foreground>
                                                     <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
@@ -62,11 +62,11 @@
                     </Grid>
 
                     <Controls:MetroContentControl Content="{TemplateBinding SelectedItem}" Grid.Column="1"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_Presenter" />
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_Presenter" Background="White" />
                 </Grid>
             </Border>
         </Grid>
-        
+
         <ControlTemplate.Resources>
             <Storyboard Storyboard.TargetName="SideBarGrid" Storyboard.TargetProperty="(Grid.Width)" x:Key="AnimationStoryboard">
                 <DoubleAnimation To="100" Duration="0:0:0.35" AccelerationRatio=".9" BeginTime="0:0:0"/>
@@ -81,6 +81,7 @@
         <Setter Property="Template" Value="{StaticResource TabBarTemplate}"/>
     </Style>
     <Style TargetType="{x:Type Controls:TabBarItem}">
+        <Setter Property="Background" Value="White"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:TabBarItem}">

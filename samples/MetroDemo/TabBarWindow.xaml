@@ -136,7 +136,7 @@
             </Controls:TabBarItem>
 
             <Controls:TabBar.LowerTabBarContent>
-                <Grid>
+                <Grid Background="#FF252525">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -169,7 +169,7 @@
 
                     <Grid Grid.Row="1">
                         <ListBox x:Name="itemListBox" Style="{StaticResource ItemListBoxStyle}" 
-                             MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Grid},Path=ActualHeight}">
+                             MaxHeight="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Grid},Path=ActualHeight}" Background="#FF252525">
                         </ListBox>
 
                         <ToggleButton x:Name="collapsedItemListBoxButton" Visibility="Collapsed"
@@ -188,7 +188,8 @@
                            PlacementTarget="{Binding ElementName=collapsedItemListBoxButton}"
                            Placement="Right" Height="300">
                             <ListBox x:Name="itemListBox2" Style="{DynamicResource ItemListBoxStyle}" 
-                                 SelectedItem="{Binding ElementName=itemListBox,Path=SelectedItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}">
+                                 SelectedItem="{Binding ElementName=itemListBox,Path=SelectedItem,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}"
+                                 Background="#FF252525">
                             </ListBox>
                         </Popup>
                     </Grid>

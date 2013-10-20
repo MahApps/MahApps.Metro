@@ -80,6 +80,10 @@ namespace MetroDemo
 
             itemListBox.Visibility = e.IsCollapsed ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
             collapsedItemListBoxButton.Visibility = itemListBox.Visibility == System.Windows.Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+
+            if (!e.IsCollapsed && (bool)collapsedItemListBoxButton.IsChecked)
+                collapsedItemListBoxButton.IsChecked = false;
+
         }
     }
 
