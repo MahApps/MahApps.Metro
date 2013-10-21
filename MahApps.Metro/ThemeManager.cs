@@ -28,8 +28,8 @@ namespace MahApps.Metro
             }
         }
 
-        private static IEnumerable<Accent> _accents;
-        public static IEnumerable<Accent> DefaultAccents
+        private static IList<Accent> _accents;
+        public static IList<Accent> DefaultAccents
         {
             get
             {
