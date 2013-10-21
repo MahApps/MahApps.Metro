@@ -19,6 +19,7 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroAnimatedSingleRowTabControl.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroTabControl.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroTabItem.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/TabBar.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Tile.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />
