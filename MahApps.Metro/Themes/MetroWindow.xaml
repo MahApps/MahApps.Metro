@@ -33,7 +33,6 @@
                 <Controls:MetroContentControl IsTabStop="False"
                                               FocusVisualStyle="{x:Null}"
                                               TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
-                    <Grid>
                     <Grid Background="{TemplateBinding Background}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
