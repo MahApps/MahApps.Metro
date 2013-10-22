@@ -31,9 +31,9 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="Controls:TextboxHelper.FocusBorderBrush"
-                Value="{DynamicResource BlackBrush}" />
+                Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:TextboxHelper.MouseOverBorderBrush"
-                Value="{DynamicResource BlackBrush}" />
+                Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
@@ -349,9 +349,9 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="Controls:TextboxHelper.FocusBorderBrush"
-                Value="{DynamicResource BlackBrush}" />
+                Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:TextboxHelper.MouseOverBorderBrush"
-                Value="{DynamicResource BlackBrush}" />
+                Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="Controls:TextboxHelper.ButtonTemplate"
                 Value="{DynamicResource ChromelessButtonTemplate}" />
         <!-- change SnapsToDevicePixels to true to view a better border and validation error -->

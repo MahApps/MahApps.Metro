@@ -103,8 +103,9 @@
     
     <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{DynamicResource Gray6}" />
     <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource Gray6}" />
-    <SolidColorBrush x:Key="TextBoxMouseOverBorderBrush" Color="{DynamicResource BlackColor}" />
     <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush" Color="{DynamicResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBoxFocusBorderBrush" Color="{DynamicResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBoxMouseOverBorderBrush" Color="{DynamicResource Gray2}" />
 
     <SolidColorBrush x:Key="ButtonMouseOverBorderBrush" Color="{DynamicResource BlackColor}" />
     <SolidColorBrush x:Key="ButtonMouseOverInnerBorderBrush" Color="{DynamicResource BlackColor}" />
