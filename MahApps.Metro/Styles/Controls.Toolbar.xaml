@@ -28,12 +28,12 @@
                     
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush5}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush5}" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="true">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
@@ -74,7 +74,7 @@
                                 <!--Brush similar to visual studio, can be improved-->
                                 <DrawingBrush ViewportUnits="Absolute" ViewboxUnits="Absolute" Viewport="0,0,5,4" Viewbox="0,0,5,4" TileMode="Tile">
                                     <DrawingBrush.Drawing>
-                                        <GeometryDrawing Brush="{DynamicResource GrayBrush6}">
+                                        <GeometryDrawing Brush="{DynamicResource GrayBrush3}">
                                             <GeometryDrawing.Geometry>
                                                 <GeometryGroup>
                                                     <GeometryGroup.Children>
@@ -110,12 +110,12 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush5}"/>
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}"/>
                             <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource AccentColorBrush}"/>
                             <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource AccentColorBrush}"/>
                         </Trigger>
                         <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush5}"/>
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}"/>
                             <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource AccentColorBrush}"/>
                             <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource AccentColorBrush}"/>
                         </Trigger>

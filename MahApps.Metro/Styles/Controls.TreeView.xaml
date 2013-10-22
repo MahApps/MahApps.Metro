@@ -99,11 +99,8 @@
 
                         
                         <Trigger SourceName="Border" Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="Border" Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
                             <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}"></Setter>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
@@ -111,7 +108,7 @@
                             <Setter Property="Foreground" Value="White"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -119,7 +116,7 @@
                                 <Condition Property="IsSelected" Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
+                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
                                 <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
@@ -128,11 +125,8 @@
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="Selector.IsSelectionActive" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="Border" Property="Background"
+                                    Value="{DynamicResource AccentColorBrush2}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

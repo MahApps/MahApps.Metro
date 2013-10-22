@@ -128,7 +128,6 @@
     <Compile Include="Behaviours\ReloadBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviors.cs" />
     <Compile Include="Behaviours\TiltBehavior.cs" />
-    <Compile Include="Controls\AppBarButton.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroContentControl.cs" />
     <Compile Include="Controls\MetroImage.cs" />
@@ -338,7 +337,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\VS\Colours.xaml">
+    <Page Include="Styles\VS\Colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -363,10 +362,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\VS\TextBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\AppBarButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -464,7 +459,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\Colours.xaml">
+    <Page Include="Styles\Colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

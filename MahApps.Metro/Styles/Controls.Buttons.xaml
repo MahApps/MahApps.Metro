@@ -223,7 +223,7 @@
         <Setter Property="FontFamily"
                 Value="{DynamicResource DefaultFont}" />
         <Setter Property="Background"
-                Value="{DynamicResource GrayBrush7}" />
+                Value="{DynamicResource GrayBrush10}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="Foreground"
@@ -307,7 +307,7 @@
                                 CornerRadius="3.5"
                                 Opacity="0" />
                         <Border x:Name="PressedBorder"
-                                Background="{DynamicResource GrayBrush5}"
+                                Background="{DynamicResource GrayBrush7}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="3.5"
                                 Opacity="0" />
@@ -345,7 +345,7 @@
         <Setter Property="FontWeight"
                 Value="SemiBold" />
         <Setter Property="Background"
-                Value="{DynamicResource GrayBrush7}" />
+                Value="{DynamicResource GrayBrush10}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Foreground"
@@ -422,7 +422,7 @@
                         <Border x:Name="Background"
                                 BorderBrush="{DynamicResource BlackBrush}"
                                 BorderThickness="2"
-                                Background="{DynamicResource WhiteColorBrush}" />
+                                Background="{DynamicResource WhiteBrush}" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
                                    IsHitTestVisible="false"
@@ -448,7 +448,7 @@
                         <Trigger Property="IsPressed"
                                  Value="true">
                             <Setter Property="Foreground"
-                                    Value="{DynamicResource WhiteColorBrush}" />
+                                    Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -549,7 +549,7 @@
     <Style TargetType="ToggleButton"
            x:Key="MetroToggleButton">
         <Setter Property="Background"
-                Value="{DynamicResource GrayBrush7}" />
+                Value="{DynamicResource GrayBrush10}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="Foreground"
@@ -647,7 +647,7 @@
                                 Background="{TemplateBinding Background}"
                                 CornerRadius="3" />
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource WhiteColorBrush}"
+                                   Fill="{DynamicResource WhiteBrush}"
                                    IsHitTestVisible="false"
                                    Opacity="0"
                                    RadiusY="3"
@@ -658,12 +658,12 @@
                                 CornerRadius="3.5"
                                 Opacity="0" />
                         <Border x:Name="PressedBorder"
-                                Background="{DynamicResource GrayBrush5}"
+                                Background="{DynamicResource GrayBrush7}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="3.5"
                                 Opacity="0" />
                         <Border x:Name="CheckedBorder"
-                                Background="{DynamicResource GrayBrush5}"
+                                Background="{DynamicResource GrayBrush7}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 CornerRadius="3.5"
                                 Opacity="0" />
@@ -680,7 +680,7 @@
                                    RadiusY="3"
                                    Opacity="0" />
                         <Rectangle x:Name="CheckedRectangle"
-                                   Stroke="{DynamicResource GrayBrush1}"
+                                   Stroke="{DynamicResource GrayBrush6}"
                                    RadiusY="4"
                                    RadiusX="4"
                                    Margin="-1"

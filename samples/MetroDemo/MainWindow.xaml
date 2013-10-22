@@ -19,7 +19,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
@@ -727,7 +727,7 @@
                             <Controls:ProgressIndicator Width="100"
                                                         Height="10"
                                                         Margin="0, 10, 0, 0"
-                                                        ProgressColour="{DynamicResource AccentColorBrush}" />
+                                                        ProgressColor="{DynamicResource AccentColorBrush}" />
                         </StackPanel>
                         <Grid Grid.Row="2" Grid.Column="2">
                             <Label VerticalAlignment="top" HorizontalAlignment="Center" Content="Sliders TickPlacement" Style="{StaticResource DescriptionHeaderStyle}" />

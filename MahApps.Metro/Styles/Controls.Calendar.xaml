@@ -100,19 +100,13 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}" />
                         <Rectangle x:Name="HighlightBackground"
-                                   Opacity="0">
-                            <Rectangle.Fill>
-                                <SolidColorBrush Color="{DynamicResource AccentColor4}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
+                                   Opacity="0"
+                                   Fill="{DynamicResource AccentColorBrush4}" />
                         <ContentPresenter x:Name="NormalText"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="5,1,5,1"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <TextElement.Foreground>
-                                <SolidColorBrush Color="{DynamicResource Gray3}" />
-                            </TextElement.Foreground>
-                        </ContentPresenter>
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          TextElement.Foreground="{DynamicResource GrayBrush1}" />
                         <Path x:Name="Blackout"
                               Data="M8.1772461,11.029181 L10.433105,11.029181 L11.700684,12.801641 L12.973633,11.029181 L15.191895,11.029181 L12.844727,13.999395 L15.21875,17.060919 L12.962891,17.060919 L11.673828,15.256231 L10.352539,17.060919 L8.1396484,17.060919 L10.519043,14.042364 z"
                               HorizontalAlignment="Stretch"
@@ -121,14 +115,11 @@
                               RenderTransformOrigin="0.5,0.5"
                               Stretch="Fill"
                               VerticalAlignment="Stretch"
-                              Fill="{DynamicResource WhiteColorBrush}" />
+                              Fill="{DynamicResource WhiteBrush}" />
                         <Rectangle x:Name="DayButtonFocusVisual"
                                    IsHitTestVisible="false"
-                                   Visibility="Collapsed">
-                            <Rectangle.Stroke>
-                                <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                            </Rectangle.Stroke>
-                        </Rectangle>
+                                   Visibility="Collapsed"
+                                   Stroke="{DynamicResource AccentColorBrush3}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -177,7 +168,7 @@
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Margin="0,6,0,6"
-                                       Foreground="{DynamicResource BlackColorBrush}"
+                                       Foreground="{DynamicResource BlackBrush}"
                                        Opacity="0.8" />
                         </DataTemplate>
                     </ControlTemplate.Resources>
@@ -464,11 +455,8 @@
 
     <Style x:Key="MetroCalendarButtonStyle"
            TargetType="{x:Type CalendarButton}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource AccentColor4}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background"
+                Value="{DynamicResource AccentColorBrush4}" />
         <Setter Property="MinWidth"
                 Value="40" />
         <Setter Property="MinHeight"
@@ -580,14 +568,11 @@
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="1,0,1,1"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          TextElement.Foreground="{DynamicResource GrayBrush3}" />
+                                          TextElement.Foreground="{DynamicResource GrayBrush1}" />
                         <Rectangle x:Name="CalendarButtonFocusVisual"
                                    IsHitTestVisible="false"
-                                   Visibility="Collapsed">
-                            <Rectangle.Stroke>
-                                <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                            </Rectangle.Stroke>
-                        </Rectangle>
+                                   Visibility="Collapsed"
+                                   Stroke ="{DynamicResource AccentColorBrush3}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused"
@@ -625,7 +610,7 @@
                 <ControlTemplate TargetType="{x:Type Calendar}">
                     <StackPanel x:Name="PART_Root"
                                 HorizontalAlignment="Center"
-                                Background="{DynamicResource WhiteColorBrush}">
+                                Background="{DynamicResource WhiteBrush}">
                         <CalendarItem x:Name="PART_CalendarItem"
                                       BorderBrush="{TemplateBinding BorderBrush}"
                                       BorderThickness="{TemplateBinding BorderThickness}"

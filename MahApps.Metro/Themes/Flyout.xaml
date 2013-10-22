@@ -4,6 +4,10 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <DataTemplate x:Key="HeaderTemplate"
                   x:Shared="False">
         <DockPanel x:Name="dpHeader"

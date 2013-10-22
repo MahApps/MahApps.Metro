@@ -75,27 +75,27 @@
     </UserControl.Triggers>
     <Border x:Name="IndeterminateRoot" Visibility="Visible"  VerticalAlignment="Stretch">
         <Grid VerticalAlignment="Stretch" Margin="0" HorizontalAlignment="Left">
-            <Rectangle Fill="{Binding Path=ProgressColour,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R1" HorizontalAlignment="Left" >
+            <Rectangle Fill="{Binding Path=ProgressColor,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R1" HorizontalAlignment="Left" >
                 <Rectangle.RenderTransform>
                     <TranslateTransform x:Name="R1TT" />
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Rectangle Fill="{Binding Path=ProgressColour,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R2" HorizontalAlignment="Left" >
+            <Rectangle Fill="{Binding Path=ProgressColor,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R2" HorizontalAlignment="Left" >
                 <Rectangle.RenderTransform>
                     <TranslateTransform x:Name="R2TT" />
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Rectangle Fill="{Binding Path=ProgressColour,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R3" HorizontalAlignment="Left" >
+            <Rectangle Fill="{Binding Path=ProgressColor,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R3" HorizontalAlignment="Left" >
                 <Rectangle.RenderTransform>
                     <TranslateTransform x:Name="R3TT" />
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Rectangle Fill="{Binding Path=ProgressColour,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R4" HorizontalAlignment="Left" >
+            <Rectangle Fill="{Binding Path=ProgressColor,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R4" HorizontalAlignment="Left" >
                 <Rectangle.RenderTransform>
                     <TranslateTransform x:Name="R4TT" />
                 </Rectangle.RenderTransform>
             </Rectangle>
-            <Rectangle Fill="{Binding Path=ProgressColour,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R5" HorizontalAlignment="Left" >
+            <Rectangle Fill="{Binding Path=ProgressColor,ElementName=progressIndicator}" VerticalAlignment="Stretch" IsHitTestVisible="False" Width="4" x:Name="R5" HorizontalAlignment="Left" >
                 <Rectangle.RenderTransform>
                     <TranslateTransform x:Name="R5TT" />
                 </Rectangle.RenderTransform>

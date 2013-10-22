@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
 
@@ -16,12 +15,12 @@
                             <Rectangle.Resources>
                                 <Style TargetType="{x:Type Rectangle}">
                                     <Setter Property="Fill"
-                                            Value="{DynamicResource GrayBrush5}" />
+                                            Value="{DynamicResource GrayBrush7}" />
                                 </Style>
                             </Rectangle.Resources>
                         </Rectangle>
                         <Polygon x:Name="Arrow"
-                                 Fill="{DynamicResource GrayBrush3}"
+                                 Fill="{DynamicResource GrayBrush1}"
                                  HorizontalAlignment="Right"
                                  Margin="8,8,3,3"
                                  Opacity="0.15"
@@ -33,11 +32,8 @@
                         <Trigger Property="IsPressed"
                                  Value="True">
                             <Setter Property="Fill"
-                                    TargetName="Border">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                </Setter.Value>
-                            </Setter>
+                                    TargetName="Border"
+                                    Value="{DynamicResource AccentColorBrush2}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
@@ -56,7 +52,7 @@
         <Setter Property="Width"
                 Value="8" />
         <Setter Property="Background"
-                Value="{DynamicResource GrayBrush4}" />
+                Value="{DynamicResource GrayBrush5}" />
         <Setter Property="Cursor"
                 Value="SizeWE" />
         <Setter Property="Template">
@@ -101,7 +97,7 @@
         <Setter Property="MinHeight"
                 Value="25" />
         <Setter Property="Foreground"
-                Value="{DynamicResource BlackColorBrush}" />
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Cursor"
                 Value="Hand" />
         <Setter Property="HorizontalContentAlignment"
@@ -113,7 +109,7 @@
         <Setter Property="Margin"
                 Value="0,0,0,0" />
         <Setter Property="BorderBrush"
-                Value="{DynamicResource GrayBrush4}" />
+                Value="{DynamicResource GrayBrush5}" />
         <Setter Property="Background"
                 Value="{DynamicResource GrayBrush8}" />
         <Setter Property="Template">
@@ -167,7 +163,7 @@
                                  Value="{x:Null}">
                             <Setter TargetName="BackgroundBorder"
                                     Property="Background"
-                                    Value="{DynamicResource WhiteColorBrush}" />
+                                    Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -232,7 +228,7 @@
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
-                Value="{DynamicResource GrayBrush4}" />
+                Value="{DynamicResource GrayBrush5}" />
         <Setter Property="BorderThickness"
                 Value="0,0,1,0" />
         <Setter Property="Margin"
@@ -265,11 +261,8 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -324,11 +317,8 @@
             </Trigger>
             <Trigger Property="IsMouseOver"
                      Value="True">
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush3}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -338,17 +328,14 @@
                                Value="True" />
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Background"
+                            Value="{DynamicResource AccentColorBrush2}" />
                 </MultiTrigger.Setters>
             </MultiTrigger>
             <Trigger Property="IsEnabled"
                      Value="False">
                 <Setter Property="Foreground"
-                        Value="{DynamicResource GrayBrush5}" />
+                        Value="{DynamicResource GrayBrush7}" />
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
@@ -359,7 +346,7 @@
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
                     <Setter Property="Background"
-                            Value="{DynamicResource GrayBrush5}" />
+                            Value="{DynamicResource GrayBrush7}" />
                     <Setter Property="Foreground"
                             Value="{DynamicResource AccentSelectedColorBrush}" />
                 </MultiTrigger.Setters>
@@ -372,7 +359,7 @@
         <Setter Property="GridLinesVisibility"
                 Value="None" />
         <Setter Property="Background"
-                Value="{DynamicResource WhiteColorBrush}" />
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness"
@@ -391,7 +378,7 @@
             <Setter.Value>
                 <Style TargetType="Separator">
                     <Setter Property="Background"
-                            Value="{DynamicResource GrayBrush5}" />
+                            Value="{DynamicResource GrayBrush7}" />
                     <Setter Property="Width"
                             Value="2" />
                     <Setter Property="Template">
@@ -537,11 +524,8 @@
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Column.DisplayIndex}"
                          Value="0">
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource AccentColor4}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush4}" />
             </DataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -550,11 +534,8 @@
                     <Condition Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=IsSelected}"
                                Value="True" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush2}" />
             </MultiDataTrigger>
         </Style.Triggers>
     </Style>

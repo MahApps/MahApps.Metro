@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!--Thumb Style-->
     <Style x:Key="HorizontalSliderThumb" TargetType="Thumb">
-        <Setter Property="Background" Value="{DynamicResource GrayBrush7}" />
+        <Setter Property="Background" Value="{DynamicResource GrayBrush10}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Template">
@@ -43,7 +43,7 @@
                                 Opacity=".55"
                                 BorderBrush="{DynamicResource ControlBackgroundBrush}" />
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource DisabledWhiteColorBrush}"
+                                   Fill="{DynamicResource DisabledWhiteBrush}"
                                    IsHitTestVisible="false"
                                    Opacity=".4" />
                     </Grid>
@@ -97,7 +97,7 @@
                                 Opacity=".55"
                                 BorderBrush="{DynamicResource ControlBackgroundBrush}" />
                         <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource DisabledWhiteColorBrush}"
+                                   Fill="{DynamicResource DisabledWhiteBrush}"
                                    IsHitTestVisible="false"
                                    Opacity=".4" />
                     </Grid>
@@ -130,11 +130,8 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Rectangle Height="3"
-                                   Margin="0,1,0,0">
-                            <Rectangle.Fill>
-                                <SolidColorBrush Color="{DynamicResource Gray6}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
+                                   Margin="0,1,0,0"
+                                   Fill="{DynamicResource GrayBrush3}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -193,11 +190,8 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Rectangle Width="3"
-                                   Margin="1,0,0,0">
-                            <Rectangle.Fill>
-                                <SolidColorBrush Color="{DynamicResource Gray6}" />
-                            </Rectangle.Fill>
-                        </Rectangle>
+                                   Margin="1,0,0,0"
+                                   Fill="{DynamicResource GrayBrush3}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

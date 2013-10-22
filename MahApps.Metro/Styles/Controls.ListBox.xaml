@@ -6,7 +6,7 @@
         <Setter Property="BorderBrush"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
-                Value="{DynamicResource WhiteColorBrush}" />
+                Value="{DynamicResource WhiteBrush}" />
         <!-- default to 0 -->
         <Setter Property="BorderThickness"
                 Value="0" />
@@ -29,7 +29,7 @@
                             <Setter TargetName="Border"
                                     Property="BorderBrush">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray13}" />
+                                    <SolidColorBrush Color="{DynamicResource Gray9}" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
@@ -77,16 +77,13 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="Border"
-                                    Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                </Setter.Value>
-                            </Setter>
+                                    Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter Property="Foreground"
-                                    Value="{DynamicResource GrayBrush5}" />
+                                    Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -98,7 +95,7 @@
                             <MultiTrigger.Setters>
                                 <Setter TargetName="Border"
                                         Property="Background"
-                                        Value="{DynamicResource GrayBrush5}" />
+                                        Value="{DynamicResource GrayBrush7}" />
                                 <Setter Property="Foreground"
                                         Value="{DynamicResource AccentSelectedColorBrush}" />
                             </MultiTrigger.Setters>
@@ -111,11 +108,8 @@
                                            Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="Border"
-                                    Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                </Setter.Value>
-                            </Setter>
+                                    Property="Background"
+                                    Value="{DynamicResource AccentColorBrush2}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -33,12 +33,12 @@ namespace MahApps.Metro.Controls
             dpd.AddValueChanged(this, (s, e) => ((ProgressIndicator)s).StartStopAnimation());
         }
 
-        public static readonly DependencyProperty ProgressColourProperty = DependencyProperty.RegisterAttached("ProgressColour", typeof(Brush), typeof(ProgressIndicator), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty ProgressColorProperty = DependencyProperty.RegisterAttached("ProgressColor", typeof(Brush), typeof(ProgressIndicator), new UIPropertyMetadata(null));
 
-        public Brush ProgressColour
+        public Brush ProgressColor
         {
-            get { return (Brush)GetValue(ProgressColourProperty); }
-            set { SetValue(ProgressColourProperty, value); }
+            get { return (Brush)GetValue(ProgressColorProperty); }
+            set { SetValue(ProgressColorProperty, value); }
         }
 
         private void StartStopAnimation()
