@@ -21,7 +21,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty IsWaitingForDataProperty = DependencyProperty.RegisterAttached("IsWaitingForData", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false));
 
-        private static readonly DependencyProperty hasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
+        private static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
 
         public static void SetIsWaitingForData(DependencyObject obj, bool value)
         {
@@ -61,12 +61,12 @@ namespace MahApps.Metro.Controls
         private static void SetTextLength(DependencyObject obj, int value)
         {
             obj.SetValue(TextLengthProperty, value);
-            obj.SetValue(hasTextProperty, value >= 1);
+            obj.SetValue(HasTextProperty, value >= 1);
         }
 
         public bool HasText
         {
-            get { return (bool)GetValue(hasTextProperty); }
+            get { return (bool)GetValue(HasTextProperty); }
         }
 
         static void OnIsMonitoringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
