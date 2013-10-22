@@ -11,10 +11,12 @@ namespace MahApps.Metro.Controls
 {
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
+    [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
     public class MetroWindow : Window
     {
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowCommands = "PART_WindowCommands";
+        private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -30,10 +32,25 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty InheritAccentColorsAndThemeProperty = DependencyProperty.Register("InheritAccentColorsAndTheme", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
 
         bool isDragging;
         ContentPresenter WindowCommandsPresenter;
+        WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
+
+        public bool InheritAccentColorsAndTheme
+        {
+            get { return (bool)this.GetValue(InheritAccentColorsAndThemeProperty); }
+            set { SetValue(InheritAccentColorsAndThemeProperty, value); }
+        }
+
+        public bool ShowWindowCommandsOnTop
+        {
+            get { return (bool)this.GetValue(ShowWindowCommandsOnTopProperty); }
+            set { SetValue(ShowWindowCommandsOnTopProperty, value); }
+        }
 
         public bool WindowTransitionsEnabled
         {
@@ -146,6 +163,19 @@ namespace MahApps.Metro.Controls
             {
                 this.Flyouts = new FlyoutsControl();
             }
+
+            if (this.InheritAccentColorsAndTheme)
+            {
+                var mainWindow = System.Windows.Application.Current != null ? System.Windows.Application.Current.MainWindow as MetroWindow : null;
+                if (mainWindow != null)
+                {
+                    var theme = ThemeManager.DetectTheme(mainWindow);
+                    if (theme != null && theme.Item1 != null && theme.Item2 != null)
+                    {
+                        ThemeManager.ChangeTheme(this, theme.Item2, theme.Item1);
+                    }
+                }
+            }
         }
 
         static MetroWindow()
@@ -159,6 +189,8 @@ namespace MahApps.Metro.Controls
 
             if (WindowCommands == null)
                 WindowCommands = new WindowCommands();
+            WindowCommandsPresenter = GetTemplateChild("PART_WindowCommands") as ContentPresenter;
+            WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
 
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
 
@@ -174,15 +206,13 @@ namespace MahApps.Metro.Controls
                 MouseUp += TitleBarMouseUp;
                 MouseMove += TitleBarMouseMove;
             }
-
-            WindowCommandsPresenter = GetTemplateChild("PART_WindowCommands") as ContentPresenter;
         }
 
         protected override void OnStateChanged(EventArgs e)
         {
-            if (WindowCommands != null)
+            if (WindowButtonCommands != null)
             {
-                WindowCommands.RefreshMaximiseIconState();
+                WindowButtonCommands.RefreshMaximiseIconState();
             }
 
             base.OnStateChanged(e);
@@ -292,12 +322,16 @@ namespace MahApps.Metro.Controls
                 UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
         }
 
-        internal void HandleFlyoutStatusChange(Flyout flyout)
+        internal void HandleFlyoutStatusChange(Flyout flyout, int visibleFlyouts)
         {
-            if (flyout.Position == Position.Right && flyout.IsOpen)
-                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 3);
-            else
-                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 1); //in the style, the default is 1
+            if (flyout.Position == Position.Right || flyout.Position == Position.Top)
+            {
+                var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts + 2;
+                if (this.ShowWindowCommandsOnTop) {
+                    WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, zIndex);
+                }
+                WindowButtonCommands.SetValue(Panel.ZIndexProperty, zIndex);
+            }
         }
     }
 }

@@ -12,6 +12,7 @@
                       ShowIconOnTitleBar="True"
                       ShowTitleBar="True"
                       WindowStartupLocation="CenterScreen"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
                       mc:Ignorable="d">
 
@@ -33,10 +34,6 @@
             </Style>
         </ResourceDictionary>
     </Window.Resources>
-
-    <Controls:MetroWindow.GlowBrush>
-        <SolidColorBrush Color="{DynamicResource AccentColor}" />
-    </Controls:MetroWindow.GlowBrush>
 
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
@@ -589,8 +586,32 @@
                                       IsEditable="True"
                                       ItemsSource="{Binding Albums}"
                                       MaxDropDownHeight="125"
-                                      Text="{Binding Path=Title,
-                                                     Mode=TwoWay}" />
+                                      Text="{Binding Path=Title}" />
+                            <ComboBox Width="200"
+                                      Margin="0, 10, 0, 0"
+                                      Controls:TextboxHelper.Watermark="Autocompletion with grouping/virtualization"
+                                      DisplayMemberPath="Title"
+                                      IsEditable="True"
+                                      IsEnabled="True"
+                                      ItemsSource="{Binding Albums}"
+                                      Text="{Binding Path=Title}"
+                                      Controls:ComboBoxHelper.EnableVirtualizationWithGrouping="True" 
+                                      x:Name="groupingComboBox">
+                                <ComboBox.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path=Name.Name}"/>
+                                            </DataTemplate>
+                                        </GroupStyle.HeaderTemplate>
+                                    </GroupStyle>
+                                </ComboBox.GroupStyle>
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel IsItemsHost="True"/>
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                            </ComboBox>
                             <ComboBox Width="200"
                                       Margin="0, 10, 0, 0"
                                       IsEnabled="False"

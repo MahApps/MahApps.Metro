@@ -24,7 +24,7 @@
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\NET45\</OutputPath>
     <IntermediateOutputPath>obj\NET45\Debug\</IntermediateOutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -65,6 +65,7 @@
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
+    <Compile Include="Controls\ComboBoxHelper.cs" />
     <Compile Include="Controls\FlipView.cs" />
     <Compile Include="Controls\Flyout.cs" />
     <Compile Include="Controls\FlyoutsControl.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
+    <Compile Include="Controls\WindowButtonCommands.cs" />
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="Converters\FontSizeOffsetConverter.cs" />
     <Compile Include="Converters\OffOnConverter.cs" />

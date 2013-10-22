@@ -145,6 +145,10 @@ namespace MahApps.Metro.Behaviours
                     {
                         windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
                     }
+                    var windowButtonCommands = window.GetPart<ContentControl>("PART_WindowButtonCommands");
+                    if (windowButtonCommands != null) {
+                        windowButtonCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    }
                 };
 
                 switch (AssociatedObject.ResizeMode)

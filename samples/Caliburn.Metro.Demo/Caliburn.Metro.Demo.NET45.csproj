@@ -160,6 +160,10 @@
       <Project>{942D11C4-29F5-46C4-8C14-4B976D56C637}</Project>
       <Name>MahApps.Metro.NET45</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MetroDemo\MetroDemo.NET45.csproj">
+      <Project>{67174e59-0a40-4e8f-a82b-02fd317dd801}</Project>
+      <Name>MetroDemo.NET45</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -18,6 +20,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsPinnableProperty = DependencyProperty.Register("IsPinnable", typeof(bool), typeof(Flyout), new PropertyMetadata(default(bool)));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
+        public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
+
+        public ICommand CloseCommand
+        {
+            get { return (ICommand)GetValue(CloseCommandProperty); }
+            set { SetValue(CloseCommandProperty, value); }
+        }
 
         public DataTemplate HeaderTemplate
         {
@@ -52,6 +61,22 @@ namespace MahApps.Metro.Controls
         private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (Flyout)dependencyObject;
+
+            if ((bool)e.NewValue)
+            {
+                var window = flyout.TryFindParent<MetroWindow>();
+                if (window != null)
+                {
+                    var theme = ThemeManager.DetectTheme(window);
+                    if (theme != null && theme.Item2 != null)
+                    {
+                        var accent = theme.Item2;
+                        flyout.CheckForMainResourceDictionaries();
+                        ThemeManager.ChangeTheme(flyout.Resources, accent, Theme.Dark);
+                    }
+                }
+            }
+
             VisualStateManager.GoToState(flyout, (bool) e.NewValue == false ? "Hide" : "Show", true);
             if (flyout.IsOpenChanged != null)
             {
@@ -63,6 +88,31 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout) dependencyObject;
             flyout.ApplyAnimation((Position)e.NewValue);
+        }
+
+        private bool resDictAlreadyChecked;
+
+        private void CheckForMainResourceDictionaries()
+        {
+            if (resDictAlreadyChecked)
+                return;
+
+            this.Resources.BeginInit();
+            try {
+                var idx = -1;
+                foreach (var rd in ThemeManager.MainResourceDictionaries)
+                {
+                    var md = this.Resources.MergedDictionaries.FirstOrDefault(d => d.Source == rd.Source);
+                    if (md != null)
+                        this.Resources.MergedDictionaries.Remove(md);
+                    this.Resources.MergedDictionaries.Insert(++idx, rd);
+                }
+            }
+            finally
+            {
+                this.Resources.EndInit();
+                resDictAlreadyChecked = true;
+            }
         }
 
         static Flyout()

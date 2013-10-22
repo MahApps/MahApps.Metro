@@ -7,41 +7,43 @@ namespace AccentColorRepro
 {
     public partial class MainWindow
     {
-        private string lastUsedAccent;
+        private Theme currentTheme = Theme.Light;
+        private Accent currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Blue");
 
         public MainWindow()
         {
             InitializeComponent();
-            lastUsedAccent = "Blue";
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(x => x.Name == lastUsedAccent), Theme.Light);
+            ThemeManager.ChangeTheme(this, currentAccent, currentTheme);
         }
 
         private void DarkButtonClick(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(x => x.Name == lastUsedAccent), Theme.Dark);
+            currentTheme = Theme.Dark;
+            ThemeManager.ChangeTheme(this, currentAccent, currentTheme);
         }
 
         private void LightButtonClick(object sender, RoutedEventArgs e)
         {
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(x => x.Name == lastUsedAccent), Theme.Light);
+            currentTheme = Theme.Light;
+            ThemeManager.ChangeTheme(this, currentAccent, currentTheme);
         }
 
         private void BlueButtonClick(object sender, RoutedEventArgs e)
         {
-            lastUsedAccent = "Blue";
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(x => x.Name == lastUsedAccent), ThemeManager.ThemeIsDark ? Theme.Dark : Theme.Light);
+            currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Blue");
+            ThemeManager.ChangeTheme(this, currentAccent, currentTheme);
         }
 
         private void RedButtonClick(object sender, RoutedEventArgs e)
         {
-            lastUsedAccent = "Red";
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(x => x.Name == lastUsedAccent), ThemeManager.ThemeIsDark ? Theme.Dark : Theme.Light);
+            currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Red");
+            ThemeManager.ChangeTheme(this, currentAccent, currentTheme);
         }
 
         private void GreenButtonClick(object sender, RoutedEventArgs e)
         {
-            lastUsedAccent = "Green";
-            ThemeManager.ChangeTheme(this, ThemeManager.DefaultAccents.First(x => x.Name == lastUsedAccent), ThemeManager.ThemeIsDark ? Theme.Dark : Theme.Light);
+            currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Green");
+            ThemeManager.ChangeTheme(this, currentAccent, currentTheme);
         }
     }
 }

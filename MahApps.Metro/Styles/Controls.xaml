@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Calendar.xaml" />
@@ -70,14 +70,38 @@
             <Border Background="{DynamicResource ValidationBrush2}" CornerRadius="4" Margin="3,3,-3,-3" />
             <Border Background="{DynamicResource ValidationBrush3}" CornerRadius="3" Margin="2,2,-2,-2" />
             <Border Background="{DynamicResource ValidationBrush4}" CornerRadius="2" Margin="1,1,-1,-1" />
-            <Border Background="{DynamicResource ValidationBrush5}" CornerRadius="2" /> 
-            <Border CornerRadius="2">
-                <TextBlock Foreground="{DynamicResource WhiteColorBrush}"
-                           MaxWidth="250"
-                           Margin="8,4,8,4"
-                           TextWrapping="Wrap"
-                           Text="{Binding (Validation.Errors)[0].ErrorContent}"
-                           UseLayoutRounding="false" />
+            <Border Background="{DynamicResource ValidationBrush5}" CornerRadius="2">
+                <!--
+                from Josh Smith
+                
+                Binding to (Validation.Errors)[0] without Creating Debug Spew
+                
+                http://joshsmithonwpf.wordpress.com/2008/10/08/binding-to-validationerrors0-without-creating-debug-spew/
+                    
+                The trick is to bind a ContentPresenter’s Content to the CurrentItem of Validation.Errors for the target element.
+                Binding to the CurrentItem means that we’re  binding to the CurrentItem property of the default ICollectionView
+                that wraps the ReadOnlyObservableCollection<ValidationError> returned by the attached Errors property.
+                When the current item is non-null, that means there is a validation error; when it is null, there are no validation errors.
+                We can rely on ICollectionView to safely access the validation error, or not return anything if there are no errors.
+                That is what prevents the debug spew from pouring out.
+                    
+                The DataTemplate declared in the StackPanel’s Resources knows how to render a ValidationError object.
+                If the ContentPresenter has a null value, the template is not used to render anything.
+                
+                Issue #707
+                    
+                -->
+                <Border.Resources>
+                    <DataTemplate DataType="{x:Type ValidationError}">
+                        <TextBlock Foreground="{DynamicResource WhiteColorBrush}"
+                                   MaxWidth="250"
+                                   Margin="8,4,8,4"
+                                   TextWrapping="Wrap"
+                                   Text="{Binding ErrorContent}"
+                                   UseLayoutRounding="false" />
+                    </DataTemplate>
+                </Border.Resources>
+                <ContentPresenter Content="{Binding (Validation.Errors).CurrentItem}" />
             </Border>
         </Grid>
     </ControlTemplate>

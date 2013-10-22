@@ -24,4 +24,6 @@
 
     <SolidColorBrush x:Key="SliderTrackNormal" Color="#FF6C6C6C" />
 
+    <Color x:Key="FlyoutBackgroundColor">#2B2B2B</Color>
+
 </ResourceDictionary>

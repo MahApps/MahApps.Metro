@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
+using System.Collections.Generic;
+using System.Windows.Data;
 
 namespace MetroDemo
 {
@@ -19,6 +21,8 @@ namespace MetroDemo
             DataContext = new MainWindowViewModel();
             InitializeComponent();
             var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
+
+            CollectionViewSource.GetDefaultView(groupingComboBox.ItemsSource).GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
         }
 
         void Tick(object sender, EventArgs e)
@@ -28,23 +32,36 @@ namespace MetroDemo
             customTransitioning.Content = new TextBlock {Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true};
         }
 
-        private void ChangeAccent(string accentName)
+        private void ChangeAccent(Accent accent, Theme theme)
         {
-            this.currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == accentName);
-
-            ThemeManager.ChangeTheme(this, this.currentAccent, this.currentTheme);
+            //ThemeManager.ChangeTheme(this, this.currentAccent, this.currentTheme);
+            // changes from @spiritdead, try to change all open windows
+            var allWindows = System.Windows.Application.Current.Windows.OfType<Window>().Where(w => w.GetType() != typeof(GlowWindow)).ToList();
+            foreach (var window in allWindows)
+            {
+                List<Flyout> allOpenFlyouts = new List<Flyout>();
+                if (window is MetroWindow)
+                {
+                    allOpenFlyouts = ((MetroWindow)window).Flyouts.Items.OfType<Flyout>().ToList();
+                    foreach (var flyOut in allOpenFlyouts)
+                    {
+                        ThemeManager.ChangeTheme(flyOut.Resources, accent, Theme.Dark); // always dark
+                    }
+                }
+                ThemeManager.ChangeTheme(window, accent, theme);
+            }
         }
 
         private void ThemeLight(object sender, RoutedEventArgs e)
         {
             this.currentTheme = Theme.Light;
-            ThemeManager.ChangeTheme(this, this.currentAccent, Theme.Light);
+            this.ChangeAccent(this.currentAccent, this.currentTheme);
         }
 
         private void ThemeDark(object sender, RoutedEventArgs e)
         {
             this.currentTheme = Theme.Dark;
-            ThemeManager.ChangeTheme(this, this.currentAccent, Theme.Dark);
+            this.ChangeAccent(this.currentAccent, this.currentTheme);
         }
 
         private void LaunchVisualStudioDemo(object sender, RoutedEventArgs e)
@@ -112,7 +129,9 @@ namespace MetroDemo
 
         private void ChangeAccent(object sender, RoutedEventArgs e)
         {
-            ChangeAccent((string)((MenuItem)sender).Header);
+            var accentName = (string)((MenuItem)sender).Header;
+            this.currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == accentName);
+            this.ChangeAccent(this.currentAccent, this.currentTheme);
         }
     }
 }

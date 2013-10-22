@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace MahApps.Metro
@@ -10,8 +12,24 @@ namespace MahApps.Metro
         private static readonly ResourceDictionary LightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
         private static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
 
-        private static IEnumerable<Accent> _accents;
-        public static IEnumerable<Accent> DefaultAccents
+        private static List<ResourceDictionary> _mainResourceDictionaries;
+        public static List<ResourceDictionary> MainResourceDictionaries
+        {
+            get
+            {
+                return _mainResourceDictionaries ?? (_mainResourceDictionaries =
+                    new List<ResourceDictionary> {
+                                                    new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml") },
+                                                    new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") },
+                                                    new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") },
+                                                    new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml") },
+                                                    new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml") }
+                                                });
+            }
+        }
+
+        private static IList<Accent> _accents;
+        public static IList<Accent> DefaultAccents
         {
             get
             {
@@ -51,18 +69,59 @@ namespace MahApps.Metro
 
         public static void ChangeTheme(Window window, Accent accent, Theme theme)
         {
-            ChangeTheme(window.Resources, accent, theme);
+            window.Resources.BeginInit();
+
+            var detectedTheme = DetectTheme((MetroWindow)window);
+            if (detectedTheme != null)
+            {
+                if (detectedTheme.Item2 != null)
+                {
+                    var accentResource = window.Resources.MergedDictionaries.FirstOrDefault(d => d.Source == detectedTheme.Item2.Resources.Source);
+                    if (accentResource != null) {
+                        var ok = window.Resources.MergedDictionaries.Remove(accentResource);
+
+                        foreach (DictionaryEntry r in accentResource)
+                        {
+                            if (window.Resources.Contains(r.Key))
+                                window.Resources.Remove(r.Key);
+                        }
+
+                        window.Resources.MergedDictionaries.Add(accent.Resources);
+                    }
+                }
+                if (detectedTheme.Item1 != null)
+                {
+                    var themeResource = (detectedTheme.Item1 == Theme.Light) ? LightResource : DarkResource;
+                    var md = window.Resources.MergedDictionaries.FirstOrDefault(d => d.Source == themeResource.Source);
+                    if (md != null)
+                    {
+                        window.Resources.MergedDictionaries.Remove(md);
+                        var newThemeResource = (theme == Theme.Light) ? LightResource : DarkResource;
+
+                        foreach (DictionaryEntry r in themeResource)
+                        {
+                            if (window.Resources.Contains(r.Key))
+                                window.Resources.Remove(r.Key);
+                        }
+
+                        window.Resources.MergedDictionaries.Add(newThemeResource);
+                    }
+                }
+            }
+            else
+            {
+                ChangeTheme(window.Resources, accent, theme);
+            }
+
+            window.Resources.EndInit();
         }
 
         public static void ChangeTheme(ResourceDictionary r, Accent accent, Theme theme)
         {
-            ThemeIsDark = (theme == Theme.Dark);
             var themeResource = (theme == Theme.Light) ? LightResource : DarkResource;
-            ApplyResourceDictionary(themeResource, r);
             ApplyResourceDictionary(accent.Resources, r);
+            ApplyResourceDictionary(themeResource, r);
         }
-
-        public static bool ThemeIsDark { get; private set; }
 
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
         {
@@ -73,6 +132,84 @@ namespace MahApps.Metro
 
                 oldRd.Add(r.Key, r.Value);
             }
+        }
+
+        /// <summary>
+        /// Scans a Window's resources and returns it's accent and theme.
+        /// </summary>
+        /// <param name="window">The Window to check.</param>
+        /// <returns></returns>
+        public static Tuple<Theme, Accent> DetectTheme(MahApps.Metro.Controls.MetroWindow window)
+        {
+            if (window == null) throw new ArgumentNullException("window");
+
+            Theme currentTheme = Theme.Light;
+            ResourceDictionary themeDictionary = null;
+            Tuple<Theme, Accent> detectedAccentTheme = null;
+
+
+            if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, window.Resources))
+            {
+                if (GetThemeFromResources(currentTheme, window.Resources, ref detectedAccentTheme))
+                    return new Tuple<Theme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
+            }
+
+            return null;
+        }
+
+        internal static bool DetectThemeFromAppResources(out Theme detectedTheme, out ResourceDictionary themeRd)
+        {
+            detectedTheme = Theme.Light;
+            themeRd = null;
+
+            return DetectThemeFromResources(ref detectedTheme, ref themeRd, Application.Current.Resources);
+        }
+
+        private static bool DetectThemeFromResources(ref Theme detectedTheme, ref ResourceDictionary themeRd, ResourceDictionary dict)
+        {
+            var enumerator = dict.MergedDictionaries.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var currentRd = enumerator.Current;
+
+                if (currentRd.Source == LightResource.Source || currentRd.Source == DarkResource.Source)
+                {
+                    detectedTheme = currentRd.Source == LightResource.Source ? Theme.Light : Theme.Dark;
+                    themeRd = currentRd;
+
+                    enumerator.Dispose();
+                    return true;
+                }
+
+                if (DetectThemeFromResources(ref detectedTheme, ref themeRd, currentRd)) {
+                    return true;
+                }
+            }
+
+            enumerator.Dispose();
+            return false;
+        }
+        
+        internal static bool GetThemeFromResources(Theme presetTheme, ResourceDictionary dict, ref Tuple<Theme, Accent> detectedAccentTheme)
+        {
+            Theme currentTheme = presetTheme;
+            Accent currentAccent = null;
+
+            Accent matched = null;
+            if ((matched = ((List<Accent>)DefaultAccents).Find(x => x.Resources.Source == dict.Source)) != null)
+            {
+                currentAccent = matched;
+                detectedAccentTheme = Tuple.Create<Theme, Accent>(currentTheme, currentAccent);
+                return true;
+            }
+
+            foreach (ResourceDictionary rd in dict.MergedDictionaries)
+            {
+                if (GetThemeFromResources(presetTheme, rd, ref detectedAccentTheme))
+                    return true;
+            }
+
+            return false;
         }
     }
 }
