@@ -275,6 +275,7 @@
                             <TextBox Margin="0, 10, 0, 0" Text="Enabled" />
                             <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Watermark"
+                                     Controls:TextboxHelper.IsWaitingForData="True"
                                      ToolTip="Default alignment" />
                             <TextBox Margin="0, 10, 0, 0"
                                      HorizontalContentAlignment="Center"
