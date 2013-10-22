@@ -79,8 +79,8 @@
                                                 <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource WhiteBrush}" IsHitTestVisible="false" Opacity="0" />
                                                 <Border x:Name="MouseOverBorder" Background="{DynamicResource GrayBrush8}" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0" />
                                                 <Border x:Name="PressedBorder" Background="{DynamicResource GrayBrush7}" BorderThickness="{TemplateBinding BorderThickness}" Opacity="0" />
-                                                <Rectangle x:Name="FocusRectangle" Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" Opacity="0" />
-                                                <Rectangle x:Name="CheckedRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{DynamicResource TextBoxMouseOverBorderBrush}" />
+                                                <Rectangle x:Name="FocusRectangle" Stroke="{DynamicResource ComboBoxMouseOverInnerBorderBrush}" Opacity="0" />
+                                                <Rectangle x:Name="CheckedRectangle" StrokeThickness="{TemplateBinding BorderThickness}" Opacity="0" Stroke="{DynamicResource ComboBoxMouseOverBorderBrush}" />
                                                 <Rectangle x:Name="FocusVisualElement" IsHitTestVisible="false" Margin="1" Stroke="{DynamicResource HighlightBrush}" StrokeThickness="1" Visibility="Collapsed" />
                                                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                                   IsHitTestVisible="false"
@@ -209,7 +209,7 @@
                                 </Grid>
                             </Grid>
                         </Border>
-                        <Rectangle x:Name="FocusRectangle" Stroke="{DynamicResource TextBoxMouseOverInnerBorderBrush}" Opacity="0" />
+                        <Rectangle x:Name="FocusRectangle" Stroke="{DynamicResource ComboBoxMouseOverInnerBorderBrush}" Opacity="0" />
                         <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource DisabledWhiteBrush}" IsHitTestVisible="false" Opacity="0" />
                         <Border x:Name="ValidationErrorElement" BorderBrush="{DynamicResource ControlsValidationBrush}" BorderThickness="1" Visibility="Collapsed">
                             <ToolTipService.ToolTip>
