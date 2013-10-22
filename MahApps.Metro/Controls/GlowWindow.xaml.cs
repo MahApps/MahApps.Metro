@@ -29,9 +29,9 @@ namespace MahApps.Metro.Controls
             this.Owner = owner;
             glow.Visibility = Visibility.Collapsed;
 
-            var b = new Binding("GlowBrush.Color");
+            var b = new Binding("GlowBrush");
             b.Source = owner;
-            glow.SetBinding(Glow.GlowColorProperty, b);
+            glow.SetBinding(Glow.GlowBrushProperty, b);
 
             switch (direction)
             {
