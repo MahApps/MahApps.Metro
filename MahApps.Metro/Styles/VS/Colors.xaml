@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">    
+
     <!--Background-->
     <SolidColorBrush x:Key="Background" Color="#1C1C1C"/>
     <SolidColorBrush x:Key="LightBackground" Color="#2D2D30"/>
@@ -44,4 +45,5 @@
 
     <!--Scroll Bar-->
     <SolidColorBrush x:Key="ScrollBarPageButtonBackgroundHighlighted" Color="#05FFFFFF"/>
+
 </ResourceDictionary>
