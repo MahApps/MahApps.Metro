@@ -106,6 +106,11 @@
     <SolidColorBrush x:Key="TextBoxMouseOverBorderBrush" Color="{DynamicResource BlackColor}" />
     <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush" Color="{DynamicResource BlackColor}" />
 
+    <SolidColorBrush x:Key="ButtonMouseOverBorderBrush" Color="{DynamicResource BlackColor}" />
+    <SolidColorBrush x:Key="ButtonMouseOverInnerBorderBrush" Color="{DynamicResource BlackColor}" />
+    <SolidColorBrush x:Key="ComboBoxMouseOverBorderBrush" Color="{DynamicResource BlackColor}" />
+    <SolidColorBrush x:Key="ComboBoxMouseOverInnerBorderBrush" Color="{DynamicResource BlackColor}" />
+
     <SolidColorBrush x:Key="CheckBoxBrush" Color="{DynamicResource Gray2}" />
     <SolidColorBrush x:Key="CheckBoxMouseOverBrush" Color="{DynamicResource Gray1}" />
     <LinearGradientBrush x:Key="CheckBoxBackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0">
