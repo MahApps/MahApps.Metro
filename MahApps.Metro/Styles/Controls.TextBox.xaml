@@ -36,9 +36,9 @@
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect ShadowDepth="0"
-                                  Color="{DynamicResource AccentColor}"
+                                  Color="{DynamicResource BlackColor}"
                                   Opacity="0"
-                                  BlurRadius="8" />
+                                  BlurRadius="10" />
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
