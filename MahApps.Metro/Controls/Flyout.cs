@@ -151,26 +151,26 @@ namespace MahApps.Metro.Controls
                 default:
                     HorizontalAlignment = HorizontalAlignment.Left;
                     VerticalAlignment = VerticalAlignment.Stretch;
-                    hideFrame.Value = -root.DesiredSize.Width;
-                    root.RenderTransform = new TranslateTransform(-root.DesiredSize.Width, 0);
+                    hideFrame.Value = -root.ActualWidth;
+                    root.RenderTransform = new TranslateTransform(-root.ActualWidth, 0);
                     break;
                 case Position.Right:
                     HorizontalAlignment = HorizontalAlignment.Right;
                     VerticalAlignment = VerticalAlignment.Stretch;
-                    hideFrame.Value = root.DesiredSize.Width;
-                    root.RenderTransform = new TranslateTransform(root.DesiredSize.Width, 0);
+                    hideFrame.Value = root.ActualWidth;
+                    root.RenderTransform = new TranslateTransform(root.ActualWidth, 0);
                     break;
                 case Position.Top:
                     HorizontalAlignment = HorizontalAlignment.Stretch;
                     VerticalAlignment = VerticalAlignment.Top;
-                    hideFrameY.Value = -root.DesiredSize.Height;
-                    root.RenderTransform = new TranslateTransform(0, -root.DesiredSize.Height);
+                    hideFrameY.Value = -root.ActualHeight;
+                    root.RenderTransform = new TranslateTransform(0, -root.ActualHeight);
                     break;
                 case Position.Bottom:
                     HorizontalAlignment = HorizontalAlignment.Stretch;
                     VerticalAlignment = VerticalAlignment.Bottom;
-                    hideFrameY.Value = root.DesiredSize.Height;
-                    root.RenderTransform = new TranslateTransform(0, root.DesiredSize.Height);
+                    hideFrameY.Value = root.ActualHeight;
+                    root.RenderTransform = new TranslateTransform(0, root.ActualHeight);
                     break;
             }
         }
@@ -207,16 +207,16 @@ namespace MahApps.Metro.Controls
             switch (Position)
             {
                 default:
-                    hideFrame.Value = -root.DesiredSize.Width;
+                    hideFrame.Value = -root.ActualWidth;
                     break;
                 case Position.Right:
-                    hideFrame.Value = root.DesiredSize.Width;
+                    hideFrame.Value = root.ActualWidth;
                     break;
                 case Position.Top:
-                    hideFrameY.Value = -root.DesiredSize.Height;
+                    hideFrameY.Value = -root.ActualHeight;
                     break;
                 case Position.Bottom:
-                    hideFrameY.Value = root.DesiredSize.Height;
+                    hideFrameY.Value = root.ActualHeight;
                     break;
             }
         }
