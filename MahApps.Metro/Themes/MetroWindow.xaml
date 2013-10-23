@@ -10,7 +10,7 @@
 
     <ControlTemplate x:Key="WindowTemplateKey"
                      TargetType="{x:Type Controls:MetroWindow}">
-        <Grid Background="{TemplateBinding Background}">
+        <Grid>
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="LayoutStates">
                     <VisualState x:Name="AfterLoaded">
