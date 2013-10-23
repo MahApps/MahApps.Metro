@@ -223,23 +223,22 @@ namespace MahApps.Metro.Controls
 
         static void ComboBoxLoaded(object sender, RoutedEventArgs e)
         {
-            if (!(sender is ComboBox))
+            var comboBox = sender as ComboBox;
+            if (comboBox == null || comboBox.Style == null)
                 return;
 
-            var passbox = sender as ComboBox;
-            if (passbox.Style == null)
-                return;
-
-            var template = passbox.Template;
+            var template = comboBox.Template;
             if (template == null)
                 return;
 
-            var button = template.FindName("PART_ClearText", passbox) as Button;
+            var button = template.FindName("PART_ClearText", comboBox) as Button;
             if (button == null)
                 return;
 
-            if (GetClearTextButton(passbox))
+            if (GetClearTextButton(comboBox))
             {
+                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
+                button.Click -= ButtonClicked;
                 button.Click += ButtonClicked;
             }
             else
