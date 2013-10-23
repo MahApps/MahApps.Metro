@@ -572,7 +572,7 @@
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="2">
                             <Label Content="ComboBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <ComboBox Width="200"
+                            <ComboBox Width="200" Controls:TextboxHelper.ClearTextButton="True"
                                       Margin="0, 10, 0, 0"
                                       SelectedIndex="0">
                                 <ComboBoxItem Content="Item 1" />

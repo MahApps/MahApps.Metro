@@ -212,6 +212,40 @@ namespace MahApps.Metro.Controls
                 passbox.Loaded -= PassBoxLoaded;
                 passbox.Loaded += PassBoxLoaded;
             }
+            var combobox = d as ComboBox;
+            if (combobox != null)
+            {
+                // only one loaded event
+                combobox.Loaded -= ComboBoxLoaded;
+                combobox.Loaded += ComboBoxLoaded;
+            }
+        }
+
+        static void ComboBoxLoaded(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is ComboBox))
+                return;
+
+            var passbox = sender as ComboBox;
+            if (passbox.Style == null)
+                return;
+
+            var template = passbox.Template;
+            if (template == null)
+                return;
+
+            var button = template.FindName("PART_ClearText", passbox) as Button;
+            if (button == null)
+                return;
+
+            if (GetClearTextButton(passbox))
+            {
+                button.Click += ButtonClicked;
+            }
+            else
+            {
+                button.Click -= ButtonClicked;
+            }
         }
 
         static void PassBoxLoaded(object sender, RoutedEventArgs e)
@@ -270,7 +304,7 @@ namespace MahApps.Metro.Controls
         {
             var button = ((Button)sender);
             var parent = VisualTreeHelper.GetParent(button);
-            while (!(parent is TextBox || parent is PasswordBox))
+            while (!(parent is TextBox || parent is PasswordBox || parent is ComboBox))
             {
                 parent = VisualTreeHelper.GetParent(parent);
             }
@@ -282,7 +316,7 @@ namespace MahApps.Metro.Controls
             }
 
             if (GetClearTextButton(parent))
-            {
+            { 
                 if (parent is TextBox)
                 {
                     ((TextBox)parent).Clear();
@@ -290,6 +324,10 @@ namespace MahApps.Metro.Controls
                 else if (parent is PasswordBox)
                 {
                     ((PasswordBox)parent).Clear();
+                }
+                else if (parent is ComboBox)
+                {
+                    ((ComboBox)parent).SelectedItem = null;
                 }
             }
         }
