@@ -11,11 +11,11 @@ namespace MahApps.Metro.Controls
     partial class GlowWindow : Window
     {
         private readonly Func<Point, Cursor> getCursor;
-        private readonly Func<double> getHeight;
+        private readonly Func<double, double> getHeight;
         private readonly Func<Point, HitTestValues> getHitTestValue;
-        private readonly Func<double> getLeft;
-        private readonly Func<double> getTop;
-        private readonly Func<double> getWidth;
+        private readonly Func<double, double> getLeft;
+        private readonly Func<double, double> getTop;
+        private readonly Func<double, double> getWidth;
         private const double edgeSize = 20.0;
         private const double glowSize = 9.0;
         private IntPtr handle;
@@ -38,10 +38,10 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Left:
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Right;
-                    getLeft = () => Math.Ceiling(owner.Left - glowSize);
-                    getTop = () => owner.Top - glowSize;
-                    getWidth = () => glowSize;
-                    getHeight = () => owner.ActualHeight + glowSize*2;
+                    getLeft = (dpi) => Math.Round((owner.Left - glowSize) * dpi);
+                    getTop = (dpi) =>  Math.Round((owner.Top - glowSize) * dpi);
+                    getWidth = (dpi) => glowSize * dpi;
+                    getHeight = (dpi) => (owner.ActualHeight + glowSize * 2.0) * dpi;
                     getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                                ? HitTestValues.HTTOPLEFT
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
@@ -56,10 +56,10 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Right:
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Left;
-                    getLeft = () => owner.Left + owner.ActualWidth;
-                    getTop = () => owner.Top - glowSize;
-                    getWidth = () => glowSize;
-                    getHeight = () => owner.ActualHeight + glowSize*2;
+                    getLeft = (dpi) => Math.Round((owner.Left + owner.ActualWidth) * dpi);
+                    getTop = (dpi) => Math.Round((owner.Top - glowSize) * dpi);
+                    getWidth = (dpi) => glowSize * dpi;
+                    getHeight = (dpi) => (owner.ActualHeight + glowSize * 2.0) * dpi;
                     getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                                ? HitTestValues.HTTOPRIGHT
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
@@ -74,10 +74,10 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Top:
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Bottom;
-                    getLeft = () => owner.Left;
-                    getTop = () => Math.Ceiling(owner.Top - glowSize);
-                    getWidth = () => owner.ActualWidth;
-                    getHeight = () => glowSize;
+                    getLeft = (dpi) => owner.Left * dpi;
+                    getTop = (dpi) =>  Math.Round((owner.Top - glowSize) * dpi);
+                    getWidth = (dpi) => Math.Round(owner.ActualWidth * dpi);
+                    getHeight = (dpi) => glowSize * dpi;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                                ? HitTestValues.HTTOPLEFT
                                                : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize,
@@ -94,10 +94,10 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Bottom:
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Top;
-                    getLeft = () => owner.Left;
-                    getTop = () => owner.Top + owner.ActualHeight;
-                    getWidth = () => owner.ActualWidth;
-                    getHeight = () => glowSize;
+                    getLeft = (dpi) => owner.Left * dpi;
+                    getTop = (dpi) => Math.Round((owner.Top + owner.ActualHeight) * dpi);
+                    getWidth = (dpi) => Math.Round(owner.ActualWidth * dpi);
+                    getHeight = (dpi) => glowSize * dpi;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                                ? HitTestValues.HTBOTTOMLEFT
                                                : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize,
@@ -114,8 +114,14 @@ namespace MahApps.Metro.Controls
             }
 
             owner.ContentRendered += (sender, e) => glow.Visibility = Visibility.Visible;
-            owner.Activated += (sender, e) => Update();
-            owner.Activated += (sender, e) => glow.IsGlow = true;
+            owner.Activated += (sender, e) => {
+                                   Update();
+                                   //glow.IsGlow = true;
+            };
+            owner.Activated += (sender, e) => {
+                                   //Update();
+                                   glow.IsGlow = true;
+            };
             owner.Deactivated += (sender, e) => glow.IsGlow = false;
             owner.LocationChanged += (sender, e) => Update();
             owner.SizeChanged += (sender, e) => Update();
@@ -196,10 +202,10 @@ namespace MahApps.Metro.Controls
             NativeMethods.SetWindowPos(
                 handle,
                 ownerHandle,
-                (int) (getLeft() * DpiFactor),
-                (int) (getTop() * DpiFactor),
-                (int) (getWidth() * DpiFactor),
-                (int) (getHeight() * DpiFactor),
+                (int) (getLeft(DpiFactor)),
+                (int) (getTop(DpiFactor)),
+                (int) (getWidth(DpiFactor)),
+                (int) (getHeight(DpiFactor)),
                 SWP.NOACTIVATE);
         }
 
