@@ -13,13 +13,14 @@
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="Background"
                 Value="{DynamicResource GrayBrush10}" />
-
         <Setter Property="HorizontalContentAlignment"
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="BorderThickness"
                 Value="1" />
+        <Setter Property="Padding"
+                Value="0" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
                 Value="Auto" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
@@ -77,18 +78,6 @@
                                                         </VisualState>
                                                         <VisualState x:Name="Disabled" />
                                                     </VisualStateGroup>
-                                                    <VisualStateGroup x:Name="CheckStates">
-                                                        <VisualState x:Name="Checked">
-                                                            <Storyboard>
-                                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                                               Storyboard.TargetName="CheckedRectangle">
-                                                                    <EasingDoubleKeyFrame KeyTime="0:0:0.1"
-                                                                                          Value="1" />
-                                                                </DoubleAnimationUsingKeyFrames>
-                                                            </Storyboard>
-                                                        </VisualState>
-                                                        <VisualState x:Name="Unchecked" />
-                                                    </VisualStateGroup>
                                                     <VisualStateGroup x:Name="FocusStates">
                                                         <VisualState x:Name="Focused">
                                                             <Storyboard>
@@ -102,6 +91,7 @@
                                                         <VisualState x:Name="Unfocused" />
                                                     </VisualStateGroup>
                                                 </VisualStateManager.VisualStateGroups>
+
                                                 <Border x:Name="Background"
                                                         BorderBrush="{TemplateBinding BorderBrush}"
                                                         BorderThickness="{TemplateBinding BorderThickness}"
@@ -121,22 +111,74 @@
                                                 <Rectangle x:Name="FocusRectangle"
                                                            Stroke="{DynamicResource ComboBoxMouseOverInnerBorderBrush}"
                                                            Opacity="0" />
-                                                <Rectangle x:Name="CheckedRectangle"
-                                                           StrokeThickness="{TemplateBinding BorderThickness}"
-                                                           Opacity="0"
-                                                           Stroke="{DynamicResource ComboBoxMouseOverBorderBrush}" />
                                                 <Rectangle x:Name="FocusVisualElement"
                                                            IsHitTestVisible="false"
                                                            Margin="1"
                                                            Stroke="{DynamicResource HighlightBrush}"
                                                            StrokeThickness="1"
                                                            Visibility="Collapsed" />
-                                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                  IsHitTestVisible="false"
-                                                                  Margin="{TemplateBinding Padding}"
-                                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+
+                                                <Grid Margin="1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Button x:Name="PART_ClearText"
+                                                            Grid.Column="1"
+                                                            FontSize="16"
+                                                            Style="{DynamicResource ChromelessButtonStyle}"
+                                                            Foreground="{TemplateBinding Foreground}"
+                                                            FontFamily="Marlett"
+                                                            Content="r"
+                                                            Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                            IsTabStop="False" />
+                                                    <Rectangle x:Name="BtnArrowBackground"
+                                                               Grid.Column="2"
+                                                               Fill="Transparent"
+                                                               StrokeThickness="0" />
+                                                    <Path x:Name="BtnArrow"
+                                                          Grid.Column="2"
+                                                          IsHitTestVisible="false"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                          Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
+                                                          HorizontalAlignment="Center"
+                                                          Height="4"
+                                                          Stretch="Uniform"
+                                                          Width="8"
+                                                          Fill="{DynamicResource GrayBrush1}" />
+                                                </Grid>
                                             </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger SourceName="BtnArrowBackground"
+                                                         Property="IsMouseOver"
+                                                         Value="True">
+                                                    <Setter TargetName="BtnArrowBackground"
+                                                            Property="Fill"
+                                                            Value="{DynamicResource GrayBrush5}" />
+                                                </Trigger>
+                                                <Trigger SourceName="PART_ClearText"
+                                                         Property="IsMouseOver"
+                                                         Value="True">
+                                                    <Setter TargetName="PART_ClearText"
+                                                            Property="Background"
+                                                            Value="{DynamicResource GrayBrush8}" />
+                                                    <Setter TargetName="PART_ClearText"
+                                                            Property="Foreground"
+                                                            Value="{DynamicResource AccentColorBrush}" />
+                                                </Trigger>
+                                                <Trigger SourceName="PART_ClearText"
+                                                         Property="IsPressed"
+                                                         Value="True">
+                                                    <Setter TargetName="PART_ClearText"
+                                                            Property="Background"
+                                                            Value="{DynamicResource BlackBrush}" />
+                                                    <Setter TargetName="PART_ClearText"
+                                                            Property="Foreground"
+                                                            Value="{DynamicResource WhiteBrush}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -217,82 +259,57 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border x:Name="ContentPresenterBorder">
-                            <Grid>
-                                <Border x:Name="DropDownToggleBorder"
-                                        HorizontalAlignment="Stretch"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}">
-                                    <Grid HorizontalAlignment="Stretch">
-                                        <ToggleButton x:Name="DropDownToggle"
-                                                      BorderBrush="{TemplateBinding BorderBrush}"
-                                                      BorderThickness="{TemplateBinding BorderThickness}"
-                                                      Background="{TemplateBinding Background}"
-                                                      HorizontalAlignment="Stretch"
-                                                      HorizontalContentAlignment="Right"
-                                                      Margin="0"
-                                                      Style="{DynamicResource comboToggleStyle}"
-                                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                      VerticalAlignment="Stretch"
-                                                      KeyboardNavigation.IsTabStop="False">
-                                            <Path x:Name="BtnArrow"
-                                                  Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
-                                                  HorizontalAlignment="Right"
-                                                  Height="4"
-                                                  Margin="0,0,6,0"
-                                                  Stretch="Uniform"
-                                                  Width="8"
-                                                  Fill="{DynamicResource GrayBrush1}" />
-                                        </ToggleButton>
-                                        <Button x:Name="PART_ClearText"
-                                                Margin="0,0,18,0"
-                                                FontSize="16"
-                                                Style="{DynamicResource ChromelessButtonStyle}"
-                                                Foreground="{TemplateBinding Foreground}"
-                                                HorizontalAlignment="Right"
-                                                FontFamily="Marlett"
-                                                Content="r"
-                                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                IsTabStop="False" />
-                                    </Grid>
-                                </Border>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                            </Grid.ColumnDefinitions>
 
-                                <Border x:Name="EditableTextBoxBorder"
-                                        Visibility="Collapsed"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="1,1,0,1"
-                                        Background="{DynamicResource ControlBackgroundBrush}"
-                                        HorizontalAlignment="Stretch"
-                                        Margin="0,0,23,0"
-                                        VerticalAlignment="Stretch">
-                                    <TextBox    x:Name="PART_EditableTextBox"
-                                                HorizontalAlignment="Stretch"
-                                                Margin="{TemplateBinding Padding}"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                BorderThickness="0"
-                                                Background="{x:Null}"
-                                                Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}"
-                                                Foreground="{TemplateBinding Foreground}"
-                                                Focusable="True"
-                                                IsReadOnly="{TemplateBinding IsReadOnly}"
-                                                FontFamily="{TemplateBinding FontFamily}"
-                                                FontSize="{TemplateBinding FontSize}" />
-                                </Border>
-                                <Grid Margin="4 0 16 0">
-                                    <ContentPresenter x:Name="ContentSite"
-                                                      ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                      ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                      Content="{TemplateBinding SelectionBoxItem}"
-                                                      ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      IsHitTestVisible="false"
-                                                      Margin="{TemplateBinding Padding}"
-                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                </Grid>
+                            <ToggleButton x:Name="PART_DropDownToggle"
+                                          Grid.ColumnSpan="3"
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}"
+                                          Background="{TemplateBinding Background}"
+                                          Margin="0"
+                                          Style="{DynamicResource comboToggleStyle}"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          VerticalAlignment="Stretch"
+                                          KeyboardNavigation.IsTabStop="False" />
+
+                            <Border x:Name="EditableTextBoxBorder"
+                                    Visibility="Collapsed"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="1,1,0,1"
+                                    Margin="0,0,-2,0"
+                                    Background="{DynamicResource ControlBackgroundBrush}">
+                                <TextBox x:Name="PART_EditableTextBox"
+                                         HorizontalAlignment="Stretch"
+                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                         BorderThickness="0"
+                                         Background="{x:Null}"
+                                         Margin="0,0,0,-2"
+                                         Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                         Foreground="{TemplateBinding Foreground}"
+                                         Focusable="True"
+                                         IsReadOnly="{TemplateBinding IsReadOnly}"
+                                         FontFamily="{TemplateBinding FontFamily}"
+                                         FontSize="{TemplateBinding FontSize}" />
+                            </Border>
+                            <Grid x:Name="ContentSite"
+                                  Margin="7 0 0 0">
+                                <ContentPresenter ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  IsHitTestVisible="false"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
-                        </Border>
+                        </Grid>
                         <Rectangle x:Name="FocusRectangle"
                                    Stroke="{DynamicResource ComboBoxMouseOverInnerBorderBrush}"
                                    Opacity="0" />
@@ -365,6 +382,15 @@
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}"
+                                     Value="False">
+                            <Setter TargetName="EditableTextBoxBorder"
+                                    Property="Grid.ColumnSpan"
+                                    Value="2" />
+                            <Setter TargetName="ContentSite"
+                                    Property="Grid.ColumnSpan"
+                                    Value="2" />
+                        </DataTrigger>
                         <Trigger Property="IsEditable"
                                  Value="True">
                             <Setter Property="IsTabStop"
@@ -375,21 +401,12 @@
                             <Setter TargetName="ContentSite"
                                     Property="Visibility"
                                     Value="Hidden" />
-                            <Setter TargetName="DropDownToggle"
+                            <Setter TargetName="PART_DropDownToggle"
                                     Property="Focusable"
                                     Value="False" />
-                            <Setter TargetName="DropDownToggle"
-                                    Property="HorizontalAlignment"
-                                    Value="Right" />
-                            <Setter TargetName="DropDownToggle"
+                            <Setter TargetName="PART_DropDownToggle"
                                     Property="Background"
                                     Value="Transparent" />
-                            <Setter TargetName="DropDownToggle"
-                                    Property="Width"
-                                    Value="23" />
-                            <Setter TargetName="DropDownToggle"
-                                    Property="BorderThickness"
-                                    Value="0,1,1,1" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

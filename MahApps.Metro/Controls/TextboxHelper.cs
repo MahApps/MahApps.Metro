@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -231,7 +232,11 @@ namespace MahApps.Metro.Controls
             if (template == null)
                 return;
 
-            var button = template.FindName("PART_ClearText", comboBox) as Button;
+            var dropDown = template.FindName("PART_DropDownToggle", comboBox) as ToggleButton;
+            if (dropDown == null || dropDown.Template == null)
+                return;
+
+            var button = dropDown.Template.FindName("PART_ClearText", dropDown) as Button;
             if (button == null)
                 return;
 
