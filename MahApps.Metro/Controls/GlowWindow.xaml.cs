@@ -116,10 +116,6 @@ namespace MahApps.Metro.Controls
             owner.ContentRendered += (sender, e) => glow.Visibility = Visibility.Visible;
             owner.Activated += (sender, e) => {
                                    Update();
-                                   //glow.IsGlow = true;
-            };
-            owner.Activated += (sender, e) => {
-                                   //Update();
                                    glow.IsGlow = true;
             };
             owner.Deactivated += (sender, e) => glow.IsGlow = false;
@@ -129,16 +125,16 @@ namespace MahApps.Metro.Controls
             owner.Closed += (sender, e) => Close();
         }
 
-        public static double DpiFactor
+        public double DpiFactor
         {
             get
             {
                 if (_dpiFactor == null)
                 {
 
-                    PresentationSource source = PresentationSource.FromVisual(Application.Current.MainWindow);
+                    PresentationSource source = PresentationSource.FromVisual(this.Owner);
                     double dpiX = 96.0, dpiY = 96.0;
-                    if (source != null)
+                    if (source != null && source.CompositionTarget != null)
                     {
                         dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
                         dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
@@ -148,7 +144,7 @@ namespace MahApps.Metro.Controls
                         _dpiFactor = dpiX / 96.0;
                     }
                 }
-                return _dpiFactor.Value;
+                return _dpiFactor.HasValue ? _dpiFactor.Value : 1;
             }
             
         }

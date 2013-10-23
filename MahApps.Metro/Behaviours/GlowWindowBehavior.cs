@@ -35,14 +35,6 @@ namespace MahApps.Metro.Behaviours
             };
         }
 
-        public void Hide()
-        {
-            left.Hide();
-            right.Hide();
-            bottom.Hide();
-            top.Hide();
-        }
-
         public void Show()
         {
             left.Show();
