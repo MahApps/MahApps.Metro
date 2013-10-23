@@ -572,12 +572,23 @@
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="2">
                             <Label Content="ComboBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <ComboBox Width="200" Controls:TextboxHelper.ClearTextButton="True"
+                            <ComboBox Width="200"
+                                      Controls:TextboxHelper.ClearTextButton="True"
                                       Margin="0, 10, 0, 0"
                                       SelectedIndex="0">
                                 <ComboBoxItem Content="Item 1" />
                                 <ComboBoxItem Content="Item 2" />
-                                <ComboBoxItem Content="Item 3" />
+                                <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                                <ComboBoxItem Content="Item 4" />
+                            </ComboBox>
+                            <ComboBox Width="200"
+                                      Controls:TextboxHelper.ClearTextButton="True"
+                                      Margin="0, 10, 0, 0"
+                                      SelectedIndex="0"
+                                      IsEditable="True">
+                                <ComboBoxItem Content="Item 1" />
+                                <ComboBoxItem Content="Item 2" />
+                                <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
                                 <ComboBoxItem Content="Item 4" />
                             </ComboBox>
                             <ComboBox Width="200"
