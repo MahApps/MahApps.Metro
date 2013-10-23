@@ -3,6 +3,7 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Style TargetType="{x:Type ComboBox}" x:Key="MetroComboBox">
         <Setter Property="MinHeight" Value="26" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -161,7 +162,11 @@
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="ContentPresenterBorder">
                             <Grid>
-                                <ToggleButton x:Name="DropDownToggle"
+                                <Border x:Name="DropDownToggleBorder" HorizontalAlignment="Stretch" 
+                                          BorderBrush="{TemplateBinding BorderBrush}"
+                                          BorderThickness="{TemplateBinding BorderThickness}" >
+                                    <Grid HorizontalAlignment="Stretch">
+                                        <ToggleButton x:Name="DropDownToggle"
                                               BorderBrush="{TemplateBinding BorderBrush}"
                                               BorderThickness="{TemplateBinding BorderThickness}"
                                               Background="{TemplateBinding Background}"
@@ -172,7 +177,7 @@
                                               IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                               VerticalAlignment="Stretch"
                                               KeyboardNavigation.IsTabStop="False">
-                                    <Path x:Name="BtnArrow"
+                                            <Path x:Name="BtnArrow"
                                           Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
                                           HorizontalAlignment="Right"
                                           Height="4"
@@ -180,7 +185,10 @@
                                           Stretch="Uniform"
                                           Width="8"
                                           Fill="{DynamicResource GrayBrush1}" />
-                                </ToggleButton>
+                                        </ToggleButton>
+                                        <Button x:Name="PART_ClearText" Margin="0,0,18,0" FontSize="16" Style="{DynamicResource ChromelessButtonStyle}" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="Right"  FontFamily="Marlett" Content="r" Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" IsTabStop="False" />
+                                    </Grid>
+                                </Border>
 
                                 <Border x:Name="EditableTextBoxBorder"
                                             Visibility="Collapsed"
