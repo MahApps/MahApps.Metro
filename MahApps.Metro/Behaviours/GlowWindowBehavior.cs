@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Interactivity;
 using MahApps.Metro.Controls;
 
@@ -37,14 +33,6 @@ namespace MahApps.Metro.Behaviours
                 if (top != null) top.Close();
                 if (bottom != null) bottom.Close();
             };
-        }
-
-        public void Hide()
-        {
-            left.Hide();
-            right.Hide();
-            bottom.Hide();
-            top.Hide();
         }
 
         public void Show()
