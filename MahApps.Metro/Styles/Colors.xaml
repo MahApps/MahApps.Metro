@@ -143,6 +143,8 @@
     <SolidColorBrush x:Key="ValidationBrush3" Color="{DynamicResource ValidationColor3}"/>
     <SolidColorBrush x:Key="ValidationBrush4" Color="{DynamicResource ValidationColor4}"/>
     <SolidColorBrush x:Key="ValidationBrush5" Color="{DynamicResource ValidationColor5}"/>
+    <!-- validation text foreground always white -->
+    <SolidColorBrush x:Key="ValidationTextBrush" Color="White"/>
 
     <!-- WPF default colors -->
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{DynamicResource WhiteColor}" />

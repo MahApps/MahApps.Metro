@@ -93,7 +93,7 @@
                 -->
                 <Border.Resources>
                     <DataTemplate DataType="{x:Type ValidationError}">
-                        <TextBlock Foreground="{DynamicResource WhiteColorBrush}"
+                        <TextBlock Foreground="{DynamicResource ValidationTextBrush}"
                                    MaxWidth="250"
                                    Margin="8,4,8,4"
                                    TextWrapping="Wrap"
