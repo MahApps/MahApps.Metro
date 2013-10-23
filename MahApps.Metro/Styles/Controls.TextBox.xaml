@@ -37,14 +37,6 @@
         <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
-        <Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect ShadowDepth="0"
-                                  Color="{DynamicResource BlackColor}"
-                                  Opacity="0"
-                                  BlurRadius="10" />
-            </Setter.Value>
-        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
@@ -300,6 +292,14 @@
 
                         <Trigger Property="Controls:TextboxHelper.IsWaitingForData"
                                  Value="True">
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect ShadowDepth="0"
+                                                      Color="{DynamicResource BlackColor}"
+                                                      Opacity="0"
+                                                      BlurRadius="10" />
+                                </Setter.Value>
+                            </Setter>
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
