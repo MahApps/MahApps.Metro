@@ -16,5 +16,7 @@
     <SolidColorBrush x:Key="AccentColorBrush3" Color="{StaticResource AccentColor3}"/>
     <SolidColorBrush x:Key="AccentColorBrush4" Color="{StaticResource AccentColor4}"/>
 
+    <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource AccentColor}" />
+
     <SolidColorBrush x:Key="AccentSelectedColorBrush" Color="White" />
 </ResourceDictionary>
