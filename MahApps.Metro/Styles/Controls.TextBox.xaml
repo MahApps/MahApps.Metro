@@ -107,7 +107,6 @@
                         <Rectangle x:Name="Base"
                                    Stroke="{TemplateBinding BorderBrush}"
                                    StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Opacity="1"
                                    Fill="{TemplateBinding Background}" />
                         <Rectangle x:Name="FocusRectangle"
                                    Visibility="Collapsed"
@@ -292,7 +291,8 @@
 
                         <Trigger Property="Controls:TextboxHelper.IsWaitingForData"
                                  Value="True">
-                            <Setter Property="Effect">
+                            <Setter TargetName="Base"
+                                    Property="Effect">
                                 <Setter.Value>
                                     <DropShadowEffect ShadowDepth="0"
                                                       Color="{DynamicResource BlackColor}"
@@ -305,6 +305,7 @@
                                     <Storyboard>
                                         <DoubleAnimation From="0"
                                                          To="1"
+                                                         Storyboard.TargetName="Base"
                                                          Storyboard.TargetProperty="(Effect).Opacity"
                                                          Duration="00:00:02"
                                                          AutoReverse="True"
@@ -315,7 +316,8 @@
                         </Trigger>
                         <Trigger Property="Controls:TextboxHelper.IsWaitingForData"
                                  Value="False">
-                            <Setter Property="Effect"
+                            <Setter TargetName="Base"
+                                    Property="Effect"
                                     Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -425,7 +427,6 @@
                         <Rectangle x:Name="Base"
                                    Stroke="{TemplateBinding BorderBrush}"
                                    StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Opacity="1"
                                    Fill="{TemplateBinding Background}" />
                         <Rectangle x:Name="FocusRectangle"
                                    Visibility="Collapsed"
