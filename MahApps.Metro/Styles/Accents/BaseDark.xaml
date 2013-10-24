@@ -4,9 +4,6 @@
     <Color x:Key="BlackColor">#FFFFFFFF</Color>
     <Color x:Key="WhiteColor">#FF252525</Color>
 
-    <Color x:Key="NormalForegroundColor">#FFFFFFFF</Color>
-    <Color x:Key="HoverForegroundColor">#FF000000</Color>
-
     <Color x:Key="Gray1">#FFF9F9F9</Color>
     <Color x:Key="Gray2">#FF7F7F7F</Color>
     <Color x:Key="Gray7">#FF7E7E7E</Color>
