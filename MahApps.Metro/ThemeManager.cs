@@ -157,6 +157,23 @@ namespace MahApps.Metro
             return null;
         }
 
+        public static Tuple<Theme, Accent> DetectTheme(Application app)
+        {
+            if (app == null) throw new ArgumentNullException("app");
+
+            Theme currentTheme = Theme.Light;
+            ResourceDictionary themeDictionary = null;
+            Tuple<Theme, Accent> detectedAccentTheme = null;
+
+
+            if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, app.Resources)) {
+                if (GetThemeFromResources(currentTheme, app.Resources, ref detectedAccentTheme))
+                    return new Tuple<Theme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
+            }
+
+            return null;
+        }
+
         internal static bool DetectThemeFromAppResources(out Theme detectedTheme, out ResourceDictionary themeRd)
         {
             detectedTheme = Theme.Light;
