@@ -416,11 +416,8 @@
 
     <Style TargetType="ComboBoxItem"
            x:Key="MetroComboBoxItem">
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource NormalForegroundColor}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
         <Setter Property="Padding"
                 Value="2" />
         <Setter Property="HorizontalContentAlignment"

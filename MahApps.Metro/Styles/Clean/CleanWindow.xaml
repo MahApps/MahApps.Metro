@@ -17,10 +17,7 @@
                         <AdornerDecorator>
                             <Controls:MetroContentControl IsTabStop="False"
                                                           FocusVisualStyle="{x:Null}">
-                                <Grid>
-                                    <Grid.Background>
-                                        <SolidColorBrush Color="{DynamicResource WhiteColor}" />
-                                    </Grid.Background>
+                                <Grid Background="{DynamicResource WhiteBrush}">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />

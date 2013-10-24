@@ -27,26 +27,14 @@
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter TargetName="root" Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="root" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
 
                         <Trigger Property="IsSelected" Value="false">
-                            <Setter  TargetName="root" Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource GrayNormal}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="root" Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         <Trigger SourceName="root" Property="IsMouseOver" Value="True">
-                            <Setter  TargetName="root" Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource GrayHover}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="root" Property="Foreground" Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
                         <Trigger SourceName="PART_CloseButton" Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>

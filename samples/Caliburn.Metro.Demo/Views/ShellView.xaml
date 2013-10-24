@@ -11,11 +11,8 @@
                       BorderThickness="1"
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
+                      BorderBrush="{DynamicResource AccentColorBrush}"
                       mc:Ignorable="d">
-
-    <Controls:MetroWindow.BorderBrush>
-        <SolidColorBrush Color="{DynamicResource AccentColor}" />
-    </Controls:MetroWindow.BorderBrush>
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl x:Name="Flyouts">

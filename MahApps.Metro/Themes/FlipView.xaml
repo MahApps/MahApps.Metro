@@ -20,11 +20,7 @@
                         <Grid x:Name="PART_BannerGrid"
                               VerticalAlignment="Bottom" Height="0" Panel.ZIndex="6" Opacity="0.85"
                               Background="{DynamicResource BlackBrush}">
-                            <Label FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" x:Name="PART_BannerLabel" IsTabStop="False">
-                                <Label.Foreground>
-                                    <SolidColorBrush Color="{DynamicResource WhiteColor}" />
-                                </Label.Foreground>
-                            </Label>
+                            <Label Foreground="{DynamicResource WhiteBrush}" FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" x:Name="PART_BannerLabel" IsTabStop="False" />
                         </Grid>
                     </Grid>
                     <Controls:TransitioningContentControl Content="{TemplateBinding SelectedItem}"
@@ -40,11 +36,7 @@
                 <Setter Property="Panel.ZIndex" Value="5"/>
                 <Setter Property="IsTabStop" Value="False"/>
                 <Setter Property="Focusable" Value="True"/>
-                <Setter Property="Background">
-                    <Setter.Value>
-                        <SolidColorBrush Color="{DynamicResource WhiteColor}"/>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
                 <Setter Property="Foreground" Value="{DynamicResource NormalForegroundBrush}"/>
                 <Setter Property="Template">
                     <Setter.Value>
