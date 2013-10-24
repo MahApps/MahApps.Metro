@@ -517,11 +517,8 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
-                            <Setter Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">

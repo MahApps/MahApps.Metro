@@ -27,11 +27,7 @@
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter TargetName="root" Property="Foreground">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="root" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
 
                         <Trigger Property="IsSelected" Value="false">

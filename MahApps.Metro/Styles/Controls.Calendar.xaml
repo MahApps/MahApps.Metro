@@ -84,17 +84,11 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid.Resources>
-                            <SolidColorBrush x:Key="TodayBackground"
-                                             Color="{DynamicResource AccentColor}" />
-                            <SolidColorBrush x:Key="SelectedBackground"
-                                             Color="{DynamicResource AccentColor4}" />
-                        </Grid.Resources>
                         <Rectangle x:Name="TodayBackground"
-                                   Fill="{StaticResource TodayBackground}"
+                                   Fill="{DynamicResource AccentColorBrush}"
                                    Opacity="0" />
                         <Rectangle x:Name="SelectedBackground"
-                                   Fill="{StaticResource SelectedBackground}"
+                                   Fill="{DynamicResource AccentColorBrush4}"
                                    Opacity="0" />
                         <Border BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -222,11 +216,8 @@
                                                     </VisualStateGroup>
                                                 </VisualStateManager.VisualStateGroups>
                                                 <Rectangle Opacity="0.1"
-                                                           Stretch="Fill">
-                                                    <Rectangle.Fill>
-                                                        <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
+                                                           Stretch="Fill"
+                                                           Fill="{DynamicResource AccentColorBrush}" />
                                                 <Path x:Name="path"
                                                       Data="M288.75,232.25 L288.75,240.625 L283,236.625 z"
                                                       Opacity="0.7"
@@ -264,11 +255,8 @@
                                                     </VisualStateGroup>
                                                 </VisualStateManager.VisualStateGroups>
                                                 <Rectangle Opacity="0.1"
-                                                           Stretch="Fill">
-                                                    <Rectangle.Fill>
-                                                        <SolidColorBrush Color="{DynamicResource AccentColor}" />
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
+                                                           Stretch="Fill"
+                                                           Fill="{DynamicResource AccentColorBrush}" />
                                                 <Path x:Name="path"
                                                       Data="M282.875,231.875 L282.875,240.375 L288.625,236 z"
                                                       Opacity="0.7"
