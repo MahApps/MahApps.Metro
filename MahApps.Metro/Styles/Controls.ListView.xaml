@@ -108,11 +108,7 @@
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"
                                                          Value="False">
-                                                <Setter Property="Foreground">
-                                                    <Setter.Value>
-                                                        <SolidColorBrush Color="{DynamicResource GrayNormal}" />
-                                                    </Setter.Value>
-                                                </Setter>
+                                                <Setter Property="Foreground" Value="{DynamicResource GrayNormalBrush}" />
                                             </DataTrigger>
                                             <MultiDataTrigger>
                                                 <MultiDataTrigger.Conditions>
