@@ -40,20 +40,6 @@
     <Color x:Key="FlyoutBackgroundColor">#FF252525</Color>
 
     <!-- CORE CONTROL COLORS-->
-    <Color x:Key="ValidationColor1">#052A2E31</Color>
-    <Color x:Key="ValidationColor2">#152A2E31</Color>
-    <Color x:Key="ValidationColor3">#252A2E31</Color>
-    <Color x:Key="ValidationColor4">#352A2E31</Color>
-    <Color x:Key="ValidationColor5">#FFDC000C</Color>
-    <Color x:Key="ValidationSummaryColor1">#FFDC020D</Color>
-    <Color x:Key="ValidationSummaryColor2">#FFCA000C</Color>
-    <Color x:Key="ValidationSummaryColor3">#FFFF9298</Color>
-    <Color x:Key="ValidationSummaryColor4">#FFFDC8C8</Color>
-    <Color x:Key="ValidationSummaryColor5">#DDD43940</Color>
-    <Color x:Key="ValidationSummaryFillColor1">#59F7D8DB</Color>
-    <Color x:Key="ValidationSummaryFillColor2">#FFF7D8DB</Color>
-    <Color x:Key="ControlsValidationColor">#FFDB000C</Color>
-
     <Color x:Key="ProgressIndeterminateColor1">#33878787</Color>
     <Color x:Key="ProgressIndeterminateColor2">#33959595</Color>
     <Color x:Key="ProgressIndeterminateColor3">#4C000000</Color>
@@ -137,12 +123,20 @@
 
 
     <!-- CONTROL VALIDATION BRUSHES -->
-    <SolidColorBrush x:Key="ControlsValidationBrush" Color="{DynamicResource ControlsValidationColor}"/>
-    <SolidColorBrush x:Key="ValidationBrush1" Color="{DynamicResource ValidationColor1}"/>
-    <SolidColorBrush x:Key="ValidationBrush2" Color="{DynamicResource ValidationColor2}"/>
-    <SolidColorBrush x:Key="ValidationBrush3" Color="{DynamicResource ValidationColor3}"/>
-    <SolidColorBrush x:Key="ValidationBrush4" Color="{DynamicResource ValidationColor4}"/>
-    <SolidColorBrush x:Key="ValidationBrush5" Color="{DynamicResource ValidationColor5}"/>
+    <SolidColorBrush x:Key="ControlsValidationBrush" Color="#FFDB000C"/>
+    <SolidColorBrush x:Key="ValidationBrush1" Color="#052A2E31" />
+    <SolidColorBrush x:Key="ValidationBrush2" Color="#152A2E31" />
+    <SolidColorBrush x:Key="ValidationBrush3" Color="#252A2E31" />
+    <SolidColorBrush x:Key="ValidationBrush4" Color="#352A2E31" />
+    <SolidColorBrush x:Key="ValidationBrush5" Color="#FFDC000C" />
+    <!-- unused -->
+    <SolidColorBrush x:Key="ValidationSummaryColor1" Color="#FFDC020D" />
+    <SolidColorBrush x:Key="ValidationSummaryColor2" Color="#FFCA000C" />
+    <SolidColorBrush x:Key="ValidationSummaryColor3" Color="#FFFF9298" />
+    <SolidColorBrush x:Key="ValidationSummaryColor4" Color="#FFFDC8C8" />
+    <SolidColorBrush x:Key="ValidationSummaryColor5" Color="#DDD43940" />
+    <SolidColorBrush x:Key="ValidationSummaryFillColor1" Color="#59F7D8DB" />
+    <SolidColorBrush x:Key="ValidationSummaryFillColor2" Color="#FFF7D8DB" />
     <!-- validation text foreground always white -->
     <SolidColorBrush x:Key="ValidationTextBrush" Color="White"/>
 
