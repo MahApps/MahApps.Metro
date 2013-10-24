@@ -10,5 +10,11 @@
     <!--20%-->
     <Color x:Key="AccentColor4">#3376608A</Color>
 
+    <!-- re-set brushes too -->
+    <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="AccentColorBrush2" Color="{StaticResource AccentColor2}"/>
+    <SolidColorBrush x:Key="AccentColorBrush3" Color="{StaticResource AccentColor3}"/>
+    <SolidColorBrush x:Key="AccentColorBrush4" Color="{StaticResource AccentColor4}"/>
+
     <SolidColorBrush x:Key="AccentSelectedColorBrush" Color="White" />
 </ResourceDictionary>
