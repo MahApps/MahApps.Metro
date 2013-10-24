@@ -273,7 +273,11 @@
                         <StackPanel Grid.Column="0" Width="150">
                             <Label Content="TextBox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <TextBox Margin="0, 10, 0, 0" Text="Enabled" />
-                            <TextBox Margin="0, 10, 0, 0"
+                            <CheckBox Margin="0, 10, 0, 0"
+                                      Content="Wait for...."
+                                      IsChecked="{Binding ElementName=waitingTextBox, Path=(Controls:TextboxHelper.IsWaitingForData)}"/>
+                            <TextBox x:Name="waitingTextBox"
+                                     Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Watermark"
                                      Controls:TextboxHelper.IsWaitingForData="True"
                                      ToolTip="Default alignment" />
