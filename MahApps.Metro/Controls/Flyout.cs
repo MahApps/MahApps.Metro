@@ -68,6 +68,14 @@ namespace MahApps.Metro.Controls
                 if (window != null)
                 {
                     var theme = ThemeManager.DetectTheme(window);
+                    if (theme == null || theme.Item2 == null)
+                    {
+                        var mainWindow = Application.Current != null ? Application.Current.MainWindow as MetroWindow : null;
+                        if (mainWindow != null)
+                        {
+                            theme = ThemeManager.DetectTheme(mainWindow);
+                        }
+                    }
                     if (theme != null && theme.Item2 != null)
                     {
                         var accent = theme.Item2;
