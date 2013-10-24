@@ -13,6 +13,8 @@
     <Color x:Key="GrayNormal">#FF7D7D7D</Color>
     <Color x:Key="GrayHover">#FFAAAAAA</Color>
 
+    <Color x:Key="FlyoutBackgroundColor">#2B2B2B</Color>
+
     <!-- re-set brushes too -->
     <SolidColorBrush x:Key="GrayBrush1" Color="{StaticResource Gray1}" />
     <SolidColorBrush x:Key="GrayBrush2" Color="{StaticResource Gray2}" />
@@ -33,6 +35,6 @@
     <SolidColorBrush x:Key="SliderTrackHover" Color="#FF737373" />
     <SolidColorBrush x:Key="SliderTrackNormal" Color="#FF6C6C6C" />
 
-    <Color x:Key="FlyoutBackgroundColor">#2B2B2B</Color>
+    <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="{StaticResource FlyoutBackgroundColor}" />
 
 </ResourceDictionary>
