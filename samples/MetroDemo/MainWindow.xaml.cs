@@ -34,22 +34,7 @@ namespace MetroDemo
 
         private void ChangeAccent(Accent accent, Theme theme)
         {
-            //ThemeManager.ChangeTheme(this, this.currentAccent, this.currentTheme);
-            // changes from @spiritdead, try to change all open windows
-            var allWindows = System.Windows.Application.Current.Windows.OfType<Window>().Where(w => w.GetType() != typeof(GlowWindow)).ToList();
-            foreach (var window in allWindows)
-            {
-                List<Flyout> allOpenFlyouts = new List<Flyout>();
-                if (window is MetroWindow)
-                {
-                    allOpenFlyouts = ((MetroWindow)window).Flyouts.Items.OfType<Flyout>().ToList();
-                    foreach (var flyOut in allOpenFlyouts)
-                    {
-                        ThemeManager.ChangeTheme(flyOut.Resources, accent, Theme.Dark); // always dark
-                    }
-                }
-                ThemeManager.ChangeTheme(window, accent, theme);
-            }
+            ThemeManager.ChangeTheme(Application.Current, accent, theme);
         }
 
         private void ThemeLight(object sender, RoutedEventArgs e)
