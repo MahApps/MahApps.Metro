@@ -30,10 +30,6 @@
     <Color x:Key="Gray9">#5EC9C9C9</Color>
     <Color x:Key="Gray10">#FFF7F7F7</Color>
 
-    <Color x:Key="TransparentWhiteColor">#00FFFFFF</Color>
-    <Color x:Key="SemiTransparentWhiteColor">#55FFFFFF</Color>
-    <Color x:Key="TransparentLightLightColor">#A5FFFFFF</Color>
-
     <Color x:Key="FlyoutBackgroundColor">#FF252525</Color>
 
     <!-- CORE CONTROL COLORS-->
@@ -60,12 +56,12 @@
 
     <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{DynamicResource AccentColor}" />
     <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource HighlightColor}" />
-    <SolidColorBrush x:Key="ControlsDisabledBrush" Color="{DynamicResource TransparentLightLightColor}"/>
-    <SolidColorBrush x:Key="DisabledWhiteBrush" Color="{DynamicResource WhiteColor}" />   
-    <SolidColorBrush x:Key="TransparentWhiteBrush" Color="{DynamicResource TransparentWhiteColor}"/>
-    <SolidColorBrush x:Key="SemiTransparentWhiteBrush" Color="{DynamicResource SemiTransparentWhiteColor}"/>
+    <SolidColorBrush x:Key="DisabledWhiteBrush" Color="{DynamicResource WhiteColor}" />
 
-    
+    <SolidColorBrush x:Key="TransparentWhiteBrush" Color="#00FFFFFF"/>
+    <SolidColorBrush x:Key="SemiTransparentWhiteBrush" Color="#55FFFFFF"/>
+    <SolidColorBrush x:Key="ControlsDisabledBrush" Color="#A5FFFFFF" />
+
     <SolidColorBrush x:Key="AccentColorBrush" Color="{DynamicResource AccentColor}"/>
     <SolidColorBrush x:Key="AccentColorBrush2" Color="{DynamicResource AccentColor2}"/>
     <SolidColorBrush x:Key="AccentColorBrush3" Color="{DynamicResource AccentColor3}"/>
