@@ -8,6 +8,40 @@
     <Color x:Key="BlackColor">#FFFFFFFF</Color>
     <Color x:Key="WhiteColor">#2D2D30</Color>
 
+    <!-- re-set brushes too -->
+    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" />
+    <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentColorBrush2" Color="{StaticResource AccentColor2}" />
+    <SolidColorBrush x:Key="AccentColorBrush3" Color="{StaticResource AccentColor3}" />
+    <SolidColorBrush x:Key="AccentColorBrush4" Color="{StaticResource AccentColor4}" />
+
+    <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource AccentColor}" />
+
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="LabelTextBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="BlackColorBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="TextBoxFocusBorderBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ButtonMouseOverBorderBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ButtonMouseOverInnerBorderBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ComboBoxMouseOverBorderBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="ComboBoxMouseOverInnerBorderBrush" Color="{StaticResource BlackColor}" />
+
+    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="WhiteColorBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="DisabledWhiteBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WhiteColor}" />
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{StaticResource BlackColor}" />
+
+    <LinearGradientBrush x:Key="CheckBoxBackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="{StaticResource Gray7}" Offset="0" />
+        <GradientStop Color="{StaticResource WhiteColor}" Offset="1" />
+    </LinearGradientBrush>
+
     <!--Foreground-->
     <SolidColorBrush x:Key="Foreground" Color="#FFFFFF"/>
 
