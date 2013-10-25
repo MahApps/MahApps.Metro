@@ -13,7 +13,7 @@
                     <ControlTemplate.Resources>
                         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
                     </ControlTemplate.Resources>
-                    <Grid Background="{TemplateBinding Background}">
+                    <Grid>
                         <AdornerDecorator>
                             <Controls:MetroContentControl IsTabStop="False"
                                                           FocusVisualStyle="{x:Null}">
@@ -60,7 +60,7 @@
                                         </Grid>
 
                                     </Grid>
-                                    
+
                                     <ContentPresenter Grid.Row="1" />
 
                                     <ItemsControl Grid.Row="0"

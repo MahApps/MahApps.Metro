@@ -144,8 +144,10 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>
