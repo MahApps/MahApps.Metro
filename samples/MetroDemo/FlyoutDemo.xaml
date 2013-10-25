@@ -12,14 +12,14 @@
                       WindowStartupLocation="CenterScreen"
                       BorderThickness="1"
                       BorderBrush="{DynamicResource AccentColorBrush}"
-                      InheritAccentColorsAndTheme="True"
+                      InheritAccentColorsAndTheme="False"
                       mc:Ignorable="d"
                       x:Name="flyoutsDemo">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />-->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
