@@ -13,13 +13,6 @@
         <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" AllowsTransparency="False" />
     </i:Interaction.Behaviors>
 
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />-->
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <Grid>
         <Border BorderBrush="{DynamicResource AccentColorBrush}" Margin="10" BorderThickness="2">
             <Grid>

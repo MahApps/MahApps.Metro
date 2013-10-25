@@ -98,7 +98,6 @@ namespace MahApps.Metro.Controls
                     if (theme != null && theme.Item2 != null)
                     {
                         var accent = theme.Item2;
-//                        flyout.CheckForMainResourceDictionaries();
                         // flyout use always the dark theme
                         ThemeManager.ChangeTheme(flyout.Resources, accent, Theme.Dark);
                     }
@@ -117,31 +116,6 @@ namespace MahApps.Metro.Controls
             var flyout = (Flyout) dependencyObject;
             flyout.ApplyAnimation((Position)e.NewValue);
         }
-
-//        private bool resDictAlreadyChecked;
-
-//        private void CheckForMainResourceDictionaries()
-//        {
-//            if (resDictAlreadyChecked)
-//                return;
-//
-//            this.Resources.BeginInit();
-//            try {
-//                var idx = -1;
-//                foreach (var rd in ThemeManager.MainResourceDictionaries)
-//                {
-//                    var md = this.Resources.MergedDictionaries.FirstOrDefault(d => d.Source == rd.Source);
-//                    if (md != null)
-//                        this.Resources.MergedDictionaries.Remove(md);
-//                    this.Resources.MergedDictionaries.Insert(++idx, rd);
-//                }
-//            }
-//            finally
-//            {
-//                this.Resources.EndInit();
-//                resDictAlreadyChecked = true;
-//            }
-//        }
 
         static Flyout()
         {

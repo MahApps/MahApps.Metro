@@ -11,11 +11,6 @@
     <Window.Resources>
         <ResourceDictionary>
             
-            <ResourceDictionary.MergedDictionaries>
-<!--                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>-->
-
-            </ResourceDictionary.MergedDictionaries>
-
             <DataTemplate DataType="{x:Type Models:Artist}">
                 <Controls:Tile Title="{Binding Name}" Width="120" Height="120">
                     <Image Source="images/placeholder_person.gif" Opacity="0.5"  Stretch="UniformToFill">
