@@ -44,7 +44,8 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Rectangle Fill="{DynamicResource WindowTitleColorBrush}"
+                        <Rectangle x:Name="PART_WindowTitleBackground"
+                                   Fill="{DynamicResource WindowTitleColorBrush}"
                                    Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                    Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                    Grid.Column="0"
@@ -72,7 +73,7 @@
                                        Margin="8 -1 0 0"
                                        FontSize="16"
                                        FontFamily="{DynamicResource HeaderFontFamily}"
-                                       Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+                                       Foreground="{Binding ElementName=PART_WindowTitleBackground, Path=Fill, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                         </Grid>
 
                         <!-- the window commands -->
