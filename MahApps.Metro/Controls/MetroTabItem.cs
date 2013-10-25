@@ -8,40 +8,11 @@ namespace MahApps.Metro.Controls
 {
     public class MetroTabItem : TabItem
     {
-
-        static MetroTabItem()
-        {
-            FontSizeProperty.OverrideMetadata(typeof (MetroTabItem), new FrameworkPropertyMetadata(26.67,OnFontSizeChanged));
-        }
-        
-        private static void OnFontSizeChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
-        {
-            var item = (MetroTabItem)obj;
-
-            if (item.closeButton == null)
-            {
-                item.ApplyTemplate();
-            }
-
-            double fontDpiSize = (double)args.NewValue;
-
-            double fontHeight = Math.Ceiling(fontDpiSize * item.rootLabel.FontFamily.LineSpacing);
-
-            var newMargin = (Math.Round(fontHeight) / 2.2) - (item.rootLabel.Padding.Top);
-
-            var previousMargin = item.closeButton.Margin;
-            item.newButtonMargin = new Thickness(previousMargin.Left, newMargin, previousMargin.Right, previousMargin.Bottom);
-            item.closeButton.Margin = item.newButtonMargin;
-
-            item.closeButton.UpdateLayout();
-        }
-
         public MetroTabItem()
         {
             DefaultStyleKey = typeof(MetroTabItem);
             this.Unloaded += MetroTabItem_Unloaded;
             this.Loaded += MetroTabItem_Loaded;
-
         }
         
          public MetroTabItem(BaseMetroTabControl OwningTabControl)
@@ -85,6 +56,37 @@ namespace MahApps.Metro.Controls
                 }));
             }
         }
+
+        public double HeaderFontSize
+        {
+            get { return (double)GetValue(HeaderFontSizeProperty); }
+            set { SetValue(HeaderFontSizeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for HeaderSize.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty HeaderFontSizeProperty =
+            DependencyProperty.Register("HeaderFontSize", typeof(double), typeof(MetroTabItem), new PropertyMetadata(26.67, (obj, args) =>
+            {
+                var item = (MetroTabItem)obj;
+
+                if (item.closeButton == null)
+                {
+                    item.ApplyTemplate();
+                }
+
+                double fontDpiSize = (double)args.NewValue;
+
+                double fontHeight = Math.Ceiling(fontDpiSize * item.rootLabel.FontFamily.LineSpacing);
+
+                var newMargin = (Math.Round(fontHeight) / 2.2) - (item.rootLabel.Padding.Top);
+
+                var previousMargin = item.closeButton.Margin;
+                item.newButtonMargin = new Thickness(previousMargin.Left, newMargin, previousMargin.Right, previousMargin.Bottom);
+                item.closeButton.Margin = item.newButtonMargin;
+
+                item.closeButton.UpdateLayout();
+
+            }));
 
         public bool CloseButtonEnabled
         {
