@@ -64,11 +64,10 @@
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="MinWidth" Value="5" />
         <Setter Property="MinHeight" Value="5" />
-        <Setter Property="FontSize" Value="26.67" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
-                    <Label x:Name="root" FontSize="{TemplateBinding FontSize}">
+                    <Label x:Name="root" FontSize="26.67">
                         <ContentPresenter ContentSource="Header"  RecognizesAccessKey="True" />
                     </Label>
                     <ControlTemplate.Triggers>
