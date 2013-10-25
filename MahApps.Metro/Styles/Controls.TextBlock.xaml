@@ -2,10 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--    <Style TargetType="{x:Type TextBlock}" x:Key="MetroTextBlock">-->
-    <!--        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />-->
-    <!--    </Style>-->
-
     <DataTemplate DataType="{x:Type system:String}">
         <TextBlock Text="{Binding}">
             <TextBlock.Resources>
@@ -13,7 +9,8 @@
             </TextBlock.Resources>
         </TextBlock>
     </DataTemplate>
-    <Style TargetType="{x:Type TextBlock}">
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="MetroTextBlock">
         <Setter Property="Foreground"
                 Value="{DynamicResource LabelTextBrush}" />
     </Style>
