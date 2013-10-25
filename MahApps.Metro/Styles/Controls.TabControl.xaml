@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls" >
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <Style TargetType="{x:Type TabControl}" x:Key="MetroTabControl">
         <Setter Property="Background" Value="{x:Null}" />
@@ -28,6 +27,7 @@
                             <Setter Property="Grid.Row" TargetName="ContentPanel" Value="0"/>
                             <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
                             <Setter Property="Height" TargetName="RowDefinition1" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="HeaderPanel" Value="2,0,2,2"/>
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Left">
                             <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
@@ -38,6 +38,7 @@
                             <Setter Property="Width" TargetName="ColumnDefinition1" Value="*"/>
                             <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
                             <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                            <Setter Property="Margin" TargetName="HeaderPanel" Value="2,2,0,2"/>
                         </Trigger>
                         <Trigger Property="TabStripPlacement" Value="Right">
                             <Setter Property="Grid.Row" TargetName="HeaderPanel" Value="0"/>
@@ -48,6 +49,7 @@
                             <Setter Property="Width" TargetName="ColumnDefinition1" Value="Auto"/>
                             <Setter Property="Height" TargetName="RowDefinition0" Value="*"/>
                             <Setter Property="Height" TargetName="RowDefinition1" Value="0"/>
+                            <Setter Property="Margin" TargetName="HeaderPanel" Value="0,2,2,2"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
