@@ -20,7 +20,6 @@ namespace MahApps.Metro
                 return _mainResourceDictionaries ?? (_mainResourceDictionaries =
                     new List<ResourceDictionary> {
                                                     new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") },
-                                                    new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml") },
                                                     new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml") }
                                                 });
             }
