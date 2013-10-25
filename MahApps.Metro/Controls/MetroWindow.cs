@@ -33,18 +33,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty InheritAccentColorsAndThemeProperty = DependencyProperty.Register("InheritAccentColorsAndTheme", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
 
         bool isDragging;
         ContentPresenter WindowCommandsPresenter;
         WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
-
-        public bool InheritAccentColorsAndTheme
-        {
-            get { return (bool)this.GetValue(InheritAccentColorsAndThemeProperty); }
-            set { SetValue(InheritAccentColorsAndThemeProperty, value); }
-        }
 
         public bool ShowWindowCommandsOnTop
         {
@@ -162,19 +155,6 @@ namespace MahApps.Metro.Controls
             if (this.Flyouts == null)
             {
                 this.Flyouts = new FlyoutsControl();
-            }
-
-            if (this.InheritAccentColorsAndTheme)
-            {
-                var mainWindow = System.Windows.Application.Current != null ? System.Windows.Application.Current.MainWindow as MetroWindow : null;
-                if (mainWindow != null)
-                {
-                    var theme = ThemeManager.DetectTheme(mainWindow);
-                    if (theme != null && theme.Item1 != null && theme.Item2 != null)
-                    {
-                        ThemeManager.ChangeTheme(this, theme.Item2, theme.Item1);
-                    }
-                }
             }
         }
 
