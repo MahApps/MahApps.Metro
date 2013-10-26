@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
@@ -33,18 +33,22 @@
                                               ContentSource="Header"
                                               RecognizesAccessKey="True">
                                 <ContentPresenter.Resources>
-                                    <DataTemplate DataType="{x:Type system:String}">
-                                        <TextBlock Text="{Binding}">
-                                            <TextBlock.Resources>
-                                                <Style TargetType="{x:Type TextBlock}">
-                                                    <Setter Property="Foreground"
-                                                            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type GroupBox}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
-                                                    <Setter Property="VerticalAlignment"
-                                                            Value="Center" />
-                                                </Style>
-                                            </TextBlock.Resources>
-                                        </TextBlock>
-                                    </DataTemplate>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Foreground">
+                                            <Setter.Value>
+                                                <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type GroupBox}}"
+                                                             Path="Background"
+                                                             Mode="OneWay" />
+                                                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type GroupBox}}"
+                                                             Path="(Controls:ControlsHelper.GroupBoxHeaderForeground)"
+                                                             Mode="OneWay" />
+                                                </MultiBinding>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="VerticalAlignment"
+                                                Value="Center" />
+                                    </Style>
                                 </ContentPresenter.Resources>
                                 <ContentPresenter.Content>
                                     <Binding Converter="{StaticResource ToUpperConverter}"

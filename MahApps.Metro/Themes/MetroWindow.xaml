@@ -76,8 +76,18 @@
                                        VerticalAlignment="Center"
                                        Margin="8 -1 0 0"
                                        FontSize="16"
-                                       FontFamily="{DynamicResource HeaderFontFamily}"
-                                       Foreground="{Binding ElementName=PART_WindowTitleBackground, Path=Fill, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+                                       FontFamily="{DynamicResource HeaderFontFamily}">
+                                <TextBlock.Foreground>
+                                    <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                        <Binding ElementName="PART_WindowTitleBackground"
+                                                 Path="Fill"
+                                                 Mode="OneWay" />
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                 Path="TitleForeground"
+                                                 Mode="OneWay" />
+                                    </MultiBinding>
+                                </TextBlock.Foreground>
+                            </TextBlock>
                         </Grid>
 
                         <!-- the window commands -->

@@ -1,12 +1,13 @@
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Converters
 {
-    public class BackgroundToForegroundConverter : IValueConverter
+    public class BackgroundToForegroundConverter : IValueConverter, IMultiValueConverter
     {
         private static BackgroundToForegroundConverter _instance;
 
@@ -54,6 +55,22 @@ namespace MahApps.Metro.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;
+        }
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var bgBrush = values.Length > 0 ? values[0] as Brush : null;
+            var titleBrush = values.Length > 1 ? values[1] as Brush : null;
+            if (titleBrush != null)
+            {
+                return titleBrush;
+            }
+            return Convert(bgBrush, targetType, parameter, culture);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return targetTypes.Select(t => DependencyProperty.UnsetValue).ToArray();
         }
     }
 }
