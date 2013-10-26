@@ -32,7 +32,7 @@
 
     <Style TargetType="{x:Type Controls:Glow}">
         <Setter Property="Background"
-                Value="{Binding RelativeSource={RelativeSource Self}, Path=GlowBrush}"/>
+                Value="{Binding RelativeSource={RelativeSource Self}, Path=GlowBrush}" />
         <Setter Property="Width"
                 Value="1" />
         <Setter Property="Padding"

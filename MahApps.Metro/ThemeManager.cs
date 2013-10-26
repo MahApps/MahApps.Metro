@@ -12,20 +12,6 @@ namespace MahApps.Metro
         private static readonly ResourceDictionary LightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
         private static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
 
-        private static List<ResourceDictionary> _mainResourceDictionaries;
-        public static List<ResourceDictionary> MainResourceDictionaries
-        {
-            get
-            {
-                return _mainResourceDictionaries ?? (_mainResourceDictionaries =
-                    new List<ResourceDictionary> {
-                                                    new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") },
-                                                    new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml") },
-                                                    new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml") }
-                                                });
-            }
-        }
-
         private static IList<Accent> _accents;
         public static IList<Accent> DefaultAccents
         {

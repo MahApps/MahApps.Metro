@@ -560,7 +560,7 @@
                         <Rectangle x:Name="CalendarButtonFocusVisual"
                                    IsHitTestVisible="false"
                                    Visibility="Collapsed"
-                                   Stroke ="{DynamicResource AccentColorBrush3}" />
+                                   Stroke="{DynamicResource AccentColorBrush3}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsFocused"

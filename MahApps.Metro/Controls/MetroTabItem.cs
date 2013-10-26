@@ -37,7 +37,10 @@ namespace MahApps.Metro.Controls
         void MetroTabItem_Unloaded(object sender, RoutedEventArgs e)
         {
             this.Unloaded -= MetroTabItem_Unloaded;
-            closeButton.Click -= closeButton_Click;
+            if (closeButton != null)
+            {
+                closeButton.Click -= closeButton_Click;
+            }
 
             closeButtonClickUnloaded = true;
         }
@@ -71,17 +74,18 @@ namespace MahApps.Metro.Controls
                     item.ApplyTemplate();
                 }
 
-                double fontDpiSize = (double)args.NewValue;
+                if (item.closeButton != null && item.rootLabel != null)
+                {
+                    double fontDpiSize = (double)args.NewValue;
+                    double fontHeight = Math.Ceiling(fontDpiSize * item.rootLabel.FontFamily.LineSpacing);
+                    var newMargin = (Math.Round(fontHeight) / 2.2) - (item.rootLabel.Padding.Top);
 
-                double fontHeight = Math.Ceiling(fontDpiSize * item.rootLabel.FontFamily.LineSpacing);
+                    var previousMargin = item.closeButton.Margin;
+                    item.newButtonMargin = new Thickness(previousMargin.Left, newMargin, previousMargin.Right, previousMargin.Bottom);
+                    item.closeButton.Margin = item.newButtonMargin;
 
-                var newMargin = (Math.Round(fontHeight) / 2.2) - (item.rootLabel.Padding.Top);
-
-                var previousMargin = item.closeButton.Margin;
-                item.newButtonMargin = new Thickness(previousMargin.Left, newMargin, previousMargin.Right, previousMargin.Bottom);
-                item.closeButton.Margin = item.newButtonMargin;
-
-                item.closeButton.UpdateLayout();
+                    item.closeButton.UpdateLayout();
+                }
 
             }));
 
@@ -106,13 +110,15 @@ namespace MahApps.Metro.Controls
             bool closeButtonNullBefore = closeButton == null; //TabControl's multi-loading/unloading issue
 
             closeButton = GetTemplateChild("PART_CloseButton") as Button;
-            closeButton.Margin = newButtonMargin;
+            if (closeButton != null)
+            {
+                closeButton.Margin = newButtonMargin;
 
-            if (closeButtonNullBefore)
-                closeButton.Click += closeButton_Click;
+                if (closeButtonNullBefore)
+                    closeButton.Click += closeButton_Click;
 
-
-            closeButton.Visibility = CloseButtonEnabled ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                closeButton.Visibility = CloseButtonEnabled ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            }
 
             rootLabel = GetTemplateChild("root") as Label;
         }

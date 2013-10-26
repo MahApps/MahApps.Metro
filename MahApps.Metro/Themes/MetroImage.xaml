@@ -3,15 +3,21 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style TargetType="Controls:MetroImage">
-        <Setter Property="Width" Value="48" />
-        <Setter Property="Height" Value="48" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Width"
+                Value="48" />
+        <Setter Property="Height"
+                Value="48" />
+        <Setter Property="Foreground"
+                Value="White" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:MetroImage">
-                    <Rectangle Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Fill="{TemplateBinding Foreground}">
+                    <Rectangle Width="{TemplateBinding Width}"
+                               Height="{TemplateBinding Height}"
+                               Fill="{TemplateBinding Foreground}">
                         <Rectangle.OpacityMask>
-                            <VisualBrush Visual="{Binding Source, RelativeSource={RelativeSource TemplatedParent}}" Stretch="Fill" />
+                            <VisualBrush Visual="{Binding Source, RelativeSource={RelativeSource TemplatedParent}}"
+                                         Stretch="Fill" />
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </ControlTemplate>

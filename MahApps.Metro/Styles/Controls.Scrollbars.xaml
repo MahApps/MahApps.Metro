@@ -3,7 +3,8 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
     <!-- fugging Scrollbars -->
-    <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
+    <ControlTemplate x:Key="HorizontalScrollBar"
+                     TargetType="{x:Type ScrollBar}">
         <Grid x:Name="Root">
             <Grid.Resources>
                 <ControlTemplate x:Key="RepeatButtonTemplate"
@@ -85,7 +86,8 @@
                                    RadiusX="2" />
                     </Grid>
                 </ControlTemplate>
-                <ControlTemplate x:Key="HorizontalDecrementTemplate" TargetType="RepeatButton">
+                <ControlTemplate x:Key="HorizontalDecrementTemplate"
+                                 TargetType="RepeatButton">
                     <Grid x:Name="Root">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -122,9 +124,8 @@
                               Height="6"
                               Stretch="Uniform"
                               Width="4"
-                              Fill="{DynamicResource GrayBrush1}"/>
-                            
-                        
+                              Fill="{DynamicResource GrayBrush1}" />
+
                         <Path x:Name="HoverPath"
                               Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
                               Height="6"
@@ -343,7 +344,7 @@
                               UseLayoutRounding="False"
                               Opacity="0"
                               Margin="1,0,0,0"
-                              Fill="{DynamicResource BlackBrush}"/>
+                              Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
                               Height="4"
@@ -561,19 +562,30 @@
     </ControlTemplate>
 
     <!-- Style for overall  ScrollBar -->
-    <Style x:Key="MetroScrollBar" TargetType="{x:Type ScrollBar}">
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
+    <Style x:Key="MetroScrollBar"
+           TargetType="{x:Type ScrollBar}">
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="OverridesDefaultStyle"
+                Value="true" />
         <Style.Triggers>
-            <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="Width" Value="Auto" />
-                <Setter Property="Height" Value="12" />
-                <Setter Property="Template" Value="{DynamicResource HorizontalScrollBar}" />
+            <Trigger Property="Orientation"
+                     Value="Horizontal">
+                <Setter Property="Width"
+                        Value="Auto" />
+                <Setter Property="Height"
+                        Value="12" />
+                <Setter Property="Template"
+                        Value="{DynamicResource HorizontalScrollBar}" />
             </Trigger>
-            <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Width" Value="12" />
-                <Setter Property="Height" Value="Auto" />
-                <Setter Property="Template" Value="{DynamicResource VerticalScrollBar}" />
+            <Trigger Property="Orientation"
+                     Value="Vertical">
+                <Setter Property="Width"
+                        Value="12" />
+                <Setter Property="Height"
+                        Value="Auto" />
+                <Setter Property="Template"
+                        Value="{DynamicResource VerticalScrollBar}" />
             </Trigger>
         </Style.Triggers>
     </Style>

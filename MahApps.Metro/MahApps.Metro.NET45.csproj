@@ -66,6 +66,7 @@
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="Controls\ComboBoxHelper.cs" />
+    <Compile Include="Controls\ControlsHelper.cs" />
     <Compile Include="Controls\FlipView.cs" />
     <Compile Include="Controls\Flyout.cs" />
     <Compile Include="Controls\FlyoutsControl.cs" />
@@ -249,10 +250,12 @@
     <Page Include="Styles\Controls.AnimatedSingleRowTabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.AnimatedTabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.ComboBox.xaml">
       <SubType>Designer</SubType>

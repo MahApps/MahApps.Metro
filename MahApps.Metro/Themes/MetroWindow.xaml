@@ -5,6 +5,10 @@
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <conv:ToUpperConverter x:Key="ToUpperConverter" />
 
@@ -44,7 +48,8 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Rectangle Fill="{DynamicResource WindowTitleColorBrush}"
+                        <Rectangle x:Name="PART_WindowTitleBackground"
+                                   Fill="{DynamicResource WindowTitleColorBrush}"
                                    Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                    Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                    Grid.Column="0"
@@ -71,8 +76,18 @@
                                        VerticalAlignment="Center"
                                        Margin="8 -1 0 0"
                                        FontSize="16"
-                                       FontFamily="{DynamicResource HeaderFontFamily}"
-                                       Foreground="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+                                       FontFamily="{DynamicResource HeaderFontFamily}">
+                                <TextBlock.Foreground>
+                                    <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                        <Binding ElementName="PART_WindowTitleBackground"
+                                                 Path="Fill"
+                                                 Mode="OneWay" />
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                 Path="TitleForeground"
+                                                 Mode="OneWay" />
+                                    </MultiBinding>
+                                </TextBlock.Foreground>
+                            </TextBlock>
                         </Grid>
 
                         <!-- the window commands -->
@@ -143,8 +158,12 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
-        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="TextBlockStyle"
+                Value="{StaticResource MetroTextBlock}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>

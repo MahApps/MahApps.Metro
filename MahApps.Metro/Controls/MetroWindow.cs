@@ -33,17 +33,17 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty InheritAccentColorsAndThemeProperty = DependencyProperty.Register("InheritAccentColorsAndTheme", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty TextBlockStyleProperty = DependencyProperty.Register("TextBlockStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(default(Style)));
 
         bool isDragging;
         ContentPresenter WindowCommandsPresenter;
         WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
 
-        public bool InheritAccentColorsAndTheme
+        public Style TextBlockStyle
         {
-            get { return (bool)this.GetValue(InheritAccentColorsAndThemeProperty); }
-            set { SetValue(InheritAccentColorsAndThemeProperty, value); }
+            get { return (Style)this.GetValue(TextBlockStyleProperty); }
+            set { SetValue(TextBlockStyleProperty, value); }
         }
 
         public bool ShowWindowCommandsOnTop
@@ -163,19 +163,6 @@ namespace MahApps.Metro.Controls
             {
                 this.Flyouts = new FlyoutsControl();
             }
-
-            if (this.InheritAccentColorsAndTheme)
-            {
-                var mainWindow = System.Windows.Application.Current != null ? System.Windows.Application.Current.MainWindow as MetroWindow : null;
-                if (mainWindow != null)
-                {
-                    var theme = ThemeManager.DetectTheme(mainWindow);
-                    if (theme != null && theme.Item1 != null && theme.Item2 != null)
-                    {
-                        ThemeManager.ChangeTheme(this, theme.Item2, theme.Item1);
-                    }
-                }
-            }
         }
 
         static MetroWindow()
@@ -186,6 +173,11 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            if (TextBlockStyle != null && !this.Resources.Contains(typeof(TextBlock)))
+            {
+                this.Resources.Add(typeof(TextBlock), TextBlockStyle);
+            }
 
             if (WindowCommands == null)
                 WindowCommands = new WindowCommands();
