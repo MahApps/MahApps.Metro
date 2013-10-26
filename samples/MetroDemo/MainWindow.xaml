@@ -532,21 +532,18 @@
                                        Style="{StaticResource DescriptionHeaderStyle}" />
                                 <ListBox Grid.Row="1"
                                          Grid.Column="0"
+                                         Height="100"
+                                         ItemsSource="{Binding Artists}"
+                                         DisplayMemberPath="Name"
                                          Margin="1"
-                                         SelectedIndex="0">
-                                    <ListBoxItem Content="Item 1" />
-                                    <ListBoxItem Content="Item 2" />
-                                    <ListBoxItem Content="Item 3" />
-                                </ListBox>
+                                         SelectedIndex="0" />
                                 <ListBox Grid.Row="2"
                                          Grid.Column="0"
+                                         ItemsSource="{Binding Albums}"
+                                         DisplayMemberPath="Title"
                                          Margin="1"
                                          IsEnabled="False"
-                                         SelectedIndex="0">
-                                    <ListBoxItem Content="Item 1" />
-                                    <ListBoxItem Content="Item 2" />
-                                    <ListBoxItem Content="Item 3" />
-                                </ListBox>
+                                         SelectedIndex="0" />
                                 <ListBox Grid.Row="1"
                                          Grid.Column="1"
                                          BorderThickness="1"
