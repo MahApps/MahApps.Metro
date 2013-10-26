@@ -5,6 +5,10 @@
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <conv:ToUpperConverter x:Key="ToUpperConverter" />
 
@@ -144,6 +148,8 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
+        <Setter Property="TextBlockStyle"
+                Value="{StaticResource MetroTextBlock}" />
         <Setter Property="Background"
                 Value="{DynamicResource WhiteBrush}" />
         <Setter Property="Foreground"

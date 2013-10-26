@@ -2,14 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <DataTemplate DataType="{x:Type system:String}">
-        <TextBlock Text="{Binding}">
-            <TextBlock.Resources>
-                <Style TargetType="{x:Type TextBlock}" />
-            </TextBlock.Resources>
-        </TextBlock>
-    </DataTemplate>
-
+    <!-- note: default style for textblock is now in MetroWindow !!! -->
+    <!-- never ever make a default style for TextBlock in App.xaml !!!  -->
     <Style TargetType="{x:Type TextBlock}"
            x:Key="MetroTextBlock">
         <Setter Property="Foreground"
