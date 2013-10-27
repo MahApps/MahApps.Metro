@@ -22,11 +22,12 @@ namespace MahApps.Metro.Controls
             this.OwningTabControl = OwningTabControl;
         }
 
+
         void MetroTabItem_Loaded(object sender, RoutedEventArgs e)
         {
-            if (CloseButton != null && closeButtonClickUnloaded)
+            if (closeButton != null && closeButtonClickUnloaded)
             {
-                CloseButton.Click += closeButton_Click;
+                closeButton.Click += closeButton_Click;
 
                 closeButtonClickUnloaded = false;
             }
@@ -35,9 +36,9 @@ namespace MahApps.Metro.Controls
         void MetroTabItem_Unloaded(object sender, RoutedEventArgs e)
         {
             this.Unloaded -= MetroTabItem_Unloaded;
-            if (CloseButton != null)
+            if (closeButton != null)
             {
-                CloseButton.Click -= closeButton_Click;
+                closeButton.Click -= closeButton_Click;
             }
 
             closeButtonClickUnloaded = true;
@@ -62,37 +63,47 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty CloseButtonEnabledProperty =
-            DependencyProperty.Register("CloseButtonEnabled", typeof(bool), typeof(MetroTabItem), new PropertyMetadata(false));
+            DependencyProperty.Register("CloseButtonEnabled", typeof(bool), typeof(MetroTabItem), new PropertyMetadata(false, OnCloseButtonEnabledPropertyChangedCallback));
+
+        private static void OnCloseButtonEnabledPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var item = dependencyObject as MetroTabItem;
+            if (item != null)
+            {
+                if (item.closeButton == null)
+                {
+                    item.ApplyTemplate();
+                }
+
+                if (item.closeButton != null)
+                {
+                    item.closeButton.Visibility = (bool)e.NewValue ? Visibility.Hidden : Visibility.Collapsed;
+                }
+            }
+        }
 
         internal Button closeButton = null;
-        public Button CloseButton
-        {
-            get { return this.closeButton ?? (this.closeButton = GetTemplateChild("PART_CloseButton") as Button); }
-        }
-
-        internal Label rootLabel = null;
-        public Label Label
-        {
-            get { return this.rootLabel ?? (this.rootLabel = GetTemplateChild("root") as Label); }
-        }
-
         internal Thickness newButtonMargin;
+        internal ContentPresenter contentSite = null;
         private bool closeButtonClickUnloaded = false;
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
-            if (CloseButton != null)
+            closeButton = GetTemplateChild("PART_CloseButton") as Button;
+            if (closeButton != null)
             {
-                CloseButton.Margin = newButtonMargin;
+                closeButton.Margin = newButtonMargin;
 
                 //TabControl's multi-loading/unloading issue
-                CloseButton.Click -= closeButton_Click;
-                CloseButton.Click += closeButton_Click;
+                closeButton.Click -= closeButton_Click;
+                closeButton.Click += closeButton_Click;
 
-                CloseButton.Visibility = CloseButtonEnabled ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                closeButton.Visibility = CloseButtonEnabled ? Visibility.Hidden : Visibility.Collapsed;
             }
+
+            contentSite = GetTemplateChild("ContentSite") as ContentPresenter;
         }
 
         void closeButton_Click(object sender, RoutedEventArgs e)
@@ -130,34 +141,33 @@ namespace MahApps.Metro.Controls
 
         protected override void OnSelected(RoutedEventArgs e)
         {
-            if (CloseButton != null)
-                if (CloseButtonEnabled)
-                    CloseButton.Visibility = Visibility.Visible;
+            if (closeButton != null && CloseButtonEnabled)
+                closeButton.Visibility = Visibility.Visible;
 
             base.OnSelected(e);
         }
 
         protected override void OnUnselected(RoutedEventArgs e)
         {
-            if (CloseButton != null)
-                CloseButton.Visibility = Visibility.Hidden;
+            if (closeButton != null && CloseButtonEnabled)
+                closeButton.Visibility = Visibility.Hidden;
 
             base.OnUnselected(e);
         }
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            if (CloseButton != null)
+            if (closeButton != null)
                 if (CloseButtonEnabled)
-                    CloseButton.Visibility = Visibility.Visible;
+                    closeButton.Visibility = Visibility.Visible;
 
             base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(MouseEventArgs e)
         {
-            if (!this.IsSelected && CloseButton != null && CloseButtonEnabled)
-                CloseButton.Visibility = Visibility.Hidden;
+            if (!this.IsSelected && closeButton != null && CloseButtonEnabled)
+                closeButton.Visibility = Visibility.Hidden;
 
             base.OnMouseLeave(e);
         }

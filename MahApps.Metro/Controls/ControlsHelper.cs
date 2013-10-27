@@ -35,22 +35,25 @@ namespace MahApps.Metro.Controls
                     return;
                 }
 
-                if (metroTabItem.CloseButton == null)
+                if (metroTabItem.closeButton == null)
                 {
                     metroTabItem.ApplyTemplate();
                 }
 
-                if (metroTabItem.CloseButton != null && metroTabItem.Label != null)
+                if (metroTabItem.closeButton != null && metroTabItem.contentSite != null)
                 {
+                    // punker76: i don't like this! i think this must be done with xaml.
                     var fontDpiSize = (double)e.NewValue;
-                    var fontHeight = Math.Ceiling(fontDpiSize * metroTabItem.Label.FontFamily.LineSpacing);
-                    var newMargin = (Math.Round(fontHeight) / 2.2) - (metroTabItem.Label.Padding.Top);
+                    var fontHeight = Math.Ceiling(fontDpiSize * metroTabItem.FontFamily.LineSpacing);
+                    var newMargin = (Math.Round(fontHeight) / 2.8)
+                                    - metroTabItem.Padding.Top - metroTabItem.Padding.Bottom
+                                    - metroTabItem.contentSite.Margin.Top - metroTabItem.contentSite.Margin.Bottom;
 
-                    var previousMargin = metroTabItem.CloseButton.Margin;
+                    var previousMargin = metroTabItem.closeButton.Margin;
                     metroTabItem.newButtonMargin = new Thickness(previousMargin.Left, newMargin, previousMargin.Right, previousMargin.Bottom);
-                    metroTabItem.CloseButton.Margin = metroTabItem.newButtonMargin;
+                    metroTabItem.closeButton.Margin = metroTabItem.newButtonMargin;
 
-                    metroTabItem.CloseButton.UpdateLayout();
+                    metroTabItem.closeButton.UpdateLayout();
                 }
             }
         }

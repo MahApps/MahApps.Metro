@@ -21,51 +21,66 @@
                 Value="5" />
         <Setter Property="MinHeight"
                 Value="5" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <!-- special property for header font size -->
         <Setter Property="Controls:ControlsHelper.HeaderFontSize"
                 Value="{DynamicResource TabItemFontSize}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">
-                    <StackPanel Orientation="Horizontal">
-                        <Label x:Name="root"
-                               FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}">
-                            <ContentPresenter ContentSource="Header"
+                    <Border x:Name="Border"
+                            Margin="{TemplateBinding Padding}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentPresenter x:Name="ContentSite"
+                                              Margin="2,1,2,1"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                              ContentSource="Header"
                                               RecognizesAccessKey="True" />
-                        </Label>
-                        <Button x:Name="PART_CloseButton"
-                                Style="{DynamicResource ChromelessButtonStyle}"
-                                Foreground="{TemplateBinding Foreground}"
-                                Width="20"
-                                HorizontalAlignment="Right"
-                                FontFamily="Marlett"
-                                Content="r"
-                                FontSize="17"
-                                Margin="0 0 2 0"
-                                IsTabStop="False"
-                                VerticalAlignment="Top"
-                                Command="{TemplateBinding CloseTabCommand}"
-                                CommandParameter="{TemplateBinding CloseTabCommandParameter}" />
-                    </StackPanel>
+                            <Button x:Name="PART_CloseButton"
+                                    Style="{DynamicResource ChromelessButtonStyle}"
+                                    Foreground="{DynamicResource BlackBrush}"
+                                    Width="20"
+                                    HorizontalAlignment="Right"
+                                    FontFamily="Marlett"
+                                    Content="r"
+                                    FontSize="17"
+                                    Margin="0 0 2 0"
+                                    IsTabStop="False"
+                                    VerticalAlignment="Top"
+                                    Command="{TemplateBinding CloseTabCommand}"
+                                    CommandParameter="{TemplateBinding CloseTabCommandParameter}" />
+                        </StackPanel>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected"
                                  Value="true">
-                            <Setter TargetName="root"
-                                    Property="Foreground"
+                            <Setter Property="Foreground"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
-
                         <Trigger Property="IsSelected"
                                  Value="false">
-                            <Setter TargetName="root"
-                                    Property="Foreground"
+                            <Setter Property="Foreground"
                                     Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
-                        <Trigger SourceName="root"
+                        <Trigger SourceName="ContentSite"
                                  Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="root"
-                                    Property="Foreground"
+                            <Setter Property="Foreground"
                                     Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
                         <Trigger SourceName="PART_CloseButton"
@@ -79,14 +94,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <!--<Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <AdornerDecorator>
-                        <ContentPresenter Content="{Binding}"/>
-                    </AdornerDecorator>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>-->
     </Style>
 </ResourceDictionary>
