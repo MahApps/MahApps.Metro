@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style TargetType="{x:Type TabControl}"
            x:Key="MetroTabControl">
@@ -146,11 +147,14 @@
                 Value="5" />
         <Setter Property="MinHeight"
                 Value="5" />
+        <!-- special property for header font size -->
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize"
+                Value="{DynamicResource TabItemFontSize}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Label x:Name="root"
-                           FontSize="{DynamicResource TabItemFontSize}">
+                           FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}">
                         <ContentPresenter ContentSource="Header"
                                           RecognizesAccessKey="True" />
                     </Label>

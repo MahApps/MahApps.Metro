@@ -22,14 +22,14 @@
         <Setter Property="MinHeight"
                 Value="5" />
         <!-- special property for header font size -->
-        <Setter Property="HeaderFontSize"
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize"
                 Value="{DynamicResource TabItemFontSize}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">
                     <StackPanel Orientation="Horizontal">
                         <Label x:Name="root"
-                               FontSize="{TemplateBinding HeaderFontSize}">
+                               FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}">
                             <ContentPresenter ContentSource="Header"
                                               RecognizesAccessKey="True" />
                         </Label>
