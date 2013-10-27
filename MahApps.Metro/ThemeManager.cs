@@ -66,8 +66,6 @@ namespace MahApps.Metro
 
         private static void ChangeTheme(ResourceDictionary resources, Tuple<Theme, Accent> oldThemeInfo, Accent accent, Theme newTheme)
         {
-            resources.BeginInit();
-
             if (oldThemeInfo != null)
             {
                 if (oldThemeInfo.Item2 != null)
@@ -75,7 +73,7 @@ namespace MahApps.Metro
                     var accentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldThemeInfo.Item2.Resources.Source);
                     if (accentResource != null) {
                         var ok = resources.MergedDictionaries.Remove(accentResource);
-
+                        // really need this???
                         foreach (DictionaryEntry r in accentResource)
                         {
                             if (resources.Contains(r.Key))
@@ -91,9 +89,9 @@ namespace MahApps.Metro
                     var md = resources.MergedDictionaries.FirstOrDefault(d => d.Source == themeResource.Source);
                     if (md != null)
                     {
-                        resources.MergedDictionaries.Remove(md);
+                        var ok = resources.MergedDictionaries.Remove(md);
                         var newThemeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
-
+                        // really need this???
                         foreach (DictionaryEntry r in themeResource)
                         {
                             if (resources.Contains(r.Key))
@@ -108,8 +106,6 @@ namespace MahApps.Metro
             {
                 ChangeTheme(resources, accent, newTheme);
             }
-
-            resources.EndInit();
         }
 
         public static void ChangeTheme(ResourceDictionary r, Accent accent, Theme theme)
