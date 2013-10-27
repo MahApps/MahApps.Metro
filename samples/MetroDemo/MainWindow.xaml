@@ -779,15 +779,15 @@
                                             <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
                                         </Grid.Resources>
                                         <TabControl>
-                                            <TabItem Header="this tabcontrol">
+                                            <Controls:MetroTabItem Header="this tabcontrol">
                                                 <TextBlock FontSize="30" Text="Cool transition" />
-                                            </TabItem>
-                                            <TabItem Header="animates its content">
+                                            </Controls:MetroTabItem>
+                                            <Controls:MetroTabItem Header="animates its content">
                                                 <TextBlock FontSize="30" Text="More cool transition" />
-                                            </TabItem>
-                                            <TabItem Header="with a transition">
+                                            </Controls:MetroTabItem>
+                                            <Controls:MetroTabItem Header="with a transition">
                                                 <TextBlock FontSize="30" Text="Animate everything!" />
-                                            </TabItem>
+                                            </Controls:MetroTabItem>
                                         </TabControl>
                                     </Grid>
                                     <Label Margin="0, 5, 0, 0" Content="Default TabControl with AnimatedSingleRowTabControl style" Style="{StaticResource DescriptionHeaderStyle}" />
