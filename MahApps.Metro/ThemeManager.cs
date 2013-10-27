@@ -68,9 +68,10 @@ namespace MahApps.Metro
         {
             if (oldThemeInfo != null)
             {
-                if (oldThemeInfo.Item2 != null)
+                var oldAccent = oldThemeInfo.Item2;
+                if (oldAccent != null && oldAccent.Name != accent.Name)
                 {
-                    var accentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldThemeInfo.Item2.Resources.Source);
+                    var accentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
                     if (accentResource != null) {
                         var ok = resources.MergedDictionaries.Remove(accentResource);
                         // really need this???
@@ -83,16 +84,18 @@ namespace MahApps.Metro
                         resources.MergedDictionaries.Add(accent.Resources);
                     }
                 }
-                if (oldThemeInfo.Item1 != null)
+
+                var oldTheme = oldThemeInfo.Item1;
+                if (oldTheme != null && oldTheme != newTheme)
                 {
-                    var themeResource = (oldThemeInfo.Item1 == Theme.Light) ? LightResource : DarkResource;
-                    var md = resources.MergedDictionaries.FirstOrDefault(d => d.Source == themeResource.Source);
+                    var oldThemeResource = (oldTheme == Theme.Light) ? LightResource : DarkResource;
+                    var md = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldThemeResource.Source);
                     if (md != null)
                     {
                         var ok = resources.MergedDictionaries.Remove(md);
                         var newThemeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
                         // really need this???
-                        foreach (DictionaryEntry r in themeResource)
+                        foreach (DictionaryEntry r in oldThemeResource)
                         {
                             if (resources.Contains(r.Key))
                                 resources.Remove(r.Key);
