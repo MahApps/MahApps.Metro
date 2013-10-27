@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
-    public class ControlsHelper : DependencyObject
+    public static class ControlsHelper
     {
-        public static readonly DependencyProperty GroupBoxHeaderForegroundProperty = DependencyProperty.Register("GroupBoxHeaderForeground", typeof(Brush), typeof(ControlsHelper), new UIPropertyMetadata(Brushes.White));
+        public static readonly DependencyProperty GroupBoxHeaderForegroundProperty =
+            DependencyProperty.RegisterAttached("GroupBoxHeaderForeground", typeof(Brush), typeof(ControlsHelper), new UIPropertyMetadata(Brushes.White));
 
-        public Brush GroupBoxHeaderForeground
+        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        public static Brush GetGroupBoxHeaderForeground(UIElement element)
         {
-            get { return (Brush)GetValue(GroupBoxHeaderForegroundProperty); }
-            set { SetValue(GroupBoxHeaderForegroundProperty, value); }
+            return (Brush)element.GetValue(GroupBoxHeaderForegroundProperty);
+        }
+
+        public static void SetGroupBoxHeaderForeground(UIElement element, Brush value)
+        {
+            element.SetValue(GroupBoxHeaderForegroundProperty, value);
         }
     }
 }
