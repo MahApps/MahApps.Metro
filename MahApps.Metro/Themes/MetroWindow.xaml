@@ -75,7 +75,7 @@
                                        TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"
                                        Margin="8 -1 0 0"
-                                       FontSize="16"
+                                       FontSize="{DynamicResource WindowTitleFontSize}"
                                        FontFamily="{DynamicResource HeaderFontFamily}">
                                 <TextBlock.Foreground>
                                     <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
