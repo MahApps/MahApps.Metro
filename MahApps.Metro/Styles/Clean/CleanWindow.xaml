@@ -49,9 +49,9 @@
                                             </Grid.ColumnDefinitions>
 
                                             <!-- the window commands -->
-                                            <ContentPresenter Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                                              x:Name="PART_WindowCommands"
-                                                              Panel.ZIndex="1"
+                                        <ContentPresenter Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                                          x:Name="PART_WindowCommands"
+                                                          Panel.ZIndex="1"
                                                               Grid.Column="0" />
                                             <!-- the window button commands -->
                                             <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
