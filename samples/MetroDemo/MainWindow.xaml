@@ -750,7 +750,7 @@
                 <TabItem Header="tabcontrol">
                     <ScrollViewer>
                         <StackPanel Margin="5, 10, 5, 0">
-                            <GroupBox Header="Default TabControl">
+                            <GroupBox Header="Default TabControl" Margin="0">
                                 <StackPanel Margin="15, 5, 15, 5">
                                     <Label Content="Default TabControl normal style" Style="{StaticResource DescriptionHeaderStyle}" />
                                     <TabControl>
@@ -810,6 +810,31 @@
                                             </TabItem>
                                         </TabControl>
                                     </Grid>
+                                    <Label Margin="0, 5, 0, 0" Content="Default TabControl left style" Style="{StaticResource DescriptionHeaderStyle}" />
+                                    <TabControl Margin="0, 10, 0, 0" TabStripPlacement="Left">
+                                        <TabItem Header="LeftItem0">
+                                            <TextBlock FontSize="30" Text="This is left content 0" />
+                                        </TabItem>
+                                        <TabItem Header="LeftItem1">
+                                            <TextBlock FontSize="30" Text="This is left content 1" />
+                                        </TabItem>
+                                        <TabItem Header="LeftItem2">
+                                            <TextBlock FontSize="30" Text="This is left content 2" />
+                                        </TabItem>
+                                    </TabControl>
+                                    <!--
+                                    Right & Bottom are both work, no need to show them all
+                                    <TabControl TabStripPlacement="Right" Style="{DynamicResource MetroTabControl}">
+                                        <TabItem Header="RightItem0" Content="This is Right content 0" />
+                                        <TabItem Header="RightItem1" Content="This is Right content 1" />
+                                        <TabItem Header="RightItem2" Content="This is Right content 2" />
+                                    </TabControl>
+                                    <TabControl TabStripPlacement="Bottom" Style="{DynamicResource MetroTabControl}">
+                                        <TabItem Header="BottomItem0" Content="This is Bottom content 0" />
+                                        <TabItem Header="BottomItem1" Content="This is Bottom content 1" />
+                                        <TabItem Header="BottomItem2" Content="This is Bottom content 2" />
+                                    </TabControl>
+                                    -->
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="Generic theme TabControls" Margin="0, 10, 0, 0">
@@ -874,30 +899,6 @@
                                     </Controls:MetroTabControl>
                                 </StackPanel>
                             </GroupBox>
-                            <TabControl Margin="0, 10, 0, 0" TabStripPlacement="Left" Style="{DynamicResource MetroTabControl}">
-                                <TabItem Header="LeftItem0">
-                                    <TextBlock FontSize="30" Text="This is left content 0" />
-                                </TabItem>
-                                <TabItem Header="LeftItem1">
-                                    <TextBlock FontSize="30" Text="This is left content 1" />
-                                </TabItem>
-                                <TabItem Header="LeftItem2">
-                                    <TextBlock FontSize="30" Text="This is left content 2" />
-                                </TabItem>
-                            </TabControl>
-                            <!--
-                            Right & Bottom are both work, no need to show them all
-                            <TabControl TabStripPlacement="Right" Style="{DynamicResource MetroTabControl}">
-                                <TabItem Header="RightItem0" Content="This is Right content 0" />
-                                <TabItem Header="RightItem1" Content="This is Right content 1" />
-                                <TabItem Header="RightItem2" Content="This is Right content 2" />
-                            </TabControl>
-                            <TabControl TabStripPlacement="Bottom" Style="{DynamicResource MetroTabControl}">
-                                <TabItem Header="BottomItem0" Content="This is Bottom content 0" />
-                                <TabItem Header="BottomItem1" Content="This is Bottom content 1" />
-                                <TabItem Header="BottomItem2" Content="This is Bottom content 2" />
-                            </TabControl>
-                            -->
                         </StackPanel>
 
                     </ScrollViewer>
