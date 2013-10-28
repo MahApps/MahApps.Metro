@@ -16,6 +16,9 @@ using System.Windows.Shapes;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A control that imitate a slideshow with back/forward buttons.
+    /// </summary>
     [TemplatePart(Name = "PART_Presenter", Type = typeof(TransitioningContentControl))]
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_ForwardButton", Type = typeof(Button))]
@@ -188,6 +191,9 @@ namespace MahApps.Metro.Controls
             GoBack();
         }
 
+        /// <summary>
+        /// Changes the current slide to the previous item.
+        /// </summary>
         public void GoBack()
         {
             if (SelectedIndex > 0)
@@ -197,6 +203,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Changes the current to the next item.
+        /// </summary>
         public void GoForward()
         {
             if (SelectedIndex < Items.Count - 1)
@@ -206,6 +215,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Brings the control buttons (next/previous) into view.
+        /// </summary>
         public void ShowControlButtons()
         {
             controls_visibility_override = false;
@@ -216,6 +228,9 @@ namespace MahApps.Metro.Controls
                     forwardButton.Visibility = Visibility.Visible;
                 });
         }
+        /// <summary>
+        /// Removes the control buttons (next/previous) from view.
+        /// </summary>
         public void HideControlButtons()
         {
             controls_visibility_override = true;
@@ -244,6 +259,9 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender,(d, e) => ExecuteWhenLoaded(((FlipView)d), 
                     () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
 
+        /// <summary>
+        /// Gets/sets the text that is displayed in the FlipView's banner.
+        /// </summary>
         public string BannerText
         {
             get { return (string)GetValue(BannerTextProperty); }
@@ -321,6 +339,9 @@ namespace MahApps.Metro.Controls
                 }
             }));
 
+        /// <summary>
+        /// Gets/sets whether the FlipView's banner is visible.
+        /// </summary>
         public bool IsBannerEnabled
         {
             get { return (bool)GetValue(IsBannerEnabledProperty); }

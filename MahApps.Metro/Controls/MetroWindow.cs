@@ -9,6 +9,9 @@ using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// An extended, metrofied Window.
+    /// </summary>
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
@@ -52,12 +55,18 @@ namespace MahApps.Metro.Controls
             set { SetValue(ShowWindowCommandsOnTopProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether the window's entrance transition animation is enabled.
+        /// </summary>
         public bool WindowTransitionsEnabled
         {
             get { return (bool)this.GetValue(WindowTransitionsEnabledProperty); }
             set { SetValue(WindowTransitionsEnabledProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the FlyoutsControl that hosts the window's flyouts.
+        /// </summary>
         public FlyoutsControl Flyouts
         {
             get { return (FlyoutsControl)GetValue(FlyoutsProperty); }
@@ -66,18 +75,27 @@ namespace MahApps.Metro.Controls
 
         public WindowCommands WindowCommands { get; set; }
 
+        /// <summary>
+        /// Gets/sets whether the window will ignore (and overlap) the taskbar when maximized.
+        /// </summary>
         public bool IgnoreTaskbarOnMaximize
         {
             get { return (bool)this.GetValue(IgnoreTaskbarOnMaximizeProperty); }
             set { SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the brush used for the titlebar's foreground.
+        /// </summary>
         public Brush TitleForeground
         {
             get { return (Brush)GetValue(TitleForegroundProperty); }
             set { SetValue(TitleForegroundProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether the window will save it's position between loads.
+        /// </summary>
         public bool SaveWindowPosition
         {
             get { return (bool)GetValue(SaveWindowPositionProperty); }
@@ -90,54 +108,81 @@ namespace MahApps.Metro.Controls
             set { SetValue(WindowPlacementSettingsProperty, value); }
         }
 
+        /// <summary>
+        /// Get/sets whether the titlebar icon is visible or not.
+        /// </summary>
         public bool ShowIconOnTitleBar
         {
             get { return (bool)GetValue(ShowIconOnTitleBarProperty); }
             set { SetValue(ShowIconOnTitleBarProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether the TitleBar is visible or not.
+        /// </summary>
         public bool ShowTitleBar
         {
             get { return (bool)GetValue(ShowTitleBarProperty); }
             set { SetValue(ShowTitleBarProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets if the minimize button is visible.
+        /// </summary>
         public bool ShowMinButton
         {
             get { return (bool)GetValue(ShowMinButtonProperty); }
             set { SetValue(ShowMinButtonProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets if the close button is visible.
+        /// </summary>
         public bool ShowCloseButton
         {
             get { return (bool)GetValue(ShowCloseButtonProperty); }
             set { SetValue(ShowCloseButtonProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the TitleBar's height.
+        /// </summary>
         public int TitlebarHeight
         {
             get { return (int)GetValue(TitlebarHeightProperty); }
             set { SetValue(TitlebarHeightProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets if the Maximize/Restore button is visible.
+        /// </summary>
         public bool ShowMaxRestoreButton
         {
             get { return (bool)GetValue(ShowMaxRestoreButtonProperty); }
             set { SetValue(ShowMaxRestoreButtonProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets if the TitleBar's text is automatically capitalized.
+        /// </summary>
         public bool TitleCaps
         {
             get { return (bool)GetValue(TitleCapsProperty); }
             set { SetValue(TitleCapsProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the brush used for the Window's glow.
+        /// </summary>
         public SolidColorBrush GlowBrush
         {
             get { return (SolidColorBrush)GetValue(GlowBrushProperty); }
             set { SetValue(GlowBrushProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the TitleBar/Window's Text.
+        /// </summary>
         public string WindowTitle
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
@@ -316,10 +361,13 @@ namespace MahApps.Metro.Controls
 
         internal void HandleFlyoutStatusChange(Flyout flyout, int visibleFlyouts)
         {
+            //checks a recently opened flyout's position.
             if (flyout.Position == Position.Right || flyout.Position == Position.Top)
             {
+                //get it's zindex
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts + 2;
-                if (this.ShowWindowCommandsOnTop) {
+                if (this.ShowWindowCommandsOnTop) //if ShowWindowCommandsOnTop is true, set the window commands' zindex to a number that is higher than the flyout's. 
+                {
                     WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, zIndex);
                 }
                 WindowButtonCommands.SetValue(Panel.ZIndexProperty, zIndex);

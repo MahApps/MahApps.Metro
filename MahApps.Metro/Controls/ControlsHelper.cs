@@ -5,6 +5,9 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A helper class that provides various attached properties for the GroupBox, TabItem and MetroTabItem controls.
+    /// </summary>
     public static class ControlsHelper
     {
         public static readonly DependencyProperty GroupBoxHeaderForegroundProperty =

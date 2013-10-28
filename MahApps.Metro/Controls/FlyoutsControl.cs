@@ -9,6 +9,10 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A FlyoutsControl is for displaying flyouts in a MetroWindow.
+    /// <see cref="MetroWindow"/>
+    /// </summary>
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(Flyout))]
     public class FlyoutsControl : ItemsControl
     {

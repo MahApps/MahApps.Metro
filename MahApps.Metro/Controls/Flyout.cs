@@ -8,11 +8,19 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A sliding panel control that is hosted in a MetroWindow via a FlyoutsControl.
+    /// <see cref="MetroWindow"/>
+    /// <seealso cref="FlyoutsControl"/>
+    /// </summary>
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
     public class Flyout : ContentControl
     {
         
+        /// <summary>
+        /// An event that is raised when IsOpen changes.
+        /// </summary>
         public event EventHandler IsOpenChanged;
         
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Flyout), new PropertyMetadata(default(string)));
@@ -22,36 +30,54 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
 
+        /// <summary>
+        /// An ICommand that executes when the flyout's close button is clicked.
+        /// </summary>
         public ICommand CloseCommand
         {
             get { return (ICommand)GetValue(CloseCommandProperty); }
             set { SetValue(CloseCommandProperty, value); }
         }
 
+        /// <summary>
+        /// A DataTemplate for the flyout's header.
+        /// </summary>
         public DataTemplate HeaderTemplate
         {
             get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
             set { SetValue(HeaderTemplateProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether this flyout is visible.
+        /// </summary>
         public bool IsOpen
         {
             get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether this flyout is pinnable.
+        /// </summary>
         public bool IsPinnable
         {
             get { return (bool)GetValue(IsPinnableProperty); }
             set { SetValue(IsPinnableProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets this flyout's position in the FlyoutsControl/MetroWindow.
+        /// </summary>
         public Position Position
         {
             get { return (Position)GetValue(PositionProperty); }
             set { SetValue(PositionProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the flyout's header.
+        /// </summary>
         public string Header
         {
             get { return (string)GetValue(HeaderProperty); }
