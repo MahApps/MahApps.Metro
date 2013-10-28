@@ -10,9 +10,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Control}">
                     <Ellipse Margin="8"
-                             Stroke="{TemplateBinding Foreground}"
+                             Stroke="{DynamicResource BlackBrush}"
                              StrokeDashArray="2 2"
-                             StrokeThickness="1" />
+                             StrokeThickness="1"
+                             SnapsToDevicePixels="True" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
