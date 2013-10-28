@@ -7,12 +7,18 @@ using System.Windows;
 
 namespace MahApps.Metro
 {
+    /// <summary>
+    /// A control that allows for the detection and alteration of a MetroWindow's theme and accent.
+    /// </summary>
     public static class ThemeManager
     {
         private static readonly ResourceDictionary LightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
         private static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
 
         private static IList<Accent> _accents;
+        /// <summary>
+        /// Gets a list of all of default themes.
+        /// </summary>
         public static IList<Accent> DefaultAccents
         {
             get
@@ -47,8 +53,11 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// change accent and theme for the hole application
+        /// Change accent and theme for the whole application.
         /// </summary>
+        /// <param name="app">The instance of Application to change.</param>
+        /// <param name="accent">The accent to apply.</param>
+        /// <param name="theme">The theme to apply.</param>
         public static void ChangeTheme(Application app, Accent accent, Theme theme)
         {
             var oldTheme = DetectTheme(app);
@@ -56,8 +65,11 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// change accent and theme for the given window
+        /// Change accent and theme for the given window.
         /// </summary>
+        /// <param name="window">The Window to change.</param>
+        /// <param name="accent">The accent to apply.</param>
+        /// <param name="theme">The theme to apply.</param>
         public static void ChangeTheme(Window window, Accent accent, Theme theme)
         {
             var oldTheme = DetectTheme(window);
@@ -111,6 +123,12 @@ namespace MahApps.Metro
             }
         }
 
+        /// <summary>
+        /// Changes the theme of a ResourceDictionary directly.
+        /// </summary>
+        /// <param name="r">The ResourceDictionary to modify.</param>
+        /// <param name="accent">The accent to apply to the ResourceDictionary.</param>
+        /// <param name="theme">The theme to apply to the ResourceDictionary.</param>
         public static void ChangeTheme(ResourceDictionary r, Accent accent, Theme theme)
         {
             var themeResource = (theme == Theme.Light) ? LightResource : DarkResource;
@@ -132,6 +150,7 @@ namespace MahApps.Metro
         /// <summary>
         /// Scans the window resources and returns it's accent and theme.
         /// </summary>
+        /// <param name="window">The Window to scan.</param>
         public static Tuple<Theme, Accent> DetectTheme(Window window)
         {
             if (window == null) throw new ArgumentNullException("window");
@@ -142,6 +161,7 @@ namespace MahApps.Metro
         /// <summary>
         /// Scans the application resources and returns it's accent and theme.
         /// </summary>
+        /// <param name="app">The Application instance to scan.</param>
         public static Tuple<Theme, Accent> DetectTheme(Application app)
         {
             if (app == null) throw new ArgumentNullException("app");
