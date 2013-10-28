@@ -13,9 +13,6 @@ namespace MetroDemo
 {
     public partial class MainWindow
     {
-        private Theme currentTheme = Theme.Light;
-        private Accent currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Blue");
-
         public MainWindow()
         {
             DataContext = new MainWindowViewModel();
@@ -32,21 +29,16 @@ namespace MetroDemo
             customTransitioning.Content = new TextBlock {Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true};
         }
 
-        private void ChangeAccent(Accent accent, Theme theme)
-        {
-            ThemeManager.ChangeTheme(Application.Current, accent, theme);
-        }
-
         private void ThemeLight(object sender, RoutedEventArgs e)
         {
-            this.currentTheme = Theme.Light;
-            this.ChangeAccent(this.currentAccent, this.currentTheme);
+            var theme = ThemeManager.DetectTheme(Application.Current);
+            ThemeManager.ChangeTheme(Application.Current, theme.Item2, Theme.Light);
         }
 
         private void ThemeDark(object sender, RoutedEventArgs e)
         {
-            this.currentTheme = Theme.Dark;
-            this.ChangeAccent(this.currentAccent, this.currentTheme);
+            var theme = ThemeManager.DetectTheme(Application.Current);
+            ThemeManager.ChangeTheme(Application.Current, theme.Item2, Theme.Dark);
         }
 
         private void LaunchVisualStudioDemo(object sender, RoutedEventArgs e)
@@ -110,13 +102,6 @@ namespace MetroDemo
         {
             new InteropDemo().Show();
 
-        }
-
-        private void ChangeAccent(object sender, RoutedEventArgs e)
-        {
-            var accentName = (string)((MenuItem)sender).Header;
-            this.currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == accentName);
-            this.ChangeAccent(this.currentAccent, this.currentTheme);
         }
     }
 }
