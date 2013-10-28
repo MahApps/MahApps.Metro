@@ -119,7 +119,7 @@
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
-                                <EasingDoubleKeyFrame KeyTime="00:00:00.500"
+                                <EasingDoubleKeyFrame KeyTime="00:00:00.400"
                                                       Value="0"
                                                       x:Name="hideFrame">
                                     <EasingDoubleKeyFrame.EasingFunction>
@@ -139,6 +139,7 @@
                                 </EasingDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimation From="1" To="0" BeginTime="00:00:00"
+                                             Duration="00:00:00.400"
                                              Storyboard.TargetProperty="(UIElement.Opacity)"
                                              Storyboard.TargetName="root" />
                         </Storyboard>
@@ -146,10 +147,9 @@
                     <VisualState x:Name="Show">
                         <Storyboard>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           x:Name="translateShow"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
-                                <EasingDoubleKeyFrame KeyTime="00:00:00.600"
+                                <EasingDoubleKeyFrame KeyTime="00:00:00.400"
                                                       Value="0"
                                                       x:Name="showFrame">
                                     <EasingDoubleKeyFrame.EasingFunction>
@@ -169,6 +169,7 @@
                                 </EasingDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimation From="0" To="1" BeginTime="00:00:00"
+                                             Duration="00:00:00.400"
                                              Storyboard.TargetProperty="(UIElement.Opacity)"
                                              Storyboard.TargetName="root" />
                         </Storyboard>
