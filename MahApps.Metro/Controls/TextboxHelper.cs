@@ -8,8 +8,11 @@ using System.Windows.Media;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// Password watermarking code from: http://prabu-guru.blogspot.com/2010/06/how-to-add-watermark-text-to-textbox.html
+    /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
+    /// <remarks>
+    /// Password watermarking code from: http://prabu-guru.blogspot.com/2010/06/how-to-add-watermark-text-to-textbox.html
+    /// </remarks>
     public class TextboxHelper : DependencyObject
     {
         public static readonly DependencyProperty IsMonitoringProperty = DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false, OnIsMonitoringChanged));
@@ -27,12 +30,18 @@ namespace MahApps.Metro.Controls
 
         private static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
 
+        /// <summary>
+        /// Gets/sets the brush used to draw the focus border.
+        /// </summary>
         public Brush FocusBorderBrush
         {
             get { return (Brush)GetValue(FocusBorderBrushProperty); }
             set { SetValue(FocusBorderBrushProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the brush used to draw the mouse over brush.
+        /// </summary>
         public Brush MouseOverBorderBrush
         {
             get { return (Brush)GetValue(MouseOverBorderBrushProperty); }
@@ -80,6 +89,9 @@ namespace MahApps.Metro.Controls
             obj.SetValue(HasTextProperty, value >= 1);
         }
 
+        /// <summary>
+        /// Gets if the attached TextBox has text.
+        /// </summary>
         public bool HasText
         {
             get { return (bool)GetValue(HasTextProperty); }

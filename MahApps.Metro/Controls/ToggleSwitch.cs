@@ -15,6 +15,9 @@ using MahApps.Metro.Converters;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A control that allows the user to toggle between two states: One represents true; The other represents false.
+    /// </summary>
     [TemplateVisualState(Name = NormalState, GroupName = CommonStates)]
     [TemplateVisualState(Name = DisabledState, GroupName = CommonStates)]
     [TemplatePart(Name = SwitchPart, Type = typeof(ToggleButton))]
@@ -42,30 +45,45 @@ namespace MahApps.Metro.Controls
         public event EventHandler<RoutedEventArgs> Indeterminate;
         public event EventHandler<RoutedEventArgs> Click;
 
+        /// <summary>
+        /// Gets/sets the text to display when the control is in it's On state.
+        /// </summary>
         public string OnLabel
         {
             get { return (string)GetValue(OnLabelProperty); }
             set { SetValue(OnLabelProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the text to display when the control is in it's Off state.
+        /// </summary>
         public string OffLabel
         {
             get { return (string)GetValue(OffLabelProperty); }
             set { SetValue(OffLabelProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the header to display on top of the control.
+        /// </summary>
         public object Header
         {
             get { return GetValue(HeaderProperty); }
             set { SetValue(HeaderProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the data template used to display the header on the top of the control.
+        /// </summary>
         public DataTemplate HeaderTemplate
         {
             get { return (DataTemplate)GetValue(HeaderTemplateProperty); }
             set { SetValue(HeaderTemplateProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the brush used for the switch's foreground.
+        /// </summary>
         public Brush SwitchForeground
         {
             get { return (Brush)GetValue(SwitchForegroundProperty); }
@@ -75,11 +93,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Gets/sets the control's content flow direction.
+        /// </summary>
         public FlowDirection ContentDirection {
             get { return (FlowDirection)GetValue(ContentDirectionProperty); }
             set { SetValue(ContentDirectionProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether the control is Checked (On) or not (Off).
+        /// </summary>
         [TypeConverter(typeof(NullableBoolConverter))]
         public bool? IsChecked
         {
@@ -87,6 +111,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(IsCheckedProperty, value); }
         }
 
+        /// <summary>
+        /// An event that is raised when the value of IsChecked changes.
+        /// </summary>
         public event EventHandler IsCheckedChanged;
 
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
