@@ -7,6 +7,10 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A metrofied ProgressBar.
+    /// <see cref="ProgressBar"/>
+    /// </summary>
     public class MetroProgressBar : ProgressBar
     {
         public static readonly DependencyProperty EllipseDiameterProperty =
@@ -29,12 +33,18 @@ namespace MahApps.Metro.Controls
             SizeChanged += SizeChangedHandler;
         }
 
+        /// <summary>
+        /// Gets/sets the diameter of the ellipses used in the indeterminate animation.
+        /// </summary>
         public double EllipseDiameter
         {
             get { return (double) GetValue(EllipseDiameterProperty); }
             set { SetValue(EllipseDiameterProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the offset of the ellipses used in the indeterminate animation.
+        /// </summary>
         public double EllipseOffset
         {
             get { return (double) GetValue(EllipseOffsetProperty); }

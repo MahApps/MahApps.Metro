@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// An extended TabItem with a metro style.
+    /// </summary>
     public class MetroTabItem : TabItem
     {
         public MetroTabItem()
@@ -56,6 +59,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Gets/sets whether the Close Button is visible.
+        /// </summary>
         public bool CloseButtonEnabled
         {
             get { return (bool)GetValue(CloseButtonEnabledProperty); }
@@ -130,6 +136,9 @@ namespace MahApps.Metro.Controls
             OwningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(data, this));
         }
 
+        /// <summary>
+        /// Gets/sets the command that is executed when the Close Button is clicked.
+        /// </summary>
         public ICommand CloseTabCommand { get { return (ICommand)GetValue(CloseTabCommandProperty); } set { SetValue(CloseTabCommandProperty, value); } }
         public static readonly DependencyProperty CloseTabCommandProperty = DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroTabItem));
 
@@ -137,6 +146,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseTabCommandParameterProperty =
             DependencyProperty.Register("CloseTabCommandParameter", typeof(object), typeof(MetroTabItem), new PropertyMetadata(null));
 
+        /// <summary>
+        /// Gets the owning MetroTabControl of this MetroTabItem.
+        /// </summary>
         public BaseMetroTabControl OwningTabControl { get; internal set; }
 
         protected override void OnSelected(RoutedEventArgs e)

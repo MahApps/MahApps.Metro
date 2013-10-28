@@ -16,6 +16,9 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A ContentControl that animates content as it loads and unloads.
+    /// </summary>
     public class TransitioningContentControl : ContentControl
     {
         internal const string PresentationGroup = "PresentationStates";
@@ -40,6 +43,9 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(CustomVisualStatesProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets if the content is transitioning.
+        /// </summary>
         public bool IsTransitioning
         {
             get { return (bool)GetValue(IsTransitioningProperty); }

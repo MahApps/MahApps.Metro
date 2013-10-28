@@ -7,6 +7,10 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A helper class that provides various attached properties for the ComboBox control.
+    /// <see cref="ComboBox"/>
+    /// </summary>
     public class ComboBoxHelper : DependencyObject
     {
         public static readonly DependencyProperty EnableVirtualizationWithGroupingProperty = DependencyProperty.RegisterAttached("EnableVirtualizationWithGrouping", typeof(bool), typeof(ComboBox), new FrameworkPropertyMetadata(false));
