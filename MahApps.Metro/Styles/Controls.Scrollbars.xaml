@@ -226,15 +226,9 @@
                   Height="11">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="0.00001*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Border BorderThickness="0,0,0,1"
-                        Grid.RowSpan="1"
-                        Margin="0,0,0,-1"
-                        Grid.ColumnSpan="5"
-                        Visibility="Collapsed"
-                        BorderBrush="{DynamicResource GrayBrush5}" />
                 <RepeatButton x:Name="HorizontalSmallDecrease"
                               Command="ScrollBar.LineLeftCommand"
                               Width="16"
@@ -244,14 +238,8 @@
                               Grid.Column="0"
                               Template="{DynamicResource HorizontalDecrementTemplate}" />
                 <Track x:Name="PART_Track"
-                       MinWidth="60"
                        IsDirectionReversed="False"
                        Grid.Column="1">
-                    <Track.Resources>
-                        <System:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">
-                            100
-                        </System:Double>
-                    </Track.Resources>
                     <Track.DecreaseRepeatButton>
                         <RepeatButton x:Name="HorizontalLargeDecrease"
                                       Command="ScrollBar.PageLeftCommand"
@@ -260,8 +248,7 @@
                                       Template="{DynamicResource RepeatButtonTemplate}" />
                     </Track.DecreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb MinWidth="60"
-                               Template="{DynamicResource HorizontalThumbTemplate}" />
+                        <Thumb Template="{DynamicResource HorizontalThumbTemplate}" />
                     </Track.Thumb>
                     <Track.IncreaseRepeatButton>
                         <RepeatButton x:Name="HorizontalLargeIncrease"
@@ -505,14 +492,9 @@
                   Width="11">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="0.00001*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Border BorderThickness="0,0,1,0"
-                        Margin="0,0,-1,0"
-                        Grid.RowSpan="5"
-                        Visibility="Collapsed"
-                        BorderBrush="{DynamicResource GrayBrush5}" />
                 <RepeatButton x:Name="VerticalSmallDecrease"
                               Command="ScrollBar.LineUpCommand"
                               Height="16"
@@ -522,13 +504,10 @@
                               Grid.Row="0"
                               Template="{DynamicResource VerticalDecrementTemplate}" />
                 <Track x:Name="PART_Track"
-                       MinHeight="60"
                        IsDirectionReversed="true"
                        Grid.Row="1">
                     <Track.Resources>
-                        <System:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">
-                            100
-                        </System:Double>
+                        <System:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">50</System:Double>
                     </Track.Resources>
                     <Track.DecreaseRepeatButton>
                         <RepeatButton x:Name="VerticalLargeDecrease"
@@ -538,8 +517,7 @@
                                       Template="{DynamicResource RepeatButtonTemplate}" />
                     </Track.DecreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb MinHeight="60"
-                               Template="{DynamicResource VerticalThumbTemplate}" />
+                        <Thumb Template="{DynamicResource VerticalThumbTemplate}" />
                     </Track.Thumb>
                     <Track.IncreaseRepeatButton>
                         <RepeatButton x:Name="VerticalLargeIncrease"
