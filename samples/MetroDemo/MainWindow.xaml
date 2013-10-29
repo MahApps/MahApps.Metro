@@ -294,6 +294,7 @@
                                      Controls:TextboxHelper.ClearTextButton="True"
                                      Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                                      Controls:TextboxHelper.Watermark="Watermark"
+                                     Controls:ControlsHelper.ButtonWidth="30"
                                      Text="Big" />
                             <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Search style"
@@ -304,6 +305,7 @@
                                      Controls:TextboxHelper.Watermark="Search style"
                                      Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                                      Style="{DynamicResource SearchMetroTextBox}"
+                                     Controls:ControlsHelper.ButtonWidth="28"
                                      Text="Big search" />
                             <TextBox Margin="0, 10, 0, 0"
                                      Controls:TextboxHelper.Watermark="Custom icon style"

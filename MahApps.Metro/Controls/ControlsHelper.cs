@@ -73,5 +73,22 @@ namespace MahApps.Metro.Controls
         {
             element.SetValue(HeaderFontSizeProperty, value);
         }
+
+        /// <summary>
+        /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox
+        /// </summary>
+        public static readonly DependencyProperty ButtonWidthProperty =
+            DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(ControlsHelper),
+                                                new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static double GetButtonWidth(DependencyObject obj)
+        {
+            return (double)obj.GetValue(ButtonWidthProperty);
+        }
+
+        public static void SetButtonWidth(DependencyObject obj, double value)
+        {
+            obj.SetValue(ButtonWidthProperty, value);
+        }
     }
 }

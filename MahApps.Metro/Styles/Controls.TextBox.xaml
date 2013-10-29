@@ -12,6 +12,8 @@
            x:Key="MetroTextBox">
         <Setter Property="Controls:TextboxHelper.IsMonitoring"
                 Value="True" />
+        <Setter Property="Controls:ControlsHelper.ButtonWidth"
+                Value="22" />
         <Setter Property="SelectionBrush"
                 Value="{DynamicResource HighlightBrush}" />
         <Setter Property="FontFamily"
@@ -114,7 +116,7 @@
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
 
                             <Border x:Name="ReadOnlyVisualElement"
@@ -325,11 +327,13 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    
     <Style TargetType="{x:Type TextBox}"
            x:Key="ButtonCommandMetroTextBox">
         <Setter Property="Controls:TextboxHelper.IsMonitoring"
                 Value="True" />
+        <Setter Property="Controls:ControlsHelper.ButtonWidth"
+                Value="22" />
         <Setter Property="SelectionBrush"
                 Value="{DynamicResource HighlightBrush}" />
         <Setter Property="FontFamily"
@@ -434,7 +438,7 @@
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
 
                             <Border x:Name="ReadOnlyVisualElement"
