@@ -113,10 +113,12 @@
                         <Rectangle x:Name="FocusRectangle"
                                    Visibility="Collapsed"
                                    StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" />
-                        <Grid Margin="2">
+                        <Grid x:Name="PART_InnerGrid"
+                              Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                <ColumnDefinition x:Name="ButtonColumn"
+                                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
 
                             <Border x:Name="ReadOnlyVisualElement"
@@ -205,6 +207,19 @@
                                     Property="Visibility"
                                     Value="Visible" />
                         </DataTrigger>
+
+                        <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="TextWrapping"
+                                           Value="NoWrap" />
+                                <Condition Property="AcceptsReturn"
+                                           Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ButtonColumn"
+                                    Property="Width"
+                                    Value="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}"/>
+                        </MultiTrigger>
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}"
                                      Value="False">
@@ -435,10 +450,12 @@
                         <Rectangle x:Name="FocusRectangle"
                                    Visibility="Collapsed"
                                    StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" />
-                        <Grid Margin="2">
+                        <Grid x:Name="PART_InnerGrid"
+                              Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                <ColumnDefinition x:Name="ButtonColumn"
+                                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
 
                             <Border x:Name="ReadOnlyVisualElement"
@@ -527,6 +544,19 @@
                                     Property="Visibility"
                                     Value="Visible" />
                         </DataTrigger>
+
+                        <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="TextWrapping"
+                                           Value="NoWrap" />
+                                <Condition Property="AcceptsReturn"
+                                           Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ButtonColumn"
+                                    Property="Width"
+                                    Value="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}" />
+                        </MultiTrigger>
 
                         <Trigger Property="IsMouseOver"
                                  Value="True">

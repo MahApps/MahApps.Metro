@@ -9,8 +9,6 @@
            x:Key="MetroComboBox">
         <Setter Property="MinHeight"
                 Value="26" />
-        <Setter Property="Controls:ControlsHelper.ButtonWidth"
-                Value="24" />
         <Setter Property="Foreground"
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="Background"
@@ -123,8 +121,8 @@
                                                 <Grid Margin="1">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*" />
-                                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
-                                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
                                                     </Grid.ColumnDefinitions>
 
                                                     <Button x:Name="PART_ClearText"
@@ -264,8 +262,8 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
-                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
 
                             <ToggleButton x:Name="PART_DropDownToggle"
@@ -283,7 +281,7 @@
                                     Visibility="Collapsed"
                                     BorderBrush="Transparent"
                                     BorderThickness="1,1,0,1"
-                                    Margin="0,0,1,0"
+                                    Margin="0,0,-2,0"
                                     Background="{DynamicResource ControlBackgroundBrush}">
                                 <TextBox x:Name="PART_EditableTextBox"
                                          HorizontalAlignment="Stretch"

@@ -76,6 +76,8 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox
+        /// For multiline TextBox, PasswordBox is this the fallback for the clear text button! so it must set manually!
+        /// For normal TextBox, PasswordBox the width is the height. 
         /// </summary>
         public static readonly DependencyProperty ButtonWidthProperty =
             DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(ControlsHelper),
