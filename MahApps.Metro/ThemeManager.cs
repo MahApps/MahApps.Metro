@@ -1,4 +1,6 @@
-﻿using MahApps.Metro.Controls;
+﻿using System.Reflection;
+using System.Security;
+using MahApps.Metro.Controls;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,32 +58,36 @@ namespace MahApps.Metro
         /// Change accent and theme for the whole application.
         /// </summary>
         /// <param name="app">The instance of Application to change.</param>
-        /// <param name="accent">The accent to apply.</param>
-        /// <param name="theme">The theme to apply.</param>
-        public static void ChangeTheme(Application app, Accent accent, Theme theme)
+        /// <param name="newAccent">The accent to apply.</param>
+        /// <param name="newTheme">The theme to apply.</param>
+        [SecurityCritical]
+        public static void ChangeTheme(Application app, Accent newAccent, Theme newTheme)
         {
             var oldTheme = DetectTheme(app);
-            ChangeTheme(app.Resources, oldTheme, accent, theme);
+            ChangeTheme(app.Resources, oldTheme, newAccent, newTheme);
         }
 
         /// <summary>
         /// Change accent and theme for the given window.
         /// </summary>
         /// <param name="window">The Window to change.</param>
-        /// <param name="accent">The accent to apply.</param>
-        /// <param name="theme">The theme to apply.</param>
-        public static void ChangeTheme(Window window, Accent accent, Theme theme)
+        /// <param name="newAccent">The accent to apply.</param>
+        /// <param name="newTheme">The theme to apply.</param>
+        [SecurityCritical]
+        public static void ChangeTheme(Window window, Accent newAccent, Theme newTheme)
         {
             var oldTheme = DetectTheme(window);
-            ChangeTheme(window.Resources, oldTheme, accent, theme);
+            ChangeTheme(window.Resources, oldTheme, newAccent, newTheme);
         }
 
-        private static void ChangeTheme(ResourceDictionary resources, Tuple<Theme, Accent> oldThemeInfo, Accent accent, Theme newTheme)
+        [SecurityCritical]
+        private static void ChangeTheme(ResourceDictionary resources, Tuple<Theme, Accent> oldThemeInfo, Accent newAccent, Theme newTheme)
         {
+            var themeChanged = false;
             if (oldThemeInfo != null)
             {
                 var oldAccent = oldThemeInfo.Item2;
-                if (oldAccent != null && oldAccent.Name != accent.Name)
+                if (oldAccent != null && oldAccent.Name != newAccent.Name)
                 {
                     var accentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
                     if (accentResource != null) {
@@ -93,7 +99,9 @@ namespace MahApps.Metro
                                 resources.Remove(r.Key);
                         }
 
-                        resources.MergedDictionaries.Add(accent.Resources);
+                        resources.MergedDictionaries.Add(newAccent.Resources);
+
+                        themeChanged = true;
                     }
                 }
 
@@ -114,12 +122,21 @@ namespace MahApps.Metro
                         }
 
                         resources.MergedDictionaries.Add(newThemeResource);
+
+                        themeChanged = true;
                     }
                 }
             }
             else
             {
-                ChangeTheme(resources, accent, newTheme);
+                ChangeTheme(resources, newAccent, newTheme);
+
+                themeChanged = true;
+            }
+
+            if (themeChanged)
+            {
+                OnThemeChanged(newAccent, newTheme);
             }
         }
 
@@ -127,12 +144,13 @@ namespace MahApps.Metro
         /// Changes the theme of a ResourceDictionary directly.
         /// </summary>
         /// <param name="r">The ResourceDictionary to modify.</param>
-        /// <param name="accent">The accent to apply to the ResourceDictionary.</param>
-        /// <param name="theme">The theme to apply to the ResourceDictionary.</param>
-        public static void ChangeTheme(ResourceDictionary r, Accent accent, Theme theme)
+        /// <param name="newAccent">The accent to apply to the ResourceDictionary.</param>
+        /// <param name="newTheme">The theme to apply to the ResourceDictionary.</param>
+        [SecurityCritical]
+        public static void ChangeTheme(ResourceDictionary r, Accent newAccent, Theme newTheme)
         {
-            var themeResource = (theme == Theme.Light) ? LightResource : DarkResource;
-            ApplyResourceDictionary(accent.Resources, r);
+            var themeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
+            ApplyResourceDictionary(newAccent.Resources, r);
             ApplyResourceDictionary(themeResource, r);
         }
 
@@ -244,5 +262,59 @@ namespace MahApps.Metro
 
             return false;
         }
+
+        /// <summary>
+        /// This event fires if accent color and theme was changed
+        /// this should be using the weak event pattern, but for now it's enough
+        /// </summary>
+        public static event EventHandler<OnThemeChangedEventArgs> IsThemeChanged;
+
+        /// <summary>
+        /// Invalidates global colors and resources.
+        /// Sometimes the ContextMenu is not changing the colors, so this will fix it.
+        /// </summary>
+        [SecurityCritical]
+        private static void OnThemeChanged(Accent newAccent, Theme newTheme)
+        {
+            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { Theme = newTheme, Accent = newAccent });
+
+            var invalidateColors = typeof(SystemColors).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic);
+            if (invalidateColors != null)
+            {
+                invalidateColors.Invoke(null, null);
+            }
+
+            var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
+            if (invalidateParameters != null)
+            {
+                invalidateParameters.Invoke(null, null);
+            }
+
+            var assembly = Assembly.GetAssembly(typeof(Window));
+            if (assembly != null)
+            {
+                var systemResources = assembly.GetType("System.Windows.SystemResources");
+                if (systemResources != null)
+                {
+                    var onThemeChanged = systemResources.GetMethod("OnThemeChanged", BindingFlags.Static | BindingFlags.NonPublic);
+                    if (onThemeChanged != null)
+                    {
+                        onThemeChanged.Invoke(null, null);
+                    }
+
+                    var invalidateResources = systemResources.GetMethod("InvalidateResources", BindingFlags.Static | BindingFlags.NonPublic);
+                    if (invalidateResources != null)
+                    {
+                        invalidateResources.Invoke(null, new object[] { false });
+                    }
+                }
+            }
+        }
+    }
+
+    public class OnThemeChangedEventArgs : EventArgs
+    {
+        public Theme Theme { get; set; }
+        public Accent Accent { get; set; }
     }
 }
