@@ -5,7 +5,6 @@
     <Color x:Key="WhiteColor">#FF252525</Color>
 
     <Color x:Key="Gray1">#FFF9F9F9</Color>
-    <Color x:Key="Gray2">#FF7F7F7F</Color>
     <Color x:Key="Gray7">#FF7E7E7E</Color>
     <Color x:Key="Gray8">#FF454545</Color>
     <Color x:Key="Gray10">#FF2F2F2F</Color>
@@ -42,7 +41,6 @@
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="GrayBrush1" Color="{StaticResource Gray1}" />
-    <SolidColorBrush x:Key="GrayBrush2" Color="{StaticResource Gray2}" />
     <SolidColorBrush x:Key="GrayBrush7" Color="{StaticResource Gray7}" />
     <SolidColorBrush x:Key="GrayBrush8" Color="{StaticResource Gray8}" />
     <SolidColorBrush x:Key="GrayBrush10" Color="{StaticResource Gray10}" />
@@ -50,8 +48,6 @@
     <SolidColorBrush x:Key="GrayNormalBrush" Color="{StaticResource GrayNormal}" />
     <SolidColorBrush x:Key="GrayHoverBrush" Color="{StaticResource GrayHover}" />
 
-    <SolidColorBrush x:Key="TextBoxMouseOverBorderBrush" Color="{StaticResource Gray2}" />
-    <SolidColorBrush x:Key="CheckBoxBrush" Color="{StaticResource Gray2}" />
     <SolidColorBrush x:Key="CheckBoxMouseOverBrush" Color="{StaticResource Gray1}" />
 
     <SolidColorBrush x:Key="SliderValueDisabled" Color="#FF535353" />
