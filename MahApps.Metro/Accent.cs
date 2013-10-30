@@ -18,13 +18,13 @@ namespace MahApps.Metro
         public string Name { get; set; }
 
         /// <summary>
-        /// Creates a new Accent object.
+        /// Initializes a new instance of the MahApps.Metro.Accent class.
         /// </summary>
         public Accent()
         { }
 
         /// <summary>
-        /// Creates a new Accent object with a name and ResourceDictionary URI.
+        /// Initializes a new instance of the MahApps.Metro.Accent class.
         /// </summary>
         /// <param name="name">The name of the new Accent.</param>
         /// <param name="resourceAddress">The URI of the accent ResourceDictionary.</param>

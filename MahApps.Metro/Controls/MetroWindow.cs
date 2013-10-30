@@ -10,7 +10,7 @@ using MahApps.Metro.Native;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// An extended, metrofied Window.
+    /// An extended, metrofied Window class.
     /// </summary>
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
@@ -49,6 +49,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(TextBlockStyleProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets whether the Window Commands will show on top of a Flyout with it's position set to Top or Right.
+        /// </summary>
         public bool ShowWindowCommandsOnTop
         {
             get { return (bool)this.GetValue(ShowWindowCommandsOnTopProperty); }
@@ -188,6 +191,9 @@ namespace MahApps.Metro.Controls
             get { return TitleCaps ? Title.ToUpper() : Title; }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the MahApps.Metro.Controls.MetroWindow class.
+        /// </summary>
         public MetroWindow()
         {
             Loaded += this.MetroWindow_Loaded;
