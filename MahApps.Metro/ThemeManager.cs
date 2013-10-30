@@ -136,7 +136,7 @@ namespace MahApps.Metro
 
             if (themeChanged)
             {
-                OnThemeChanged();
+                OnThemeChanged(newAccent, newTheme);
             }
         }
 
@@ -144,13 +144,13 @@ namespace MahApps.Metro
         /// Changes the theme of a ResourceDictionary directly.
         /// </summary>
         /// <param name="r">The ResourceDictionary to modify.</param>
-        /// <param name="accent">The accent to apply to the ResourceDictionary.</param>
-        /// <param name="theme">The theme to apply to the ResourceDictionary.</param>
+        /// <param name="newAccent">The accent to apply to the ResourceDictionary.</param>
+        /// <param name="newTheme">The theme to apply to the ResourceDictionary.</param>
         [SecurityCritical]
-        public static void ChangeTheme(ResourceDictionary r, Accent accent, Theme theme)
+        public static void ChangeTheme(ResourceDictionary r, Accent newAccent, Theme newTheme)
         {
-            var themeResource = (theme == Theme.Light) ? LightResource : DarkResource;
-            ApplyResourceDictionary(accent.Resources, r);
+            var themeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
+            ApplyResourceDictionary(newAccent.Resources, r);
             ApplyResourceDictionary(themeResource, r);
         }
 
@@ -264,12 +264,20 @@ namespace MahApps.Metro
         }
 
         /// <summary>
+        /// This event fires if accent color and theme was changed
+        /// this should be using the weak event pattern, but for now it's enough
+        /// </summary>
+        public static event EventHandler<OnThemeChangedEventArgs> IsThemeChanged;
+
+        /// <summary>
         /// Invalidates global colors and resources.
         /// Sometimes the ContextMenu is not changing the colors, so this will fix it.
         /// </summary>
         [SecurityCritical]
-        private static void OnThemeChanged()
+        private static void OnThemeChanged(Accent newAccent, Theme newTheme)
         {
+            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { Theme = newTheme, Accent = newAccent });
+
             var invalidateColors = typeof(SystemColors).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic);
             if (invalidateColors != null)
             {
@@ -302,5 +310,11 @@ namespace MahApps.Metro
                 }
             }
         }
+    }
+
+    public class OnThemeChangedEventArgs : EventArgs
+    {
+        public Theme Theme { get; set; }
+        public Accent Accent { get; set; }
     }
 }

@@ -84,6 +84,36 @@ namespace MahApps.Metro.Controls
             set { SetValue(HeaderProperty, value); }
         }
 
+        public Flyout()
+        {
+            this.Loaded += (sender, args) => {
+                               var window = this.TryFindParent<MetroWindow>();
+                               if (window != null)
+                               {
+                                   // detect current theme
+                                   var theme = DetectTheme(this);
+                                   if (theme != null && theme.Item2 != null)
+                                   {
+                                       var accent = theme.Item2;
+                                       // flyout use always the dark theme
+                                       ThemeManager.ChangeTheme(this.Resources, accent, Theme.Dark);
+                                   }
+                               }
+
+                               ThemeManager.IsThemeChanged += this.ThemeManager_IsThemeChanged;
+                           };
+            this.Unloaded += (sender, args) => ThemeManager.IsThemeChanged -= this.ThemeManager_IsThemeChanged;
+        }
+
+        private void ThemeManager_IsThemeChanged(object sender, OnThemeChangedEventArgs e)
+        {
+            if (e.Accent != null)
+            {
+                // flyout use always the dark theme
+                ThemeManager.ChangeTheme(this.Resources, e.Accent, Theme.Dark);
+            }
+        }
+
         private static Tuple<Theme, Accent> DetectTheme(Flyout flyout)
         {
             if (flyout == null)
@@ -113,22 +143,6 @@ namespace MahApps.Metro.Controls
         private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (Flyout)dependencyObject;
-
-            if ((bool)e.NewValue)
-            {
-                var window = flyout.TryFindParent<MetroWindow>();
-                if (window != null)
-                {
-                    // detect current theme
-                    var theme = DetectTheme(flyout);
-                    if (theme != null && theme.Item2 != null)
-                    {
-                        var accent = theme.Item2;
-                        // flyout use always the dark theme
-                        ThemeManager.ChangeTheme(flyout.Resources, accent, Theme.Dark);
-                    }
-                }
-            }
 
             VisualStateManager.GoToState(flyout, (bool) e.NewValue == false ? "Hide" : "Show", true);
             if (flyout.IsOpenChanged != null)
