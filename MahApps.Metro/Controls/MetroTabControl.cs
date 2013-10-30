@@ -9,10 +9,13 @@ using System.Windows.Input;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// A standard MetroTabControl.
+    /// A standard MetroTabControl (Pivot).
     /// </summary>
     public class MetroTabControl : BaseMetroTabControl
     {
+        /// <summary>
+        /// Initializes a new instance of the MahApps.Metro.Controls.MetroTabControl class.
+        /// </summary>
         public MetroTabControl()
         {
             DefaultStyleKey = typeof(MetroTabControl);
@@ -20,7 +23,7 @@ namespace MahApps.Metro.Controls
     }
 
     /// <summary>
-    /// A base class for every MetroTabControl.
+    /// A base class for every MetroTabControl (Pivot).
     /// </summary>
     public abstract class BaseMetroTabControl : TabControl
     {
@@ -131,6 +134,9 @@ namespace MahApps.Metro.Controls
                 ClosingTabItem = item;
             }
 
+            /// <summary>
+            /// Gets the MetroTabItem that will be closed.
+            /// </summary>
             public MetroTabItem ClosingTabItem { get; private set; }
         }
 
