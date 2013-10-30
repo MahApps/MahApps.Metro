@@ -33,7 +33,7 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="settingsFlyout" Width="250" Header="Settings" Position="Right">
+            <Controls:Flyout x:Name="settingsFlyout" Width="500" Header="Settings" Position="Right">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
