@@ -4,6 +4,8 @@
     <Color x:Key="BlackColor">#FF000000</Color>
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
 
+    <Color x:Key="Gray7">#FFF7F7F7</Color>
+
     <Color x:Key="GrayNormal">#FFBEBEBE</Color>
     <Color x:Key="GrayHover">#FF333333</Color>
 
