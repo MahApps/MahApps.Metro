@@ -106,29 +106,25 @@
                 </Setter>
             </Style>
             <Storyboard x:Key="ShowBannerStoryboard">
-                <DoubleAnimation From="0.0"
-                                 To="30.0"
+                <DoubleAnimation To="30.0"
                                  AccelerationRatio="1.0"
                                  SpeedRatio="2.5"
                                  Storyboard.TargetProperty="Height" />
             </Storyboard>
             <Storyboard x:Key="HideBannerStoryboard">
-                <DoubleAnimation From="30.0"
-                                 To="0.0"
+                <DoubleAnimation To="0.0"
                                  AccelerationRatio="1.0"
                                  SpeedRatio="2.5"
                                  Storyboard.TargetProperty="Height" />
             </Storyboard>
             <Storyboard x:Key="HideControlStoryboard">
-                <DoubleAnimation From="1.0"
-                                 To="0.0"
+                <DoubleAnimation To="0.0"
                                  AccelerationRatio="1.0"
                                  SpeedRatio="2.5"
                                  Storyboard.TargetProperty="Opacity" />
             </Storyboard>
             <Storyboard x:Key="ShowControlStoryboard">
-                <DoubleAnimation From="0.0"
-                                 To="1.0"
+                <DoubleAnimation To="1.0"
                                  AccelerationRatio="1.0"
                                  SpeedRatio="2.5"
                                  Storyboard.TargetProperty="Opacity" />

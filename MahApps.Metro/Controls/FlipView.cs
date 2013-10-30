@@ -165,6 +165,8 @@ namespace MahApps.Metro.Controls
             forwardButton = GetTemplateChild(PART_ForwardButton) as Button;
             bannerGrid = GetTemplateChild(PART_BannerGrid) as Grid;
             bannerLabel = GetTemplateChild(PART_BannerLabel) as Label;
+
+            bannerLabel.Opacity = IsBannerEnabled ? 1.0 : 0.0;
         }
 
         protected override void OnItemsSourceChanged(System.Collections.IEnumerable oldValue, System.Collections.IEnumerable newValue)
@@ -245,13 +247,15 @@ namespace MahApps.Metro.Controls
         {
             if (IsBannerEnabled)
                 bannerGrid.BeginStoryboard(ShowBannerStoryboard);
-            bannerLabel.Content = BannerText;
         }
 
         private void HideBanner()
         {
             if (this.Height > 0.0)
+            {
+                bannerLabel.BeginStoryboard(HideControlStoryboard);
                 bannerGrid.BeginStoryboard(HideBannerStoryboard);
+            }
         }
 
         public static readonly DependencyProperty BannerTextProperty =
