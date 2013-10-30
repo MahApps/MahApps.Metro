@@ -131,14 +131,17 @@ namespace MahApps.Metro.Controls
             {
                 if (_dpiFactor == null)
                 {
-
-                    var source = PresentationSource.FromVisual(this.Owner);
                     double dpiX = 96.0, dpiY = 96.0;
+
+                    // #652, #752 check if Owner not null
+                    var owner = this.Owner ?? (Application.Current != null ? Application.Current.MainWindow : null);
+                    var source = owner != null ? PresentationSource.FromVisual(owner) : null;
                     if (source != null && source.CompositionTarget != null)
                     {
                         dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
                         dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
                     }
+
                     _dpiFactor = dpiX == dpiY ? dpiX / 96.0 : 1;
                 }
                 return _dpiFactor.Value;
