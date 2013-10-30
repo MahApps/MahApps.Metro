@@ -247,7 +247,6 @@ namespace MahApps.Metro.Controls
         {
             if (IsBannerEnabled)
                 bannerGrid.BeginStoryboard(ShowBannerStoryboard);
-            //bannerLabel.Content = BannerText;
         }
 
         private void HideBanner()
