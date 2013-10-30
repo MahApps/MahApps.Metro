@@ -31,6 +31,8 @@
                 Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize"
                 Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="ItemContainerStyle"
+                Value="{DynamicResource MetroComboBoxItem}" />
         <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
