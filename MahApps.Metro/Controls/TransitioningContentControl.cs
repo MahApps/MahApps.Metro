@@ -81,8 +81,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty RestartTransitionOnContentChangeProperty = DependencyProperty.Register("RestartTransitionOnContentChange", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(false, OnRestartTransitionOnContentChangePropertyChanged));
         public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register("CustomVisualStates", typeof(ObservableCollection<VisualState>), typeof(TransitioningContentControl), new PropertyMetadata(null));
 
-        public ObservableCollection<VisualState> CustomVisualStates {
-          get { return (ObservableCollection<VisualState>)this.GetValue(CustomVisualStatesProperty); }
+        public ObservableCollection<VisualState> CustomVisualStates
+        {
+            get { return (ObservableCollection<VisualState>)this.GetValue(CustomVisualStatesProperty); }
             set { this.SetValue(CustomVisualStatesProperty, value); }
         }
 
@@ -203,10 +204,13 @@ namespace MahApps.Metro.Controls
                 AbortTransition();
             }
 
-            if (this.CustomVisualStates != null && this.CustomVisualStates.Any()) {
+            if (this.CustomVisualStates != null && this.CustomVisualStates.Any())
+            {
                 var presentationGroup = VisualStates.TryGetVisualStateGroup(this, PresentationGroup);
-                if (presentationGroup != null) {
-                    foreach (var state in this.CustomVisualStates) {
+                if (presentationGroup != null)
+                {
+                    foreach (var state in this.CustomVisualStates)
+                    {
                         presentationGroup.States.Add(state);
                     }
                 }
@@ -219,7 +223,10 @@ namespace MahApps.Metro.Controls
 
             if (CurrentContentPresentationSite != null)
             {
-                CurrentContentPresentationSite.Content = Content;
+                if (ContentTemplateSelector != null)
+                    CurrentContentPresentationSite.Content = ContentTemplateSelector.SelectTemplate(null, this);
+                else
+                    CurrentContentPresentationSite.Content = Content;
             }
 
             // hookup currenttransition
