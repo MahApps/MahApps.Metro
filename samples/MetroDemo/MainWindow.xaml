@@ -1014,11 +1014,16 @@
                                 <Label.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Menu 1">
-                                            <MenuItem Header="Submenu 1" />
+                                            <MenuItem Header="Submenu 1" IsChecked="True" />
+                                            <MenuItem Header="Submenu 1" IsChecked="True" IsEnabled="False" />
                                             <MenuItem Header="Submenu 2" />
+                                            <MenuItem Header="Submenu 3" IsEnabled="False" />
                                         </MenuItem>
                                         <MenuItem Header="Menu 2" />
-                                        <MenuItem Header="Menu 3" />
+                                        <MenuItem Header="Menu 3" IsChecked="True" />
+                                        <MenuItem Header="Menu 4" IsChecked="True" IsEnabled="False" />
+                                        <MenuItem Header="Menu 5" />
+                                        <MenuItem Header="Menu 6" IsEnabled="False" />
                                     </ContextMenu>
                                 </Label.ContextMenu>
                             </Label>

@@ -30,4 +30,7 @@
         <GradientStop Color="{StaticResource AccentColor3}" Offset="1" />
     </LinearGradientBrush>
 
+    <SolidColorBrush x:Key="CheckmarkFill" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="RightArrowFill" Color="{StaticResource AccentColor}" />
+
 </ResourceDictionary>
