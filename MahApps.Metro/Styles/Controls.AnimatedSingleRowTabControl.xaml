@@ -96,7 +96,7 @@
                        Minimum="0"
                        Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
                        AutomationProperties.AutomationId="HorizontalScrollBar"
-                       Template="{DynamicResource HorizontalScrollBarTemplate}" />
+                       Template="{StaticResource HorizontalScrollBarTemplate}" />
             <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
                                     Margin="15,2,15,0"
                                     Content="{TemplateBinding Content}"
@@ -127,7 +127,7 @@
                         </Grid.RowDefinitions>
                         <ScrollViewer VerticalScrollBarVisibility="Disabled"
                                       HorizontalScrollBarVisibility="Auto"
-                                      Template="{DynamicResource ScrollViewerTemplate}">
+                                      Template="{StaticResource ScrollViewerTemplate}">
                             <TabPanel x:Name="HeaderPanel"
                                       IsItemsHost="True"
                                       Panel.ZIndex="1"

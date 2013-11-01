@@ -76,7 +76,7 @@
                 <Setter Property="Background"
                         Value="{DynamicResource WhiteBrush}" />
                 <Setter Property="Foreground"
-                        Value="{DynamicResource NormalForegroundBrush}" />
+                        Value="{DynamicResource TextBrush}" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -85,13 +85,12 @@
                                     CornerRadius="4">
                                 <Grid Background="{TemplateBinding Background}">
                                     <Label FontFamily="Marlett"
-                                           Foreground="{DynamicResource NormalForegroundBrush}"
+                                           Foreground="{TemplateBinding Foreground}"
                                            FontSize="17"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center">
                                         <ContentPresenter ContentSource="Content" />
                                     </Label>
-
                                 </Grid>
                             </Border>
                             <ControlTemplate.Triggers>
