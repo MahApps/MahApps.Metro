@@ -24,7 +24,8 @@
                             <RowDefinition x:Name="RowDefinition1"
                                            Height="*" />
                         </Grid.RowDefinitions>
-                        <ScrollViewer Margin="{TemplateBinding TabStripMargin}"
+                        <ScrollViewer x:Name="HeaderPanelScroll"
+                                      Margin="{TemplateBinding TabStripMargin}"
                                       VerticalScrollBarVisibility="Disabled"
                                       HorizontalScrollBarVisibility="Auto"
                                       Style="{DynamicResource MetroScrollViewer}">
@@ -52,7 +53,7 @@
                         <Trigger Property="TabStripPlacement"
                                  Value="Bottom">
                             <Setter Property="Grid.Row"
-                                    TargetName="HeaderPanel"
+                                    TargetName="HeaderPanelScroll"
                                     Value="1" />
                             <Setter Property="Grid.Row"
                                     TargetName="ContentPanel"
@@ -64,19 +65,19 @@
                                     TargetName="RowDefinition1"
                                     Value="Auto" />
                             <Setter Property="Margin"
-                                    TargetName="HeaderPanel"
+                                    TargetName="HeaderPanelScroll"
                                     Value="2,0,2,2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement"
                                  Value="Left">
                             <Setter Property="Grid.Row"
-                                    TargetName="HeaderPanel"
+                                    TargetName="HeaderPanelScroll"
                                     Value="0" />
                             <Setter Property="Grid.Row"
                                     TargetName="ContentPanel"
                                     Value="0" />
                             <Setter Property="Grid.Column"
-                                    TargetName="HeaderPanel"
+                                    TargetName="HeaderPanelScroll"
                                     Value="0" />
                             <Setter Property="Grid.Column"
                                     TargetName="ContentPanel"
@@ -94,19 +95,25 @@
                                     TargetName="RowDefinition1"
                                     Value="0" />
                             <Setter Property="Margin"
-                                    TargetName="HeaderPanel"
+                                    TargetName="HeaderPanelScroll"
                                     Value="2,2,0,2" />
+                            <Setter Property="VerticalScrollBarVisibility"
+                                    TargetName="HeaderPanelScroll"
+                                    Value="Auto" />
+                            <Setter Property="HorizontalScrollBarVisibility"
+                                    TargetName="HeaderPanelScroll"
+                                    Value="Disabled" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement"
                                  Value="Right">
                             <Setter Property="Grid.Row"
-                                    TargetName="HeaderPanel"
+                                    TargetName="HeaderPanelScroll"
                                     Value="0" />
                             <Setter Property="Grid.Row"
                                     TargetName="ContentPanel"
                                     Value="0" />
                             <Setter Property="Grid.Column"
-                                    TargetName="HeaderPanel"
+                                    TargetName="HeaderPanelScroll"
                                     Value="1" />
                             <Setter Property="Grid.Column"
                                     TargetName="ContentPanel"
@@ -124,8 +131,17 @@
                                     TargetName="RowDefinition1"
                                     Value="0" />
                             <Setter Property="Margin"
-                                    TargetName="HeaderPanel"
+                                    TargetName="HeaderPanelScroll"
                                     Value="0,2,2,2" />
+                            <Setter Property="VerticalScrollBarVisibility"
+                                    TargetName="HeaderPanelScroll"
+                                    Value="Auto" />
+                            <Setter Property="HorizontalScrollBarVisibility"
+                                    TargetName="HeaderPanelScroll"
+                                    Value="Disabled" />
+                            <Setter Property="Controls:ControlsHelper.VerticalScrollBarOnLeftSide"
+                                    TargetName="HeaderPanelScroll"
+                                    Value="True" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
