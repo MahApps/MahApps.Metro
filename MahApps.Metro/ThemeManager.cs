@@ -91,13 +91,6 @@ namespace MahApps.Metro
                 {
                     var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
                     if (oldAccentResource != null) {
-                        // really need this???
-                        foreach (DictionaryEntry r in oldAccentResource)
-                        {
-                            if (resources.Contains(r.Key))
-                                resources.Remove(r.Key);
-                        }
-
                         resources.MergedDictionaries.Add(newAccent.Resources);
                         var ok = resources.MergedDictionaries.Remove(oldAccentResource);
 
@@ -112,13 +105,6 @@ namespace MahApps.Metro
                     var md = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldThemeResource.Source);
                     if (md != null)
                     {
-                        // really need this???
-                        foreach (DictionaryEntry r in oldThemeResource)
-                        {
-                            if (resources.Contains(r.Key))
-                                resources.Remove(r.Key);
-                        }
-
                         var newThemeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
                         resources.MergedDictionaries.Add(newThemeResource);
                         var ok = resources.MergedDictionaries.Remove(md);
