@@ -89,17 +89,10 @@ namespace MahApps.Metro
                 var oldAccent = oldThemeInfo.Item2;
                 if (oldAccent != null && oldAccent.Name != newAccent.Name)
                 {
-                    var accentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
-                    if (accentResource != null) {
-                        var ok = resources.MergedDictionaries.Remove(accentResource);
-                        // really need this???
-                        foreach (DictionaryEntry r in accentResource)
-                        {
-                            if (resources.Contains(r.Key))
-                                resources.Remove(r.Key);
-                        }
-
+                    var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
+                    if (oldAccentResource != null) {
                         resources.MergedDictionaries.Add(newAccent.Resources);
+                        var ok = resources.MergedDictionaries.Remove(oldAccentResource);
 
                         themeChanged = true;
                     }
@@ -112,16 +105,9 @@ namespace MahApps.Metro
                     var md = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldThemeResource.Source);
                     if (md != null)
                     {
-                        var ok = resources.MergedDictionaries.Remove(md);
                         var newThemeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
-                        // really need this???
-                        foreach (DictionaryEntry r in oldThemeResource)
-                        {
-                            if (resources.Contains(r.Key))
-                                resources.Remove(r.Key);
-                        }
-
                         resources.MergedDictionaries.Add(newThemeResource);
+                        var ok = resources.MergedDictionaries.Remove(md);
 
                         themeChanged = true;
                     }

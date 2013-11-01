@@ -3,6 +3,11 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours">
 
+    <ResourceDictionary.MergedDictionaries>
+        <!-- MetroScrollViewer -->
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Scrollbars.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -22,7 +27,7 @@
                         <ScrollViewer Margin="{TemplateBinding TabStripMargin}"
                                       VerticalScrollBarVisibility="Disabled"
                                       HorizontalScrollBarVisibility="Auto"
-                                      Template="{DynamicResource ScrollViewerTemplate}">
+                                      Style="{DynamicResource MetroScrollViewer}">
                             <TabPanel x:Name="HeaderPanel"
                                       IsItemsHost="True"
                                       Panel.ZIndex="1"
