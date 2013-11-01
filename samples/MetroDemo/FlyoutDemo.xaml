@@ -57,12 +57,16 @@
                         </StackPanel>
                     </ScrollViewer>
 
-                    <StackPanel Grid.Row="2"
-                            Margin="0,5,0,0"
-                            Orientation="Horizontal">
-                        <Button Margin="0,0,10,0" Content="create" />
-                        <Button Content="cancel" />
-                    </StackPanel>
+                    <UniformGrid Columns="2"
+                                 Grid.Row="2"
+                                 Margin="10">
+                        <Button Style="{DynamicResource SquareButtonStyle}"
+                                Margin="10"
+                                Content="Create" />
+                        <Button Style="{DynamicResource SquareButtonStyle}"
+                                Margin="10"
+                                Content="Cancel" />
+                    </UniformGrid>
 
                 </Grid>
             </Controls:Flyout>
