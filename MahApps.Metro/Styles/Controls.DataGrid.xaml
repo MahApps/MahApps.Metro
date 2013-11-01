@@ -282,8 +282,8 @@
                 Value="Stretch" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
-        <Setter Property="Foreground"
-                Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow, Mode=FindAncestor}, Path=Foreground}" />
+        <!--<Setter Property="Foreground"
+                Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow, Mode=FindAncestor}, Path=Foreground}" />-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -299,6 +299,28 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource AccentSelectedColorBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource GrayBrush7}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled"
+                               Value="False" />
+                    <Condition Property="IsSelected"
+                               Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Foreground"
+                        Value="{DynamicResource AccentSelectedColorBrush}" />
+            </MultiTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="MetroDataGridRow"
@@ -327,10 +349,8 @@
                     <Condition Property="Selector.IsSelectionActive"
                                Value="True" />
                 </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background"
-                            Value="{DynamicResource AccentColorBrush2}" />
-                </MultiTrigger.Setters>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush2}" />
             </MultiTrigger>
             <Trigger Property="IsEnabled"
                      Value="False">
@@ -344,12 +364,10 @@
                     <Condition Property="IsSelected"
                                Value="True" />
                 </MultiTrigger.Conditions>
-                <MultiTrigger.Setters>
-                    <Setter Property="Background"
-                            Value="{DynamicResource GrayBrush7}" />
-                    <Setter Property="Foreground"
-                            Value="{DynamicResource AccentSelectedColorBrush}" />
-                </MultiTrigger.Setters>
+                <Setter Property="Background"
+                        Value="{DynamicResource GrayBrush7}" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource AccentSelectedColorBrush}" />
             </MultiTrigger>
         </Style.Triggers>
     </Style>
@@ -493,8 +511,8 @@
                 Value="Transparent" />
         <Setter Property="TextBlock.VerticalAlignment"
                 Value="Center" />
-        <Setter Property="Foreground"
-                Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow, Mode=FindAncestor}, Path=Foreground}" />
+        <!--<Setter Property="Foreground"
+                Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow, Mode=FindAncestor}, Path=Foreground}" />-->
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="SnapsToDevicePixels"
@@ -537,6 +555,26 @@
                 <Setter Property="Background"
                         Value="{DynamicResource AccentColorBrush2}" />
             </MultiDataTrigger>
+            <Trigger Property="IsSelected"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource AccentSelectedColorBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource GrayBrush7}" />
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsEnabled"
+                               Value="False" />
+                    <Condition Property="IsSelected"
+                               Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Foreground"
+                        Value="{DynamicResource AccentSelectedColorBrush}" />
+            </MultiTrigger>
         </Style.Triggers>
     </Style>
 
