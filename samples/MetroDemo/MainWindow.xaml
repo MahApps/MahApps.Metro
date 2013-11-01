@@ -99,7 +99,7 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Column="0">
@@ -199,6 +199,7 @@
                                     Grid.Column="0"
                                     HorizontalAlignment="Center">
                             <StackPanel.Resources>
+                                <BooleanToVisibilityConverter x:Key="btv" />
                                 <Style x:Key="CustomMetroToggleSwitch"
                                        TargetType="{x:Type Controls:ToggleSwitch}"
                                        BasedOn="{StaticResource MetroToggleSwitch}">
@@ -214,12 +215,22 @@
                             <Controls:ToggleSwitch IsChecked="True" Header="With Header" />
                             <Controls:ToggleSwitch IsChecked="True" Header="right to left" ContentDirection="RightToLeft" />
                             <Controls:ToggleSwitch Style="{StaticResource CustomMetroToggleSwitch}" IsChecked="True" />
-                            <Controls:ToggleSwitch />
                             <Controls:ToggleSwitch IsChecked="True" IsEnabled="False" />
                             <Controls:ToggleSwitch IsEnabled="False" />
                         </StackPanel>
                         <StackPanel Grid.Row="1"
                                     Grid.Column="1"
+                                    HorizontalAlignment="Center">
+                            <StackPanel.Resources>
+                                <BooleanToVisibilityConverter x:Key="btv" />
+                            </StackPanel.Resources>
+                            <Label Content="Toggle switch enable/visible demo" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Controls:ToggleSwitch x:Name="enabledSwitch" IsChecked="True" OnLabel="Enabled" OffLabel="Disabled" />
+                            <Controls:ToggleSwitch x:Name="visibleSwitch" IsChecked="False" OnLabel="Visible" OffLabel="Collapsed" />
+                            <Controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}" Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1"
+                                    Grid.Column="2"
                                     HorizontalAlignment="Center">
                             <Label Content="Checkbox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <CheckBox Margin="0, 10, 0, 0" Content="Enabled" />
@@ -244,7 +255,7 @@
                                       IsThreeState="True" />
                         </StackPanel>
                         <StackPanel Grid.Row="1"
-                                    Grid.Column="2"
+                                    Grid.Column="3"
                                     HorizontalAlignment="Center">
                             <Label Content="Radio button" Style="{StaticResource DescriptionHeaderStyle}" />
                             <RadioButton Margin="0, 10, 0, 0"
