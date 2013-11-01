@@ -158,4 +158,6 @@
 
     <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{StaticResource BlackColor}" />
 
+    <Color x:Key="MenuShadowColor">#FF000000</Color>
+
 </ResourceDictionary>
