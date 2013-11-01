@@ -136,4 +136,28 @@
     <!-- WPF default colors -->
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{DynamicResource WhiteColor}" />
     <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{DynamicResource BlackColor}" />
+
+    <!-- menu default colors -->
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="ContextMenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="SubMenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
+
+    <SolidColorBrush x:Key="ContextMenuBorderBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="SubMenuBorderBrush" Color="{StaticResource BlackColor}" />
+
+    <SolidColorBrush x:Key="MenuItemSelectionFill" Color="#DEDEDE" />
+    <SolidColorBrush x:Key="MenuItemSelectionStroke" Color="#DEDEDE" />
+
+    <SolidColorBrush x:Key="TopMenuItemPressedFill" Color="#DEDEDE" />
+    <SolidColorBrush x:Key="TopMenuItemPressedStroke" Color="#E0717070" />
+    <SolidColorBrush x:Key="TopMenuItemSelectionStroke" Color="#90717070" />
+
+    <!-- original #FF9A9A9A" -->
+    <SolidColorBrush x:Key="DisabledMenuItemForeground" Color="{StaticResource Gray2}" />
+    <SolidColorBrush x:Key="DisabledMenuItemGlyphPanel" Color="#848589" />
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{StaticResource BlackColor}" />
+
+    <Color x:Key="MenuShadowColor">#FF000000</Color>
+
 </ResourceDictionary>

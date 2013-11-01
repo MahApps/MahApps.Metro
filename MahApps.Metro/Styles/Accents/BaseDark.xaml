@@ -58,4 +58,27 @@
 
     <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="{StaticResource FlyoutBackgroundColor}" />
 
+    <!-- menu brushes -->
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="ContextMenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="SubMenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
+
+    <SolidColorBrush x:Key="ContextMenuBorderBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="SubMenuBorderBrush" Color="{StaticResource BlackColor}" />
+
+    <SolidColorBrush x:Key="MenuItemSelectionFill" Color="#313131" />
+    <SolidColorBrush x:Key="MenuItemSelectionStroke" Color="#313131" />
+
+    <SolidColorBrush x:Key="TopMenuItemPressedFill" Color="#313131" />
+    <SolidColorBrush x:Key="TopMenuItemPressedStroke" Color="#E0717070" />
+    <SolidColorBrush x:Key="TopMenuItemSelectionStroke" Color="#90717070" />
+
+    <!-- original #FF9A9A9A" -->
+    <SolidColorBrush x:Key="DisabledMenuItemForeground" Color="{StaticResource Gray7}" />
+    <SolidColorBrush x:Key="DisabledMenuItemGlyphPanel" Color="#848589" />
+
+    <SolidColorBrush x:Key="{x:Static SystemColors.MenuTextBrushKey}" Color="{StaticResource BlackColor}" />
+
+    <Color x:Key="MenuShadowColor">#FFFFFFFF</Color>
+
 </ResourceDictionary>
