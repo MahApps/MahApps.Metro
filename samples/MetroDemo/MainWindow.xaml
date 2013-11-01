@@ -26,24 +26,32 @@
                 <Setter Property="FontSize" Value="22" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
+            <Ellipse x:Key="DarkThemeMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     StrokeThickness="1"
+                     Stroke="{DynamicResource BlackBrush}"
+                     Fill="{DynamicResource WhiteBrush}" />
+            <Ellipse x:Key="LightThemeMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     StrokeThickness="1"
+                     Stroke="{DynamicResource BlackBrush}"
+                     Fill="{DynamicResource BlackBrush}" />
+            <Ellipse x:Key="AccentMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     Fill="{Binding ColorBrush, Mode=OneWay}" />
             <Style x:Key="AccentColorMenuItemStyle"
                    TargetType="{x:Type MenuItem}"
                    BasedOn="{StaticResource MetroMenuItem}">
                 <Setter Property="Command"
                         Value="{Binding ChangeAccentCommand}" />
-                <Setter Property="HeaderTemplate">
-                    <Setter.Value>
-                        <DataTemplate DataType="{x:Type MetroDemo:AccentColorMenuData}">
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse Width="16"
-                                         Height="16"
-                                         Fill="{Binding ColorBrush}" />
-                                <TextBlock Text="{Binding Name}"
-                                            Margin="4,0,0,0" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
+                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
             </Style>
         </ResourceDictionary>
     </Window.Resources>
@@ -72,8 +80,8 @@
                   VerticalAlignment="Stretch"
                   HorizontalAlignment="Left">
                 <MenuItem Header="Theme">
-                    <MenuItem Click="ThemeLight" Header="Light" />
-                    <MenuItem Click="ThemeDark" Header="Dark" />
+                    <MenuItem Click="ThemeLight" Header="Light" Icon="{StaticResource DarkThemeMenuIcon}" />
+                    <MenuItem Click="ThemeDark" Header="Dark" Icon="{StaticResource LightThemeMenuIcon}" />
                 </MenuItem>
                 <MenuItem Header="Accent"
                           ItemsSource="{Binding AccentColors, Mode=OneWay}"
