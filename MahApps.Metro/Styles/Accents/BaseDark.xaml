@@ -60,6 +60,8 @@
 
     <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="{StaticResource FlyoutBackgroundColor}" />
 
+    <SolidColorBrush x:Key="FlatButtonPressedBackgroundBrush" Color="#444444"/>
+
     <!-- menu brushes -->
     <SolidColorBrush x:Key="MenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
     <SolidColorBrush x:Key="ContextMenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
