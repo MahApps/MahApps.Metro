@@ -844,17 +844,35 @@
                                         </TabControl>
                                     </Grid>
                                     <Label Margin="0, 5, 0, 0" Content="Default TabControl left style" Style="{StaticResource DescriptionHeaderStyle}" />
-                                    <TabControl Margin="0, 10, 0, 0" TabStripPlacement="Left">
-                                        <TabItem Header="LeftItem0">
-                                            <TextBlock FontSize="30" Text="This is left content 0" />
-                                        </TabItem>
-                                        <TabItem Header="LeftItem1">
-                                            <TextBlock FontSize="30" Text="This is left content 1" />
-                                        </TabItem>
-                                        <TabItem Header="LeftItem2">
-                                            <TextBlock FontSize="30" Text="This is left content 2" />
-                                        </TabItem>
-                                    </TabControl>
+                                    <Grid>
+                                        <Grid.Resources>
+                                            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
+                                        </Grid.Resources>
+                                        <TabControl Margin="0, 10, 0, 0"
+                                                    TabStripPlacement="Left"
+                                                    Height="100">
+                                            <TabItem Header="LeftItem0">
+                                                <TextBlock FontSize="30"
+                                                           Text="This is left content 0" />
+                                            </TabItem>
+                                            <TabItem Header="LeftItem1">
+                                                <TextBlock FontSize="30"
+                                                           Text="This is left content 1" />
+                                            </TabItem>
+                                            <TabItem Header="LeftItem2">
+                                                <TextBlock FontSize="30"
+                                                           Text="This is left content 2" />
+                                            </TabItem>
+                                            <TabItem Header="LeftItem3">
+                                                <TextBlock FontSize="30"
+                                                           Text="This is left content 3" />
+                                            </TabItem>
+                                            <TabItem Header="LeftItem4">
+                                                <TextBlock FontSize="30"
+                                                           Text="This is left content 4" />
+                                            </TabItem>
+                                        </TabControl>
+                                    </Grid>
                                     <!--
                                     Right & Bottom are both work, no need to show them all
                                     <TabControl TabStripPlacement="Right" Style="{DynamicResource MetroTabControl}">
@@ -873,6 +891,75 @@
                             <GroupBox Header="Generic theme TabControls" Margin="0, 10, 0, 0">
                                 <StackPanel Margin="15, 5, 15, 5">
                                     <Label Content="MetroAnimatedTabControl" Style="{StaticResource DescriptionHeaderStyle}" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Controls:MetroAnimatedSingleRowTabControl TabStripPlacement="Left"
+                                                                                   Height="100">
+                                            <TabControl.Resources>
+                                                <Style TargetType="{x:Type TabItem}"
+                                                       BasedOn="{StaticResource {x:Type TabItem}}">
+                                                    <Setter Property="HeaderTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <ContentPresenter Content="{TemplateBinding Content}">
+                                                                    <ContentPresenter.LayoutTransform>
+                                                                        <RotateTransform Angle="270" />
+                                                                    </ContentPresenter.LayoutTransform>
+                                                                </ContentPresenter>
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </TabControl.Resources>
+                                            <TabItem Header="Test1">
+                                                <TextBlock FontSize="12"
+                                                           Text="TabStripPlacement Left Test 1" />
+                                            </TabItem>
+                                            <TabItem Header="Test2">
+                                                <TextBlock FontSize="12"
+                                                           Text="TabStripPlacement Left Test 2" />
+                                            </TabItem>
+                                            <TabItem Header="Test3">
+                                                <TextBlock FontSize="12"
+                                                           Text="TabStripPlacement Left Test 3" />
+                                            </TabItem>
+                                        </Controls:MetroAnimatedSingleRowTabControl>
+                                        <Controls:MetroAnimatedSingleRowTabControl Grid.Column="1"
+                                                                                   TabStripPlacement="Right"
+                                                                                   Height="100">
+                                            <TabControl.Resources>
+                                                <Style TargetType="{x:Type TabItem}"
+                                                       BasedOn="{StaticResource {x:Type TabItem}}">
+                                                    <Setter Property="HeaderTemplate">
+                                                        <Setter.Value>
+                                                            <DataTemplate>
+                                                                <ContentPresenter Content="{TemplateBinding Content}">
+                                                                    <ContentPresenter.LayoutTransform>
+                                                                        <RotateTransform Angle="90" />
+                                                                    </ContentPresenter.LayoutTransform>
+                                                                </ContentPresenter>
+                                                            </DataTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </TabControl.Resources>
+                                            <TabItem Header="Test1">
+                                                <TextBlock FontSize="12"
+                                                           Text="TabStripPlacement Right Test 1" />
+                                            </TabItem>
+                                            <TabItem Header="Test2">
+                                                <TextBlock FontSize="12"
+                                                           Text="TabStripPlacement Right Test 2" />
+                                            </TabItem>
+                                            <TabItem Header="Test3">
+                                                <TextBlock FontSize="12"
+                                                           Text="TabStripPlacement Right Test 3" />
+                                            </TabItem>
+                                        </Controls:MetroAnimatedSingleRowTabControl>
+                                    </Grid>
                                     <Controls:MetroAnimatedTabControl>
                                         <TabItem Header="this tabcontrol">
                                             <TextBlock FontSize="30" Text="Cool transition" />

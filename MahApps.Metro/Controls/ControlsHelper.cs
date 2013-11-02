@@ -74,6 +74,38 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderFontSizeProperty, value);
         }
 
+        public static readonly DependencyProperty HeaderFontStretchProperty =
+            DependencyProperty.RegisterAttached("HeaderFontStretch", typeof(FontStretch), typeof(ControlsHelper), new UIPropertyMetadata(FontStretches.Normal));
+
+        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
+        [AttachedPropertyBrowsableForType(typeof(TabItem))]
+        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        public static FontStretch GetHeaderFontStretch(UIElement element)
+        {
+            return (FontStretch)element.GetValue(HeaderFontStretchProperty);
+        }
+
+        public static void SetHeaderFontStretch(UIElement element, FontStretch value)
+        {
+            element.SetValue(HeaderFontStretchProperty, value);
+        }
+
+        public static readonly DependencyProperty HeaderFontWeightProperty =
+            DependencyProperty.RegisterAttached("HeaderFontWeight", typeof(FontWeight), typeof(ControlsHelper), new UIPropertyMetadata(FontWeights.Normal));
+
+        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
+        [AttachedPropertyBrowsableForType(typeof(TabItem))]
+        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        public static FontWeight GetHeaderFontWeight(UIElement element)
+        {
+            return (FontWeight)element.GetValue(HeaderFontWeightProperty);
+        }
+
+        public static void SetHeaderFontWeight(UIElement element, FontWeight value)
+        {
+            element.SetValue(HeaderFontWeightProperty, value);
+        }
+
         /// <summary>
         /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox
         /// For multiline TextBox, PasswordBox is this the fallback for the clear text button! so it must set manually!
@@ -91,6 +123,23 @@ namespace MahApps.Metro.Controls
         public static void SetButtonWidth(DependencyObject obj, double value)
         {
             obj.SetValue(ButtonWidthProperty, value);
+        }
+
+        /// <summary>
+        /// This property can be used to set vertical scrollbar left side from the tabpanel (look at MetroAnimatedSingleRowTabControl)
+        /// </summary>
+        public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty =
+            DependencyProperty.RegisterAttached("VerticalScrollBarOnLeftSide", typeof(bool), typeof(ControlsHelper),
+                                                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static bool GetVerticalScrollBarOnLeftSide(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(VerticalScrollBarOnLeftSideProperty);
+        }
+
+        public static void SetVerticalScrollBarOnLeftSide(DependencyObject obj, bool value)
+        {
+            obj.SetValue(VerticalScrollBarOnLeftSideProperty, value);
         }
     }
 }
