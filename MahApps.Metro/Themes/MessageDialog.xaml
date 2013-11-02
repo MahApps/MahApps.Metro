@@ -26,8 +26,8 @@
                     <Grid Grid.Column="1" Margin="0 10 0 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <TextBlock Grid.Row="0" 
                                    FontSize="26" 
@@ -35,11 +35,13 @@
                         <TextBlock Grid.Row="1" 
                                    Margin="0 5 0 0" 
                                    FontSize="15" 
-                                   Text="{TemplateBinding Message}"/>
+                                   Text="{TemplateBinding Message}"
+                                   TextWrapping="Wrap"/>
 
                         <StackPanel Grid.Row="2" 
                                     Orientation="Horizontal" 
-                                    HorizontalAlignment="Right">
+                                    HorizontalAlignment="Right"
+                                    Height="85">
                             <Button x:Name="PART_AffirmativeButton" 
                                     Height="35" 
                                     MinWidth="60" 
