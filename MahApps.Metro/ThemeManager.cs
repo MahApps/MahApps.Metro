@@ -63,6 +63,8 @@ namespace MahApps.Metro
         [SecurityCritical]
         public static void ChangeTheme(Application app, Accent newAccent, Theme newTheme)
         {
+            if (app == null) throw new ArgumentNullException("app");
+
             var oldTheme = DetectTheme(app);
             ChangeTheme(app.Resources, oldTheme, newAccent, newTheme);
         }
@@ -76,6 +78,8 @@ namespace MahApps.Metro
         [SecurityCritical]
         public static void ChangeTheme(Window window, Accent newAccent, Theme newTheme)
         {
+            if (window == null) throw new ArgumentNullException("window");
+
             var oldTheme = DetectTheme(window);
             ChangeTheme(window.Resources, oldTheme, newAccent, newTheme);
         }
@@ -129,15 +133,17 @@ namespace MahApps.Metro
         /// <summary>
         /// Changes the theme of a ResourceDictionary directly.
         /// </summary>
-        /// <param name="r">The ResourceDictionary to modify.</param>
+        /// <param name="resources">The ResourceDictionary to modify.</param>
         /// <param name="newAccent">The accent to apply to the ResourceDictionary.</param>
         /// <param name="newTheme">The theme to apply to the ResourceDictionary.</param>
         [SecurityCritical]
-        public static void ChangeTheme(ResourceDictionary r, Accent newAccent, Theme newTheme)
+        public static void ChangeTheme(ResourceDictionary resources, Accent newAccent, Theme newTheme)
         {
+            if (resources == null) throw new ArgumentNullException("resources");
+
             var themeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
-            ApplyResourceDictionary(newAccent.Resources, r);
-            ApplyResourceDictionary(themeResource, r);
+            ApplyResourceDictionary(newAccent.Resources, resources);
+            ApplyResourceDictionary(themeResource, resources);
         }
 
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
