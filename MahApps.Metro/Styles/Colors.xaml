@@ -113,7 +113,11 @@
 
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource WhiteColor}" />
     <SolidColorBrush x:Key="SeperatorBrush" Color="#FFC4C4C5"/>
-
+    
+    <SolidColorBrush x:Key="FlatButtonBackgroundBrush" Color="#D5D5D5"/>
+    <SolidColorBrush x:Key="FlatButtonForegroundBrush" Color="#222222"/>
+    <SolidColorBrush x:Key="FlatButtonPressedBackgroundBrush" Color="#222222"/>
+    <SolidColorBrush x:Key="FlatButtonPressedForegroundBrush" Color="White"/>
 
     <!-- CONTROL VALIDATION BRUSHES -->
     <SolidColorBrush x:Key="ControlsValidationBrush" Color="#FFDB000C"/>
