@@ -44,7 +44,7 @@
                                     Height="85">
                             <Button x:Name="PART_AffirmativeButton" 
                                     Height="35" 
-                                    MinWidth="60" 
+                                    MinWidth="80" 
                                     Background="{DynamicResource AccentColorBrush}" 
                                     Foreground="White" 
                                     Style="{StaticResource MetroFlatButton}" 
@@ -53,7 +53,7 @@
                                     TabIndex="0"/>
                             <Button x:Name="PART_NegativeButton" 
                                     Height="35" 
-                                    MinWidth="60" 
+                                    MinWidth="80" 
                                     Style="{StaticResource MetroFlatButton}" 
                                     Content="{TemplateBinding NegativeButtonText}"
                                     TabIndex="1"/>
