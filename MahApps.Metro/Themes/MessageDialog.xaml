@@ -12,7 +12,8 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </ControlTemplate.Resources>
-        <Grid HorizontalAlignment="Stretch" Background="{TemplateBinding Background}">
+        <Grid HorizontalAlignment="Stretch" 
+              Background="{TemplateBinding Background}">
             <Border>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -28,34 +29,64 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" FontSize="26" Text="{TemplateBinding Title}"/>
-                        <TextBlock Grid.Row="1" Margin="0 5 0 0" FontSize="15" Text="{TemplateBinding Message}"/>
+                        <TextBlock Grid.Row="0" 
+                                   FontSize="26" 
+                                   Text="{TemplateBinding Title}"/>
+                        <TextBlock Grid.Row="1" 
+                                   Margin="0 5 0 0" 
+                                   FontSize="15" 
+                                   Text="{TemplateBinding Message}"/>
 
-                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button x:Name="PART_AffirmativeButton" Height="35" MinWidth="60" Background="{DynamicResource AccentColorBrush}" Foreground="White" 
-                                    Style="{StaticResource MetroFlatButton}" Content="{TemplateBinding AffirmativeButtonText}"/>
-                            <Button x:Name="PART_NegativeButton" Height="35" MinWidth="60" Style="{StaticResource MetroFlatButton}" Content="{TemplateBinding NegativeButtonText}"/>
+                        <StackPanel Grid.Row="2" 
+                                    Orientation="Horizontal" 
+                                    HorizontalAlignment="Right">
+                            <Button x:Name="PART_AffirmativeButton" 
+                                    Height="35" 
+                                    MinWidth="60" 
+                                    Background="{DynamicResource AccentColorBrush}" 
+                                    Foreground="White" 
+                                    Style="{StaticResource MetroFlatButton}" 
+                                    Content="{TemplateBinding AffirmativeButtonText}"/>
+                            <Button x:Name="PART_NegativeButton" 
+                                    Height="35" 
+                                    MinWidth="60" 
+                                    Style="{StaticResource MetroFlatButton}" 
+                                    Content="{TemplateBinding NegativeButtonText}"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" Value="Affirmative">
-                <Setter TargetName="PART_AffirmativeButton" Property="Visibility" Value="Visible"/>
-                <Setter TargetName="PART_NegativeButton" Property="Visibility" Value="Collapsed"/>
+            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" 
+                         Value="Affirmative">
+                <Setter TargetName="PART_AffirmativeButton" 
+                        Property="Visibility" 
+                        Value="Visible"/>
+                <Setter TargetName="PART_NegativeButton" 
+                        Property="Visibility" 
+                        Value="Collapsed"/>
             </DataTrigger>
-            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" Value="AffirmativeAndNegative">
-                <Setter TargetName="PART_AffirmativeButton" Property="Visibility" Value="Visible"/>
-                <Setter TargetName="PART_NegativeButton" Property="Visibility" Value="Visible"/>
+            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" 
+                         Value="AffirmativeAndNegative">
+                <Setter TargetName="PART_AffirmativeButton" 
+                        Property="Visibility" 
+                        Value="Visible"/>
+                <Setter TargetName="PART_NegativeButton" 
+                        Property="Visibility" 
+                        Value="Visible"/>
             </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MessageDialog}">
-        <Setter Property="Template" Value="{StaticResource MessageDialogTemplate}"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}"/>
+        <Setter Property="Template" 
+                Value="{StaticResource MessageDialogTemplate}"/>
+        <Setter Property="VerticalAlignment" 
+                Value="Center"/>
+        <Setter Property="HorizontalAlignment" 
+                Value="Stretch"/>
+        <Setter Property="Background" 
+                Value="{DynamicResource WhiteColorBrush}"/>
     </Style>
 </ResourceDictionary>
