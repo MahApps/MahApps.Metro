@@ -15,11 +15,15 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
+    [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
+    [TemplatePart(Name = PART_MessageDialogContainer, Type = typeof(Grid))]
     public class MetroWindow : Window
     {
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowCommands = "PART_WindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
+        private const string PART_OverlayBox = "PART_OverlayBox";
+        private const string PART_MessageDialogContainer = "PART_MessageDialogContainer";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -42,6 +46,8 @@ namespace MahApps.Metro.Controls
         ContentPresenter WindowCommandsPresenter;
         WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
+        Grid overlayBox;
+        Grid messageDialogContainer;
 
         public Style TextBlockStyle
         {
@@ -191,6 +197,36 @@ namespace MahApps.Metro.Controls
             get { return TitleCaps ? Title.ToUpper() : Title; }
         }
 
+        public System.Threading.Tasks.Task<MessageDialogResult> ShowMessageAsync(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
+        {
+            //create the dialog control
+            MessageDialog dialog = new MessageDialog();
+            dialog.SetValue(Panel.ZIndexProperty, (int)overlayBox.GetValue(Panel.ZIndexProperty) + 1);
+            dialog.Height = this.ActualHeight / 4.0;
+            dialog.Title = title;
+            dialog.Message = message;
+            dialog.ButtonStyle = style;
+
+            overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
+
+            messageDialogContainer.Children.Add(dialog); //add the dialog to the container
+
+            dialog.ApplyTemplate(); //make sure the dialog has loaded before trying to wait on it.
+
+            return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(x =>
+                {
+                    //once a button as been clicked, begin removing the dialog.
+                    Dispatcher.Invoke(new Action(() =>
+                        {
+                            messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
+
+                            overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+                        }));
+
+                    return x.Result;
+                });
+        }
+
         /// <summary>
         /// Initializes a new instance of the MahApps.Metro.Controls.MetroWindow class.
         /// </summary>
@@ -234,6 +270,9 @@ namespace MahApps.Metro.Controls
                 WindowCommands = new WindowCommands();
             WindowCommandsPresenter = GetTemplateChild("PART_WindowCommands") as ContentPresenter;
             WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
+
+            overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
+            messageDialogContainer = GetTemplateChild(PART_MessageDialogContainer) as Grid;
 
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
 
