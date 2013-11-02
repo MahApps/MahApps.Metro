@@ -74,6 +74,38 @@ namespace MahApps.Metro.Controls
             element.SetValue(HeaderFontSizeProperty, value);
         }
 
+        public static readonly DependencyProperty HeaderFontStretchProperty =
+            DependencyProperty.RegisterAttached("HeaderFontStretch", typeof(FontStretch), typeof(ControlsHelper), new UIPropertyMetadata(FontStretches.Normal));
+
+        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
+        [AttachedPropertyBrowsableForType(typeof(TabItem))]
+        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        public static FontStretch GetHeaderFontStretch(UIElement element)
+        {
+            return (FontStretch)element.GetValue(HeaderFontStretchProperty);
+        }
+
+        public static void SetHeaderFontStretch(UIElement element, FontStretch value)
+        {
+            element.SetValue(HeaderFontStretchProperty, value);
+        }
+
+        public static readonly DependencyProperty HeaderFontWeightProperty =
+            DependencyProperty.RegisterAttached("HeaderFontWeight", typeof(FontWeight), typeof(ControlsHelper), new UIPropertyMetadata(FontWeights.Normal));
+
+        [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
+        [AttachedPropertyBrowsableForType(typeof(TabItem))]
+        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        public static FontWeight GetHeaderFontWeight(UIElement element)
+        {
+            return (FontWeight)element.GetValue(HeaderFontWeightProperty);
+        }
+
+        public static void SetHeaderFontWeight(UIElement element, FontWeight value)
+        {
+            element.SetValue(HeaderFontWeightProperty, value);
+        }
+
         /// <summary>
         /// This property can be used to set the button width (PART_ClearText) of TextBox, PasswordBox, ComboBox
         /// For multiline TextBox, PasswordBox is this the fallback for the clear text button! so it must set manually!

@@ -49,6 +49,8 @@
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                              TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                              TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                               ContentSource="Header"
                                               RecognizesAccessKey="True" />
                             <Button x:Name="PART_CloseButton"

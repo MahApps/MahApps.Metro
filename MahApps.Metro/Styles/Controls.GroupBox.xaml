@@ -17,6 +17,8 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize"
+                Value="{DynamicResource ContentFontSize}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -48,6 +50,9 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="1">
                             <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                              TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                              TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                               ContentSource="Header"
                                               RecognizesAccessKey="True" />
                         </Border>
