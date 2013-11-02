@@ -8,6 +8,7 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
+    [Obsolete("The ProgressIndicator is now obsolete, use the MetroProgressBar or ProgressBar instead!")]
     public class WidthPercentageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -22,6 +23,7 @@ namespace MahApps.Metro.Controls
         }
     }
 
+    [Obsolete("The ProgressIndicator is now obsolete, use the MetroProgressBar or ProgressBar instead!")]
     public partial class ProgressIndicator
     {
         public ProgressIndicator()
