@@ -225,6 +225,11 @@ namespace MahApps.Metro.Controls
 
             dialog.ApplyTemplate(); //make sure the dialog has loaded before trying to wait on it.
 
+            if (TextBlockStyle != null && !dialog.Resources.Contains(typeof(TextBlock)))
+            {
+                dialog.Resources.Add(typeof(TextBlock), TextBlockStyle);
+            }
+
             return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(x =>
                 {
                     //once a button as been clicked, begin removing the dialog.
