@@ -4,43 +4,47 @@
     <Style x:Key="MetroFlatButton"
            TargetType="{x:Type Button}">
         <Setter Property="Background"
-                Value="#D5D5D5" />
+                Value="{DynamicResource FlatButtonBackgroundBrush}" />
         <Setter Property="Foreground"
-                Value="#222222" />
+                Value="{DynamicResource FlatButtonForegroundBrush}" />
         <Setter Property="FontSize"
                 Value="{DynamicResource FlatButtonFontSize}" />
         <Setter Property="Padding"
                 Value="10,5,10,5" />
+        <Setter Property="Margin"
+                Value="3" />
         <Setter Property="BorderThickness"
                 Value="0" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid Margin="3">
-                        <Border x:Name="Border"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}" />
-
+                    <Border x:Name="Border"
+                            Margin="{TemplateBinding Margin}"
+                            Focusable="True"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
+                                          Focusable="False"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           RecognizesAccessKey="True" />
-                    </Grid>
-
+                    </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed"
-                                 Value="true">
+                                 Value="True">
                             <Setter Property="Background"
-                                    Value="#222222"
+                                    Value="{DynamicResource FlatButtonPressedBackgroundBrush}"
                                     TargetName="Border" />
                             <Setter Property="Foreground"
-                                    Value="White" />
+                                    Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
-                                 Value="false">
+                                 Value="False">
                             <Setter Property="Foreground"
-                                    Value="#7f222222" />
+                                    Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
