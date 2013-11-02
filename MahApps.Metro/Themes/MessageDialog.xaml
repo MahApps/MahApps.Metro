@@ -46,12 +46,15 @@
                                     Background="{DynamicResource AccentColorBrush}" 
                                     Foreground="White" 
                                     Style="{StaticResource MetroFlatButton}" 
-                                    Content="{TemplateBinding AffirmativeButtonText}"/>
+                                    Content="{TemplateBinding AffirmativeButtonText}"
+                                    IsDefault="True"
+                                    TabIndex="0"/>
                             <Button x:Name="PART_NegativeButton" 
                                     Height="35" 
                                     MinWidth="60" 
                                     Style="{StaticResource MetroFlatButton}" 
-                                    Content="{TemplateBinding NegativeButtonText}"/>
+                                    Content="{TemplateBinding NegativeButtonText}"
+                                    TabIndex="1"/>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -88,5 +91,7 @@
                 Value="Stretch"/>
         <Setter Property="Background" 
                 Value="{DynamicResource WhiteColorBrush}"/>
+        <Setter Property="Focusable"
+                Value="False"/>
     </Style>
 </ResourceDictionary>

@@ -29,6 +29,8 @@ namespace MahApps.Metro.Controls
 
         internal Task<MessageDialogResult> WaitForButtonPressAsync()
         {
+            AffirmativeButton.Focus();
+
             TaskCompletionSource<MessageDialogResult> tcs = new TaskCompletionSource<MessageDialogResult>();
 
             RoutedEventHandler negativeHandler = null;
