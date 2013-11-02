@@ -5,6 +5,7 @@
     <Color x:Key="WhiteColor">#FFFFFFFF</Color>
 
     <Color x:Key="Gray1">#FF333333</Color>
+    <Color x:Key="Gray2">#FF7F7F7F</Color>
     <Color x:Key="Gray7">#FFD8D8D9</Color>
     <Color x:Key="Gray8">#FFE0E0E0</Color>
     <Color x:Key="Gray10">#FFF7F7F7</Color>
@@ -41,6 +42,7 @@
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="GrayBrush1" Color="{StaticResource Gray1}" />
+    <SolidColorBrush x:Key="GrayBrush2" Color="{DynamicResource Gray2}"/>
     <SolidColorBrush x:Key="GrayBrush7" Color="{StaticResource Gray7}" />
     <SolidColorBrush x:Key="GrayBrush8" Color="{StaticResource Gray8}" />
     <SolidColorBrush x:Key="GrayBrush10" Color="{StaticResource Gray10}" />
