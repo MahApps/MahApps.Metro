@@ -211,13 +211,21 @@ namespace MahApps.Metro.Controls
             //create the dialog control
             MessageDialog dialog = new MessageDialog();
             dialog.SetValue(Panel.ZIndexProperty, (int)overlayBox.GetValue(Panel.ZIndexProperty) + 1);
-            dialog.Height = this.ActualHeight / 4.0;
+            dialog.MinHeight = this.ActualHeight / 4.0;
             dialog.Title = title;
             dialog.Message = message;
             dialog.ButtonStyle = style;
 
             dialog.AffirmativeButtonText = MessageDialogOptions.AffirmativeButtonText;
             dialog.NegativeButtonText = MessageDialogOptions.NegativeButtonText;
+
+            SizeChangedEventHandler sizeHandler = null; //an event handler for auto resizing an open dialog.
+            sizeHandler = new SizeChangedEventHandler((sender, args) =>
+                {
+                    dialog.MinHeight = this.ActualHeight / 4.0;
+                });
+
+            this.SizeChanged += sizeHandler;
 
             overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
 
@@ -235,6 +243,8 @@ namespace MahApps.Metro.Controls
                     //once a button as been clicked, begin removing the dialog.
                     Dispatcher.Invoke(new Action(() =>
                         {
+                            this.SizeChanged -= sizeHandler;
+
                             messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
 
                             overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
