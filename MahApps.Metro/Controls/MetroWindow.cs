@@ -210,7 +210,7 @@ namespace MahApps.Metro.Controls
             dialog.ButtonStyle = style;
 
             dialog.AffirmativeButtonText = MessageDialogOptions.AffirmativeButtonText;
-            dialog.AffirmativeButtonText = MessageDialogOptions.NegativeButtonText;
+            dialog.NegativeButtonText = MessageDialogOptions.NegativeButtonText;
 
             overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
 
