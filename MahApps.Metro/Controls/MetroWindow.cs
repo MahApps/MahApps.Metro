@@ -199,6 +199,13 @@ namespace MahApps.Metro.Controls
             get { return TitleCaps ? Title.ToUpper() : Title; }
         }
 
+        /// <summary>
+        /// Creates a MessageDialog inside of the current window.
+        /// </summary>
+        /// <param name="title">The title of the MessageDialog.</param>
+        /// <param name="message">The message contained within the MessageDialog.</param>
+        /// <param name="style">The type of buttons to use.</param>
+        /// <returns></returns>
         public System.Threading.Tasks.Task<MessageDialogResult> ShowMessageAsync(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
         {
             //create the dialog control
