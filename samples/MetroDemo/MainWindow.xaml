@@ -31,6 +31,7 @@
 
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
+            <Button Click="ShowMessageBox" Content="Show MessageBox" />
             <Button Click="LaunchVisualStudioDemo" Content="VS Demo" />
             <Button Click="LaunchFlyoutDemo" Content="Flyout Demo" />
             <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />

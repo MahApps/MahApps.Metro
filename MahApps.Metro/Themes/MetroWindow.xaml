@@ -121,6 +121,28 @@
                                         KeyboardNavigation.TabNavigation="None"
                                         Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                         VerticalAlignment="Stretch" />
+                        
+                        
+                        <!--Used to create that overlay effect. Can be used for anything.-->
+                        <Grid Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Grid.RowSpan="2"
+                              Panel.ZIndex="3"
+                              x:Name="PART_OverlayBox"
+                              Background="{DynamicResource BlackColorBrush}"
+                              Opacity=".7"
+                              Visibility="Hidden">
+                        </Grid>
+                        
+                        <Grid Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Grid.RowSpan="2"
+                              Panel.ZIndex="4"
+                              x:Name="PART_MessageDialogContainer">
+                            
+                        </Grid>
                     </Grid>
                 </Controls:MetroContentControl>
             </AdornerDecorator>

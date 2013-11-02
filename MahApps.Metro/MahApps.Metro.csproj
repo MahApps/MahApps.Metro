@@ -80,6 +80,7 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\IPanoramaTile.cs" />
+    <Compile Include="Controls\MessageDialog.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroProgressBar.cs" />
@@ -392,6 +393,10 @@
     <Page Include="Themes\FlyoutsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MessageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
       <SubType>Designer</SubType>

@@ -28,8 +28,8 @@ namespace MetroDemo
         void Tick(object sender, EventArgs e)
         {
             var dateTime = DateTime.Now;
-            transitioning.Content = new TextBlock {Text = "Transitioning Content! " + dateTime, SnapsToDevicePixels = true};
-            customTransitioning.Content = new TextBlock {Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true};
+            transitioning.Content = new TextBlock { Text = "Transitioning Content! " + dateTime, SnapsToDevicePixels = true };
+            customTransitioning.Content = new TextBlock { Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true };
         }
 
         private void ChangeAccent(Accent accent, Theme theme)
@@ -81,6 +81,17 @@ namespace MetroDemo
 #else
             MessageBox.Show("Ribbon is only supported on .NET 4.5 or higher.");
 #endif
+        }
+
+        private void ShowMessageBox(object sender, RoutedEventArgs e)
+        {
+            this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MahApps.Metro.Controls.MessageDialogStyle.AffirmativeAndNegative).ContinueWith(x =>
+                {
+                    Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            this.ShowMessageAsync("Result", "You said: " + (x.Result == MahApps.Metro.Controls.MessageDialogResult.Affirmative ? "OK" : "Cancel"));
+                        }));
+                });
         }
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
