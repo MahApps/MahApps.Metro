@@ -95,5 +95,7 @@
                 Value="{DynamicResource WhiteColorBrush}"/>
         <Setter Property="Focusable"
                 Value="False"/>
+        <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="Cycle" />
     </Style>
 </ResourceDictionary>
