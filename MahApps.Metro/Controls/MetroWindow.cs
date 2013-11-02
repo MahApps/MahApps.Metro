@@ -49,6 +49,8 @@ namespace MahApps.Metro.Controls
         Grid overlayBox;
         Grid messageDialogContainer;
 
+        public MessageDialogSettings MessageDialogOptions { get; private set; }
+
         public Style TextBlockStyle
         {
             get { return (Style)this.GetValue(TextBlockStyleProperty); }
@@ -207,6 +209,9 @@ namespace MahApps.Metro.Controls
             dialog.Message = message;
             dialog.ButtonStyle = style;
 
+            dialog.AffirmativeButtonText = MessageDialogOptions.AffirmativeButtonText;
+            dialog.AffirmativeButtonText = MessageDialogOptions.NegativeButtonText;
+
             overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
 
             messageDialogContainer.Children.Add(dialog); //add the dialog to the container
@@ -250,6 +255,9 @@ namespace MahApps.Metro.Controls
             {
                 this.Flyouts = new FlyoutsControl();
             }
+
+            if (MessageDialogOptions == null)
+                MessageDialogOptions = new MessageDialogSettings();
         }
 
         static MetroWindow()
