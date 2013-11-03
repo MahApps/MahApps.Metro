@@ -32,6 +32,12 @@ namespace MahApps.Metro.Controls
         {
             this.Focus();
 
+            //kind of acts like a selective 'IsDefault' mechanism.
+            if (ButtonStyle == MessageDialogStyle.Affirmative)
+                AffirmativeButton.Focus();
+            else if (ButtonStyle == MessageDialogStyle.AffirmativeAndNegative)
+                NegativeButton.Focus();
+
             TaskCompletionSource<MessageDialogResult> tcs = new TaskCompletionSource<MessageDialogResult>();
 
             RoutedEventHandler negativeHandler = null;
