@@ -292,6 +292,7 @@
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                     </Border>
@@ -506,6 +507,8 @@
 
     <Style x:Key="AzureDataGridCell"
            TargetType="{x:Type DataGridCell}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
@@ -533,6 +536,7 @@
                                           Content="{TemplateBinding Content}"
                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="2" />
