@@ -92,8 +92,8 @@
                 Value="Stretch"/>
         <Setter Property="Background" 
                 Value="{DynamicResource WhiteColorBrush}"/>
-        <Setter Property="Focusable"
-                Value="True"/>
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}"/>
         <Setter Property="KeyboardNavigation.TabNavigation"
                 Value="Cycle" />
     </Style>

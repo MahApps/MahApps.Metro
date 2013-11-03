@@ -208,6 +208,10 @@ namespace MahApps.Metro.Controls
         /// <returns></returns>
         public System.Threading.Tasks.Task<MessageDialogResult> ShowMessageAsync(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
         {
+            bool originalFocusable = this.Focusable;
+
+            this.Focusable = false;
+
             //create the dialog control
             MessageDialog dialog = new MessageDialog();
             dialog.SetValue(Panel.ZIndexProperty, (int)overlayBox.GetValue(Panel.ZIndexProperty) + 1);
@@ -244,6 +248,8 @@ namespace MahApps.Metro.Controls
                     Dispatcher.Invoke(new Action(() =>
                         {
                             this.SizeChanged -= sizeHandler;
+
+                            this.Focusable = originalFocusable;
 
                             messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
 
