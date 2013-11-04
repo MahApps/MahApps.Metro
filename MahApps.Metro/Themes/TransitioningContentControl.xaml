@@ -3,8 +3,6 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style TargetType="Controls:TransitioningContentControl">
-        <Setter Property="IsTabStop"
-                Value="True" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Stretch" />
         <Setter Property="VerticalContentAlignment"
@@ -13,6 +11,12 @@
                 Value="Default" />
         <Setter Property="IsTabStop"
                 Value="False" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="RenderOptions.ClearTypeHint"
+                Value="Enabled" />
+        <Setter Property="TextOptions.TextFormattingMode"
+                Value="Display" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:TransitioningContentControl">
@@ -279,6 +283,7 @@
                         <Grid>
                             <ContentPresenter x:Name="PreviousContentPresentationSite"
                                               Content="{x:Null}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
@@ -294,6 +299,7 @@
 
                             <ContentPresenter x:Name="CurrentContentPresentationSite"
                                               Content="{x:Null}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
