@@ -1090,12 +1090,12 @@
                                                                   Width="250"
                                                                   Height="50"
                                                                   Margin="0, 10, 0, 0"
-                                                                  Transition="DownTransition" />
+                                                                  Transition="Down" />
                             <Controls:TransitioningContentControl x:Name="customTransitioning"
                                                                   Width="250"
                                                                   Height="50"
                                                                   Margin="0, 10, 0, 0"
-                                                                  Transition="CustomTransition">
+                                                                  Transition="Custom">
                                 <Controls:TransitioningContentControl.CustomVisualStates>
                                     <VisualState x:Name="CustomTransition">
                                         <Storyboard>
