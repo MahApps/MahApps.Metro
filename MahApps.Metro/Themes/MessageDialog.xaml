@@ -12,7 +12,7 @@
                 </ResourceDictionary.MergedDictionaries>
             </ResourceDictionary>
         </ControlTemplate.Resources>
-        <Grid HorizontalAlignment="Stretch" 
+        <Grid HorizontalAlignment="Stretch"
               Background="{TemplateBinding Background}">
             <Border>
                 <Grid>
@@ -29,16 +29,16 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" 
-                                   FontSize="26" 
+                        <TextBlock Grid.Row="0"
+                                   FontSize="26"
                                    Text="{TemplateBinding Title}"/>
                         <TextBlock Grid.Row="1" 
-                                   Margin="0 5 0 0" 
-                                   FontSize="15" 
+                                   Margin="0 5 0 0"
+                                   FontSize="15"
                                    Text="{TemplateBinding Message}"
                                    TextWrapping="Wrap"/>
 
-                        <StackPanel Grid.Row="2" 
+                        <StackPanel Grid.Row="2"
                                     Orientation="Horizontal" 
                                     HorizontalAlignment="Right"
                                     Height="85">
@@ -95,6 +95,8 @@
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}"/>
         <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="Cycle" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation"
                 Value="Cycle" />
     </Style>
 </ResourceDictionary>
