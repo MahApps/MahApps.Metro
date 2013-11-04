@@ -2,7 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours">
+
     <Style TargetType="{x:Type Controls:MetroAnimatedTabControl}">
+        <Setter Property="Controls:ControlsHelper.Transition"
+                Value="LeftTransition" />
         <Setter Property="Background"
                 Value="{x:Null}" />
         <Setter Property="BorderBrush"
@@ -40,12 +43,13 @@
                                 Grid.Row="1"
                                 KeyboardNavigation.TabIndex="2"
                                 KeyboardNavigation.TabNavigation="Local">
-                            <Controls:MetroContentControl Behaviours:ReloadBehavior.OnSelectedTabChanged="True">
+                            <Controls:TransitioningContentControl Transition="{TemplateBinding Controls:ControlsHelper.Transition}"
+                                                                  Behaviours:ReloadBehavior.OnSelectedTabChanged="True">
                                 <ContentPresenter x:Name="PART_SelectedContentHost"
                                                   ContentSource="SelectedContent"
                                                   Margin="{TemplateBinding Padding}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </Controls:MetroContentControl>
+                            </Controls:TransitioningContentControl>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -69,6 +73,8 @@
                         </Trigger>
                         <Trigger Property="TabStripPlacement"
                                  Value="Left">
+                            <Setter Property="Controls:ControlsHelper.Transition"
+                                    Value="RightTransition" />
                             <Setter Property="Grid.Row"
                                     TargetName="HeaderPanel"
                                     Value="0" />
@@ -137,4 +143,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 </ResourceDictionary>

@@ -141,5 +141,22 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(VerticalScrollBarOnLeftSideProperty, value);
         }
+
+        /// <summary>
+        /// This property can be used to set the Transition for animated TabControls
+        /// </summary>
+        public static readonly DependencyProperty TransitionProperty =
+            DependencyProperty.RegisterAttached("Transition", typeof(string), typeof(ControlsHelper),
+                                                new FrameworkPropertyMetadata("DefaultTransition", FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
+
+        public static string GetTransition(DependencyObject obj)
+        {
+            return (string)obj.GetValue(TransitionProperty);
+        }
+
+        public static void SetTransition(DependencyObject obj, string value)
+        {
+            obj.SetValue(TransitionProperty, value);
+        }
     }
 }
