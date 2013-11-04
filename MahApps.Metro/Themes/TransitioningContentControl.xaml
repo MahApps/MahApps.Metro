@@ -10,7 +10,7 @@
         <Setter Property="VerticalContentAlignment"
                 Value="Stretch" />
         <Setter Property="Transition"
-                Value="DefaultTransition" />
+                Value="Default" />
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="Template">

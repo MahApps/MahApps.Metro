@@ -10,7 +10,7 @@
 
     <Style TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
         <Setter Property="Controls:ControlsHelper.Transition"
-                Value="LeftTransition" />
+                Value="Left" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroAnimatedSingleRowTabControl}">
@@ -74,7 +74,7 @@
                         <Trigger Property="TabStripPlacement"
                                  Value="Left">
                             <Setter Property="Controls:ControlsHelper.Transition"
-                                    Value="RightTransition" />
+                                    Value="Right" />
                             <Setter Property="Grid.Row"
                                     TargetName="HeaderPanelScroll"
                                     Value="0" />

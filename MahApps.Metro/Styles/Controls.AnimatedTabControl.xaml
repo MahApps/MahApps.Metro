@@ -5,7 +5,7 @@
 
     <Style TargetType="{x:Type TabControl}">
         <Setter Property="Controls:ControlsHelper.Transition"
-                Value="LeftTransition" />
+                Value="Left" />
         <Setter Property="Background"
                 Value="{x:Null}" />
         <Setter Property="BorderBrush"
@@ -73,7 +73,7 @@
                         <Trigger Property="TabStripPlacement"
                                  Value="Left">
                             <Setter Property="Controls:ControlsHelper.Transition"
-                                    Value="RightTransition" />
+                                    Value="Right" />
                             <Setter Property="Grid.Row"
                                     TargetName="HeaderPanel"
                                     Value="0" />
