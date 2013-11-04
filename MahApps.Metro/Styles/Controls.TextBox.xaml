@@ -36,7 +36,7 @@
                 Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:TextboxHelper.MouseOverBorderBrush"
                 Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
-        <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
+        <!-- change SnapsToDevicePixels to True to view a better border and validation error -->
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="Template">
@@ -175,7 +175,7 @@
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible">
                                                         <DiscreteObjectKeyFrame KeyTime="0">
                                                             <DiscreteObjectKeyFrame.Value>
-                                                                <System:Boolean>true</System:Boolean>
+                                                                <System:Boolean>True</System:Boolean>
                                                             </DiscreteObjectKeyFrame.Value>
                                                         </DiscreteObjectKeyFrame>
                                                     </ObjectAnimationUsingKeyFrames>
@@ -218,7 +218,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="ButtonColumn"
                                     Property="Width"
-                                    Value="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}"/>
+                                    Value="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}" />
                         </MultiTrigger>
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}"
@@ -342,7 +342,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style TargetType="{x:Type TextBox}"
            x:Key="ButtonCommandMetroTextBox">
         <Setter Property="Controls:TextboxHelper.IsMonitoring"
@@ -373,7 +373,7 @@
                 Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="Controls:TextboxHelper.ButtonTemplate"
                 Value="{DynamicResource ChromelessButtonTemplate}" />
-        <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
+        <!-- change SnapsToDevicePixels to True to view a better border and validation error -->
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="Template">
@@ -512,7 +512,7 @@
                                                     <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible">
                                                         <DiscreteObjectKeyFrame KeyTime="0">
                                                             <DiscreteObjectKeyFrame.Value>
-                                                                <System:Boolean>true</System:Boolean>
+                                                                <System:Boolean>True</System:Boolean>
                                                             </DiscreteObjectKeyFrame.Value>
                                                         </DiscreteObjectKeyFrame>
                                                     </ObjectAnimationUsingKeyFrames>
@@ -653,9 +653,124 @@
                                     Value=".5" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
-                                 Value="false">
+                                 Value="False">
                             <Setter Property="Foreground"
                                     Value="#ADADAD" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MetroRichTextBox"
+           TargetType="{x:Type RichTextBox}">
+        <Style.Resources>
+            <Style TargetType="{x:Type Hyperlink}"
+                   BasedOn="{StaticResource {x:Type Hyperlink}}">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource AccentColorBrush}" />
+                <Setter Property="TextDecorations"
+                        Value="Underline" />
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver"
+                             Value="True">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource HighlightBrush}" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="False">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                    </Trigger>
+                    <Trigger Property="IsEnabled"
+                             Value="True">
+                        <Setter Property="Cursor"
+                                Value="Hand" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+        <Setter Property="SelectionBrush"
+                Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="MinHeight"
+                Value="26" />
+        <Setter Property="MinWidth"
+                Value="10" />
+        <Setter Property="Background"
+                Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="Controls:TextboxHelper.FocusBorderBrush"
+                Value="{DynamicResource TextBoxFocusBorderBrush}" />
+        <Setter Property="Controls:TextboxHelper.MouseOverBorderBrush"
+                Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
+        <Setter Property="Padding"
+                Value="1" />
+        <Setter Property="AllowDrop"
+                Value="True" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        <Setter Property="ScrollViewer.PanningMode"
+                Value="VerticalFirst" />
+        <Setter Property="Stylus.IsFlicksEnabled"
+                Value="False" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Grid>
+                        <Border x:Name="Bd"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <Rectangle x:Name="FocusRectangle"
+                                   Visibility="Collapsed"
+                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" />
+                        <Rectangle x:Name="DisabledVisualElement"
+                                   Stroke="{DynamicResource ControlsDisabledBrush}"
+                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
+                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   IsHitTestVisible="False"
+                                   Visibility="Collapsed" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.MouseOverBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="DisabledVisualElement"
+                                    Property="Visibility"
+                                    Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
