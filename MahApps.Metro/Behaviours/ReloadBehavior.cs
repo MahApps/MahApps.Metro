@@ -60,6 +60,7 @@ namespace MahApps.Metro.Behaviours
             if (tab == null) return;
 
             SetMetroContentControl(tab, metroContentControl);
+            tab.SelectionChanged -= ReloadSelectionChanged;
             tab.SelectionChanged += ReloadSelectionChanged;
         }
 
@@ -89,9 +90,7 @@ namespace MahApps.Metro.Behaviours
             var transitioningContentControl = contentControl as TransitioningContentControl;
             if (transitioningContentControl != null)
             {
-                var oldContent = transitioningContentControl.Content;
-                transitioningContentControl.Content = null;
-                transitioningContentControl.Content = oldContent;
+                transitioningContentControl.ReloadTransition();
             }
         }
 

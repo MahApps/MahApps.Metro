@@ -253,6 +253,7 @@
                         <Controls:TransitioningContentControl x:Name="ContentPanel"
                                                               Transition="{TemplateBinding Controls:ControlsHelper.Transition}"
                                                               Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
+                                                              RestartTransitionOnContentChange="True"
                                                               Grid.Column="0"
                                                               Grid.Row="1">
                             <ContentPresenter x:Name="PART_SelectedContentHost"

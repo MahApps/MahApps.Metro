@@ -271,6 +271,27 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Reload the current transition if the content is the same.
+        /// </summary>
+        public void ReloadTransition()
+        {
+            if (RestartTransitionOnContentChange)
+            {
+                CurrentTransition.Completed -= OnTransitionCompleted;
+            }
+            if (!IsTransitioning || RestartTransitionOnContentChange)
+            {
+                if (RestartTransitionOnContentChange)
+                {
+                    CurrentTransition.Completed += OnTransitionCompleted;
+                }
+                IsTransitioning = true;
+                VisualStateManager.GoToState(this, NormalState, false);
+                VisualStateManager.GoToState(this, GetTransitionName(Transition), true);
+            }
+        }
+
         private void OnTransitionCompleted(object sender, EventArgs e)
         {
             AbortTransition();
