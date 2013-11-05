@@ -97,7 +97,7 @@ namespace MahApps.Metro.Behaviours
                 mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
                 mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
 
-                bool ignoreTaskBar = AssociatedObject as MetroWindow != null && ((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize;
+                bool ignoreTaskBar = AssociatedObject as MetroWindow != null && (((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize || ((MetroWindow)this.AssociatedObject).UseNoneWindowStyle);
 
                 if (!ignoreTaskBar)
                 {
@@ -128,6 +128,7 @@ namespace MahApps.Metro.Behaviours
             var window = AssociatedObject as MetroWindow;
             if (window != null)
             {
+                AssociatedObject.Activated += (s, e) => HandleMaximize();
                 //MetroWindow already has a border we can use
                 AssociatedObject.Loaded += (s, e) =>
                 {
@@ -215,7 +216,7 @@ namespace MahApps.Metro.Behaviours
             {
                 var monitorInfo = new MONITORINFO();
                 UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                bool ignoreTaskBar = AssociatedObject as MetroWindow != null && ((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize;
+                bool ignoreTaskBar = AssociatedObject as MetroWindow != null && (((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize || ((MetroWindow)this.AssociatedObject).UseNoneWindowStyle);
                 var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
                 var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
                 var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
