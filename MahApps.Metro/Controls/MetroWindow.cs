@@ -42,6 +42,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty TextBlockStyleProperty = DependencyProperty.Register("TextBlockStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(default(Style)));
+        public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
 
         bool isDragging;
         ContentPresenter WindowCommandsPresenter;
@@ -141,17 +142,25 @@ namespace MahApps.Metro.Controls
         private static object OnShowTitleBarCoerceValueCallback(DependencyObject d, object value)
         {
             var showTitleBar = (bool)value;
-            if (showTitleBar && ((MetroWindow)d).WindowStyle != WindowStyle.None)
+            if (showTitleBar && !((MetroWindow)d).UseNoneWindowStyle)
                 return showTitleBar;
             return false;
         }
 
-        private static void OnWindowStylePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        /// <summary>
+        /// Gets/sets whether the WindowStyle is None or not.
+        /// </summary>
+        public bool UseNoneWindowStyle
+        {
+            get { return (bool)GetValue(UseNoneWindowStyleProperty); }
+            set { SetValue(UseNoneWindowStyleProperty, value); }
+        }
+
+        private static void OnUseNoneWindowStylePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue != e.OldValue)
             {
-                var windowStyle = (WindowStyle)e.NewValue;
-                if (windowStyle == WindowStyle.None)
+                if ((bool)e.NewValue)
                 {
                     ((MetroWindow)d).ShowTitleBar = false;
                 }
@@ -294,7 +303,7 @@ namespace MahApps.Metro.Controls
                 UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
             }
 
-            if (WindowStyle == WindowStyle.None)
+            if (UseNoneWindowStyle)
             {
                 WindowCommandsPresenter.Visibility = Visibility.Collapsed;
                 ShowMinButton = false;
@@ -314,7 +323,6 @@ namespace MahApps.Metro.Controls
         static MetroWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
-            WindowStyleProperty.AddOwner(typeof(MetroWindow), new FrameworkPropertyMetadata(WindowStyle.SingleBorderWindow, OnWindowStylePropertyChangedCallback));
         }
 
         public override void OnApplyTemplate()
@@ -378,7 +386,7 @@ namespace MahApps.Metro.Controls
                         ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitlebarHeight)));
                     }
                 }
-                else if (WindowStyle != WindowStyle.None)
+                else if (!UseNoneWindowStyle)
                 {
                     IntPtr windowHandle = new WindowInteropHelper(this).Handle;
                     UnsafeNativeMethods.ReleaseCapture();

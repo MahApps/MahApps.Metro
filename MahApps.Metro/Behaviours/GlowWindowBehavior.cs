@@ -11,7 +11,8 @@ namespace MahApps.Metro.Behaviours
         {
             base.OnAttached();
 
-            if (this.AssociatedObject.WindowStyle == WindowStyle.None)
+            var metroWindow = this.AssociatedObject as MetroWindow;
+            if (metroWindow != null && metroWindow.UseNoneWindowStyle)
             {
                 return;
             }
