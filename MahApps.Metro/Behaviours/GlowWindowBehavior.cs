@@ -11,6 +11,11 @@ namespace MahApps.Metro.Behaviours
         {
             base.OnAttached();
 
+            if (this.AssociatedObject.WindowStyle == WindowStyle.None)
+            {
+                return;
+            }
+
             this.AssociatedObject.Loaded += (sender, e) =>
             {
                 left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);
