@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using MahApps.Metro.Native;
+using System.ComponentModel;
 
 namespace MahApps.Metro.Controls
 {
@@ -26,7 +27,7 @@ namespace MahApps.Metro.Controls
         private const string PART_MessageDialogContainer = "PART_MessageDialogContainer";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, null, OnShowTitleBarCoerceValueCallback));
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -135,6 +136,26 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(ShowTitleBarProperty); }
             set { SetValue(ShowTitleBarProperty, value); }
+        }
+
+        private static object OnShowTitleBarCoerceValueCallback(DependencyObject d, object value)
+        {
+            var showTitleBar = (bool)value;
+            if (showTitleBar && ((MetroWindow)d).WindowStyle != WindowStyle.None)
+                return showTitleBar;
+            return false;
+        }
+
+        private static void OnWindowStylePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue)
+            {
+                var windowStyle = (WindowStyle)e.NewValue;
+                if (windowStyle == WindowStyle.None)
+                {
+                    ((MetroWindow)d).ShowTitleBar = false;
+                }
+            }
         }
 
         /// <summary>
@@ -273,6 +294,14 @@ namespace MahApps.Metro.Controls
                 UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
             }
 
+            if (WindowStyle == WindowStyle.None)
+            {
+                WindowCommandsPresenter.Visibility = Visibility.Collapsed;
+                ShowMinButton = false;
+                ShowMaxRestoreButton = false;
+                ShowCloseButton = false;
+            }
+
             if (this.Flyouts == null)
             {
                 this.Flyouts = new FlyoutsControl();
@@ -285,6 +314,7 @@ namespace MahApps.Metro.Controls
         static MetroWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
+            WindowStyleProperty.AddOwner(typeof(MetroWindow), new FrameworkPropertyMetadata(WindowStyle.SingleBorderWindow, OnWindowStylePropertyChangedCallback));
         }
 
         public override void OnApplyTemplate()
@@ -348,19 +378,19 @@ namespace MahApps.Metro.Controls
                         ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitlebarHeight)));
                     }
                 }
-                else
+                else if (WindowStyle != WindowStyle.None)
                 {
                     IntPtr windowHandle = new WindowInteropHelper(this).Handle;
                     UnsafeNativeMethods.ReleaseCapture();
 
                     var mPoint = Mouse.GetPosition(this);
+
                     var wpfPoint = PointToScreen(mPoint);
                     short x = Convert.ToInt16(wpfPoint.X);
                     short y = Convert.ToInt16(wpfPoint.Y);
-
                     int lParam = x | (y << 16);
-
                     UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
+                    
                     if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize) && mPoint.Y <= TitlebarHeight)
                     {
                         WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
