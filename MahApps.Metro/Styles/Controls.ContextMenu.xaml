@@ -191,6 +191,16 @@
         </Style.Triggers>
     </Style>
 
+    <ContextMenu x:Key="TextBoxMetroContextMenu"
+                 Style="{StaticResource MetroContextMenu}">
+        <MenuItem Command="ApplicationCommands.Cut"
+                  Style="{DynamicResource MetroMenuItem}" />
+        <MenuItem Command="ApplicationCommands.Copy"
+                  Style="{DynamicResource MetroMenuItem}" />
+        <MenuItem Command="ApplicationCommands.Paste"
+                  Style="{DynamicResource MetroMenuItem}" />
+    </ContextMenu>
+
     <Style x:Key="MenuScrollButton"
            BasedOn="{x:Null}"
            TargetType="{x:Type RepeatButton}">
