@@ -129,20 +129,19 @@
                               Grid.ColumnSpan="3"
                               Grid.RowSpan="2"
                               Panel.ZIndex="3"
+                              FocusVisualStyle="{x:Null}"
                               x:Name="PART_OverlayBox"
                               Background="{DynamicResource BlackColorBrush}"
                               Opacity=".7"
-                              Visibility="Hidden">
-                        </Grid>
+                              Visibility="Hidden" />
                         
                         <Grid Grid.Row="0"
                               Grid.Column="0"
                               Grid.ColumnSpan="3"
                               Grid.RowSpan="2"
                               Panel.ZIndex="4"
-                              x:Name="PART_MessageDialogContainer">
-                            
-                        </Grid>
+                              FocusVisualStyle="{x:Null}"
+                              x:Name="PART_MessageDialogContainer" />
                     </Grid>
                 </Controls:MetroContentControl>
             </AdornerDecorator>

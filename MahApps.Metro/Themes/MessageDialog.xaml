@@ -8,94 +8,132 @@
         <ControlTemplate.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml"/>
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
                 </ResourceDictionary.MergedDictionaries>
+
+                <Style TargetType="{x:Type Button}"
+                       BasedOn="{StaticResource MetroFlatButton}">
+                    <Setter Property="FocusVisualStyle"
+                            Value="{x:Null}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Grid>
+                                    <Border x:Name="Border"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          Margin="{TemplateBinding Padding}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          RecognizesAccessKey="True" />
+                                    </Border>
+                                    <Rectangle x:Name="FocusRectangle"
+                                               Visibility="Collapsed"
+                                               Margin="1"
+                                               Stroke="{DynamicResource BlackBrush}"
+                                               StrokeDashArray="1.5 1.5"
+                                               StrokeThickness="1"
+                                               SnapsToDevicePixels="True" />
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocused}"
+                                                 Value="True">
+                                        <Setter TargetName="FocusRectangle"
+                                                Property="Visibility"
+                                                Value="Visible" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
             </ResourceDictionary>
+
         </ControlTemplate.Resources>
-        <Grid HorizontalAlignment="Stretch" 
-              Background="{TemplateBinding Background}">
-            <Border>
+
+        <Grid Background="{TemplateBinding Background}">
+            <Border Focusable="False"
+                    FocusVisualStyle="{x:Null}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="25*"/>
-                        <ColumnDefinition Width="50*"/>
-                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="25*" />
+                        <ColumnDefinition Width="50*" />
+                        <ColumnDefinition Width="25*" />
                     </Grid.ColumnDefinitions>
 
                     <!--Content area-->
-                    <Grid Grid.Column="1" Margin="0 10 0 0">
+                    <Grid Grid.Column="1"
+                          Margin="0 10 0 0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0" 
-                                   FontSize="26" 
-                                   Text="{TemplateBinding Title}"/>
-                        <TextBlock Grid.Row="1" 
-                                   Margin="0 5 0 0" 
-                                   FontSize="15" 
+                        <TextBlock Grid.Row="0"
+                                   FontSize="26"
+                                   Text="{TemplateBinding Title}" />
+                        <TextBlock Grid.Row="1"
+                                   Margin="0 5 0 0"
+                                   FontSize="15"
                                    Text="{TemplateBinding Message}"
-                                   TextWrapping="Wrap"/>
+                                   TextWrapping="Wrap" />
 
-                        <StackPanel Grid.Row="2" 
-                                    Orientation="Horizontal" 
+                        <StackPanel Grid.Row="2"
+                                    Orientation="Horizontal"
                                     HorizontalAlignment="Right"
                                     Height="85">
-                            <Button x:Name="PART_AffirmativeButton" 
-                                    Height="35" 
-                                    MinWidth="80" 
-                                    Background="{DynamicResource AccentColorBrush}" 
-                                    Foreground="White" 
-                                    Style="{StaticResource MetroFlatButton}" 
-                                    Content="{TemplateBinding AffirmativeButtonText}"
-                                    IsDefault="True"
-                                    TabIndex="0"/>
-                            <Button x:Name="PART_NegativeButton" 
-                                    Height="35" 
-                                    MinWidth="80" 
-                                    Style="{StaticResource MetroFlatButton}" 
-                                    Content="{TemplateBinding NegativeButtonText}"
-                                    TabIndex="1"/>
+                            <Button x:Name="PART_AffirmativeButton"
+                                    Height="35"
+                                    MinWidth="80"
+                                    Background="{DynamicResource AccentColorBrush}"
+                                    Foreground="White"
+                                    Content="{TemplateBinding AffirmativeButtonText}" />
+                            <Button x:Name="PART_NegativeButton"
+                                    Height="35"
+                                    MinWidth="80"
+                                    Content="{TemplateBinding NegativeButtonText}" />
                         </StackPanel>
                     </Grid>
                 </Grid>
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" 
+            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}"
                          Value="Affirmative">
-                <Setter TargetName="PART_AffirmativeButton" 
-                        Property="Visibility" 
-                        Value="Visible"/>
-                <Setter TargetName="PART_NegativeButton" 
-                        Property="Visibility" 
-                        Value="Collapsed"/>
+                <Setter TargetName="PART_AffirmativeButton"
+                        Property="Visibility"
+                        Value="Visible" />
+                <Setter TargetName="PART_NegativeButton"
+                        Property="Visibility"
+                        Value="Collapsed" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}" 
+            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}"
                          Value="AffirmativeAndNegative">
-                <Setter TargetName="PART_AffirmativeButton" 
-                        Property="Visibility" 
-                        Value="Visible"/>
-                <Setter TargetName="PART_NegativeButton" 
-                        Property="Visibility" 
-                        Value="Visible"/>
+                <Setter TargetName="PART_AffirmativeButton"
+                        Property="Visibility"
+                        Value="Visible" />
+                <Setter TargetName="PART_NegativeButton"
+                        Property="Visibility"
+                        Value="Visible" />
             </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MessageDialog}">
-        <Setter Property="Template" 
-                Value="{StaticResource MessageDialogTemplate}"/>
-        <Setter Property="VerticalAlignment" 
-                Value="Center"/>
-        <Setter Property="HorizontalAlignment" 
-                Value="Stretch"/>
-        <Setter Property="Background" 
-                Value="{DynamicResource WhiteColorBrush}"/>
-        <Setter Property="Focusable"
-                Value="False"/>
+        <Setter Property="Template"
+                Value="{StaticResource MessageDialogTemplate}" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
         <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="Cycle" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation"
                 Value="Cycle" />
     </Style>
 </ResourceDictionary>
