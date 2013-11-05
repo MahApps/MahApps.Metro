@@ -272,26 +272,25 @@
 
     <Style x:Key="MetroDataGridCell"
            TargetType="{x:Type DataGridCell}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
                 Value="Transparent" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Stretch" />
-        <Setter Property="VerticalAlignment"
-                Value="Stretch" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
-        <!--<Setter Property="Foreground"
-                Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow, Mode=FindAncestor}, Path=Foreground}" />-->
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
-                            SnapsToDevicePixels="True">
-
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
@@ -325,6 +324,8 @@
 
     <Style x:Key="MetroDataGridRow"
            TargetType="{x:Type DataGridRow}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="MinHeight"
                 Value="25" />
         <Setter Property="Margin"
@@ -505,35 +506,37 @@
 
     <Style x:Key="AzureDataGridCell"
            TargetType="{x:Type DataGridCell}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
                 Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
         <Setter Property="TextBlock.VerticalAlignment"
                 Value="Center" />
-        <!--<Setter Property="Foreground"
-                Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow, Mode=FindAncestor}, Path=Foreground}" />-->
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="MinHeight"
                 Value="25" />
-        <Setter Property="VerticalAlignment"
-                Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
                     <Border BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
-                            SnapsToDevicePixels="True"
-                            VerticalAlignment="Stretch">
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Content="{TemplateBinding Content}"
                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="Center"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="2" />
                     </Border>
                 </ControlTemplate>
@@ -581,6 +584,8 @@
     <Style x:Key="AzureDataGridRow"
            TargetType="{x:Type DataGridRow}"
            BasedOn="{StaticResource MetroDataGridRow}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Margin"
                 Value="0,0,0,1" />
     </Style>
