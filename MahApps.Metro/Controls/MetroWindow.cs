@@ -141,10 +141,12 @@ namespace MahApps.Metro.Controls
 
         private static object OnShowTitleBarCoerceValueCallback(DependencyObject d, object value)
         {
-            var showTitleBar = (bool)value;
-            if (showTitleBar && !((MetroWindow)d).UseNoneWindowStyle)
-                return showTitleBar;
-            return false;
+            // if UseNoneWindowStyle = true no title bar should be shown
+            if (((MetroWindow)d).UseNoneWindowStyle)
+            {
+                return false;
+            }
+            return value;
         }
 
         /// <summary>
@@ -160,6 +162,7 @@ namespace MahApps.Metro.Controls
         {
             if (e.NewValue != e.OldValue)
             {
+                // if UseNoneWindowStyle = true no title bar should be shown
                 if ((bool)e.NewValue)
                 {
                     ((MetroWindow)d).ShowTitleBar = false;
@@ -303,6 +306,7 @@ namespace MahApps.Metro.Controls
                 UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
             }
 
+            // if UseNoneWindowStyle = true no title bar, window commands or min, max, close buttons should be shown
             if (UseNoneWindowStyle)
             {
                 WindowCommandsPresenter.Visibility = Visibility.Collapsed;
@@ -388,6 +392,7 @@ namespace MahApps.Metro.Controls
                 }
                 else if (!UseNoneWindowStyle)
                 {
+                    // if UseNoneWindowStyle = true no movement, no maximize please
                     IntPtr windowHandle = new WindowInteropHelper(this).Handle;
                     UnsafeNativeMethods.ReleaseCapture();
 
