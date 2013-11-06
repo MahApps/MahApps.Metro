@@ -10,6 +10,10 @@ Read it here: [http://mahapps.com/MahApps.Metro/](http://mahapps.com/MahApps.Met
 
 You can help keep the documentation up to date by submitting a pull request on the `gh-pages` branch of this repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
 
+### Breaking Changes
+
+[Breaking Changes or WTF is happened with the ALPHA version](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happened-with-the-ALPHA-version)
+
 ### Contributions
 
 If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request!
