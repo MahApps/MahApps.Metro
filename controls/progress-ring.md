@@ -15,4 +15,4 @@ Override `Foreground` if you wish to change the colour.
 
 `<Controls:ProgressRing Foreground="{DynamicResource AccentColorBrush}" />`
 
-![](/images/progress_ring.gif)
+![]({{site.baseurl}}/images/progress_ring.gif)

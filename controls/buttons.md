@@ -6,13 +6,13 @@ title: Buttons
 # Default look
 
 This just replaces the standard button when you drop in the library, nothing fancy to activate it    
-![](/images/08_RegularButton.png)
+![]({{site.baseurl}}/images/08_RegularButton.png)
 
 # MetroCircleButton
 
 "Standard" circle button, designed for icons.  
 Add the following to a button to apply this style: `Style="{DynamicResource MetroCircleButtonStyle}"`  
-![](/images/07_CircleButtons.png)
+![]({{site.baseurl}}/images/07_CircleButtons.png)
 
 # SquareButton 
 

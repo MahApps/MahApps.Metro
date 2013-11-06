@@ -4,7 +4,7 @@ title: Panorama Control - MahApps.Metro
 ---
 
 # Panorama Control
-![](images/panorama.png)
+![]({{site.baseurl}}images/panorama.png)
 
 `Panorama`s are sideways scrolling (typically tile) lists, found in Windows Phone 7, Windows 8 (the "metro" start screen) and in select parts of the Zune interface.
 
