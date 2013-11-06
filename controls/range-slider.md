@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: no-sidebar
 title: RangeSlider - MahApps.Metro
 ---
 
