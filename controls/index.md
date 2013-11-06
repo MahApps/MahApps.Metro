@@ -8,10 +8,13 @@ title: Controls
  - [TextBox](/controls/textbox.html)
  - [ProgressRing](/controls/progress-ring.html)
  - [TabControl](/controls/tab-control.html)
+ - [RangeSlider](/controls/range-slider.html)
+ 
+ **Not documented yet**
  - DatePicker and Calendar
  - ListView and ListBox
  - ComboBox
- - Slider and RangeSlider
+ - Slider
  - ProgressBar and ProgressIndicator
  - DataGrid
  - TransitioningContentControl

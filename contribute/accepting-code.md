@@ -3,8 +3,7 @@ layout: no-sidebar
 title: Accepting Code
 ---
 
-
-### Some Three Letter Acronyms We Use
+# Some Three Letter Acronyms We Use
 
 **\[WIP\]** - Work In Progress - this is a tag we include on any pull request that is not ready for consumption. We do this because it's always A Good Thing to start a pull request early so that we can get feedback on it early.
 
