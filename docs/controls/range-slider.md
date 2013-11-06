@@ -5,7 +5,7 @@ title: RangeSlider - MahApps.Metro
 
 # Range Slider
 
-![](/images/range_slider.PNG)  
+![]({{site.baseurl}}/images/range_slider.PNG)  
 
 Taken from the [Avalon Controls Library](http://avaloncontrolslib.codeplex.com/) (MS-PL), `RangeSlider` lets you select a range of values with a slider, rather than a single value.
 
