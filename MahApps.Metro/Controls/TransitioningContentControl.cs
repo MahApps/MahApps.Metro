@@ -22,39 +22,39 @@ namespace MahApps.Metro.Controls
     public enum TransitionType
     {
         /// <summary>
-        /// DefaultTransition
+        /// Use the VisualState DefaultTransition
         /// </summary>
         Default,
         /// <summary>
-        /// Normal
+        /// Use the VisualState Normal
         /// </summary>
         Normal,
         /// <summary>
-        /// UpTransition
+        /// Use the VisualState UpTransition
         /// </summary>
         Up,
         /// <summary>
-        /// DownTransition
+        /// Use the VisualState DownTransition
         /// </summary>
         Down,
         /// <summary>
-        /// RightTransition
+        /// Use the VisualState RightTransition
         /// </summary>
         Right,
         /// <summary>
-        /// RightReplaceTransition
+        /// Use the VisualState RightReplaceTransition
         /// </summary>
         RightReplace,
         /// <summary>
-        /// LeftTransition
+        /// Use the VisualState LeftTransition
         /// </summary>
         Left,
         /// <summary>
-        /// LeftReplaceTransition
+        /// Use the VisualState LeftReplaceTransition
         /// </summary>
         LeftReplace,
         /// <summary>
-        /// CustomTransition
+        /// Use a custom VisualState, the name must be CustomTransition
         /// </summary>
         Custom
     }
@@ -231,8 +231,7 @@ namespace MahApps.Metro.Controls
                 // revert to default
                 Transition = DefaultTransitionState;
 
-                throw new ArgumentException(
-                    string.Format(CultureInfo.CurrentCulture, "Temporary removed exception message", invalidTransition));
+                throw new ArgumentException(string.Format("'{0}' Transition could not be found!", invalidTransition), "Transition");
             }
             VisualStateManager.GoToState(this, NormalState, false);
         }
@@ -250,18 +249,19 @@ namespace MahApps.Metro.Controls
             // both presenters must be available, otherwise a transition is useless.
             if (CurrentContentPresentationSite != null && PreviousContentPresentationSite != null)
             {
-                if (RestartTransitionOnContentChange) {
+                if (RestartTransitionOnContentChange)
+                {
                     CurrentTransition.Completed -= OnTransitionCompleted;
                 }
 
                 CurrentContentPresentationSite.Content = newContent;
-
                 PreviousContentPresentationSite.Content = oldContent;
 
                 // and start a new transition
                 if (!IsTransitioning || RestartTransitionOnContentChange)
                 {
-                    if (RestartTransitionOnContentChange) {
+                    if (RestartTransitionOnContentChange)
+                    {
                         CurrentTransition.Completed += OnTransitionCompleted;
                     }
                     IsTransitioning = true;
@@ -276,19 +276,23 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void ReloadTransition()
         {
-            if (RestartTransitionOnContentChange)
-            {
-                CurrentTransition.Completed -= OnTransitionCompleted;
-            }
-            if (!IsTransitioning || RestartTransitionOnContentChange)
+            // both presenters must be available, otherwise a transition is useless.
+            if (CurrentContentPresentationSite != null && PreviousContentPresentationSite != null)
             {
                 if (RestartTransitionOnContentChange)
                 {
-                    CurrentTransition.Completed += OnTransitionCompleted;
+                    CurrentTransition.Completed -= OnTransitionCompleted;
                 }
-                IsTransitioning = true;
-                VisualStateManager.GoToState(this, NormalState, false);
-                VisualStateManager.GoToState(this, GetTransitionName(Transition), true);
+                if (!IsTransitioning || RestartTransitionOnContentChange)
+                {
+                    if (RestartTransitionOnContentChange)
+                    {
+                        CurrentTransition.Completed += OnTransitionCompleted;
+                    }
+                    IsTransitioning = true;
+                    VisualStateManager.GoToState(this, NormalState, false);
+                    VisualStateManager.GoToState(this, GetTransitionName(Transition), true);
+                }
             }
         }
 
