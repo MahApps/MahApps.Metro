@@ -77,11 +77,11 @@ namespace MetroDemo
 
         private void ShowMessageBox(object sender, RoutedEventArgs e)
         {
-            this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MahApps.Metro.Controls.MessageDialogStyle.AffirmativeAndNegative).ContinueWith(x =>
+            this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MahApps.Metro.Controls.Dialogs.MessageDialogStyle.AffirmativeAndNegative).ContinueWith(x =>
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            this.ShowMessageAsync("Result", "You said: " + (x.Result == MahApps.Metro.Controls.MessageDialogResult.Affirmative ? "OK" : "Cancel"));
+                            this.ShowMessageAsync("Result", "You said: " + (x.Result == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative ? "OK" : "Cancel"));
                         }));
                 });
         }

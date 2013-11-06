@@ -7,12 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace MahApps.Metro.Controls
+namespace MahApps.Metro.Controls.Dialogs
 {
     /// <summary>
     /// An internal control that represents a message dialog. Please use MetroWindow.ShowMessage instead!
     /// </summary>
-    public class MessageDialog : Control
+    public class MessageDialog : BaseMetroDialog
     {
         private const string PART_AffirmativeButton = "PART_AffirmativeButton";
         private const string PART_NegativeButton = "PART_NegativeButton";
@@ -24,7 +24,8 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageDialog), new FrameworkPropertyMetadata(typeof(MessageDialog)));
         }
-        internal MessageDialog()
+        internal MessageDialog(MetroWindow parentWindow)
+            : base(parentWindow)
         {
         }
 

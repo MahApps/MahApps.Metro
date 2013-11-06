@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;
 using System.ComponentModel;
 
@@ -242,7 +243,7 @@ namespace MahApps.Metro.Controls
         public System.Threading.Tasks.Task<MessageDialogResult> ShowMessageAsync(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
         {
             //create the dialog control
-            MessageDialog dialog = new MessageDialog();
+            MessageDialog dialog = new MessageDialog(this);
             dialog.SetValue(Panel.ZIndexProperty, (int)overlayBox.GetValue(Panel.ZIndexProperty) + 1);
             dialog.MinHeight = this.ActualHeight / 4.0;
             dialog.Title = title;
