@@ -1,6 +1,6 @@
 ---
 layout: no-sidebar
-title: Mahapps.Metro - Quick Start
+title: Quick Start
 ---
 
 This guide will introduce you to how *MahApps.Metro* works and how to incorporate it into your app.
@@ -143,3 +143,7 @@ Produces this window titlebar:
 ![]({{site.baseurl}}/images/05_WindowCommands.png)
 
 The foreground (link) colour of `WindowCommands` will always be white, *unless* the titlebar is disabled, in which case it will be the reverse of whatever theme you have selected. For example, using the White/Light theme, the foreground colour will be black.
+
+### What now?
+
+For extended documentation, take a look at the [Controls]({{site.baseurl}}/controls/) page
