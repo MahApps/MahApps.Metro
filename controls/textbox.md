@@ -13,7 +13,7 @@ A **watermark** - in the context of textboxes - refers to text that appears in t
 
 Will produce a textbox that looks like the below image. The three states are *unfocused* (with no user text provided), focused, and unfocused (with user text provided).
 
-![]({{site.baseurl}}images/10_textboxstates.png)
+![]({{site.baseurl}}/images/10_textboxstates.png)
 
 ## Clear button
 
@@ -23,7 +23,7 @@ Like the watermark, a simple attached property adds in the functionality
 
 Which will give you
 
-![]({{site.baseurl}}images/11_textboxclearstates.png)
+![]({{site.baseurl}}/images/11_textboxclearstates.png)
 
 ## Why Attached Properties?
 
