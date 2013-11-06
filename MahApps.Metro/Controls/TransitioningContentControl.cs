@@ -17,6 +17,49 @@ using System.Windows.Media.Animation;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
+    /// enumeration for the different transition types
+    /// </summary>
+    public enum TransitionType
+    {
+        /// <summary>
+        /// DefaultTransition
+        /// </summary>
+        Default,
+        /// <summary>
+        /// Normal
+        /// </summary>
+        Normal,
+        /// <summary>
+        /// UpTransition
+        /// </summary>
+        Up,
+        /// <summary>
+        /// DownTransition
+        /// </summary>
+        Down,
+        /// <summary>
+        /// RightTransition
+        /// </summary>
+        Right,
+        /// <summary>
+        /// RightReplaceTransition
+        /// </summary>
+        RightReplace,
+        /// <summary>
+        /// LeftTransition
+        /// </summary>
+        Left,
+        /// <summary>
+        /// LeftReplaceTransition
+        /// </summary>
+        LeftReplace,
+        /// <summary>
+        /// CustomTransition
+        /// </summary>
+        Custom
+    }
+
+    /// <summary>
     /// A ContentControl that animates content as it loads and unloads.
     /// </summary>
     public class TransitioningContentControl : ContentControl
@@ -31,10 +74,10 @@ namespace MahApps.Metro.Controls
         private Storyboard _currentTransition;
 
         public event RoutedEventHandler TransitionCompleted;
-        public const string DefaultTransitionState = "DefaultTransition";
+        public const TransitionType DefaultTransitionState = TransitionType.Default;
        
         public static readonly DependencyProperty IsTransitioningProperty = DependencyProperty.Register("IsTransitioning", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(OnIsTransitioningPropertyChanged));
-        public static readonly DependencyProperty TransitionProperty = DependencyProperty.Register("Transition", typeof(string), typeof(TransitioningContentControl), new PropertyMetadata(DefaultTransitionState, OnTransitionPropertyChanged));
+        public static readonly DependencyProperty TransitionProperty = DependencyProperty.Register("Transition", typeof(TransitionType), typeof(TransitioningContentControl), new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged));
         public static readonly DependencyProperty RestartTransitionOnContentChangeProperty = DependencyProperty.Register("RestartTransitionOnContentChange", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(false, OnRestartTransitionOnContentChangePropertyChanged));
         public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register("CustomVisualStates", typeof(ObservableCollection<VisualState>), typeof(TransitioningContentControl), new PropertyMetadata(null));
 
@@ -57,9 +100,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public string Transition
+        public TransitionType Transition
         {
-            get { return GetValue(TransitionProperty) as string; }
+            get { return (TransitionType)GetValue(TransitionProperty); }
             set { SetValue(TransitionProperty, value); }
         }
 
@@ -103,8 +146,8 @@ namespace MahApps.Metro.Controls
         private static void OnTransitionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var source = (TransitioningContentControl)d;
-            var oldTransition = e.OldValue as string;
-            var newTransition = e.NewValue as string;
+            var oldTransition = (TransitionType)e.OldValue;
+            var newTransition = (TransitionType)e.NewValue;
 
             if (source.IsTransitioning)
             {
@@ -184,7 +227,7 @@ namespace MahApps.Metro.Controls
             CurrentTransition = transition;
             if (transition == null)
             {
-                string invalidTransition = Transition;
+                var invalidTransition = Transition;
                 // revert to default
                 Transition = DefaultTransitionState;
 
@@ -223,8 +266,29 @@ namespace MahApps.Metro.Controls
                     }
                     IsTransitioning = true;
                     VisualStateManager.GoToState(this, NormalState, false);
-                    VisualStateManager.GoToState(this, Transition, true);
+                    VisualStateManager.GoToState(this, GetTransitionName(Transition), true);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Reload the current transition if the content is the same.
+        /// </summary>
+        public void ReloadTransition()
+        {
+            if (RestartTransitionOnContentChange)
+            {
+                CurrentTransition.Completed -= OnTransitionCompleted;
+            }
+            if (!IsTransitioning || RestartTransitionOnContentChange)
+            {
+                if (RestartTransitionOnContentChange)
+                {
+                    CurrentTransition.Completed += OnTransitionCompleted;
+                }
+                IsTransitioning = true;
+                VisualStateManager.GoToState(this, NormalState, false);
+                VisualStateManager.GoToState(this, GetTransitionName(Transition), true);
             }
         }
 
@@ -250,19 +314,45 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private Storyboard GetStoryboard(string newTransition)
+        private Storyboard GetStoryboard(TransitionType newTransition)
         {
             VisualStateGroup presentationGroup = VisualStates.TryGetVisualStateGroup(this, PresentationGroup);
             Storyboard newStoryboard = null;
             if (presentationGroup != null)
             {
+                var transitionName = GetTransitionName(newTransition);
                 newStoryboard = presentationGroup.States
                     .OfType<VisualState>()
-                    .Where(state => state.Name == newTransition)
+                    .Where(state => state.Name == transitionName)
                     .Select(state => state.Storyboard)
                     .FirstOrDefault();
             }
             return newStoryboard;
+        }
+
+        private string GetTransitionName(TransitionType transition)
+        {
+            switch (transition) {
+                default:
+                case TransitionType.Default:
+                    return "DefaultTransition";
+                case TransitionType.Normal:
+                    return "Normal";
+                case TransitionType.Up:
+                    return "UpTransition";
+                case TransitionType.Down:
+                    return "DownTransition";
+                case TransitionType.Right:
+                    return "RightTransition";
+                case TransitionType.RightReplace:
+                    return "RightReplaceTransition";
+                case TransitionType.Left:
+                    return "LeftTransition";
+                case TransitionType.LeftReplace:
+                    return "LeftReplaceTransition";
+                case TransitionType.Custom:
+                    return "CustomTransition";
+            }
         }
     }
 }

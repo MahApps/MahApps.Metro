@@ -222,6 +222,8 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type TabControl}">
+        <Setter Property="Controls:ControlsHelper.Transition"
+                Value="Left" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -248,10 +250,12 @@
                                       Grid.Row="0"
                                       KeyboardNavigation.TabIndex="1" />
                         </ScrollViewer>
-                        <Controls:MetroContentControl x:Name="ContentPanel"
-                                                      Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
-                                                      Grid.Column="0"
-                                                      Grid.Row="1">
+                        <Controls:TransitioningContentControl x:Name="ContentPanel"
+                                                              Transition="{TemplateBinding Controls:ControlsHelper.Transition}"
+                                                              Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
+                                                              RestartTransitionOnContentChange="True"
+                                                              Grid.Column="0"
+                                                              Grid.Row="1">
                             <ContentPresenter x:Name="PART_SelectedContentHost"
                                               ContentTemplate="{TemplateBinding SelectedContentTemplate}"
                                               Content="{TemplateBinding SelectedContent}"
@@ -259,7 +263,7 @@
                                               ContentSource="SelectedContent"
                                               Margin="{TemplateBinding Padding}"
                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        </Controls:MetroContentControl>
+                        </Controls:TransitioningContentControl>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="TabStripPlacement"
@@ -282,6 +286,8 @@
                         </Trigger>
                         <Trigger Property="TabStripPlacement"
                                  Value="Left">
+                            <Setter Property="Controls:ControlsHelper.Transition"
+                                    Value="Right" />
                             <Setter Property="Grid.Row"
                                     TargetName="HeaderPanelScroll"
                                     Value="0" />

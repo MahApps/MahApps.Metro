@@ -364,18 +364,43 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1" Width="150">
                             <Label Content="RichTextBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <RichTextBox Margin="0, 10, 0, 0" Padding="5">
+                            <RichTextBox Margin="0, 10, 0, 0"
+                                         Padding="5"
+                                         IsDocumentEnabled="True">
                                 <FlowDocument>
                                     <Paragraph>
+                                        <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                            <Run Text="Normal" />
+                                        </Hyperlink>
+                                        <LineBreak />
+                                        <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <RichTextBox Margin="0, 10, 0, 0"
+                                         IsReadOnly="True"
+                                         Padding="5"
+                                         IsDocumentEnabled="True">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                            <Run Text="ReadOnly" />
+                                        </Hyperlink>
+                                        <LineBreak />
                                         <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
                             <RichTextBox Margin="0, 10, 0, 0"
                                          IsEnabled="False"
-                                         Padding="5">
+                                         Padding="5"
+                                         IsDocumentEnabled="True">
                                 <FlowDocument>
                                     <Paragraph>
+                                        <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                            <Run Text="Disabled" />
+                                        </Hyperlink>
+                                        <LineBreak />
                                         <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
                                     </Paragraph>
                                 </FlowDocument>
@@ -1090,12 +1115,12 @@
                                                                   Width="250"
                                                                   Height="50"
                                                                   Margin="0, 10, 0, 0"
-                                                                  Transition="DownTransition" />
+                                                                  Transition="Down" />
                             <Controls:TransitioningContentControl x:Name="customTransitioning"
                                                                   Width="250"
                                                                   Height="50"
                                                                   Margin="0, 10, 0, 0"
-                                                                  Transition="CustomTransition">
+                                                                  Transition="Custom">
                                 <Controls:TransitioningContentControl.CustomVisualStates>
                                     <VisualState x:Name="CustomTransition">
                                         <Storyboard>

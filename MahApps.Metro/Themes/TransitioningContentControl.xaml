@@ -3,16 +3,20 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style TargetType="Controls:TransitioningContentControl">
-        <Setter Property="IsTabStop"
-                Value="True" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Stretch" />
         <Setter Property="VerticalContentAlignment"
                 Value="Stretch" />
         <Setter Property="Transition"
-                Value="DefaultTransition" />
+                Value="Default" />
         <Setter Property="IsTabStop"
                 Value="False" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="RenderOptions.ClearTypeHint"
+                Value="Enabled" />
+        <Setter Property="TextOptions.TextFormattingMode"
+                Value="Display" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:TransitioningContentControl">
@@ -137,7 +141,53 @@
                                 </VisualState>
                                 <VisualState x:Name="RightTransition">
                                     <Storyboard>
+                                        <!-- new right transition =========================================== -->
+
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                       Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                                       Storyboard.TargetName="CurrentContentPresentationSite">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                  Value="0" />
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.400"
+                                                                  Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="CurrentContentPresentationSite">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                  Value="-30" />
+                                            <EasingDoubleKeyFrame KeyTime="00:00:00.700"
+                                                                  Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                       Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                                       Storyboard.TargetName="PreviousContentPresentationSite">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                  Value="1" />
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.100"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="PreviousContentPresentationSite">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                  Value="0" />
+                                            <EasingDoubleKeyFrame KeyTime="00:00:00.700"
+                                                                  Value="30">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <!-- old right transition =========================================== -->
+                                        
+                                        <!--<DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                                        Storyboard.TargetName="CurrentContentPresentationSite"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00"
@@ -171,12 +221,58 @@
                                                                   Value="0" />
                                             <SplineDoubleKeyFrame KeyTime="00:00:00.300"
                                                                   Value="40" />
-                                        </DoubleAnimationUsingKeyFrames>
+                                        </DoubleAnimationUsingKeyFrames>-->
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="LeftTransition">
                                     <Storyboard>
+                                        <!-- new left transition =========================================== -->
+                                        
                                         <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                       Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                                       Storyboard.TargetName="CurrentContentPresentationSite">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                  Value="0" />
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.400"
+                                                                  Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="CurrentContentPresentationSite">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                  Value="30" />
+                                            <EasingDoubleKeyFrame KeyTime="00:00:00.700"
+                                                                  Value="0">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                       Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                                       Storyboard.TargetName="PreviousContentPresentationSite">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                  Value="1" />
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00.100"
+                                                                  Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="PreviousContentPresentationSite">
+                                            <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                                  Value="0" />
+                                            <EasingDoubleKeyFrame KeyTime="00:00:00.700"
+                                                                  Value="-30">
+                                                <EasingDoubleKeyFrame.EasingFunction>
+                                                    <CubicEase EasingMode="EaseOut" />
+                                                </EasingDoubleKeyFrame.EasingFunction>
+                                            </EasingDoubleKeyFrame>
+                                        </DoubleAnimationUsingKeyFrames>
+                                        
+                                        <!-- old left transition =========================================== -->
+
+                                        <!--<DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                                        Storyboard.TargetName="CurrentContentPresentationSite"
                                                                        Storyboard.TargetProperty="(UIElement.Opacity)">
                                             <SplineDoubleKeyFrame KeyTime="00:00:00"
@@ -210,7 +306,7 @@
                                                                   Value="0" />
                                             <SplineDoubleKeyFrame KeyTime="00:00:00.300"
                                                                   Value="-40" />
-                                        </DoubleAnimationUsingKeyFrames>
+                                        </DoubleAnimationUsingKeyFrames>-->
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="RightReplaceTransition">
@@ -279,6 +375,7 @@
                         <Grid>
                             <ContentPresenter x:Name="PreviousContentPresentationSite"
                                               Content="{x:Null}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
@@ -294,6 +391,7 @@
 
                             <ContentPresenter x:Name="CurrentContentPresentationSite"
                                               Content="{x:Null}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                               ContentTemplate="{TemplateBinding ContentTemplate}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">

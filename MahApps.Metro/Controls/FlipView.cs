@@ -200,7 +200,7 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex > 0)
             {
-                presenter.Transition = "RightReplaceTransition";
+                presenter.Transition = TransitionType.RightReplace;
                 SelectedIndex--;
             }
         }
@@ -212,7 +212,7 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex < Items.Count - 1)
             {
-                presenter.Transition = "LeftReplaceTransition";
+                presenter.Transition = TransitionType.LeftReplace;
                 SelectedIndex++;
             }
         }
