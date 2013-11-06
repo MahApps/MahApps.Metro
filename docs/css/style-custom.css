@@ -2,6 +2,7 @@ pre, code {
 	font-family: 'Source Code Pro', sans-serif;
 	font-weight: 500;
 	font-size: 0.9em;
+  line-height: normal;
 }
 
 blockquote {
