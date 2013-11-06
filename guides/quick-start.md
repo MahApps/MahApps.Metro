@@ -13,7 +13,7 @@ You can install MahApps.Metro via the NuGet GUI (right click on your project, cl
 
 If you want to use the pre-release packages of MahApps.Metro (these have the latest code and newest features), you need to enable **Include Prerelease** in the GUI:
 
-![]({{site.baseurl}}images/include_prerelease.png)
+![]({{site.baseurl}}/images/include_prerelease.png)
 
 or use the Package Manager Console:
 
@@ -30,7 +30,7 @@ For now we'll use `MetroWindow`, as this approach will work for a good percentag
 
 A default WPF Window with a few controls looks like the following:
 
-![]({{site.baseurl}}images/01_UnstyledWindow.png)
+![]({{site.baseurl}}/images/01_UnstyledWindow.png)
 
 After installing MahApps.Metro:
 
@@ -66,7 +66,7 @@ But in most cases you can just drop the base class (because this is a `partial` 
 
  Which will give us this:
 
-![]({{site.baseurl}}images/02_PartiallyStyledWindow.png)
+![]({{site.baseurl}}/images/02_PartiallyStyledWindow.png)
 
 Which looks different - but we're on the right track. 
 
@@ -92,7 +92,7 @@ Just after the opening MetroWindow tag, add the following:
 	        </ResourceDictionary>
 	    </Window.Resources>
 	
-![]({{site.baseurl}}images/03_StyledWindow.png)
+![]({{site.baseurl}}/images/03_StyledWindow.png)
 
 And now we have something much better!
 
@@ -100,7 +100,7 @@ And now we have something much better!
 
 The default `MetroWindow` is made up of a few components:
 
-![]({{site.baseurl}}images/04_ExplainedStyledWindow.png)
+![]({{site.baseurl}}/images/04_ExplainedStyledWindow.png)
 
 If you don't like the elements that are labelled, fear not, they're all optional.
 
@@ -140,6 +140,6 @@ Including this within the `MetroWindow` tag (under the `Window.Resources` sectio
 
 Produces this window titlebar:
 
-![]({{site.baseurl}}images/05_WindowCommands.png)
+![]({{site.baseurl}}/images/05_WindowCommands.png)
 
 The foreground (link) colour of `WindowCommands` will always be white, *unless* the titlebar is disabled, in which case it will be the reverse of whatever theme you have selected. For example, using the White/Light theme, the foreground colour will be black.
