@@ -39,3 +39,8 @@ blockquote {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+#logo h1, .image img
+{
+  border-radius: 0px;
+}
