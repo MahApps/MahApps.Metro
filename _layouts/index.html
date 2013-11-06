@@ -22,8 +22,8 @@
 							</div>
 							<nav id="nav">
 								<ul>
-                  <li><a href="/controls/">controls</a></li>
-                  <li><a href="/contribute/">contribute</a></li>
+                  <li><a href="{{site.baseurl}}/controls/">controls</a></li>
+                  <li><a href="{{site.baseurl}}/contribute/">contribute</a></li>
 								</ul>
 							</nav>
 						</header>
@@ -41,13 +41,13 @@
 									<div class="12u">
 										<h2>let your desktop apps shine</h2>
 										<div id="home-container">
-                      <div><img alt="before" src="/images/home-title-light.png" height="366" /></div>
-                      <div><img alt="after" src="/images/home-title-dark.png" height="366" /></div>
+                      <div><img alt="before" src="{{site.baseurl}}/images/home-title-light.png" height="366" /></div>
+                      <div><img alt="after" src="{{site.baseurl}}/images/home-title-dark.png" height="366" /></div>
 										</div>
 										<p>1. install it from NuGet
 											<pre class="nuget-button">Install-Package MahApps.Metro</pre>
 										</p>
-                    <p>2. read through the <a href="/guides/quick-start.html">quick start</a></p>
+                    <p>2. read through the <a href="{{site.baseurl}}/guides/quick-start.html">quick start</a></p>
 										<p>3. go forth and be awesome</p>
 									</div>
 								</div>
@@ -62,7 +62,7 @@
 				<div class="row">
 					<div class="4u">
 						<section class="box box-feature">
-              <a href="#" class="image image-full"><img src="/images/pic03.jpg" alt="" /></a>
+              <a href="#" class="image image-full"><img src="{{site.baseurl}}/images/pic03.jpg" alt="" /></a>
 							<div class="inner">
 								<header>
 									<h2>enhance the default controls</h2>
@@ -73,7 +73,7 @@
 					</div>
 					<div class="4u">
 						<section class="box box-feature">
-              <a href="#" class="image image-full"><img src="/images/home-visual-studio.png" alt="" /></a>
+              <a href="#" class="image image-full"><img src="{{site.baseurl}}/images/home-visual-studio.png" alt="" /></a>
 							<div class="inner">
 								<header>
 									<h2>more than just styles</h2>
@@ -85,7 +85,7 @@
 					
 					<div class="4u">
 						<section class="box box-feature last">
-              <a href="#" class="image image-full"><img src="/images/home-open-source.png" alt="" /></a>
+              <a href="#" class="image image-full"><img src="{{site.baseurl}}/images/home-open-source.png" alt="" /></a>
 							<div class="inner">
 								<header>
 									<h2>it's open source</h2>
@@ -106,8 +106,8 @@
 								<h3>quick links</h3>
 								<div class="grid persistent">
 									<div class="row">
-                    <div class="6u"><a href="https://github.com/MahApps/MahApps.Metro/" class="image image-full x"><img src="/images/github.png" alt="" /></a></div>
-                    <div class="6u"><a href="http://html5up.net/halcyonic/" class="image image-full y"><img src="/images/pic05.jpg" alt="" /></a></div>
+                    <div class="6u"><a href="https://github.com/MahApps/MahApps.Metro/" class="image image-full x"><img src="{{site.baseurl}}/images/github.png" alt="" /></a></div>
+                    <div class="6u"><a href="http://html5up.net/halcyonic/" class="image image-full y"><img src="{{site.baseurl}}/images/pic05.jpg" alt="" /></a></div>
 									</div>
 									<!--<div class="row">
 										<div class="6u"><a href="http://html5up.net/arcana/" class="image image-full x"><img src="images/pic06.jpg" alt="" /></a></div>
@@ -194,7 +194,7 @@
 			</footer>
 		</div>-->
 	</body>
-  <script type="text/javascript" src="/js/jquery.beforeafter-1.4.min.js"></script>
+  <script type="text/javascript" src="{{site.baseurl}}/js/jquery.beforeafter-1.4.min.js"></script>
 	<script type="text/javascript">
 	$(function(){
 		$('#home-container').beforeAfter({
@@ -210,7 +210,7 @@
         var nb = document.createElement('script');
         nb.type = 'text/javascript';
         nb.async = true;
-        nb.src = '/js/nuget.js';
+        nb.src = '{{site.baseurl}}/js/nuget.js';
         var s = document.getElementsByTagName('script')[0];
         s.parentNode.insertBefore(nb, s);
     })();
