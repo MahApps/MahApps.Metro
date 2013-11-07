@@ -399,9 +399,9 @@ namespace MahApps.Metro.Controls
                     var mPoint = Mouse.GetPosition(this);
 
                     var wpfPoint = PointToScreen(mPoint);
-                    short x = Convert.ToInt16(wpfPoint.X);
-                    short y = Convert.ToInt16(wpfPoint.Y);
-                    int lParam = x | (y << 16);
+                    var x = Convert.ToInt16(wpfPoint.X);
+                    var y = Convert.ToInt16(wpfPoint.Y);
+                    var lParam = x | (y << 16);
                     UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
                     
                     if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize) && mPoint.Y <= TitlebarHeight)

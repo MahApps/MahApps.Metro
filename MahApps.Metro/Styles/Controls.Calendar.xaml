@@ -209,7 +209,7 @@
                                                             <Storyboard>
                                                                 <DoubleAnimation Duration="0"
                                                                                  To=".5"
-                                                                                 Storyboard.TargetProperty="(Shape.Fill).(Brush.Opacity)"
+                                                                                 Storyboard.TargetProperty="Opacity"
                                                                                  Storyboard.TargetName="path" />
                                                             </Storyboard>
                                                         </VisualState>
@@ -248,7 +248,7 @@
                                                             <Storyboard>
                                                                 <DoubleAnimation Duration="0"
                                                                                  To=".2"
-                                                                                 Storyboard.TargetProperty="(Shape.Fill).(Brush.Opacity)"
+                                                                                 Storyboard.TargetProperty="Opacity"
                                                                                  Storyboard.TargetName="path" />
                                                             </Storyboard>
                                                         </VisualState>
