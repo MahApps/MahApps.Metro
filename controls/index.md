@@ -10,6 +10,7 @@ title: Controls
  - [TabControl]({{site.baseurl}}/controls/tab-control.html)
  - [RangeSlider]({{site.baseurl}}/controls/range-slider.html)
  - [Panorama]({{site.baseurl}}/controls/panorama.html)
+ - [TransitioningContentControl]({{site.baseurl}}/controls/transitioning-content-control.html)
  
  **Not documented yet**
  - DatePicker and Calendar
@@ -18,7 +19,6 @@ title: Controls
  - Slider
  - ProgressBar and ProgressIndicator
  - DataGrid
- - TransitioningContentControl
  - Tile
  - FlipView
  - Flyouts
