@@ -1,10 +1,11 @@
 ---
-layout: default
-title: Panorama Control - MahApps.Metro
+layout: no-sidebar
+title: Panorama
 ---
 
-# Panorama Control
-![]({{site.baseurl}}images/panorama.png)
+> NOTE: The `Panorama` control is currently a bit buggy
+
+![]({{site.baseurl}}/images/panorama.png)
 
 `Panorama`s are sideways scrolling (typically tile) lists, found in Windows Phone 7, Windows 8 (the "metro" start screen) and in select parts of the Zune interface.
 
@@ -13,7 +14,6 @@ A `Panorama` can be databound, but because of it's nature it needs a different t
     <Controls:Panorama ItemBox="140" ItemsSource="{Binding Groups}" />
 
 And then on the `ViewModel`
-
 	
 	public ObservableCollection<PanoramaGroup> Groups { get; set; }
 	...

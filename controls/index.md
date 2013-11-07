@@ -9,6 +9,7 @@ title: Controls
  - [ProgressRing]({{site.baseurl}}/controls/progress-ring.html)
  - [TabControl]({{site.baseurl}}/controls/tab-control.html)
  - [RangeSlider]({{site.baseurl}}/controls/range-slider.html)
+ - [Panorama]({{site.baseurl}}/controls/panorama.html)
  
  **Not documented yet**
  - DatePicker and Calendar
@@ -21,4 +22,3 @@ title: Controls
  - Tile
  - FlipView
  - Flyouts
- - Panorama
