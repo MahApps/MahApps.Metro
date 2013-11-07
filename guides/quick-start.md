@@ -72,11 +72,9 @@ Which looks different - but we're on the right track.
 
 Next we need to add the resources and styles. Unfortunately these need to be specified with each Window.
 
-> **A note from the team**
+> **Note**
 
-> We have tried embedding the resources and styles in `MetroWindow` and in `App`, but you sacrifice all ability to dynamically change the theme.
-
-> We are looking into improving this in an upcoming release. Stay tuned.
+> Since version 0.11.2.1-ALPHA, you can embed the resource dictionary in the App.xaml
 
 Just after the opening MetroWindow tag, add the following:
 	
