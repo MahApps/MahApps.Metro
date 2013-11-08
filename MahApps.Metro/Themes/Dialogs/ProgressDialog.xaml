@@ -3,7 +3,8 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters"
-                    x:Class="MahApps.Metro.Controls.Dialogs.ProgressDialog">
+                    x:Class="MahApps.Metro.Controls.Dialogs.ProgressDialog"
+                    Cursor="Wait">
     <Dialogs:BaseMetroDialog.DialogBody>
         <Grid>
             <TextBlock Margin="0 5 0 0"
@@ -17,6 +18,7 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"
                 Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                Height="10"
                 Panel.ZIndex="5"
                 IsIndeterminate="True" />
     </Dialogs:BaseMetroDialog.DialogBottom>
