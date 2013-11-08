@@ -6,6 +6,10 @@
                     x:Class="MahApps.Metro.Controls.Dialogs.ProgressDialog">
     <Dialogs:BaseMetroDialog.DialogBody>
         <Grid>
+            <TextBlock Margin="0 5 0 0"
+                       FontSize="15"
+                       Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                       TextWrapping="Wrap" />
         </Grid>
     </Dialogs:BaseMetroDialog.DialogBody>
     <Dialogs:BaseMetroDialog.DialogBottom>

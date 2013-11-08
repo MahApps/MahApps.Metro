@@ -89,7 +89,7 @@ namespace MetroDemo
 
         private void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
-            this.ShowProgressAsync("Showing something...");
+            this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
         }
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
