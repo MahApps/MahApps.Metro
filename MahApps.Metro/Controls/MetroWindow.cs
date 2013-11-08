@@ -265,27 +265,31 @@ namespace MahApps.Metro.Controls
 
             messageDialogContainer.Children.Add(dialog); //add the dialog to the container
 
-            dialog.ApplyTemplate(); //make sure the dialog has loaded before trying to wait on it.
+           //dialog.ApplyTemplate(); //make sure the dialog has loaded before trying to wait on it.
 
             if (TextBlockStyle != null && !dialog.Resources.Contains(typeof(TextBlock)))
             {
                 dialog.Resources.Add(typeof(TextBlock), TextBlockStyle);
             }
 
-            return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(x =>
+            return dialog.WaitForLoadAsync().ContinueWith<System.Threading.Tasks.Task<MessageDialogResult>>(x =>
                 {
-                    //once a button as been clicked, begin removing the dialog.
-                    Dispatcher.Invoke(new Action(() =>
+                    return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(y =>
                         {
-                            this.SizeChanged -= sizeHandler;
+                            //once a button as been clicked, begin removing the dialog.
+                            Dispatcher.Invoke(new Action(() =>
+                                {
+                                    this.SizeChanged -= sizeHandler;
 
-                            messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
+                                    messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
 
-                            overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
-                        }));
+                                    overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+                                }));
 
-                    return x.Result;
-                });
+                            return y.Result;
+                        });
+                }).ContinueWith(x => 
+                    x.Result.Result);
         }
 
         /// <summary>

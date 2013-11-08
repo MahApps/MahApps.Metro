@@ -17,8 +17,8 @@ namespace MahApps.Metro.Controls.Dialogs
         //private const string PART_AffirmativeButton = "PART_AffirmativeButton";
         //private const string PART_NegativeButton = "PART_NegativeButton";
 
-        private Button AffirmativeButton = null;
-        private Button NegativeButton = null;
+        //private Button AffirmativeButton = null;
+        //private Button NegativeButton = null;
 
         //static MessageDialog()
         //{
@@ -27,18 +27,21 @@ namespace MahApps.Metro.Controls.Dialogs
         internal MessageDialog(MetroWindow parentWindow)
             : base(parentWindow)
         {
-            
+            InitializeComponent();
         }
 
         internal Task<MessageDialogResult> WaitForButtonPressAsync()
         {
-            this.Focus();
+            Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    this.Focus();
 
-            //kind of acts like a selective 'IsDefault' mechanism.
-            if (ButtonStyle == MessageDialogStyle.Affirmative)
-                AffirmativeButton.Focus();
-            else if (ButtonStyle == MessageDialogStyle.AffirmativeAndNegative)
-                NegativeButton.Focus();
+                    //kind of acts like a selective 'IsDefault' mechanism.
+                    if (ButtonStyle == MessageDialogStyle.Affirmative)
+                        PART_AffirmativeButton.Focus();
+                    else if (ButtonStyle == MessageDialogStyle.AffirmativeAndNegative)
+                        PART_NegativeButton.Focus();
+                }));
 
             TaskCompletionSource<MessageDialogResult> tcs = new TaskCompletionSource<MessageDialogResult>();
 
@@ -50,11 +53,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
             Action cleanUpHandlers = () =>
             {
-                NegativeButton.Click -= negativeHandler;
-                AffirmativeButton.Click -= affirmativeHandler;
+                PART_NegativeButton.Click -= negativeHandler;
+                PART_AffirmativeButton.Click -= affirmativeHandler;
 
-                NegativeButton.KeyDown -= negativeKeyHandler;
-                AffirmativeButton.KeyDown -= affirmativeKeyHandler;
+                PART_NegativeButton.KeyDown -= negativeKeyHandler;
+                PART_AffirmativeButton.KeyDown -= affirmativeKeyHandler;
             };
 
 
@@ -97,11 +100,11 @@ namespace MahApps.Metro.Controls.Dialogs
                     e.Handled = true;
                 });
 
-            NegativeButton.KeyDown += negativeKeyHandler;
-            AffirmativeButton.KeyDown += affirmativeKeyHandler;
+            PART_NegativeButton.KeyDown += negativeKeyHandler;
+            PART_AffirmativeButton.KeyDown += affirmativeKeyHandler;
 
-            NegativeButton.Click += negativeHandler;
-            AffirmativeButton.Click += affirmativeHandler;
+            PART_NegativeButton.Click += negativeHandler;
+            PART_AffirmativeButton.Click += affirmativeHandler;
 
             return tcs.Task;
         }
@@ -118,20 +121,20 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static void SetButtonState(MessageDialog md)
         {
-            if (md.AffirmativeButton == null) return;
+            if (md.PART_AffirmativeButton == null) return;
 
             switch (md.ButtonStyle)
             {
                 case MessageDialogStyle.Affirmative:
                     {
-                        md.AffirmativeButton.Visibility = Visibility.Visible;
-                        md.NegativeButton.Visibility = Visibility.Collapsed;
+                        md.PART_AffirmativeButton.Visibility = Visibility.Visible;
+                        md.PART_NegativeButton.Visibility = Visibility.Collapsed;
                     }
                     break;
                 case MessageDialogStyle.AffirmativeAndNegative:
                     {
-                        md.AffirmativeButton.Visibility = Visibility.Visible;
-                        md.NegativeButton.Visibility = Visibility.Visible;
+                        md.PART_AffirmativeButton.Visibility = Visibility.Visible;
+                        md.PART_NegativeButton.Visibility = Visibility.Visible;
                     }
                     break;
             }
@@ -139,8 +142,6 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void Dialog_Loaded(object sender, RoutedEventArgs e)
         {
-            //AffirmativeButton = ((Grid)this.DialogBody).GetChildObjects().Where(x => x.GetValue(FrameworkElement.NameProperty) == PART_AffirmativeButton).First() as Button;
-
             SetButtonState(this);
         }
 

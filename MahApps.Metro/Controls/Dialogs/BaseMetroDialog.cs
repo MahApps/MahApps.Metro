@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -9,8 +10,8 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public abstract class BaseMetroDialog: Control
     {
-        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(MessageDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(MessageDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
 
         public string Title
         {
@@ -34,6 +35,25 @@ namespace MahApps.Metro.Controls.Dialogs
         }
         public BaseMetroDialog()
         {
+        }
+
+        public Task WaitForLoadAsync()
+        {
+            if (this.IsLoaded) return new Task(() => {});
+
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+
+            RoutedEventHandler handler = null;
+            handler = new RoutedEventHandler((sender,args) =>
+                {
+                    this.Loaded -= handler;
+
+                    tcs.TrySetResult(null);
+                });
+
+            this.Loaded += handler;
+
+            return tcs.Task;
         }
     }
 }
