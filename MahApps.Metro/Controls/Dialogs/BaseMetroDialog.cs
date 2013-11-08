@@ -12,6 +12,8 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
 
         public string Title
         {
@@ -23,6 +25,18 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return GetValue(DialogBodyProperty); }
             set { SetValue(DialogBodyProperty, value); }
+        }
+
+        public object DialogTop
+        {
+            get { return GetValue(DialogTopProperty); }
+            set { SetValue(DialogTopProperty, value); }
+        }
+
+        public object DialogBottom
+        {
+            get { return GetValue(DialogBottomProperty); }
+            set { SetValue(DialogBottomProperty, value); }
         }
 
         static BaseMetroDialog()

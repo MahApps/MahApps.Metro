@@ -49,8 +49,8 @@ namespace MahApps.Metro.Controls
         ContentPresenter WindowCommandsPresenter;
         WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
-        Grid overlayBox;
-        Grid messageDialogContainer;
+        internal Grid overlayBox;
+        internal Grid messageDialogContainer;
 
         public MessageDialogSettings MessageDialogOptions { get; private set; }
 
@@ -231,65 +231,6 @@ namespace MahApps.Metro.Controls
         public string WindowTitle
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
-        }
-
-        /// <summary>
-        /// Creates a MessageDialog inside of the current window.
-        /// </summary>
-        /// <param name="title">The title of the MessageDialog.</param>
-        /// <param name="message">The message contained within the MessageDialog.</param>
-        /// <param name="style">The type of buttons to use.</param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<MessageDialogResult> ShowMessageAsync(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
-        {
-            //create the dialog control
-            MessageDialog dialog = new MessageDialog(this);
-            dialog.SetValue(Panel.ZIndexProperty, (int)overlayBox.GetValue(Panel.ZIndexProperty) + 1);
-            dialog.MinHeight = this.ActualHeight / 4.0;
-            dialog.Title = title;
-            dialog.Message = message;
-            dialog.ButtonStyle = style;
-
-            dialog.AffirmativeButtonText = MessageDialogOptions.AffirmativeButtonText;
-            dialog.NegativeButtonText = MessageDialogOptions.NegativeButtonText;
-
-            SizeChangedEventHandler sizeHandler = null; //an event handler for auto resizing an open dialog.
-            sizeHandler = new SizeChangedEventHandler((sender, args) =>
-                {
-                    dialog.MinHeight = this.ActualHeight / 4.0;
-                });
-
-            this.SizeChanged += sizeHandler;
-
-            overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
-
-            messageDialogContainer.Children.Add(dialog); //add the dialog to the container
-
-           //dialog.ApplyTemplate(); //make sure the dialog has loaded before trying to wait on it.
-
-            if (TextBlockStyle != null && !dialog.Resources.Contains(typeof(TextBlock)))
-            {
-                dialog.Resources.Add(typeof(TextBlock), TextBlockStyle);
-            }
-
-            return dialog.WaitForLoadAsync().ContinueWith<System.Threading.Tasks.Task<MessageDialogResult>>(x =>
-                {
-                    return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(y =>
-                        {
-                            //once a button as been clicked, begin removing the dialog.
-                            Dispatcher.Invoke(new Action(() =>
-                                {
-                                    this.SizeChanged -= sizeHandler;
-
-                                    messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
-
-                                    overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
-                                }));
-
-                            return y.Result;
-                        });
-                }).ContinueWith(x => 
-                    x.Result.Result);
         }
 
         /// <summary>
