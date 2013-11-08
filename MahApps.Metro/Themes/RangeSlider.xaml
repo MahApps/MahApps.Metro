@@ -14,6 +14,8 @@
                                       Style="{DynamicResource HorizontalTrackLargeDecrease}" />
                         <Thumb Name="PART_LeftThumb"
                                Cursor="SizeWE"
+                               Height="{DynamicResource HorizontalThumbHeight}"
+                               Width="{DynamicResource HorizontalThumbWidth}"
                                Style="{DynamicResource HorizontalSliderThumb}" />
                         <Thumb Name="PART_MiddleThumb"
                                Cursor="ScrollAll"
@@ -34,6 +36,8 @@
                         </Thumb>
                         <Thumb Name="PART_RightThumb"
                                Cursor="SizeWE"
+                               Height="{DynamicResource HorizontalThumbHeight}"
+                               Width="{DynamicResource HorizontalThumbWidth}"
                                Style="{DynamicResource HorizontalSliderThumb}" />
                         <RepeatButton Name="PART_RightEdge"
                                       Style="{DynamicResource HorizontalTrackLargeDecrease}" />
