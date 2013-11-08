@@ -50,16 +50,18 @@ namespace MahApps.Metro.Controls.Dialogs
                     x.Result.Result);
         }
 
-        public static Task ShowProgressAsync(this MetroWindow window, string title)
+        public static Task ShowProgressAsync(this MetroWindow window, string title, string message)
         {
             //create the dialog control
             ProgressDialog dialog = new ProgressDialog(window);
+            dialog.Message = message;
             SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
 
 
             return dialog.WaitForLoadAsync().ContinueWith(x =>
             {
-                Thread.Sleep(10000);
+                Thread.Sleep(10000); //TODO: remove
+
                 window.Dispatcher.Invoke(new Action(() =>
                 {
                     window.SizeChanged -= sizeHandler;
