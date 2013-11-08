@@ -185,7 +185,7 @@
     <Style TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="TextBlockStyle"
                 Value="{StaticResource MetroTextBlock}" />
-        <Setter Property="TextBlock.FontSize"
+        <Setter Property="TextElement.FontSize"
                 Value="{DynamicResource ContentFontSize}"/>
         <Setter Property="Background"
                 Value="{DynamicResource WhiteBrush}" />
