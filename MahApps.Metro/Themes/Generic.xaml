@@ -24,6 +24,6 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />
 
-        <ResourceDictionary Source="/MahApps.Metro;component/Themes/Dialogs/MessageDialog.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
