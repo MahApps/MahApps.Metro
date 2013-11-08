@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
 using System.Windows.Data;
 
@@ -75,7 +76,7 @@ namespace MetroDemo
 #endif
         }
 
-        private void ShowMessageBox(object sender, RoutedEventArgs e)
+        private void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
             this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MahApps.Metro.Controls.Dialogs.MessageDialogStyle.AffirmativeAndNegative).ContinueWith(x =>
                 {
@@ -84,6 +85,11 @@ namespace MetroDemo
                             this.ShowMessageAsync("Result", "You said: " + (x.Result == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative ? "OK" : "Cancel"));
                         }));
                 });
+        }
+
+        private void ShowProgressDialog(object sender, RoutedEventArgs e)
+        {
+            this.ShowProgressAsync("Showing something...");
         }
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)

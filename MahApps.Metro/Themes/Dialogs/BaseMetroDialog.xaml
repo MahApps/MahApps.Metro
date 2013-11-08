@@ -52,30 +52,44 @@
                 </Style>
             </ResourceDictionary>
         </ControlTemplate.Resources>
-        
+
         <Grid Background="{TemplateBinding Background}">
             <Border Focusable="False"
                     FocusVisualStyle="{x:Null}">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="25*" />
-                        <ColumnDefinition Width="50*" />
-                        <ColumnDefinition Width="25*" />
-                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-                    <!--Content area-->
-                    <Grid Grid.Column="1"
+                    <ContentPresenter Grid.Row="0"
+                                   Content="{TemplateBinding DialogTop}"/>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25*" />
+                            <ColumnDefinition Width="50*" />
+                            <ColumnDefinition Width="25*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--Content area-->
+                        <Grid Grid.Column="1"
                           Margin="0 10 0 0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="0"
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0"
                                    FontSize="26"
                                    Text="{TemplateBinding Title}" />
-                        <ContentPresenter Grid.Row="1"
-                            Content="{TemplateBinding DialogBody}"/>
+                            <ContentPresenter Grid.Row="1"
+                                   Content="{TemplateBinding DialogBody}"/>
+                        </Grid>
                     </Grid>
+
+                    <ContentPresenter Grid.Row="2"
+                                   Content="{TemplateBinding DialogBottom}"/>
                 </Grid>
             </Border>
         </Grid>
