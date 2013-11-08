@@ -58,14 +58,14 @@
 
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Click="ShowMessageDialog" Content="Show MessageDialog" />
-            <Button Click="ShowProgressDialog" Content="Show ProgressDialog" />
+            <Button Click="ShowMessageDialog" Content="Show MessageDlg" />
+            <Button Click="ShowProgressDialog" Content="Show ProgressDlg" />
             <Button Click="LaunchVisualStudioDemo" Content="VS Demo" />
             <Button Click="LaunchFlyoutDemo" Content="Flyout Demo" />
             <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
             <Button Click="LaunchIcons" Content="Icons" />
             <Button Click="LauchCleanDemo" Content="Clean Demo" />
-            <Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />
+            <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
             <Button Click="InteropDemo" Content="Interop Demo" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
