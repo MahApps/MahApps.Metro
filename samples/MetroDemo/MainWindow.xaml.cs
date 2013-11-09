@@ -91,6 +91,8 @@ namespace MetroDemo
         {
             var remoteTask = this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
 
+
+            //Ugly demo code that doesn't use 'await'. This would be much cleaner WITH await.
             ProgressDialogController remote = null;
 
             System.Threading.Tasks.Task.Factory.StartNew(() => System.Threading.Thread.Sleep(5000)).ContinueWith(x => Dispatcher.BeginInvoke(new Action(() =>
@@ -105,6 +107,7 @@ namespace MetroDemo
                                 {
                                     double val = (i / 100.0) * 20.0;
                                     remote.SetProgress(val);
+                                    remote.SetMessage("Baking cupcake: " + i.ToString() + "...");
                                 }));
 
                             i += 1.0;
