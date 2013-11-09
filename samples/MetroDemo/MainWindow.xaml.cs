@@ -99,7 +99,7 @@ namespace MetroDemo
                 }))).ContinueWith(x =>
                     {
                         double i = 0.0;
-                        while (i < 5.0)
+                        while (i < 6.0)
                         {
                             Dispatcher.Invoke(new Action(() =>
                                 {
