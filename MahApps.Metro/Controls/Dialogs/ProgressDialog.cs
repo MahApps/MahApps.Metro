@@ -77,6 +77,11 @@ namespace MahApps.Metro.Controls.Dialogs
             WrappedDialog.PART_ProgressBar.ApplyTemplate();
         }
 
+        public void SetMessage(string message)
+        {
+            WrappedDialog.Message = message;
+        }
+
         public void Close()
         {
             if (!IsOpen) throw new InvalidOperationException();
