@@ -37,7 +37,7 @@ namespace MahApps.Metro.Controls.Dialogs
             get { return (string)GetValue(MessageProperty); }
             set { SetValue(MessageProperty, value); }
         }
-       
+
     }
 
     public class ProgressDialogController
@@ -46,9 +46,9 @@ namespace MahApps.Metro.Controls.Dialogs
         private ProgressDialog WrappedDialog { get; set; }
         private Action CloseCallback { get; set; }
 
-        public bool IsOpen {get;private set;}
+        public bool IsOpen { get; private set; }
 
-        internal ProgressDialogController(ref ProgressDialog dialog, Action closeCallBack)
+        internal ProgressDialogController(ProgressDialog dialog, Action closeCallBack)
         {
             WrappedDialog = dialog;
             CloseCallback = closeCallBack;
