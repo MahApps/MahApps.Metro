@@ -18,7 +18,7 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"
                 Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                Height="10"
+                Height="8"
                 Panel.ZIndex="5"
                 IsIndeterminate="True"
                 Minimum="0.0"
