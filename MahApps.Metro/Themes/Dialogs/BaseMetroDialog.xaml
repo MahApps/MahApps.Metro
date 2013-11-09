@@ -10,11 +10,11 @@
         <ControlTemplate.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
                 </ResourceDictionary.MergedDictionaries>
 
                 <Style TargetType="{x:Type Button}"
-                       BasedOn="{StaticResource MetroFlatButton}">
+                       BasedOn="{StaticResource SquareButtonStyle}">
                     <Setter Property="FocusVisualStyle"
                             Value="{x:Null}" />
                     <Setter Property="Template">
