@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;
 using System.ComponentModel;
@@ -232,6 +233,66 @@ namespace MahApps.Metro.Controls
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
         }
+
+        public System.Threading.Tasks.Task ShowOverlayAsync()
+        {
+            if (IsOverlayVisible()) 
+                throw new InvalidOperationException();
+
+            Dispatcher.VerifyAccess();
+
+            overlayBox.Visibility = System.Windows.Visibility.Visible;
+
+            System.Threading.Tasks.TaskCompletionSource<object> tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
+            Storyboard sb = this.Template.Resources["OverlayFastSemiFadeIn"] as Storyboard;
+
+            sb = sb.Clone();
+
+            EventHandler completionHandler = null;
+            completionHandler = new EventHandler((sender, args) =>
+                {
+                    sb.Completed -= completionHandler;
+
+                    tcs.TrySetResult(null);
+                });
+
+            sb.Completed += completionHandler;
+
+            overlayBox.BeginStoryboard(sb);
+
+            return tcs.Task;
+        }
+        public System.Threading.Tasks.Task HideOverlayAsync()
+        {
+            if (overlayBox.Visibility == System.Windows.Visibility.Visible && overlayBox.Opacity == 0.0)
+                throw new InvalidOperationException();
+
+            Dispatcher.VerifyAccess();
+
+            System.Threading.Tasks.TaskCompletionSource<object> tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
+            Storyboard sb = this.Template.Resources["OverlayFastSemiFadeOut"] as Storyboard;
+
+            sb = sb.Clone();
+
+            EventHandler completionHandler = null;
+            completionHandler = new EventHandler((sender, args) =>
+            {
+                sb.Completed -= completionHandler;
+
+                overlayBox.Visibility = System.Windows.Visibility.Hidden;
+
+                tcs.TrySetResult(null);
+            });
+
+            sb.Completed += completionHandler;
+
+            overlayBox.BeginStoryboard(sb);
+
+            return tcs.Task;
+        }
+        public bool IsOverlayVisible() { return overlayBox.Visibility == System.Windows.Visibility.Visible && overlayBox.Opacity >= 0.7; }
 
         /// <summary>
         /// Initializes a new instance of the MahApps.Metro.Controls.MetroWindow class.

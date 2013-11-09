@@ -21,65 +21,76 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
         {
             window.Dispatcher.VerifyAccess();
-
-            //create the dialog control
-            MessageDialog dialog = new MessageDialog(window);
-            dialog.Message = message;
-            dialog.ButtonStyle = style;
-
-            dialog.AffirmativeButtonText = window.MessageDialogOptions.AffirmativeButtonText;
-            dialog.NegativeButtonText = window.MessageDialogOptions.NegativeButtonText;
-
-            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
-
-            return dialog.WaitForLoadAsync().ContinueWith<System.Threading.Tasks.Task<MessageDialogResult>>(x =>
-            {
-                return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(y =>
+            return window.ShowOverlayAsync().ContinueWith(z =>
                 {
-                    //once a button as been clicked, begin removing the dialog.
+                    return window.Dispatcher.Invoke(new Func<object>(() =>
+                        {
+                            //create the dialog control
+                            MessageDialog dialog = new MessageDialog(window);
+                            dialog.Message = message;
+                            dialog.ButtonStyle = style;
 
-                    dialog.OnClose();
+                            dialog.AffirmativeButtonText = window.MessageDialogOptions.AffirmativeButtonText;
+                            dialog.NegativeButtonText = window.MessageDialogOptions.NegativeButtonText;
 
-                    window.Dispatcher.Invoke(new Action(() =>
-                    {
-                        window.SizeChanged -= sizeHandler;
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
 
-                        window.messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
+                            return dialog.WaitForLoadAsync().ContinueWith(x =>
+                           {
+                               return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(y =>
+                               {
+                                   //once a button as been clicked, begin removing the dialog.
 
-                        window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
-                    }));
+                                   dialog.OnClose();
 
-                    return y.Result;
-                });
-            }).ContinueWith(x =>
-                    x.Result.Result);
+                                   return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                   {
+                                       window.SizeChanged -= sizeHandler;
+
+                                       window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+
+                                       return window.HideOverlayAsync();
+                                       //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+                                   }))).ContinueWith(y3 => y).Result.Result;
+
+                               }).Result;
+                           });
+                        }));
+                }).ContinueWith(x => ((Task<MessageDialogResult>)x.Result).Result);
         }
 
         public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message)
         {
             window.Dispatcher.VerifyAccess();
 
-            //create the dialog control
-            ProgressDialog dialog = new ProgressDialog(window);
-            dialog.Message = message;
-            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
-
-
-            return dialog.WaitForLoadAsync().ContinueWith(x =>
+            return window.ShowOverlayAsync().ContinueWith<ProgressDialogController>(z =>
             {
-                return new ProgressDialogController(ref dialog, () =>
-                {
-                    dialog.OnClose();
-
-                    window.Dispatcher.Invoke(new Action(() =>
+                return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                     {
-                        window.SizeChanged -= sizeHandler;
+                        //create the dialog control
+                        ProgressDialog dialog = new ProgressDialog(window);
+                        dialog.Message = message;
+                        SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
 
-                        window.messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
 
-                        window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
-                    }));
-                });
+                        return dialog.WaitForLoadAsync().ContinueWith(x =>
+                        {
+                            return new ProgressDialogController(dialog, () =>
+                            {
+                                dialog.OnClose();
+
+                                window.Dispatcher.Invoke(new Func<Task>(() =>
+                                {
+                                    window.SizeChanged -= sizeHandler;
+
+                                    window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+
+                                    return window.HideOverlayAsync();
+                                    //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+                                }));
+                            });
+                        });
+                    }))).Result;
             });
         }
 
@@ -97,7 +108,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             window.SizeChanged += sizeHandler;
 
-            window.overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
+            //window.overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
 
             window.messageDialogContainer.Children.Add(dialog); //add the dialog to the container
 
