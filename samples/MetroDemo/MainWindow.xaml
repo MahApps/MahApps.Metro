@@ -771,9 +771,18 @@
                                                        Width="200"
                                                        Foreground="{DynamicResource AccentColorBrush}"
                                                        Margin="0, 10, 0, 0" />
-                            <Controls:MetroProgressBar IsIndeterminate="True"
+                            <CheckBox x:Name="indeterminateCB"
+                                      Content="IsIndeterminate"
+                                      Width="200"
+                                      Margin="0, 10, 0, 0"
+                                      IsChecked="True" />
+                            <Controls:MetroProgressBar IsIndeterminate="{Binding ElementName=indeterminateCB, Path=IsChecked}"
+                                                       Value="{Binding ElementName=horizSlider, Path=Value}"
+                                                       Minimum="0"
+                                                       Maximum="100"
                                                        Width="200"
-                                                       Foreground="{DynamicResource AccentColorBrush}" />
+                                                       Foreground="{DynamicResource AccentColorBrush}"
+                                                       Margin="0, 10, 0, 0"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1">
                             <Label Content="ProgressRing" Style="{StaticResource DescriptionHeaderStyle}" />
