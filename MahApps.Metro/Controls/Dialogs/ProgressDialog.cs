@@ -39,4 +39,53 @@ namespace MahApps.Metro.Controls.Dialogs
         }
        
     }
+
+    public class ProgressDialogController
+    {
+        //No spiritdead, you can't change this.
+        private ProgressDialog WrappedDialog { get; set; }
+        private Action CloseCallback { get; set; }
+
+        public bool IsOpen {get;private set;}
+
+        internal ProgressDialogController(ref ProgressDialog dialog, Action closeCallBack)
+        {
+            WrappedDialog = dialog;
+            CloseCallback = closeCallBack;
+
+            IsOpen = dialog.IsVisible;
+        }
+
+        /// <summary>
+        /// Sets the ProgressBar's IsIndeterminate to true. To set it to false, call SetProgress.
+        /// </summary>
+        public void SetIndeterminate()
+        {
+            WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
+        }
+
+        public void SetProgress(double value)
+        {
+            if (value < 0.0 || value > 1.0) throw new ArgumentOutOfRangeException("value");
+
+            WrappedDialog.PART_ProgressBar.IsIndeterminate = false;
+
+            WrappedDialog.PART_ProgressBar.Value = value;
+
+            WrappedDialog.PART_ProgressBar.Maximum = 1.0;
+
+            WrappedDialog.PART_ProgressBar.ApplyTemplate();
+        }
+
+        public void Close()
+        {
+            if (!IsOpen) throw new InvalidOperationException();
+
+            WrappedDialog.Dispatcher.VerifyAccess();
+
+            CloseCallback();
+
+            IsOpen = false;
+        }
+    }
 }

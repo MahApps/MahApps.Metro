@@ -20,6 +20,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns></returns>
         public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
         {
+            window.Dispatcher.VerifyAccess();
+
             //create the dialog control
             MessageDialog dialog = new MessageDialog(window);
             dialog.Message = message;
@@ -35,6 +37,9 @@ namespace MahApps.Metro.Controls.Dialogs
                 return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(y =>
                 {
                     //once a button as been clicked, begin removing the dialog.
+
+                    dialog.OnClose();
+
                     window.Dispatcher.Invoke(new Action(() =>
                     {
                         window.SizeChanged -= sizeHandler;
@@ -50,8 +55,10 @@ namespace MahApps.Metro.Controls.Dialogs
                     x.Result.Result);
         }
 
-        public static Task ShowProgressAsync(this MetroWindow window, string title, string message)
+        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message)
         {
+            window.Dispatcher.VerifyAccess();
+
             //create the dialog control
             ProgressDialog dialog = new ProgressDialog(window);
             dialog.Message = message;
@@ -60,16 +67,19 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return dialog.WaitForLoadAsync().ContinueWith(x =>
             {
-                Thread.Sleep(10000); //TODO: remove
-
-                window.Dispatcher.Invoke(new Action(() =>
+                return new ProgressDialogController(ref dialog, () =>
                 {
-                    window.SizeChanged -= sizeHandler;
+                    dialog.OnClose();
 
-                    window.messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
+                    window.Dispatcher.Invoke(new Action(() =>
+                    {
+                        window.SizeChanged -= sizeHandler;
 
-                    window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
-                }));
+                        window.messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
+
+                        window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+                    }));
+                });
             });
         }
 
@@ -90,6 +100,8 @@ namespace MahApps.Metro.Controls.Dialogs
             window.overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
 
             window.messageDialogContainer.Children.Add(dialog); //add the dialog to the container
+
+            dialog.OnShown();
 
             if (window.TextBlockStyle != null && !dialog.Resources.Contains(typeof(TextBlock)))
             {

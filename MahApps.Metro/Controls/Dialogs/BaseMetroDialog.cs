@@ -69,5 +69,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return tcs.Task;
         }
+
+        internal protected virtual void OnShown() { }
+        internal protected virtual void OnClose() { }
     }
 }

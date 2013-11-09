@@ -89,7 +89,33 @@ namespace MetroDemo
 
         private void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
-            this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
+            var remoteTask = this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
+
+            ProgressDialogController remote = null;
+
+            System.Threading.Tasks.Task.Factory.StartNew(() => System.Threading.Thread.Sleep(5000)).ContinueWith(x => Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    remote = remoteTask.Result;
+                }))).ContinueWith(x =>
+                    {
+                        double i = 0.0;
+                        while (i < 5.0)
+                        {
+                            Dispatcher.Invoke(new Action(() =>
+                                {
+                                    double val = (i / 100.0) * 20.0;
+                                    remote.SetProgress(val);
+                                }));
+
+                            i += 1.0;
+                            System.Threading.Thread.Sleep(2000);
+                        }
+
+                        Dispatcher.Invoke(new Action(() =>
+                        {
+                            remote.Close();
+                        }));
+                    });
         }
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)

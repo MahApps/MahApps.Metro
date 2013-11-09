@@ -20,6 +20,9 @@
                 Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                 Height="10"
                 Panel.ZIndex="5"
-                IsIndeterminate="True" />
+                IsIndeterminate="True"
+                Minimum="0.0"
+                Maximum="1.0"
+                x:Name="PART_ProgressBar" />
     </Dialogs:BaseMetroDialog.DialogBottom>
 </Dialogs:BaseMetroDialog>
