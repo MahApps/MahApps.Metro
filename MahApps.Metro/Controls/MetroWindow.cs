@@ -236,8 +236,8 @@ namespace MahApps.Metro.Controls
 
         public System.Threading.Tasks.Task ShowOverlayAsync()
         {
-            if (IsOverlayVisible()) 
-                throw new InvalidOperationException();
+            if (IsOverlayVisible())
+                return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
 
             Dispatcher.VerifyAccess();
 
@@ -266,7 +266,7 @@ namespace MahApps.Metro.Controls
         public System.Threading.Tasks.Task HideOverlayAsync()
         {
             if (overlayBox.Visibility == System.Windows.Visibility.Visible && overlayBox.Opacity == 0.0)
-                throw new InvalidOperationException();
+                return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
 
             Dispatcher.VerifyAccess();
 
