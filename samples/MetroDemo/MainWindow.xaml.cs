@@ -87,6 +87,18 @@ namespace MetroDemo
                 });
         }
 
+        private void ShowSimpleDialog(object sender, RoutedEventArgs e)
+        {
+            var dialog = this.Resources["SimpleDialogTest"] as BaseMetroDialog;
+
+            this.ShowMetroDialogAsync("This dialog allows arbitrary content. It will close in 5 seconds.", dialog).ContinueWith(x => System.Threading.Thread.Sleep(5000)).ContinueWith(y =>
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                        {
+                            this.HideMetroDialogAsync(dialog);
+                        }));
+                });
+        }
         private void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
             var remoteTask = this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");

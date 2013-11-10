@@ -39,6 +39,9 @@ namespace MahApps.Metro.Controls.Dialogs
             set { SetValue(DialogBottomProperty, value); }
         }
 
+        internal SizeChangedEventHandler SizeChangedHandler { get; set; }
+
+
         static BaseMetroDialog()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseMetroDialog), new FrameworkPropertyMetadata(typeof(BaseMetroDialog)));

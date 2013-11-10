@@ -34,27 +34,28 @@ namespace MahApps.Metro.Controls.Dialogs
                             dialog.NegativeButtonText = window.MessageDialogOptions.NegativeButtonText;
 
                             SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
+                            dialog.SizeChangedHandler = sizeHandler;
 
                             return dialog.WaitForLoadAsync().ContinueWith(x =>
-                           {
-                               return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(y =>
-                               {
-                                   //once a button as been clicked, begin removing the dialog.
+                            {
+                                return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(y =>
+                                {
+                                    //once a button as been clicked, begin removing the dialog.
 
-                                   dialog.OnClose();
+                                    dialog.OnClose();
 
-                                   return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
-                                   {
-                                       window.SizeChanged -= sizeHandler;
+                                    return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                    {
+                                        window.SizeChanged -= sizeHandler;
 
-                                       window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+                                        window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
-                                       return window.HideOverlayAsync();
-                                       //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
-                                   }))).ContinueWith(y3 => y).Result.Result;
+                                        return window.HideOverlayAsync();
+                                        //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+                                    }))).ContinueWith(y3 => y).Result.Result;
 
-                               }).Result;
-                           });
+                                }).Result;
+                            });
                         }));
                 }).ContinueWith(x => ((Task<MessageDialogResult>)x.Result).Result);
         }
@@ -79,7 +80,7 @@ namespace MahApps.Metro.Controls.Dialogs
                         dialog.IsCancelable = isCancelable;
                         dialog.NegativeButtonText = window.MessageDialogOptions.NegativeButtonText;
                         SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
-
+                        dialog.SizeChangedHandler = sizeHandler;
 
                         return dialog.WaitForLoadAsync().ContinueWith(x =>
                         {
@@ -100,6 +101,34 @@ namespace MahApps.Metro.Controls.Dialogs
                         });
                     }))).Result;
             });
+        }
+
+        public static Task ShowMetroDialogAsync(this MetroWindow window, string title, BaseMetroDialog dialog)
+        {
+            window.Dispatcher.VerifyAccess();
+            if (window.messageDialogContainer.Children.Contains(dialog))
+                throw new Exception("The provided dialog is already visible in the specified window.");
+
+            return window.ShowOverlayAsync().ContinueWith(z =>
+                {
+                    dialog.Dispatcher.Invoke(new Action(() =>
+                        {
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
+                            dialog.SizeChangedHandler = sizeHandler;
+                        }));
+                }).ContinueWith(y => dialog.WaitForLoadAsync().Wait());
+        }
+        public static Task HideMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog)
+        {
+            window.Dispatcher.VerifyAccess();
+            if (!window.messageDialogContainer.Children.Contains(dialog))
+                throw new Exception("The provided dialog is not visible in the specified window.");
+
+            window.SizeChanged -= dialog.SizeChangedHandler;
+
+            window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+
+            return window.HideOverlayAsync();
         }
 
         private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, string title, BaseMetroDialog dialog)
