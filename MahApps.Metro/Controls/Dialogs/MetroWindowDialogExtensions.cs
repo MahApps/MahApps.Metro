@@ -59,7 +59,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 }).ContinueWith(x => ((Task<MessageDialogResult>)x.Result).Result);
         }
 
-        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message)
+        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false)
         {
             window.Dispatcher.VerifyAccess();
 
@@ -70,6 +70,8 @@ namespace MahApps.Metro.Controls.Dialogs
                         //create the dialog control
                         ProgressDialog dialog = new ProgressDialog(window);
                         dialog.Message = message;
+                        dialog.IsCancelable = isCancelable;
+                        dialog.NegativeButtonText = window.MessageDialogOptions.NegativeButtonText;
                         SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
 
 

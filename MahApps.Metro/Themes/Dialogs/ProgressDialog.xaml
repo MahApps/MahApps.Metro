@@ -7,10 +7,29 @@
                     Cursor="Wait">
     <Dialogs:BaseMetroDialog.DialogBody>
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <TextBlock Margin="0 5 0 0"
                        FontSize="15"
                        Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                       TextWrapping="Wrap" />
+                       TextWrapping="Wrap"
+                       Grid.Row="0" />
+
+            <StackPanel Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Height="85">
+                <Button x:Name="PART_NegativeButton"
+                        Height="35"
+                        MinWidth="80"
+                        Background="{DynamicResource AccentColorBrush}"
+                        Foreground="White"
+                        Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="5 0 0 0"
+                        Visibility="Hidden" />
+            </StackPanel>
         </Grid>
     </Dialogs:BaseMetroDialog.DialogBody>
     <Dialogs:BaseMetroDialog.DialogBottom>
