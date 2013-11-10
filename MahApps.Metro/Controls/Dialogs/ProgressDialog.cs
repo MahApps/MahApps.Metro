@@ -31,13 +31,28 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(ProgressDialog), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register("IsCancelable", typeof(bool), typeof(ProgressDialog), new PropertyMetadata(default(bool), new PropertyChangedCallback((s, e) =>
+            {
+                ((ProgressDialog)s).PART_NegativeButton.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Hidden;
+            })));
+        public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(ProgressDialog), new PropertyMetadata("Cancel"));
 
         public string Message
         {
             get { return (string)GetValue(MessageProperty); }
             set { SetValue(MessageProperty, value); }
         }
+        public bool IsCancelable
+        {
+            get { return (bool)GetValue(IsCancelableProperty); }
+            set { SetValue(IsCancelableProperty, value); }
+        }
 
+        public string NegativeButtonText
+        {
+            get { return (string)GetValue(NegativeButtonTextProperty); }
+            set { SetValue(NegativeButtonTextProperty, value); }
+        }
     }
 
     public class ProgressDialogController
@@ -54,6 +69,20 @@ namespace MahApps.Metro.Controls.Dialogs
             CloseCallback = closeCallBack;
 
             IsOpen = dialog.IsVisible;
+
+            WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() =>
+                {
+                    WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
+                }));
+        }
+
+        void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
+        {
+            IsCanceled = true;
+
+            WrappedDialog.PART_NegativeButton.IsEnabled = false;
+
+            //Close();
         }
 
         /// <summary>
@@ -62,6 +91,17 @@ namespace MahApps.Metro.Controls.Dialogs
         public void SetIndeterminate()
         {
             WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
+        }
+
+        public void SetCancelable(bool value)
+        {
+            if (WrappedDialog.Dispatcher.CheckAccess())
+                WrappedDialog.IsCancelable = value;
+            else
+                WrappedDialog.Dispatcher.Invoke(new Action(() =>
+                    {
+                        WrappedDialog.IsCancelable = value;
+                    }));
         }
 
         public void SetProgress(double value)
@@ -82,11 +122,15 @@ namespace MahApps.Metro.Controls.Dialogs
             WrappedDialog.Message = message;
         }
 
+        public bool IsCanceled { get; private set; }
+
         public void Close()
         {
             if (!IsOpen) throw new InvalidOperationException();
 
             WrappedDialog.Dispatcher.VerifyAccess();
+
+            WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
 
             CloseCallback();
 

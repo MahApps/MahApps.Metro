@@ -52,6 +52,7 @@ namespace MahApps.Metro.Controls
         UIElement titleBar;
         internal Grid overlayBox;
         internal Grid messageDialogContainer;
+        private Storyboard overlayStoryboard;
 
         public MessageDialogSettings MessageDialogOptions { get; private set; }
 
@@ -254,12 +255,19 @@ namespace MahApps.Metro.Controls
                 {
                     sb.Completed -= completionHandler;
 
+                    if (overlayStoryboard == sb)
+                    {
+                        overlayStoryboard = null;
+                    }
+
                     tcs.TrySetResult(null);
                 });
 
             sb.Completed += completionHandler;
 
             overlayBox.BeginStoryboard(sb);
+
+            overlayStoryboard = sb;
 
             return tcs.Task;
         }
@@ -281,7 +289,11 @@ namespace MahApps.Metro.Controls
             {
                 sb.Completed -= completionHandler;
 
-                overlayBox.Visibility = System.Windows.Visibility.Hidden;
+                if (overlayStoryboard == sb)
+                {
+                    overlayBox.Visibility = System.Windows.Visibility.Hidden;
+                    overlayStoryboard = null;
+                }
 
                 tcs.TrySetResult(null);
             });
@@ -289,6 +301,8 @@ namespace MahApps.Metro.Controls
             sb.Completed += completionHandler;
 
             overlayBox.BeginStoryboard(sb);
+
+            overlayStoryboard = sb;
 
             return tcs.Task;
         }
@@ -413,7 +427,7 @@ namespace MahApps.Metro.Controls
                     var y = Convert.ToInt16(wpfPoint.Y);
                     var lParam = x | (y << 16);
                     UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
-                    
+
                     if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize) && mPoint.Y <= TitlebarHeight)
                     {
                         WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
