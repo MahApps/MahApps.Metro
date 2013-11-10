@@ -58,7 +58,13 @@ namespace MahApps.Metro.Controls.Dialogs
                         }));
                 }).ContinueWith(x => ((Task<MessageDialogResult>)x.Result).Result);
         }
-
+        /// <summary>
+        /// Creates a ProgressDialog inside of the current window.
+        /// </summary>
+        /// <param name="title">The title of the ProgressDialog.</param>
+        /// <param name="message">The message within the ProgressDialog.</param>
+        /// <param name="isCancelable">Determines if the cancel button is visible.</param>
+        /// <returns></returns>
         public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false)
         {
             window.Dispatcher.VerifyAccess();
