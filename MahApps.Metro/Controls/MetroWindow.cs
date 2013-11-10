@@ -235,6 +235,10 @@ namespace MahApps.Metro.Controls
             get { return TitleCaps ? Title.ToUpper() : Title; }
         }
 
+        /// <summary>
+        /// Begins to show the MetroWindow's overlay effect.
+        /// </summary>
+        /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task ShowOverlayAsync()
         {
             if (IsOverlayVisible())
@@ -271,6 +275,10 @@ namespace MahApps.Metro.Controls
 
             return tcs.Task;
         }
+        /// <summary>
+        /// Begins to hide the MetroWindow's overlay effect.
+        /// </summary>
+        /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task HideOverlayAsync()
         {
             if (overlayBox.Visibility == System.Windows.Visibility.Visible && overlayBox.Opacity == 0.0)
