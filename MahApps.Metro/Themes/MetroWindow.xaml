@@ -24,8 +24,12 @@
                                                            Storyboard.TargetName="PART_Border">
                                 <SplineDoubleKeyFrame KeyTime="00:00:00"
                                                       Value="0" />
-                                <SplineDoubleKeyFrame KeyTime="00:00:00.800"
-                                                      Value="1" />
+                                <EasingDoubleKeyFrame KeyTime="00:00:00.600"
+                                                      Value="1">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <CubicEase EasingMode="EaseIn" />
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
                         </Storyboard>
                     </VisualState>
@@ -181,7 +185,7 @@
     <Style TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="TextBlockStyle"
                 Value="{StaticResource MetroTextBlock}" />
-        <Setter Property="TextBlock.FontSize"
+        <Setter Property="TextElement.FontSize"
                 Value="{DynamicResource ContentFontSize}"/>
         <Setter Property="Background"
                 Value="{DynamicResource WhiteBrush}" />

@@ -297,7 +297,10 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            VisualStateManager.GoToState(this, "AfterLoaded", true);
+            if (this.WindowTransitionsEnabled)
+            {
+                VisualStateManager.GoToState(this, "AfterLoaded", true);
+            }
 
             if (!ShowTitleBar)
             {

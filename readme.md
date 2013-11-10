@@ -12,7 +12,7 @@ You can help keep the documentation up to date by submitting a pull request on t
 
 ### Breaking Changes
 
-[Breaking Changes or WTF is happened with the ALPHA version](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happened-with-the-ALPHA-version)
+[Breaking Changes or WTF is happening with the ALPHA version](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
 
 ### Contributions
 

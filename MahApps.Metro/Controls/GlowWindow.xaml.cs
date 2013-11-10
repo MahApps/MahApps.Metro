@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media.Animation;
 using MahApps.Metro.Models.Win32;
 
 namespace MahApps.Metro.Controls
@@ -147,6 +148,14 @@ namespace MahApps.Metro.Controls
                 return _dpiFactor.Value;
             }
             
+        }
+
+        public Storyboard OpacityStoryboard { get; set; }
+
+        public override void OnApplyTemplate() {
+            base.OnApplyTemplate();
+
+            this.OpacityStoryboard = this.TryFindResource("OpacityStoryboard") as Storyboard;
         }
 
         protected override void OnSourceInitialized(EventArgs e)

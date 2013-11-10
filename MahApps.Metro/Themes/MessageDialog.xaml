@@ -92,6 +92,7 @@
                             <Button x:Name="PART_NegativeButton"
                                     Height="35"
                                     MinWidth="80"
+                                    Margin="8 0 0 0"
                                     Content="{TemplateBinding NegativeButtonText}" />
                         </StackPanel>
                     </Grid>

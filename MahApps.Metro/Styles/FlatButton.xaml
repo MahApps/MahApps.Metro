@@ -11,8 +11,6 @@
                 Value="{DynamicResource FlatButtonFontSize}" />
         <Setter Property="Padding"
                 Value="10,5,10,5" />
-        <Setter Property="Margin"
-                Value="3" />
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="Template">
