@@ -82,7 +82,8 @@
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
                                    FontSize="26"
-                                   Text="{TemplateBinding Title}" />
+                                   Text="{TemplateBinding Title}"
+                                   TextWrapping="Wrap" />
                             <ContentPresenter Grid.Row="1"
                                    Content="{TemplateBinding DialogBody}"/>
                         </Grid>
