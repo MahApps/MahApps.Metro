@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
-    public abstract class BaseMetroDialog: Control
+    public abstract class BaseMetroDialog : Control
     {
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
@@ -49,6 +49,16 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public BaseMetroDialog(MetroWindow owningWindow)
         {
+            switch (owningWindow.MetroDialogOptions.ColorScheme)
+            {
+                case MetroDialogColorScheme.Theme:
+                    this.SetResourceReference(BackgroundProperty, "WhiteColorBrush");
+                    break;
+                case MetroDialogColorScheme.Accented:
+                    this.SetResourceReference(BackgroundProperty, "AccentColorBrush");
+                    this.SetResourceReference(ForegroundProperty, "WhiteColorBrush");
+                    break;
+            }
         }
         public BaseMetroDialog()
         {
@@ -56,12 +66,14 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public Task WaitForLoadAsync()
         {
-            if (this.IsLoaded) return new Task(() => {});
+            Dispatcher.VerifyAccess();
+
+            if (this.IsLoaded) return new Task(() => { });
 
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
             RoutedEventHandler handler = null;
-            handler = new RoutedEventHandler((sender,args) =>
+            handler = new RoutedEventHandler((sender, args) =>
                 {
                     this.Loaded -= handler;
 
@@ -75,5 +87,27 @@ namespace MahApps.Metro.Controls.Dialogs
 
         internal protected virtual void OnShown() { }
         internal protected virtual void OnClose() { }
+    }
+
+    public class MetroDialogSettings
+    {
+        internal MetroDialogSettings()
+        {
+            AffirmativeButtonText = "OK";
+            NegativeButtonText = "Cancel";
+
+            ColorScheme = MetroDialogColorScheme.Theme;
+        }
+
+        public string AffirmativeButtonText { get; set; }
+        public string NegativeButtonText { get; set; }
+
+        public MetroDialogColorScheme ColorScheme { get; set; }
+    }
+
+    public enum MetroDialogColorScheme
+    {
+        Theme = 0,
+        Accented = 1
     }
 }
