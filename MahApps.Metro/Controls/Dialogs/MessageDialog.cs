@@ -191,16 +191,4 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         AffirmativeAndNegative = 1,
     }
-
-    public class MessageDialogSettings
-    {
-        internal MessageDialogSettings()
-        {
-            AffirmativeButtonText = "OK";
-            NegativeButtonText = "Cancel";
-        }
-
-        public string AffirmativeButtonText { get; set; }
-        public string NegativeButtonText { get; set; }
-    }
 }

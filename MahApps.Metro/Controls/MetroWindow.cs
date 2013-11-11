@@ -54,7 +54,7 @@ namespace MahApps.Metro.Controls
         internal Grid messageDialogContainer;
         private Storyboard overlayStoryboard;
 
-        public MessageDialogSettings MessageDialogOptions { get; private set; }
+        public MetroDialogSettings MetroDialogOptions { get; private set; }
 
         public Style TextBlockStyle
         {
@@ -322,6 +322,9 @@ namespace MahApps.Metro.Controls
         public MetroWindow()
         {
             Loaded += this.MetroWindow_Loaded;
+
+            if (MetroDialogOptions == null)
+                MetroDialogOptions = new MetroDialogSettings();
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -351,9 +354,6 @@ namespace MahApps.Metro.Controls
             {
                 this.Flyouts = new FlyoutsControl();
             }
-
-            if (MessageDialogOptions == null)
-                MessageDialogOptions = new MessageDialogSettings();
         }
 
         static MetroWindow()

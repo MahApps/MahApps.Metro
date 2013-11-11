@@ -83,7 +83,8 @@
                             <TextBlock Grid.Row="0"
                                    FontSize="26"
                                    Text="{TemplateBinding Title}"
-                                   TextWrapping="Wrap" />
+                                   TextWrapping="Wrap"
+                                   Foreground="{TemplateBinding Foreground}" />
                             <ContentPresenter Grid.Row="1"
                                    Content="{TemplateBinding DialogBody}"/>
                         </Grid>
@@ -105,6 +106,8 @@
                 Value="Stretch" />
         <Setter Property="Background"
                 Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="KeyboardNavigation.TabNavigation"

@@ -15,7 +15,8 @@
                        FontSize="15"
                        Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        TextWrapping="Wrap"
-                       Grid.Row="0" />
+                       Grid.Row="0"
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
 
             <StackPanel Grid.Row="1"
                         Orientation="Horizontal"
@@ -43,6 +44,7 @@
                 IsIndeterminate="True"
                 Minimum="0.0"
                 Maximum="1.0"
+                Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                 x:Name="PART_ProgressBar" />
     </Dialogs:BaseMetroDialog.DialogBottom>
 </Dialogs:BaseMetroDialog>

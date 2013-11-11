@@ -30,8 +30,8 @@ namespace MahApps.Metro.Controls.Dialogs
                             dialog.Message = message;
                             dialog.ButtonStyle = style;
 
-                            dialog.AffirmativeButtonText = window.MessageDialogOptions.AffirmativeButtonText;
-                            dialog.NegativeButtonText = window.MessageDialogOptions.NegativeButtonText;
+                            dialog.AffirmativeButtonText = window.MetroDialogOptions.AffirmativeButtonText;
+                            dialog.NegativeButtonText = window.MetroDialogOptions.NegativeButtonText;
 
                             SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
@@ -78,7 +78,7 @@ namespace MahApps.Metro.Controls.Dialogs
                         ProgressDialog dialog = new ProgressDialog(window);
                         dialog.Message = message;
                         dialog.IsCancelable = isCancelable;
-                        dialog.NegativeButtonText = window.MessageDialogOptions.NegativeButtonText;
+                        dialog.NegativeButtonText = window.MetroDialogOptions.NegativeButtonText;
                         SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
                         dialog.SizeChangedHandler = sizeHandler;
 
