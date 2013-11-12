@@ -323,22 +323,28 @@ namespace MahApps.Metro.Behaviours
 
         readonly SolidColorBrush _borderColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
 
+        /// <summary>
+        /// show activated border with given brush and thickness from associated object
+        /// </summary>
         private void AddBorder()
         {
             if (Border == null)
                 return;
 
-            Border.BorderThickness = new Thickness(1);
-            Border.BorderBrush = _borderColor;
+            Border.BorderThickness = AssociatedObject.BorderThickness;
+            Border.BorderBrush = AssociatedObject.BorderBrush ?? _borderColor;
         }
 
+        /// <summary>
+        /// show deactivated border with thickness from associated object
+        /// </summary>
         private void RemoveBorder()
         {
             if (Border == null)
                 return;
 
-            Border.BorderThickness = new Thickness(0);
-            Border.BorderBrush = null;
+            Border.BorderThickness = AssociatedObject.BorderThickness;
+            Border.BorderBrush = _borderColor;
         }
 
         private void SetDefaultBackgroundColor()
@@ -394,9 +400,9 @@ namespace MahApps.Metro.Behaviours
                         returnval = UnsafeNativeMethods.DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
 
                         MetroWindow w = AssociatedObject as MetroWindow;
-                        if ((w != null && w.GlowBrush != null) || ShouldHaveBorder())
+                        if ((w != null && w.GlowBrush == null) || ShouldHaveBorder())
                         {
-                            if (wParam == IntPtr.Zero)
+                            if (wParam != IntPtr.Zero)
                                 AddBorder();
                             else
                                 RemoveBorder();
