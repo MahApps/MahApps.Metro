@@ -21,8 +21,6 @@ namespace MetroDemo
             var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
 
             CollectionViewSource.GetDefaultView(groupingComboBox.ItemsSource).GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
-
-            this.MetroDialogOptions.ColorScheme = MetroDialogColorScheme.Accented;
         }
 
         void Tick(object sender, EventArgs e)
