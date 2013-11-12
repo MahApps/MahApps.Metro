@@ -116,7 +116,8 @@ namespace MahApps.Metro.Controls.Dialogs
                             SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
                         }));
-                }).ContinueWith(y => dialog.WaitForLoadAsync().Wait());
+                }).ContinueWith(y =>
+                    ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync()))));
         }
         public static Task HideMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog)
         {
