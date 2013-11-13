@@ -166,14 +166,14 @@
                         BeginTime="0:0:0"
                         AccelerationRatio=".97" 
                         Storyboard.TargetProperty="Opacity"
-                        SpeedRatio="2.0">
+                        SpeedRatio="2.7">
                 <DoubleAnimation To=".7" />
             </Storyboard>
             <Storyboard x:Key="OverlayFastSemiFadeOut" 
                         BeginTime="0:0:0"
                         AccelerationRatio=".97" 
                         Storyboard.TargetProperty="Opacity"
-                        SpeedRatio="2.0">
+                        SpeedRatio="2.7">
                 <DoubleAnimation To="0.0" />
             </Storyboard>
         </ControlTemplate.Resources>
