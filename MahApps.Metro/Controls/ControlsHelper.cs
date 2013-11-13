@@ -1,10 +1,162 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Interop;
 using System.Windows.Media;
+using Standard;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// This custom popup is used by the validation error template.
+    /// It provides some additional nice features:
+    ///     - repositioning if host-window size or location changed
+    ///     - repositioning if host-window gets maximized and vice versa
+    ///     - it's only topmost if the host-window is activated
+    /// </summary>
+    public class CustomValidationPopup : Popup
+    {
+        private Window hostWindow;
+
+        public CustomValidationPopup()
+        {
+            this.Loaded += this.CustomValidationPopup_Loaded;
+            this.Opened += this.CustomValidationPopup_Opened;
+        }
+
+        private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
+        {
+            var target = this.PlacementTarget as FrameworkElement;
+            if (target == null)
+            {
+                return;
+            }
+
+            this.hostWindow = Window.GetWindow(target);
+            if (this.hostWindow == null)
+            {
+                return;
+            }
+
+            this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
+            this.hostWindow.LocationChanged += this.hostWindow_SizeOrLocationChanged;
+            this.hostWindow.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
+            this.hostWindow.SizeChanged += this.hostWindow_SizeOrLocationChanged;
+            this.hostWindow.StateChanged -= this.hostWindow_StateChanged;
+            this.hostWindow.StateChanged += this.hostWindow_StateChanged;
+            this.hostWindow.Activated -= this.hostWindow_Activated;
+            this.hostWindow.Activated += this.hostWindow_Activated;
+            this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
+            this.hostWindow.Deactivated += this.hostWindow_Deactivated;
+
+            this.Unloaded -= this.CustomValidationPopup_Unloaded;
+            this.Unloaded += this.CustomValidationPopup_Unloaded;
+        }
+
+        private void CustomValidationPopup_Opened(object sender, EventArgs e)
+        {
+            this.SetTopmostState(true);
+        }
+
+        private void hostWindow_Activated(object sender, EventArgs e)
+        {
+            this.SetTopmostState(true);
+        }
+
+        private void hostWindow_Deactivated(object sender, EventArgs e)
+        {
+            this.SetTopmostState(false);
+        }
+
+        private void CustomValidationPopup_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (this.hostWindow != null)
+            {
+                this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
+                this.hostWindow.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
+                this.hostWindow.StateChanged -= this.hostWindow_StateChanged;
+                this.hostWindow.Activated -= this.hostWindow_StateChanged;
+                this.hostWindow.Deactivated -= this.hostWindow_StateChanged;
+            }
+            this.Unloaded -= this.CustomValidationPopup_Unloaded;
+            this.Opened -= this.CustomValidationPopup_Opened;
+            this.hostWindow = null;
+        }
+
+        private void hostWindow_StateChanged(object sender, EventArgs e)
+        {
+            if (this.hostWindow != null && this.hostWindow.WindowState != WindowState.Minimized)
+            {
+                var target = this.PlacementTarget as FrameworkElement;
+                var holder = target != null ? target.DataContext as AdornedElementPlaceholder : null;
+                if (holder != null && holder.AdornedElement != null)
+                {
+                    var errorTemplate = holder.AdornedElement.GetValue(Validation.ErrorTemplateProperty);
+                    holder.AdornedElement.SetValue(Validation.ErrorTemplateProperty, null);
+                    holder.AdornedElement.SetValue(Validation.ErrorTemplateProperty, errorTemplate);
+                }
+            }
+        }
+
+        private void hostWindow_SizeOrLocationChanged(object sender, EventArgs e)
+        {
+            var offset = this.HorizontalOffset;
+            // "bump" the offset to cause the popup to reposition itself on its own
+            this.HorizontalOffset = offset + 1;
+            this.HorizontalOffset = offset;
+        }
+
+        private bool? appliedTopMost;
+        private readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        private readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+        private readonly IntPtr HWND_TOP = new IntPtr(0);
+        private readonly IntPtr HWND_BOTTOM = new IntPtr(1);
+        private const SWP TOPMOST_FLAGS = SWP.NOACTIVATE | SWP.NOOWNERZORDER | SWP.NOSIZE | SWP.NOMOVE | SWP.NOREDRAW | SWP.NOSENDCHANGING;
+
+        private void SetTopmostState(bool isTop)
+        {
+            // Don’t apply state if it’s the same as incoming state
+            if (this.appliedTopMost.HasValue && this.appliedTopMost == isTop)
+            {
+                return;
+            }
+
+            if (this.Child == null)
+            {
+                return;
+            }
+
+            var hwndSource = (PresentationSource.FromVisual(this.Child)) as HwndSource;
+
+            if (hwndSource == null)
+            {
+                return;
+            }
+            var hwnd = hwndSource.Handle;
+
+            var rect = NativeMethods.GetWindowRect(hwnd);
+            //Debug.WriteLine("setting z-order " + isTop);
+
+            if (isTop)
+            {
+                NativeMethods.SetWindowPos(hwnd, this.HWND_TOPMOST, rect.Left, rect.Top, (int)this.Width, (int)this.Height, TOPMOST_FLAGS);
+            }
+            else
+            {
+                // Z-Order would only get refreshed/reflected if clicking the
+                // the titlebar (as opposed to other parts of the external
+                // window) unless I first set the popup to HWND_BOTTOM
+                // then HWND_TOP before HWND_NOTOPMOST
+                NativeMethods.SetWindowPos(hwnd, this.HWND_BOTTOM, rect.Left, rect.Top, (int)this.Width, (int)this.Height, TOPMOST_FLAGS);
+                NativeMethods.SetWindowPos(hwnd, this.HWND_TOP, rect.Left, rect.Top, (int)this.Width, (int)this.Height, TOPMOST_FLAGS);
+                NativeMethods.SetWindowPos(hwnd, this.HWND_NOTOPMOST, rect.Left, rect.Top, (int)this.Width, (int)this.Height, TOPMOST_FLAGS);
+            }
+
+            this.appliedTopMost = isTop;
+        }
+    }
+
     /// <summary>
     /// A helper class that provides various attached properties for the GroupBox, TabItem and MetroTabItem controls.
     /// </summary>
