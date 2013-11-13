@@ -241,7 +241,7 @@ namespace MahApps.Metro.Controls
         /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task ShowOverlayAsync()
         {
-            if (IsOverlayVisible())
+            if (IsOverlayVisible() && overlayStoryboard == null)
                 return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
 
             Dispatcher.VerifyAccess();

@@ -59,11 +59,11 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         //No spiritdead, you can't change this.
         private ProgressDialog WrappedDialog { get; set; }
-        private Action CloseCallback { get; set; }
+        private Func<Task> CloseCallback { get; set; }
 
         public bool IsOpen { get; private set; }
 
-        internal ProgressDialogController(ProgressDialog dialog, Action closeCallBack)
+        internal ProgressDialogController(ProgressDialog dialog, Func<Task> closeCallBack)
         {
             WrappedDialog = dialog;
             CloseCallback = closeCallBack;
@@ -124,7 +124,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public bool IsCanceled { get; private set; }
 
-        public void Close()
+        public Task CloseAsync()
         {
             if (!IsOpen) throw new InvalidOperationException();
 
@@ -132,9 +132,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
 
-            CloseCallback();
-
-            IsOpen = false;
+            return CloseCallback().ContinueWith(x => IsOpen = false);
         }
     }
 }

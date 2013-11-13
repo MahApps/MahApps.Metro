@@ -133,25 +133,22 @@ namespace MetroDemo
 
                         Dispatcher.Invoke(new Action(() =>
                         {
-                            remote.Close();
+                            remote.CloseAsync().ContinueWith(y =>
+                                {
+                                    Dispatcher.Invoke(new Action(() =>
+                                    {
+                                        if (remote.IsCanceled)
+                                        {
+                                            this.ShowMessageAsync("No cupcakes!", "You stopped baking!");
+                                        }
+                                        else
+                                        {
+                                            this.ShowMessageAsync("Cupcakes!", "Your cupcakes are finished! Enjoy!");
+                                        }
+                                    }));
+                                });
                         }));
-
-                        return x.Result;
-                    }).ContinueWith(x =>
-                        {
-                            Dispatcher.Invoke(new Action(() =>
-                            {
-                                if (remote.IsCanceled)
-                                {
-                                    this.ShowMessageAsync("No cupcakes!", "You stopped baking!");
-                                }
-                                else
-                                {
-                                    this.ShowMessageAsync("Cupcakes!", "Your cupcakes are finished! Enjoy!");
-                                }
-                            }), DispatcherPriority.ApplicationIdle);
-                            return x;
-                        });
+                    });
         }
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
