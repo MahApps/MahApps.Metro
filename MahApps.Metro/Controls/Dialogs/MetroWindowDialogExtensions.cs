@@ -88,7 +88,7 @@ namespace MahApps.Metro.Controls.Dialogs
                             {
                                 dialog.OnClose();
 
-                                window.Dispatcher.Invoke(new Func<Task>(() =>
+                                return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
                                 {
                                     window.SizeChanged -= sizeHandler;
 
