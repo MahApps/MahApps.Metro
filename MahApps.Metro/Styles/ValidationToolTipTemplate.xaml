@@ -141,7 +141,7 @@
                                                 PopupAnimation="Fade"
                                                 Placement="Right"
                                                 PlacementTarget="{Binding ElementName=PopupTargetElement}"
-                                                IsOpen="{Binding ElementName=placeholder, Path=AdornedElement.IsFocused, Mode=OneWay}">
+                                                IsOpen="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}">
                     <Grid x:Name="Root">
                         <Border Background="{DynamicResource ValidationBrush1}"
                                 CornerRadius="5"
