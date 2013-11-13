@@ -1,0 +1,46 @@
+pre, code {
+	font-family: 'Source Code Pro', sans-serif;
+	font-weight: 500;
+	font-size: 0.9em;
+  line-height: normal;
+}
+
+blockquote {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  padding-left: 15px;
+  border-left: 2px solid #0071BC;
+} 
+
+#banner .nuget-button-command
+{
+	font-size: 1.5em;
+	line-height: 1.5em;
+	margin: .8em .5em;
+}
+
+#content .nuget-button-command
+{
+	font-size: 1.5em;
+	line-height: 1.5em;
+	margin: .3em .5em;
+}
+
+#banner .nuget-button-commandWrapper,
+#content .nuget-button-commandWrapper
+{
+	max-width: 600px;
+	margin: 0;
+}
+
+#banner .nuget-button-commandWrapper
+{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#logo h1, .image img
+{
+  border-radius: 0px;
+}
