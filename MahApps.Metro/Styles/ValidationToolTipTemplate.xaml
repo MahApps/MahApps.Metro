@@ -3,6 +3,7 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
+    <!-- is obsolete -->
     <ControlTemplate x:Key="ValidationToolTipTemplate">
         <Grid x:Name="Root"
               Margin="5,0"
