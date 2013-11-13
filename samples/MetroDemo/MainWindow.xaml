@@ -434,56 +434,59 @@
                     </AdornerDecorator>
                 </TabItem>
                 <TabItem Header="dates">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel>
-                            <TextBlock Text="date picker"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <DatePicker Width="150"
-                                        HorizontalAlignment="Center"
-                                        Controls:TextboxHelper.Watermark="Select a date" />
-                            <DatePicker Width="300"
-                                        Margin="2"
-                                        FontSize="24"
-                                        HorizontalAlignment="Center"
-                                        SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
-                                        Controls:TextboxHelper.Watermark="Select a date" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="1">
-                            <TextBlock Text="disabled date picker"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <DatePicker Width="150"
-                                        HorizontalAlignment="Center"
-                                        Controls:TextboxHelper.Watermark="Select a date" 
-                                        IsEnabled="False"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" >
-                            <TextBlock Text="calendar"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <Calendar />
-                        </StackPanel>
+                    <AdornerDecorator>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="date picker"
+                                           Margin="0,5"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center" />
+                                <DatePicker Width="150"
+                                            HorizontalAlignment="Center"
+                                            Controls:TextboxHelper.Watermark="Select a date" />
+                                <DatePicker Width="300"
+                                            Margin="2"
+                                            FontSize="24"
+                                            HorizontalAlignment="Center"
+                                            SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                            Controls:TextboxHelper.Watermark="Select a date" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="1">
+                                <TextBlock Text="disabled date picker"
+                                           Margin="0,5"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center" />
+                                <DatePicker Width="150"
+                                            HorizontalAlignment="Center"
+                                            Controls:TextboxHelper.Watermark="Select a date"
+                                            IsEnabled="False" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="calendar"
+                                           Margin="0,5"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center" />
+                                <Calendar />
+                            </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="1">
-                            <TextBlock Text="disabled calendar"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <Calendar IsEnabled="False"/>
-                        </StackPanel>
-                    </Grid>
+                            <StackPanel Grid.Column="1"
+                                        Grid.Row="1">
+                                <TextBlock Text="disabled calendar"
+                                           Margin="0,5"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center" />
+                                <Calendar IsEnabled="False" />
+                            </StackPanel>
+                        </Grid>
+                    </AdornerDecorator>
                 </TabItem>
                 <TabItem Header="selection">
                     <Grid Margin="1">
