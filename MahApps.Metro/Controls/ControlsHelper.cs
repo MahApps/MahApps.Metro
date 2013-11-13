@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Interop;
 using System.Windows.Media;
-using Standard;
+using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
 {
@@ -108,11 +108,10 @@ namespace MahApps.Metro.Controls
         }
 
         private bool? appliedTopMost;
-        private readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
-        private readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
-        private readonly IntPtr HWND_TOP = new IntPtr(0);
-        private readonly IntPtr HWND_BOTTOM = new IntPtr(1);
-        private const SWP TOPMOST_FLAGS = SWP.NOACTIVATE | SWP.NOOWNERZORDER | SWP.NOSIZE | SWP.NOMOVE | SWP.NOREDRAW | SWP.NOSENDCHANGING;
+        static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+        static readonly IntPtr HWND_TOP = new IntPtr(0);
+        static readonly IntPtr HWND_BOTTOM = new IntPtr(1);
 
         private void SetTopmostState(bool isTop)
         {
@@ -135,12 +134,16 @@ namespace MahApps.Metro.Controls
             }
             var hwnd = hwndSource.Handle;
 
-            var rect = NativeMethods.GetWindowRect(hwnd);
+            RECT rect;
+            if (!UnsafeNativeMethods.GetWindowRect(hwnd, out rect))
+            {
+                return;
+            }
             //Debug.WriteLine("setting z-order " + isTop);
 
             if (isTop)
             {
-                NativeMethods.SetWindowPos(hwnd, this.HWND_TOPMOST, rect.Left, rect.Top, (int)this.Width, (int)this.Height, TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(hwnd, HWND_TOPMOST, rect.left, rect.top, (int)this.Width, (int)this.Height, Constants.TOPMOST_FLAGS);
             }
             else
             {
@@ -148,9 +151,9 @@ namespace MahApps.Metro.Controls
                 // the titlebar (as opposed to other parts of the external
                 // window) unless I first set the popup to HWND_BOTTOM
                 // then HWND_TOP before HWND_NOTOPMOST
-                NativeMethods.SetWindowPos(hwnd, this.HWND_BOTTOM, rect.Left, rect.Top, (int)this.Width, (int)this.Height, TOPMOST_FLAGS);
-                NativeMethods.SetWindowPos(hwnd, this.HWND_TOP, rect.Left, rect.Top, (int)this.Width, (int)this.Height, TOPMOST_FLAGS);
-                NativeMethods.SetWindowPos(hwnd, this.HWND_NOTOPMOST, rect.Left, rect.Top, (int)this.Width, (int)this.Height, TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(hwnd, HWND_BOTTOM, rect.left, rect.top, (int)this.Width, (int)this.Height, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(hwnd, HWND_TOP, rect.left, rect.top, (int)this.Width, (int)this.Height, Constants.TOPMOST_FLAGS);
+                UnsafeNativeMethods.SetWindowPos(hwnd, HWND_NOTOPMOST, rect.left, rect.top, (int)this.Width, (int)this.Height, Constants.TOPMOST_FLAGS);
             }
 
             this.appliedTopMost = isTop;
