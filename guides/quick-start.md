@@ -26,7 +26,8 @@ There's two ways you can style your Window using MahApps.Metro:
  -  using the included `MetroWindow` control, or
  -  design your own window
 
-For now we'll use `MetroWindow`, as this approach will work for a good percentage of apps and is the quickest and easiest way to get going. If you want to learn about rolling your own window, check out [the guide](advanced-guide.html).
+For now we'll use `MetroWindow`, as this approach will work for a good percentage of apps and is the quickest and easiest way to get going. 
+If you want to learn about rolling your own window, check out [the guide](advanced-guide.html).
 
 A default WPF Window with a few controls looks like the following:
 

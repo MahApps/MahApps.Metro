@@ -2,6 +2,7 @@
 layout: no-sidebar
 title: Controls 
 ---
+
  - [MetroWindow]({{site.baseurl}}/controls/metro-window.html)
  - [Buttons]({{site.baseurl}}/controls/buttons.html)
  - [ToggleSwitch]({{site.baseurl}}/controls/toggle-switch.html)

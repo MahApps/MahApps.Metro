@@ -5,7 +5,9 @@ title: Icons and Resources - MahApps.Metro
 
 # Icons and Resources
 
-MahApps.Metro does not embed any icons or "resources" other than control styles. However, there is *[MahApps.Metro.Resources](http://nuget.org/packages?q=MahApps.Metro.Resources)* package. This allows better discoverability and customisation.
+MahApps.Metro does not embed any icons or "resources" other than control styles. 
+However, there is *[MahApps.Metro.Resources](http://nuget.org/packages?q=MahApps.Metro.Resources)* package. 
+This allows better discoverability and customisation.
 
 You can install this package using nuget:
 
@@ -13,7 +15,7 @@ You can install this package using nuget:
 
 Currently, this consists of [Entypo](http://www.entypo.com/) and [Temparian's Windows Phone Icon pack](http://templarian.com/project_windows_phone_icons/)
 
-![]({{site.baseurl}}images/6_Resources.png)
+![]({{site.baseurl}}/images/6_Resources.png)
 
 ## Usage
 The resources are simply `Canvas`'s wrapping one or more `Path`s. To use these sorts of elements, you can just use WPF's `VisualBrush`.
@@ -32,7 +34,8 @@ The resources are simply `Canvas`'s wrapping one or more `Path`s. To use these s
         </Rectangle.Fill>
     </Rectangle>
     
-If you're trying to create "circle" buttons ala Windows Phone 7, the easiest way is to set the `VisualBrush` to be an *`OpacityMask`* on the `Rectangle`. This means you just need to alter the `Rectangle` colours on state change (hover, mouse down, etc)
+If you're trying to create "circle" buttons ala Windows Phone 7, the easiest way is to set the `VisualBrush` to be an *`OpacityMask`* on the `Rectangle`. 
+This means you just need to alter the `Rectangle` colours on state change (hover, mouse down, etc)
 
 	<Rectangle Fill="Black">
 		<Rectangle.OpacityMask>
