@@ -86,41 +86,6 @@
                                 </VisualState>
                                 <VisualState x:Name="Unfocused" />
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="ValidationStates">
-                                <VisualState x:Name="Valid" />
-                                <VisualState x:Name="InvalidUnfocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
-                                                                       Storyboard.TargetName="ValidationErrorElement">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="InvalidFocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
-                                                                       Storyboard.TargetName="ValidationErrorElement">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsOpen"
-                                                                       Storyboard.TargetName="validationTooltip">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <System:Boolean>True</System:Boolean>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="18" />
@@ -155,52 +120,6 @@
                                    Fill="{DynamicResource WhiteBrush}"
                                    Width="18"
                                    Height="18" />
-                        <Border x:Name="ValidationErrorElement"
-                                BorderBrush="{DynamicResource ControlsValidationBrush}"
-                                BorderThickness="1"
-                                CornerRadius="1"
-                                ToolTipService.PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                Visibility="Collapsed"
-                                Width="18"
-                                Height="18">
-                            <ToolTipService.ToolTip>
-                                <ToolTip x:Name="validationTooltip"
-                                         DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                         Placement="Right"
-                                         PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                         Template="{DynamicResource ValidationToolTipTemplate}">
-                                    <ToolTip.Triggers>
-                                        <EventTrigger RoutedEvent="Canvas.Loaded">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible"
-                                                                                   Storyboard.TargetName="validationTooltip">
-                                                        <DiscreteObjectKeyFrame KeyTime="0">
-                                                            <DiscreteObjectKeyFrame.Value>
-                                                                <System:Boolean>true</System:Boolean>
-                                                            </DiscreteObjectKeyFrame.Value>
-                                                        </DiscreteObjectKeyFrame>
-                                                    </ObjectAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </ToolTip.Triggers>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                            <Grid Background="Transparent"
-                                  HorizontalAlignment="Right"
-                                  Height="10"
-                                  Margin="0,-4,-4,0"
-                                  VerticalAlignment="Top"
-                                  Width="10">
-                                <Path Data="M 1,0 L5,0 A 2,2 90 0 1 7,2 L7,6 z"
-                                      Fill="{DynamicResource ValidationBrush5}"
-                                      Margin="0,3,0,0" />
-                                <Path Data="M 0,0 L2,0 L 7,5 L7,7"
-                                      Fill="{DynamicResource WhiteBrush}"
-                                      Margin="0,3,0,0" />
-                            </Grid>
-                        </Border>
                         <Path x:Name="checkBox"
                               Height="10"
                               Width="12"

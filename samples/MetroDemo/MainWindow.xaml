@@ -279,201 +279,214 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="text">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Width="150">
-                            <Label Content="TextBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <TextBox Margin="0, 10, 0, 0" Text="Enabled" />
-                            <CheckBox Margin="0, 10, 0, 0"
-                                      Content="Wait for...."
-                                      IsChecked="{Binding ElementName=waitingTextBox, Path=(Controls:TextboxHelper.IsWaitingForData)}"/>
-                            <TextBox x:Name="waitingTextBox"
-                                     Margin="0, 10, 0, 0"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     Controls:TextboxHelper.IsWaitingForData="True"
-                                     ToolTip="Default alignment" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     HorizontalContentAlignment="Center"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     ToolTip="Text and watermark at center" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     HorizontalContentAlignment="Right"
-                                     TextAlignment="Left"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     ToolTip="Text at left, watermark at right" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     Controls:TextboxHelper.ClearTextButton="True"
-                                     Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     Text="Clear button" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     FontSize="20"
-                                     Controls:TextboxHelper.ClearTextButton="True"
-                                     Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     Controls:ControlsHelper.ButtonWidth="30"
-                                     Text="Big" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     Controls:TextboxHelper.Watermark="Search style"
-                                     Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                     Style="{DynamicResource SearchMetroTextBox}" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     FontSize="18"
-                                     Controls:TextboxHelper.Watermark="Search style"
-                                     Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                     Style="{DynamicResource SearchMetroTextBox}"
-                                     Controls:ControlsHelper.ButtonWidth="28"
-                                     Text="Big search" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     Controls:TextboxHelper.Watermark="Custom icon style"
-                                     Controls:TextboxHelper.ButtonContent="s"
-                                     Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                     Style="{DynamicResource ButtonCommandMetroTextBox}" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     Controls:TextboxHelper.Watermark="Number smaller than 10"
-                                     Text="{Binding IntegerGreater10Property,
-                                                    ValidatesOnDataErrors=True,
-                                                    UpdateSourceTrigger=PropertyChanged,
-                                                    NotifyOnValidationError=True}" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     IsEnabled="False"
-                                     Text="Disabled" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     IsEnabled="False" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     Controls:TextboxHelper.ClearTextButton="True"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     IsEnabled="False"
-                                     Text="Clear button" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     Controls:TextboxHelper.Watermark="Search style"
-                                     IsEnabled="False"
-                                     Style="{DynamicResource SearchMetroTextBox}" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     Controls:TextboxHelper.Watermark="Number smaller than 10"
-                                     IsEnabled="False"
-                                     Text="{Binding IntegerGreater10Property,
-                                                    ValidatesOnDataErrors=True,
-                                                    UpdateSourceTrigger=PropertyChanged,
-                                                    NotifyOnValidationError=True}" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Width="150">
-                            <Label Content="RichTextBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <RichTextBox Margin="0, 10, 0, 0"
-                                         Padding="5"
-                                         IsDocumentEnabled="True">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
-                                            <Run Text="Normal" />
-                                        </Hyperlink>
-                                        <LineBreak />
-                                        <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                            <RichTextBox Margin="0, 10, 0, 0"
-                                         IsReadOnly="True"
-                                         Padding="5"
-                                         IsDocumentEnabled="True">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
-                                            <Run Text="ReadOnly" />
-                                        </Hyperlink>
-                                        <LineBreak />
-                                        <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                            <RichTextBox Margin="0, 10, 0, 0"
-                                         IsEnabled="False"
-                                         Padding="5"
-                                         IsDocumentEnabled="True">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
-                                            <Run Text="Disabled" />
-                                        </Hyperlink>
-                                        <LineBreak />
-                                        <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                        </StackPanel>
-                        <StackPanel Grid.Column="2" Width="150">
-                            <Label Content="PasswordBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <PasswordBox Margin="0, 10, 0, 0" Password="Password" />
-                            <PasswordBox Margin="0, 10, 0, 0"
+                    <AdornerDecorator>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0"
+                                        Width="150">
+                                <Label Content="TextBox"
+                                       Style="{StaticResource DescriptionHeaderStyle}" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         Text="Enabled" />
+                                <CheckBox Margin="0, 10, 0, 0"
+                                          Content="Wait for...."
+                                          IsChecked="{Binding ElementName=waitingTextBox, Path=(Controls:TextboxHelper.IsWaitingForData)}" />
+                                <TextBox x:Name="waitingTextBox"
+                                         Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.Watermark="Watermark"
+                                         Controls:TextboxHelper.IsWaitingForData="True"
+                                         ToolTip="Default alignment" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         HorizontalContentAlignment="Center"
+                                         Controls:TextboxHelper.Watermark="Watermark"
+                                         ToolTip="Text and watermark at center" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         HorizontalContentAlignment="Right"
+                                         TextAlignment="Left"
+                                         Controls:TextboxHelper.Watermark="Watermark"
+                                         ToolTip="Text at left, watermark at right" />
+                                <TextBox Margin="0, 10, 0, 0"
                                          Controls:TextboxHelper.ClearTextButton="True"
                                          Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                         Password="Password" />
-                            <PasswordBox Margin="0, 10, 0, 0"
-                                         IsEnabled="False"
-                                         Password="Password" />
-                            <PasswordBox Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.Watermark="Watermark"
+                                         Text="Clear button" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         FontSize="20"
                                          Controls:TextboxHelper.ClearTextButton="True"
+                                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                         Controls:TextboxHelper.Watermark="Watermark"
+                                         Controls:ControlsHelper.ButtonWidth="30"
+                                         Text="Big" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.Watermark="Search style"
+                                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                         Style="{DynamicResource SearchMetroTextBox}" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         FontSize="18"
+                                         Controls:TextboxHelper.Watermark="Search style"
+                                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                         Style="{DynamicResource SearchMetroTextBox}"
+                                         Controls:ControlsHelper.ButtonWidth="28"
+                                         Text="Big search" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.Watermark="Custom icon style"
+                                         Controls:TextboxHelper.ButtonContent="s"
+                                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                         Style="{DynamicResource ButtonCommandMetroTextBox}" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.Watermark="Number smaller than 10"
+                                         Text="{Binding IntegerGreater10Property,
+                                                    ValidatesOnDataErrors=True,
+                                                    UpdateSourceTrigger=PropertyChanged,
+                                                    NotifyOnValidationError=True}" />
+                                <TextBox Margin="0, 10, 0, 0"
                                          IsEnabled="False"
-                                         Password="Password" />
-                        </StackPanel>
-                    </Grid>
+                                         Text="Disabled" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.Watermark="Watermark"
+                                         IsEnabled="False" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.ClearTextButton="True"
+                                         Controls:TextboxHelper.Watermark="Watermark"
+                                         IsEnabled="False"
+                                         Text="Clear button" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.Watermark="Search style"
+                                         IsEnabled="False"
+                                         Style="{DynamicResource SearchMetroTextBox}" />
+                                <TextBox Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.Watermark="Number smaller than 10"
+                                         IsEnabled="False"
+                                         Text="{Binding IntegerGreater10Property,
+                                                    ValidatesOnDataErrors=True,
+                                                    UpdateSourceTrigger=PropertyChanged,
+                                                    NotifyOnValidationError=True}" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1"
+                                        Width="150">
+                                <Label Content="RichTextBox"
+                                       Style="{StaticResource DescriptionHeaderStyle}" />
+                                <RichTextBox Margin="0, 10, 0, 0"
+                                             Padding="5"
+                                             IsDocumentEnabled="True">
+                                    <FlowDocument>
+                                        <Paragraph>
+                                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                                <Run Text="Normal" />
+                                            </Hyperlink>
+                                            <LineBreak />
+                                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+                                <RichTextBox Margin="0, 10, 0, 0"
+                                             IsReadOnly="True"
+                                             Padding="5"
+                                             IsDocumentEnabled="True">
+                                    <FlowDocument>
+                                        <Paragraph>
+                                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                                <Run Text="ReadOnly" />
+                                            </Hyperlink>
+                                            <LineBreak />
+                                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+                                <RichTextBox Margin="0, 10, 0, 0"
+                                             IsEnabled="False"
+                                             Padding="5"
+                                             IsDocumentEnabled="True">
+                                    <FlowDocument>
+                                        <Paragraph>
+                                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                                <Run Text="Disabled" />
+                                            </Hyperlink>
+                                            <LineBreak />
+                                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                                        </Paragraph>
+                                    </FlowDocument>
+                                </RichTextBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2"
+                                        Width="150">
+                                <Label Content="PasswordBox"
+                                       Style="{StaticResource DescriptionHeaderStyle}" />
+                                <PasswordBox Margin="0, 10, 0, 0"
+                                             Password="Password" />
+                                <PasswordBox Margin="0, 10, 0, 0"
+                                             Controls:TextboxHelper.ClearTextButton="True"
+                                             Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                             Password="Password" />
+                                <PasswordBox Margin="0, 10, 0, 0"
+                                             IsEnabled="False"
+                                             Password="Password" />
+                                <PasswordBox Margin="0, 10, 0, 0"
+                                             Controls:TextboxHelper.ClearTextButton="True"
+                                             IsEnabled="False"
+                                             Password="Password" />
+                            </StackPanel>
+                        </Grid>
+                    </AdornerDecorator>
                 </TabItem>
                 <TabItem Header="dates">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel>
-                            <TextBlock Text="date picker"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <DatePicker Width="150"
-                                        HorizontalAlignment="Center"
-                                        Controls:TextboxHelper.Watermark="Select a date" />
-                            <DatePicker Width="300"
-                                        Margin="2"
-                                        FontSize="24"
-                                        HorizontalAlignment="Center"
-                                        SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
-                                        Controls:TextboxHelper.Watermark="Select a date" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="1">
-                            <TextBlock Text="disabled date picker"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <DatePicker Width="150"
-                                        HorizontalAlignment="Center"
-                                        Controls:TextboxHelper.Watermark="Select a date" 
-                                        IsEnabled="False"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" >
-                            <TextBlock Text="calendar"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <Calendar />
-                        </StackPanel>
+                    <AdornerDecorator>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="date picker"
+                                           Margin="0,5"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center" />
+                                <DatePicker Width="150"
+                                            HorizontalAlignment="Center"
+                                            Controls:TextboxHelper.Watermark="Select a date" />
+                                <DatePicker Width="300"
+                                            Margin="2"
+                                            FontSize="24"
+                                            HorizontalAlignment="Center"
+                                            SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                            Controls:TextboxHelper.Watermark="Select a date" />
+                            </StackPanel>
+                            <StackPanel Grid.Row="1">
+                                <TextBlock Text="disabled date picker"
+                                           Margin="0,5"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center" />
+                                <DatePicker Width="150"
+                                            HorizontalAlignment="Center"
+                                            Controls:TextboxHelper.Watermark="Select a date"
+                                            IsEnabled="False" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="calendar"
+                                           Margin="0,5"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center" />
+                                <Calendar />
+                            </StackPanel>
 
-                        <StackPanel Grid.Column="1" Grid.Row="1">
-                            <TextBlock Text="disabled calendar"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <Calendar IsEnabled="False"/>
-                        </StackPanel>
-                    </Grid>
+                            <StackPanel Grid.Column="1"
+                                        Grid.Row="1">
+                                <TextBlock Text="disabled calendar"
+                                           Margin="0,5"
+                                           FontSize="20"
+                                           HorizontalAlignment="Center" />
+                                <Calendar IsEnabled="False" />
+                            </StackPanel>
+                        </Grid>
+                    </AdornerDecorator>
                 </TabItem>
                 <TabItem Header="selection">
                     <Grid Margin="1">

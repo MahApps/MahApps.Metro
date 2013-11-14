@@ -154,5 +154,9 @@ namespace MahApps.Metro.Native
 
         [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern int SHAppBarMessage(int dwMessage, ref APPBARDATA pData);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
     }
 }

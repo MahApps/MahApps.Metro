@@ -79,41 +79,6 @@
                                 </VisualState>
                                 <VisualState x:Name="Unfocused" />
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="ValidationStates">
-                                <VisualState x:Name="Valid" />
-                                <VisualState x:Name="InvalidUnfocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
-                                                                       Storyboard.TargetName="ValidationErrorElement">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="InvalidFocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility"
-                                                                       Storyboard.TargetName="ValidationErrorElement">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsOpen"
-                                                                       Storyboard.TargetName="validationTooltip">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <System:Boolean>True</System:Boolean>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="18" />
@@ -149,38 +114,6 @@
                                  Fill="{DynamicResource WhiteBrush}"
                                  Width="18"
                                  Height="18" />
-                        <Ellipse x:Name="ValidationErrorElement"
-                                 ToolTipService.PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                 Visibility="Collapsed"
-                                 Height="18"
-                                 Width="18"
-                                 Stroke="{DynamicResource ControlsValidationBrush}"
-                                 StrokeThickness="1">
-                            <ToolTipService.ToolTip>
-                                <ToolTip x:Name="validationTooltip"
-                                         DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                         Placement="Right"
-                                         PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                         Template="{DynamicResource ValidationToolTipTemplate}">
-                                    <ToolTip.Triggers>
-                                        <EventTrigger RoutedEvent="Canvas.Loaded">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible"
-                                                                                   Storyboard.TargetName="validationTooltip">
-                                                        <DiscreteObjectKeyFrame KeyTime="0">
-                                                            <DiscreteObjectKeyFrame.Value>
-                                                                <System:Boolean>true</System:Boolean>
-                                                            </DiscreteObjectKeyFrame.Value>
-                                                        </DiscreteObjectKeyFrame>
-                                                    </ObjectAnimationUsingKeyFrames>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </ToolTip.Triggers>
-                                </ToolTip>
-                            </ToolTipService.ToolTip>
-                        </Ellipse>
                         <Ellipse x:Name="Checked1"
                                  Fill="{DynamicResource HighlightBrush}"
                                  Opacity="0"
