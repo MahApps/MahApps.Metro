@@ -108,8 +108,7 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="ValidationErrorTemplate">
-        <AdornedElementPlaceholder x:Name="placeholder"
-                                   Margin="-5,0,-5,0">
+        <AdornedElementPlaceholder x:Name="placeholder">
             <Grid SnapsToDevicePixels="True">
                 <Rectangle StrokeThickness="0"
                            x:Name="PopupTargetElement"
