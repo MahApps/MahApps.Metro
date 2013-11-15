@@ -114,5 +114,10 @@ namespace MetroDemo
             new InteropDemo().Show();
 
         }
+
+        private void LaunchNavigationDemo(object sender, RoutedEventArgs e)
+        {
+            new Navigation.NavigationDemo().Show();
+        }
     }
 }
