@@ -117,7 +117,6 @@
     <Compile Include="Navigation\InterestingPage.xaml.cs">
       <DependentUpon>InterestingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Navigation\NavigationDemo.cs" />
     <Compile Include="VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>

@@ -117,7 +117,9 @@ namespace MetroDemo
 
         private void LaunchNavigationDemo(object sender, RoutedEventArgs e)
         {
-            new Navigation.NavigationDemo().Show();
+            var navWin = new MetroNavigationWindow();
+            navWin.Show();
+            navWin.Navigate(new Navigation.HomePage());
         }
     }
 }
