@@ -17,7 +17,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title of the MessageDialog.</param>
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="style">The type of buttons to use.</param>
-        /// <returns></returns>
+        /// <returns>A task promising the result of which button was pressed.</returns>
         public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
         {
             window.Dispatcher.VerifyAccess();
@@ -65,7 +65,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title of the ProgressDialog.</param>
         /// <param name="message">The message within the ProgressDialog.</param>
         /// <param name="isCancelable">Determines if the cancel button is visible.</param>
-        /// <returns></returns>
+        /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
         public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false)
         {
             window.Dispatcher.VerifyAccess();
@@ -103,6 +103,13 @@ namespace MahApps.Metro.Controls.Dialogs
             });
         }
 
+        /// <summary>
+        /// Adds a Metro Dialog instance to the specified window and makes it visible.
+        /// </summary>
+        /// <param name="window">The owning window of the dialog.</param>
+        /// <param name="title">The title to be set in the dialog.</param>
+        /// <param name="dialog">The dialog instance itself.</param>
+        /// <returns>A task representing the operation.</returns>
         public static Task ShowMetroDialogAsync(this MetroWindow window, string title, BaseMetroDialog dialog)
         {
             window.Dispatcher.VerifyAccess();
@@ -119,6 +126,12 @@ namespace MahApps.Metro.Controls.Dialogs
                 }).ContinueWith(y =>
                     ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync()))));
         }
+        /// <summary>
+        /// Hides a visible Metro Dialog instance.
+        /// </summary>
+        /// <param name="window">The window with the dialog that is visible.</param>
+        /// <param name="dialog">The dialog instance to hide.</param>
+        /// <returns>A task representing the operation.</returns>
         public static Task HideMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog)
         {
             window.Dispatcher.VerifyAccess();
