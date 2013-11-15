@@ -174,12 +174,19 @@ namespace MahApps.Metro.Controls.Dialogs
             base.OnApplyTemplate();
         }
     }
+
+    /// <summary>
+    /// An enum representing the result of a Message Dialog.
+    /// </summary>
     public enum MessageDialogResult
     {
         Negative = 0,
         Affirmative = 1,
     }
 
+    /// <summary>
+    /// An enum representing the different button states for a Message Dialog.
+    /// </summary>
     public enum MessageDialogStyle
     {
         /// <summary>

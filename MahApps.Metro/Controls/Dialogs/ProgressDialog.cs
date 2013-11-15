@@ -55,12 +55,18 @@ namespace MahApps.Metro.Controls.Dialogs
         }
     }
 
+    /// <summary>
+    /// A class for manipulating an open ProgressDialog.
+    /// </summary>
     public class ProgressDialogController
     {
         //No spiritdead, you can't change this.
         private ProgressDialog WrappedDialog { get; set; }
         private Func<Task> CloseCallback { get; set; }
 
+        /// <summary>
+        /// Gets if the wrapped ProgressDialog is open.
+        /// </summary>
         public bool IsOpen { get; private set; }
 
         internal ProgressDialogController(ProgressDialog dialog, Func<Task> closeCallBack)
@@ -93,6 +99,10 @@ namespace MahApps.Metro.Controls.Dialogs
             WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
         }
 
+        /// <summary>
+        /// Sets if the Cancel button is visible.
+        /// </summary>
+        /// <param name="value"></param>
         public void SetCancelable(bool value)
         {
             if (WrappedDialog.Dispatcher.CheckAccess())
@@ -104,6 +114,10 @@ namespace MahApps.Metro.Controls.Dialogs
                     }));
         }
 
+        /// <summary>
+        /// Sets the dialog's progress bar value and sets IsIndeterminate to false.
+        /// </summary>
+        /// <param name="value">The percentage to set as the value.</param>
         public void SetProgress(double value)
         {
             if (value < 0.0 || value > 1.0) throw new ArgumentOutOfRangeException("value");
@@ -117,13 +131,24 @@ namespace MahApps.Metro.Controls.Dialogs
             WrappedDialog.PART_ProgressBar.ApplyTemplate();
         }
 
+        /// <summary>
+        /// Sets the dialog's message content.
+        /// </summary>
+        /// <param name="message">The message to be set.</param>
         public void SetMessage(string message)
         {
             WrappedDialog.Message = message;
         }
 
+        /// <summary>
+        /// Gets if the Cancel button has been pressed.
+        /// </summary>
         public bool IsCanceled { get; private set; }
 
+        /// <summary>
+        /// Begins an operation to close the ProgressDialog.
+        /// </summary>
+        /// <returns>A task representing the operation.</returns>
         public Task CloseAsync()
         {
             if (!IsOpen) throw new InvalidOperationException();
