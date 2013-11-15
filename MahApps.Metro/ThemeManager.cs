@@ -182,7 +182,7 @@ namespace MahApps.Metro
         /// <summary>
         /// Scans a resources and returns it's accent and theme.
         /// </summary>
-        /// <param name="window">The resource to check.</param>
+        /// <param name="resources">The ResourceDictionary to check.</param>
         private static Tuple<Theme, Accent> DetectTheme(ResourceDictionary resources)
         {
             if (resources == null) throw new ArgumentNullException("resources");

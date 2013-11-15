@@ -796,7 +796,9 @@ namespace Standard
         /// Retrieve an IEnumObjects or IObjectArray for IShellItems and/or IShellLinks. 
         /// Items may appear in both the frequent and recent lists.  
         /// </summary>
-        /// <param name="?"></param>
+        /// <param name="cItemsDesired"></param>
+        /// <param name="listtype"></param>
+        /// <param name="riid"></param>
         /// <returns></returns>
         [return: MarshalAs(UnmanagedType.IUnknown)]
         object GetList([In] APPDOCLISTTYPE listtype, [In] uint cItemsDesired, [In] ref Guid riid);
