@@ -118,6 +118,12 @@ namespace MetroDemo
         private void LaunchNavigationDemo(object sender, RoutedEventArgs e)
         {
             var navWin = new MetroNavigationWindow();
+            navWin.Title = "Navigation Demo";
+            
+            //uncomment the next two lines if you want the clean style.
+            //navWin.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml", UriKind.Absolute) });
+            //navWin.SetResourceReference(StyleProperty, "CleanWindowStyleKey");
+            
             navWin.Show();
             navWin.Navigate(new Navigation.HomePage());
         }
