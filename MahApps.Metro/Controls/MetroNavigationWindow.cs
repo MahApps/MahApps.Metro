@@ -9,6 +9,10 @@ using System.Windows.Navigation;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A reimplementation of NavigationWindow based on MetroWindow.
+    /// </summary>
+    /// <see cref="http://msdn.microsoft.com/en-us/library/System.Windows.Navigation.NavigationWindow(v=vs.110).aspx"/>
     [ContentProperty("OverlayContent")]
     public partial class MetroNavigationWindow : MetroWindow, IUriContext
     {
