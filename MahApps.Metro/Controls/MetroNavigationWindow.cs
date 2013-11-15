@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -126,6 +127,16 @@ namespace MahApps.Metro.Controls
             private set { SetValue(PageContentProperty, value); }
         }
 
+        /// <summary>
+        /// Gets an IEnumerable that you use to enumerate the entries in back navigation history for a NavigationWindow.
+        /// </summary>
+        /// <see cref="System.Windows.Navigation.NavigationWindow.ForwardStack"/>
+        public IEnumerable ForwardStack { get { return PART_Frame.ForwardStack; } }
+        /// <summary>
+        /// Gets an IEnumerable that you use to enumerate the entries in back navigation history for a NavigationWindow.
+        /// </summary>
+        /// <see cref="System.Windows.Navigation.NavigationWindow.BackStack"/>
+        public IEnumerable BackStack { get { return PART_Frame.BackStack; } }
 
         /// <summary>
         /// Gets the NavigationService that is used by this MetroNavigationWindow to provide navigation services to its content.
@@ -163,6 +174,16 @@ namespace MahApps.Metro.Controls
         public void AddBackEntry(CustomContentState state)
         {
             PART_Frame.AddBackEntry(state);
+        }
+        /// <summary>
+        /// Removes the most recent journal entry from back history.
+        /// </summary>
+        /// <returns>The most recent JournalEntry in back navigation history, if there is one.</returns>
+        /// <see cref="System.Windows.Navigation.NavigationWindow.RemoveBackEntry"/>
+        [System.Diagnostics.DebuggerNonUserCode]
+        public JournalEntry RemoveBackEntry()
+        {
+            return PART_Frame.RemoveBackEntry();
         }
 
         /// <summary>
