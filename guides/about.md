@@ -18,3 +18,7 @@ While MahApps.Metro strives to make *good looking* metro interfaces easier, but 
 ## Fonts
 
 Segoe UI, Segoe WP and Zegoe UI are all Microsoft/Ascender fonts. They will not be embedded in MahApps.Metro.
+
+## Interoperability
+
+In order to maintain compatibility for both .NET 4.0 and 4.5, we make use of the Microsoft.Windows.Shell in the former.
