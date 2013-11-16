@@ -9,6 +9,7 @@
 
     <StackPanel>
         <Label FontSize="25">Hello</Label>
+        <TextBox>This should persist between navigations. If you're not convinced, try changing it.</TextBox>
         <TextBlock>Welcome to this page. It doesn't have much but maybe if you click <Hyperlink NavigateUri="InterestingPage.xaml">this</Hyperlink>, you will see something cool.</TextBlock>
     </StackPanel>
 </Page>

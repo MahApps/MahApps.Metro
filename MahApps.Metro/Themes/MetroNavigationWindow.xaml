@@ -51,6 +51,38 @@
                 </Button.LayoutTransform>
             </Button>
             <Label FontSize="25" x:Name="PART_Title" Margin="0 5 0 0" />
+            <Button x:Name="PART_ForwardButton"
+                    DockPanel.Dock="Right"
+                    Style="{DynamicResource MetroCircleButtonStyle}"
+                    Height="40"
+                    Width="40"
+                    FontFamily="Segoe UI Symbol"
+                    FontSize="16"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Right"
+                    Visibility="Collapsed">
+                <Rectangle Width="20"
+                           Height="15">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill">
+                            <VisualBrush.Visual>
+                                <Canvas Width="48"
+                                        Height="48"
+                                        Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                                        UseLayoutRounding="False">
+                                    <Path Width="25"
+                                          Height="18"
+                                          Canvas.Left="12"
+                                          Canvas.Top="15"
+                                          Stretch="Fill"
+                                          Fill="{DynamicResource BlackBrush}"
+                                          Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z " />
+                                </Canvas>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Button>
         </StackPanel>
         
         <Grid Grid.Row="1">

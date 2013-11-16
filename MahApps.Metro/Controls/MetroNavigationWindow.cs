@@ -36,6 +36,14 @@ namespace MahApps.Metro.Controls
             PART_Frame.FragmentNavigation += PART_Frame_FragmentNavigation;
 
             PART_BackButton.Click += PART_BackButton_Click;
+            PART_ForwardButton.Click += PART_ForwardButton_Click;
+        }
+
+        [System.Diagnostics.DebuggerNonUserCode]
+        void PART_ForwardButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CanGoForward)
+                GoForward();
         }
 
         [System.Diagnostics.DebuggerNonUserCode]
@@ -91,6 +99,7 @@ namespace MahApps.Metro.Controls
             PART_Frame.LoadCompleted -= PART_Frame_LoadCompleted;
             PART_Frame.Navigated -= PART_Frame_Navigated;
 
+            PART_ForwardButton.Click -= PART_ForwardButton_Click;
             PART_BackButton.Click -= PART_BackButton_Click;
 
             this.Loaded -= MetroNavigationWindow_Loaded;
@@ -106,6 +115,8 @@ namespace MahApps.Metro.Controls
             PageContent = PART_Frame.Content;
 
             PART_BackButton.Visibility = CanGoBack ? Visibility.Visible : System.Windows.Visibility.Hidden;
+
+            PART_ForwardButton.Visibility = CanGoForward ? Visibility.Visible : Visibility.Collapsed;
 
             if (Navigated != null)
                 Navigated(this, e);
