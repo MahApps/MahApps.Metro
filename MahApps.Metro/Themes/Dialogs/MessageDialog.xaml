@@ -1,0 +1,65 @@
+﻿<Dialogs:BaseMetroDialog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                    xmlns:conv="clr-namespace:MahApps.Metro.Converters"
+                    x:Class="MahApps.Metro.Controls.Dialogs.MessageDialog"
+                    Loaded="Dialog_Loaded">
+    <Dialogs:BaseMetroDialog.DialogBody>
+        <Grid Margin="0 10 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
+                       Margin="0 5 0 0"
+                       FontSize="15"
+                       Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                       TextWrapping="Wrap" 
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+
+            <StackPanel Grid.Row="1"
+                                    Orientation="Horizontal"
+                                    HorizontalAlignment="Right"
+                                    Height="85">
+                <Button x:Name="PART_AffirmativeButton"
+                                    Height="35"
+                                    MinWidth="80"
+                                    Background="{DynamicResource AccentColorBrush}"
+                                    Foreground="White"
+                                    Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                                    Margin="0 0 5 0" />
+                <Button x:Name="PART_NegativeButton"
+                                    Height="35"
+                                    MinWidth="80"
+                                    Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                                    Margin="5 0 0 0" />
+
+                <!--<StackPanel.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}"
+                         Value="Affirmative">
+                                <Setter TargetName="PART_AffirmativeButton"
+                        Property="Visibility"
+                        Value="Visible" />
+                                <Setter TargetName="PART_NegativeButton"
+                        Property="Visibility"
+                        Value="Collapsed" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}"
+                         Value="AffirmativeAndNegative">
+                                <Setter TargetName="PART_AffirmativeButton"
+                        Property="Visibility"
+                        Value="Visible" />
+                                <Setter TargetName="PART_NegativeButton"
+                        Property="Visibility"
+                        Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>-->
+            </StackPanel>
+        </Grid>
+    </Dialogs:BaseMetroDialog.DialogBody>
+</Dialogs:BaseMetroDialog>
