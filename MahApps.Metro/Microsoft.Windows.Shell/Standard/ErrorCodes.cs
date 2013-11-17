@@ -109,7 +109,6 @@ namespace Standard
 
         // Method version of the cast operation
         /// <summary>Performs HRESULT_FROM_WIN32 conversion.</summary>
-        /// <param name="error">The Win32 error being converted to an HRESULT.</param>
         /// <returns>The equivilent HRESULT value.</returns>
         public HRESULT ToHRESULT()
         {

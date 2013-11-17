@@ -44,7 +44,7 @@ namespace Standard
         /// <summary>
         /// Convert a point in system coordinates to a point in device independent pixels (1/96").
         /// </summary>
-        /// <param name="logicalPoint">A point in the physical coordinate system.</param>
+        /// <param name="devicePoint">A point in the physical coordinate system.</param>
         /// <returns>Returns the parameter converted to the device independent coordinate system.</returns>
         public static Point DevicePixelsToLogical(Point devicePoint)
         {
