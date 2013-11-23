@@ -6,6 +6,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System.Collections.Generic;
 using System.Windows.Data;
 
@@ -75,15 +76,79 @@ namespace MetroDemo
 #endif
         }
 
-        private void ShowMessageBox(object sender, RoutedEventArgs e)
+        private void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
-            this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MahApps.Metro.Controls.MessageDialogStyle.AffirmativeAndNegative).ContinueWith(x =>
+            this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MahApps.Metro.Controls.Dialogs.MessageDialogStyle.AffirmativeAndNegative).ContinueWith(x =>
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            this.ShowMessageAsync("Result", "You said: " + (x.Result == MahApps.Metro.Controls.MessageDialogResult.Affirmative ? "OK" : "Cancel"));
+                            this.ShowMessageAsync("Result", "You said: " + (x.Result == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative ? "OK" : "Cancel"));
                         }));
                 });
+        }
+
+        private void ShowSimpleDialog(object sender, RoutedEventArgs e)
+        {
+            var dialog = this.Resources["SimpleDialogTest"] as BaseMetroDialog;
+
+            this.ShowMetroDialogAsync("This dialog allows arbitrary content. It will close in 5 seconds.", dialog).ContinueWith(x => System.Threading.Thread.Sleep(5000)).ContinueWith(y =>
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                        {
+                            this.HideMetroDialogAsync(dialog);
+                        }));
+                });
+        }
+        private void ShowProgressDialog(object sender, RoutedEventArgs e)
+        {
+            var remoteTask = this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
+
+
+            //Ugly demo code that doesn't use 'await'. This would be much cleaner WITH await.
+            ProgressDialogController remote = null;
+
+            System.Threading.Tasks.Task.Factory.StartNew(() => System.Threading.Thread.Sleep(5000)).ContinueWith(x => Dispatcher.Invoke(new Action(() =>
+                {
+                    remote = remoteTask.Result;
+                }))).ContinueWith(x =>
+                    {
+                        remote.SetCancelable(true);
+
+                        double i = 0.0;
+                        while (i < 6.0)
+                        {
+                            Dispatcher.Invoke(new Action(() =>
+                                {
+                                    double val = (i / 100.0) * 20.0;
+                                    remote.SetProgress(val);
+                                    remote.SetMessage("Baking cupcake: " + i.ToString() + "...");
+                                }));
+
+                            if (remote.IsCanceled)
+                                break; //canceled progressdialog auto closes.
+
+                            i += 1.0;
+                            System.Threading.Thread.Sleep(2000);
+                        }
+
+                        Dispatcher.Invoke(new Action(() =>
+                        {
+                            remote.CloseAsync().ContinueWith(y =>
+                                {
+                                    Dispatcher.Invoke(new Action(() =>
+                                    {
+                                        if (remote.IsCanceled)
+                                        {
+                                            this.ShowMessageAsync("No cupcakes!", "You stopped baking!");
+                                        }
+                                        else
+                                        {
+                                            this.ShowMessageAsync("Cupcakes!", "Your cupcakes are finished! Enjoy!");
+                                        }
+                                    }));
+                                });
+                        }));
+                    });
         }
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
