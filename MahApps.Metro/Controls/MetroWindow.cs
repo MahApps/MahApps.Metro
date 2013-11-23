@@ -5,6 +5,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;
 using System.ComponentModel;
 
@@ -48,10 +50,11 @@ namespace MahApps.Metro.Controls
         ContentPresenter WindowCommandsPresenter;
         WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
-        Grid overlayBox;
-        Grid messageDialogContainer;
+        internal Grid overlayBox;
+        internal Grid messageDialogContainer;
+        private Storyboard overlayStoryboard;
 
-        public MessageDialogSettings MessageDialogOptions { get; private set; }
+        public MetroDialogSettings MetroDialogOptions { get; private set; }
 
         public Style TextBlockStyle
         {
@@ -233,59 +236,85 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Creates a MessageDialog inside of the current window.
+        /// Begins to show the MetroWindow's overlay effect.
         /// </summary>
-        /// <param name="title">The title of the MessageDialog.</param>
-        /// <param name="message">The message contained within the MessageDialog.</param>
-        /// <param name="style">The type of buttons to use.</param>
-        /// <returns></returns>
-        public System.Threading.Tasks.Task<MessageDialogResult> ShowMessageAsync(string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
+        /// <returns>A task representing the process.</returns>
+        public System.Threading.Tasks.Task ShowOverlayAsync()
         {
-            //create the dialog control
-            MessageDialog dialog = new MessageDialog();
-            dialog.SetValue(Panel.ZIndexProperty, (int)overlayBox.GetValue(Panel.ZIndexProperty) + 1);
-            dialog.MinHeight = this.ActualHeight / 4.0;
-            dialog.Title = title;
-            dialog.Message = message;
-            dialog.ButtonStyle = style;
+            if (IsOverlayVisible() && overlayStoryboard == null)
+                return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
 
-            dialog.AffirmativeButtonText = MessageDialogOptions.AffirmativeButtonText;
-            dialog.NegativeButtonText = MessageDialogOptions.NegativeButtonText;
+            Dispatcher.VerifyAccess();
 
-            SizeChangedEventHandler sizeHandler = null; //an event handler for auto resizing an open dialog.
-            sizeHandler = new SizeChangedEventHandler((sender, args) =>
+            overlayBox.Visibility = System.Windows.Visibility.Visible;
+
+            System.Threading.Tasks.TaskCompletionSource<object> tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
+            Storyboard sb = this.Template.Resources["OverlayFastSemiFadeIn"] as Storyboard;
+
+            sb = sb.Clone();
+
+            EventHandler completionHandler = null;
+            completionHandler = new EventHandler((sender, args) =>
                 {
-                    dialog.MinHeight = this.ActualHeight / 4.0;
+                    sb.Completed -= completionHandler;
+
+                    if (overlayStoryboard == sb)
+                    {
+                        overlayStoryboard = null;
+                    }
+
+                    tcs.TrySetResult(null);
                 });
 
-            this.SizeChanged += sizeHandler;
+            sb.Completed += completionHandler;
 
-            overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
+            overlayBox.BeginStoryboard(sb);
 
-            messageDialogContainer.Children.Add(dialog); //add the dialog to the container
+            overlayStoryboard = sb;
 
-            dialog.ApplyTemplate(); //make sure the dialog has loaded before trying to wait on it.
-
-            if (TextBlockStyle != null && !dialog.Resources.Contains(typeof(TextBlock)))
-            {
-                dialog.Resources.Add(typeof(TextBlock), TextBlockStyle);
-            }
-
-            return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(x =>
-                {
-                    //once a button as been clicked, begin removing the dialog.
-                    Dispatcher.Invoke(new Action(() =>
-                        {
-                            this.SizeChanged -= sizeHandler;
-
-                            messageDialogContainer.Children.Remove(dialog); //removed the dialog from the container
-
-                            overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
-                        }));
-
-                    return x.Result;
-                });
+            return tcs.Task;
         }
+        /// <summary>
+        /// Begins to hide the MetroWindow's overlay effect.
+        /// </summary>
+        /// <returns>A task representing the process.</returns>
+        public System.Threading.Tasks.Task HideOverlayAsync()
+        {
+            if (overlayBox.Visibility == System.Windows.Visibility.Visible && overlayBox.Opacity == 0.0)
+                return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
+
+            Dispatcher.VerifyAccess();
+
+            System.Threading.Tasks.TaskCompletionSource<object> tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
+            Storyboard sb = this.Template.Resources["OverlayFastSemiFadeOut"] as Storyboard;
+
+            sb = sb.Clone();
+
+            EventHandler completionHandler = null;
+            completionHandler = new EventHandler((sender, args) =>
+            {
+                sb.Completed -= completionHandler;
+
+                if (overlayStoryboard == sb)
+                {
+                    overlayBox.Visibility = System.Windows.Visibility.Hidden;
+                    overlayStoryboard = null;
+                }
+
+                tcs.TrySetResult(null);
+            });
+
+            sb.Completed += completionHandler;
+
+            overlayBox.BeginStoryboard(sb);
+
+            overlayStoryboard = sb;
+
+            return tcs.Task;
+        }
+        public bool IsOverlayVisible() { return overlayBox.Visibility == System.Windows.Visibility.Visible && overlayBox.Opacity >= 0.7; }
 
         /// <summary>
         /// Initializes a new instance of the MahApps.Metro.Controls.MetroWindow class.
@@ -293,6 +322,9 @@ namespace MahApps.Metro.Controls
         public MetroWindow()
         {
             Loaded += this.MetroWindow_Loaded;
+
+            if (MetroDialogOptions == null)
+                MetroDialogOptions = new MetroDialogSettings();
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -322,9 +354,6 @@ namespace MahApps.Metro.Controls
             {
                 this.Flyouts = new FlyoutsControl();
             }
-
-            if (MessageDialogOptions == null)
-                MessageDialogOptions = new MessageDialogSettings();
         }
 
         static MetroWindow()
@@ -406,7 +435,7 @@ namespace MahApps.Metro.Controls
                     var y = Convert.ToInt16(wpfPoint.Y);
                     var lParam = x | (y << 16);
                     UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
-                    
+
                     if (e.ClickCount == 2 && (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize) && mPoint.Y <= TitlebarHeight)
                     {
                         WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;

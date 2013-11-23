@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:MetroDemo="clr-namespace:MetroDemo"
+                      xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       Title="MahApps.Metro - Demo Application"
@@ -53,18 +54,22 @@
                 <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
             </Style>
+            
+            <Dialog:SimpleDialog x:Key="SimpleDialogTest"
+                                 x:Name="SimpleTestDialog">
+                <Button Content="Hello"/>
+            </Dialog:SimpleDialog>
         </ResourceDictionary>
     </Window.Resources>
 
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
-            <Button Click="ShowMessageBox" Content="Show MessageBox" />
             <Button Click="LaunchVisualStudioDemo" Content="VS Demo" />
             <Button Click="LaunchFlyoutDemo" Content="Flyout Demo" />
             <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
             <Button Click="LaunchIcons" Content="Icons" />
             <Button Click="LauchCleanDemo" Content="Clean Demo" />
-            <Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />
+            <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
             <Button Click="InteropDemo" Content="Interop Demo" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
@@ -87,6 +92,11 @@
                 <MenuItem Header="Accent"
                           ItemsSource="{Binding AccentColors, Mode=OneWay}"
                           ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" />
+                <MenuItem Header="Dialogs">
+                    <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
+                    <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
+                    <MenuItem Click="ShowSimpleDialog" Header="Show SimpleDialog" />
+                </MenuItem>
             </Menu>
 
             <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
