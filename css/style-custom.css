@@ -44,3 +44,7 @@ blockquote {
 {
   border-radius: 0px;
 }
+
+#maintainer-list img {
+  vertical-align: middle;
+}

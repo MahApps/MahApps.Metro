@@ -24,7 +24,7 @@
 								<ul>
                   <li><a href="{{site.baseurl}}/guides/">guides</a></li>
                   <li><a href="{{site.baseurl}}/controls/">controls</a></li>
-                  <li><a href="{{site.baseurl}}/contribute/">contribute</a></li>
+                  <li><a href="{{site.baseurl}}/about/">about</a></li>
 								</ul>
 							</nav>
 						</header>
@@ -122,9 +122,8 @@
 						<div id="content">
 							<section class="last">
 								<h2>you've read this far? fantastic!</h2>
-								<p>MahApps.Metro is a project that <a href="http://vikingco.de/">Paul Jenkins</a> started back in 2011 as a simple way to bring a Metro-style user interface into your WPF application. Since then it's evolved and taken contributions (at last count there were 300+ forks) from various people in the community. </p>
-								<p>This has been a project for the community, by the community - none of us are paid to do this, and we do it out of our love of code.</p>
-								<p>So if you love this project and want it to get better, get involved!</p>
+                {% capture words %}{% include words.md %}{% endcapture %}
+                {{ words | markdownify }}
 							</section>
 						</div>
 					</div>
