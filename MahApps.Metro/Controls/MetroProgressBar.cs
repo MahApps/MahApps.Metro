@@ -80,11 +80,6 @@ namespace MahApps.Metro.Controls
 
         private void ResetStoryboard(double width)
         {
-            if (!IsIndeterminate)
-            {
-                return;
-            }
-            
             lock(this)
             {
                 //perform calculations
@@ -135,7 +130,12 @@ namespace MahApps.Metro.Controls
 
                         indeterminate.Storyboard.Remove();
                         indeterminate.Storyboard = newStoryboard;
-
+                        
+                        if (!IsIndeterminate)
+                        {
+                        return;
+                        }
+                        
                         indeterminate.Storyboard.Begin((FrameworkElement)GetTemplateChild("ContainingGrid"), true);
                     }
                 }
