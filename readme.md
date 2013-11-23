@@ -14,6 +14,53 @@ You can help keep the documentation up to date by submitting a pull request on t
 
 [Breaking Changes or WTF is happening with the ALPHA version](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
 
+### Quick How To
+or, how to create a simple MahApps.Metro App and a Window... it's so easy ;-)
+```XML
+<Application x:Class="WpfApplication.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>
+```
+```XML
+<controls:MetroWindow x:Class="WpfApplication.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      Title="MainWindow"
+                      Height="600"
+                      Width="800">
+  <Grid>
+    <!-- now your content -->
+  
+  </Grid>
+</controls:MetroWindow>
+```
+```csharp
+namespace WpfApplication
+{
+  public partial class MainWindow : MetroWindow
+  {
+    public MainWindow()
+    {
+      InitializeComponent();
+    }
+  }
+}
+```
+
 ### Contributions
 
 If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request.
