@@ -27,6 +27,8 @@ This sort of button can be found when you're making a call on Windows Phone - al
 
 ![](http://images.theleagueofpaul.com/flatbutton04.png)  
 
+Add the following to a button to apply this style: `Style="{DynamicResource MetroFlatButton}"`
+
 Flat button lives in   
 `<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />`
 
