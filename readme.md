@@ -16,7 +16,7 @@ You can help keep the documentation up to date by submitting a pull request on t
 
 ### Contributions
 
-If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request!
+If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request to the ```dev``` branch.
 
 ### IRC chatroom
 
