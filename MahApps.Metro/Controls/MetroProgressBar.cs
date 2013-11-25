@@ -133,7 +133,7 @@ namespace MahApps.Metro.Controls
                         
                         if (!IsIndeterminate)
                         {
-                        return;
+                            return;
                         }
                         
                         indeterminate.Storyboard.Begin((FrameworkElement)GetTemplateChild("ContainingGrid"), true);
