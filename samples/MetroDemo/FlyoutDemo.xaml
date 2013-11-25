@@ -164,6 +164,13 @@
                     </Button>
                 </StackPanel>
             </Controls:Flyout>
+            <Controls:Flyout Header="Modal" Position="Right" IsModal="True">
+                <StackPanel Height="80"
+                        Margin="5,5,5,5"
+                        Orientation="Horizontal">
+                    <TextBlock>Modal Flyout</TextBlock>
+                </StackPanel>
+            </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
 
@@ -190,6 +197,10 @@
                     Margin="2"
                     Click="ShowSettings"
                     Content="Settings" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Click="ShowModal"
+                    Content="Modal" />
             <Button MinWidth="90"
                     Margin="2"
                     Click="CloseMe"

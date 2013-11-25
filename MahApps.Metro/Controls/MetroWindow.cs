@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,6 +8,8 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using MahApps.Metro.Native;
 using System.ComponentModel;
+using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace MahApps.Metro.Controls
 {
@@ -18,6 +21,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
     [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
     [TemplatePart(Name = PART_MessageDialogContainer, Type = typeof(Grid))]
+    [TemplatePart(Name = PART_FlyoutModal, Type = typeof(Rectangle))]
     public class MetroWindow : Window
     {
         private const string PART_TitleBar = "PART_TitleBar";
@@ -25,6 +29,7 @@ namespace MahApps.Metro.Controls
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
         private const string PART_OverlayBox = "PART_OverlayBox";
         private const string PART_MessageDialogContainer = "PART_MessageDialogContainer";
+        private const string PART_FlyoutModal = "PART_FlyoutModal";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, null, OnShowTitleBarCoerceValueCallback));
@@ -50,6 +55,7 @@ namespace MahApps.Metro.Controls
         UIElement titleBar;
         Grid overlayBox;
         Grid messageDialogContainer;
+        Rectangle flyoutModal;
 
         public MessageDialogSettings MessageDialogOptions { get; private set; }
 
@@ -348,6 +354,7 @@ namespace MahApps.Metro.Controls
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             messageDialogContainer = GetTemplateChild(PART_MessageDialogContainer) as Grid;
+            flyoutModal = GetTemplateChild(PART_FlyoutModal) as Rectangle;
 
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
 
@@ -480,19 +487,21 @@ namespace MahApps.Metro.Controls
                 UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
         }
 
-        internal void HandleFlyoutStatusChange(Flyout flyout, int visibleFlyouts)
+        internal void HandleFlyoutStatusChange(Flyout flyout, IEnumerable<Flyout> visibleFlyouts)
         {
             //checks a recently opened flyout's position.
             if (flyout.Position == Position.Right || flyout.Position == Position.Top)
             {
                 //get it's zindex
-                var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts + 2;
+                var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
                 if (this.ShowWindowCommandsOnTop) //if ShowWindowCommandsOnTop is true, set the window commands' zindex to a number that is higher than the flyout's. 
                 {
                     WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, zIndex);
                 }
                 WindowButtonCommands.SetValue(Panel.ZIndexProperty, zIndex);
             }
+
+            flyoutModal.Visibility = visibleFlyouts.Any(x => x.IsModal) ? Visibility.Visible : Visibility.Hidden;
         }
     }
 }

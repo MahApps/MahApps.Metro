@@ -39,7 +39,13 @@ namespace MetroDemo
             ToggleFlyout(6);
         }
 
-        private void CloseMe(object sender, RoutedEventArgs e) {
+        private void ShowModal(object sender, RoutedEventArgs e)
+        {
+            ToggleFlyout(7);
+        }
+
+        private void CloseMe(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
 
