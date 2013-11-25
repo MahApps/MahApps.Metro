@@ -27,6 +27,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnableProperty = DependencyProperty.Register("IsPinnable", typeof(bool), typeof(Flyout), new PropertyMetadata(default(bool)));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+        public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
 
@@ -64,6 +65,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsPinnableProperty); }
             set { SetValue(IsPinnableProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets whether this flyout is modal.
+        /// </summary>
+        public bool IsModal
+        {
+            get { return (bool)GetValue(IsModalProperty); }
+            set { SetValue(IsModalProperty, value); }
         }
 
         /// <summary>
