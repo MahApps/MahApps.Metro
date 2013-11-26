@@ -143,7 +143,7 @@
                               FocusVisualStyle="{x:Null}"
                               x:Name="PART_OverlayBox"
                               Background="{DynamicResource BlackColorBrush}"
-                              Opacity=".7"
+                              Opacity="0"
                               Visibility="Hidden" />
                         
                         <Grid Grid.Row="0"
@@ -168,6 +168,22 @@
                         Visibility="Collapsed"
                         VerticalAlignment="Bottom" />
         </Grid>
+        <ControlTemplate.Resources>
+            <Storyboard x:Key="OverlayFastSemiFadeIn" 
+                        BeginTime="0:0:0"
+                        AccelerationRatio=".97" 
+                        Storyboard.TargetProperty="Opacity"
+                        SpeedRatio="2.7">
+                <DoubleAnimation To=".7" />
+            </Storyboard>
+            <Storyboard x:Key="OverlayFastSemiFadeOut" 
+                        BeginTime="0:0:0"
+                        AccelerationRatio=".97" 
+                        Storyboard.TargetProperty="Opacity"
+                        SpeedRatio="2.7">
+                <DoubleAnimation To="0.0" />
+            </Storyboard>
+        </ControlTemplate.Resources>
         <ControlTemplate.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>

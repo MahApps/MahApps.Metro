@@ -8,7 +8,6 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/FlipView.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Flyout.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/FlyoutsControl.xaml" />
-        <ResourceDictionary Source="/MahApps.Metro;component/Themes/MessageDialog.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroContentControl.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroImage.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroProgressBar.xaml" />
@@ -24,5 +23,7 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Tile.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ToggleSwitch.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />
+
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
