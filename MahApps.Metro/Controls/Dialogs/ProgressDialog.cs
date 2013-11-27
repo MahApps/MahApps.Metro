@@ -109,10 +109,10 @@ namespace MahApps.Metro.Controls.Dialogs
                 WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
             else
             {
-                WrappedDialog.Dispatcher.Invoke(() =>
+                WrappedDialog.Dispatcher.Invoke(new Action(() =>
                                                 {
                                                     WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
-                                                });
+                                                }));
             }
         }
 
@@ -171,7 +171,7 @@ namespace MahApps.Metro.Controls.Dialogs
             }
             else
             {
-                WrappedDialog.Dispatcher.Invoke(() => { WrappedDialog.Message = message; });
+                WrappedDialog.Dispatcher.Invoke(new Action(() => { WrappedDialog.Message = message; }));
             }
         }
 
@@ -203,10 +203,10 @@ namespace MahApps.Metro.Controls.Dialogs
               
             }
 
-            return CloseCallback().ContinueWith(x => WrappedDialog.Dispatcher.Invoke(() =>
+            return CloseCallback().ContinueWith(x => WrappedDialog.Dispatcher.Invoke(new Action(() =>
                                                                                      {
                                                                                          IsOpen = false;
-                                                                                     }));
+                                                                                     })));
         }
     }
 }
