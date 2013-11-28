@@ -7,7 +7,7 @@ The default `TabControl` style is included in `Controls.xaml`, but the other two
 
 # Default look
 
-![](/images/default_tab_control.png)  
+![]({{site.baseurl}}/images/default_tab_control.png)  
 
 This shows the three states - selected/active tab, hover and inactive.
 
@@ -17,7 +17,7 @@ This shows the three states - selected/active tab, hover and inactive.
 
 Functioning just like the regular `TabControl`, except it animates every tab change by wrapping everything in a `MetroContentControl`.
 
-![](/images/animatedtabcontrol.gif)
+![]({{site.baseurl}}/images/animatedtabcontrol.gif)
 
 # AnimatedSingleRowTabControl
 
@@ -26,4 +26,4 @@ Functioning just like the regular `TabControl`, except it animates every tab cha
 `AnimatedSingleRowTabControl` functions exactly the same as the `AnimatedTabControl` except the tabs will only appear on a single line rather than wrapping. 
 Instead of wrapping, arrows (left/right) are presented.
 
-![](/images/singlerow_tab_control.png)
+![]({{site.baseurl}}/images/singlerow_tab_control.png)
