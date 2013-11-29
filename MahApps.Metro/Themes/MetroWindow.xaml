@@ -120,7 +120,8 @@
                         <Rectangle Grid.RowSpan="2" 
                                    Grid.ColumnSpan="3" 
                                    Name="PART_FlyoutModal" 
-                                   Fill="#80ffffff"
+                                   Fill="{DynamicResource BlackColorBrush}"
+                                   Opacity="0.5"
                                    Visibility="Hidden"/>
                         
                         <!-- flyouts -->
