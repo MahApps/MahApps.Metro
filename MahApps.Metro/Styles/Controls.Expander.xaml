@@ -203,22 +203,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ExpanderHeaderFocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Border>
-                        <Rectangle Margin="0"
-                                   SnapsToDevicePixels="true"
-                                   Stroke="Black"
-                                   StrokeDashArray="1 2"
-                                   StrokeThickness="1" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style x:Key="ExpanderDownHeaderStyle"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Template">
@@ -323,7 +307,7 @@
                                               Background="Transparent"
                                               BorderBrush="Transparent"
                                               DockPanel.Dock="Left"
-                                              FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                              FocusVisualStyle="{x:Null}"
                                               IsChecked="{Binding IsExpanded,
                                                                   Mode=TwoWay,
                                                                   RelativeSource={RelativeSource TemplatedParent}}"
