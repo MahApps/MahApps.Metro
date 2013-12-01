@@ -10,6 +10,13 @@ Read it here: [http://mahapps.com/MahApps.Metro/](http://mahapps.com/MahApps.Met
 
 You can help keep the documentation up to date by submitting a pull request on the `gh-pages` branch of this repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
 
+### Ran into an bug?
+Did you stumble upon a bug? Before reporting it to us, please check out the [FAQ](https://github.com/MahApps/MahApps.Metro/wiki/FAQ) to see if it is actually a bug. If you can not find anything related to your issue, feel free to report it to us in the issue tracker.
+
+#### Bug Reports
+
+Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-Reports) before submitting an issue.
+
 ### Breaking Changes
 
 [Breaking Changes or WTF is happening with the ALPHA version](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
@@ -68,7 +75,3 @@ If you've improved MahApps.Metro and think that other people would enjoy it, sub
 ### IRC chatroom
 
 Drop in on the IRC room - `#mametro` on [Freenode](http://freenode.net/) - if you want to ask a question. If no one responds and you have to leave, please post your issue on the [issue tracker](https://github.com/MahApps/MahApps.Metro/issues).
-
-### Bug Reports
-
-Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-Reports) before submitting an issue.
