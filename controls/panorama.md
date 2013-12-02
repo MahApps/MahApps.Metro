@@ -3,7 +3,7 @@ layout: no-sidebar
 title: Panorama
 ---
 
-> NOTE: The `Panorama` control is currently a bit buggy
+> NOTE: The `Panorama` control is marked as `Obsolete` and is no longer supported
 
 ![]({{site.baseurl}}/images/panorama.png)
 

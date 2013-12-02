@@ -71,25 +71,23 @@ But in most cases you can just drop the base class (because this is a `partial` 
 
 Which looks different - but we're on the right track. 
 
-Next we need to add the resources and styles. Unfortunately these need to be specified with each Window.
+Next we need to add the resources and styles.
 
 > **Note**
 
-> Since version 0.11.2.1-ALPHA, you can embed the resource dictionary in the App.xaml
-
-Just after the opening MetroWindow tag, add the following:
+In your App.xaml, add the following:
 	
-	   <Window.Resources>
-	        <ResourceDictionary>
-	            <ResourceDictionary.MergedDictionaries>
-	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
-	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-	                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-	            </ResourceDictionary.MergedDictionaries>
-	        </ResourceDictionary>
-	    </Window.Resources>
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
 	
 ![]({{site.baseurl}}/images/03_StyledWindow.png)
 
