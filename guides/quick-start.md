@@ -73,8 +73,6 @@ Which looks different - but we're on the right track.
 
 Next we need to add the resources and styles.
 
-> **Note**
-
 In your App.xaml, add the following:
 	
 	<Application.Resources>
