@@ -11,11 +11,11 @@ When you change the content, an animation is played switching the two.
 
 Built in there are several transitions:  
 
-* DownTransition
-* UpTransition
-* RightTransition
-* LeftTransition
-* RightReplaceTransition
-* LeftReplaceTransition
-
-This is still a 'work in progress' control, so there are some limitations - at the moment you can't provide a custom transition without overriding the style of the control.
+* Default
+* Down
+* Up
+* Right
+* Left
+* RightReplace
+* LeftReplace
+* Custom
