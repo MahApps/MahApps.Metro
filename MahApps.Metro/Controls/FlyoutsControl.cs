@@ -91,7 +91,7 @@ namespace MahApps.Metro.Controls
             var parentWindow = this.TryFindParent<MetroWindow>();
             if (parentWindow != null)
             {
-                var visibleFlyouts = this.GetFlyouts(this.Items).Where(i => i.IsOpen).OrderBy(Panel.GetZIndex).Count();
+                var visibleFlyouts = this.GetFlyouts(this.Items).Where(i => i.IsOpen).OrderBy(Panel.GetZIndex);
                 parentWindow.HandleFlyoutStatusChange(flyout, visibleFlyouts);
             }
         }
