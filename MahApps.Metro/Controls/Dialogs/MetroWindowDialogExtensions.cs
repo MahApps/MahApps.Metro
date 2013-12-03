@@ -23,7 +23,7 @@ namespace MahApps.Metro.Controls.Dialogs
             window.Dispatcher.VerifyAccess();
             return window.ShowOverlayAsync().ContinueWith(z =>
                 {
-                    return window.Dispatcher.Invoke(new Func<object>(() =>
+                    return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
                         {
                             //create the dialog control
                             MessageDialog dialog = new MessageDialog(window);
@@ -38,7 +38,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                             return dialog.WaitForLoadAsync().ContinueWith(x =>
                             {
-                                return dialog.WaitForButtonPressAsync().ContinueWith<MessageDialogResult>(y =>
+                                return dialog.WaitForButtonPressAsync().ContinueWith(y =>
                                 {
                                     //once a button as been clicked, begin removing the dialog.
 
@@ -52,12 +52,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
                                         return window.HideOverlayAsync();
                                         //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
-                                    }))).ContinueWith(y3 => y).Result.Result;
-
-                                }).Result;
-                            });
+                                    }))).ContinueWith(y3 => y).Unwrap();
+                                }).Unwrap();
+                            }).Unwrap();
                         }));
-                }).ContinueWith(x => ((Task<MessageDialogResult>)x.Result).Result);
+                }).Unwrap();
         }
         /// <summary>
         /// Creates a ProgressDialog inside of the current window.
@@ -70,7 +69,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             window.Dispatcher.VerifyAccess();
 
-            return window.ShowOverlayAsync().ContinueWith<ProgressDialogController>(z =>
+            return window.ShowOverlayAsync().ContinueWith(z =>
             {
                 return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                     {
@@ -99,8 +98,8 @@ namespace MahApps.Metro.Controls.Dialogs
                                 }));
                             });
                         });
-                    }))).Result;
-            });
+                    })));
+            }).Unwrap();
         }
 
         /// <summary>
@@ -124,7 +123,7 @@ namespace MahApps.Metro.Controls.Dialogs
                             dialog.SizeChangedHandler = sizeHandler;
                         }));
                 }).ContinueWith(y =>
-                    ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync()))));
+                    ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync())))).Unwrap();
         }
         /// <summary>
         /// Hides a visible Metro Dialog instance.
