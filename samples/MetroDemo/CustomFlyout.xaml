@@ -51,7 +51,8 @@
                 Margin="5"
                 Value="50" />
 
-        <ListView Height="200"
+        <ListView Style="{StaticResource VirtualisedMetroListView}"
+                  Height="200"
                   Margin="0, 10, 0, 0"
                   BorderThickness="0"
                   ItemsSource="{Binding ElementName=customFlyout, Path=Artists}"
@@ -66,7 +67,8 @@
             </ListView.View>
         </ListView>
 
-        <ListView Height="200"
+        <ListView Style="{StaticResource VirtualisedMetroListView}"
+                  Height="200"
                   Margin="0, 10, 0, 0"
                   BorderThickness="0"
                   ItemContainerStyle="{StaticResource CustomListViewItemStyle}"
