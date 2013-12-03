@@ -125,7 +125,7 @@ namespace MahApps.Metro.Controls.Dialogs
                             dialog.SizeChangedHandler = sizeHandler;
                         }));
                 }).ContinueWith(y =>
-                    ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync())))).Unwrap();
+                    ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync()))));
         }
         /// <summary>
         /// Hides a visible Metro Dialog instance.
