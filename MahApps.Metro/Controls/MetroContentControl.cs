@@ -24,19 +24,27 @@ namespace MahApps.Metro.Controls
             set { SetValue(TransitionsEnabledProperty, value); }
         }
 
+        public static readonly DependencyProperty OnlyLoadTransitionProperty = DependencyProperty.Register("OnlyLoadTransition", typeof(bool), typeof(MetroContentControl), new FrameworkPropertyMetadata(false));
+
+        public bool OnlyLoadTransition
+        {
+            get { return (bool)GetValue(OnlyLoadTransitionProperty); }
+            set { SetValue(OnlyLoadTransitionProperty, value); }
+        }
+
+        private bool transitionLoaded;
+
         public MetroContentControl()
         {
             DefaultStyleKey = typeof(MetroContentControl);
 
             Loaded += MetroContentControlLoaded;
             Unloaded += MetroContentControlUnloaded;
-
-            IsVisibleChanged += MetroContentControlIsVisibleChanged;
         }
 
         void MetroContentControlIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (TransitionsEnabled)
+            if (TransitionsEnabled && !transitionLoaded)
             {
                 if (!IsVisible)
                     VisualStateManager.GoToState(this, ReverseTransition ? "AfterUnLoadedReverse" : "AfterUnLoaded", false);
@@ -48,13 +56,25 @@ namespace MahApps.Metro.Controls
         private void MetroContentControlUnloaded(object sender, RoutedEventArgs e)
         {
             if (TransitionsEnabled)
-                VisualStateManager.GoToState(this, ReverseTransition ? "AfterUnLoadedReverse" : "AfterUnLoaded", false);
+            {
+                if (transitionLoaded)
+                    VisualStateManager.GoToState(this, ReverseTransition ? "AfterUnLoadedReverse" : "AfterUnLoaded", false);
+                IsVisibleChanged -= MetroContentControlIsVisibleChanged;
+            }
         }
 
         private void MetroContentControlLoaded(object sender, RoutedEventArgs e)
         {
             if (TransitionsEnabled)
-                VisualStateManager.GoToState(this, ReverseTransition ? "AfterLoadedReverse" : "AfterLoaded", true);
+            {
+                if (!transitionLoaded)
+                {
+                    transitionLoaded = this.OnlyLoadTransition;
+                    VisualStateManager.GoToState(this, ReverseTransition ? "AfterLoadedReverse" : "AfterLoaded", true);
+                }
+                IsVisibleChanged -= MetroContentControlIsVisibleChanged;
+                IsVisibleChanged += MetroContentControlIsVisibleChanged;
+            }
             else
             {
                 var root = ((Grid)GetTemplateChild("root"));
@@ -75,7 +95,7 @@ namespace MahApps.Metro.Controls
 
         public void Reload()
         {
-            if (!TransitionsEnabled) return;
+            if (!TransitionsEnabled || transitionLoaded) return;
 
             if (ReverseTransition)
             {
