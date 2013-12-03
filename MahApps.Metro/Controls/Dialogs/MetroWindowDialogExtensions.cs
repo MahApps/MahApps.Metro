@@ -28,12 +28,13 @@ namespace MahApps.Metro.Controls.Dialogs
                             //create the dialog control
                             MessageDialog dialog = new MessageDialog(window);
                             dialog.Message = message;
+                            dialog.Title = title;
                             dialog.ButtonStyle = style;
 
                             dialog.AffirmativeButtonText = window.MetroDialogOptions.AffirmativeButtonText;
                             dialog.NegativeButtonText = window.MetroDialogOptions.NegativeButtonText;
 
-                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
 
                             return dialog.WaitForLoadAsync().ContinueWith(x =>
@@ -76,9 +77,10 @@ namespace MahApps.Metro.Controls.Dialogs
                         //create the dialog control
                         ProgressDialog dialog = new ProgressDialog(window);
                         dialog.Message = message;
+                        dialog.Title = title;
                         dialog.IsCancelable = isCancelable;
                         dialog.NegativeButtonText = window.MetroDialogOptions.NegativeButtonText;
-                        SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
+                        SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                         dialog.SizeChangedHandler = sizeHandler;
 
                         return dialog.WaitForLoadAsync().ContinueWith(x =>
@@ -109,7 +111,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title to be set in the dialog.</param>
         /// <param name="dialog">The dialog instance itself.</param>
         /// <returns>A task representing the operation.</returns>
-        public static Task ShowMetroDialogAsync(this MetroWindow window, string title, BaseMetroDialog dialog)
+        public static Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog)
         {
             window.Dispatcher.VerifyAccess();
             if (window.messageDialogContainer.Children.Contains(dialog))
@@ -119,7 +121,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     dialog.Dispatcher.Invoke(new Action(() =>
                         {
-                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, title, dialog);
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
                         }));
                 }).ContinueWith(y =>
@@ -144,11 +146,10 @@ namespace MahApps.Metro.Controls.Dialogs
             return window.HideOverlayAsync();
         }
 
-        private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, string title, BaseMetroDialog dialog)
+        private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog)
         {
             dialog.SetValue(Panel.ZIndexProperty, (int)window.overlayBox.GetValue(Panel.ZIndexProperty) + 1);
             dialog.MinHeight = window.ActualHeight / 4.0;
-            dialog.Title = title;
 
             SizeChangedEventHandler sizeHandler = null; //an event handler for auto resizing an open dialog.
             sizeHandler = new SizeChangedEventHandler((sender, args) =>

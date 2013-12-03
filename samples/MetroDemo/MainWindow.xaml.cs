@@ -91,7 +91,7 @@ namespace MetroDemo
         {
             var dialog = this.Resources["SimpleDialogTest"] as BaseMetroDialog;
 
-            this.ShowMetroDialogAsync("This dialog allows arbitrary content. It will close in 5 seconds.", dialog).ContinueWith(x => System.Threading.Thread.Sleep(5000)).ContinueWith(y =>
+            this.ShowMetroDialogAsync(dialog).ContinueWith(x => System.Threading.Thread.Sleep(5000)).ContinueWith(y =>
                 {
                     Dispatcher.Invoke(new Action(() =>
                         {
