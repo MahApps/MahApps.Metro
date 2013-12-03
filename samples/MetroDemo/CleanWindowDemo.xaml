@@ -18,9 +18,51 @@
             <Button Content="Another Test"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.Flyouts>
+        <Controls:FlyoutsControl>
+            <Controls:Flyout x:Name="settingsFlyout" Width="500" Header="Settings" Position="Right">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Something above the ScrollPanel" />
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel Orientation="Vertical">
+                            <TextBox Controls:TextboxHelper.Watermark="TextBox 01" />
+                            <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 02" />
+                            <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 03" />
+                            <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 04" />
+                            <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 05" />
+                            <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 06" />
+                            <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 07" />
+                            <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 08" />
+                            <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 09" />
+                            <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 10" />
+                        </StackPanel>
+                    </ScrollViewer>
+
+                    <UniformGrid Columns="2"
+                                 Grid.Row="2"
+                                 Margin="10">
+                        <Button Style="{DynamicResource SquareButtonStyle}"
+                                Margin="10"
+                                Content="Create" />
+                        <Button Style="{DynamicResource SquareButtonStyle}"
+                                Margin="10"
+                                Content="Cancel" />
+                    </UniformGrid>
+
+                </Grid>
+            </Controls:Flyout>
+        </Controls:FlyoutsControl>
+    </Controls:MetroWindow.Flyouts>
+        
     <Grid>
         <GroupBox Header="Hello">
-            <Button Content="Test" Height="20" Width="40"/>
+            <Button Content="Test" Height="20" Width="40" Click="Button_Click"/>
         </GroupBox>
     </Grid>
 </Controls:MetroWindow>

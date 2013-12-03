@@ -78,18 +78,14 @@
 
                                     <ContentPresenter Grid.Row="1" />
 
-                                    <ItemsControl Grid.Row="0"
+
+                                    <ContentControl Grid.Row="0"
                                                   Grid.RowSpan="2"
                                                   Panel.ZIndex="2"
                                                   KeyboardNavigation.TabNavigation="None"
-                                                  ItemsSource="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                                  Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                                   VerticalAlignment="Stretch">
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <Grid />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                    </ItemsControl>
+                                    </ContentControl>
 
                                     <!--Used to create that overlay effect. Can be used for anything.-->
                                     <Grid Grid.Row="0"
