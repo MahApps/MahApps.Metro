@@ -118,7 +118,7 @@ namespace MahApps.Metro.Controls
             owner.Activated += (sender, e) => {
                                    Update();
                                    glow.IsGlow = true;
-            };
+                               };
             owner.Deactivated += (sender, e) => glow.IsGlow = false;
             owner.LocationChanged += (sender, e) => Update();
             owner.SizeChanged += (sender, e) => Update();
@@ -179,15 +179,15 @@ namespace MahApps.Metro.Controls
 
         public void Update()
         {
-            if (Owner.WindowState == WindowState.Normal)
+            if (Owner.Visibility == Visibility.Hidden)
             {
-                Visibility = Visibility.Visible;
+                Visibility = Visibility.Hidden;
 
                 UpdateCore();
             }
-            else if (Owner.Visibility == Visibility.Hidden)
+            else if (Owner.WindowState == WindowState.Normal)
             {
-                Visibility = Visibility.Hidden;
+                Visibility = Visibility.Visible;
 
                 UpdateCore();
             }
