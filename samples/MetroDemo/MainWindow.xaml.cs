@@ -47,9 +47,17 @@ namespace MetroDemo
             new VSDemo().Show();
         }
 
+        private Window flyoutDemo;
         private void LaunchFlyoutDemo(object sender, RoutedEventArgs e)
         {
-            new FlyoutDemo().Show();
+            if (flyoutDemo == null) {
+                flyoutDemo = new FlyoutDemo();
+                flyoutDemo.Closed += (o, args) => flyoutDemo = null;
+            }
+            if (flyoutDemo.IsVisible)
+                flyoutDemo.Hide();
+            else
+                flyoutDemo.Show();
         }
 
         private void LaunchPanoramaDemo(object sender, RoutedEventArgs e)
@@ -62,9 +70,17 @@ namespace MetroDemo
             new IconsWindow().Show();
         }
 
+        private Window cleanWindowDemo;
         private void LauchCleanDemo(object sender, RoutedEventArgs e)
         {
-            new CleanWindowDemo().Show();
+            if (cleanWindowDemo == null) {
+                cleanWindowDemo = new CleanWindowDemo();
+                cleanWindowDemo.Closed += (o, args) => cleanWindowDemo = null;
+            }
+            if (cleanWindowDemo.IsVisible)
+                cleanWindowDemo.Hide();
+            else
+                cleanWindowDemo.Show();
         }
 
         private void LaunchRibbonDemo(object sender, RoutedEventArgs e)
