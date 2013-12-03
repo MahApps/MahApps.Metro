@@ -78,6 +78,13 @@
 
                                     <ContentPresenter Grid.Row="1" />
 
+                                    <!-- disables the main content when a modal flyout is shown -->
+                                    <Rectangle Grid.RowSpan="2" 
+                                               Grid.ColumnSpan="3" 
+                                               Name="PART_FlyoutModal" 
+                                               Fill="{DynamicResource BlackColorBrush}"
+                                               Opacity="0.5"
+                                               Visibility="Hidden"/>
 
                                     <ContentControl Grid.Row="0"
                                                   Grid.RowSpan="2"
