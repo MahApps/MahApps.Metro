@@ -40,6 +40,7 @@
             <AdornerDecorator>
                 <Controls:MetroContentControl IsTabStop="False"
                                               FocusVisualStyle="{x:Null}"
+                                              OnlyLoadTransition="True"
                                               TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
                     <Grid Background="{TemplateBinding Background}">
                         <Grid.ColumnDefinitions>

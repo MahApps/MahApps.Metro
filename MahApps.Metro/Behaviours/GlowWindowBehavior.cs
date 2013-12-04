@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Interactivity;
-using System.Windows.Media.Animation;
 using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Behaviours
@@ -28,44 +27,102 @@ namespace MahApps.Metro.Behaviours
                 this.bottom = new GlowWindow(this.AssociatedObject, GlowDirection.Bottom);
 
                 this.Show();
+                this.Update();
 
+                var windowTransitionsEnabled = metroWindow != null && metroWindow.WindowTransitionsEnabled;
+                if (!windowTransitionsEnabled)
+                {
+                    // no storyboard so set opacity to 1
+                    this.SetOpacityTo(1);
+                }
+                else
+                {
+                    // start the opacity storyboard 0->1
+                    this.StartOpacityStoryboard();
+                    // hide the glows if window get invisible state
+                    this.AssociatedObject.IsVisibleChanged += this.AssociatedObject_IsVisibleChanged;
+                    // closing always handled
+                    this.AssociatedObject.Closing += (o, args) =>
+                    {
+                        if (!args.Cancel)
+                        {
+                            this.AssociatedObject.IsVisibleChanged -= this.AssociatedObject_IsVisibleChanged;
+                        }
+                    };
+                }
+            };
+        }
+
+        private void AssociatedObject_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            this.Update();
+
+            if (!this.AssociatedObject.IsVisible)
+            {
+                // the associated owner got invisible so set opacity to 0 to start the storyboard by 0 for the next visible state
+                this.SetOpacityTo(0);
+            }
+            else
+            {
+                this.StartOpacityStoryboard();
+            }
+        }
+
+        /// <summary>
+        /// Updates all glow windows (visible, hidden, collapsed)
+        /// </summary>
+        private void Update()
+        {
+            if (this.left != null
+                && this.right != null
+                && this.top != null
+                && this.bottom != null)
+            {
                 this.left.Update();
                 this.right.Update();
                 this.top.Update();
                 this.bottom.Update();
-
-                var windowTransitionsEnabled = metroWindow != null && metroWindow.WindowTransitionsEnabled;
-                if (!windowTransitionsEnabled) {
-                    this.left.Opacity = 1;
-                    this.right.Opacity = 1;
-                    this.top.Opacity = 1;
-                    this.bottom.Opacity = 1;
-                }
-                else
-                {
-                    if (this.left.OpacityStoryboard != null
-                        && this.right.OpacityStoryboard != null
-                        && this.top.OpacityStoryboard != null
-                        && this.bottom.OpacityStoryboard != null)
-                    {
-                        this.left.BeginStoryboard(this.left.OpacityStoryboard);
-                        this.right.BeginStoryboard(this.right.OpacityStoryboard);
-                        this.top.BeginStoryboard(this.top.OpacityStoryboard);
-                        this.bottom.BeginStoryboard(this.bottom.OpacityStoryboard);
-                    }
-                }
-            };
-
-            this.AssociatedObject.Closed += (sender, args) =>
-            {
-                if (left != null) left.Close();
-                if (right != null) right.Close();
-                if (top != null) top.Close();
-                if (bottom != null) bottom.Close();
-            };
+            }
         }
 
-        public void Show()
+        /// <summary>
+        /// Sets the opacity to all glow windows
+        /// </summary>
+        private void SetOpacityTo(double newOpacity)
+        {
+            if (this.left != null
+                && this.right != null
+                && this.top != null
+                && this.bottom != null)
+            {
+                this.left.Opacity = newOpacity;
+                this.right.Opacity = newOpacity;
+                this.top.Opacity = newOpacity;
+                this.bottom.Opacity = newOpacity;
+            }
+        }
+
+        /// <summary>
+        /// Starts the opacity storyboard 0 -> 1
+        /// </summary>
+        private void StartOpacityStoryboard()
+        {
+            if (this.left != null && this.left.OpacityStoryboard != null
+                && this.right != null && this.right.OpacityStoryboard != null
+                && this.top != null && this.top.OpacityStoryboard != null
+                && this.bottom != null && this.bottom.OpacityStoryboard != null)
+            {
+                this.left.BeginStoryboard(this.left.OpacityStoryboard);
+                this.right.BeginStoryboard(this.right.OpacityStoryboard);
+                this.top.BeginStoryboard(this.top.OpacityStoryboard);
+                this.bottom.BeginStoryboard(this.bottom.OpacityStoryboard);
+            }
+        }
+
+        /// <summary>
+        /// Shows all glow windows
+        /// </summary>
+        private void Show()
         {
             left.Show();
             right.Show();
