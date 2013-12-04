@@ -448,22 +448,31 @@
                                        Style="{StaticResource DescriptionHeaderStyle}" />
 
                                 <Label Content='Minimum="0", Maximum="10"' />
-                                <Controls:NumericUpDown Value="5" Minimum="0" Maximum="10"></Controls:NumericUpDown>
+                                <Controls:NumericUpDown Value="5" 
+                                                        Minimum="0" 
+                                                        Maximum="10" />
 
                                 <Label Content='SmallChange="2"' />
-                                <Controls:NumericUpDown Value="5" SmallChange="2"></Controls:NumericUpDown>
+                                <Controls:NumericUpDown Value="5" 
+                                                        SmallChange="2" />
                                 <Label Content='SmallChange="5"' />
-                                <Controls:NumericUpDown Value="5" SmallChange="5"></Controls:NumericUpDown>
-
+                                <Controls:NumericUpDown Value="5" 
+                                                        SmallChange="5" />
 
                                 <Label Content="No Speedup when long pressed" />
-                                <Controls:NumericUpDown Value="5" Speedup="false"></Controls:NumericUpDown>
+                                <Controls:NumericUpDown Value="5" 
+                                                        Speedup="false" />
                                 <Label Content="Speedup when long pressed" />
-                                <Controls:NumericUpDown Value="5" Speedup="true"></Controls:NumericUpDown>
+                                <Controls:NumericUpDown Value="5" 
+                                                        Speedup="true" />
 
                                 <Label Content="StringFormat" />
-                                <Controls:NumericUpDown Value="5" SmallChange=".1"  StringFormat="C2"></Controls:NumericUpDown>
-                                <Controls:NumericUpDown Value="5" SmallChange=".1"  StringFormat="N2"></Controls:NumericUpDown>
+                                <Controls:NumericUpDown Value="5" 
+                                                        SmallChange=".1"  
+                                                        StringFormat="C2" />
+                                <Controls:NumericUpDown Value="5"
+                                                        SmallChange=".1" 
+                                                        StringFormat="N2" />
                             </StackPanel>
                         </Grid>
                     </AdornerDecorator>
