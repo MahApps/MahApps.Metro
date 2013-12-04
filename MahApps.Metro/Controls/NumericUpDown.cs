@@ -107,14 +107,14 @@ namespace MahApps.Metro.Controls
 
         public event RoutedEventHandler IncrementValue
         {
-            add { AddHandler(MinimumReachedEvent, value); }
-            remove { RemoveHandler(MinimumReachedEvent, value); }
+            add { AddHandler(IncrementValueEvent, value); }
+            remove { RemoveHandler(IncrementValueEvent, value); }
         }
 
         public event RoutedEventHandler DecrementValue
         {
-            add { AddHandler(MinimumReachedEvent, value); }
-            remove { RemoveHandler(MinimumReachedEvent, value); }
+            add { AddHandler(DecrementValueEvent, value); }
+            remove { RemoveHandler(DecrementValueEvent, value); }
         }
 
         /// <summary>
