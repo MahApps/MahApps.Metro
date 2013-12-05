@@ -456,6 +456,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style x:Key="AccentedSquareButtonStyle"
            TargetType="{x:Type Button}">
         <Setter Property="MinHeight"
@@ -569,6 +570,11 @@
                                  Value="true">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource WhiteBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Foreground"
+                                    Value="Black" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
