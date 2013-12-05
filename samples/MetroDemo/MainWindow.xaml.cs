@@ -78,6 +78,8 @@ namespace MetroDemo
 
         private void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
+            this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+
             this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MahApps.Metro.Controls.Dialogs.MessageDialogStyle.AffirmativeAndNegative).ContinueWith(x =>
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
@@ -89,6 +91,8 @@ namespace MetroDemo
 
         private void ShowSimpleDialog(object sender, RoutedEventArgs e)
         {
+            this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+
             var dialog = this.Resources["SimpleDialogTest"] as BaseMetroDialog;
 
             this.ShowMetroDialogAsync(dialog).ContinueWith(x => System.Threading.Thread.Sleep(5000)).ContinueWith(y =>
@@ -101,6 +105,8 @@ namespace MetroDemo
         }
         private void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
+            this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+
             var remoteTask = this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
 
 
