@@ -94,6 +94,8 @@
                           ItemsSource="{Binding AccentColors, Mode=OneWay}"
                           ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" />
                 <MenuItem Header="Dialogs">
+                    <MenuItem Header="Use Accent?" x:Name="UseAccentForDialogsMenuItem" IsCheckable="True" />
+                    <Separator />
                     <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
                     <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                     <MenuItem Click="ShowSimpleDialog" Header="Show SimpleDialog" />
@@ -132,9 +134,18 @@
                                     Style="{StaticResource SquareButtonStyle}" />
                             <Button Width="100"
                                     Margin="0, 10, 0, 0"
+                                    Content="Enabled"
+                                    Style="{StaticResource AccentedSquareButtonStyle}" />
+                            <Button Width="100"
+                                    Margin="0, 10, 0, 0"
                                     Content="Disabled"
                                     IsEnabled="False"
                                     Style="{StaticResource SquareButtonStyle}" />
+                            <Button Width="100"
+                                    Margin="0, 10, 0, 0"
+                                    Content="Disabled"
+                                    IsEnabled="False"
+                                    Style="{StaticResource AccentedSquareButtonStyle}" />
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <Label Content="Toggle button" Style="{StaticResource DescriptionHeaderStyle}" />
