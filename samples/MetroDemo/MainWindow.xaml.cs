@@ -127,7 +127,6 @@ namespace MetroDemo
             double i = 0.0;
             while (i < 6.0)
             {
-
                 double val = (i / 100.0) * 20.0;
                 controller.SetProgress(val);
                 controller.SetMessage("Baking cupcake: " + i + "...");
