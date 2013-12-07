@@ -23,7 +23,7 @@ namespace MahApps.Metro.Behaviours
         {
             var behaviorClass = ((BorderlessWindowBehavior)obj);
 
-            if (behaviorClass.AssociatedObject != null)
+            if (behaviorClass.AssociatedObject != null && !(((Window)behaviorClass.AssociatedObject).IsLoaded))
                 if ((bool)args.NewValue && behaviorClass.AssociatedObject.AllowsTransparency)
                     throw new InvalidOperationException("EnableDWMDropShadow cannot be set to True when AllowsTransparency is True.");
         })));
@@ -33,7 +33,7 @@ namespace MahApps.Metro.Behaviours
             {
                 var behaviorClass = ((BorderlessWindowBehavior)obj);
 
-                if (behaviorClass.AssociatedObject != null)
+                if (behaviorClass.AssociatedObject != null && !(((Window)behaviorClass.AssociatedObject).IsLoaded))
                 {
                     if ((bool)args.NewValue && behaviorClass.EnableDWMDropShadow)
                         throw new InvalidOperationException("AllowsTransparency cannot be set to True when EnableDWMDropShadow is True.");
@@ -121,7 +121,17 @@ namespace MahApps.Metro.Behaviours
                 throw new InvalidOperationException("EnableDWMDropShadow cannot be set to True when AllowsTransparency is True.");
 
             AssociatedObject.WindowStyle = WindowStyle.None;
-            AssociatedObject.AllowsTransparency = AllowsTransparency;
+            if (!AssociatedObject.IsLoaded)
+            {
+                try
+                {
+                    AssociatedObject.AllowsTransparency = AllowsTransparency;
+                }
+                catch (Exception)
+                {
+                    //For some reason, we can't determine if the window has loaded or not. So we will swallow the exception.
+                }
+            }
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
             AssociatedObject.SetValue(WindowChrome.GlassFrameThicknessProperty, new Thickness(-1));
 
@@ -147,7 +157,8 @@ namespace MahApps.Metro.Behaviours
                         windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
                     }
                     var windowButtonCommands = window.GetPart<ContentControl>("PART_WindowButtonCommands");
-                    if (windowButtonCommands != null) {
+                    if (windowButtonCommands != null)
+                    {
                         windowButtonCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
                     }
                 };
@@ -194,7 +205,7 @@ namespace MahApps.Metro.Behaviours
                 {
                     //Temp fix, thanks @lynnx
                     AssociatedObject.SizeToContent = SizeToContent.Height;
-                    AssociatedObject.SizeToContent = AutoSizeToContent ? 
+                    AssociatedObject.SizeToContent = AutoSizeToContent ?
                         SizeToContent.WidthAndHeight : SizeToContent.Manual;
                 };
 
