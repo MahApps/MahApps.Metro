@@ -12,7 +12,8 @@
                             <ColorAnimation AutoReverse="True"
                                     Duration="00:00:00.1"
                                     Storyboard.TargetName="PART_TextBox"
-                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource RangeReachedColor}" />
+                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+                                    To="{StaticResource RangeReachedColor}" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid Background="{TemplateBinding Background}">
@@ -23,8 +24,10 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBox x:Name="PART_TextBox"
-                                Grid.ColumnSpan="3" Padding="0,0,40,0"
-                                VerticalAlignment="Stretch" TextAlignment="{TemplateBinding TextAlignment}"
+                                Grid.ColumnSpan="3" 
+                                Padding="0,0,40,0"
+                                VerticalAlignment="Stretch"
+                                TextAlignment="{TemplateBinding TextAlignment}"
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Background="Transparent" />
                         <RepeatButton x:Name="PART_NumericUp"
