@@ -186,6 +186,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             Window win = SetupExternalDialogWindow(dialog);
 
+            dialog.OnShown();
             win.Show();
 
             return dialog;
@@ -195,6 +196,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             Window win = SetupExternalDialogWindow(dialog);
 
+            dialog.OnShown();
             win.ShowDialog();
 
             return dialog;
@@ -212,6 +214,7 @@ namespace MahApps.Metro.Controls.Dialogs
             win.ShowTitleBar = false;
             win.ShowCloseButton = false;
             win.WindowTransitionsEnabled = false;
+            win.Background = dialog.Background;
 
             try
             {
