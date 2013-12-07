@@ -9,8 +9,9 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
-    public static class MetroWindowDialogExtensions
+    public static class DialogManager
     {
+        #region In-Window Extension Methods
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -176,5 +177,46 @@ namespace MahApps.Metro.Controls.Dialogs
             }
             return sizeHandler;
         }
+        #endregion
+
+        #region External Windowed Dialog Methods
+        public static BaseMetroDialog ShowDialogExternally(BaseMetroDialog dialog)
+        {
+            Window win = SetupExternalDialogWindow(dialog);
+
+            win.Show();
+
+            return dialog;
+        }
+
+        public static BaseMetroDialog ShowModalDialogExternally(BaseMetroDialog dialog)
+        {
+            Window win = SetupExternalDialogWindow(dialog);
+
+            win.ShowDialog();
+
+            return dialog;
+        }
+
+        private static Window SetupExternalDialogWindow(BaseMetroDialog dialog)
+        {
+            Window win = new Window();
+            win.ShowInTaskbar = false;
+            win.ShowActivated = true;
+            win.Topmost = true;
+            win.ResizeMode = ResizeMode.NoResize;
+            win.WindowStyle = WindowStyle.None;
+            win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+
+            win.Width = SystemParameters.PrimaryScreenWidth;
+            win.Height = SystemParameters.PrimaryScreenHeight / 3;
+
+            dialog.ParentDialogWindow = win;
+
+            win.Content = dialog;
+
+            return win;
+        }
+        #endregion
     }
 }

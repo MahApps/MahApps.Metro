@@ -108,8 +108,37 @@ namespace MahApps.Metro.Controls.Dialogs
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Requests an externally shown Dialog to close. Will throw an exception if the Dialog is inside of a MetroWindow.
+        /// </summary>
+        public void RequestClose()
+        {
+            if (ParentDialogWindow == null) throw new InvalidOperationException("This dialog is inside of a MetroWindow! Call HideMetroDialogAsync!");
+
+            if (OnRequestClose())
+                ParentDialogWindow.Close();
+        }
+
         internal protected virtual void OnShown() { }
-        internal protected virtual void OnClose() { }
+        internal protected virtual void OnClose()
+        {
+            if (ParentDialogWindow != null) //this is only set when a dialog is shown (externally) in it's OWN window.
+                ParentDialogWindow.Close();
+        }
+
+        /// <summary>
+        /// A last chance virtual method for stopping an external dialog from closing.
+        /// </summary>
+        /// <returns></returns>
+        internal protected virtual bool OnRequestClose()
+        {
+            return true; //allow the dialog to close.
+        }
+
+        /// <summary>
+        /// Gets the window that owns the current Dialog IF AND ONLY IF the Dialog is shown externally.
+        /// </summary>
+        protected internal Window ParentDialogWindow { get; internal set; }
     }
 
     /// <summary>

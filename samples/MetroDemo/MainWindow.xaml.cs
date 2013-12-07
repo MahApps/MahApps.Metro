@@ -93,6 +93,16 @@ namespace MetroDemo
 #endif
         }
 
+        private async void ShowDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var dialog = (BaseMetroDialog) this.Resources["SimpleDialogTest"];
+            dialog = DialogManager.ShowDialogExternally(dialog);
+
+            await TaskEx.Delay(5000);
+
+            dialog.RequestClose();
+        }
+
         private async void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
             // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support

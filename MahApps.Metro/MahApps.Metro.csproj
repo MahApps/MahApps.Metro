@@ -91,7 +91,7 @@
     <Compile Include="Controls\ComboBoxHelper.cs" />
     <Compile Include="Controls\ControlsHelper.cs" />
     <Compile Include="Controls\Dialogs\BaseMetroDialog.cs" />
-    <Compile Include="Controls\Dialogs\MetroWindowDialogExtensions.cs" />
+    <Compile Include="Controls\Dialogs\DialogManager.cs" />
     <Compile Include="Controls\Dialogs\ProgressDialog.cs" />
     <Compile Include="Controls\Dialogs\SimpleDialog.cs" />
     <Compile Include="Controls\FlipView.cs" />
@@ -301,10 +301,10 @@
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
-	<Page Include="Styles\Controls.Expander.xaml">
+    <Page Include="Styles\Controls.Expander.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-	  <DependentUpon>Controls.xaml</DependentUpon>
+      <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.GroupBox.xaml">
       <Generator>MSBuild:Compile</Generator>
