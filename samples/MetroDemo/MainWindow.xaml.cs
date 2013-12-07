@@ -96,7 +96,7 @@ namespace MetroDemo
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
             var dialog = (BaseMetroDialog) this.Resources["SimpleDialogTest"];
-            dialog = DialogManager.ShowDialogExternally(dialog);
+            dialog = dialog.ShowDialogExternally();
 
             await TaskEx.Delay(5000);
 

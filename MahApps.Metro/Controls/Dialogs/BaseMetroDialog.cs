@@ -113,6 +113,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public void RequestClose()
         {
+            //Technically, the Dialog is /always/ inside of a MetroWindow. However, this is thrown because it is inside of a user-defined one, not an internally-defined one.
             if (ParentDialogWindow == null) throw new InvalidOperationException("This dialog is inside of a MetroWindow! Call HideMetroDialogAsync!");
 
             if (OnRequestClose())

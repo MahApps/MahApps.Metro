@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using MahApps.Metro.Behaviours;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -180,7 +182,7 @@ namespace MahApps.Metro.Controls.Dialogs
         #endregion
 
         #region External Windowed Dialog Methods
-        public static BaseMetroDialog ShowDialogExternally(BaseMetroDialog dialog)
+        public static BaseMetroDialog ShowDialogExternally(this BaseMetroDialog dialog)
         {
             Window win = SetupExternalDialogWindow(dialog);
 
@@ -189,7 +191,7 @@ namespace MahApps.Metro.Controls.Dialogs
             return dialog;
         }
 
-        public static BaseMetroDialog ShowModalDialogExternally(BaseMetroDialog dialog)
+        public static BaseMetroDialog ShowModalDialogExternally(this BaseMetroDialog dialog)
         {
             Window win = SetupExternalDialogWindow(dialog);
 
@@ -200,19 +202,31 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static Window SetupExternalDialogWindow(BaseMetroDialog dialog)
         {
-            Window win = new Window();
+            MetroWindow win = new MetroWindow();
             win.ShowInTaskbar = false;
             win.ShowActivated = true;
             win.Topmost = true;
             win.ResizeMode = ResizeMode.NoResize;
             win.WindowStyle = WindowStyle.None;
             win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            win.ShowTitleBar = false;
+            win.ShowCloseButton = false;
+            win.WindowTransitionsEnabled = false;
+
+            try
+            {
+                win.GlowBrush = win.TryFindResource("AccentColorBrush") as SolidColorBrush;
+            }
+            catch (Exception) { }
 
             win.Width = SystemParameters.PrimaryScreenWidth;
             win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
             win.SizeToContent = SizeToContent.Height;
 
-            dialog.ParentDialogWindow = win;
+            GlowWindowBehavior glowWindow = new GlowWindowBehavior();
+            glowWindow.Attach(win);
+
+            dialog.ParentDialogWindow = win; //THIS IS ONLY, I REPEAT, ONLY SET FOR EXTERNAL DIALOGS!
 
             win.Content = dialog;
 
