@@ -109,6 +109,7 @@
     <Compile Include="Controls\MetroProgressBar.cs" />
     <Compile Include="Controls\MetroTabControl.cs" />
     <Compile Include="Controls\MetroTabItem.cs" />
+    <Compile Include="Controls\NumericUpDown.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
@@ -470,6 +471,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\NumericUpDown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Themes\Panorama.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -588,7 +593,6 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
       <Visible>False</Visible>
