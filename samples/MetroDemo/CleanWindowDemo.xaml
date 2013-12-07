@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Icon="mahapps.metro.logo2.ico" ShowIconOnTitleBar="True"
+        GlowBrush="{DynamicResource AccentColorBrush}"
         Title="CleanWindowDemo" Height="300" Width="300" Style="{DynamicResource CleanWindowStyleKey}">
     <Window.Resources>
         <ResourceDictionary>
