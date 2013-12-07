@@ -158,14 +158,18 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             dialog.SetValue(Panel.ZIndexProperty, (int)window.overlayBox.GetValue(Panel.ZIndexProperty) + 1);
             dialog.MinHeight = window.ActualHeight / 4.0;
+            dialog.MaxHeight = window.ActualHeight;
 
             SizeChangedEventHandler sizeHandler = null; //an event handler for auto resizing an open dialog.
             sizeHandler = new SizeChangedEventHandler((sender, args) =>
             {
                 dialog.MinHeight = window.ActualHeight / 4.0;
+                dialog.MaxHeight = window.ActualHeight;
             });
 
             window.SizeChanged += sizeHandler;
+
+            window.SizeToContent = SizeToContent.Height;
 
             //window.overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
 
