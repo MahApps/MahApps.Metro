@@ -42,6 +42,13 @@ namespace MahApps.Metro.Controls
                                                                                               typeof(NumericUpDown),
                                                                                               new FrameworkPropertyMetadata(DefaultDelay, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnDelayChanged),
                                                                                               ValidateDelay);
+        /// <summary>
+        ///     DependencyProperty for <see cref="TextAlignment"/> property.
+        /// </summary>
+        public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register("TextAlignment",
+                                                                                                typeof(TextAlignment),
+                                                                                                typeof(NumericUpDown),
+                                                                                                new PropertyMetadata(default(TextAlignment)));
 
         /// <summary>
         ///     DependencyProperty for <see cref="Speedup" /> property.
@@ -139,6 +146,17 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsReadOnlyProperty); }
             set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the horizontal alignment of the contents of the text box. 
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(default(TextAlignment))]
+        public TextAlignment TextAlignment
+        {
+            get { return (TextAlignment)GetValue(TextAlignmentProperty); }
+            set { SetValue(TextAlignmentProperty, value); }
         }
 
         /// <summary>
