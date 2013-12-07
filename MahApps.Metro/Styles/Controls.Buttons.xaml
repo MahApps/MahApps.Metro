@@ -108,7 +108,7 @@
 
     <!-- "Chromeless" style for buttons -->
     <ControlTemplate x:Key="ChromelessButtonTemplate"
-                     TargetType="{x:Type Button}">
+                     TargetType="{x:Type ButtonBase}">
         <Grid Background="{TemplateBinding Background}">
             <ContentPresenter x:Name="contentPresenter"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -139,7 +139,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     <Style x:Key="ChromelessButtonStyle"
-           TargetType="{x:Type Button}">
+           TargetType="{x:Type ButtonBase}">
         <Setter Property="Background"
                 Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground"
