@@ -4,7 +4,6 @@ namespace MahApps.Metro.Controls
 
     using System;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Globalization;
     using System.Threading;
     using System.Windows;
@@ -126,9 +125,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         ///     Gets or sets the amount of time, in milliseconds, the NumericUpDown waits while the up/down button is pressed before it starts increasing/decreasing the
-        ///     <see
-        ///         cref="RangeBase.Value" />
-        ///     for the specified <see cref="RangeBase.SmallChange" /> . The value must be non-negative.
+        ///     <see cref="RangeBase.Value" /> for the specified <see cref="RangeBase.SmallChange" /> . The value must be non-negative.
         /// </summary>
         [DefaultValue(DefaultDelay)]
         [Category("Common")]
@@ -161,12 +158,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         ///     Gets or sets a value indicating whether the value to be added to or subtracted from remains always
-        ///     <see
-        ///         cref="RangeBase.SmallChange" />
-        ///     or it will change to
-        ///     <see
-        ///         cref="RangeBase.LargeChange" />
-        ///     and increase this
+        ///     <see cref="RangeBase.SmallChange" /> or it will change to <see cref="RangeBase.LargeChange" /> and increase this.
         /// </summary>
         [DefaultValue(true)]
         [Category("Common")]
@@ -191,9 +183,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         ///     When overridden in a derived class, is invoked whenever application code or internal processes call
-        ///     <see
-        ///         cref="M:System.Windows.FrameworkElement.ApplyTemplate" />
-        ///     .
+        ///     <see cref="M:System.Windows.FrameworkElement.ApplyTemplate" />.
         /// </summary>
         public override void OnApplyTemplate()
         {
@@ -284,8 +274,6 @@ namespace MahApps.Metro.Controls
 
             if (newValue <= Minimum)
             {
-                Debug.WriteLine("From reached", GetType().Name);
-
                 if (_repeatDown != null)
                 {
                     _repeatDown.IsEnabled = false;
@@ -301,8 +289,6 @@ namespace MahApps.Metro.Controls
 
             if (newValue >= Maximum)
             {
-                Debug.WriteLine("To reached", GetType().Name);
-
                 if (_repeatUp != null)
                 {
                     _repeatUp.IsEnabled = false;
@@ -396,14 +382,6 @@ namespace MahApps.Metro.Controls
                 {
                     LargeChange *= 10;
                     _internalIntervalMultiplierForCalculation *= 10;
-
-                    Debug.WriteLine(
-                        string.Format("{3}cremented by {0} now {3}crementing by {1} and next interval Speedup on value {2}",
-                                      _internalIntervalMultiplierForCalculation / 10,
-                                      _internalIntervalMultiplierForCalculation,
-                                      LargeChange,
-                                      toPositive ? "in" : "de"),
-                        GetType().Name);
                 }
             }
 
@@ -453,15 +431,12 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                Debug.WriteLine("Input not valid", GetType().Name);
                 OnValueChanged(Value, Value);
             }
         }
 
         private void ResetInternal()
         {
-            Debug.WriteLine("Reset Internal Values", GetType().Name);
-
             LargeChange = 100 * SmallChange;
             _internalIntervalMultiplierForCalculation = SmallChange;
             _intervalValueSinceReset = 0;
