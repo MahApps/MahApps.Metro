@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -28,8 +29,15 @@ namespace MahApps.Metro.Controls.Dialogs
             : base(parentWindow)
         {
             InitializeComponent();
+
+            try
+            {
+                ProgressBarForeground = this.FindResource("AccentColorBrush") as Brush;
+            }
+            catch (Exception) { }
         }
 
+        public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ProgressDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(ProgressDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty IsCancelableProperty = DependencyProperty.Register("IsCancelable", typeof(bool), typeof(ProgressDialog), new PropertyMetadata(default(bool), new PropertyChangedCallback((s, e) =>
             {
@@ -52,6 +60,12 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (string)GetValue(NegativeButtonTextProperty); }
             set { SetValue(NegativeButtonTextProperty, value); }
+        }
+
+        public Brush ProgressBarForeground
+        {
+            get { return (Brush)GetValue(ProgressBarForegroundProperty); }
+            set { SetValue(ProgressBarForegroundProperty, value); }
         }
     }
 
