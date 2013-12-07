@@ -209,7 +209,8 @@ namespace MahApps.Metro.Controls.Dialogs
             win.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
             win.Width = SystemParameters.PrimaryScreenWidth;
-            win.Height = SystemParameters.PrimaryScreenHeight / 3;
+            win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
+            win.SizeToContent = SizeToContent.Height;
 
             dialog.ParentDialogWindow = win;
 
