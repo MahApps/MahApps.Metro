@@ -30,11 +30,16 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             InitializeComponent();
 
-            try
+            if (parentWindow.MetroDialogOptions.ColorScheme == MetroDialogColorScheme.Theme)
             {
-                ProgressBarForeground = this.FindResource("AccentColorBrush") as Brush;
+                try
+                {
+                    ProgressBarForeground = this.FindResource("AccentColorBrush") as Brush;
+                }
+                catch (Exception) { }
             }
-            catch (Exception) { }
+            else
+                ProgressBarForeground = Brushes.White;
         }
 
         public static readonly DependencyProperty ProgressBarForegroundProperty = DependencyProperty.Register("ProgressBarForeground", typeof(Brush), typeof(ProgressDialog), new PropertyMetadata(default(string)));
