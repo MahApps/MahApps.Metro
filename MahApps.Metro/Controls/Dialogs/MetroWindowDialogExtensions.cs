@@ -111,11 +111,12 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title to be set in the dialog.</param>
         /// <param name="dialog">The dialog instance itself.</param>
         /// <returns>A task representing the operation.</returns>
+        /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
         public static Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog)
         {
             window.Dispatcher.VerifyAccess();
             if (window.messageDialogContainer.Children.Contains(dialog))
-                throw new Exception("The provided dialog is already visible in the specified window.");
+                throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
 
             return window.ShowOverlayAsync().ContinueWith(z =>
                 {
@@ -133,11 +134,15 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="window">The window with the dialog that is visible.</param>
         /// <param name="dialog">The dialog instance to hide.</param>
         /// <returns>A task representing the operation.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// The <paramref name="dialog"/> is not visible in the window.
+        /// This happens if <see cref="ShowMetroDialogAsync"/> hasn't been called before.
+        /// </exception>
         public static Task HideMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog)
         {
             window.Dispatcher.VerifyAccess();
             if (!window.messageDialogContainer.Children.Contains(dialog))
-                throw new Exception("The provided dialog is not visible in the specified window.");
+                throw new InvalidOperationException("The provided dialog is not visible in the specified window.");
 
             window.SizeChanged -= dialog.SizeChangedHandler;
 

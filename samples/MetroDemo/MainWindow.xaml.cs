@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -92,79 +93,65 @@ namespace MetroDemo
 #endif
         }
 
-        private void ShowMessageDialog(object sender, RoutedEventArgs e)
+        private async void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
-            this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MahApps.Metro.Controls.Dialogs.MessageDialogStyle.AffirmativeAndNegative).ContinueWith(x =>
-                {
-                    Dispatcher.BeginInvoke(new Action(() =>
-                        {
-                            this.ShowMessageAsync("Result", "You said: " + (x.Result == MahApps.Metro.Controls.Dialogs.MessageDialogResult.Affirmative ? "OK" : "Cancel"));
-                        }));
-                });
+            // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support
+            // The package is only used by the demo and not a dependency of the library!
+            this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MessageDialogStyle.AffirmativeAndNegative);
+
+            await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? "OK" : "Cancel"));
         }
 
-        private void ShowSimpleDialog(object sender, RoutedEventArgs e)
+        private async void ShowSimpleDialog(object sender, RoutedEventArgs e)
         {
-            var dialog = this.Resources["SimpleDialogTest"] as BaseMetroDialog;
+            this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
-            this.ShowMetroDialogAsync(dialog).ContinueWith(x => System.Threading.Thread.Sleep(5000)).ContinueWith(y =>
-                {
-                    Dispatcher.Invoke(new Action(() =>
-                        {
-                            this.HideMetroDialogAsync(dialog);
-                        }));
-                });
+            var dialog = (BaseMetroDialog) this.Resources["SimpleDialogTest"];
+
+            await this.ShowMetroDialogAsync(dialog);
+            
+            await TaskEx.Delay(5000);
+            
+            await this.HideMetroDialogAsync(dialog);
         }
-        private void ShowProgressDialog(object sender, RoutedEventArgs e)
+        private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
-            var remoteTask = this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
+            this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
+            var controller = await this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
 
-            //Ugly demo code that doesn't use 'await'. This would be much cleaner WITH await.
-            ProgressDialogController remote = null;
+            await TaskEx.Delay(5000);
 
-            System.Threading.Tasks.Task.Factory.StartNew(() => System.Threading.Thread.Sleep(5000)).ContinueWith(x => Dispatcher.Invoke(new Action(() =>
-                {
-                    remote = remoteTask.Result;
-                }))).ContinueWith(x =>
-                    {
-                        remote.SetCancelable(true);
+            controller.SetCancelable(true);
 
-                        double i = 0.0;
-                        while (i < 6.0)
-                        {
-                            Dispatcher.Invoke(new Action(() =>
-                                {
-                                    double val = (i / 100.0) * 20.0;
-                                    remote.SetProgress(val);
-                                    remote.SetMessage("Baking cupcake: " + i.ToString() + "...");
-                                }));
+            double i = 0.0;
+            while (i < 6.0)
+            {
+                double val = (i / 100.0) * 20.0;
+                controller.SetProgress(val);
+                controller.SetMessage("Baking cupcake: " + i + "...");
 
-                            if (remote.IsCanceled)
-                                break; //canceled progressdialog auto closes.
+                if (controller.IsCanceled)
+                    break; //canceled progressdialog auto closes.
 
-                            i += 1.0;
-                            System.Threading.Thread.Sleep(2000);
-                        }
+                i += 1.0;
+                
+                await TaskEx.Delay(2000);
+            }
 
-                        Dispatcher.Invoke(new Action(() =>
-                        {
-                            remote.CloseAsync().ContinueWith(y =>
-                                {
-                                    Dispatcher.Invoke(new Action(() =>
-                                    {
-                                        if (remote.IsCanceled)
-                                        {
-                                            this.ShowMessageAsync("No cupcakes!", "You stopped baking!");
-                                        }
-                                        else
-                                        {
-                                            this.ShowMessageAsync("Cupcakes!", "Your cupcakes are finished! Enjoy!");
-                                        }
-                                    }));
-                                });
-                        }));
-                    });
+            await controller.CloseAsync();
+
+            if (controller.IsCanceled)
+            {
+                await this.ShowMessageAsync("No cupcakes!", "You stopped baking!");
+            }
+
+            else
+            {
+                await this.ShowMessageAsync("Cupcakes!", "Your cupcakes are finished! Enjoy!");
+            }
         }
 
         private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)

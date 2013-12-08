@@ -94,6 +94,8 @@
                           ItemsSource="{Binding AccentColors, Mode=OneWay}"
                           ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" />
                 <MenuItem Header="Dialogs">
+                    <MenuItem Header="Use Accent?" x:Name="UseAccentForDialogsMenuItem" IsCheckable="True" />
+                    <Separator />
                     <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
                     <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                     <MenuItem Click="ShowSimpleDialog" Header="Show SimpleDialog" />
@@ -132,9 +134,18 @@
                                     Style="{StaticResource SquareButtonStyle}" />
                             <Button Width="100"
                                     Margin="0, 10, 0, 0"
+                                    Content="Enabled"
+                                    Style="{StaticResource AccentedSquareButtonStyle}" />
+                            <Button Width="100"
+                                    Margin="0, 10, 0, 0"
                                     Content="Disabled"
                                     IsEnabled="False"
                                     Style="{StaticResource SquareButtonStyle}" />
+                            <Button Width="100"
+                                    Margin="0, 10, 0, 0"
+                                    Content="Disabled"
+                                    IsEnabled="False"
+                                    Style="{StaticResource AccentedSquareButtonStyle}" />
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <Label Content="Toggle button" Style="{StaticResource DescriptionHeaderStyle}" />
@@ -296,6 +307,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                                 <ColumnDefinition />
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
                             <StackPanel Grid.Column="0"
                                         Width="150">
@@ -440,6 +452,38 @@
                                              Controls:TextboxHelper.ClearTextButton="True"
                                              IsEnabled="False"
                                              Password="Password" />
+                            </StackPanel>
+                            <StackPanel Grid.Column="3"
+                                        Width="200">
+                                <Label Content="NumericUpDown"
+                                       Style="{StaticResource DescriptionHeaderStyle}" />
+
+                                <Label Content='Minimum="0", Maximum="10"' />
+                                <Controls:NumericUpDown Value="5"
+                                                        Minimum="0" 
+                                                        Maximum="10" />
+
+                                <Label Content='SmallChange="2"' />
+                                <Controls:NumericUpDown Value="5" 
+                                                        SmallChange="2" />
+                                <Label Content='SmallChange="5"' />
+                                <Controls:NumericUpDown Value="5" 
+                                                        SmallChange="5" />
+
+                                <Label Content="No Speedup when long pressed" />
+                                <Controls:NumericUpDown Value="5" 
+                                                        Speedup="false" />
+                                <Label Content="Speedup when long pressed" />
+                                <Controls:NumericUpDown Value="5" 
+                                                        Speedup="true" />
+
+                                <Label Content="StringFormat" />
+                                <Controls:NumericUpDown Value="5" 
+                                                        SmallChange=".1"  
+                                                        StringFormat="C2" />
+                                <Controls:NumericUpDown Value="5"
+                                                        SmallChange=".1" 
+                                                        StringFormat="N2" />
                             </StackPanel>
                         </Grid>
                     </AdornerDecorator>
