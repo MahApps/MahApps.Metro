@@ -149,7 +149,7 @@ namespace MahApps.Metro.Controls
         /// Gets or sets the horizontal alignment of the contents of the text box. 
         /// </summary>
         [Category("Common")]
-        [DefaultValue(default(TextAlignment))]
+        [DefaultValue(TextAlignment.Right)]
         public TextAlignment TextAlignment
         {
             get { return (TextAlignment)GetValue(TextAlignmentProperty); }
