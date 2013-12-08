@@ -47,7 +47,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register("TextAlignment",
                                                                                                 typeof(TextAlignment),
                                                                                                 typeof(NumericUpDown),
-                                                                                                new PropertyMetadata(default(TextAlignment)));
+                                                                                                new PropertyMetadata(TextAlignment.Right));
 
         /// <summary>
         ///     DependencyProperty for <see cref="Speedup" /> property.
