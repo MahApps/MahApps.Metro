@@ -52,7 +52,7 @@
                                 IsTabStop="False">
                             <Path x:Name="PolygonDown"
                                     Width="14"
-                                    Height="3"
+                                    Height="2"
                                     Stretch="Fill"
                                     Fill="{DynamicResource BlackBrush}"
                                     Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z " />
