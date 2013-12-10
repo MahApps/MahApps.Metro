@@ -42,11 +42,25 @@ namespace MahApps.Metro.Controls.Dialogs
 
                             return dialog.WaitForLoadAsync().ContinueWith(x =>
                             {
+                                if (DialogOpened != null)
+                                {
+                                    window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs()
+                                    {
+                                    })));
+                                }
+
                                 return dialog.WaitForButtonPressAsync().ContinueWith(y =>
                                 {
                                     //once a button as been clicked, begin removing the dialog.
 
                                     dialog.OnClose();
+
+                                    if (DialogClosed != null)
+                                    {
+                                        window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs()
+                                        {
+                                        })));
+                                    }
 
                                     return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
                                     {
@@ -88,9 +102,23 @@ namespace MahApps.Metro.Controls.Dialogs
 
                         return dialog.WaitForLoadAsync().ContinueWith(x =>
                         {
+                            if (DialogOpened != null)
+                            {
+                                window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs()
+                                {
+                                })));
+                            }
+
                             return new ProgressDialogController(dialog, () =>
                             {
                                 dialog.OnClose();
+
+                                if (DialogClosed != null)
+                                {
+                                    window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs()
+                                    {
+                                    })));
+                                }
 
                                 return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
                                 {
@@ -129,7 +157,17 @@ namespace MahApps.Metro.Controls.Dialogs
                             dialog.SizeChangedHandler = sizeHandler;
                         }));
                 }).ContinueWith(y =>
-                    ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync()))));
+                    ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync().ContinueWith(x =>
+                        {
+                            dialog.OnShown();
+
+                            if (DialogOpened != null)
+                            {
+                                DialogOpened(window, new DialogStateChangedEventArgs()
+                                {
+                                });
+                            }
+                        })))));
         }
         /// <summary>
         /// Hides a visible Metro Dialog instance.
@@ -148,6 +186,15 @@ namespace MahApps.Metro.Controls.Dialogs
                 throw new InvalidOperationException("The provided dialog is not visible in the specified window.");
 
             window.SizeChanged -= dialog.SizeChangedHandler;
+
+            dialog.OnClose();
+
+            if (DialogClosed != null)
+            {
+                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs()
+                {
+                })));
+            }
 
             window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
@@ -240,5 +287,10 @@ namespace MahApps.Metro.Controls.Dialogs
             return win;
         }
         #endregion
+
+        public delegate void DialogStateChangedHandler(object sender, DialogStateChangedEventArgs args);
+
+        public static event DialogStateChangedHandler DialogOpened;
+        public static event DialogStateChangedHandler DialogClosed;
     }
 }
