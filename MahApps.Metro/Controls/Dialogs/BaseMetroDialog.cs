@@ -118,7 +118,15 @@ namespace MahApps.Metro.Controls.Dialogs
             if (ParentDialogWindow == null) throw new InvalidOperationException("This dialog is inside of a MetroWindow! Call HideMetroDialogAsync!");
 
             if (OnRequestClose())
-                ParentDialogWindow.Close();
+            {
+                _WaitForCloseAsync().ContinueWith(x =>
+                    {
+                        ParentDialogWindow.Dispatcher.Invoke(new Action(() =>
+                        {
+                            ParentDialogWindow.Close();
+                        }));
+                    });
+            }
         }
 
         internal protected virtual void OnShown() { }
