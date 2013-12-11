@@ -179,7 +179,7 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public class MetroDialogSettings
     {
-        internal MetroDialogSettings()
+        public MetroDialogSettings()
         {
             AffirmativeButtonText = "OK";
             NegativeButtonText = "Cancel";
@@ -195,6 +195,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the text used for the Negative bytton. For example: "Cancel" or "No".
         /// </summary>
         public string NegativeButtonText { get; set; }
+        public string FirstAuxiliaryButtonText { get; set; }
+        public string SecondAuxiliaryButtonText { get; set; }
 
         /// <summary>
         /// Gets/sets whether the metro dialog should use the default black/white appearance (theme) or try to use the current accent.

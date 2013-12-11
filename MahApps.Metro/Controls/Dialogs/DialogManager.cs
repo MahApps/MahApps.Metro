@@ -20,8 +20,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title of the MessageDialog.</param>
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="style">The type of buttons to use.</param>
+        /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative)
+        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
             return window.ShowOverlayAsync().ContinueWith(z =>
@@ -34,8 +35,13 @@ namespace MahApps.Metro.Controls.Dialogs
                             dialog.Title = title;
                             dialog.ButtonStyle = style;
 
-                            dialog.AffirmativeButtonText = window.MetroDialogOptions.AffirmativeButtonText;
-                            dialog.NegativeButtonText = window.MetroDialogOptions.NegativeButtonText;
+                            if (settings == null)
+                                settings = window.MetroDialogOptions;
+
+                            dialog.AffirmativeButtonText = settings.AffirmativeButtonText;
+                            dialog.NegativeButtonText = settings.NegativeButtonText;
+                            dialog.FirstAuxiliaryButtonText = settings.FirstAuxiliaryButtonText;
+                            dialog.SecondAuxiliaryButtonText = settings.SecondAuxiliaryButtonText;
 
                             SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
@@ -87,8 +93,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title of the ProgressDialog.</param>
         /// <param name="message">The message within the ProgressDialog.</param>
         /// <param name="isCancelable">Determines if the cancel button is visible.</param>
+        /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
-        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false)
+        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
 
@@ -101,7 +108,12 @@ namespace MahApps.Metro.Controls.Dialogs
                         dialog.Message = message;
                         dialog.Title = title;
                         dialog.IsCancelable = isCancelable;
-                        dialog.NegativeButtonText = window.MetroDialogOptions.NegativeButtonText;
+
+                        if (settings == null)
+                            settings = window.MetroDialogOptions;
+
+                        dialog.NegativeButtonText = settings.NegativeButtonText;
+
                         SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                         dialog.SizeChangedHandler = sizeHandler;
 

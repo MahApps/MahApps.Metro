@@ -109,8 +109,16 @@ namespace MetroDemo
             // The package is only used by the demo and not a dependency of the library!
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
-            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MessageDialogStyle.AffirmativeAndNegative);
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Hi",
+                NegativeButtonText = "Go away!",
+                FirstAuxiliaryButtonText = "Cancel",
+            };
 
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+            if (result != MessageDialogResult.FirstAuxiliary)
             await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? "OK" : "Cancel"));
         }
 
