@@ -24,4 +24,3 @@ title: Controls
  - Tile
  - FlipView
  - Flyouts
-
