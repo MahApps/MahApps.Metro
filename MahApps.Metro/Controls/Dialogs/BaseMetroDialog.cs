@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -140,6 +141,29 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets the window that owns the current Dialog IF AND ONLY IF the Dialog is shown externally.
         /// </summary>
         protected internal Window ParentDialogWindow { get; internal set; }
+
+        public Task _WaitForCloseAsync()
+        {
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+
+            Storyboard closingStoryboard = this.Template.Resources["DialogCloseStoryboard"] as Storyboard;
+
+            EventHandler handler = null;
+            handler = new EventHandler((sender, args) =>
+            {
+                closingStoryboard.Completed -= handler;
+
+                tcs.TrySetResult(null);
+            });
+
+            closingStoryboard = closingStoryboard.Clone();
+
+            closingStoryboard.Completed += handler;
+
+            closingStoryboard.Begin(this);
+
+            return tcs.Task;
+        }
     }
 
     /// <summary>

@@ -62,17 +62,22 @@ namespace MahApps.Metro.Controls.Dialogs
                                         })));
                                     }
 
-                                    return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
-                                    {
-                                        window.SizeChanged -= sizeHandler;
+                                    Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+                                    return closingTask.ContinueWith<Task<MessageDialogResult>>(a =>
+                                        {
+                                            return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                            {
+                                                window.SizeChanged -= sizeHandler;
 
-                                        window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+                                                window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
-                                        return window.HideOverlayAsync();
-                                        //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
-                                    }))).ContinueWith(y3 => y).Unwrap();
+                                                return window.HideOverlayAsync();
+                                                //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+
+                                            }))).ContinueWith(y3 => y).Unwrap();
+                                        });
                                 }).Unwrap();
-                            }).Unwrap();
+                            }).Unwrap().Unwrap();
                         }));
                 }).Unwrap();
         }
