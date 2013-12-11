@@ -198,16 +198,23 @@ namespace MahApps.Metro.Controls.Dialogs
 
             dialog.OnClose();
 
-            if (DialogClosed != null)
+            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+            return closingTask.ContinueWith<Task>(a =>
             {
-                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs()
+                if (DialogClosed != null)
                 {
-                })));
-            }
+                    window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs()
+                    {
+                    })));
+                }
 
-            window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+                return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                {
+                    window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
-            return window.HideOverlayAsync();
+                    return window.HideOverlayAsync();
+                }));
+            }).Unwrap();
         }
 
         private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog)
