@@ -119,7 +119,7 @@ namespace MetroDemo
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)
-            await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? "OK" : "Cancel"));
+            await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText));
         }
 
         private async void ShowSimpleDialog(object sender, RoutedEventArgs e)
