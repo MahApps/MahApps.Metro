@@ -12,6 +12,7 @@ title: Controls
  - [RangeSlider]({{site.baseurl}}/controls/range-slider.html)
  - [Panorama]({{site.baseurl}}/controls/panorama.html)
  - [TransitioningContentControl]({{site.baseurl}}/controls/transitioning-content-control.html)
+ - [NumericUpDown]({{site.baseurl}}/controls/numericupdown.html)
  
  **Not documented yet**
  - DatePicker and Calendar
