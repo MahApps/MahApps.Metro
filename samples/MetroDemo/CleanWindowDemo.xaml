@@ -60,10 +60,13 @@
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
-        
+
     <Grid>
         <GroupBox Header="Hello">
-            <Button Content="Test" Height="20" Width="40" Click="Button_Click"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Test" Height="20" Width="40" Click="Button_Click"/>
+                <Button Content="Test 2" Height="20" Width="40" Click="Button_Click_1"/>
+            </StackPanel>
         </GroupBox>
     </Grid>
 </Controls:MetroWindow>
