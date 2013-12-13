@@ -94,6 +94,7 @@
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
+    <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
@@ -280,7 +281,7 @@
     <Page Include="Styles\Controls.Expander.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-	  <DependentUpon>Controls.xaml</DependentUpon>
+      <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.GroupBox.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -182,5 +182,21 @@ namespace MetroDemo
             new InteropDemo().Show();
 
         }
+
+        private void eventSlider_RangeStartChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            eventSliderLabel.Content = string.Format("Start: {0} -> {1} / Stop: {2}",
+                e.OldValue,
+                e.NewValue,
+                eventSlider.RangeStopSelected);
+        }
+
+        private void eventSlider_RangeStopChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            eventSliderLabel.Content = string.Format("Start: {0} / Stop: {1} -> {2}",
+                eventSlider.RangeStartSelected,
+                e.OldValue,
+                e.NewValue);
+        }
     }
 }

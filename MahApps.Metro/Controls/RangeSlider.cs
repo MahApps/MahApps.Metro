@@ -8,6 +8,7 @@ using System.Windows.Input;
 namespace MahApps.Metro.Controls
 {
     public delegate void RangeSelectionChangedEventHandler(object sender, RangeSelectionChangedEventArgs e);
+    public delegate void RangeParameterChangedEventHandler(object sender, RangeParameterChangedEventArgs e);
 
     /// <summary>
     /// A slider control with the ability to select a range between two values.
@@ -22,6 +23,9 @@ namespace MahApps.Metro.Controls
     public sealed class RangeSlider : Control
     {
         public static readonly RoutedEvent RangeSelectionChangedEvent = EventManager.RegisterRoutedEvent("RangeSelectionChanged", RoutingStrategy.Bubble, typeof(RangeSelectionChangedEventHandler), typeof(RangeSlider));
+        public static readonly RoutedEvent RangeStartChangedEvent = EventManager.RegisterRoutedEvent("RangeStartChanged", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
+        public static readonly RoutedEvent RangeStopChangedEvent = EventManager.RegisterRoutedEvent("RangeStopChanged", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
+
         public static RoutedUICommand MoveBack = new RoutedUICommand("MoveBack", "MoveBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Control) }));
         public static RoutedUICommand MoveForward = new RoutedUICommand("MoveForward", "MoveForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Control) }));
         public static RoutedUICommand MoveAllForward = new RoutedUICommand("MoveAllForward", "MoveAllForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Alt) }));
@@ -83,6 +87,18 @@ namespace MahApps.Metro.Controls
         {
             add { AddHandler(RangeSelectionChangedEvent, value); }
             remove { RemoveHandler(RangeSelectionChangedEvent, value); }
+        }
+
+        public event RangeParameterChangedEventHandler RangeStartChanged
+        {
+            add { AddHandler(RangeStartChangedEvent, value); }
+            remove { RemoveHandler(RangeStartChangedEvent, value); }
+        }
+
+        public event RangeParameterChangedEventHandler RangeStopChanged
+        {
+            add { AddHandler(RangeStopChangedEvent, value); }
+            remove { RemoveHandler(RangeStopChangedEvent, value); }
         }
 
         private const double RepeatButtonMoveRatio = 0.1;
@@ -249,8 +265,10 @@ namespace MahApps.Metro.Controls
             _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
 
             if (reCalculateStart || reCalculateStop)
+            {
                 //raise the RangeSelectionChanged event
                 OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
+            }
         }
 
         public void MoveSelection(bool isLeft)
@@ -351,6 +369,12 @@ namespace MahApps.Metro.Controls
             RaiseEvent(e);
         }
 
+        private void OnRangeParameterChanged(RangeParameterChangedEventArgs e, RoutedEvent Event)
+        {
+            e.RoutedEvent = Event;
+            RaiseEvent(e);
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -380,13 +404,42 @@ namespace MahApps.Metro.Controls
             _rightThumb.Width = DefaultSplittersThumbWidth;
             _rightThumb.Tag = "right";
 
+            _leftThumb.DragCompleted += LeftThumbDragComplete;
+            _rightThumb.DragCompleted += RightThumbDragComplete;
+            _leftThumb.DragStarted += LeftThumbDragStart;
+            _rightThumb.DragStarted += RightThumbDragStart;
+
             //handle the drag delta
             _centerThumb.DragDelta += CenterThumbDragDelta;
             _leftThumb.DragDelta += LeftThumbDragDelta;
             _rightThumb.DragDelta += RightThumbDragDelta;
+
             _leftButton.Click += LeftButtonClick;
             _rightButton.Click += RightButtonClick;
 
+        }
+
+        long oldStop = 0, oldStart = 0;
+        private void RightThumbDragStart(object sender, DragStartedEventArgs e)
+        {
+            oldStop = RangeStopSelected;
+        }
+
+        private void LeftThumbDragStart(object sender, DragStartedEventArgs e)
+        {
+            oldStart = RangeStartSelected;
+        }
+
+        private void RightThumbDragComplete(object sender, DragCompletedEventArgs e)
+        {
+            if (oldStop != RangeStopSelected)
+                OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Stop, oldStop, RangeStopSelected), RangeStopChangedEvent);
+        }
+
+        private void LeftThumbDragComplete(object sender, DragCompletedEventArgs e)
+        {
+            if (oldStart != RangeStartSelected)
+                OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Start, oldStart, RangeStartSelected), RangeStartChangedEvent);
         }
     }
 }
