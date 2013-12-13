@@ -818,11 +818,14 @@
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"
+                                                  RangeStart="-100"
+                                                  RangeStop="100"
                                                   RangeStartSelected="20"
                                                   RangeStopSelected="60"
                                                   x:Name="eventSlider"
                                                   RangeStartChanged="eventSlider_RangeStartChanged"
-                                                  RangeStopChanged="eventSlider_RangeStopChanged" />
+                                                  RangeStopChanged="eventSlider_RangeStopChanged" 
+                                                  RangeSelectionChanged="eventSlider_RangeSelectionChanged" />
 
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="0">

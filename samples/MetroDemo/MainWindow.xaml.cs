@@ -180,7 +180,6 @@ namespace MetroDemo
         private void InteropDemo(object sender, RoutedEventArgs e)
         {
             new InteropDemo().Show();
-
         }
 
         private void eventSlider_RangeStartChanged(object sender, RangeParameterChangedEventArgs e)
@@ -197,6 +196,13 @@ namespace MetroDemo
                 eventSlider.RangeStartSelected,
                 e.OldValue,
                 e.NewValue);
+        }
+
+        private void eventSlider_RangeSelectionChanged(object sender, RangeSelectionChangedEventArgs e)
+        {
+            eventSliderLabel.Content = string.Format("Start: {0} / Stop: {1}",
+                            eventSlider.RangeStartSelected,
+                            eventSlider.RangeStopSelected);
         }
     }
 }
