@@ -16,6 +16,8 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
 
+        protected MetroDialogSettings DialogSettings { get; private set; }
+
         /// <summary>
         /// Gets/sets the dialog's title.
         /// </summary>
@@ -64,9 +66,11 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
         /// </summary>
         /// <param name="owningWindow">The window that is the parent of the dialog.</param>
-        public BaseMetroDialog(MetroWindow owningWindow)
+        public BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
         {
-            switch (owningWindow.MetroDialogOptions.ColorScheme)
+            DialogSettings = settings == null ? owningWindow.MetroDialogOptions : settings;
+
+            switch (DialogSettings.ColorScheme)
             {
                 case MetroDialogColorScheme.Theme:
                     this.SetResourceReference(BackgroundProperty, "WhiteColorBrush");
@@ -76,6 +80,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
                     break;
             }
+
+            OwningWindow = owningWindow;
         }
         /// <summary>
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
@@ -146,9 +152,13 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
-        /// Gets the window that owns the current Dialog IF AND ONLY IF the Dialog is shown externally.
+        /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown externally.
         /// </summary>
         protected internal Window ParentDialogWindow { get; internal set; }
+        /// <summary>
+        /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
+        /// </summary>
+        protected internal MetroWindow OwningWindow { get; internal set; }
 
         public Task _WaitForCloseAsync()
         {

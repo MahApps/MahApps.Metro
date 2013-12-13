@@ -29,19 +29,14 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
                         {
-                            //create the dialog control
-                            MessageDialog dialog = new MessageDialog(window);
-                            dialog.Message = message;
-                            dialog.Title = title;
-                            dialog.ButtonStyle = style;
-
                             if (settings == null)
                                 settings = window.MetroDialogOptions;
 
-                            dialog.AffirmativeButtonText = settings.AffirmativeButtonText;
-                            dialog.NegativeButtonText = settings.NegativeButtonText;
-                            dialog.FirstAuxiliaryButtonText = settings.FirstAuxiliaryButtonText;
-                            dialog.SecondAuxiliaryButtonText = settings.SecondAuxiliaryButtonText;
+                            //create the dialog control
+                            MessageDialog dialog = new MessageDialog(window, settings);
+                            dialog.Message = message;
+                            dialog.Title = title;
+                            dialog.ButtonStyle = style;
 
                             SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;

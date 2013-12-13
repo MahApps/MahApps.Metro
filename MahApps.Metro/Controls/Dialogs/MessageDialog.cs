@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -24,8 +25,13 @@ namespace MahApps.Metro.Controls.Dialogs
         //{
         //    //DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageDialog), new FrameworkPropertyMetadata(typeof(MessageDialog)));
         //}
+
         internal MessageDialog(MetroWindow parentWindow)
-            : base(parentWindow)
+            : this(parentWindow, null)
+        {
+        }
+        internal MessageDialog(MetroWindow parentWindow, MetroDialogSettings settings)
+            : base(parentWindow, settings)
         {
             InitializeComponent();
         }
@@ -204,6 +210,22 @@ namespace MahApps.Metro.Controls.Dialogs
                     }
                     break;
             }
+
+            md.AffirmativeButtonText = md.DialogSettings.AffirmativeButtonText;
+            md.NegativeButtonText = md.DialogSettings.NegativeButtonText;
+            md.FirstAuxiliaryButtonText = md.DialogSettings.FirstAuxiliaryButtonText;
+            md.SecondAuxiliaryButtonText = md.DialogSettings.SecondAuxiliaryButtonText;
+
+            //switch (md.DialogSettings.ColorScheme)
+            //{
+            //    case MetroDialogColorScheme.Accented:
+            //        md.PART_NegativeButton.Background = md.FindResource("HighlightBrush") as Brush;
+            //        md.PART_FirstAuxiliaryButton.Background = md.FindResource("HighlightBrush") as Brush;
+            //        md.PART_SecondAuxiliaryButton.Background = md.FindResource("HighlightBrush") as Brush;
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         private void Dialog_Loaded(object sender, RoutedEventArgs e)
