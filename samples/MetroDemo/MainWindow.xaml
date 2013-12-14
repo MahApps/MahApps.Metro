@@ -823,9 +823,11 @@
                                                   RangeStartSelected="20"
                                                   RangeStopSelected="60"
                                                   x:Name="eventSlider"
+                                                  RangeStartChangedEnd="eventSlider_RangeStartChangedEnd"
+                                                  RangeStopChangedEnd="eventSlider_RangeStopChangedEnd" 
+                                                  RangeSelectionChanged="eventSlider_RangeSelectionChanged"
                                                   RangeStartChanged="eventSlider_RangeStartChanged"
-                                                  RangeStopChanged="eventSlider_RangeStopChanged" 
-                                                  RangeSelectionChanged="eventSlider_RangeSelectionChanged" />
+                                                  RangeStopChanged="eventSlider_RangeStopChanged" />
 
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="0">

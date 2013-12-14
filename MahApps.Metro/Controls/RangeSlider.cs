@@ -25,6 +25,8 @@ namespace MahApps.Metro.Controls
         public static readonly RoutedEvent RangeSelectionChangedEvent = EventManager.RegisterRoutedEvent("RangeSelectionChanged", RoutingStrategy.Bubble, typeof(RangeSelectionChangedEventHandler), typeof(RangeSlider));
         public static readonly RoutedEvent RangeStartChangedEvent = EventManager.RegisterRoutedEvent("RangeStartChanged", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
         public static readonly RoutedEvent RangeStopChangedEvent = EventManager.RegisterRoutedEvent("RangeStopChanged", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
+        public static readonly RoutedEvent RangeStartChangedEndEvent = EventManager.RegisterRoutedEvent("RangeStartChangedEnd", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
+        public static readonly RoutedEvent RangeStopChangedEndEvent = EventManager.RegisterRoutedEvent("RangeStopChangedEnd", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
 
         public static RoutedUICommand MoveBack = new RoutedUICommand("MoveBack", "MoveBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Control) }));
         public static RoutedUICommand MoveForward = new RoutedUICommand("MoveForward", "MoveForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Control) }));
@@ -99,6 +101,18 @@ namespace MahApps.Metro.Controls
         {
             add { AddHandler(RangeStopChangedEvent, value); }
             remove { RemoveHandler(RangeStopChangedEvent, value); }
+        }
+
+        public event RangeParameterChangedEventHandler RangeStartChangedEnd
+        {
+            add { AddHandler(RangeStartChangedEndEvent, value); }
+            remove { RemoveHandler(RangeStartChangedEndEvent, value); }
+        }
+
+        public event RangeParameterChangedEventHandler RangeStopChangedEnd
+        {
+            add { AddHandler(RangeStopChangedEndEvent, value); }
+            remove { RemoveHandler(RangeStopChangedEndEvent, value); }
         }
 
         private const double RepeatButtonMoveRatio = 0.1;
@@ -196,7 +210,7 @@ namespace MahApps.Metro.Controls
         {
             if (RangeStartSelected == RangeStopSelected && e.HorizontalChange > 0)
             {
-                //prevent the left thumb from pushing the right thumb off the screen
+                //prevent the left thumb from pushing the right thumb off the screen... doesn't always work.
                 e.Handled = true;
                 return;
             }
@@ -256,17 +270,24 @@ namespace MahApps.Metro.Controls
 
         private void ReCalculateRangeSelected(bool reCalculateStart, bool reCalculateStop)
         {
+            long oldStart = 0, oldStop = 0;
+
             _internalUpdate = true;//set flag to signal that the properties are being set by the object itself
             if (reCalculateStart)
             {
+                oldStart = RangeStartSelected;
+
                 // Make sure to get exactly rangestart if thumb is at the start
                 RangeStartSelected = _leftButton.Width == 0.0 ? RangeStart : Math.Min(Math.Max(RangeStart, (long)(RangeStart + _movableRange * _leftButton.Width / _movableWidth)), RangeStopSelected);
             }
 
             if (reCalculateStop)
             {
+                oldStop = RangeStopSelected;
+
                 // Make sure to get exactly rangestop if thumb is at the end
                 RangeStopSelected = _rightButton.Width == 0.0 ? RangeStop : Math.Max(Math.Min(RangeStop, (long)(RangeStop - _movableRange * _rightButton.Width / _movableWidth)), RangeStartSelected + MinRange);
+
             }
 
             _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
@@ -276,6 +297,11 @@ namespace MahApps.Metro.Controls
                 //raise the RangeSelectionChanged event
                 OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
             }
+
+            if (reCalculateStart && oldStart != RangeStartSelected)
+                OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Start, oldStart, RangeStartSelected), RangeStartChangedEvent);
+            else if (reCalculateStop && oldStop != RangeStopSelected)
+                OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Stop, oldStop, RangeStopSelected), RangeStopChangedEvent);
         }
 
         public void MoveSelection(bool isLeft)
@@ -440,13 +466,13 @@ namespace MahApps.Metro.Controls
         private void RightThumbDragComplete(object sender, DragCompletedEventArgs e)
         {
             if (oldStop != RangeStopSelected)
-                OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Stop, oldStop, RangeStopSelected), RangeStopChangedEvent);
+                OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Stop, oldStop, RangeStopSelected), RangeStopChangedEndEvent);
         }
 
         private void LeftThumbDragComplete(object sender, DragCompletedEventArgs e)
         {
             if (oldStart != RangeStartSelected)
-                OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Start, oldStart, RangeStartSelected), RangeStartChangedEvent);
+                OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Start, oldStart, RangeStartSelected), RangeStartChangedEndEvent);
         }
 
         public Thumb LeftThumb { get { return _leftThumb; } }
