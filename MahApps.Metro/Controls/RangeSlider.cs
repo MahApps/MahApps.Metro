@@ -196,6 +196,7 @@ namespace MahApps.Metro.Controls
         {
             if (RangeStartSelected == RangeStopSelected && e.HorizontalChange > 0)
             {
+                //prevent the left thumb from pushing the right thumb off the screen
                 e.Handled = true;
                 return;
             }
@@ -447,5 +448,8 @@ namespace MahApps.Metro.Controls
             if (oldStart != RangeStartSelected)
                 OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Start, oldStart, RangeStartSelected), RangeStartChangedEvent);
         }
+
+        public Thumb LeftThumb { get { return _leftThumb; } }
+        public Thumb RightThumb { get { return _rightThumb; } }
     }
 }
