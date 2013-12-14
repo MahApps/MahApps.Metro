@@ -253,13 +253,13 @@ namespace MahApps.Metro.Controls
             if (reCalculateStart)
             {
                 // Make sure to get exactly rangestart if thumb is at the start
-                RangeStartSelected = _leftButton.Width == 0.0 ? RangeStart : Math.Min(Math.Max(RangeStart, (long)(RangeStart + _movableRange * _leftButton.Width / _movableWidth)), RangeStopSelected); ;
+                RangeStartSelected = _leftButton.Width == 0.0 ? RangeStart : Math.Min(Math.Max(RangeStart, (long)(RangeStart + _movableRange * _leftButton.Width / _movableWidth)), RangeStopSelected);
             }
 
             if (reCalculateStop)
             {
                 // Make sure to get exactly rangestop if thumb is at the end
-                RangeStopSelected = _rightButton.Width == 0.0 ? RangeStop : Math.Max(Math.Min(RangeStop, (long)(RangeStop - _movableRange * _rightButton.Width / _movableWidth)), RangeStart + MinRange);
+                RangeStopSelected = _rightButton.Width == 0.0 ? RangeStop : Math.Max(Math.Min(RangeStop, (long)(RangeStop - _movableRange * _rightButton.Width / _movableWidth)), RangeStartSelected + MinRange);
             }
 
             _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
