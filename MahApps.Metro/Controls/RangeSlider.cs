@@ -194,6 +194,12 @@ namespace MahApps.Metro.Controls
 
         private void LeftThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
+            if (RangeStartSelected == RangeStopSelected && e.HorizontalChange > 0)
+            {
+                e.Handled = true;
+                return;
+            }
+
             MoveThumb(_leftButton, _centerThumb, e.HorizontalChange);
             ReCalculateRangeSelected(true, false);
         }
