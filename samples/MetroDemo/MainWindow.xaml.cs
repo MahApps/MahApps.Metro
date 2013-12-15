@@ -113,14 +113,15 @@ namespace MetroDemo
             {
                 AffirmativeButtonText = "Hi",
                 NegativeButtonText = "Go away!",
-                FirstAuxiliaryButtonText = "Cancel",
-                ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Theme : MetroDialogColorScheme.Accented
+                FirstAuxiliaryButtonText = "Cancel"
             };
 
-            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro! This dialog will be the opposite of the Use Accent setting.", MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro! ", 
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)
-            await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText));
+            await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText + 
+                Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
 
         private async void ShowSimpleDialog(object sender, RoutedEventArgs e)

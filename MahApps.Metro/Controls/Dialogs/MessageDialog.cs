@@ -216,16 +216,16 @@ namespace MahApps.Metro.Controls.Dialogs
             md.FirstAuxiliaryButtonText = md.DialogSettings.FirstAuxiliaryButtonText;
             md.SecondAuxiliaryButtonText = md.DialogSettings.SecondAuxiliaryButtonText;
 
-            //switch (md.DialogSettings.ColorScheme)
-            //{
-            //    case MetroDialogColorScheme.Accented:
-            //        md.PART_NegativeButton.Background = md.FindResource("HighlightBrush") as Brush;
-            //        md.PART_FirstAuxiliaryButton.Background = md.FindResource("HighlightBrush") as Brush;
-            //        md.PART_SecondAuxiliaryButton.Background = md.FindResource("HighlightBrush") as Brush;
-            //        break;
-            //    default:
-            //        break;
-            //}
+            switch (md.DialogSettings.ColorScheme)
+            {
+                case MetroDialogColorScheme.Accented:
+                    md.PART_NegativeButton.Style = md.FindResource("HighlightedSquareButtonStyle") as Style;
+                    md.PART_FirstAuxiliaryButton.Style = md.FindResource("HighlightedSquareButtonStyle") as Style;
+                    md.PART_SecondAuxiliaryButton.Style = md.FindResource("HighlightedSquareButtonStyle") as Style;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void Dialog_Loaded(object sender, RoutedEventArgs e)
