@@ -269,11 +269,11 @@
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type Expander}},
+                    <ContentPresenter Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Expander}},
                                               Path=Header,
                                               Mode=OneWay,
                                               Converter={StaticResource ToUpperConverter}}">
-                        <TextBlock.Foreground>
+                        <TextElement.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding Mode="OneWay"
                                          Path="Background"
@@ -284,8 +284,8 @@
                                          RelativeSource="{RelativeSource FindAncestor,
                                                                          AncestorType={x:Type Expander}}" />
                             </MultiBinding>
-                        </TextBlock.Foreground>
-                    </TextBlock>
+                        </TextElement.Foreground>
+                    </ContentPresenter>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
