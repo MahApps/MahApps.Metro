@@ -224,9 +224,11 @@ namespace MahApps.Metro.Controls
             if (CurrentContentPresentationSite != null)
             {
                 if (ContentTemplateSelector != null)
-                    CurrentContentPresentationSite.Content = ContentTemplateSelector.SelectTemplate(null, this);
+                    CurrentContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(Content, this);
                 else
-                    CurrentContentPresentationSite.Content = Content;
+                    CurrentContentPresentationSite.ContentTemplate = null;
+
+                CurrentContentPresentationSite.Content = Content;
             }
 
             // hookup currenttransition
@@ -261,8 +263,20 @@ namespace MahApps.Metro.Controls
                     CurrentTransition.Completed -= OnTransitionCompleted;
                 }
 
+                if (ContentTemplateSelector != null)
+                {
+                    PreviousContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(oldContent, this);
+                    CurrentContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(newContent, this);
+                }
+                else
+                {
+                    PreviousContentPresentationSite.ContentTemplate = null;
+                    CurrentContentPresentationSite.ContentTemplate = null;
+                }
+
                 CurrentContentPresentationSite.Content = newContent;
                 PreviousContentPresentationSite.Content = oldContent;
+
 
                 // and start a new transition
                 if (!IsTransitioning || RestartTransitionOnContentChange)
