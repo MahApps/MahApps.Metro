@@ -239,7 +239,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
             window.SizeChanged += sizeHandler;
 
-            window.SizeToContent = SizeToContent.Height;
+            if (window.MetroDialogOptions.CanChangeSizeToContent)
+            {
+                window.SizeToContent = SizeToContent.Height;
+            }
 
             //window.overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
 
