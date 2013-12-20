@@ -99,6 +99,7 @@
                     <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
                     <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                     <MenuItem Click="ShowSimpleDialog" Header="Show SimpleDialog" />
+                    <MenuItem Click="ShowDialogOutside" Header="Show SimpleDialog Externally" />
                 </MenuItem>
             </Menu>
 

@@ -43,7 +43,7 @@
                 IsIndeterminate="True"
                 Minimum="0.0"
                 Maximum="1.0"
-                Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                Foreground="{Binding ProgressBarForeground, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                 x:Name="PART_ProgressBar" />
     </Dialogs:BaseMetroDialog.DialogBottom>
 </Dialogs:BaseMetroDialog>

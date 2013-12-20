@@ -93,15 +93,35 @@ namespace MetroDemo
 #endif
         }
 
+        private async void ShowDialogOutside(object sender, RoutedEventArgs e)
+        {
+            var dialog = (BaseMetroDialog) this.Resources["SimpleDialogTest"];
+            dialog = dialog.ShowDialogExternally();
+
+            await TaskEx.Delay(5000);
+
+            dialog.RequestClose();
+        }
+
         private async void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
             // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support
             // The package is only used by the demo and not a dependency of the library!
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
-            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!", MessageDialogStyle.AffirmativeAndNegative);
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Hi",
+                NegativeButtonText = "Go away!",
+                FirstAuxiliaryButtonText = "Cancel"
+            };
 
-            await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? "OK" : "Cancel"));
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro! ", 
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+            if (result != MessageDialogResult.FirstAuxiliary)
+            await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText + 
+                Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
 
         private async void ShowSimpleDialog(object sender, RoutedEventArgs e)

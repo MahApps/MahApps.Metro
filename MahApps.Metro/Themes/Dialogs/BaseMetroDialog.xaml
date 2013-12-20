@@ -25,6 +25,14 @@
                     <Setter Property="FocusVisualStyle"
                             Value="{x:Null}" />
                 </Style>
+
+
+                <Storyboard x:Key="DialogShownStoryboard">
+                    <DoubleAnimation To="1" BeginTime="0:0:0" Duration="0:0:0.2" AccelerationRatio=".9" Storyboard.TargetProperty="Opacity" />
+                </Storyboard>
+                <Storyboard x:Key="DialogCloseStoryboard">
+                    <DoubleAnimation To="0" BeginTime="0:0:0" Duration="0:0:0.2" AccelerationRatio=".9" Storyboard.TargetProperty="Opacity" />
+                </Storyboard>
             </ResourceDictionary>
         </ControlTemplate.Resources>
 
@@ -70,6 +78,14 @@
                 </Grid>
             </Border>
         </Grid>
+        <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource DialogShownStoryboard}" />
+                </EventTrigger.Actions>
+            </EventTrigger>
+            
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style TargetType="{x:Type Dialogs:BaseMetroDialog}">
@@ -89,5 +105,7 @@
                 Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation"
                 Value="Cycle" />
+        <Setter Property="Opacity" 
+                Value="0" />
     </Style>
 </ResourceDictionary>
