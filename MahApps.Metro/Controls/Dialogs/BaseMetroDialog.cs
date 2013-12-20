@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -14,6 +15,8 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+
+        protected MetroDialogSettings DialogSettings { get; private set; }
 
         /// <summary>
         /// Gets/sets the dialog's title.
@@ -63,9 +66,11 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
         /// </summary>
         /// <param name="owningWindow">The window that is the parent of the dialog.</param>
-        public BaseMetroDialog(MetroWindow owningWindow)
+        public BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
         {
-            switch (owningWindow.MetroDialogOptions.ColorScheme)
+            DialogSettings = settings == null ? owningWindow.MetroDialogOptions : settings;
+
+            switch (DialogSettings.ColorScheme)
             {
                 case MetroDialogColorScheme.Theme:
                     this.SetResourceReference(BackgroundProperty, "WhiteColorBrush");
@@ -75,6 +80,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
                     break;
             }
+
+            OwningWindow = owningWindow;
         }
         /// <summary>
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
@@ -108,8 +115,73 @@ namespace MahApps.Metro.Controls.Dialogs
             return tcs.Task;
         }
 
+        /// <summary>
+        /// Requests an externally shown Dialog to close. Will throw an exception if the Dialog is inside of a MetroWindow.
+        /// </summary>
+        public void RequestClose()
+        {
+            //Technically, the Dialog is /always/ inside of a MetroWindow. However, this is thrown because it is inside of a user-defined one, not an internally-defined one.
+            if (ParentDialogWindow == null) throw new InvalidOperationException("This dialog is inside of a MetroWindow! Call HideMetroDialogAsync!");
+
+            if (OnRequestClose())
+            {
+                _WaitForCloseAsync().ContinueWith(x =>
+                    {
+                        ParentDialogWindow.Dispatcher.Invoke(new Action(() =>
+                        {
+                            ParentDialogWindow.Close();
+                        }));
+                    });
+            }
+        }
+
         internal protected virtual void OnShown() { }
-        internal protected virtual void OnClose() { }
+        internal protected virtual void OnClose()
+        {
+            if (ParentDialogWindow != null) //this is only set when a dialog is shown (externally) in it's OWN window.
+                ParentDialogWindow.Close();
+        }
+
+        /// <summary>
+        /// A last chance virtual method for stopping an external dialog from closing.
+        /// </summary>
+        /// <returns></returns>
+        internal protected virtual bool OnRequestClose()
+        {
+            return true; //allow the dialog to close.
+        }
+
+        /// <summary>
+        /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown externally.
+        /// </summary>
+        protected internal Window ParentDialogWindow { get; internal set; }
+        /// <summary>
+        /// Gets the window that owns the current Dialog IF AND ONLY IF the dialog is shown inside of a window.
+        /// </summary>
+        protected internal MetroWindow OwningWindow { get; internal set; }
+
+        public Task _WaitForCloseAsync()
+        {
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+
+            Storyboard closingStoryboard = this.Template.Resources["DialogCloseStoryboard"] as Storyboard;
+
+            EventHandler handler = null;
+            handler = new EventHandler((sender, args) =>
+            {
+                closingStoryboard.Completed -= handler;
+
+                tcs.TrySetResult(null);
+            });
+
+            closingStoryboard = closingStoryboard.Clone();
+
+            closingStoryboard.Completed += handler;
+
+            closingStoryboard.Begin(this);
+
+            return tcs.Task;
+        }
     }
 
     /// <summary>
@@ -117,7 +189,7 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public class MetroDialogSettings
     {
-        internal MetroDialogSettings()
+        public MetroDialogSettings()
         {
             AffirmativeButtonText = "OK";
             NegativeButtonText = "Cancel";
@@ -133,6 +205,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the text used for the Negative bytton. For example: "Cancel" or "No".
         /// </summary>
         public string NegativeButtonText { get; set; }
+        public string FirstAuxiliaryButtonText { get; set; }
+        public string SecondAuxiliaryButtonText { get; set; }
 
         /// <summary>
         /// Gets/sets whether the metro dialog should use the default black/white appearance (theme) or try to use the current accent.

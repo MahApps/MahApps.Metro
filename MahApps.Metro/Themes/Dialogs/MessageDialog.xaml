@@ -32,6 +32,18 @@
                                     Height="35"
                                     MinWidth="80"
                                     Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                                    Margin="5 0 5 0" />
+                <Button x:Name="PART_FirstAuxiliaryButton"
+                                    Height="35"
+                                    MinWidth="80"
+                                    Visibility="Collapsed"
+                                    Content="{Binding FirstAuxiliaryButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                                    Margin="5 0 5 0" />
+                <Button x:Name="PART_SecondAuxiliaryButton"
+                                    Height="35"
+                                    MinWidth="80"
+                                    Visibility="Collapsed"
+                                    Content="{Binding SecondAuxiliaryButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                                     Margin="5 0 0 0" />
 
                 <!--<StackPanel.Style>
