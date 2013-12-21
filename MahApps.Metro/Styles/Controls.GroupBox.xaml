@@ -22,8 +22,8 @@
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type GroupBox}}, Path=Header, Mode=OneWay, Converter={StaticResource ToUpperConverter}}">
-                        <TextBlock.Foreground>
+                    <ContentPresenter Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type GroupBox}}, Path=Header, Mode=OneWay, Converter={StaticResource ToUpperConverter}}">
+                        <TextElement.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                 <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type GroupBox}}"
                                          Path="Background"
@@ -32,8 +32,8 @@
                                          Path="(Controls:ControlsHelper.GroupBoxHeaderForeground)"
                                          Mode="OneWay" />
                             </MultiBinding>
-                        </TextBlock.Foreground>
-                    </TextBlock>
+                        </TextElement.Foreground>
+                    </ContentPresenter>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
