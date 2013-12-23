@@ -11,6 +11,16 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="Temp0">
+                <TextBlock Text="Nothing selected"/>
+            </DataTemplate>
+            <DataTemplate x:Key="Temp1">
+                <TextBlock Text="Something about Item 1"/>
+            </DataTemplate>
+            <DataTemplate x:Key="Temp2">
+                <TextBlock Text="Another thing about Item 2"/>
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <Controls:MetroWindow.WindowCommands>
@@ -62,11 +72,23 @@
     </Controls:MetroWindow.Flyouts>
 
     <Grid>
-        <GroupBox Header="Hello">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Content="Test" Height="20" Width="40" Click="Button_Click"/>
-                <Button Content="Test 2" Height="20" Width="40" Click="Button_Click_1"/>
+        <StackPanel>
+            <GroupBox Header="Hello">
+				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                	<Button Content="Test" Height="20" Width="40" Click="Button_Click"/>
+                	<Button Content="Test 2" Height="20" Width="40" Click="Button_Click_1"/>
+            	</StackPanel>
+            </GroupBox>
+            <StackPanel Orientation="Horizontal">
+                <Controls:TransitioningContentControl x:Name="tc" Height="200" Width="200"
+                                                      Content="{Binding ElementName=lb,Path=SelectedItem}">
+
+                </Controls:TransitioningContentControl>
+                <ListBox x:Name="lb" Width="200" Height="200">
+                    <ListBoxItem>Item 1</ListBoxItem>
+                    <ListBoxItem>Item 2</ListBoxItem>
+                </ListBox>
             </StackPanel>
-        </GroupBox>
+        </StackPanel>
     </Grid>
 </Controls:MetroWindow>
