@@ -72,6 +72,7 @@
             <Button Click="LauchCleanDemo" Content="Clean Demo" />
             <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
             <Button Click="InteropDemo" Content="Interop Demo" />
+            <Button Click="LaunchNavigationDemo" Content="Navigation Demo"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
