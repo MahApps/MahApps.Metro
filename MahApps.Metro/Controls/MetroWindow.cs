@@ -52,13 +52,24 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
 
         bool isDragging;
-        ContentPresenter WindowCommandsPresenter;
-        WindowButtonCommands WindowButtonCommands;
+        internal ContentPresenter WindowCommandsPresenter;
+        internal WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
         internal Grid overlayBox;
         internal Grid messageDialogContainer;
         private Storyboard overlayStoryboard;
         Rectangle flyoutModal;
+
+        public static readonly RoutedEvent FlyoutsStatusChangedEvent = EventManager.RegisterRoutedEvent(
+            "FlyoutsStatusChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
+
+        // Provide CLR accessors for the event 
+        public event RoutedEventHandler FlyoutsStatusChanged
+        {
+            add { AddHandler(FlyoutsStatusChangedEvent, value); }
+            remove { RemoveHandler(FlyoutsStatusChangedEvent, value); }
+        }
+
 
         public MetroDialogSettings MetroDialogOptions { get; private set; }
 
@@ -531,6 +542,20 @@ namespace MahApps.Metro.Controls
             }
 
             flyoutModal.Visibility = visibleFlyouts.Any(x => x.IsModal) ? Visibility.Visible : Visibility.Hidden;
+
+            RaiseEvent(new FlyoutStatusChangedRoutedEventArgs(FlyoutsStatusChangedEvent, this)
+            {
+                ChangedFlyout = flyout
+            });
+        }
+
+        public class FlyoutStatusChangedRoutedEventArgs : RoutedEventArgs
+        {
+            internal FlyoutStatusChangedRoutedEventArgs(RoutedEvent rEvent, object source): base(rEvent, source)
+            {
+            }
+
+            public Flyout ChangedFlyout { get; internal set; }
         }
     }
 }

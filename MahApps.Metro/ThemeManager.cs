@@ -160,6 +160,21 @@ namespace MahApps.Metro
         /// <summary>
         /// Scans the window resources and returns it's accent and theme.
         /// </summary>
+        public static Tuple<Theme, Accent> DetectTheme()
+        {
+            try
+            {
+                return DetectTheme(Application.Current.MainWindow);
+            }
+            catch (Exception)
+            {
+                return DetectTheme(Application.Current);
+            }
+        }
+
+        /// <summary>
+        /// Scans the window resources and returns it's accent and theme.
+        /// </summary>
         /// <param name="window">The Window to scan.</param>
         public static Tuple<Theme, Accent> DetectTheme(Window window)
         {
