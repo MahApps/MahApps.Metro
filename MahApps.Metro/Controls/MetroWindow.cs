@@ -523,10 +523,10 @@ namespace MahApps.Metro.Controls
             {
                 //get it's zindex
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
-                if (this.ShowWindowCommandsOnTop) //if ShowWindowCommandsOnTop is true, set the window commands' zindex to a number that is higher than the flyout's. 
-                {
-                    WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, zIndex);
-                }
+
+                //if ShowWindowCommandsOnTop is true, set the window commands' zindex to a number that is higher than the flyout's. 
+                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
+
                 WindowButtonCommands.SetValue(Panel.ZIndexProperty, zIndex);
             }
 
