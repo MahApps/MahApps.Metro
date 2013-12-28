@@ -194,8 +194,6 @@ namespace MahApps.Metro.Controls.Dialogs
             AffirmativeButtonText = "OK";
             NegativeButtonText = "Cancel";
 
-            CanChangeSizeToContent = true;
-
             ColorScheme = MetroDialogColorScheme.Theme;
         }
 
