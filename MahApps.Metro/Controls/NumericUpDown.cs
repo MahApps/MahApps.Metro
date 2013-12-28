@@ -95,6 +95,11 @@ namespace MahApps.Metro.Controls
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
         }
 
+        ~NumericUpDown()
+        {
+            DataObject.RemovePastingHandler(_valueTextBox, OnValueTextBoxPaste);
+        }
+
         /// <summary>
         ///     Event fired from this NumericUpDown when its value has reached the maximum value
         /// </summary>
@@ -204,6 +209,7 @@ namespace MahApps.Metro.Controls
             _valueTextBox.LostFocus += OnTextBoxLostFocus;
             _valueTextBox.PreviewTextInput += OnPreviewTextInput;
             _valueTextBox.IsReadOnly = IsReadOnly;
+            DataObject.AddPastingHandler(_valueTextBox, OnValueTextBoxPaste);
 
             _repeatUp.Click += (o, e) => ChangeValue(true);
             _repeatDown.Click += (o, e) => ChangeValue(false);
@@ -212,6 +218,27 @@ namespace MahApps.Metro.Controls
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
 
             OnValueChanged(Value, Value);
+        }
+
+        private static void OnValueTextBoxPaste(object sender, DataObjectPastingEventArgs e)
+        {
+            var textBox = ((TextBox)sender);
+            string textPresent = textBox.Text;
+
+            var isText = e.SourceDataObject.GetDataPresent(DataFormats.Text, true);
+            if (!isText)
+            {
+                return;
+            }
+
+            var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
+
+            string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart));
+            double number;
+            if (!ValidateText(newText, out number))
+            {
+                e.CancelCommand();
+            }
         }
 
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
