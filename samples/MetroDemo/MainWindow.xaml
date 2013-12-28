@@ -480,9 +480,10 @@
                                                         Speedup="true" />
 
                                 <Label Content="StringFormat" />
-                                <Controls:NumericUpDown Value="5" 
+                                <Label Content="{Binding ElementName=test, Path=Value}" />
+                                <Controls:NumericUpDown x:Name="test" Value="5" 
                                                         SmallChange=".1"  
-                                                        StringFormat="C2" />
+                                                        StringFormat="E2" />
                                 <Controls:NumericUpDown Value="5"
                                                         SmallChange=".1" 
                                                         StringFormat="N2" />

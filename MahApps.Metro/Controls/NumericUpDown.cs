@@ -79,6 +79,7 @@ namespace MahApps.Metro.Controls
         private const string ElementTextBox = "PART_TextBox";
         private double _internalIntervalMultiplierForCalculation = DefaultInterval;
         private double _intervalValueSinceReset;
+        private bool _manualChange;
         private RepeatButton _repeatDown;
         private RepeatButton _repeatUp;
         private TextBox _valueTextBox;
@@ -209,6 +210,7 @@ namespace MahApps.Metro.Controls
             _valueTextBox.LostFocus += OnTextBoxLostFocus;
             _valueTextBox.PreviewTextInput += OnPreviewTextInput;
             _valueTextBox.IsReadOnly = IsReadOnly;
+            _valueTextBox.PreviewKeyDown += OnTextBoxKeyDown;
             DataObject.AddPastingHandler(_valueTextBox, OnValueTextBoxPaste);
 
             _repeatUp.Click += (o, e) => ChangeValue(true);
@@ -220,7 +222,12 @@ namespace MahApps.Metro.Controls
             OnValueChanged(Value, Value);
         }
 
-        private static void OnValueTextBoxPaste(object sender, DataObjectPastingEventArgs e)
+        private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
+        {
+            _manualChange = true;
+        }
+
+        private void OnValueTextBoxPaste(object sender, DataObjectPastingEventArgs e)
         {
             var textBox = ((TextBox)sender);
             string textPresent = textBox.Text;
@@ -461,10 +468,18 @@ namespace MahApps.Metro.Controls
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
+            if (!_manualChange)
+            {
+                return;
+            }
 
             double convertedValue;
             if (ValidateText(tb.Text, out convertedValue))
             {
+                if (Value == convertedValue)
+                {
+                    OnValueChanged(Value, Value);
+                }
                 if (convertedValue > Maximum)
                 {
                     if (Value == Maximum)
