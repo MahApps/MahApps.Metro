@@ -239,11 +239,6 @@ namespace MahApps.Metro.Controls.Dialogs
 
             window.SizeChanged += sizeHandler;
 
-            if (window.MetroDialogOptions.CanChangeSizeToContent)
-            {
-                window.SizeToContent = SizeToContent.Height;
-            }
-
             //window.overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
 
             window.messageDialogContainer.Children.Add(dialog); //add the dialog to the container

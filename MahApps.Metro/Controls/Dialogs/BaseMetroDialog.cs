@@ -211,10 +211,6 @@ namespace MahApps.Metro.Controls.Dialogs
         public string SecondAuxiliaryButtonText { get; set; }
 
         /// <summary>
-        /// Gets/sets whether opening a dialog inside the mainwindow will change the sizeToContent value to "height" (default:true)
-        /// </summary>
-        public bool CanChangeSizeToContent { get; set; }
-        /// <summary>
         /// Gets/sets whether the metro dialog should use the default black/white appearance (theme) or try to use the current accent.
         /// </summary>
         public MetroDialogColorScheme ColorScheme { get; set; }
