@@ -5,10 +5,12 @@ namespace MahApps.Metro.Controls
     using System;
     using System.ComponentModel;
     using System.Globalization;
+    using System.Linq;
     using System.Threading;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
+    using System.Windows.Input;
 
     #endregion
 
@@ -200,6 +202,7 @@ namespace MahApps.Metro.Controls
             }
 
             _valueTextBox.LostFocus += OnTextBoxLostFocus;
+            _valueTextBox.PreviewTextInput += OnPreviewTextInput;
             _valueTextBox.IsReadOnly = IsReadOnly;
 
             _repeatUp.Click += (o, e) => ChangeValue(true);
@@ -209,6 +212,34 @@ namespace MahApps.Metro.Controls
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
 
             OnValueChanged(Value, Value);
+        }
+
+        protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = true;
+            if (!string.IsNullOrWhiteSpace(e.Text) && e.Text.Length == 1)
+            {
+                string text = e.Text;
+
+                if (Char.IsDigit(text[0]))
+                {
+                    e.Handled = false;
+                }
+                else if (NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == text)
+                {
+                    if (!((TextBox)sender).Text.Any(i => i.ToString() == NumberFormatInfo.CurrentInfo.NumberDecimalSeparator))
+                    {
+                        e.Handled = false;
+                    }
+                }
+                else if (NumberFormatInfo.CurrentInfo.NegativeSign == text || text == NumberFormatInfo.CurrentInfo.PositiveSign)
+                {
+                    if (((TextBox)sender).SelectionStart == 0)
+                    {
+                        e.Handled = false;
+                    }
+                }
+            }
         }
 
         protected virtual void OnDelayChanged(int oldDelay, int newDelay)
@@ -395,12 +426,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private static bool ValidateText(string text, out double convertedValue)
+        {
+            return double.TryParse(text, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out convertedValue);
+        }
+
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
 
             double convertedValue;
-            if (double.TryParse(tb.Text, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out convertedValue))
+            if (ValidateText(tb.Text, out convertedValue))
             {
                 if (convertedValue > Maximum)
                 {
