@@ -192,9 +192,6 @@
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>
-                    <Behaviours:BorderlessWindowBehavior />
-                    <Behaviours:WindowsSettingBehaviour />
-                    <Behaviours:GlowWindowBehavior />
                     <Behaviours:InternalCleanWindowGlueBehavior />
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
