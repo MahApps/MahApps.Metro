@@ -75,10 +75,10 @@ namespace MahApps.Metro.Behaviours
 
         private static IntPtr SetClassLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
         {
-            if (IntPtr.Size > 4)
-                return UnsafeNativeMethods.SetClassLongPtr64(hWnd, nIndex, dwNewLong);
+            //if (IntPtr.Size > 4)
+            return UnsafeNativeMethods.SetClassLongPtr64(hWnd, nIndex, dwNewLong);
 
-            return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
+            // return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, dwNewLong));
         }
 
         /*Taken from http://stackoverflow.com/questions/20941443/properly-maximizing-wpf-window-with-windowstyle-none */
@@ -337,7 +337,19 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             AddHwndHook();
-            SetDefaultBackgroundColor();
+
+            try
+            {
+                SetDefaultBackgroundColor();
+            }
+            catch (OverflowException ex)
+            {
+                //known bug: see https://github.com/MahApps/MahApps.Metro/issues/897
+
+                throw new Exception(
+                     "Bug #897 has occurred.\r\n\tDWN Enabled: " + UnsafeNativeMethods.DwmIsCompositionEnabled().ToString() + "\r\n\tBackground: " + (AssociatedObject.Background as SolidColorBrush).Color.ToString()
+                    , ex);
+            }
         }
 
         private bool ShouldHaveBorder()
