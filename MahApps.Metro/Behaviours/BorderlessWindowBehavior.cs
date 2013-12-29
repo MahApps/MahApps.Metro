@@ -75,10 +75,10 @@ namespace MahApps.Metro.Behaviours
 
         private static IntPtr SetClassLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
         {
-            //if (IntPtr.Size > 4)
-            return UnsafeNativeMethods.SetClassLongPtr64(hWnd, nIndex, dwNewLong);
+            if (IntPtr.Size > 4)
+                return UnsafeNativeMethods.SetClassLongPtr64(hWnd, nIndex, dwNewLong);
 
-            // return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, dwNewLong));
+            return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, (uint)dwNewLong));
         }
 
         /*Taken from http://stackoverflow.com/questions/20941443/properly-maximizing-wpf-window-with-windowstyle-none */
