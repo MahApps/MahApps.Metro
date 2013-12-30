@@ -18,6 +18,21 @@ namespace MahApps.Metro.Behaviours
     public class BorderlessWindowBehavior : Behavior<Window>
     {
         private bool _isMaximize;
+        
+        #region Workaround for #897
+        /// <summary>
+        /// NO TOUCHY! This is a workaround for issue #897
+        /// </summary>
+        internal static readonly DependencyProperty BackgroundSetPropertyKey = DependencyProperty.RegisterAttached("BackgroundSet", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        internal static void SetBackgroundSet(UIElement element, Boolean value)
+        {
+            element.SetValue(BackgroundSetPropertyKey, value);
+        }
+        internal static Boolean GetBackgroundSet(UIElement element)
+        {
+            return (Boolean)element.GetValue(BackgroundSetPropertyKey);
+        }
+        #endregion
 
         public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
         public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
@@ -392,6 +407,9 @@ namespace MahApps.Metro.Behaviours
 
             if (bgSolidColorBrush != null)
             {
+                if (((bool)AssociatedObject.GetValue(BackgroundSetPropertyKey)))
+                    return;
+
                 var rgb = bgSolidColorBrush.Color.R | (bgSolidColorBrush.Color.G << 8) | (bgSolidColorBrush.Color.B << 16);
 
                 // set the default background color of the window -> this avoids the black stripes when resizing
@@ -399,6 +417,8 @@ namespace MahApps.Metro.Behaviours
 
                 if (hBrushOld != IntPtr.Zero)
                     UnsafeNativeMethods.DeleteObject(hBrushOld);
+
+                AssociatedObject.SetValue(BackgroundSetPropertyKey, true);
             }
         }
 

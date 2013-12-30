@@ -12,7 +12,7 @@ using MahApps.Metro.Controls;
 namespace MahApps.Metro.Behaviours
 {
     //in order to get around some short comings in XAML, I needed a code behind class that I could manipulate the window from.
-    internal class InternalCleanWindowGlueBehavior: Behavior<Window>
+    internal class InternalCleanWindowGlueBehavior : Behavior<Window>
     {
         public MetroWindow AssociatedMetroWindow { get { return this.AssociatedObject as MetroWindow; } }
 
@@ -38,6 +38,28 @@ namespace MahApps.Metro.Behaviours
             AssociatedMetroWindow.FlyoutsStatusChanged += AssociatedMetroWindow_FlyoutsStatusChanged;
 
             base.OnAttached();
+        }
+
+        private void InjectBehaviors()
+        {
+            var behaviors = AssociatedMetroWindow.GetValue(MahApps.Metro.Behaviours.StylizedBehaviors.BehaviorsProperty) as MahApps.Metro.Behaviours.StylizedBehaviorCollection;
+            if (!behaviors.Any(x => x is BorderlessWindowBehavior))
+            {
+                behaviors = behaviors.Clone() as MahApps.Metro.Behaviours.StylizedBehaviorCollection;
+                var be = new BorderlessWindowBehavior() { AllowsTransparency = true };
+                be.Attach(AssociatedMetroWindow);
+                behaviors.Add(be);
+
+                var gl = new GlowWindowBehavior();
+                gl.Attach(AssociatedMetroWindow);
+                behaviors.Add(gl);
+
+                behaviors.Freeze();
+
+
+                AssociatedMetroWindow.SetValue(MahApps.Metro.Behaviours.StylizedBehaviors.BehaviorsProperty, behaviors);
+                AssociatedMetroWindow.InvalidateArrange();
+            }
         }
 
         private void SetWindowCommandButtonsToBlackBrush()
