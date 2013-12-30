@@ -76,8 +76,8 @@ namespace MahApps.Metro.Controls
                 this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
                 this.hostWindow.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
                 this.hostWindow.StateChanged -= this.hostWindow_StateChanged;
-                this.hostWindow.Activated -= this.hostWindow_StateChanged;
-                this.hostWindow.Deactivated -= this.hostWindow_StateChanged;
+                this.hostWindow.Activated -= this.hostWindow_Activated;
+                this.hostWindow.Deactivated -= this.hostWindow_Deactivated;
             }
             this.Unloaded -= this.CustomValidationPopup_Unloaded;
             this.Opened -= this.CustomValidationPopup_Opened;
