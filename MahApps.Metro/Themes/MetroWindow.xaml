@@ -154,7 +154,7 @@
                               Grid.RowSpan="2"
                               Panel.ZIndex="4"
                               FocusVisualStyle="{x:Null}"
-                              x:Name="PART_MessageDialogContainer" />
+                              x:Name="PART_MetroDialogContainer" />
                     </Grid>
                 </Controls:MetroContentControl>
             </AdornerDecorator>

@@ -70,7 +70,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                             {
                                                 window.SizeChanged -= sizeHandler;
 
-                                                window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+                                                window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
                                                 return window.HideOverlayAsync();
                                                 //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
@@ -139,7 +139,7 @@ namespace MahApps.Metro.Controls.Dialogs
                                     {
                                         window.SizeChanged -= sizeHandler;
 
-                                        window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+                                        window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
                                         return window.HideOverlayAsync();
                                         //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
@@ -162,7 +162,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog)
         {
             window.Dispatcher.VerifyAccess();
-            if (window.messageDialogContainer.Children.Contains(dialog))
+            if (window.metroDialogContainer.Children.Contains(dialog))
                 throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
 
             return window.ShowOverlayAsync().ContinueWith(z =>
@@ -198,7 +198,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task HideMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog)
         {
             window.Dispatcher.VerifyAccess();
-            if (!window.messageDialogContainer.Children.Contains(dialog))
+            if (!window.metroDialogContainer.Children.Contains(dialog))
                 throw new InvalidOperationException("The provided dialog is not visible in the specified window.");
 
             window.SizeChanged -= dialog.SizeChangedHandler;
@@ -217,7 +217,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                 return (Task)window.Dispatcher.Invoke(new Func<Task>(() =>
                 {
-                    window.messageDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+                    window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
                     return window.HideOverlayAsync();
                 }));
@@ -241,7 +241,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             //window.overlayBox.Visibility = Visibility.Visible; //activate the overlay effect
 
-            window.messageDialogContainer.Children.Add(dialog); //add the dialog to the container
+            window.metroDialogContainer.Children.Add(dialog); //add the dialog to the container
 
             dialog.OnShown();
 

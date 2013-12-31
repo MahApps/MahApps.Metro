@@ -22,7 +22,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
     [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
-    [TemplatePart(Name = PART_MessageDialogContainer, Type = typeof(Grid))]
+    [TemplatePart(Name = PART_MetroDialogContainer, Type = typeof(Grid))]
     [TemplatePart(Name = PART_FlyoutModal, Type = typeof(Rectangle))]
     public class MetroWindow : Window
     {
@@ -30,7 +30,7 @@ namespace MahApps.Metro.Controls
         private const string PART_WindowCommands = "PART_WindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
         private const string PART_OverlayBox = "PART_OverlayBox";
-        private const string PART_MessageDialogContainer = "PART_MessageDialogContainer";
+        private const string PART_MetroDialogContainer = "PART_MetroDialogContainer";
         private const string PART_FlyoutModal = "PART_FlyoutModal";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -56,7 +56,7 @@ namespace MahApps.Metro.Controls
         internal WindowButtonCommands WindowButtonCommands;
         UIElement titleBar;
         internal Grid overlayBox;
-        internal Grid messageDialogContainer;
+        internal Grid metroDialogContainer;
         private Storyboard overlayStoryboard;
         Rectangle flyoutModal;
 
@@ -393,7 +393,7 @@ namespace MahApps.Metro.Controls
             WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
-            messageDialogContainer = GetTemplateChild(PART_MessageDialogContainer) as Grid;
+            metroDialogContainer = GetTemplateChild(PART_MetroDialogContainer) as Grid;
             flyoutModal = GetTemplateChild(PART_FlyoutModal) as Rectangle;
 
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
