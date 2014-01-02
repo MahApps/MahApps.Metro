@@ -6,23 +6,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">
-                    <ControlTemplate.Resources>
-                        <Color x:Key="RangeReachedColor">OrangeRed</Color>
-                        <Storyboard x:Key="MinMaxReached">
-                            <ColorAnimation AutoReverse="True"
-                                    Duration="00:00:00.1"
-                                    Storyboard.TargetName="PART_TextBox"
-                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
-                                    To="{StaticResource RangeReachedColor}" />
-                        </Storyboard>
-                    </ControlTemplate.Resources>
                     <Grid Background="{TemplateBinding Background}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="20" />
                             <ColumnDefinition Width="20" />
                         </Grid.ColumnDefinitions>
-
                         <TextBox x:Name="PART_TextBox"
                                 Grid.ColumnSpan="3" 
                                 Padding="0,0,40,0"
@@ -59,16 +48,6 @@
                         </RepeatButton>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <EventTrigger RoutedEvent="MaximumReached">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard Storyboard="{StaticResource MinMaxReached}" />
-                            </EventTrigger.Actions>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="MinimumReached">
-                            <EventTrigger.Actions>
-                                <BeginStoryboard Storyboard="{StaticResource MinMaxReached}" />
-                            </EventTrigger.Actions>
-                        </EventTrigger>
                         <Trigger SourceName="PART_NumericUp"
                                 Property="IsMouseOver"
                                 Value="True">
@@ -89,7 +68,6 @@
                                     Property="Fill"
                                     Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
-
                         <Trigger SourceName="PART_NumericDown"
                                 Property="IsMouseOver"
                                 Value="True">
