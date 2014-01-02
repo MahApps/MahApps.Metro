@@ -22,8 +22,6 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementTextBox, Type = typeof(TextBox))]
     public class NumericUpDown : RangeBase
     {
-        public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
 
         /// <summary>
@@ -118,18 +116,6 @@ namespace MahApps.Metro.Controls
         {
             add { AddHandler(MinimumReachedEvent, value); }
             remove { RemoveHandler(MinimumReachedEvent, value); }
-        }
-
-        public event RoutedEventHandler IncrementValue
-        {
-            add { AddHandler(IncrementValueEvent, value); }
-            remove { RemoveHandler(IncrementValueEvent, value); }
-        }
-
-        public event RoutedEventHandler DecrementValue
-        {
-            add { AddHandler(DecrementValueEvent, value); }
-            remove { RemoveHandler(DecrementValueEvent, value); }
         }
 
         public event RoutedEventHandler DelayChanged
@@ -440,7 +426,6 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValue(bool toPositive)
         {
-            RaiseEvent(new RoutedEventArgs(toPositive ? IncrementValueEvent : DecrementValueEvent));
             if (Speedup)
             {
                 double d = SmallChange * LargeChange;
