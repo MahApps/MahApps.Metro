@@ -87,7 +87,7 @@ namespace MahApps.Metro.Controls
         static NumericUpDown()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(typeof(NumericUpDown)));
-            MinimumProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MinValue, null, CoerceMinimum));
+            MinimumProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MinValue));
             SmallChangeProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(DefaultInterval, IntervalChanged));
             LargeChangeProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(100 * DefaultInterval));
             MaximumProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MaxValue));
@@ -377,18 +377,6 @@ namespace MahApps.Metro.Controls
                     _valueTextBox.Text = newValue.ToString(StringFormat);
                 }
             }
-        }
-
-        private static object CoerceMinimum(DependencyObject d, object value)
-        {
-            RangeBase ctrl = (RangeBase)d;
-            double max = ctrl.Maximum;
-            if ((double)value > max)
-            {
-                return max;
-            }
-
-            return value;
         }
 
         private static void IntervalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
