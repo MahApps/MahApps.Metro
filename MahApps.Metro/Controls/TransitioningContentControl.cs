@@ -54,7 +54,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         LeftReplace,
         /// <summary>
-        /// Use a custom VisualState, the name must be CustomTransition
+        /// Use a custom VisualState, the name must be set using CustomVisualStatesName property
         /// </summary>
         Custom
     }
@@ -80,11 +80,21 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TransitionProperty = DependencyProperty.Register("Transition", typeof(TransitionType), typeof(TransitioningContentControl), new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits, OnTransitionPropertyChanged));
         public static readonly DependencyProperty RestartTransitionOnContentChangeProperty = DependencyProperty.Register("RestartTransitionOnContentChange", typeof(bool), typeof(TransitioningContentControl), new PropertyMetadata(false, OnRestartTransitionOnContentChangePropertyChanged));
         public static readonly DependencyProperty CustomVisualStatesProperty = DependencyProperty.Register("CustomVisualStates", typeof(ObservableCollection<VisualState>), typeof(TransitioningContentControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty CustomVisualStatesNameProperty = DependencyProperty.Register("CustomVisualStatesName", typeof(string), typeof(TransitioningContentControl), new PropertyMetadata("CustomTransition"));
 
         public ObservableCollection<VisualState> CustomVisualStates
         {
             get { return (ObservableCollection<VisualState>)this.GetValue(CustomVisualStatesProperty); }
             set { this.SetValue(CustomVisualStatesProperty, value); }
+        }
+        
+        /// <summary>
+        /// Gets or sets the name of the custom transition visual state.
+        /// </summary>
+        public string CustomVisualStatesName
+        {
+            get { return (string)this.GetValue(CustomVisualStatesNameProperty); }
+            set { this.SetValue(CustomVisualStatesNameProperty, value); }
         }
 
         /// <summary>
@@ -376,7 +386,7 @@ namespace MahApps.Metro.Controls
                 case TransitionType.LeftReplace:
                     return "LeftReplaceTransition";
                 case TransitionType.Custom:
-                    return "CustomTransition";
+                    return CustomVisualStatesName;
             }
         }
     }
