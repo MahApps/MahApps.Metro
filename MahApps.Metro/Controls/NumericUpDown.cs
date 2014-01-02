@@ -24,6 +24,7 @@ namespace MahApps.Metro.Controls
     {
         public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
+        public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
 
         /// <summary>
         ///     Event for "To value has been reached"
@@ -129,6 +130,12 @@ namespace MahApps.Metro.Controls
         {
             add { AddHandler(DecrementValueEvent, value); }
             remove { RemoveHandler(DecrementValueEvent, value); }
+        }
+
+        public event RoutedEventHandler DelayChanged
+        {
+            add { AddHandler(DelayChangedEvent, value); }
+            remove { RemoveHandler(DelayChangedEvent, value); }
         }
 
         /// <summary>
@@ -400,6 +407,7 @@ namespace MahApps.Metro.Controls
         {
             NumericUpDown ctrl = (NumericUpDown)d;
 
+            ctrl.RaiseChangeDelay();
             ctrl.OnDelayChanged((int)e.OldValue, (int)e.NewValue);
         }
 
@@ -423,6 +431,11 @@ namespace MahApps.Metro.Controls
         private static bool ValidateDelay(object value)
         {
             return Convert.ToInt32(value) >= 0;
+        }
+
+        private void RaiseChangeDelay()
+        {
+            RaiseEvent(new RoutedEventArgs(DelayChangedEvent));
         }
 
         private void ChangeValue(bool toPositive)
