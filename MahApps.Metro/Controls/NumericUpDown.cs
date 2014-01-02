@@ -452,11 +452,11 @@ namespace MahApps.Metro.Controls
 
             if (toPositive)
             {
-                SetSilentValue(Value + _internalIntervalMultiplierForCalculation);
+                Value = Value + _internalIntervalMultiplierForCalculation;
             }
             else
             {
-                SetSilentValue(Value - _internalIntervalMultiplierForCalculation);
+                Value = Value - _internalIntervalMultiplierForCalculation;
             }
         }
 
@@ -518,11 +518,6 @@ namespace MahApps.Metro.Controls
             LargeChange = 100 * SmallChange;
             _internalIntervalMultiplierForCalculation = SmallChange;
             _intervalValueSinceReset = 0;
-        }
-
-        private void SetSilentValue(double value)
-        {
-            Value = value;
         }
     }
 }
