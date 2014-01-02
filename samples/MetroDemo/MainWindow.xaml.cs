@@ -29,6 +29,7 @@ namespace MetroDemo
             var dateTime = DateTime.Now;
             transitioning.Content = new TextBlock { Text = "Transitioning Content! " + dateTime, SnapsToDevicePixels = true };
             customTransitioning.Content = new TextBlock { Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true };
+            SecondcustomTransitioning.Content = new TextBlock { Text = "Second custom transistion! " + dateTime, SnapsToDevicePixels = true };
         }
 
         private void ThemeLight(object sender, RoutedEventArgs e)
