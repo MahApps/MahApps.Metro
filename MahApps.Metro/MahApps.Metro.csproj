@@ -129,8 +129,6 @@
     <Compile Include="Controls\PanoramaGroup.cs" />
     <Compile Include="Controls\Planerator.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
-    <Compile Include="Controls\RangeSelectionChangedEventArgs.cs" />
-    <Compile Include="Controls\RangeSlider.cs" />
     <Compile Include="Controls\TextboxHelper.cs" />
     <Compile Include="Controls\ToggleSwitchButton.cs" />
     <Compile Include="Controls\TransitioningContentControl.cs" />
@@ -491,10 +489,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\ProgressRing.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\RangeSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
