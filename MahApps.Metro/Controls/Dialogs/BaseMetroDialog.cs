@@ -118,21 +118,30 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Requests an externally shown Dialog to close. Will throw an exception if the Dialog is inside of a MetroWindow.
         /// </summary>
-        public void RequestClose()
+        public Task RequestCloseAsync()
         {
-            //Technically, the Dialog is /always/ inside of a MetroWindow. However, this is thrown because it is inside of a user-defined one, not an internally-defined one.
-            if (ParentDialogWindow == null) throw new InvalidOperationException("This dialog is inside of a MetroWindow! Call HideMetroDialogAsync!");
-
             if (OnRequestClose())
             {
-                _WaitForCloseAsync().ContinueWith(x =>
-                    {
-                        ParentDialogWindow.Dispatcher.Invoke(new Action(() =>
+                //Technically, the Dialog is /always/ inside of a MetroWindow.
+                //If the dialog is inside of a user-created MetroWindow, not one created by the external dialog APIs.
+                if (ParentDialogWindow == null)
+                {
+                    //This is from a user-created MetroWindow
+                    return DialogManager.HideMetroDialogAsync(OwningWindow, this);
+                }
+                else
+                {
+                    //This is from a MetroWindow created by the external dialog APIs.
+                    return _WaitForCloseAsync().ContinueWith(x =>
                         {
-                            ParentDialogWindow.Close();
-                        }));
-                    });
+                            ParentDialogWindow.Dispatcher.Invoke(new Action(() =>
+                            {
+                                ParentDialogWindow.Close();
+                            }));
+                        });
+                }
             }
+            return Task.Factory.StartNew(() => { });
         }
 
         internal protected virtual void OnShown() { }
