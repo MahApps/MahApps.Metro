@@ -67,7 +67,7 @@
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot">
-        <Border x:Name="progressBorder" Background="{DynamicResource AccentColorBrush}" BorderThickness="1" />
+        <Border x:Name="progressBorder" Background="{DynamicResource AccentColorBrush}" BorderThickness="0" />
         <Slider x:Name="LowerSlider"
                 Minimum="{Binding RelativeSource={RelativeSource AncestorType=local:RangeSlider}, Path=Minimum, Mode=TwoWay}"
                 Maximum="{Binding RelativeSource={RelativeSource AncestorType=local:RangeSlider}, Path=Maximum, Mode=TwoWay}"
