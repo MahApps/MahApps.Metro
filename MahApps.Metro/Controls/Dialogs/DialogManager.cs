@@ -15,12 +15,78 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         #region In-Window Extension Methods
         /// <summary>
+        /// Creates a InputDialog inside of the current window.
+        /// </summary>
+        /// <param name="title">The title of the MessageDialog.</param>
+        /// <param name="message">The message contained within the MessageDialog.</param>
+        /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
+        /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
+        public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null)
+        {
+            window.Dispatcher.VerifyAccess();
+            return window.ShowOverlayAsync().ContinueWith(z =>
+                {
+                    return (Task<string>)window.Dispatcher.Invoke(new Func<Task<string>>(() =>
+                        {
+                            if (settings == null)
+                                settings = window.MetroDialogOptions;
+
+                            //create the dialog control
+                            InputDialog dialog = new InputDialog(window, settings);
+                            dialog.Title = title;
+                            dialog.Message = message;
+
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                            dialog.SizeChangedHandler = sizeHandler;
+
+                            return dialog.WaitForLoadAsync().ContinueWith(x =>
+                            {
+                                if (DialogOpened != null)
+                                {
+                                    window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs()
+                                    {
+                                    })));
+                                }
+
+                                return dialog.WaitForButtonPressAsync().ContinueWith(y =>
+                                {
+                                    //once a button as been clicked, begin removing the dialog.
+
+                                    dialog.OnClose();
+
+                                    if (DialogClosed != null)
+                                    {
+                                        window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs()
+                                        {
+                                        })));
+                                    }
+
+                                    Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+                                    return closingTask.ContinueWith<Task<string>>(a =>
+                                        {
+                                            return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                            {
+                                                window.SizeChanged -= sizeHandler;
+
+                                                window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+
+                                                return window.HideOverlayAsync();
+                                                //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+
+                                            }))).ContinueWith(y3 => y).Unwrap();
+                                        });
+                                }).Unwrap();
+                            }).Unwrap().Unwrap();
+                        }));
+                }).Unwrap();
+        }
+        /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
         /// <param name="title">The title of the MessageDialog.</param>
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="style">The type of buttons to use.</param>
-        /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
+        /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
         public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
