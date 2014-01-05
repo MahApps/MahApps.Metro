@@ -169,7 +169,6 @@ namespace MetroDemo
             {
                 await this.ShowMessageAsync("No cupcakes!", "You stopped baking!");
             }
-
             else
             {
                 await this.ShowMessageAsync("Cupcakes!", "Your cupcakes are finished! Enjoy!");
