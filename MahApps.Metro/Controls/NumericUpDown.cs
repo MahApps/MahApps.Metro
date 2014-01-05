@@ -375,13 +375,14 @@ namespace MahApps.Metro.Controls
 
             if (_valueTextBox != null)
             {
+                CultureInfo culture = Language.GetSpecificCulture();
                 if (string.IsNullOrEmpty(StringFormat))
                 {
-                    _valueTextBox.Text = newValue.ToString();
+                    _valueTextBox.Text = newValue.ToString(culture);
                 }
                 else
                 {
-                    _valueTextBox.Text = newValue.ToString(StringFormat);
+                    _valueTextBox.Text = newValue.ToString(StringFormat, culture);
                 }
             }
         }
@@ -461,9 +462,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static bool ValidateText(string text, out double convertedValue)
+        private bool ValidateText(string text, out double convertedValue)
         {
-            return double.TryParse(text, NumberStyles.Any, Thread.CurrentThread.CurrentCulture, out convertedValue);
+            return double.TryParse(text, NumberStyles.Any, Language.GetSpecificCulture(), out convertedValue);
         }
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
