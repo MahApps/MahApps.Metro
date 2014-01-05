@@ -102,7 +102,7 @@ namespace MetroDemo
 
             await TaskEx.Delay(5000);
 
-            dialog.RequestClose();
+            await dialog.RequestCloseAsync();
         }
 
         private async void ShowMessageDialog(object sender, RoutedEventArgs e)

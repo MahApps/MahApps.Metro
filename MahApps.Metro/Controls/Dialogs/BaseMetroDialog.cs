@@ -100,6 +100,9 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.IsLoaded) return new Task(() => { });
 
+            if (!DialogSettings.UseAnimations)
+                this.Opacity = 1.0; //skip the animation
+
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
             RoutedEventHandler handler = null;
@@ -173,21 +176,29 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
-            Storyboard closingStoryboard = this.Template.Resources["DialogCloseStoryboard"] as Storyboard;
-
-            EventHandler handler = null;
-            handler = new EventHandler((sender, args) =>
+            if (DialogSettings.UseAnimations)
             {
-                closingStoryboard.Completed -= handler;
+                Storyboard closingStoryboard = this.Template.Resources["DialogCloseStoryboard"] as Storyboard;
 
-                tcs.TrySetResult(null);
-            });
+                EventHandler handler = null;
+                handler = new EventHandler((sender, args) =>
+                {
+                    closingStoryboard.Completed -= handler;
 
-            closingStoryboard = closingStoryboard.Clone();
+                    tcs.TrySetResult(null);
+                });
 
-            closingStoryboard.Completed += handler;
+                closingStoryboard = closingStoryboard.Clone();
 
-            closingStoryboard.Begin(this);
+                closingStoryboard.Completed += handler;
+
+                closingStoryboard.Begin(this);
+            }
+            else
+            {
+                this.Opacity = 0.0;
+                tcs.TrySetResult(null); //skip the animation
+            }
 
             return tcs.Task;
         }
@@ -204,6 +215,7 @@ namespace MahApps.Metro.Controls.Dialogs
             NegativeButtonText = "Cancel";
 
             ColorScheme = MetroDialogColorScheme.Theme;
+            UseAnimations = true;
         }
 
         /// <summary>
@@ -211,7 +223,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public string AffirmativeButtonText { get; set; }
         /// <summary>
-        /// Gets/sets the text used for the Negative bytton. For example: "Cancel" or "No".
+        /// Gets/sets the text used for the Negative button. For example: "Cancel" or "No".
         /// </summary>
         public string NegativeButtonText { get; set; }
         public string FirstAuxiliaryButtonText { get; set; }
@@ -221,6 +233,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets whether the metro dialog should use the default black/white appearance (theme) or try to use the current accent.
         /// </summary>
         public MetroDialogColorScheme ColorScheme { get; set; }
+
+        public bool UseAnimations { get; set; }
     }
 
     /// <summary>

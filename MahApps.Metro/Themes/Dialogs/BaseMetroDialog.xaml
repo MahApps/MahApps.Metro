@@ -84,7 +84,6 @@
                     <BeginStoryboard Storyboard="{StaticResource DialogShownStoryboard}" />
                 </EventTrigger.Actions>
             </EventTrigger>
-            
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
