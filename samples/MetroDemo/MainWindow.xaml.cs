@@ -200,7 +200,45 @@ namespace MetroDemo
         private void InteropDemo(object sender, RoutedEventArgs e)
         {
             new InteropDemo().Show();
+        }
 
+        private void eventSlider_RangeStartChangedEnd(object sender, RangeParameterChangedEventArgs e)
+        {
+            eventSliderLabel.Content = string.Format("Start: {0} -> {1} / Stop: {2}",
+                e.OldValue,
+                e.NewValue,
+                eventSlider.RangeStopSelected);
+        }
+
+        private void eventSlider_RangeStopChangedEnd(object sender, RangeParameterChangedEventArgs e)
+        {
+            eventSliderLabel.Content = string.Format("Start: {0} / Stop: {1} -> {2}",
+                eventSlider.RangeStartSelected,
+                e.OldValue,
+                e.NewValue);
+        }
+
+        private void eventSlider_RangeSelectionChanged(object sender, RangeSelectionChangedEventArgs e)
+        {
+            //eventSliderLabel.Content = string.Format("Start: {0} / Stop: {1}",
+            //                eventSlider.RangeStartSelected,
+            //                eventSlider.RangeStopSelected);
+        }
+
+        private void eventSlider_RangeStartChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            //these act exactly the same as RangeSelectionChanged
+            eventSliderLabel.Content = string.Format("Start: {0} / Stop: {1}",
+                            e.NewValue,
+                            eventSlider.RangeStopSelected);
+        }
+
+        private void eventSlider_RangeStopChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            //these act exactly the same as RangeSelectionChanged
+            eventSliderLabel.Content = string.Format("Start: {0} / Stop: {1}",
+                            eventSlider.RangeStartSelected,
+                            e.NewValue);
         }
 
         private void LaunchNavigationDemo(object sender, RoutedEventArgs e)

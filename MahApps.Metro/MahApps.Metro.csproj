@@ -116,6 +116,7 @@
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
+    <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />

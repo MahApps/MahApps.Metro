@@ -816,12 +816,21 @@
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"
                                                   IsEnabled="False" />
+                            <Label Content="Start: 20 / End: 60" HorizontalAlignment="Center" x:Name="eventSliderLabel" FontSize="15" />
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"
-                                                  IsEnabled="False"
+                                                  RangeStart="-100"
+                                                  RangeStop="100"
                                                   RangeStartSelected="20"
-                                                  RangeStopSelected="60" />
+                                                  RangeStopSelected="60"
+                                                  x:Name="eventSlider"
+                                                  RangeStartChangedEnd="eventSlider_RangeStartChangedEnd"
+                                                  RangeStopChangedEnd="eventSlider_RangeStopChangedEnd" 
+                                                  RangeSelectionChanged="eventSlider_RangeSelectionChanged"
+                                                  RangeStartChanged="eventSlider_RangeStartChanged"
+                                                  RangeStopChanged="eventSlider_RangeStopChanged" />
+
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="0">
                             <Label Content="ProgressBar" Style="{StaticResource DescriptionHeaderStyle}" />
