@@ -36,7 +36,7 @@
                                  Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}"
                                  Foreground="{TemplateBinding Foreground}"
                                  Focusable="True"
-                                 ReadOnly="{TemplateBinding ReadOnly}"
+                                 IsReadOnly="{TemplateBinding IsReadOnly}"
                                  FontFamily="{TemplateBinding FontFamily}"
                                  FontSize="{TemplateBinding FontSize}" />
 
@@ -66,6 +66,12 @@
                         </RepeatButton>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsReadOnly"
+                                 Value="True">
+                            <Setter TargetName="PART_TextBox"
+                                    Property="IsHitTestVisible"
+                                    Value="False" />
+                        </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True"
                                  SourceName="PART_NumericUp">
