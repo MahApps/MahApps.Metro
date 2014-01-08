@@ -21,9 +21,9 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}"
-                                              MaxWidth="50" />
+                                              MaxWidth="40" />
                             <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}"
-                                              MaxWidth="50" />
+                                              MaxWidth="40" />
                         </Grid.ColumnDefinitions>
 
                         <Border x:Name="Background"
@@ -31,18 +31,21 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}" />
-
-                        <TextBox x:Name="PART_TextBox"
-                                 HorizontalAlignment="Stretch"
-                                 HorizontalContentAlignment="Right"
-                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                 BorderThickness="0"
-                                 Background="{x:Null}"
-                                 Focusable="True"
-                                 IsReadOnly="{TemplateBinding IsReadOnly}"
-                                 FontFamily="{TemplateBinding FontFamily}"
-                                 FontSize="{TemplateBinding FontSize}" />
+                        <ScrollViewer VerticalScrollBarVisibility="Hidden"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      IsTabStop="False">
+                            <TextBox x:Name="PART_TextBox"
+                                     HorizontalAlignment="Stretch"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                     BorderThickness="0"
+                                     Background="{x:Null}"
+                                     Focusable="True"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"
+                                     FontFamily="{TemplateBinding FontFamily}"
+                                     FontSize="{TemplateBinding FontSize}" />
+                        </ScrollViewer>
                         <RepeatButton x:Name="PART_NumericUp"
                                       Grid.Column="1"
                                       MinWidth="20"
