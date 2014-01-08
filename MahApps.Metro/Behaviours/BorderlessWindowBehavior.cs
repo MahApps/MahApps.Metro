@@ -17,6 +17,8 @@ namespace MahApps.Metro.Behaviours
 {
     public class BorderlessWindowBehavior : Behavior<Window>
     {
+        private bool _isMaximize;
+
         public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
         public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false, new PropertyChangedCallback((obj, args) =>
@@ -79,32 +81,45 @@ namespace MahApps.Metro.Behaviours
             return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
         }
 
+        /*Taken from http://stackoverflow.com/questions/20941443/properly-maximizing-wpf-window-with-windowstyle-none */
         private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
-            var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+            POINT mousePosition;
+            UnsafeNativeMethods.GetCursorPos(out mousePosition);
 
-            // Adjust the maximized size and position to fit the work area of the correct monitor
-            IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
-
-            if (monitor != IntPtr.Zero)
+            IntPtr primaryScreen = UnsafeNativeMethods.MonitorFromPoint(new POINT(0, 0), MONITORINFO.MonitorOptions.MONITOR_DEFAULTTOPRIMARY);
+            MONITORINFO primaryScreenInfo = new MONITORINFO();
+            if (UnsafeNativeMethods.GetMonitorInfo(primaryScreen, primaryScreenInfo) == false)
             {
-                var monitorInfo = new MONITORINFO();
-                UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                RECT rcWorkArea = monitorInfo.rcWork;
-                RECT rcMonitorArea = monitorInfo.rcMonitor;
-                mmi.ptMaxPosition.X = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
-                mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-                mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-                mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+                return;
+            }
 
-                bool ignoreTaskBar = AssociatedObject as MetroWindow != null && (((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize || ((MetroWindow)this.AssociatedObject).UseNoneWindowStyle);
+            IntPtr currentScreen = UnsafeNativeMethods.MonitorFromPoint(mousePosition, MONITORINFO.MonitorOptions.MONITOR_DEFAULTTONEAREST);
 
-                if (!ignoreTaskBar)
-                {
-                    mmi.ptMaxTrackSize.X = mmi.ptMaxSize.X;
-                    mmi.ptMaxTrackSize.Y = mmi.ptMaxSize.Y;
-                    mmi = AdjustWorkingAreaForAutoHide(monitor, mmi);
-                }
+            MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+            if (primaryScreen.Equals(currentScreen))
+            {
+                mmi.ptMaxPosition.X = primaryScreenInfo.rcWork.left;
+                mmi.ptMaxPosition.Y = primaryScreenInfo.rcWork.top;
+                mmi.ptMaxSize.X = primaryScreenInfo.rcWork.right - primaryScreenInfo.rcWork.left;
+                mmi.ptMaxSize.Y = primaryScreenInfo.rcWork.bottom - primaryScreenInfo.rcWork.top;
+            }
+            else
+            {
+                mmi.ptMaxPosition.X = primaryScreenInfo.rcMonitor.left;
+                mmi.ptMaxPosition.Y = primaryScreenInfo.rcMonitor.top;
+                mmi.ptMaxSize.X = primaryScreenInfo.rcMonitor.right - primaryScreenInfo.rcMonitor.left;
+                mmi.ptMaxSize.Y = primaryScreenInfo.rcMonitor.bottom - primaryScreenInfo.rcMonitor.top;
+            }
+            bool ignoreTaskBar = AssociatedObject as MetroWindow != null && (((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize || ((MetroWindow)this.AssociatedObject).UseNoneWindowStyle);
+
+            //Only do this on maximize and when mouse X position is not greater than the primary screen width
+            if (!(mousePosition.X >= (int)SystemParameters.PrimaryScreenWidth) && !ignoreTaskBar && primaryScreen.Equals(currentScreen) && _isMaximize)
+            {
+                mmi.ptMaxTrackSize.X = mmi.ptMaxSize.X;
+                mmi.ptMaxTrackSize.Y = mmi.ptMaxSize.Y;
+                mmi = AdjustWorkingAreaForAutoHide(primaryScreen, mmi);
+                _isMaximize = false;
             }
 
             Marshal.StructureToPtr(mmi, lParam, true);
@@ -221,6 +236,7 @@ namespace MahApps.Metro.Behaviours
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
+                _isMaximize = true;
                 IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(_mHWND, Constants.MONITOR_DEFAULTTONEAREST);
                 if (monitor != IntPtr.Zero)
                 {
