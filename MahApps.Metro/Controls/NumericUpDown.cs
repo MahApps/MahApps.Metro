@@ -61,12 +61,12 @@ namespace MahApps.Metro.Controls
                                                                                                 new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSpeedupChanged));
 
         /// <summary>
-        ///     DependencyProperty for <see cref="IsReadOnly" /> property.
+        ///     DependencyProperty for <see cref="ReadOnly" /> property.
         /// </summary>
-        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly",
+        public static readonly DependencyProperty ReadOnlyProperty = DependencyProperty.Register("ReadOnly",
                                                                                                    typeof(bool),
                                                                                                    typeof(NumericUpDown),
-                                                                                                   new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsReadOnlyChanged));
+                                                                                                   new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ReadOnlyChanged));
 
         /// <summary>
         ///     DependencyProperty for <see cref="StringFormat" /> property.
@@ -151,13 +151,13 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the NumericUpDown allows to get UserInput or not
+        ///     Gets or sets a value indicating whether the text can be changed by the use of the up or down buttons only.
         /// </summary>
         [Category("Common")]
-        public bool IsReadOnly
+        public bool ReadOnly
         {
-            get { return (bool)GetValue(IsReadOnlyProperty); }
-            set { SetValue(IsReadOnlyProperty, value); }
+            get { return (bool)GetValue(ReadOnlyProperty); }
+            set { SetValue(ReadOnlyProperty, value); }
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace MahApps.Metro.Controls
 
             _valueTextBox.LostFocus += OnTextBoxLostFocus;
             _valueTextBox.PreviewTextInput += OnPreviewTextInput;
-            _valueTextBox.IsReadOnly = IsReadOnly;
+            _valueTextBox.ReadOnly = ReadOnly;
             _valueTextBox.PreviewKeyDown += OnTextBoxKeyDown;
             DataObject.AddPastingHandler(_valueTextBox, OnValueTextBoxPaste);
 
@@ -394,13 +394,13 @@ namespace MahApps.Metro.Controls
             numericUpDown.ResetInternal();
         }
 
-        private static void IsReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void ReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TextBox valueTextBox = ((NumericUpDown)d)._valueTextBox;
 
             if (valueTextBox != null)
             {
-                valueTextBox.IsReadOnly = (bool)e.NewValue;
+                valueTextBox.ReadOnly = (bool)e.NewValue;
             }
         }
 
