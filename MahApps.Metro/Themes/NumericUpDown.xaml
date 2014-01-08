@@ -16,12 +16,14 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">
-                    <Grid VerticalAlignment="Center"
+                    <Grid VerticalAlignment="{TemplateBinding VerticalAlignment}"
                           Background="{TemplateBinding Background}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
-                            <ColumnDefinition Width="{Binding ElementName=PART_NumericUp, Path=DesiredSize.Width}" />
-                            <ColumnDefinition Width="{Binding ElementName=PART_NumericDown, Path=DesiredSize.Width}" />
+                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}"
+                                              MaxWidth="50" />
+                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}"
+                                              MaxWidth="50" />
                         </Grid.ColumnDefinitions>
 
                         <Border x:Name="Background"
@@ -32,40 +34,41 @@
 
                         <TextBox x:Name="PART_TextBox"
                                  HorizontalAlignment="Stretch"
-                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                  HorizontalContentAlignment="Right"
+                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                  BorderThickness="0"
                                  Background="{x:Null}"
-                                 Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}"
                                  Focusable="True"
                                  IsReadOnly="{TemplateBinding IsReadOnly}"
                                  FontFamily="{TemplateBinding FontFamily}"
                                  FontSize="{TemplateBinding FontSize}" />
-
                         <RepeatButton x:Name="PART_NumericUp"
                                       Grid.Column="1"
+                                      MinWidth="20"
                                       Margin="2,2,0,2"
-                                      FontWeight="ExtraBold"
-                                      FontFamily="{TemplateBinding FontFamily}"
-                                      FontSize="{TemplateBinding FontSize}"
                                       Style="{DynamicResource ChromelessButtonStyle}"
                                       IsTabStop="False">
-                            <TextBlock x:Name="PolygonUp"
-                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Text="+" />
+                            <Path x:Name="PolygonUp"
+                                  Width="14"
+                                  Height="14"
+                                  Stretch="Fill"
+                                  Fill="{DynamicResource BlackBrush}"
+                                  Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z " />
                         </RepeatButton>
                         <RepeatButton x:Name="PART_NumericDown"
                                       Grid.Column="2"
+                                      MinWidth="20"
                                       Margin="0,2,2,2"
-                                      FontWeight="ExtraBold"
-                                      FontSize="{TemplateBinding FontSize}"
-                                      FontFamily="{TemplateBinding FontFamily}"
+                                      VerticalContentAlignment="Center"
                                       Style="{DynamicResource ChromelessButtonStyle}"
                                       IsTabStop="False">
-                            <TextBlock x:Name="PolygonDown"
-                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Text="&#8722;" />
+                            <Path x:Name="PolygonDown"
+                                  Width="14"
+                                  Height="3"
+                                  Stretch="Fill"
+                                  Fill="{DynamicResource BlackBrush}"
+                                  Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z " />
                         </RepeatButton>
                     </Grid>
                     <ControlTemplate.Triggers>
