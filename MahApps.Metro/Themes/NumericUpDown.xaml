@@ -2,6 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <Style TargetType="{x:Type Controls:NumericUpDown}">
         <Setter Property="BorderThickness"
                 Value="1" />
@@ -34,7 +38,6 @@
                                  BorderThickness="0"
                                  Background="{x:Null}"
                                  Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}"
-                                 Foreground="{TemplateBinding Foreground}"
                                  Focusable="True"
                                  IsReadOnly="{TemplateBinding IsReadOnly}"
                                  FontFamily="{TemplateBinding FontFamily}"
@@ -43,7 +46,7 @@
                         <RepeatButton x:Name="PART_NumericUp"
                                       Grid.Column="1"
                                       Margin="2,2,0,2"
-                                      Foreground="{TemplateBinding Foreground}"
+                                      FontWeight="ExtraBold"
                                       FontFamily="{TemplateBinding FontFamily}"
                                       FontSize="{TemplateBinding FontSize}"
                                       Style="{DynamicResource ChromelessButtonStyle}"
@@ -55,7 +58,7 @@
                         <RepeatButton x:Name="PART_NumericDown"
                                       Grid.Column="2"
                                       Margin="0,2,2,2"
-                                      Foreground="{TemplateBinding Foreground}"
+                                      FontWeight="ExtraBold"
                                       FontSize="{TemplateBinding FontSize}"
                                       FontFamily="{TemplateBinding FontFamily}"
                                       Style="{DynamicResource ChromelessButtonStyle}"
@@ -111,6 +114,18 @@
                             <Setter TargetName="PART_NumericDown"
                                     Property="Foreground"
                                     Value="{DynamicResource WhiteBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true"
+                                 SourceName="PART_TextBox">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource TextBoxBackgroundSelected}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused"
+                                 Value="true"
+                                 SourceName="PART_TextBox">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource TextBoxBackgroundSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

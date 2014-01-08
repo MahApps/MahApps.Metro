@@ -73,6 +73,8 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register("StringFormat", typeof(string), typeof(NumericUpDown), new FrameworkPropertyMetadata(null, OnStringFormatChanged));
 
+        public static readonly DependencyProperty InterceptArrowKeysProperty = DependencyProperty.Register("InterceptArrowKeys", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(true));
+
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -151,7 +153,17 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the NumericUpDown allows to get UserInput or not
+        ///     Gets or sets a value indicating whether the user can use the UP ARROW and DOWN ARROW keys to select values.
+        /// </summary>
+        public bool InterceptArrowKeys
+        {
+            get { return (bool)GetValue(InterceptArrowKeysProperty); }
+            set { SetValue(InterceptArrowKeysProperty, value); }
+        }
+
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the text can be changed by the use of the up or down buttons only.
         /// </summary>
         [Category("Common")]
         public bool IsReadOnly
@@ -225,8 +237,36 @@ namespace MahApps.Metro.Controls
 
             _repeatUp.PreviewMouseUp += (o, e) => ResetInternal();
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
-
+            GotFocus += OnGetFocus;
             OnValueChanged(Value, Value);
+        }
+
+        private void OnGetFocus(object sender, RoutedEventArgs e)
+        {
+            _valueTextBox.Focus();
+        }
+
+        /// <summary>
+        /// Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown"/> attached event reaches an element in its route that is derived from this class. Implement this method to add class handling for this event. 
+        /// </summary>
+        /// <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs"/> that contains the event data.</param>
+        protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            base.OnPreviewKeyDown(e);
+
+            if (InterceptArrowKeys)
+            {
+                if (e.Key == Key.Up)
+                {
+                    ChangeValue(true);
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Down)
+                {
+                    ChangeValue(false);
+                    e.Handled = true;
+                }
+            }
         }
 
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
