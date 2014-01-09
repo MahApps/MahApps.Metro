@@ -108,8 +108,9 @@ namespace MahApps.Metro.Controls
         protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
         {
             base.OnMinimumChanged(oldMinimum, newMinimum);
-            if (RangeStartSelected < newMinimum)
-                RangeStartSelected = newMinimum;
+
+            ReCalculateRanges();
+            ReCalculateWidths();
         }
 
         /// <summary>
@@ -119,8 +120,9 @@ namespace MahApps.Metro.Controls
         protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
         {
             base.OnMaximumChanged(oldMaximum, newMaximum);
-            if (RangeStopSelected > newMaximum)
-                RangeStopSelected = newMaximum;
+
+            ReCalculateRanges();
+            ReCalculateWidths();
         }
 
         private static void RangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -442,5 +444,6 @@ namespace MahApps.Metro.Controls
 
             return (double)basevalue > rs.RangeStartSelected ? rs.RangeStartSelected : (double)basevalue;
         }
+
     }
 }

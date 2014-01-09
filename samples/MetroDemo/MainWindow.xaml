@@ -805,13 +805,12 @@
                         <StackPanel Grid.Column="2">
                             <Label Content="RangeSlider" Style="{StaticResource DescriptionHeaderStyle}" />
 
-                            <Label Content="{Binding ElementName=RangeSlider, Path=RangeStartSelected}"></Label>
-                            <Label Content="{Binding ElementName=RangeSlider, Path=RangeStopSelected}"></Label>
+                            <Label Content="Look Tooltip of NumericUpDown"></Label>
 
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=RangeStartSelected}"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=RangeStopSelected}"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=RangeStartSelected}" ToolTip="RangeStartSelected"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=RangeStopSelected}" ToolTip="RangeStopSelected"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}" ToolTip="Minimum"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}" ToolTip="Maximum"></Controls:NumericUpDown>
                             
                             <Controls:RangeSlider Width="200" x:Name="RangeSlider"
                                                   Height="20"
