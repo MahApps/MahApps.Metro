@@ -807,8 +807,8 @@
 
                             <Label Content="Look Tooltip of NumericUpDown"></Label>
 
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=RangeStartSelected}" ToolTip="RangeStartSelected"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=RangeStopSelected}" ToolTip="RangeStopSelected"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=LowerValue}" ToolTip="RangeStartSelected"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=UpperValue}" ToolTip="RangeStopSelected"></Controls:NumericUpDown>
                             <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}" ToolTip="Minimum"></Controls:NumericUpDown>
                             <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}" ToolTip="Maximum"></Controls:NumericUpDown>
                             
@@ -818,8 +818,8 @@
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"
-                                                  RangeStartSelected="20"
-                                                  RangeStopSelected="60" />
+                                                  LowerValue="20"
+                                                  UpperValue="60" />
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"
@@ -828,8 +828,8 @@
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"
                                                   IsEnabled="False"
-                                                  RangeStartSelected="20"
-                                                  RangeStopSelected="60" />
+                                                  LowerValue="20"
+                                                  UpperValue="60" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="0">
                             <Label Content="ProgressBar" Style="{StaticResource DescriptionHeaderStyle}" />
