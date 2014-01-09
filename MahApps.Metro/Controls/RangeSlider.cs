@@ -96,6 +96,31 @@ namespace MahApps.Metro.Controls
         static RangeSlider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
+
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue, null, CoerceMinimum));
+            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue, null, CoerceMaximum));
+        }
+
+        /// <summary>
+        /// Responds to a change in the value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/> property.
+        /// </summary>
+        /// <param name="oldMinimum">The old value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/> property.</param><param name="newMinimum">The new value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/> property.</param>
+        protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
+        {
+            base.OnMinimumChanged(oldMinimum, newMinimum);
+            if (RangeStartSelected < newMinimum)
+                RangeStartSelected = newMinimum;
+        }
+
+        /// <summary>
+        /// Responds to a change in the value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/> property.
+        /// </summary>
+        /// <param name="oldMaximum">The old value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/> property.</param><param name="newMaximum">The new value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/> property.</param>
+        protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
+        {
+            base.OnMaximumChanged(oldMaximum, newMaximum);
+            if (RangeStopSelected > newMaximum)
+                RangeStopSelected = newMaximum;
         }
 
         private static void RangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
@@ -403,6 +428,19 @@ namespace MahApps.Metro.Controls
             if (value > rs.Maximum)
                 return rs.Maximum;
             return Math.Max(value, rs.RangeStartSelected);
+        }
+
+        private static object CoerceMaximum(DependencyObject d, object basevalue)
+        {
+            RangeSlider rs = (RangeSlider)d;
+            return (double)basevalue < rs.RangeStopSelected ? rs.RangeStopSelected : (double)basevalue;
+        }
+
+        private static object CoerceMinimum(DependencyObject d, object basevalue)
+        {
+            RangeSlider rs = (RangeSlider)d;
+
+            return (double)basevalue > rs.RangeStartSelected ? rs.RangeStartSelected : (double)basevalue;
         }
     }
 }
