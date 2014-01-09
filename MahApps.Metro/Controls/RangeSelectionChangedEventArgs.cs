@@ -11,13 +11,13 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// The value of the new range's beginning.
         /// </summary>
-        public long NewRangeStart { get; set; }
+        public double NewRangeStart { get; set; }
         /// <summary>
         /// The value of the new range's ending.
         /// </summary>
-        public long NewRangeStop { get; set; }
+        public double NewRangeStop { get; set; }
 
-        internal RangeSelectionChangedEventArgs(long newRangeStart, long newRangeStop)
+        internal RangeSelectionChangedEventArgs(double newRangeStart, double newRangeStop)
         {
             NewRangeStart = newRangeStart;
             NewRangeStop = newRangeStop;

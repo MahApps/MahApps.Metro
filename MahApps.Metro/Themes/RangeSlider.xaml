@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style TargetType="{x:Type Controls:RangeSlider}">
-        <Setter Property="RangeStop"
+        <Setter Property="Maximum"
                 Value="100" />
         <Setter Property="Template">
             <Setter.Value>
