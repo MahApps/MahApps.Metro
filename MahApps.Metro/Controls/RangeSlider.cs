@@ -8,6 +8,7 @@ using System.Windows.Input;
 namespace MahApps.Metro.Controls
 {
     public delegate void RangeSelectionChangedEventHandler(object sender, RangeSelectionChangedEventArgs e);
+    public delegate void RangeParameterChangedEventHandler(object sender, RangeParameterChangedEventArgs e);
 
     /// <summary>
     /// A slider control with the ability to select a range between two values.
@@ -27,40 +28,55 @@ namespace MahApps.Metro.Controls
         public static RoutedUICommand MoveAllForward = new RoutedUICommand("MoveAllForward", "MoveAllForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Alt) }));
         public static RoutedUICommand MoveAllBack = new RoutedUICommand("MoveAllBack", "MoveAllBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Alt) }));
 
-        public static readonly DependencyProperty RangeStartSelectedProperty = DependencyProperty.Register("RangeStartSelected", typeof(double), typeof(RangeSlider), new UIPropertyMetadata((double)0, RangesChanged,CoearceRangeStart));
+        public static readonly RoutedEvent LowerValueChangedEvent = EventManager.RegisterRoutedEvent("LowerValueChanged", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
+        public static readonly RoutedEvent UpperValueChangedEvent = EventManager.RegisterRoutedEvent("UpperValueChanged", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
 
-   
+        public static readonly DependencyProperty LowerValueProperty =
+            DependencyProperty.Register("LowerValue", typeof(double), typeof(RangeSlider), new UIPropertyMetadata((Double)0, RangesChanged, CoerceLowerValue));
 
-        public static readonly DependencyProperty RangeStopSelectedProperty = DependencyProperty.Register("RangeStopSelected", typeof(double), typeof(RangeSlider), new UIPropertyMetadata((double)1, RangesChanged,CoerceRangeStop));
-   
+        public static readonly DependencyProperty UpperValueProperty =
+            DependencyProperty.Register("UpperValue", typeof(double), typeof(RangeSlider), new UIPropertyMetadata((Double)1, RangesChanged, CoerceUpperValue));
 
-        public static readonly DependencyProperty MinRangeProperty = DependencyProperty.Register("MinRange", typeof(double), typeof(RangeSlider), new UIPropertyMetadata((double)0, MinRangeChanged));
+        public static readonly DependencyProperty MinRangeProperty = 
+            DependencyProperty.Register("MinRange", typeof(double), typeof(RangeSlider), new UIPropertyMetadata((Double)0, MinRangeChanged));
 
+
+        public event RangeParameterChangedEventHandler LowerValueChanged
+        {
+            add { AddHandler(LowerValueChangedEvent, value); }
+            remove { RemoveHandler(LowerValueChangedEvent, value); }
+        }
+
+        public event RangeParameterChangedEventHandler UpperValueChanged
+        {
+            add { AddHandler(UpperValueChangedEvent, value); }
+            remove { RemoveHandler(UpperValueChangedEvent, value); }
+        }
 
         /// <summary>
         /// Get/sets the beginning of the range selection.
         /// </summary>
-        public double RangeStartSelected
+        public Double LowerValue
         {
-            get { return (double)GetValue(RangeStartSelectedProperty); }
-            set { SetValue(RangeStartSelectedProperty, value); }
+            get { return (Double)GetValue(LowerValueProperty); }
+            set { SetValue(LowerValueProperty, value); }
         }
 
         /// <summary>
         /// Get/sets the end of the range selection.
         /// </summary>
-        public double RangeStopSelected
+        public Double UpperValue
         {
-            get { return (double)GetValue(RangeStopSelectedProperty); }
-            set { SetValue(RangeStopSelectedProperty, value); }
+            get { return (Double)GetValue(UpperValueProperty); }
+            set { SetValue(UpperValueProperty, value); }
         }
 
         /// <summary>
         /// Get/sets the minimum range that can be selected.
         /// </summary>
-        public double MinRange
+        public Double MinRange
         {
-            get { return (double)GetValue(MinRangeProperty); }
+            get { return (Double)GetValue(MinRangeProperty); }
             set { SetValue(MinRangeProperty, value); }
         }
 
@@ -71,8 +87,8 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(RangeSelectionChangedEvent, value); }
         }
 
-        private const double RepeatButtonMoveRatio = 0.1;
-        private const double DefaultSplittersThumbWidth = 10;
+        private const Double RepeatButtonMoveRatio = 0.1;
+        private const Double DefaultSplittersThumbWidth = 10;
         private bool _internalUpdate;
         private Thumb _centerThumb;
         private Thumb _leftThumb;
@@ -81,7 +97,7 @@ namespace MahApps.Metro.Controls
         private RepeatButton _rightButton;
         private StackPanel _visualElementsContainer;
         //private double _movableRange;
-        private double _movableWidth;
+        private Double _movableWidth;
 
         public RangeSlider()
         {
@@ -155,8 +171,8 @@ namespace MahApps.Metro.Controls
                 return;
 
             slider._internalUpdate = true;
-            slider.RangeStopSelected = Math.Max(slider.RangeStopSelected, slider.RangeStartSelected + (double)e.NewValue);
-            slider.Maximum = Math.Max(slider.Maximum, slider.RangeStopSelected);
+            slider.UpperValue = Math.Max(slider.UpperValue, slider.LowerValue + (double)e.NewValue);
+            slider.Maximum = Math.Max(slider.Maximum, slider.UpperValue);
             slider._internalUpdate = false;
 
             slider.ReCalculateRanges();
@@ -246,8 +262,8 @@ namespace MahApps.Metro.Controls
             if (_leftButton != null && _rightButton != null && _centerThumb != null)
             {
                 _movableWidth = Math.Max(ActualWidth - _rightThumb.ActualWidth - _leftThumb.ActualWidth - _centerThumb.MinWidth, 1);
-                _leftButton.Width = Math.Max(_movableWidth * (RangeStartSelected - Minimum) / MovableRange, 0);
-                _rightButton.Width = Math.Max(_movableWidth * (Maximum - RangeStopSelected) / MovableRange, 0);
+                _leftButton.Width = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
+                _rightButton.Width = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
                 _centerThumb.Width = Math.Max(ActualWidth - _leftButton.Width - _rightButton.Width - _rightThumb.ActualWidth - _leftThumb.ActualWidth, 0);
             }
         }
@@ -258,13 +274,13 @@ namespace MahApps.Metro.Controls
             if (reCalculateStart)
             {
                 // Make sure to get exactly rangestart if thumb is at the start
-                RangeStartSelected = _leftButton.Width == 0.0 ? Minimum : Math.Max(Minimum, (Minimum + MovableRange * _leftButton.Width / _movableWidth));
+                LowerValue = _leftButton.Width == 0.0 ? Minimum : Math.Max(Minimum, (Minimum + MovableRange * _leftButton.Width / _movableWidth));
             }
 
             if (reCalculateStop)
             {
                 // Make sure to get exactly rangestop if thumb is at the end
-                RangeStopSelected = _rightButton.Width == 0.0 ? Maximum : Math.Min(Maximum, (Maximum - MovableRange * _rightButton.Width / _movableWidth));
+                UpperValue = _rightButton.Width == 0.0 ? Maximum : Math.Min(Maximum, (Maximum - MovableRange * _rightButton.Width / _movableWidth));
             }
 
             _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
@@ -276,7 +292,7 @@ namespace MahApps.Metro.Controls
 
         public void MoveSelection(bool isLeft)
         {
-            double widthChange = RepeatButtonMoveRatio * (RangeStopSelected - RangeStartSelected)
+            double widthChange = RepeatButtonMoveRatio * (UpperValue - LowerValue)
                 * _movableWidth / MovableRange;
 
             widthChange = isLeft ? -widthChange : widthChange;
@@ -297,21 +313,21 @@ namespace MahApps.Metro.Controls
         {
             if (span > 0)
             {
-                if (RangeStopSelected + span > Maximum)
-                    span = Maximum - RangeStopSelected;
+                if (UpperValue + span > Maximum)
+                    span = Maximum - UpperValue;
             }
             else
             {
-                if (RangeStartSelected + span < Minimum)
-                    span = Minimum - RangeStartSelected;
+                if (LowerValue + span < Minimum)
+                    span = Minimum - LowerValue;
             }
 
             if (span == 0)
                 return;
 
             _internalUpdate = true;//set flag to signal that the properties are being set by the object itself
-            RangeStartSelected += span;
-            RangeStopSelected += span;
+            LowerValue += span;
+            UpperValue += span;
             ReCalculateWidths();
             _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
 
@@ -328,8 +344,8 @@ namespace MahApps.Metro.Controls
                 return;
 
             _internalUpdate = true;//set flag to signal that the properties are being set by the object itself
-            RangeStartSelected = start;
-            RangeStopSelected = stop;
+            LowerValue = start;
+            UpperValue = stop;
             ReCalculateWidths();
             _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
             OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
@@ -341,25 +357,25 @@ namespace MahApps.Metro.Controls
             // Ensure new span is within the valid range
             span = Math.Min(span, Maximum - Minimum);
             span = Math.Max(span, MinRange);
-            if (span == RangeStopSelected - RangeStartSelected)
+            if (span == UpperValue - LowerValue)
                 return; // No change
 
             // First zoom half of it to the right
-            double rightChange = (span - (RangeStopSelected - RangeStartSelected)) / 2;
+            double rightChange = (span - (UpperValue - LowerValue)) / 2;
             double leftChange = rightChange;
 
             // If we will hit the right edge, spill over the leftover change to the other side
-            if (rightChange > 0 && RangeStopSelected + rightChange > Maximum)
-                leftChange += rightChange - (Maximum - RangeStopSelected);
-            RangeStopSelected = Math.Min(RangeStopSelected + rightChange, Maximum);
+            if (rightChange > 0 && UpperValue + rightChange > Maximum)
+                leftChange += rightChange - (Maximum - UpperValue);
+            UpperValue = Math.Min(UpperValue + rightChange, Maximum);
             rightChange = 0;
 
             // If we will hit the left edge and there is space on the right, add the leftover change to the other side
-            if (leftChange > 0 && RangeStartSelected - leftChange < Minimum)
-                rightChange = Minimum - (RangeStartSelected - leftChange);
-            RangeStartSelected = Math.Max(RangeStartSelected - leftChange, Minimum);
+            if (leftChange > 0 && LowerValue - leftChange < Minimum)
+                rightChange = Minimum - (LowerValue - leftChange);
+            LowerValue = Math.Max(LowerValue - leftChange, Minimum);
             if (rightChange > 0) // leftovers to the right
-                RangeStopSelected = Math.Min(RangeStopSelected + rightChange, Maximum);
+                UpperValue = Math.Min(UpperValue + rightChange, Maximum);
 
             ReCalculateWidths();
             _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
@@ -410,7 +426,9 @@ namespace MahApps.Metro.Controls
 
         }
 
-        private static object CoearceRangeStart(DependencyObject d, object basevalue)
+        
+
+        private static object CoerceLowerValue(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
 
@@ -418,10 +436,10 @@ namespace MahApps.Metro.Controls
 
             if (value < rs.Minimum)
                 return rs.Minimum;
-            return Math.Min(value, rs.RangeStopSelected);
+            return Math.Min(value, rs.UpperValue);
         }
 
-        private static object CoerceRangeStop(DependencyObject d, object basevalue)
+        private static object CoerceUpperValue(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
 
@@ -429,20 +447,20 @@ namespace MahApps.Metro.Controls
 
             if (value > rs.Maximum)
                 return rs.Maximum;
-            return Math.Max(value, rs.RangeStartSelected);
+            return Math.Max(value, rs.LowerValue);
         }
 
         private static object CoerceMaximum(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
-            return (double)basevalue < rs.RangeStopSelected ? rs.RangeStopSelected : (double)basevalue;
+            return (double)basevalue < rs.UpperValue ? rs.UpperValue : (double)basevalue;
         }
 
         private static object CoerceMinimum(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
 
-            return (double)basevalue > rs.RangeStartSelected ? rs.RangeStartSelected : (double)basevalue;
+            return (double)basevalue > rs.LowerValue ? rs.LowerValue : (double)basevalue;
         }
 
     }

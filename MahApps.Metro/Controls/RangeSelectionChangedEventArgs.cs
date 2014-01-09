@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls
         }
 
         internal RangeSelectionChangedEventArgs(RangeSlider slider)
-            : this(slider.RangeStartSelected, slider.RangeStopSelected)
+            : this(slider.LowerValue, slider.UpperValue)
         { }
     }
 }
