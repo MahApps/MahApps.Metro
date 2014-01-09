@@ -101,7 +101,8 @@ namespace MahApps.Metro.Controls
 
         ~NumericUpDown()
         {
-            DataObject.RemovePastingHandler(_valueTextBox, OnValueTextBoxPaste);
+			if(_valueTextBox != null)
+				DataObject.RemovePastingHandler(_valueTextBox, OnValueTextBoxPaste);
         }
 
         /// <summary>
