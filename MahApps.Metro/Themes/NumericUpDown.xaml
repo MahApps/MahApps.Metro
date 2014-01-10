@@ -13,6 +13,8 @@
                 Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="VerticalAlignment"
                 Value="Center" />
+        <Setter Property="Controls:TextboxHelper.IsMonitoring"
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">

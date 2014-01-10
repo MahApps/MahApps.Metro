@@ -324,6 +324,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        public void SelectAll()
+        {
+            if (_valueTextBox != null)
+            {
+                _valueTextBox.SelectAll();
+            }
+        }
+
         protected virtual void OnDelayChanged(int oldDelay, int newDelay)
         {
             if (oldDelay != newDelay)
@@ -425,6 +433,8 @@ namespace MahApps.Metro.Controls
                 {
                     _valueTextBox.Text = newValue.ToString(StringFormat, culture);
                 }
+                if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
+                    SetValue(TextboxHelper.TextLengthProperty,_valueTextBox.Text.Length);
             }
         }
 
