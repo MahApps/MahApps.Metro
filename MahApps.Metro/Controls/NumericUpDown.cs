@@ -101,8 +101,8 @@ namespace MahApps.Metro.Controls
 
         ~NumericUpDown()
         {
-			if(_valueTextBox != null)
-				DataObject.RemovePastingHandler(_valueTextBox, OnValueTextBoxPaste);
+            if(_valueTextBox != null)
+                DataObject.RemovePastingHandler(_valueTextBox, OnValueTextBoxPaste);
         }
 
         /// <summary>
@@ -309,12 +309,12 @@ namespace MahApps.Metro.Controls
                 }
                 else if (NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == text)
                 {
-                    if (!((TextBox)sender).Text.Any(i => i.ToString() == NumberFormatInfo.CurrentInfo.NumberDecimalSeparator))
+                    if (!((TextBox)sender).Text.Any(i => i.ToString() == Language.GetEquivalentCulture().NumberFormat.NumberDecimalSeparator))
                     {
                         e.Handled = false;
                     }
                 }
-                else if (NumberFormatInfo.CurrentInfo.NegativeSign == text || text == NumberFormatInfo.CurrentInfo.PositiveSign)
+                else if (Language.GetEquivalentCulture().NumberFormat.NegativeSign == text || text == Language.GetEquivalentCulture().NumberFormat.PositiveSign)
                 {
                     if (((TextBox)sender).SelectionStart == 0)
                     {
