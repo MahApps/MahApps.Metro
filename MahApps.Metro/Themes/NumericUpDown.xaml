@@ -48,7 +48,8 @@
                                      Focusable="True"
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      FontFamily="{TemplateBinding FontFamily}"
-                                     FontSize="{TemplateBinding FontSize}" />
+                                     FontSize="{TemplateBinding FontSize}"
+                                     Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}" />
                         </ScrollViewer>
                         <RepeatButton x:Name="PART_NumericUp"
                                       Grid.Column="1"

@@ -476,7 +476,7 @@
                                 <Controls:NumericUpDown Value="5" 
                                                         Speedup="false" />
                                 <Label Content="Speedup when long pressed" />
-                                <Controls:NumericUpDown
+                                <Controls:NumericUpDown Controls:TextboxHelper.Watermark="Test"
                                                         Speedup="true" />
 
                                 <Label Content="StringFormat" />
