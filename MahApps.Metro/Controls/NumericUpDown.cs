@@ -36,30 +36,20 @@ namespace MahApps.Metro.Controls
             new FrameworkPropertyMetadata(DefaultDelay, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnDelayChanged),
             ValidateDelay);
 
-        public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register("TextAlignment",
-            typeof(TextAlignment),
-            typeof(NumericUpDown),
-            new PropertyMetadata(TextAlignment.Right));
+        public static readonly DependencyProperty TextAlignmentProperty = TextBox.TextAlignmentProperty.AddOwner(typeof(NumericUpDown));
 
         public static readonly DependencyProperty SpeedupProperty = DependencyProperty.Register("Speedup",
             typeof(bool),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSpeedupChanged));
 
-        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly",
-            typeof(bool),
-            typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsReadOnlyChanged));
-
+        public static readonly DependencyProperty IsReadOnlyProperty = TextBoxBase.IsReadOnlyProperty.AddOwner(typeof(NumericUpDown), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
         public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register("StringFormat", typeof(string), typeof(NumericUpDown), new FrameworkPropertyMetadata(null, OnStringFormatChanged));
         public static readonly DependencyProperty InterceptArrowKeysProperty = DependencyProperty.Register("InterceptArrowKeys", typeof(bool), typeof(NumericUpDown), new FrameworkPropertyMetadata(true));
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double?), typeof(NumericUpDown), new FrameworkPropertyMetadata(default(double?), OnValueChanged, CoerceValue));
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MinValue, OnMinimumChanged));
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MaxValue, OnMaximumChanged, CoerceMaximum));
-
-        public static readonly DependencyProperty IntervalProperty =
-            DependencyProperty.Register("Interval", typeof(double), typeof(NumericUpDown), new PropertyMetadata((double)1, IntervalChanged));
-
+        public static readonly DependencyProperty IntervalProperty = DependencyProperty.Register("Interval", typeof(double), typeof(NumericUpDown), new PropertyMetadata((double)1, IntervalChanged));
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -220,10 +210,17 @@ namespace MahApps.Metro.Controls
             set { SetValue(TextAlignmentProperty, value); }
         }
 
+        [Category("Common")]
+        [DefaultValue(null)]
         public double? Value
         {
             get { return (double?)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
+        }
+
+        private CultureInfo SpecificCultureInfo
+        {
+            get { return Language.GetSpecificCulture(); }
         }
 
         /// <summary>
@@ -260,14 +257,6 @@ namespace MahApps.Metro.Controls
             OnValueChanged(Value, Value);
         }
 
-        private void OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (String.IsNullOrEmpty(((TextBox)sender).Text))
-            {
-                Value = null;
-            }
-        }
-
         public void SelectAll()
         {
             if (_valueTextBox != null)
@@ -292,35 +281,28 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected virtual void OnMaximumChanged(double oldMaximum, double newMaximum)
-        {
-        }
+        protected virtual void OnMaximumChanged(double oldMaximum, double newMaximum) {}
+        protected virtual void OnMinimumChanged(double oldMinimum, double newMinimum) {}
 
-        protected virtual void OnMinimumChanged(double oldMinimum, double newMinimum)
-        {
-        }
-
-        /// <summary>
-        ///     Invoked when an unhandled <see cref="E:System.Windows.Input.Keyboard.PreviewKeyDown" /> attached event reaches an
-        ///     element in its route that is derived from this class. Implement this method to add class handling for this event.
-        /// </summary>
-        /// <param name="e">The <see cref="T:System.Windows.Input.KeyEventArgs" /> that contains the event data.</param>
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
             base.OnPreviewKeyDown(e);
 
-            if (InterceptArrowKeys)
+            if (!InterceptArrowKeys)
             {
-                if (e.Key == Key.Up)
-                {
+                return;
+            }
+
+            switch (e.Key)
+            {
+                case Key.Up:
                     ChangeValue(true);
                     e.Handled = true;
-                }
-                else if (e.Key == Key.Down)
-                {
+                    break;
+                case Key.Down:
                     ChangeValue(false);
                     e.Handled = true;
-                }
+                    break;
             }
         }
 
@@ -330,64 +312,64 @@ namespace MahApps.Metro.Controls
             const StringComparison strComp = StringComparison.InvariantCultureIgnoreCase;
 
             e.Handled = true;
-            if (!string.IsNullOrWhiteSpace(e.Text) && e.Text.Length == 1)
+            if (string.IsNullOrWhiteSpace(e.Text) || e.Text.Length != 1)
             {
-                string text = e.Text;
+                return;
+            }
 
-                if (Char.IsDigit(text[0]))
+            string text = e.Text;
+
+            if (Char.IsDigit(text[0]))
+            {
+                e.Handled = false;
+            }
+            else
+            {
+                CultureInfo equivalentCulture = SpecificCultureInfo;
+                NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
+                TextBox textBox = ((TextBox)sender);
+
+                if (numberFormatInfo.NumberDecimalSeparator == text)
                 {
-                    e.Handled = false;
+                    if (!textBox.Text.Any(i => i.ToString() == numberFormatInfo.NumberDecimalSeparator))
+                    {
+                        e.Handled = false;
+                    }
                 }
                 else
                 {
-                    CultureInfo equivalentCulture = Language.GetEquivalentCulture();
-                    NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
-                    TextBox textBox = ((TextBox)sender);
-
-                    if (numberFormatInfo.NumberDecimalSeparator == text)
+                    if (numberFormatInfo.NegativeSign == text || text == numberFormatInfo.PositiveSign)
                     {
-                        if (!textBox.Text.Any(i => i.ToString() == numberFormatInfo.NumberDecimalSeparator))
+                        if (textBox.SelectionStart == 0)
                         {
-                            e.Handled = false;
+                            //check if text already has a + or - sign
+                            if (textBox.Text.Length > 1)
+                            {
+                                if (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, strComp)
+                                    && !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, strComp))
+                                {
+                                    e.Handled = false;
+                                }
+                            }
+                            else
+                            {
+                                e.Handled = false;
+                            }
+                        }
+                        else if (textBox.SelectionStart > 0)
+                        {
+                            string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
+                            if (elementBeforeCaret.Equals(scientificNotationChar, strComp))
+                            {
+                                e.Handled = false;
+                            }
                         }
                     }
-                    else
+                    else if (text.Equals(scientificNotationChar, strComp)
+                             && !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(scientificNotationChar, strComp))
+                             && StringFormat.ToUpperInvariant().Contains(scientificNotationChar))
                     {
-                        
-                        if (numberFormatInfo.NegativeSign == text || text == numberFormatInfo.PositiveSign)
-                        {
-                            if (textBox.SelectionStart == 0)
-                            {
-
-                                //check if text already has a + or - sign
-                                if (textBox.Text.Length > 1)
-                                {
-                                    if (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, strComp)
-                                        && !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, strComp))
-                                    {
-                                        e.Handled = false;
-                                    }
-                                }
-                                else
-                                {
-                                    e.Handled = false;
-                                }
-                            }
-                            else if (textBox.SelectionStart > 0)
-                            {
-                                string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
-                                if (elementBeforeCaret.Equals(scientificNotationChar, strComp))
-                                {
-                                    e.Handled = false;
-                                }
-                            }
-                        }
-                        else if (text.Equals(scientificNotationChar, strComp) 
-                            && !textBox.Text.Any(i=>i.ToString(equivalentCulture).Equals(scientificNotationChar,strComp))
-                            && StringFormat.ToUpperInvariant().Contains(scientificNotationChar))
-                        {
-                            e.Handled = false;
-                        }
+                        e.Handled = false;
                     }
                 }
             }
@@ -453,7 +435,7 @@ namespace MahApps.Metro.Controls
 
             if (_valueTextBox != null)
             {
-                CultureInfo culture = Language.GetSpecificCulture();
+                CultureInfo culture = SpecificCultureInfo;
                 if (string.IsNullOrEmpty(StringFormat))
                 {
                     _valueTextBox.Text = newValue.Value.ToString(culture);
@@ -462,6 +444,7 @@ namespace MahApps.Metro.Controls
                 {
                     _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
                 }
+
                 if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
                 {
                     SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
@@ -505,16 +488,6 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.ResetInternal();
-        }
-
-        private static void IsReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            TextBox valueTextBox = ((NumericUpDown)d)._valueTextBox;
-
-            if (valueTextBox != null)
-            {
-                valueTextBox.IsReadOnly = (bool)e.NewValue;
-            }
         }
 
         private static void OnDelayChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -657,6 +630,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (String.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                Value = null;
+            }
+        }
+
         private void OnValueTextBoxPaste(object sender, DataObjectPastingEventArgs e)
         {
             var textBox = ((TextBox)sender);
@@ -691,7 +672,7 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
-            return double.TryParse(text, NumberStyles.Any, Language.GetSpecificCulture(), out convertedValue);
+            return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
         }
     }
 }
