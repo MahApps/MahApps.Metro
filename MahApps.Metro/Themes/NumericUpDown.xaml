@@ -49,6 +49,7 @@
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      FontFamily="{TemplateBinding FontFamily}"
                                      FontSize="{TemplateBinding FontSize}"
+                                     Controls:TextboxHelper.ClearTextButton="{TemplateBinding Controls:TextboxHelper.ClearTextButton}"
                                      Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}" />
                         </ScrollViewer>
                         <RepeatButton x:Name="PART_NumericUp"

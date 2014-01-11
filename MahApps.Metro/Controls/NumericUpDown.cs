@@ -248,6 +248,7 @@ namespace MahApps.Metro.Controls
             _valueTextBox.PreviewTextInput += OnPreviewTextInput;
             _valueTextBox.IsReadOnly = IsReadOnly;
             _valueTextBox.PreviewKeyDown += OnTextBoxKeyDown;
+            _valueTextBox.TextChanged += OnTextChanged;
             DataObject.AddPastingHandler(_valueTextBox, OnValueTextBoxPaste);
 
             _repeatUp.Click += (o, e) => ChangeValue(true);
@@ -257,6 +258,14 @@ namespace MahApps.Metro.Controls
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
             GotFocus += OnGetFocus;
             OnValueChanged(Value, Value);
+        }
+
+        private void OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (String.IsNullOrEmpty(((TextBox)sender).Text))
+            {
+                Value = null;
+            }
         }
 
         public void SelectAll()

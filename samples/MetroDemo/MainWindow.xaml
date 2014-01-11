@@ -469,7 +469,8 @@
                                 <Controls:NumericUpDown Value="5" 
                                                         Interval="2" />
                                 <Label Content='SmallChange="5"' />
-                                <Controls:NumericUpDown Value="5" 
+                                <Controls:NumericUpDown Value="5"  
+                                                        Controls:TextboxHelper.ClearTextButton="True"
                                                         Interval="5" />
 
                                 <Label Content="No Speedup when long pressed" />
