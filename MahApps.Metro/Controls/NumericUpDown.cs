@@ -58,7 +58,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MaxValue, OnMaximumChanged, CoerceMaximum));
 
         public static readonly DependencyProperty IntervalProperty =
-            DependencyProperty.Register("Interval", typeof(double), typeof(NumericUpDown), new PropertyMetadata((double)1));
+            DependencyProperty.Register("Interval", typeof(double), typeof(NumericUpDown), new PropertyMetadata((double)1, IntervalChanged));
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
