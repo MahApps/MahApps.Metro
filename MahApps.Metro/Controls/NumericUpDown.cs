@@ -351,6 +351,14 @@ namespace MahApps.Metro.Controls
                         {
                             e.Handled = false;
                         }
+                        else if (((TextBox)sender).SelectionStart > 0 && ((TextBox)sender).Text.ElementAt(((TextBox)sender).SelectionStart - 1).ToString().ToUpperInvariant().Equals("E"))
+                        {
+                            e.Handled = false;
+                        }
+                    }
+                    else if (text.ToUpperInvariant().Equals("E") && StringFormat.ToUpperInvariant().Contains("E"))
+                    {
+                        e.Handled = false;
                     }
                 }
             }
