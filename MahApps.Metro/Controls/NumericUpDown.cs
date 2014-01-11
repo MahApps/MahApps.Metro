@@ -331,7 +331,7 @@ namespace MahApps.Metro.Controls
 
                 if (numberFormatInfo.NumberDecimalSeparator == text)
                 {
-                    if (!textBox.Text.Any(i => i.ToString() == numberFormatInfo.NumberDecimalSeparator))
+                    if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator))
                     {
                         e.Handled = false;
                     }
