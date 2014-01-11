@@ -358,7 +358,20 @@ namespace MahApps.Metro.Controls
                         {
                             if (textBox.SelectionStart == 0)
                             {
-                                e.Handled = false;
+
+                                //check if text already has a + or - sign
+                                if (textBox.Text.Length > 1)
+                                {
+                                    if (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, strComp)
+                                        && !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, strComp))
+                                    {
+                                        e.Handled = false;
+                                    }
+                                }
+                                else
+                                {
+                                    e.Handled = false;
+                                }
                             }
                             else if (textBox.SelectionStart > 0)
                             {
