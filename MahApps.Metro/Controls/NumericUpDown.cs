@@ -327,6 +327,7 @@ namespace MahApps.Metro.Controls
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             const string scientificNotationChar = "E";
+            const StringComparison strComp = StringComparison.InvariantCultureIgnoreCase;
 
             e.Handled = true;
             if (!string.IsNullOrWhiteSpace(e.Text) && e.Text.Length == 1)
@@ -352,6 +353,7 @@ namespace MahApps.Metro.Controls
                     }
                     else
                     {
+                        
                         if (numberFormatInfo.NegativeSign == text || text == numberFormatInfo.PositiveSign)
                         {
                             if (textBox.SelectionStart == 0)
@@ -361,13 +363,15 @@ namespace MahApps.Metro.Controls
                             else if (textBox.SelectionStart > 0)
                             {
                                 string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
-                                if (elementBeforeCaret.Equals(scientificNotationChar, StringComparison.InvariantCultureIgnoreCase))
+                                if (elementBeforeCaret.Equals(scientificNotationChar, strComp))
                                 {
                                     e.Handled = false;
                                 }
                             }
                         }
-                        else if (text.Equals(scientificNotationChar, StringComparison.InvariantCultureIgnoreCase) && StringFormat.ToUpperInvariant().Contains(scientificNotationChar))
+                        else if (text.Equals(scientificNotationChar, strComp) 
+                            && !textBox.Text.Any(i=>i.ToString(equivalentCulture).Equals(scientificNotationChar,strComp))
+                            && StringFormat.ToUpperInvariant().Contains(scientificNotationChar))
                         {
                             e.Handled = false;
                         }
