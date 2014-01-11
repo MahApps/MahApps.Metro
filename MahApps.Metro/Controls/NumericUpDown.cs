@@ -335,18 +335,22 @@ namespace MahApps.Metro.Controls
                 {
                     e.Handled = false;
                 }
-                else if (NumberFormatInfo.CurrentInfo.NumberDecimalSeparator == text)
+                else
                 {
-                    if (!((TextBox)sender).Text.Any(i => i.ToString() == Language.GetEquivalentCulture().NumberFormat.NumberDecimalSeparator))
+                    NumberFormatInfo numberFormatInfo = Language.GetEquivalentCulture().NumberFormat;
+                    if (numberFormatInfo.NumberDecimalSeparator == text)
                     {
-                        e.Handled = false;
+                        if (!((TextBox)sender).Text.Any(i => i.ToString() == numberFormatInfo.NumberDecimalSeparator))
+                        {
+                            e.Handled = false;
+                        }
                     }
-                }
-                else if (Language.GetEquivalentCulture().NumberFormat.NegativeSign == text || text == Language.GetEquivalentCulture().NumberFormat.PositiveSign)
-                {
-                    if (((TextBox)sender).SelectionStart == 0)
+                    else if (numberFormatInfo.NegativeSign == text || text == numberFormatInfo.PositiveSign)
                     {
-                        e.Handled = false;
+                        if (((TextBox)sender).SelectionStart == 0)
+                        {
+                            e.Handled = false;
+                        }
                     }
                 }
             }
