@@ -20,60 +20,44 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementNumericUp, Type = typeof(RepeatButton))]
     [TemplatePart(Name = ElementNumericDown, Type = typeof(RepeatButton))]
     [TemplatePart(Name = ElementTextBox, Type = typeof(TextBox))]
-    public class NumericUpDown : RangeBase
+    public class NumericUpDown : Control
     {
         public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
 
-        /// <summary>
-        ///     Event for "To value has been reached"
-        /// </summary>
         public static readonly RoutedEvent MaximumReachedEvent = EventManager.RegisterRoutedEvent("MaximumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
 
-        /// <summary>
-        ///     Event for "From value has been reached"
-        /// </summary>
         public static readonly RoutedEvent MinimumReachedEvent = EventManager.RegisterRoutedEvent("MinimumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
 
-        /// <summary>
-        ///     DependencyProperty for <see cref="Delay" /> property.
-        /// </summary>
         public static readonly DependencyProperty DelayProperty = DependencyProperty.Register("Delay",
                                                                                               typeof(int),
                                                                                               typeof(NumericUpDown),
                                                                                               new FrameworkPropertyMetadata(DefaultDelay, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnDelayChanged),
                                                                                               ValidateDelay);
-        /// <summary>
-        ///     DependencyProperty for <see cref="TextAlignment"/> property.
-        /// </summary>
         public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register("TextAlignment",
                                                                                                 typeof(TextAlignment),
                                                                                                 typeof(NumericUpDown),
                                                                                                 new PropertyMetadata(TextAlignment.Right));
 
-        /// <summary>
-        ///     DependencyProperty for <see cref="Speedup" /> property.
-        /// </summary>
         public static readonly DependencyProperty SpeedupProperty = DependencyProperty.Register("Speedup",
                                                                                                 typeof(bool),
                                                                                                 typeof(NumericUpDown),
                                                                                                 new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSpeedupChanged));
 
-        /// <summary>
-        ///     DependencyProperty for <see cref="IsReadOnly" /> property.
-        /// </summary>
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly",
                                                                                                    typeof(bool),
                                                                                                    typeof(NumericUpDown),
                                                                                                    new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsReadOnlyChanged));
 
-        /// <summary>
-        ///     DependencyProperty for <see cref="StringFormat" /> property.
-        /// </summary>
         public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register("StringFormat", typeof(string), typeof(NumericUpDown), new FrameworkPropertyMetadata(null, OnStringFormatChanged));
 
         public static readonly DependencyProperty InterceptArrowKeysProperty = DependencyProperty.Register("InterceptArrowKeys", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(true));
+
+
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double?), typeof(NumericUpDown), new PropertyMetadata(default(double?), OnValueChanged, CoerceValue));
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(NumericUpDown), new PropertyMetadata(double.MinValue, OnMinimumChanged));
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(NumericUpDown), new PropertyMetadata(double.MaxValue, OnMaximumChanged, CoerceMaximum));
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -90,13 +74,85 @@ namespace MahApps.Metro.Controls
         static NumericUpDown()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(typeof(NumericUpDown)));
-            MinimumProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MinValue));
-            SmallChangeProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(DefaultInterval, IntervalChanged));
-            LargeChangeProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(100 * DefaultInterval));
-            MaximumProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MaxValue));
 
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
+        }
+
+        private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+
+            numericUpDown.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
+        }
+
+        public double? Value
+        {
+            get { return (double?)GetValue(ValueProperty); }
+            set { SetValue(ValueProperty, value); }
+        }
+
+      
+        public double Minimum
+        {
+            get { return (double)GetValue(MinimumProperty); }
+            set { SetValue(MinimumProperty, value); }
+        }
+
+    
+
+        private static void OnMaximumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+
+            numericUpDown.OnMaximumChanged((double?)e.OldValue, (double?)e.NewValue);
+        }
+
+        private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+
+            numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.CoerceValue(MaximumProperty);
+            numericUpDown.OnMinimumChanged((double?)e.OldValue, (double?)e.NewValue);
+        }
+
+        private static object CoerceMaximum(DependencyObject d, object value)
+        {
+            double minimum = ((NumericUpDown)d).Minimum;
+            double val = (double)value;
+            return val < minimum ? minimum : val;
+        }
+
+        private static object CoerceValue(DependencyObject d, object value)
+        {
+            if (value == null)
+                return null;
+
+            var numericUpDown = (NumericUpDown)d;
+            double val = ((double?)value).Value;
+
+            if (val < numericUpDown.Minimum)
+                return numericUpDown.Minimum;
+            if (val > numericUpDown.Maximum)
+                return numericUpDown.Maximum;
+            return val;
+        }
+
+        public double Maximum
+        {
+            get { return (double)GetValue(MaximumProperty); }
+            set { SetValue(MaximumProperty, value); }
+        }
+
+
+        public static readonly DependencyProperty IntervalProperty =
+            DependencyProperty.Register("Interval", typeof(double), typeof(NumericUpDown), new PropertyMetadata((double)1));
+
+        public double Interval
+        {
+            get { return (double)GetValue(IntervalProperty); }
+            set { SetValue(IntervalProperty, value); }
         }
 
         ~NumericUpDown()
@@ -348,21 +404,25 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
+        protected virtual void OnMaximumChanged(double? oldMaximum, double? newMaximum)
         {
-            base.OnMaximumChanged(oldMaximum, newMaximum);
-
-            if (_repeatUp != null)
+            if (!newMaximum.HasValue)
+            {
+                _repeatDown.IsEnabled = false;
+            }
+            else if (_repeatUp != null)
             {
                 _repeatUp.IsEnabled = Value < newMaximum;
             }
         }
 
-        protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
+        protected virtual void OnMinimumChanged(double? oldMinimum, double? newMinimum)
         {
-            base.OnMinimumChanged(oldMinimum, newMinimum);
-
-            if (_repeatDown != null)
+            if (!newMinimum.HasValue)
+            {
+                _repeatDown.IsEnabled = false;
+            }
+            else if (_repeatDown != null)
             {
                 _repeatDown.IsEnabled = Value > newMinimum;
             }
@@ -379,9 +439,14 @@ namespace MahApps.Metro.Controls
         /// <param name="newValue">
         ///     New value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value" /> property
         /// </param>
-        protected override void OnValueChanged(double oldValue, double newValue)
+        protected virtual void OnValueChanged(double? oldValue, double? newValue)
         {
-            base.OnValueChanged(oldValue, newValue);
+            if (!newValue.HasValue)
+            {
+                _valueTextBox.Text = null;
+                return;
+            }
+
 
             if (_repeatUp != null && !_repeatUp.IsEnabled)
             {
@@ -427,11 +492,11 @@ namespace MahApps.Metro.Controls
                 CultureInfo culture = Language.GetSpecificCulture();
                 if (string.IsNullOrEmpty(StringFormat))
                 {
-                    _valueTextBox.Text = newValue.ToString(culture);
+                    _valueTextBox.Text = newValue.Value.ToString(culture);
                 }
                 else
                 {
-                    _valueTextBox.Text = newValue.ToString(StringFormat, culture);
+                    _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
                 }
                 if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
                     SetValue(TextboxHelper.TextLengthProperty,_valueTextBox.Text.Length);
@@ -474,9 +539,9 @@ namespace MahApps.Metro.Controls
         {
             NumericUpDown nud = (NumericUpDown)d;
 
-            if (nud._valueTextBox != null)
+            if (nud._valueTextBox != null && nud.Value.HasValue)
             {
-                nud._valueTextBox.Text = nud.Value.ToString((string)e.NewValue);
+                nud._valueTextBox.Text = nud.Value.Value.ToString((string)e.NewValue);
             }
         }
 
@@ -495,10 +560,9 @@ namespace MahApps.Metro.Controls
             RaiseEvent(new RoutedEventArgs(toPositive ? IncrementValueEvent : DecrementValueEvent));
             if (Speedup)
             {
-                double d = SmallChange * LargeChange;
-                if ((_intervalValueSinceReset += SmallChange * _internalIntervalMultiplierForCalculation) > d)
+                double d = Interval * 10;
+                if ((_intervalValueSinceReset += Interval * _internalIntervalMultiplierForCalculation) > d)
                 {
-                    LargeChange *= 10;
                     _internalIntervalMultiplierForCalculation *= 10;
                 }
             }
@@ -568,8 +632,7 @@ namespace MahApps.Metro.Controls
 
         private void ResetInternal()
         {
-            LargeChange = 100 * SmallChange;
-            _internalIntervalMultiplierForCalculation = SmallChange;
+            _internalIntervalMultiplierForCalculation = Interval;
             _intervalValueSinceReset = 0;
         }
     }

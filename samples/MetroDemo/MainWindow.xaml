@@ -467,10 +467,10 @@
 
                                 <Label Content='SmallChange="2"' />
                                 <Controls:NumericUpDown Value="5" 
-                                                        SmallChange="2" />
+                                                        Interval="2" />
                                 <Label Content='SmallChange="5"' />
                                 <Controls:NumericUpDown Value="5" 
-                                                        SmallChange="5" />
+                                                        Interval="5" />
 
                                 <Label Content="No Speedup when long pressed" />
                                 <Controls:NumericUpDown Value="5" 
@@ -482,10 +482,10 @@
                                 <Label Content="StringFormat" />
                                 <Label Content="{Binding ElementName=test, Path=Value}" />
                                 <Controls:NumericUpDown x:Name="test" Value="5" 
-                                                        SmallChange=".1"  
+                                                        Interval=".1"  
                                                         StringFormat="E2" />
                                 <Controls:NumericUpDown Value="5"
-                                                        SmallChange=".1" 
+                                                        Interval=".1" 
                                                         StringFormat="N2" />
                             </StackPanel>
                         </Grid>
