@@ -326,6 +326,8 @@ namespace MahApps.Metro.Controls
 
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
+            const string scientificNotationChar = "E";
+
             e.Handled = true;
             if (!string.IsNullOrWhiteSpace(e.Text) && e.Text.Length == 1)
             {
@@ -337,28 +339,38 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    NumberFormatInfo numberFormatInfo = Language.GetEquivalentCulture().NumberFormat;
+                    CultureInfo equivalentCulture = Language.GetEquivalentCulture();
+                    NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
+                    TextBox textBox = ((TextBox)sender);
+
                     if (numberFormatInfo.NumberDecimalSeparator == text)
                     {
-                        if (!((TextBox)sender).Text.Any(i => i.ToString() == numberFormatInfo.NumberDecimalSeparator))
+                        if (!textBox.Text.Any(i => i.ToString() == numberFormatInfo.NumberDecimalSeparator))
                         {
                             e.Handled = false;
                         }
                     }
-                    else if (numberFormatInfo.NegativeSign == text || text == numberFormatInfo.PositiveSign)
+                    else
                     {
-                        if (((TextBox)sender).SelectionStart == 0)
+                        if (numberFormatInfo.NegativeSign == text || text == numberFormatInfo.PositiveSign)
+                        {
+                            if (textBox.SelectionStart == 0)
+                            {
+                                e.Handled = false;
+                            }
+                            else if (textBox.SelectionStart > 0)
+                            {
+                                string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
+                                if (elementBeforeCaret.Equals(scientificNotationChar, StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    e.Handled = false;
+                                }
+                            }
+                        }
+                        else if (text.Equals(scientificNotationChar, StringComparison.InvariantCultureIgnoreCase) && StringFormat.ToUpperInvariant().Contains(scientificNotationChar))
                         {
                             e.Handled = false;
                         }
-                        else if (((TextBox)sender).SelectionStart > 0 && ((TextBox)sender).Text.ElementAt(((TextBox)sender).SelectionStart - 1).ToString().ToUpperInvariant().Equals("E"))
-                        {
-                            e.Handled = false;
-                        }
-                    }
-                    else if (text.ToUpperInvariant().Equals("E") && StringFormat.ToUpperInvariant().Contains("E"))
-                    {
-                        e.Handled = false;
                     }
                 }
             }
