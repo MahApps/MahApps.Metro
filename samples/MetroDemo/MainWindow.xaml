@@ -476,7 +476,7 @@
                                 <Controls:NumericUpDown Value="5" 
                                                         Speedup="false" />
                                 <Label Content="Speedup when long pressed" />
-                                <Controls:NumericUpDown Value="5" 
+                                <Controls:NumericUpDown
                                                         Speedup="true" />
 
                                 <Label Content="StringFormat" />

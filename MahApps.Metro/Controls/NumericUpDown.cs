@@ -28,6 +28,7 @@ namespace MahApps.Metro.Controls
         public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MaximumReachedEvent = EventManager.RegisterRoutedEvent("MaximumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MinimumReachedEvent = EventManager.RegisterRoutedEvent("MinimumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
+        public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
 
         public static readonly DependencyProperty DelayProperty = DependencyProperty.Register("Delay",
             typeof(int),
@@ -51,10 +52,10 @@ namespace MahApps.Metro.Controls
             new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsReadOnlyChanged));
 
         public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register("StringFormat", typeof(string), typeof(NumericUpDown), new FrameworkPropertyMetadata(null, OnStringFormatChanged));
-        public static readonly DependencyProperty InterceptArrowKeysProperty = DependencyProperty.Register("InterceptArrowKeys", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(true));
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double?), typeof(NumericUpDown), new PropertyMetadata(default(double?), OnValueChanged, CoerceValue));
-        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(NumericUpDown), new PropertyMetadata(double.MinValue, OnMinimumChanged));
-        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(NumericUpDown), new PropertyMetadata(double.MaxValue, OnMaximumChanged, CoerceMaximum));
+        public static readonly DependencyProperty InterceptArrowKeysProperty = DependencyProperty.Register("InterceptArrowKeys", typeof(bool), typeof(NumericUpDown), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value", typeof(double?), typeof(NumericUpDown), new FrameworkPropertyMetadata(default(double?), OnValueChanged, CoerceValue));
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum", typeof(double), typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MinValue, OnMinimumChanged));
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum", typeof(double), typeof(NumericUpDown), new FrameworkPropertyMetadata(double.MaxValue, OnMaximumChanged, CoerceMaximum));
 
         public static readonly DependencyProperty IntervalProperty =
             DependencyProperty.Register("Interval", typeof(double), typeof(NumericUpDown), new PropertyMetadata((double)1));
@@ -88,6 +89,12 @@ namespace MahApps.Metro.Controls
             {
                 DataObject.RemovePastingHandler(_valueTextBox, OnValueTextBoxPaste);
             }
+        }
+
+        public event RoutedEventHandler ValueChanged
+        {
+            add { AddHandler(ValueChangedEvent, value); }
+            remove { RemoveHandler(ValueChangedEvent, value); }
         }
 
         /// <summary>
@@ -276,28 +283,12 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected virtual void OnMaximumChanged(double? oldMaximum, double? newMaximum)
+        protected virtual void OnMaximumChanged(double oldMaximum, double newMaximum)
         {
-            if (!newMaximum.HasValue)
-            {
-                _repeatDown.IsEnabled = false;
-            }
-            else if (_repeatUp != null)
-            {
-                _repeatUp.IsEnabled = Value < newMaximum;
-            }
         }
 
-        protected virtual void OnMinimumChanged(double? oldMinimum, double? newMinimum)
+        protected virtual void OnMinimumChanged(double oldMinimum, double newMinimum)
         {
-            if (!newMinimum.HasValue)
-            {
-                _repeatDown.IsEnabled = false;
-            }
-            else if (_repeatDown != null)
-            {
-                _repeatDown.IsEnabled = Value > newMinimum;
-            }
         }
 
         /// <summary>
@@ -426,6 +417,9 @@ namespace MahApps.Metro.Controls
                     SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
                 }
             }
+
+            var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue) { RoutedEvent = RangeBase.ValueChangedEvent };
+            RaiseEvent(eventArgs);
         }
 
         private static object CoerceMaximum(DependencyObject d, object value)
@@ -485,7 +479,7 @@ namespace MahApps.Metro.Controls
         {
             var numericUpDown = (NumericUpDown)d;
 
-            numericUpDown.OnMaximumChanged((double?)e.OldValue, (double?)e.NewValue);
+            numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -494,7 +488,7 @@ namespace MahApps.Metro.Controls
 
             numericUpDown.CoerceValue(ValueProperty);
             numericUpDown.CoerceValue(MaximumProperty);
-            numericUpDown.OnMinimumChanged((double?)e.OldValue, (double?)e.NewValue);
+            numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         private static void OnSpeedupChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -529,6 +523,13 @@ namespace MahApps.Metro.Controls
         private void ChangeValue(bool toPositive)
         {
             RaiseEvent(new RoutedEventArgs(toPositive ? IncrementValueEvent : DecrementValueEvent));
+
+            if (!Value.HasValue)
+            {
+                Value = 0;
+                return;
+            }
+
             if (Speedup)
             {
                 double d = Interval * 10;
