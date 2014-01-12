@@ -144,7 +144,7 @@
                             Panel.ZIndex="4"
                             Grid.Column="0"
                             Grid.ColumnSpan="3"
-                            x:Name="PART_MessageDialogContainer">
+                            x:Name="PART_MetroDialogContainer">
 
                         </Grid>
                     </Grid>

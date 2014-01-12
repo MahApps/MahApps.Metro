@@ -97,6 +97,7 @@
                 <MenuItem Header="Dialogs">
                     <MenuItem Header="Use Accent?" x:Name="UseAccentForDialogsMenuItem" IsCheckable="True" />
                     <Separator />
+                    <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                     <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
                     <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                     <MenuItem Click="ShowSimpleDialog" Header="Show SimpleDialog" />

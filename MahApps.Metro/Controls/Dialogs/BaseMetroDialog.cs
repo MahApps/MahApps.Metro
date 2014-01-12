@@ -76,7 +76,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.SetResourceReference(BackgroundProperty, "WhiteColorBrush");
                     break;
                 case MetroDialogColorScheme.Accented:
-                    this.SetResourceReference(BackgroundProperty, "AccentColorBrush");
+                    this.SetResourceReference(BackgroundProperty, "HighlightBrush");
                     this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
                     break;
             }
@@ -100,6 +100,9 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.IsLoaded) return new Task(() => { });
 
+            if (!DialogSettings.UseAnimations)
+                this.Opacity = 1.0; //skip the animation
+
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
             RoutedEventHandler handler = null;
@@ -118,21 +121,30 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Requests an externally shown Dialog to close. Will throw an exception if the Dialog is inside of a MetroWindow.
         /// </summary>
-        public void RequestClose()
+        public Task RequestCloseAsync()
         {
-            //Technically, the Dialog is /always/ inside of a MetroWindow. However, this is thrown because it is inside of a user-defined one, not an internally-defined one.
-            if (ParentDialogWindow == null) throw new InvalidOperationException("This dialog is inside of a MetroWindow! Call HideMetroDialogAsync!");
-
             if (OnRequestClose())
             {
-                _WaitForCloseAsync().ContinueWith(x =>
-                    {
-                        ParentDialogWindow.Dispatcher.Invoke(new Action(() =>
+                //Technically, the Dialog is /always/ inside of a MetroWindow.
+                //If the dialog is inside of a user-created MetroWindow, not one created by the external dialog APIs.
+                if (ParentDialogWindow == null)
+                {
+                    //This is from a user-created MetroWindow
+                    return DialogManager.HideMetroDialogAsync(OwningWindow, this);
+                }
+                else
+                {
+                    //This is from a MetroWindow created by the external dialog APIs.
+                    return _WaitForCloseAsync().ContinueWith(x =>
                         {
-                            ParentDialogWindow.Close();
-                        }));
-                    });
+                            ParentDialogWindow.Dispatcher.Invoke(new Action(() =>
+                            {
+                                ParentDialogWindow.Close();
+                            }));
+                        });
+                }
             }
+            return Task.Factory.StartNew(() => { });
         }
 
         internal protected virtual void OnShown() { }
@@ -164,21 +176,29 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
-            Storyboard closingStoryboard = this.Template.Resources["DialogCloseStoryboard"] as Storyboard;
-
-            EventHandler handler = null;
-            handler = new EventHandler((sender, args) =>
+            if (DialogSettings.UseAnimations)
             {
-                closingStoryboard.Completed -= handler;
+                Storyboard closingStoryboard = this.Template.Resources["DialogCloseStoryboard"] as Storyboard;
 
-                tcs.TrySetResult(null);
-            });
+                EventHandler handler = null;
+                handler = new EventHandler((sender, args) =>
+                {
+                    closingStoryboard.Completed -= handler;
 
-            closingStoryboard = closingStoryboard.Clone();
+                    tcs.TrySetResult(null);
+                });
 
-            closingStoryboard.Completed += handler;
+                closingStoryboard = closingStoryboard.Clone();
 
-            closingStoryboard.Begin(this);
+                closingStoryboard.Completed += handler;
+
+                closingStoryboard.Begin(this);
+            }
+            else
+            {
+                this.Opacity = 0.0;
+                tcs.TrySetResult(null); //skip the animation
+            }
 
             return tcs.Task;
         }
@@ -194,9 +214,8 @@ namespace MahApps.Metro.Controls.Dialogs
             AffirmativeButtonText = "OK";
             NegativeButtonText = "Cancel";
 
-            CanChangeSizeToContent = true;
-
             ColorScheme = MetroDialogColorScheme.Theme;
+            UseAnimations = true;
         }
 
         /// <summary>
@@ -204,20 +223,18 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public string AffirmativeButtonText { get; set; }
         /// <summary>
-        /// Gets/sets the text used for the Negative bytton. For example: "Cancel" or "No".
+        /// Gets/sets the text used for the Negative button. For example: "Cancel" or "No".
         /// </summary>
         public string NegativeButtonText { get; set; }
         public string FirstAuxiliaryButtonText { get; set; }
         public string SecondAuxiliaryButtonText { get; set; }
 
         /// <summary>
-        /// Gets/sets whether opening a dialog inside the mainwindow will change the sizeToContent value to "height" (default:true)
-        /// </summary>
-        public bool CanChangeSizeToContent { get; set; }
-        /// <summary>
         /// Gets/sets whether the metro dialog should use the default black/white appearance (theme) or try to use the current accent.
         /// </summary>
         public MetroDialogColorScheme ColorScheme { get; set; }
+
+        public bool UseAnimations { get; set; }
     }
 
     /// <summary>
