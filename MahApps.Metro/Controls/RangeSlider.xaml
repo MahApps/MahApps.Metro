@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="MahApps.Metro.Controls.RangeSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MahApps.Metro.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             UseLayoutRounding="True"
+             Background="{DynamicResource GrayBrush5}">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="RepeatButtonControlTemplate" TargetType="RepeatButton">
+            <Grid/>
+        </ControlTemplate>
+        <Style x:Key="ThumbStyle" TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="BackgroundOver" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="BackgroundOver" d:IsOptimized="True"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="Background" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" />
+                            <Border x:Name="BackgroundOver" Background="{TemplateBinding Foreground}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Opacity="0" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SliderStyle" TargetType="Slider">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Slider">
+                        <Grid x:Name="Root">
+                            <Grid x:Name="HorizontalTemplate">
+                                <Track x:Name="PART_Track">
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton x:Name="HorizontalTrackLargeChangeIncreaseRepeatButton" Template="{StaticResource RepeatButtonControlTemplate}" />
+                                    </Track.IncreaseRepeatButton>
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton x:Name="HorizontalTrackLargeChangeDecreaseRepeatButton" Template="{StaticResource RepeatButtonControlTemplate}" />
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb x:Name="HorizontalThumb" Height="18" IsTabStop="True" Width="10" Style="{StaticResource ThumbStyle}" Background="{DynamicResource BlackColorBrush}" BorderBrush="#00000000" Margin="1" />
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Border x:Name="progressBorder" Background="{DynamicResource AccentColorBrush}" BorderThickness="0" />
+        <Slider x:Name="LowerSlider"
+                Minimum="{Binding RelativeSource={RelativeSource AncestorType=local:RangeSlider}, Path=Minimum, Mode=TwoWay}"
+                Maximum="{Binding RelativeSource={RelativeSource AncestorType=local:RangeSlider}, Path=Maximum, Mode=TwoWay}"
+                Value="{Binding RelativeSource={RelativeSource AncestorType=local:RangeSlider}, Path=LowerValue, Mode=TwoWay}"
+                Style="{StaticResource SliderStyle}" />
+        <Slider x:Name="UpperSlider"
+                Minimum="{Binding RelativeSource={RelativeSource AncestorType=local:RangeSlider}, Path=Minimum, Mode=TwoWay}"
+                Maximum="{Binding RelativeSource={RelativeSource AncestorType=local:RangeSlider}, Path=Maximum, Mode=TwoWay}"
+                Value="{Binding RelativeSource={RelativeSource AncestorType=local:RangeSlider}, Path=UpperValue, Mode=TwoWay}"
+                Style="{StaticResource SliderStyle}" />
+    </Grid>
+</UserControl>
