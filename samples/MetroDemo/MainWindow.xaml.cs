@@ -220,12 +220,12 @@ namespace MetroDemo
         
         private void RangeSlider_OnLowerValueChanged(object sender, RangeParameterChangedEventArgs e)
         {
-            MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
+            //MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
         }
 
         private void RangeSlider_OnUpperValueChanged(object sender, RangeParameterChangedEventArgs e)
         {
-            MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
+            //MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
         }
 
         private void RangeSlider_OnLowerThumbDragStarted(object sender, DragStartedEventArgs e)

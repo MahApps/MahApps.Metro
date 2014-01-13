@@ -155,9 +155,9 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
 
-            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue, null, CoerceMinimum));
-            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue, null, CoerceMaximum));
-            //OrientationProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(OrientationProperty.DefaultMetadata.DefaultValue, null, CoerceOrientation));
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue));
+            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue));
+            OrientationProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(OrientationProperty.DefaultMetadata.DefaultValue));
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace MahApps.Metro.Controls
         protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
         {
             base.OnMinimumChanged(oldMinimum, newMinimum);
-
+            //CheckLowerValue();
             ReCalculateRanges();
             ReCalculateWidths();
         }
@@ -179,10 +179,36 @@ namespace MahApps.Metro.Controls
         protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
         {
             base.OnMaximumChanged(oldMaximum, newMaximum);
-
+            //CheckUpperValue();
             ReCalculateRanges();
             ReCalculateWidths();
         }
+
+        //Temporary fix. Keep LowerValue = Minimum or Maximum for correct calculating of slider width
+        //private void CheckLowerValue()
+        //{
+        //    if (LowerValue < Minimum)
+        //    {
+        //        LowerValue = Minimum;
+        //    }
+        //    else if (LowerValue > Maximum)
+        //    {
+        //        LowerValue = Maximum;
+        //    }
+        //}
+
+        ////Temporary fix. Keep UpperValue = Minimum or Maximum for correct calculating of slider width
+        //private void CheckUpperValue()
+        //{
+        //    if (UpperValue > Maximum)
+        //    {
+        //        UpperValue = Maximum;
+        //    }
+        //    else if (UpperValue < Minimum)
+        //    {
+        //        UpperValue = Minimum;
+        //    }
+        //}
 
         private static void RangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
@@ -305,9 +331,10 @@ namespace MahApps.Metro.Controls
             if (_leftButton != null && _rightButton != null && _centerThumb != null)
             {
                 _movableWidth = Math.Max(ActualWidth - _rightThumb.ActualWidth - _leftThumb.ActualWidth - _centerThumb.MinWidth, 1);
-                _leftButton.Width = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
-                _rightButton.Width = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
-                _centerThumb.Width = Math.Max(ActualWidth - _leftButton.Width - _rightButton.Width - _rightThumb.ActualWidth - _leftThumb.ActualWidth, 0);
+                _leftButton.Width = Math.Max(_movableWidth*(LowerValue - Minimum)/MovableRange, 0);
+                _rightButton.Width = Math.Max(_movableWidth*(Maximum - UpperValue)/MovableRange, 0);
+                _centerThumb.Width = Math.Max(ActualWidth - _leftButton.Width - _rightButton.Width - _rightThumb.ActualWidth -
+                        _leftThumb.ActualWidth, 0);
             }
         }
 
@@ -513,24 +540,6 @@ namespace MahApps.Metro.Controls
             return Math.Max(value, rs.LowerValue);
         }
 
-        private static object CoerceMaximum(DependencyObject d, object basevalue)
-        {
-            RangeSlider rs = (RangeSlider)d;
-            return (Double)basevalue < rs.UpperValue ? rs.UpperValue : (Double)basevalue;
-        }
-
-        private static object CoerceMinimum(DependencyObject d, object basevalue)
-        {
-            RangeSlider rs = (RangeSlider)d;
-
-            return (Double)basevalue > rs.LowerValue ? rs.LowerValue : (Double)basevalue;
-        }
-
-        //private static object CoerceOrientation(DependencyObject d, object basevalue)
-        //{
-        //    RangeSlider rs = (RangeSlider)d;
-             
-        //}
 
     }
 }
