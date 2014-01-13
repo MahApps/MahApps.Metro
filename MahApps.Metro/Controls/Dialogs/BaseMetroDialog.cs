@@ -74,6 +74,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 case MetroDialogColorScheme.Theme:
                     this.SetResourceReference(BackgroundProperty, "WhiteColorBrush");
+                    this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                     break;
                 case MetroDialogColorScheme.Accented:
                     this.SetResourceReference(BackgroundProperty, "HighlightBrush");
