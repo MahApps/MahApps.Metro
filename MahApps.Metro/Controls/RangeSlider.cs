@@ -167,7 +167,7 @@ namespace MahApps.Metro.Controls
         protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
         {
             base.OnMinimumChanged(oldMinimum, newMinimum);
-            //CheckLowerValue();
+            CheckLowerValue();
             ReCalculateRanges();
             ReCalculateWidths();
         }
@@ -179,36 +179,36 @@ namespace MahApps.Metro.Controls
         protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
         {
             base.OnMaximumChanged(oldMaximum, newMaximum);
-            //CheckUpperValue();
+            CheckUpperValue();
             ReCalculateRanges();
             ReCalculateWidths();
         }
 
         //Temporary fix. Keep LowerValue = Minimum or Maximum for correct calculating of slider width
-        //private void CheckLowerValue()
-        //{
-        //    if (LowerValue < Minimum)
-        //    {
-        //        LowerValue = Minimum;
-        //    }
-        //    else if (LowerValue > Maximum)
-        //    {
-        //        LowerValue = Maximum;
-        //    }
-        //}
+        private void CheckLowerValue()
+        {
+            if (LowerValue < Minimum)
+            {
+                LowerValue = Minimum;
+            }
+            else if (LowerValue > Maximum)
+            {
+                LowerValue = Maximum;
+            }
+        }
 
-        ////Temporary fix. Keep UpperValue = Minimum or Maximum for correct calculating of slider width
-        //private void CheckUpperValue()
-        //{
-        //    if (UpperValue > Maximum)
-        //    {
-        //        UpperValue = Maximum;
-        //    }
-        //    else if (UpperValue < Minimum)
-        //    {
-        //        UpperValue = Minimum;
-        //    }
-        //}
+        //Temporary fix. Keep UpperValue = Minimum or Maximum for correct calculating of slider width
+        private void CheckUpperValue()
+        {
+            if (UpperValue > Maximum)
+            {
+                UpperValue = Maximum;
+            }
+            else if (UpperValue < Minimum)
+            {
+                UpperValue = Minimum;
+            }
+        }
 
         private static void RangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
