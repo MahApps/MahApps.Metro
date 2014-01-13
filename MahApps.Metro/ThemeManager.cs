@@ -279,11 +279,12 @@ namespace MahApps.Metro
                 invalidateColors.Invoke(null, null);
             }
 
-            var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
-            if (invalidateParameters != null)
-            {
-                invalidateParameters.Invoke(null, null);
-            }
+            // See: https://github.com/MahApps/MahApps.Metro/issues/923
+            //var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
+            //if (invalidateParameters != null)
+            //{
+            //    invalidateParameters.Invoke(null, null);
+            //}
 
             var assembly = Assembly.GetAssembly(typeof(Window));
             if (assembly != null)
