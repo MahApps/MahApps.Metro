@@ -59,6 +59,7 @@ namespace MahApps.Metro.Controls
         #endregion
 
         private double _internalIntervalMultiplierForCalculation = DefaultInterval;
+        private double _internalLargeChange;
         private double _intervalValueSinceReset;
         private bool _manualChange;
         private RepeatButton _repeatDown;
@@ -555,9 +556,10 @@ namespace MahApps.Metro.Controls
 
             if (Speedup)
             {
-                double d = Interval * 10;
+                double d = Interval * _internalLargeChange;
                 if ((_intervalValueSinceReset += Interval * _internalIntervalMultiplierForCalculation) > d)
                 {
+                    _internalLargeChange *= 10;
                     _internalIntervalMultiplierForCalculation *= 10;
                 }
             }
@@ -666,6 +668,7 @@ namespace MahApps.Metro.Controls
 
         private void ResetInternal()
         {
+            _internalLargeChange = 100 * Interval;
             _internalIntervalMultiplierForCalculation = Interval;
             _intervalValueSinceReset = 0;
         }
