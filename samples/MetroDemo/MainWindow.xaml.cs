@@ -88,11 +88,7 @@ namespace MetroDemo
 
         private void LaunchRibbonDemo(object sender, RoutedEventArgs e)
         {
-#if NET_4_5
-            //new RibbonDemo().Show();
-#else
-            MessageBox.Show("Ribbon is only supported on .NET 4.5 or higher.");
-#endif
+            // new RibbonDemo().Show(); //TODO: Fix the ribbon demo
         }
 
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
@@ -100,15 +96,13 @@ namespace MetroDemo
             var dialog = (BaseMetroDialog)this.Resources["SimpleDialogTest"];
             dialog = dialog.ShowDialogExternally();
 
-            await TaskEx.Delay(5000);
+            await Task.Delay(5000);
 
             await dialog.RequestCloseAsync();
         }
 
         private async void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
-            // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support
-            // The package is only used by the demo and not a dependency of the library!
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
             var mySettings = new MetroDialogSettings()
@@ -134,7 +128,7 @@ namespace MetroDemo
 
             await this.ShowMetroDialogAsync(dialog);
 
-            await TaskEx.Delay(5000);
+            await Task.Delay(5000);
 
             await this.HideMetroDialogAsync(dialog);
         }
@@ -144,7 +138,7 @@ namespace MetroDemo
 
             var controller = await this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
 
-            await TaskEx.Delay(5000);
+            await Task.Delay(5000);
 
             controller.SetCancelable(true);
 
@@ -160,7 +154,7 @@ namespace MetroDemo
 
                 i += 1.0;
 
-                await TaskEx.Delay(2000);
+                await Task.Delay(2000);
             }
 
             await controller.CloseAsync();
