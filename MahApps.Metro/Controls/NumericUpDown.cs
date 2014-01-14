@@ -378,6 +378,28 @@ namespace MahApps.Metro.Controls
 
         protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup) {}
 
+        private void EnableDisableUpDown()
+        {
+            EnableDisableUp();
+            EnableDisableDown();
+        }
+
+        private void EnableDisableUp()
+        {
+            if (_repeatUp != null)
+            {
+                _repeatUp.IsEnabled = Value < Maximum;
+            }
+        }
+
+        private void EnableDisableDown()
+        {
+            if (_repeatDown != null)
+            {
+                _repeatDown.IsEnabled = Value > Minimum;
+            }
+        }
+
         /// <summary>
         ///     Raises the <see cref="E:System.Windows.Controls.Primitives.RangeBase.ValueChanged" /> routed event.
         /// </summary>
@@ -389,7 +411,7 @@ namespace MahApps.Metro.Controls
         /// </param>
         protected virtual void OnValueChanged(double? oldValue, double? newValue)
         {
-            if (!newValue.HasValue)
+            if (!newValue.HasValue && _valueTextBox != null)
             {
                 _valueTextBox.Text = null;
                 return;
@@ -503,7 +525,9 @@ namespace MahApps.Metro.Controls
         {
             var numericUpDown = (NumericUpDown)d;
 
+            numericUpDown.CoerceValue(ValueProperty);
             numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
+            numericUpDown.EnableDisableUpDown();
         }
 
         private static void OnMinimumChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -513,6 +537,7 @@ namespace MahApps.Metro.Controls
             numericUpDown.CoerceValue(ValueProperty);
             numericUpDown.CoerceValue(MaximumProperty);
             numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
+            numericUpDown.EnableDisableUpDown();
         }
 
         private static void OnSpeedupChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
