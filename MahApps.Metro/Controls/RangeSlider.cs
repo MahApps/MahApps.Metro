@@ -155,8 +155,8 @@ namespace MahApps.Metro.Controls
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
 
-            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue));
-            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue));
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue, null, CoerceMinimum));
+            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue, null, CoerceMaximum));
             OrientationProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(OrientationProperty.DefaultMetadata.DefaultValue));
         }
 
@@ -184,7 +184,6 @@ namespace MahApps.Metro.Controls
             ReCalculateWidths();
         }
 
-        //Temporary fix. Keep LowerValue = Minimum or Maximum for correct calculating of slider width
         private void CheckLowerValue()
         {
             if (LowerValue < Minimum)
@@ -197,7 +196,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        //Temporary fix. Keep UpperValue = Minimum or Maximum for correct calculating of slider width
         private void CheckUpperValue()
         {
             if (UpperValue > Maximum)
@@ -331,10 +329,9 @@ namespace MahApps.Metro.Controls
             if (_leftButton != null && _rightButton != null && _centerThumb != null)
             {
                 _movableWidth = Math.Max(ActualWidth - _rightThumb.ActualWidth - _leftThumb.ActualWidth - _centerThumb.MinWidth, 1);
-                _leftButton.Width = Math.Max(_movableWidth*(LowerValue - Minimum)/MovableRange, 0);
-                _rightButton.Width = Math.Max(_movableWidth*(Maximum - UpperValue)/MovableRange, 0);
-                _centerThumb.Width = Math.Max(ActualWidth - _leftButton.Width - _rightButton.Width - _rightThumb.ActualWidth -
-                        _leftThumb.ActualWidth, 0);
+                _leftButton.Width = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
+                _rightButton.Width = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
+                _centerThumb.Width = Math.Max(ActualWidth - _leftButton.Width - _rightButton.Width - _rightThumb.ActualWidth - _leftThumb.ActualWidth, 0);
             }
         }
 
@@ -524,7 +521,7 @@ namespace MahApps.Metro.Controls
 
             double value = (double)basevalue;
 
-            if (value < rs.Minimum)
+            if (value <= rs.Minimum)
                 return rs.Minimum;
             return Math.Min(value, rs.UpperValue);
         }
@@ -535,11 +532,24 @@ namespace MahApps.Metro.Controls
 
             double value = (double)basevalue;
 
-            if (value > rs.Maximum)
+            if (value >= rs.Maximum)
                 return rs.Maximum;
             return Math.Max(value, rs.LowerValue);
         }
 
+        private static object CoerceMaximum(DependencyObject d, object basevalue)
+        {
+            RangeSlider rs = (RangeSlider)d;
+            return (Double)basevalue;
+            //return (Double)basevalue < rs.Minimum ? rs.Minimum : (Double)basevalue;
+        }
+
+        private static object CoerceMinimum(DependencyObject d, object basevalue)
+        {
+            RangeSlider rs = (RangeSlider)d;
+            return (Double) basevalue;
+            //return (Double)basevalue > rs.Maximum ? rs.Maximum : (Double)basevalue;
+        }
 
     }
 }

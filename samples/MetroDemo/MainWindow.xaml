@@ -809,8 +809,9 @@
 
                             <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=LowerValue}" ToolTip="LowerValue"></Controls:NumericUpDown>
                             <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=UpperValue}" ToolTip="UpperValue"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum, Mode=TwoWay}" ToolTip="Minimum"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum, Mode=TwoWay}" ToolTip="Maximum"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}" ToolTip="Minimum"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}" ToolTip="Maximum"></Controls:NumericUpDown>
+
                             <Controls:RangeSlider Width="200" x:Name="RangeSlider" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
                                                   Height="20" LowerThumbDragStarted="RangeSlider_OnLowerThumbDragStarted" LowerThumbDragCompleted="RangeSlider_OnLowerThumbDragCompleted"
                                                   UpperThumbDragStarted="RangeSlider_OnUpperThumbDragStarted" UpperThumbDragCompleted="RangeSlider_OnUpperThumbDragCompleted"
