@@ -62,7 +62,7 @@
                                    StrokeThickness="0" />
 
                         <!-- the title bar -->
-                        <Grid x:Name="PART_TitleBar"
+                        <Grid x:Name="PART_TitleBar" Background="Transparent"
                               Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                               Grid.Column="0">
