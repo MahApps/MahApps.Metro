@@ -236,6 +236,7 @@ namespace MahApps.Metro.Behaviours
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
+                RemoveBorder();
                 _isMaximize = true;
                 IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(_mHWND, Constants.MONITOR_DEFAULTTONEAREST);
                 if (monitor != IntPtr.Zero)
@@ -249,6 +250,8 @@ namespace MahApps.Metro.Behaviours
                     var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
                     UnsafeNativeMethods.SetWindowPos(_mHWND, new IntPtr(-2), x, y, cx, cy, 0x0040);
                 }
+            } else {
+                AddBorder();
             }
         }
 
