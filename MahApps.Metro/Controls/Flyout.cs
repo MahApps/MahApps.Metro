@@ -141,12 +141,12 @@ namespace MahApps.Metro.Controls
                     switch (windowTheme)
                     {
                         case Metro.Theme.Dark:
-                            this.SetResourceReference(ForegroundProperty, "FlyoutLightBrush");
+                            this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                             this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
                             break;
 
                         case Metro.Theme.Light:
-                            this.SetResourceReference(ForegroundProperty, "FlyoutDarkBrush");
+                            this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                             this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
                             break;
                     }
@@ -158,11 +158,13 @@ namespace MahApps.Metro.Controls
                         case Metro.Theme.Dark:
                             ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Light);
                             this.Background = (Brush) ThemeManager.DarkResource["FlyoutLightBrush"];
+                            this.Foreground = (Brush) ThemeManager.DarkResource["WhiteColorBrush"];
                             break;
 
                         case Metro.Theme.Light:
                             ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Dark);
                             this.Background = (Brush) ThemeManager.LightResource["FlyoutDarkBrush"];
+                            this.Foreground = (Brush)ThemeManager.LightResource["WhiteColorBrush"];
                             break;
                     }
                     break;
