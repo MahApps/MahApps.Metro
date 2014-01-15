@@ -216,7 +216,7 @@ namespace MahApps.Metro.Controls
                     HorizontalAlignment = HorizontalAlignment.Stretch;
                     VerticalAlignment = VerticalAlignment.Top;
                     hideFrameY.Value = -root.ActualHeight - 1;
-                    root.RenderTransform = new TranslateTransform(0, -root.ActualHeight) - 1;
+                    root.RenderTransform = new TranslateTransform(0, -root.ActualHeight);
                     break;
                 case Position.Bottom:
                     HorizontalAlignment = HorizontalAlignment.Stretch;
