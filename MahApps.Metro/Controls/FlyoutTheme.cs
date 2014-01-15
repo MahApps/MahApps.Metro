@@ -19,6 +19,11 @@ namespace MahApps.Metro.Controls
         /// The dark theme. This is the default theme.
         /// </summary>
         Dark,
-        Light
+        Light,
+
+        /// <summary>
+        /// The flyouts theme will match the host window's accent color.
+        /// </summary>
+        Accent
     }
 }

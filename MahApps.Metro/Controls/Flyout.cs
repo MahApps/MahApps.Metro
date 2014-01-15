@@ -117,7 +117,7 @@ namespace MahApps.Metro.Controls
                     {
                         var accent = windowTheme.Item2;
 
-                        ThemeManager.ChangeTheme(this.Resources, accent, GetFlyoutTheme(windowTheme.Item1));
+                        this.ChangeFlyoutTheme(accent, windowTheme.Item1);
                     }
                 }
 
@@ -126,51 +126,64 @@ namespace MahApps.Metro.Controls
             this.Unloaded += (sender, args) => ThemeManager.IsThemeChanged -= this.ThemeManager_IsThemeChanged;
         }
 
-        private Theme GetFlyoutTheme(Theme windowTheme)
+        private void ChangeFlyoutTheme(Accent windowAccent, Theme windowTheme)
         {
             switch (this.Theme)
             {
-                case FlyoutTheme.Adapt:
-                    return windowTheme;
+                case FlyoutTheme.Accent:
+                    ThemeManager.ChangeTheme(this.Resources, windowAccent, windowTheme);
+                    this.SetResourceReference(BackgroundProperty, "HighlightBrush");
+                    this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
+                break;
 
-                case FlyoutTheme.Dark:
-                    return Metro.Theme.Dark;
-                    
-                case FlyoutTheme.Light:
-                    return Metro.Theme.Light;
+                case FlyoutTheme.Adapt:
+                    ThemeManager.ChangeTheme(this.Resources, windowAccent, windowTheme);
+                    switch (windowTheme)
+                    {
+                        case Metro.Theme.Dark:
+                            this.SetResourceReference(ForegroundProperty, "FlyoutLightBrush");
+                            this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
+                            break;
+
+                        case Metro.Theme.Light:
+                            this.SetResourceReference(ForegroundProperty, "FlyoutDarkBrush");
+                            this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
+                            break;
+                    }
+                    break;
 
                 case FlyoutTheme.Inverse:
-                    return windowTheme == Metro.Theme.Dark ? Metro.Theme.Light : Metro.Theme.Dark;
-            }
+                    switch (windowTheme)
+                    {
+                        case Metro.Theme.Dark:
+                            ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Light);
+                            this.Background = (Brush) ThemeManager.DarkResource["FlyoutLightBrush"];
+                            break;
 
-            // Something really bad happened
-            throw new InvalidOperationException();
-        }
-
-        private void ChangeTheme(Accent accent, Theme theme)
-        {
-            ThemeManager.ChangeTheme(this.Resources, accent, theme);
-
-            Brush backgroundBrush = null;
-
-            switch (theme)
-            {
-                case Theme.Dark:
-                    backgroundBrush = (Brush) ThemeManager.DarkResource["FlyoutBackgroundBrush"];
+                        case Metro.Theme.Light:
+                            ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Dark);
+                            this.Background = (Brush) ThemeManager.LightResource["FlyoutDarkBrush"];
+                            break;
+                    }
                     break;
 
-                case Theme.Light:
-                    backgroundBrush = (Brush) ThemeManager.LightResource["FlyoutBackgroundBrush"];
+                case FlyoutTheme.Dark:
+                    ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Dark);
+                    this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
+                    break;
+
+                case FlyoutTheme.Light:
+                    ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Light);
+                    this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
                     break;
             }
-            this.Background = backgroundBrush;
         }
 
         private void ThemeManager_IsThemeChanged(object sender, OnThemeChangedEventArgs e)
         {
             if (e.Accent != null)
             {
-                ThemeManager.ChangeTheme(this.Resources, e.Accent, this.GetFlyoutTheme(e.Theme));
+                this.ChangeFlyoutTheme(e.Accent, e.Theme);
             }
         }
 
