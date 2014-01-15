@@ -22,40 +22,71 @@ namespace MahApps.Metro.Controls
     TemplatePart(Name = "PART_RightThumb", Type = typeof(Thumb))]
     public sealed class RangeSlider : Slider
     {
-        public static readonly RoutedEvent RangeSelectionChangedEvent = EventManager.RegisterRoutedEvent("RangeSelectionChanged", RoutingStrategy.Bubble, typeof(RangeSelectionChangedEventHandler), typeof(RangeSlider));
         public static RoutedUICommand MoveBack = new RoutedUICommand("MoveBack", "MoveBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Control) }));
         public static RoutedUICommand MoveForward = new RoutedUICommand("MoveForward", "MoveForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Control) }));
         public static RoutedUICommand MoveAllForward = new RoutedUICommand("MoveAllForward", "MoveAllForward", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.F, ModifierKeys.Alt) }));
         public static RoutedUICommand MoveAllBack = new RoutedUICommand("MoveAllBack", "MoveAllBack", typeof(RangeSlider), new InputGestureCollection(new InputGesture[] { new KeyGesture(Key.B, ModifierKeys.Alt) }));
 
-        public static readonly RoutedEvent LowerValueChangedEvent = 
-            EventManager.RegisterRoutedEvent("LowerValueChanged", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
-        public static readonly RoutedEvent UpperValueChangedEvent = 
-            EventManager.RegisterRoutedEvent("UpperValueChanged", RoutingStrategy.Bubble, typeof(RangeParameterChangedEventHandler), typeof(RangeSlider));
+        #region Routed events
+
+        public static readonly RoutedEvent RangeSelectionChangedEvent =
+            EventManager.RegisterRoutedEvent("RangeSelectionChanged", RoutingStrategy.Bubble,
+                typeof (RangeSelectionChangedEventHandler), typeof (RangeSlider));
+
+        public static readonly RoutedEvent LowerValueChangedEvent =
+            EventManager.RegisterRoutedEvent("LowerValueChanged", RoutingStrategy.Bubble,
+                typeof (RangeParameterChangedEventHandler), typeof (RangeSlider));
+
+        public static readonly RoutedEvent UpperValueChangedEvent =
+            EventManager.RegisterRoutedEvent("UpperValueChanged", RoutingStrategy.Bubble,
+                typeof (RangeParameterChangedEventHandler), typeof (RangeSlider));
 
         public static readonly RoutedEvent LowerThumbDragStartedEvent =
             EventManager.RegisterRoutedEvent("LowerThumbDragStarted", RoutingStrategy.Bubble,
                 typeof (DragStartedEventHandler), typeof (RangeSlider));
+
         public static readonly RoutedEvent LowerThumbDragCompletedEvent =
             EventManager.RegisterRoutedEvent("LowerThumbDragCompleted", RoutingStrategy.Bubble,
-                typeof(DragCompletedEventHandler), typeof(RangeSlider));
+                typeof (DragCompletedEventHandler), typeof (RangeSlider));
+
         public static readonly RoutedEvent UpperThumbDragStartedEvent =
             EventManager.RegisterRoutedEvent("UpperThumbDragStarted", RoutingStrategy.Bubble,
-                typeof(DragStartedEventHandler), typeof(RangeSlider));
+                typeof (DragStartedEventHandler), typeof (RangeSlider));
+
         public static readonly RoutedEvent UpperThumbDragCompletedEvent =
             EventManager.RegisterRoutedEvent("UpperThumbDragCompleted", RoutingStrategy.Bubble,
+                typeof (DragCompletedEventHandler), typeof (RangeSlider));
+
+        public static readonly RoutedEvent CentralThumbDragStartedEvent =
+            EventManager.RegisterRoutedEvent("CentralThumbDragStarted", RoutingStrategy.Bubble,
+                typeof(DragStartedEventHandler), typeof(RangeSlider));
+
+        public static readonly RoutedEvent CentralThumbDragCompletedEvent =
+            EventManager.RegisterRoutedEvent("CentralThumbDragCompleted", RoutingStrategy.Bubble,
                 typeof(DragCompletedEventHandler), typeof(RangeSlider));
 
 
-        public static readonly DependencyProperty LowerValueProperty =
-            DependencyProperty.Register("LowerValue", typeof(double), typeof(RangeSlider), new UIPropertyMetadata((Double)0, RangesChanged, CoerceLowerValue));
+        public static readonly RoutedEvent LowerThumbDragDeltaEvent =
+            EventManager.RegisterRoutedEvent("LowerThumbDragDelta", RoutingStrategy.Bubble,
+                typeof(DragDeltaEventHandler), typeof(RangeSlider));
 
-        public static readonly DependencyProperty UpperValueProperty =
-            DependencyProperty.Register("UpperValue", typeof(double), typeof(RangeSlider), new UIPropertyMetadata((Double)1, RangesChanged, CoerceUpperValue));
+        public static readonly RoutedEvent UpperThumbDragDeltaEvent =
+            EventManager.RegisterRoutedEvent("UpperThumbDragDelta", RoutingStrategy.Bubble,
+                typeof(DragDeltaEventHandler), typeof(RangeSlider));
 
-        public static readonly DependencyProperty MinRangeProperty = 
-            DependencyProperty.Register("MinRange", typeof(double), typeof(RangeSlider), new UIPropertyMetadata((Double)0, MinRangeChanged));
+        public static readonly RoutedEvent CentralThumbDragDeltaEvent =
+            EventManager.RegisterRoutedEvent("CentralThumbDragDelta", RoutingStrategy.Bubble,
+                typeof(DragDeltaEventHandler), typeof(RangeSlider));
+        #endregion
 
+
+        #region Event handlers
+
+        public event RangeSelectionChangedEventHandler RangeSelectionChanged
+        {
+            add { AddHandler(RangeSelectionChangedEvent, value); }
+            remove { RemoveHandler(RangeSelectionChangedEvent, value); }
+        }
 
         public event RangeParameterChangedEventHandler LowerValueChanged
         {
@@ -93,12 +124,59 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(UpperThumbDragCompletedEvent, value); }
         }
 
+        public event DragStartedEventHandler CentralThumbDragStarted
+        {
+            add { AddHandler(CentralThumbDragStartedEvent, value); }
+            remove { RemoveHandler(CentralThumbDragStartedEvent, value); }
+        }
+
+        public event DragCompletedEventHandler CentralThumbDragCompleted
+        {
+            add { AddHandler(CentralThumbDragCompletedEvent, value); }
+            remove { RemoveHandler(CentralThumbDragCompletedEvent, value); }
+        }
+
+        public event DragDeltaEventHandler LowerThumbDragDelta
+        {
+            add { AddHandler(LowerThumbDragDeltaEvent, value); }
+            remove { RemoveHandler(LowerThumbDragDeltaEvent, value); }
+        }
+
+        public event DragDeltaEventHandler UpperThumbDragDelta
+        {
+            add { AddHandler(UpperThumbDragDeltaEvent, value); }
+            remove { RemoveHandler(UpperThumbDragDeltaEvent, value); }
+        }
+
+        public event DragDeltaEventHandler CentralThumbDragDelta
+        {
+            add { AddHandler(CentralThumbDragDeltaEvent, value); }
+            remove { RemoveHandler(CentralThumbDragDeltaEvent, value); }
+        }
+
+        #endregion
+
+
+        #region Dependency properties
+
+        public static readonly DependencyProperty LowerValueProperty =
+            DependencyProperty.Register("LowerValue", typeof (double), typeof (RangeSlider),
+                new UIPropertyMetadata((Double) 0, RangesChanged, CoerceLowerValue));
+
+        public static readonly DependencyProperty UpperValueProperty =
+            DependencyProperty.Register("UpperValue", typeof (double), typeof (RangeSlider),
+                new UIPropertyMetadata((Double) 1, RangesChanged, CoerceUpperValue));
+
+        public static readonly DependencyProperty MinRangeProperty =
+            DependencyProperty.Register("MinRange", typeof (double), typeof (RangeSlider),
+                new UIPropertyMetadata((Double) 0, MinRangeChanged));
+
         /// <summary>
         /// Get/sets the beginning of the range selection.
         /// </summary>
         public Double LowerValue
         {
-            get { return (Double)GetValue(LowerValueProperty); }
+            get { return (Double) GetValue(LowerValueProperty); }
             set { SetValue(LowerValueProperty, value); }
         }
 
@@ -107,7 +185,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Double UpperValue
         {
-            get { return (Double)GetValue(UpperValueProperty); }
+            get { return (Double) GetValue(UpperValueProperty); }
             set { SetValue(UpperValueProperty, value); }
         }
 
@@ -116,16 +194,14 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Double MinRange
         {
-            get { return (Double)GetValue(MinRangeProperty); }
+            get { return (Double) GetValue(MinRangeProperty); }
             set { SetValue(MinRangeProperty, value); }
         }
 
+        #endregion
 
-        public event RangeSelectionChangedEventHandler RangeSelectionChanged
-        {
-            add { AddHandler(RangeSelectionChangedEvent, value); }
-            remove { RemoveHandler(RangeSelectionChangedEvent, value); }
-        }
+
+        #region Variables
 
         private const Double RepeatButtonMoveRatio = 0.1;
         private const Double DefaultSplittersThumbWidth = 10;
@@ -138,8 +214,19 @@ namespace MahApps.Metro.Controls
         private StackPanel _visualElementsContainer;
         //private double _movableRange;
         private Double _movableWidth;
-        public Thumb LowerThumb { get { return _leftThumb; } }
-        public Thumb UpperThumb { get { return _rightThumb; } }
+
+        public Thumb LowerThumb
+        {
+            get { return _leftThumb; }
+        }
+
+        public Thumb UpperThumb
+        {
+            get { return _rightThumb; }
+        }
+
+        #endregion
+
 
         public RangeSlider()
         {
@@ -158,6 +245,8 @@ namespace MahApps.Metro.Controls
             MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue, null, CoerceMinimum));
             MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue, null, CoerceMaximum));
             OrientationProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(OrientationProperty.DefaultMetadata.DefaultValue));
+
+            
         }
 
         /// <summary>
@@ -266,17 +355,7 @@ namespace MahApps.Metro.Controls
             MoveSelection(false);
         }
 
-        private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            MoveThumb(_centerThumb, _rightButton, e.HorizontalChange);
-            ReCalculateRangeSelected(false, true);
-        }
-
-        private void LeftThumbDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            MoveThumb(_leftButton, _centerThumb, e.HorizontalChange);
-            ReCalculateRangeSelected(true, false);
-        }
+        
 
         private void LeftButtonClick(object sender, RoutedEventArgs e)
         {
@@ -288,11 +367,7 @@ namespace MahApps.Metro.Controls
             MoveSelection(false);
         }
 
-        private void CenterThumbDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            MoveThumb(_leftButton, _rightButton, e.HorizontalChange);
-            ReCalculateRangeSelected(true, true);
-        }
+        
 
         private static void MoveThumb(FrameworkElement x, FrameworkElement y, double horizonalChange)
         {
@@ -376,6 +451,7 @@ namespace MahApps.Metro.Controls
             e.RoutedEvent = Event;
             RaiseEvent(e);
         }
+
 
         public void MoveSelection(bool isLeft)
         {
@@ -504,6 +580,15 @@ namespace MahApps.Metro.Controls
             _rightThumb.Width = DefaultSplittersThumbWidth;
             _rightThumb.Tag = "right";
 
+
+            _leftThumb.DragCompleted += LeftThumbDragComplete;
+            _rightThumb.DragCompleted += RightThumbDragComplete;
+            _leftThumb.DragStarted += LeftThumbDragStart;
+            _rightThumb.DragStarted += RightThumbDragStart;
+            _centerThumb.DragStarted += CenterThumb_DragStarted;
+            _centerThumb.DragCompleted += CenterThumb_DragCompleted;
+
+
             //handle the drag delta
             _centerThumb.DragDelta += CenterThumbDragDelta;
             _leftThumb.DragDelta += LeftThumbDragDelta;
@@ -511,6 +596,75 @@ namespace MahApps.Metro.Controls
             _leftButton.Click += LeftButtonClick;
             _rightButton.Click += RightButtonClick;
         }
+
+        void CenterThumb_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            e.RoutedEvent = CentralThumbDragCompletedEvent;
+            RaiseEvent(e);
+        }
+
+        void CenterThumb_DragStarted(object sender, DragStartedEventArgs e)
+        {
+            e.RoutedEvent = CentralThumbDragStartedEvent;
+            RaiseEvent(e);
+        }
+
+        private void CenterThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            MoveThumb(_leftButton, _rightButton, e.HorizontalChange);
+            ReCalculateRangeSelected(true, true);
+            e.RoutedEvent = CentralThumbDragDeltaEvent;
+            RaiseEvent(e);
+        }
+
+        private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            MoveThumb(_centerThumb, _rightButton, e.HorizontalChange);
+            ReCalculateRangeSelected(false, true);
+            e.RoutedEvent = UpperThumbDragDeltaEvent;
+            RaiseEvent(e);
+        }
+
+        private void LeftThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            MoveThumb(_leftButton, _centerThumb, e.HorizontalChange);
+            ReCalculateRangeSelected(true, false);
+            e.RoutedEvent = LowerThumbDragDeltaEvent;
+            RaiseEvent(e);
+        }
+
+        Double oldStop = 0, oldStart = 0;
+        private void RightThumbDragStart(object sender, DragStartedEventArgs e)
+        {
+            oldStop = UpperValue;
+            e.RoutedEvent = UpperThumbDragStartedEvent;
+            RaiseEvent(e);
+        }
+
+        private void LeftThumbDragComplete(object sender, DragCompletedEventArgs e)
+        {
+            //if (oldStart != LowerValue)
+            //    OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, oldStart, LowerValue), LowerValueChangedEvent);
+            e.RoutedEvent = LowerThumbDragCompletedEvent;
+            RaiseEvent(e);
+        }
+
+        private void LeftThumbDragStart(object sender, DragStartedEventArgs e)
+        {
+            oldStart = LowerValue;
+            e.RoutedEvent = LowerThumbDragStartedEvent;
+            RaiseEvent(e);
+        }
+
+        private void RightThumbDragComplete(object sender, DragCompletedEventArgs e)
+        {
+            //if (oldStop != UpperValue)
+            //    OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, oldStop, UpperValue), UpperValueChangedEvent);
+            e.RoutedEvent = UpperThumbDragCompletedEvent;
+            RaiseEvent(e);
+        }
+
+        
 
         
         
