@@ -33,7 +33,7 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="settingsFlyout" Width="500" Header="Settings" Position="Right">
+            <Controls:Flyout x:Name="settingsFlyout" Width="500" Header="Settings" Position="Right" ThemeBehavior="Adapt">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -70,7 +70,7 @@
 
                 </Grid>
             </Controls:Flyout>
-
+<!--
             <Controls:Flyout Header="New Goodness" Position="Right" Width="{Binding ElementName=settingsFlyout, Path=ActualWidth, Mode=OneWay}">
                 <StackPanel Orientation="Vertical"
                             Margin="10">
@@ -170,7 +170,7 @@
                         Orientation="Horizontal">
                     <TextBlock>Modal Flyout</TextBlock>
                 </StackPanel>
-            </Controls:Flyout>
+            </Controls:Flyout>-->
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
 

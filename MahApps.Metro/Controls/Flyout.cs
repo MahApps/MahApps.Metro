@@ -30,6 +30,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty ThemeBehaviorProperty = DependencyProperty.Register("ThemeBehavior", typeof(FlyoutThemeBehavior), typeof(Flyout), new PropertyMetadata(FlyoutThemeBehavior.Default));
 
         /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
@@ -94,33 +95,79 @@ namespace MahApps.Metro.Controls
             set { SetValue(HeaderProperty, value); }
         }
 
+        public FlyoutThemeBehavior ThemeBehavior
+        {
+            get { return (FlyoutThemeBehavior)GetValue(ThemeBehaviorProperty); }
+            set { SetValue(ThemeBehaviorProperty, value); }
+        }
+
         public Flyout()
         {
-            this.Loaded += (sender, args) => {
-                               var window = this.TryFindParent<MetroWindow>();
-                               if (window != null)
-                               {
-                                   // detect current theme
-                                   var theme = DetectTheme(this);
-                                   if (theme != null && theme.Item2 != null)
-                                   {
-                                       var accent = theme.Item2;
-                                       // flyout use always the dark theme
-                                       ThemeManager.ChangeTheme(this.Resources, accent, Theme.Dark);
-                                   }
-                               }
+            this.Loaded += (sender, args) => 
+            {
+                var window = this.TryFindParent<MetroWindow>();
+                if (window != null)
+                {
+                    var windowTheme = DetectTheme(this);
 
-                               ThemeManager.IsThemeChanged += this.ThemeManager_IsThemeChanged;
-                           };
+                    if (windowTheme != null && windowTheme.Item2 != null)
+                    {
+                        var accent = windowTheme.Item2;
+
+                        ThemeManager.ChangeTheme(this.Resources, accent, GetFlyoutTheme(windowTheme.Item1));
+                    }
+                }
+
+                ThemeManager.IsThemeChanged += this.ThemeManager_IsThemeChanged;
+            };
             this.Unloaded += (sender, args) => ThemeManager.IsThemeChanged -= this.ThemeManager_IsThemeChanged;
+        }
+
+        private Theme GetFlyoutTheme(Theme windowTheme)
+        {
+            switch (this.ThemeBehavior)
+            {
+                case FlyoutThemeBehavior.Adapt:
+                    return windowTheme;
+
+                case FlyoutThemeBehavior.Custom:
+                    throw new NotImplementedException();
+                    
+                case FlyoutThemeBehavior.Default:
+                    return Theme.Dark;
+
+                case FlyoutThemeBehavior.Inverse:
+                    return windowTheme == Theme.Dark ? Theme.Light : Theme.Dark;
+            }
+
+            // Something really bad happened
+            throw new InvalidOperationException();
+        }
+
+        private void ChangeTheme(Accent accent, Theme theme)
+        {
+            ThemeManager.ChangeTheme(this.Resources, accent, theme);
+
+            Brush backgroundBrush = null;
+
+            switch (theme)
+            {
+                case Theme.Dark:
+                    backgroundBrush = (Brush) ThemeManager.DarkResource["FlyoutBackgroundBrush"];
+                    break;
+
+                case Theme.Light:
+                    backgroundBrush = (Brush) ThemeManager.LightResource["FlyoutBackgroundBrush"];
+                    break;
+            }
+            this.Background = backgroundBrush;
         }
 
         private void ThemeManager_IsThemeChanged(object sender, OnThemeChangedEventArgs e)
         {
             if (e.Accent != null)
             {
-                // flyout use always the dark theme
-                ThemeManager.ChangeTheme(this.Resources, e.Accent, Theme.Dark);
+                ThemeManager.ChangeTheme(this.Resources, e.Accent, this.GetFlyoutTheme(e.Theme));
             }
         }
 

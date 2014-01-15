@@ -217,8 +217,6 @@
                 Value="Stretch" />
         <Setter Property="HeaderTemplate"
                 Value="{StaticResource HeaderTemplate}" />
-        <Setter Property="Background"
-                Value="{DynamicResource FlyoutBackgroundBrush}" />
         <Setter Property="Template"
                 Value="{StaticResource FlyoutTemplate}" />
         <Setter Property="FocusVisualStyle"
