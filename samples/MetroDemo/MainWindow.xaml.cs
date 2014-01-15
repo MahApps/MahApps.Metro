@@ -62,11 +62,6 @@ namespace MetroDemo
                 flyoutDemo.Show();
         }
 
-        private void LaunchPanoramaDemo(object sender, RoutedEventArgs e)
-        {
-            new PanoramaDemo().Show();
-        }
-
         private void LaunchIcons(object sender, RoutedEventArgs e)
         {
             new IconsWindow().Show();

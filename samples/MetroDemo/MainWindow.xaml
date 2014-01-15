@@ -67,7 +67,6 @@
         <Controls:WindowCommands>
             <Button Click="LaunchVisualStudioDemo" Content="VS Demo" />
             <Button Click="LaunchFlyoutDemo" Content="Flyout Demo" />
-            <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
             <Button Click="LaunchIcons" Content="Icons" />
             <Button Click="LauchCleanDemo" Content="Clean Demo" />
             <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
