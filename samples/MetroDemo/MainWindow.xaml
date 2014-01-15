@@ -1216,14 +1216,6 @@
                                 </Controls:TransitioningContentControl.CustomVisualStates>
                             </Controls:TransitioningContentControl>
                         </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <Label Content="Tile" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:Tile Title="My cupcakes"
-                                           Margin="0, 10, 0, 0"
-                                           Count="23">
-                                <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
-                            </Controls:Tile>
-                        </StackPanel>
                         <Grid Grid.Row="1" Grid.ColumnSpan="2">
                             <Label Content="Context menu" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Label HorizontalAlignment="Stretch"
@@ -1253,16 +1245,31 @@
                             <StackPanel Orientation="Horizontal" Height="20" Margin="0 0 0 5">
                                 <CheckBox Height="20" Content="Show Banner?" x:Name="ShowBannerCheckBox" HorizontalAlignment="Right"/>
                             </StackPanel>
-                            <Controls:FlipView Height="200" IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="FlipView_SelectionChanged">
+                            <Controls:FlipView Height="200" 
+                                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" 
+                                               SelectionChanged="FlipView_SelectionChanged"
+                                               Margin="0, 0, 10, 0">
                                 <Controls:FlipView.Items>
-                                    <Grid Background="Blue">
-                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
+                                    <Grid Background="#2E8DEF">
+                                        <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                            <Rectangle.Fill>
+                                                <VisualBrush Visual="{StaticResource appbar_cupcake}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
                                     </Grid>
-                                    <Grid Background="Green">
-                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_xbox}" />
+                                    <Grid Background="#00A600">
+                                        <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                            <Rectangle.Fill>
+                                                <VisualBrush Visual="{StaticResource appbar_xbox}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
                                     </Grid>
-                                    <Grid Background="Red">
-                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_chess_horse}" />
+                                    <Grid Background="#BF1E4B">
+                                        <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                            <Rectangle.Fill>
+                                                <VisualBrush Visual="{StaticResource appbar_chess_horse}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
                                     </Grid>
                                 </Controls:FlipView.Items>
                             </Controls:FlipView>

@@ -181,7 +181,6 @@
     <Compile Include="Behaviours\TiltBehavior.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroContentControl.cs" />
-    <Compile Include="Controls\MetroImage.cs" />
     <Compile Include="Controls\MetroWindow.cs" />
     <Compile Include="Controls\RevealImage.xaml.cs">
       <DependentUpon>RevealImage.xaml</DependentUpon>
@@ -453,10 +452,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroContentControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\MetroImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
