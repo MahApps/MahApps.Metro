@@ -33,7 +33,7 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="settingsFlyout" Width="500" Header="Settings" Position="Right" ThemeBehavior="Adapt">
+            <Controls:Flyout x:Name="settingsFlyout" Width="500" Header="Settings" Position="Right">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -80,6 +80,20 @@
             </Controls:Flyout>
 
             <metroDemo:CustomFlyout Header="Third" Position="Right" />
+
+            <Controls:Flyout Header="Accented" Position="Right" Theme="Accent">
+                <Grid Margin="10"
+                      Width="400">
+                    <TextBlock Text="This flyout adapts its theme to the current accent" Foreground="{DynamicResource IdealForegroundColorBrush}" />
+                </Grid>
+            </Controls:Flyout>
+
+            <Controls:Flyout Header="Inverse" Position="Right" Width="300" Theme="Inverse">
+                <Grid Margin="10"
+                      Width="400">
+                    <TextBlock Text="This flyout has the inverse theme of the current window theme" />
+                </Grid>
+            </Controls:Flyout>
 
             <Controls:Flyout Header="Cool" Position="Right">
                 <Grid Margin="10"
@@ -193,6 +207,14 @@
                     Margin="2"
                     Click="ShowThird"
                     Content="Show 3" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Click="ShowAccent"
+                    Content="Accent" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Click="ShowInverse"
+                    Content="Inverse" />
             <Button MinWidth="90"
                     Margin="2"
                     Click="ShowSettings"
