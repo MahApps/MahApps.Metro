@@ -97,6 +97,7 @@
     <Compile Include="Controls\FlipView.cs" />
     <Compile Include="Controls\Flyout.cs" />
     <Compile Include="Controls\FlyoutsControl.cs" />
+    <Compile Include="Controls\FlyoutTheme.cs" />
     <Compile Include="Controls\Glow.cs" />
     <Compile Include="Controls\GlowDirection.cs" />
     <Compile Include="Controls\GlowWindow.xaml.cs">
