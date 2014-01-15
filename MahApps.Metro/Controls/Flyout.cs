@@ -30,7 +30,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
-        public static readonly DependencyProperty ThemeBehaviorProperty = DependencyProperty.Register("ThemeBehavior", typeof(FlyoutThemeBehavior), typeof(Flyout), new PropertyMetadata(FlyoutThemeBehavior.Default));
+        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new PropertyMetadata(FlyoutTheme.Dark));
 
         /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
@@ -95,10 +95,13 @@ namespace MahApps.Metro.Controls
             set { SetValue(HeaderProperty, value); }
         }
 
-        public FlyoutThemeBehavior ThemeBehavior
+        /// <summary>
+        /// Gets or sets the theme of this flyout.
+        /// </summary>
+        public FlyoutTheme Theme
         {
-            get { return (FlyoutThemeBehavior)GetValue(ThemeBehaviorProperty); }
-            set { SetValue(ThemeBehaviorProperty, value); }
+            get { return (FlyoutTheme)GetValue(ThemeProperty); }
+            set { SetValue(ThemeProperty, value); }
         }
 
         public Flyout()
@@ -125,19 +128,19 @@ namespace MahApps.Metro.Controls
 
         private Theme GetFlyoutTheme(Theme windowTheme)
         {
-            switch (this.ThemeBehavior)
+            switch (this.Theme)
             {
-                case FlyoutThemeBehavior.Adapt:
+                case FlyoutTheme.Adapt:
                     return windowTheme;
 
-                case FlyoutThemeBehavior.Custom:
-                    throw new NotImplementedException();
+                case FlyoutTheme.Dark:
+                    return Metro.Theme.Dark;
                     
-                case FlyoutThemeBehavior.Default:
-                    return Theme.Dark;
+                case FlyoutTheme.Light:
+                    return Metro.Theme.Light;
 
-                case FlyoutThemeBehavior.Inverse:
-                    return windowTheme == Theme.Dark ? Theme.Light : Theme.Dark;
+                case FlyoutTheme.Inverse:
+                    return windowTheme == Metro.Theme.Dark ? Metro.Theme.Light : Metro.Theme.Dark;
             }
 
             // Something really bad happened
