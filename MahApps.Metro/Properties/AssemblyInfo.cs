@@ -12,5 +12,6 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://metro.mahapps.com/winfx/xaml/shared", "MahApps.Metro.Converters")]
 [assembly: XmlnsDefinition("http://metro.mahapps.com/winfx/xaml/controls", "MahApps.Metro.Controls")]
 
-[assembly: AssemblyVersion("0.11.0.0")]
-[assembly: AssemblyFileVersion("0.11.0.0")]
+[assembly: AssemblyVersion("0.12.0.0")]
+[assembly: AssemblyFileVersion("0.12.0.0")]
+[assembly: AssemblyTitleAttribute("MahApps.Metro")]
