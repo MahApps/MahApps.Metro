@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;
-using System.ComponentModel;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 
@@ -263,26 +261,26 @@ namespace MahApps.Metro.Controls
 
             Dispatcher.VerifyAccess();
 
-            overlayBox.Visibility = System.Windows.Visibility.Visible;
+            overlayBox.Visibility = Visibility.Visible;
 
-            System.Threading.Tasks.TaskCompletionSource<object> tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            Storyboard sb = this.Template.Resources["OverlayFastSemiFadeIn"] as Storyboard;
+            var sb = (Storyboard) this.Template.Resources["OverlayFastSemiFadeIn"];
 
             sb = sb.Clone();
 
             EventHandler completionHandler = null;
-            completionHandler = new EventHandler((sender, args) =>
+            completionHandler = (sender, args) =>
+            {
+                sb.Completed -= completionHandler;
+
+                if (overlayStoryboard == sb)
                 {
-                    sb.Completed -= completionHandler;
+                    overlayStoryboard = null;
+                }
 
-                    if (overlayStoryboard == sb)
-                    {
-                        overlayStoryboard = null;
-                    }
-
-                    tcs.TrySetResult(null);
-                });
+                tcs.TrySetResult(null);
+            };
 
             sb.Completed += completionHandler;
 
@@ -298,30 +296,30 @@ namespace MahApps.Metro.Controls
         /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task HideOverlayAsync()
         {
-            if (overlayBox.Visibility == System.Windows.Visibility.Visible && overlayBox.Opacity == 0.0)
+            if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity == 0.0)
                 return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
 
             Dispatcher.VerifyAccess();
 
-            System.Threading.Tasks.TaskCompletionSource<object> tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
-            Storyboard sb = this.Template.Resources["OverlayFastSemiFadeOut"] as Storyboard;
+            var sb = (Storyboard) this.Template.Resources["OverlayFastSemiFadeOut"];
 
             sb = sb.Clone();
 
             EventHandler completionHandler = null;
-            completionHandler = new EventHandler((sender, args) =>
+            completionHandler = (sender, args) =>
             {
                 sb.Completed -= completionHandler;
 
                 if (overlayStoryboard == sb)
                 {
-                    overlayBox.Visibility = System.Windows.Visibility.Hidden;
+                    overlayBox.Visibility = Visibility.Hidden;
                     overlayStoryboard = null;
                 }
 
                 tcs.TrySetResult(null);
-            });
+            };
 
             sb.Completed += completionHandler;
 
@@ -331,7 +329,10 @@ namespace MahApps.Metro.Controls
 
             return tcs.Task;
         }
-        public bool IsOverlayVisible() { return overlayBox.Visibility == System.Windows.Visibility.Visible && overlayBox.Opacity >= 0.7; }
+        public bool IsOverlayVisible()
+        {
+            return overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity >= 0.7;
+        }
 
         /// <summary>
         /// Initializes a new instance of the MahApps.Metro.Controls.MetroWindow class.
@@ -355,7 +356,8 @@ namespace MahApps.Metro.Controls
             {
                 //Disables the system menu for reasons other than clicking an invisible titlebar.
                 IntPtr handle = new WindowInteropHelper(this).Handle;
-                UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
+                UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, 
+                    UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
             }
 
             // if UseNoneWindowStyle = true no title bar, window commands or min, max, close buttons should be shown
@@ -389,6 +391,7 @@ namespace MahApps.Metro.Controls
 
             if (WindowCommands == null)
                 WindowCommands = new WindowCommands();
+
             WindowCommandsPresenter = GetTemplateChild("PART_WindowCommands") as ContentPresenter;
             WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
 
@@ -398,7 +401,7 @@ namespace MahApps.Metro.Controls
 
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
 
-            if (titleBar != null && titleBar.Visibility == System.Windows.Visibility.Visible)
+            if (titleBar != null && titleBar.Visibility == Visibility.Visible)
             {
                 titleBar.MouseDown += TitleBarMouseDown;
                 titleBar.MouseUp += TitleBarMouseUp;
@@ -488,7 +491,7 @@ namespace MahApps.Metro.Controls
                 double left = mouseAbsolute.X - width / 2;
 
                 // Check if the mouse is at the top of the screen if TitleBar is not visible
-                if (!(titleBar.Visibility == System.Windows.Visibility.Visible) && mouseAbsolute.Y > TitlebarHeight)
+                if (titleBar.Visibility != Visibility.Visible && mouseAbsolute.Y > TitlebarHeight)
                     return;
 
                 // Aligning window's position to fit the screen.
@@ -522,7 +525,8 @@ namespace MahApps.Metro.Controls
 
             var hmenu = UnsafeNativeMethods.GetSystemMenu(hwnd, false);
 
-            var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD, (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
+            var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD, 
+                (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
                 UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
         }
@@ -564,8 +568,7 @@ namespace MahApps.Metro.Controls
         public class FlyoutStatusChangedRoutedEventArgs : RoutedEventArgs
         {
             internal FlyoutStatusChangedRoutedEventArgs(RoutedEvent rEvent, object source): base(rEvent, source)
-            {
-            }
+            { }
 
             public Flyout ChangedFlyout { get; internal set; }
         }
