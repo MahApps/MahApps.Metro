@@ -95,6 +95,13 @@
                 </Grid>
             </Controls:Flyout>
 
+            <Controls:Flyout Header="Adapt" Position="Right" Theme="Adapt">
+                <Grid Margin="10"
+                      Width="400">
+                    <TextBlock Text="This flyout adapts the theme of the current window" />
+                </Grid>
+            </Controls:Flyout>
+
             <Controls:Flyout Header="Cool" Position="Right">
                 <Grid Margin="10"
                       Width="250">
@@ -215,6 +222,10 @@
                     Margin="2"
                     Click="ShowInverse"
                     Content="Inverse" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Click="ShowAdapt"
+                    Content="Adapt" />
             <Button MinWidth="90"
                     Margin="2"
                     Click="ShowSettings"

@@ -31,25 +31,29 @@ namespace MetroDemo
             ToggleFlyout(4);
         }
 
-        private void ShowSettings(object sender, RoutedEventArgs e) {
+        private void ShowAdapt(object sender, RoutedEventArgs e)  {
             ToggleFlyout(5);
         }
 
-        private void ShowLeft(object sender, RoutedEventArgs e) {
+        private void ShowSettings(object sender, RoutedEventArgs e) {
             ToggleFlyout(6);
         }
 
-        private void ShowTop(object sender, RoutedEventArgs e) {
+        private void ShowLeft(object sender, RoutedEventArgs e) {
             ToggleFlyout(7);
         }
 
-        private void ShowBottom(object sender, RoutedEventArgs e) {
+        private void ShowTop(object sender, RoutedEventArgs e) {
             ToggleFlyout(8);
+        }
+
+        private void ShowBottom(object sender, RoutedEventArgs e) {
+            ToggleFlyout(9);
         }
 
         private void ShowModal(object sender, RoutedEventArgs e)
         {
-            ToggleFlyout(9);
+            ToggleFlyout(10);
         }
 
         private void CloseMe(object sender, RoutedEventArgs e)
