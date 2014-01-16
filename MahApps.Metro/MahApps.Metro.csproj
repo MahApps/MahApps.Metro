@@ -100,6 +100,7 @@
     <Compile Include="Controls\FlipView.cs" />
     <Compile Include="Controls\Flyout.cs" />
     <Compile Include="Controls\FlyoutsControl.cs" />
+    <Compile Include="Controls\FlyoutTheme.cs" />
     <Compile Include="Controls\Glow.cs" />
     <Compile Include="Controls\GlowDirection.cs" />
     <Compile Include="Controls\GlowWindow.xaml.cs">
@@ -113,6 +114,7 @@
     <Compile Include="Controls\MetroProgressBar.cs" />
     <Compile Include="Controls\MetroTabControl.cs" />
     <Compile Include="Controls\MetroTabItem.cs" />
+    <Compile Include="Controls\MetroWindowHelpers.cs" />
     <Compile Include="Controls\NumericUpDown.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />

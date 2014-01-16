@@ -42,10 +42,7 @@ namespace MahApps.Metro.Behaviours
 
         private void SetWindowCommandButtonsToBlackBrush()
         {
-            foreach (Button b in (AssociatedMetroWindow.WindowCommandsPresenter.Content as WindowCommands).FindChildren<Button>())
-            {
-                b.SetResourceReference(Button.ForegroundProperty, "BlackColorBrush");
-            }
+            this.AssociatedMetroWindow.ChangeWindowCommandButtonsBrush("BlackColorBrush");
         }
 
         protected override void OnDetaching()
@@ -64,18 +61,12 @@ namespace MahApps.Metro.Behaviours
             {
                 if (flyout.IsOpen)
                 {
-                    foreach (Button b in (AssociatedMetroWindow.WindowCommandsPresenter.Content as WindowCommands).FindChildren<Button>())
-                    {
-                        b.SetValue(Button.ForegroundProperty, Brushes.White);
-                    }
-                    AssociatedMetroWindow.WindowButtonCommands.SetValue(System.Windows.Controls.Control.ForegroundProperty, Brushes.White);
+                    this.AssociatedMetroWindow.HandleFlyout(flyout, (Brush)this.AssociatedMetroWindow.FindResource("WhiteColorBrush"));
                 }
                 else
                 {
-                    //var resource = AssociatedMetroWindow.TitleForeground;
-
-                    SetWindowCommandButtonsToBlackBrush();
-                    AssociatedMetroWindow.WindowButtonCommands.SetResourceReference(System.Windows.Controls.Control.ForegroundProperty, "BlackColorBrush");
+                    this.SetWindowCommandButtonsToBlackBrush();
+                    AssociatedMetroWindow.WindowButtonCommands.SetResourceReference(Control.ForegroundProperty, "BlackColorBrush");
                 }
             }
         }

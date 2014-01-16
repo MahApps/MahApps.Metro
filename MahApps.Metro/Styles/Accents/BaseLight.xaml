@@ -13,7 +13,8 @@
     <Color x:Key="GrayNormal">#FFBEBEBE</Color>
     <Color x:Key="GrayHover">#FF333333</Color>
 
-    <Color x:Key="FlyoutBackgroundColor">#FF252525</Color>
+    <Color x:Key="FlyoutDarkColor">#FF252525</Color>
+    <Color x:Key="FlyoutLightColor">#FFFFFFFF</Color>
 
     <!-- re-set brushes too -->
     <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource BlackColor}" />
@@ -58,7 +59,8 @@
     <SolidColorBrush x:Key="SliderTrackHover" Color="#FFD0D0D0" />
     <SolidColorBrush x:Key="SliderTrackNormal" Color="#FFC6C6C6" />
 
-    <SolidColorBrush x:Key="FlyoutBackgroundBrush" Color="{StaticResource FlyoutBackgroundColor}" />
+    <SolidColorBrush x:Key="FlyoutDarkBrush" Color="{StaticResource FlyoutDarkColor}" />
+    <SolidColorBrush x:Key="FlyoutLightBrush" Color="{StaticResource FlyoutLightColor}" />
 
     <SolidColorBrush x:Key="FlatButtonPressedBackgroundBrush" Color="#222222"/>
 

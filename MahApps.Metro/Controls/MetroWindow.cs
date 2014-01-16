@@ -537,8 +537,20 @@ namespace MahApps.Metro.Controls
 
                 //if ShowWindowCommandsOnTop is true, set the window commands' zindex to a number that is higher than the flyout's. 
                 WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
-
                 WindowButtonCommands.SetValue(Panel.ZIndexProperty, zIndex);
+                
+                // We need to adapt the window commands to the theme of the flyout
+                // This only needs to be done for the accent and light theme, 
+                // the dark theme is the default one and will work out of the box
+                if (flyout.IsOpen)
+                {
+                    this.HandleFlyout(flyout);
+                }
+
+                else
+                {
+                    this.ResetAllWindowCommandsBrush();
+                }
             }
 
             flyoutModal.Visibility = visibleFlyouts.Any(x => x.IsModal) ? Visibility.Visible : Visibility.Hidden;
