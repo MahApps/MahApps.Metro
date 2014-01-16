@@ -391,6 +391,10 @@
                 Value="{StaticResource MetroDataGridCell}" />
         <Setter Property="RowStyle"
                 Value="{StaticResource MetroDataGridRow}" />
+        <Setter Property="HorizontalGridLinesBrush"
+                Value="{DynamicResource GrayBrush5}"/>
+        <Setter Property="VerticalGridLinesBrush" 
+                Value="{DynamicResource GrayBrush5}"/>
         <Setter Property="HeadersVisibility"
                 Value="Column" />
         <Setter Property="DropLocationIndicatorStyle">
