@@ -295,8 +295,8 @@ namespace MahApps.Metro.Controls
                 case Position.Top:
                     HorizontalAlignment = HorizontalAlignment.Stretch;
                     VerticalAlignment = VerticalAlignment.Top;
-                    hideFrameY.Value = -root.ActualHeight;
-                    root.RenderTransform = new TranslateTransform(0, -root.ActualHeight);
+                    hideFrameY.Value = -root.ActualHeight - 1;
+                    root.RenderTransform = new TranslateTransform(0, -root.ActualHeight - 1);
                     break;
                 case Position.Bottom:
                     HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -345,7 +345,7 @@ namespace MahApps.Metro.Controls
                     hideFrame.Value = root.ActualWidth;
                     break;
                 case Position.Top:
-                    hideFrameY.Value = -root.ActualHeight;
+                    hideFrameY.Value = -root.ActualHeight - 1;
                     break;
                 case Position.Bottom:
                     hideFrameY.Value = root.ActualHeight;

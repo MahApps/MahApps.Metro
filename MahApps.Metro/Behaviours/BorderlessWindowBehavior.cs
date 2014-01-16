@@ -68,7 +68,19 @@ namespace MahApps.Metro.Behaviours
             set { SetValue(AutoSizeToContentProperty, value); }
         }
 
-        public Border Border { get; set; }
+        Border _border;
+        public Border Border
+        {
+            get { return _border; }
+            set
+            {
+                // handles cases where window starts maximized
+                if (AssociatedObject.WindowState == WindowState.Maximized) {
+                    value.BorderBrush = null;
+                }
+                _border = value;
+            }
+        }
 
         private HwndSource _mHWNDSource;
         private IntPtr _mHWND;
@@ -236,6 +248,9 @@ namespace MahApps.Metro.Behaviours
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
+                if (this.Border != null) {
+                    this.Border.BorderBrush = null;
+                }
                 _isMaximize = true;
                 IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(_mHWND, Constants.MONITOR_DEFAULTTONEAREST);
                 if (monitor != IntPtr.Zero)
@@ -249,6 +264,8 @@ namespace MahApps.Metro.Behaviours
                     var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
                     UnsafeNativeMethods.SetWindowPos(_mHWND, new IntPtr(-2), x, y, cx, cy, 0x0040);
                 }
+            } else if (/*AssociatedObject.WindowState == WindowState.Normal && */this.Border != null) {
+                this.Border.BorderBrush = AssociatedObject.BorderBrush ?? _borderColor;
             }
         }
 
