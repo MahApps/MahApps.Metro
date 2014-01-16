@@ -71,7 +71,7 @@ namespace MahApps.Metro.Behaviours
         Border _border;
         public Border Border
         {
-            get { return _boder; }
+            get { return _border; }
             set
             {
                 // handles cases where window starts maximized
