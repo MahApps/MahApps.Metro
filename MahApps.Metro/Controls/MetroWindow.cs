@@ -558,13 +558,13 @@ namespace MahApps.Metro.Controls
 
                     if (brush != null)
                     {
-                        this.WindowButtonCommands.Foreground = brush;
+                        this.ChangeAllWindowCommandsBrush(brush);
                     }
                 }
 
                 else
                 {
-                    this.WindowButtonCommands.ClearValue(ForegroundProperty);
+                    this.ResetAllWindowCommandsBrush();
                 }
             }
 
