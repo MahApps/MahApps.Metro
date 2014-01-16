@@ -40,41 +40,6 @@ namespace MahApps.Metro.Behaviours
             base.OnAttached();
         }
 
-        private void InjectBehaviors()
-        {
-            bool changed = false;
-            var behaviors = AssociatedMetroWindow.GetValue(MahApps.Metro.Behaviours.StylizedBehaviors.BehaviorsProperty) as MahApps.Metro.Behaviours.StylizedBehaviorCollection;
-            if (!behaviors.Any(x => x is BorderlessWindowBehavior))
-            {
-                var be = new BorderlessWindowBehavior() { AllowsTransparency = true };
-                be.Attach(AssociatedMetroWindow);
-                behaviors.Add(be);
-
-                behaviors = behaviors.Clone() as MahApps.Metro.Behaviours.StylizedBehaviorCollection;
-                changed = true;
-            }
-
-            if (!behaviors.Any(x => x is GlowWindowBehavior))
-            {
-                if (!changed)
-                {
-                    behaviors = behaviors.Clone() as MahApps.Metro.Behaviours.StylizedBehaviorCollection;
-                }
-
-                var gl = new GlowWindowBehavior();
-                gl.Attach(AssociatedMetroWindow);
-                behaviors.Add(gl);
-                changed = true;
-            }
-
-            if (changed)
-            {
-                behaviors.Freeze();
-                AssociatedMetroWindow.SetValue(MahApps.Metro.Behaviours.StylizedBehaviors.BehaviorsProperty, behaviors);
-                AssociatedMetroWindow.InvalidateArrange();
-            }
-        }
-
         private void SetWindowCommandButtonsToBlackBrush()
         {
             foreach (Button b in (AssociatedMetroWindow.WindowCommandsPresenter.Content as WindowCommands).FindChildren<Button>())

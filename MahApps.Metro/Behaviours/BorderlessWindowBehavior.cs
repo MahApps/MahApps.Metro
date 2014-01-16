@@ -412,13 +412,16 @@ namespace MahApps.Metro.Behaviours
 
                 var rgb = bgSolidColorBrush.Color.R | (bgSolidColorBrush.Color.G << 8) | (bgSolidColorBrush.Color.B << 16);
 
-                // set the default background color of the window -> this avoids the black stripes when resizing
-                var hBrushOld = SetClassLong(_mHWND, Constants.GCLP_HBRBACKGROUND, UnsafeNativeMethods.CreateSolidBrush(rgb));
+                if ((IntPtr)UnsafeNativeMethods.GetWindowLong(_mHWND, Constants.GCLP_HBRBACKGROUND) == IntPtr.Zero)
+                {
+                    // set the default background color of the window -> this avoids the black stripes when resizing
+                    var hBrushOld = SetClassLong(_mHWND, Constants.GCLP_HBRBACKGROUND, UnsafeNativeMethods.CreateSolidBrush(rgb));
 
-                if (hBrushOld != IntPtr.Zero)
-                    UnsafeNativeMethods.DeleteObject(hBrushOld);
+                    if (hBrushOld != IntPtr.Zero)
+                        UnsafeNativeMethods.DeleteObject(hBrushOld);
 
-                AssociatedObject.SetValue(BackgroundSetPropertyKey, true);
+                    AssociatedObject.SetValue(BackgroundSetPropertyKey, true);
+                }
             }
         }
 
