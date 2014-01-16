@@ -544,22 +544,7 @@ namespace MahApps.Metro.Controls
                 // the dark theme is the default one and will work out of the box
                 if (flyout.IsOpen)
                 {
-                    Brush brush = null; 
-                    
-                    if(flyout.Theme == FlyoutTheme.Accent)
-                    {
-                        brush = (Brush) flyout.FindResource("IdealForegroundColorBrush");
-                    }
-
-                    else if(flyout.ActualTheme == Theme.Light)
-                    {
-                        brush = (Brush)ThemeManager.LightResource["BlackBrush"];
-                    }
-
-                    if (brush != null)
-                    {
-                        this.ChangeAllWindowCommandsBrush(brush);
-                    }
+                    this.HandleFlyout(flyout);
                 }
 
                 else

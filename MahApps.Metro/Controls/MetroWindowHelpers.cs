@@ -44,5 +44,25 @@ namespace MahApps.Metro.Controls
                 action(b);
             }
         }
+
+        public static void HandleFlyout(this MetroWindow window, Flyout flyout)
+        {
+            Brush brush = null;
+
+            if (flyout.Theme == FlyoutTheme.Accent)
+            {
+                brush = (Brush)flyout.FindResource("IdealForegroundColorBrush");
+            }
+
+            else if (flyout.ActualTheme == Theme.Light)
+            {
+                brush = (Brush)ThemeManager.LightResource["BlackBrush"];
+            }
+
+            if (brush != null)
+            {
+                window.ChangeAllWindowCommandsBrush(brush);
+            }
+        }
     }
 }
