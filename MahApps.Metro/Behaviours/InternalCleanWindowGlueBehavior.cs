@@ -61,7 +61,7 @@ namespace MahApps.Metro.Behaviours
             {
                 if (flyout.IsOpen)
                 {
-                    this.AssociatedMetroWindow.HandleFlyout(flyout);
+                    this.AssociatedMetroWindow.HandleFlyout(flyout, (Brush)this.AssociatedMetroWindow.FindResource("WhiteColorBrush"));
                 }
                 else
                 {

@@ -45,7 +45,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public static void HandleFlyout(this MetroWindow window, Flyout flyout)
+        public static void HandleFlyout(this MetroWindow window, Flyout flyout, Brush darkThemeBrush = null)
         {
             Brush brush = null;
 
@@ -57,6 +57,11 @@ namespace MahApps.Metro.Controls
             else if (flyout.ActualTheme == Theme.Light)
             {
                 brush = (Brush)ThemeManager.LightResource["BlackBrush"];
+            }
+
+            else if(flyout.ActualTheme == Theme.Dark && darkThemeBrush != null)
+            {
+                brush = darkThemeBrush;
             }
 
             if (brush != null)
