@@ -89,6 +89,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public BaseMetroDialog()
         {
+            DialogSettings = new MetroDialogSettings();
         }
 
         /// <summary>
