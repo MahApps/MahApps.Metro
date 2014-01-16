@@ -33,6 +33,12 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new PropertyMetadata(FlyoutTheme.Dark));
 
         /// <summary>
+        /// Gets the actual theme (dark/light) of this flyout.
+        /// Used to handle the WindowCommands overlay in the MetroWindow.
+        /// </summary>
+        internal Theme ActualTheme { get; private set; }
+
+        /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
         /// </summary>
         public ICommand CloseCommand
@@ -128,12 +134,14 @@ namespace MahApps.Metro.Controls
 
         private void ChangeFlyoutTheme(Accent windowAccent, Theme windowTheme)
         {
+            // Beware: Über-dumb code ahead!
             switch (this.Theme)
             {
                 case FlyoutTheme.Accent:
                     ThemeManager.ChangeTheme(this.Resources, windowAccent, windowTheme);
                     this.SetResourceReference(BackgroundProperty, "HighlightBrush");
                     this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
+                    this.ActualTheme = windowTheme;
                 break;
 
                 case FlyoutTheme.Adapt:
@@ -150,6 +158,7 @@ namespace MahApps.Metro.Controls
                             this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
                             break;
                     }
+                    this.ActualTheme = windowTheme;
                     break;
 
                 case FlyoutTheme.Inverse:
@@ -159,26 +168,30 @@ namespace MahApps.Metro.Controls
                             ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Light);
                             this.Background = (Brush) ThemeManager.DarkResource["FlyoutLightBrush"];
                             this.Foreground = (Brush) ThemeManager.DarkResource["WhiteColorBrush"];
+                            this.ActualTheme = Metro.Theme.Light;
                             break;
 
                         case Metro.Theme.Light:
                             ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Dark);
                             this.Background = (Brush) ThemeManager.LightResource["FlyoutDarkBrush"];
                             this.Foreground = (Brush)ThemeManager.LightResource["WhiteColorBrush"];
+                            this.ActualTheme = Metro.Theme.Dark;
                             break;
                     }
                     break;
-
+                
                 case FlyoutTheme.Dark:
                     ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Dark);
                     this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
                     this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
+                    this.ActualTheme = Metro.Theme.Dark;
                     break;
 
                 case FlyoutTheme.Light:
                     ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Light);
                     this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
                     this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
+                    this.ActualTheme = Metro.Theme.Light;
                     break;
             }
         }
