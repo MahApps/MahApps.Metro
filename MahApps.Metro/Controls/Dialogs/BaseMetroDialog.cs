@@ -66,7 +66,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
         /// </summary>
         /// <param name="owningWindow">The window that is the parent of the dialog.</param>
-        public BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
+        protected BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
         {
             DialogSettings = settings == null ? owningWindow.MetroDialogOptions : settings;
 
@@ -84,10 +84,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
             OwningWindow = owningWindow;
         }
+
         /// <summary>
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
         /// </summary>
-        public BaseMetroDialog()
+        protected BaseMetroDialog()
         {
             DialogSettings = new MetroDialogSettings();
         }
