@@ -175,10 +175,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PanoramaDemo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -190,9 +186,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PanoramaDemo.xaml.cs">
-      <DependentUpon>PanoramaDemo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
