@@ -126,13 +126,10 @@ namespace MahApps.Metro.Controls
                         this.ChangeFlyoutTheme(accent, windowTheme.Item1);
                     }
                 }
-
-                ThemeManager.IsThemeChanged += this.ThemeManager_IsThemeChanged;
             };
-            this.Unloaded += (sender, args) => ThemeManager.IsThemeChanged -= this.ThemeManager_IsThemeChanged;
         }
 
-        private void ChangeFlyoutTheme(Accent windowAccent, Theme windowTheme)
+        internal void ChangeFlyoutTheme(Accent windowAccent, Theme windowTheme)
         {
             // Beware: Über-dumb code ahead!
             switch (this.Theme)

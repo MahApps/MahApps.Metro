@@ -373,6 +373,27 @@ namespace MahApps.Metro.Controls
             {
                 this.Flyouts = new FlyoutsControl();
             }
+
+            ThemeManager.IsThemeChanged += ThemeManagerOnIsThemeChanged;
+            this.Unloaded += (o, args) => ThemeManager.IsThemeChanged -= ThemeManagerOnIsThemeChanged;
+        }
+
+        private void ThemeManagerOnIsThemeChanged(object sender, OnThemeChangedEventArgs e)
+        {
+            if (e.Accent != null)
+            {
+                var flyouts = this.Flyouts.Items.Cast<Flyout>().ToList();
+
+                if (!flyouts.Any())
+                    return;
+
+                foreach (Flyout flyout in flyouts)
+                {
+                    flyout.ChangeFlyoutTheme(e.Accent, e.Theme);
+                }
+
+                this.HandleWindowCommandsForFlyouts(flyouts);
+            }
         }
 
         static MetroWindow()
@@ -543,18 +564,7 @@ namespace MahApps.Metro.Controls
                 WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
                 WindowButtonCommands.SetValue(Panel.ZIndexProperty, zIndex);
                 
-                // We need to adapt the window commands to the theme of the flyout
-                // This only needs to be done for the accent and light theme, 
-                // the dark theme is the default one and will work out of the box
-                if (flyout.IsOpen)
-                {
-                    this.HandleFlyout(flyout);
-                }
-
-                else
-                {
-                    this.ResetAllWindowCommandsBrush();
-                }
+                this.HandleWindowCommandsForFlyouts(visibleFlyouts);
             }
 
             flyoutModal.Visibility = visibleFlyouts.Any(x => x.IsModal) ? Visibility.Visible : Visibility.Hidden;
