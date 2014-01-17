@@ -9,6 +9,7 @@ using System.Windows;
 
 namespace MahApps.Metro
 {
+
     /// <summary>
     /// A class that allows for the detection and alteration of a MetroWindow's theme and accent.
     /// </summary>
@@ -18,6 +19,29 @@ namespace MahApps.Metro
         internal static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
 
         private static IList<Accent> _accents;
+
+        /// <summary>
+        /// Cached method info's for use in OnThemeChanged
+        /// </summary>
+        private static readonly MethodInfo SystemColors_InvalidateColors;
+        private static readonly MethodInfo SystemResources_OnThemeChanged;
+        private static readonly MethodInfo SystemResources_InvalidateResources;
+
+        static ThemeManager()
+        {
+            SystemColors_InvalidateColors = typeof(SystemColors).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic);
+            var assembly = Assembly.GetAssembly(typeof(Window));
+            if (assembly != null)
+            {
+                var systemResources = assembly.GetType("System.Windows.SystemResources");
+                if (systemResources != null)
+                {
+                    SystemResources_OnThemeChanged = systemResources.GetMethod("OnThemeChanged", BindingFlags.Static | BindingFlags.NonPublic);
+                    SystemResources_InvalidateResources = systemResources.GetMethod("InvalidateResources", BindingFlags.Static | BindingFlags.NonPublic);
+                }
+            }
+        }
+
         /// <summary>
         /// Gets a list of all of default themes.
         /// </summary>
@@ -277,10 +301,9 @@ namespace MahApps.Metro
         {
             SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { Theme = newTheme, Accent = newAccent });
 
-            var invalidateColors = typeof(SystemColors).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic);
-            if (invalidateColors != null)
+            if (SystemColors_InvalidateColors != null)
             {
-                invalidateColors.Invoke(null, null);
+                SystemColors_InvalidateColors.Invoke(null, null);
             }
 
             // See: https://github.com/MahApps/MahApps.Metro/issues/923
@@ -290,24 +313,14 @@ namespace MahApps.Metro
             //    invalidateParameters.Invoke(null, null);
             //}
 
-            var assembly = Assembly.GetAssembly(typeof(Window));
-            if (assembly != null)
+            if (SystemResources_OnThemeChanged != null)
             {
-                var systemResources = assembly.GetType("System.Windows.SystemResources");
-                if (systemResources != null)
-                {
-                    var onThemeChanged = systemResources.GetMethod("OnThemeChanged", BindingFlags.Static | BindingFlags.NonPublic);
-                    if (onThemeChanged != null)
-                    {
-                        onThemeChanged.Invoke(null, null);
-                    }
+                SystemResources_OnThemeChanged.Invoke(null, null);
+            }
 
-                    var invalidateResources = systemResources.GetMethod("InvalidateResources", BindingFlags.Static | BindingFlags.NonPublic);
-                    if (invalidateResources != null)
-                    {
-                        invalidateResources.Invoke(null, new object[] { false });
-                    }
-                }
+            if (SystemResources_InvalidateResources != null)
+            {
+                SystemResources_InvalidateResources.Invoke(null, new object[] { false });
             }
         }
     }
