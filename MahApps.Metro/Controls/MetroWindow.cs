@@ -575,28 +575,6 @@ namespace MahApps.Metro.Controls
             });
         }
 
-        /// <summary>
-        /// Adapts the WindowCommands to the theme of the first opened, topmost && && (top || right) flyout
-        /// </summary>
-        /// <param name="flyouts">All the flyouts! Or flyouts that fall into the category described in the summary.</param>
-        private void HandleWindowCommandsForFlyouts(IEnumerable<Flyout> flyouts)
-        {
-            var flyout = flyouts
-                .Where(x => x.IsOpen && (x.Position == Position.Right || x.Position == Position.Top))
-                .OrderByDescending(Panel.GetZIndex)
-                .FirstOrDefault();
-
-            if (flyout != null)
-            {
-                this.UpdateWindowCommandsForFlyout(flyout);
-            }
-
-            else
-            {
-                this.ResetAllWindowCommandsBrush();
-            }
-        }
-
         public class FlyoutStatusChangedRoutedEventArgs : RoutedEventArgs
         {
             internal FlyoutStatusChangedRoutedEventArgs(RoutedEvent rEvent, object source): base(rEvent, source)
