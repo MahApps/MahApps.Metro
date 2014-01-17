@@ -382,9 +382,12 @@ namespace MahApps.Metro.Controls
         {
             if (e.Accent != null)
             {
-                var flyouts = this.Flyouts.Items.Cast<Flyout>();
+                var flyouts = this.Flyouts.Items.Cast<Flyout>().ToList();
 
-                foreach (Flyout flyout in this.Flyouts.Items)
+                if (!flyouts.Any())
+                    return;
+
+                foreach (Flyout flyout in flyouts)
                 {
                     flyout.ChangeFlyoutTheme(e.Accent, e.Theme);
                 }
