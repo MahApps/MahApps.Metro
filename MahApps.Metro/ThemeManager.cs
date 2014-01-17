@@ -136,6 +136,8 @@ namespace MahApps.Metro
 
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
         {
+            oldRd.BeginInit();
+
             foreach (DictionaryEntry r in newRd)
             {
                 if (oldRd.Contains(r.Key))
@@ -143,6 +145,8 @@ namespace MahApps.Metro
 
                 oldRd.Add(r.Key, r.Value);
             }
+
+            oldRd.EndInit();
         }
 
         /// <summary>
