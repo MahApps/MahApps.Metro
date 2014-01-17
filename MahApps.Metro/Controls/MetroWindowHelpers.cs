@@ -13,13 +13,6 @@ namespace MahApps.Metro.Controls
     /// </summary>
     internal static class MetroWindowHelpers
     {
-        public static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush brush)
-        {
-            window.ChangeWindowCommandButtonsBrush(brush);
-
-            window.WindowButtonCommands.SetValue(Control.ForegroundProperty, brush);
-        }
-
         public static void ResetAllWindowCommandsBrush(this MetroWindow window)
         {
             window.InvokeCommandButtons(x => x.ClearValue(Control.ForegroundProperty));
@@ -32,20 +25,7 @@ namespace MahApps.Metro.Controls
             window.InvokeCommandButtons(x => x.SetResourceReference(Control.ForegroundProperty, resourceName));
         }
 
-        public static void ChangeWindowCommandButtonsBrush(this MetroWindow window, Brush brush)
-        {
-            window.InvokeCommandButtons(x => x.SetValue(Control.ForegroundProperty, brush));
-        }
-
-        private static void InvokeCommandButtons(this MetroWindow window, Action<Button> action)
-        {
-            foreach (Button b in ((WindowCommands)window.WindowCommandsPresenter.Content).FindChildren<Button>())
-            {
-                action(b);
-            }
-        }
-
-        public static void HandleFlyout(this MetroWindow window, Flyout flyout, Brush darkThemeBrush = null)
+        public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
         {
             Brush brush = null;
 
@@ -59,15 +39,33 @@ namespace MahApps.Metro.Controls
                 brush = (Brush)ThemeManager.LightResource["BlackBrush"];
             }
 
-            else if(flyout.ActualTheme == Theme.Dark && darkThemeBrush != null)
+            else if (flyout.ActualTheme == Theme.Dark)
             {
-                brush = darkThemeBrush;
+                brush = (Brush)ThemeManager.DarkResource["BlackBrush"];
             }
 
-            if (brush != null)
+             window.ChangeAllWindowCommandsBrush(brush);
+
+        }
+
+        private static void ChangeWindowCommandButtonsBrush(this MetroWindow window, Brush brush)
+        {
+            window.InvokeCommandButtons(x => x.SetValue(Control.ForegroundProperty, brush));
+        }
+
+        private static void InvokeCommandButtons(this MetroWindow window, Action<Button> action)
+        {
+            foreach (Button b in ((WindowCommands)window.WindowCommandsPresenter.Content).FindChildren<Button>())
             {
-                window.ChangeAllWindowCommandsBrush(brush);
+                action(b);
             }
+        }
+
+        private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush brush)
+        {
+            window.ChangeWindowCommandButtonsBrush(brush);
+
+            window.WindowButtonCommands.SetValue(Control.ForegroundProperty, brush);
         }
     }
 }
