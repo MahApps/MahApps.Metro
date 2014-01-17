@@ -215,6 +215,7 @@ namespace MahApps.Metro.Controls
         //private double _movableRange;
         private Double _movableWidth;
 
+
         public Thumb LowerThumb
         {
             get { return _leftThumb; }
@@ -230,6 +231,7 @@ namespace MahApps.Metro.Controls
 
         public RangeSlider()
         {
+            //
             CommandBindings.Add(new CommandBinding(MoveBack, MoveBackHandler));
             CommandBindings.Add(new CommandBinding(MoveForward, MoveForwardHandler));
             CommandBindings.Add(new CommandBinding(MoveAllForward, MoveAllForwardHandler));
@@ -364,21 +366,66 @@ namespace MahApps.Metro.Controls
 
         private void RightButtonClick(object sender, RoutedEventArgs e)
         {
+            
             MoveSelection(false);
         }
 
         
-
         private static void MoveThumb(FrameworkElement x, FrameworkElement y, double horizonalChange)
         {
             double change = 0;
             if (horizonalChange < 0) //slider went left
+            {
                 change = GetChangeKeepPositive(x.Width, horizonalChange);
+                if (x.Name == "PART_MiddleThumb")
+                {
+                    if (x.Width > x.MinWidth)
+                    {
+                        if (x.Width + change < x.MinWidth)
+                        {
+                            double dif = x.Width - x.MinWidth;
+                            x.Width = x.MinWidth;
+                            y.Width += dif;
+                        }
+                        else
+                        {
+                            x.Width += change;
+                            y.Width -= change;
+                        }
+                    }
+                }
+                else
+                {
+                    x.Width += change;
+                    y.Width -= change;
+                }
+            }
             else if (horizonalChange > 0) //slider went right if(horizontal change == 0 do nothing)
+            {
                 change = -GetChangeKeepPositive(y.Width, -horizonalChange);
-
-            x.Width += change;
-            y.Width -= change;
+                if (y.Name == "PART_MiddleThumb")
+                {
+                    if (y.Width > y.MinWidth)
+                    {
+                        if (y.Width - change < y.MinWidth)
+                        {
+                            double dif = y.Width - y.MinWidth;
+                            y.Width = y.MinWidth;
+                            x.Width += dif;
+                        }
+                        else
+                        {
+                            x.Width += change;
+                            y.Width -= change;
+                        }
+                    }
+                }
+                else
+                {
+                    x.Width += change;
+                    y.Width -= change;
+                }
+            }
         }
 
         private static double GetChangeKeepPositive(double width, double increment)
@@ -445,6 +492,8 @@ namespace MahApps.Metro.Controls
             else if (reCalculateStop && oldStop != UpperValue)
                 OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, oldStop, UpperValue), UpperValueChangedEvent);
         }
+
+
 
         private void OnRangeParameterChanged(RangeParameterChangedEventArgs e, RoutedEvent Event)
         {
@@ -554,7 +603,6 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
             _visualElementsContainer = EnforceInstance<StackPanel>("PART_RangeSliderContainer");
             _centerThumb = EnforceInstance<Thumb>("PART_MiddleThumb");
             _leftButton = EnforceInstance<RepeatButton>("PART_LeftEdge");
@@ -574,7 +622,7 @@ namespace MahApps.Metro.Controls
         //adds all visual element to the conatiner
         private void InitializeVisualElementsContainer()
         {
-            _visualElementsContainer.Orientation = Orientation.Horizontal;
+            _visualElementsContainer.Orientation = Orientation;
             _leftThumb.Width = DefaultSplittersThumbWidth;
             _leftThumb.Tag = "left";
             _rightThumb.Width = DefaultSplittersThumbWidth;
@@ -619,6 +667,7 @@ namespace MahApps.Metro.Controls
 
         private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
+
             MoveThumb(_centerThumb, _rightButton, e.HorizontalChange);
             ReCalculateRangeSelected(false, true);
             e.RoutedEvent = UpperThumbDragDeltaEvent;
@@ -633,33 +682,26 @@ namespace MahApps.Metro.Controls
             RaiseEvent(e);
         }
 
-        Double oldStop = 0, oldStart = 0;
         private void RightThumbDragStart(object sender, DragStartedEventArgs e)
         {
-            oldStop = UpperValue;
             e.RoutedEvent = UpperThumbDragStartedEvent;
             RaiseEvent(e);
         }
 
         private void LeftThumbDragComplete(object sender, DragCompletedEventArgs e)
         {
-            //if (oldStart != LowerValue)
-            //    OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, oldStart, LowerValue), LowerValueChangedEvent);
             e.RoutedEvent = LowerThumbDragCompletedEvent;
             RaiseEvent(e);
         }
 
         private void LeftThumbDragStart(object sender, DragStartedEventArgs e)
         {
-            oldStart = LowerValue;
             e.RoutedEvent = LowerThumbDragStartedEvent;
             RaiseEvent(e);
         }
 
         private void RightThumbDragComplete(object sender, DragCompletedEventArgs e)
         {
-            //if (oldStop != UpperValue)
-            //    OnRangeParameterChanged(new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, oldStop, UpperValue), UpperValueChangedEvent);
             e.RoutedEvent = UpperThumbDragCompletedEvent;
             RaiseEvent(e);
         }

@@ -230,47 +230,47 @@ namespace MetroDemo
 
         private void RangeSlider_OnLowerThumbDragStarted(object sender, DragStartedEventArgs e)
         {
-            TestBlock.Text = "lower thumb drag started";
+            //TestBlock.Text = "lower thumb drag started";
         }
 
         private void RangeSlider_OnLowerThumbDragCompleted(object sender, DragCompletedEventArgs e)
         {
-            TestBlock.Text = "lower thumb drag completed";
+            //TestBlock.Text = "lower thumb drag completed";
         }
 
         private void RangeSlider_OnUpperThumbDragStarted(object sender, DragStartedEventArgs e)
         {
-            TestBlock.Text = "upper thumb drag started";
+            //TestBlock.Text = "upper thumb drag started";
         }
 
         private void RangeSlider_OnUpperThumbDragCompleted(object sender, DragCompletedEventArgs e)
         {
-            TestBlock.Text = "upper thumb drag completed";
+            //TestBlock.Text = "upper thumb drag completed";
         }
 
         private void RangeSlider_OnCentralThumbDragStarted(object sender, DragStartedEventArgs e)
         {
-            TestBlock.Text = "central thumb drag started";
+            //TestBlock.Text = "central thumb drag started";
         }
 
         private void RangeSlider_OnCentralThumbDragCompleted(object sender, DragCompletedEventArgs e)
         {
-            TestBlock.Text = "central thumb drag completed";
+            //TestBlock.Text = "central thumb drag completed";
         }
 
         private void RangeSlider_OnLowerThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            TestBlock.Text = "lower thumb drag delta";
+            TestBlock.Text = RangeSlider.Result;
         }
 
         private void RangeSlider_OnUpperThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            TestBlock.Text = "upper thumb drag delta";
+            TestBlock.Text = RangeSlider.Result;
         }
 
         private void RangeSlider_OnCentralThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            TestBlock.Text = "central thumb drag delta";
+            //TestBlock.Text = "central thumb drag delta";
         }
     }
 }

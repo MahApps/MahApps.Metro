@@ -17,7 +17,7 @@
                                Height="{DynamicResource HorizontalThumbHeight}"
                                Width="{DynamicResource HorizontalThumbWidth}"
                                Style="{DynamicResource HorizontalSliderThumb}" />
-                        <Thumb Name="PART_MiddleThumb"
+                        <Thumb Name="PART_MiddleThumb" 
                                Cursor="ScrollAll"
                                MinWidth="10">
                             <Thumb.Style>
@@ -27,7 +27,7 @@
                                             <ControlTemplate>
                                                 <Rectangle Height="3"
                                                            Margin="0,1,0,0"
-                                                           Fill="{DynamicResource AccentColorBrush}" />
+                                                           Fill="Red" />
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
