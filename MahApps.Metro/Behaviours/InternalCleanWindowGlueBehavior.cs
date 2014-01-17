@@ -54,21 +54,8 @@ namespace MahApps.Metro.Behaviours
 
         void AssociatedMetroWindow_FlyoutsStatusChanged(object sender, RoutedEventArgs e)
         {
-            MetroWindow.FlyoutStatusChangedRoutedEventArgs args = e as MetroWindow.FlyoutStatusChangedRoutedEventArgs;
-            var flyout = args.ChangedFlyout;
-
-            if (flyout.Position == Position.Right || flyout.Position == Position.Top)
-            {
-                if (flyout.IsOpen)
-                {
-                    this.AssociatedMetroWindow.UpdateWindowCommandsForFlyout(flyout);
-                }
-                else
-                {
-                    this.SetWindowCommandButtonsToBlackBrush();
-                    AssociatedMetroWindow.WindowButtonCommands.SetResourceReference(Control.ForegroundProperty, "BlackColorBrush");
-                }
-            }
+            var flyouts = this.AssociatedMetroWindow.Flyouts.Items.Cast<Flyout>().ToList();
+            this.AssociatedMetroWindow.HandleWindowCommandsForFlyouts(flyouts, (Brush) this.AssociatedMetroWindow.FindResource("BlackColorBrush"));
         }
     }
 }

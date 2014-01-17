@@ -17,7 +17,8 @@ namespace MahApps.Metro.Controls
         /// Adapts the WindowCommands to the theme of the first opened, topmost && && (top || right) flyout
         /// </summary>
         /// <param name="flyouts">All the flyouts! Or flyouts that fall into the category described in the summary.</param>
-        public static void HandleWindowCommandsForFlyouts(this MetroWindow window, IEnumerable<Flyout> flyouts)
+        /// <param name="resetBrush">An optional brush to reset the window commands brush to.</param>
+        public static void HandleWindowCommandsForFlyouts(this MetroWindow window, IEnumerable<Flyout> flyouts, Brush resetBrush = null)
         {
             var flyout = flyouts
                 .Where(x => x.IsOpen && (x.Position == Position.Right || x.Position == Position.Top))
@@ -29,9 +30,14 @@ namespace MahApps.Metro.Controls
                 window.UpdateWindowCommandsForFlyout(flyout);
             }
 
-            else
+            else if(resetBrush == null)
             {
                 window.ResetAllWindowCommandsBrush();
+            }
+
+            else
+            {
+                window.ChangeAllWindowCommandsBrush(resetBrush);
             }
         }
 
