@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace MahApps.Metro
 {
-    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// A class that allows for the detection and alteration of a MetroWindow's theme and accent.
@@ -107,7 +107,8 @@ namespace MahApps.Metro
                 if (oldAccent != null && oldAccent.Name != newAccent.Name)
                 {
                     var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
-                    if (oldAccentResource != null) {
+                    if (oldAccentResource != null)
+                    {
                         resources.MergedDictionaries.Add(newAccent.Resources);
                         var ok = resources.MergedDictionaries.Remove(oldAccentResource);
 
@@ -207,7 +208,7 @@ namespace MahApps.Metro
         public static Tuple<Theme, Accent> DetectTheme(Application app)
         {
             if (app == null) throw new ArgumentNullException("app");
-            
+
             return DetectTheme(app.Resources);
         }
 
@@ -224,7 +225,8 @@ namespace MahApps.Metro
             Tuple<Theme, Accent> detectedAccentTheme = null;
 
 
-            if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, resources)) {
+            if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, resources))
+            {
                 if (GetThemeFromResources(currentTheme, resources, ref detectedAccentTheme))
                     return new Tuple<Theme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
             }
@@ -256,7 +258,8 @@ namespace MahApps.Metro
                     return true;
                 }
 
-                if (DetectThemeFromResources(ref detectedTheme, ref themeRd, currentRd)) {
+                if (DetectThemeFromResources(ref detectedTheme, ref themeRd, currentRd))
+                {
                     return true;
                 }
             }
@@ -264,7 +267,7 @@ namespace MahApps.Metro
             enumerator.Dispose();
             return false;
         }
-        
+
         internal static bool GetThemeFromResources(Theme presetTheme, ResourceDictionary dict, ref Tuple<Theme, Accent> detectedAccentTheme)
         {
             Theme currentTheme = presetTheme;
@@ -302,7 +305,7 @@ namespace MahApps.Metro
         {
             SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { Theme = newTheme, Accent = newAccent });
 
-            new Thread(
+            Task.Factory.StartNew(
                 () =>
                     {
                         if (SystemColors_InvalidateColors != null)
@@ -326,7 +329,7 @@ namespace MahApps.Metro
                         {
                             SystemResources_InvalidateResources.Invoke(null, new object[] { false });
                         }
-                    }).Start();
+                    });
         }
     }
 
