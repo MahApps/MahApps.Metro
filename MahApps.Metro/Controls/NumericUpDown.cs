@@ -85,7 +85,7 @@ namespace MahApps.Metro.Controls
         #endregion
 
         private double _internalIntervalMultiplierForCalculation = DefaultInterval;
-        private double _internalLargeChange;
+        private double _internalLargeChange = DefaultInterval * 100;
         private double _intervalValueSinceReset;
         private bool _manualChange;
         private RepeatButton _repeatDown;
