@@ -9,6 +9,7 @@ using System.Windows;
 
 namespace MahApps.Metro
 {
+    using System.Threading;
 
     /// <summary>
     /// A class that allows for the detection and alteration of a MetroWindow's theme and accent.
@@ -301,27 +302,31 @@ namespace MahApps.Metro
         {
             SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { Theme = newTheme, Accent = newAccent });
 
-            if (SystemColors_InvalidateColors != null)
-            {
-                SystemColors_InvalidateColors.Invoke(null, null);
-            }
+            new Thread(
+                () =>
+                    {
+                        if (SystemColors_InvalidateColors != null)
+                        {
+                            SystemColors_InvalidateColors.Invoke(null, null);
+                        }
 
-            // See: https://github.com/MahApps/MahApps.Metro/issues/923
-            //var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
-            //if (invalidateParameters != null)
-            //{
-            //    invalidateParameters.Invoke(null, null);
-            //}
+                        // See: https://github.com/MahApps/MahApps.Metro/issues/923
+                        //var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
+                        //if (invalidateParameters != null)
+                        //{
+                        //    invalidateParameters.Invoke(null, null);
+                        //}
 
-            if (SystemResources_OnThemeChanged != null)
-            {
-                SystemResources_OnThemeChanged.Invoke(null, null);
-            }
+                        if (SystemResources_OnThemeChanged != null)
+                        {
+                            SystemResources_OnThemeChanged.Invoke(null, null);
+                        }
 
-            if (SystemResources_InvalidateResources != null)
-            {
-                SystemResources_InvalidateResources.Invoke(null, new object[] { false });
-            }
+                        if (SystemResources_InvalidateResources != null)
+                        {
+                            SystemResources_InvalidateResources.Invoke(null, new object[] { false });
+                        }
+                    }).Start();
         }
     }
 
