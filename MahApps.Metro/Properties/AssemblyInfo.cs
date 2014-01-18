@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Markup;
@@ -15,3 +16,5 @@ using System.Windows.Markup;
 [assembly: AssemblyVersion("0.12.0.0")]
 [assembly: AssemblyFileVersion("0.12.0.0")]
 [assembly: AssemblyTitleAttribute("MahApps.Metro")]
+
+[assembly: InternalsVisibleTo("Mahapps.Metro.Tests")]
