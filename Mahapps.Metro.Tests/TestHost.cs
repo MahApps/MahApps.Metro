@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -23,6 +24,8 @@ namespace Mahapps.Metro.Tests
         {
             app = new TestApp { ShutdownMode = ShutdownMode.OnExplicitShutdown };
             app.Startup += (sender, args) => gate.Set();
+           var appdomain =  AppDomain.CreateDomain("TestDomain");
+           var apppp = Application.Current;
             app.Run();
         }
 

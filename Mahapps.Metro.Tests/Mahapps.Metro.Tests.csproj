@@ -76,13 +76,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutomationTestBase.cs" />
+    <Compile Include="FlyoutTest.cs" />
+    <Compile Include="FlyoutWindow.xaml.cs">
+      <DependentUpon>FlyoutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MetroWindowTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwitchContextToUiThreadAwaiter.cs" />
     <Compile Include="TestApp.xaml.cs">
       <DependentUpon>TestApp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestHelpers.cs" />
     <Compile Include="TestHost.cs" />
+    <Compile Include="ThemeManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -95,6 +101,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="FlyoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="TestApp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
