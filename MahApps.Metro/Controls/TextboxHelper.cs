@@ -129,6 +129,19 @@ namespace MahApps.Metro.Controls
                     passBox.GotFocus -= PasswordGotFocus;
                 }
             }
+            else if (d is NumericUpDown)
+            {
+                var numericUpDown = d as NumericUpDown;
+
+                if ((bool)e.NewValue)
+                {
+                    numericUpDown.GotFocus += NumericUpDownGotFocus;
+                }
+                else
+                {
+                    numericUpDown.GotFocus -= NumericUpDownGotFocus;
+                }
+            }
         }
 
         static void TextChanged(object sender, TextChangedEventArgs e)
@@ -166,6 +179,17 @@ namespace MahApps.Metro.Controls
             if (GetSelectAllOnFocus(passBox))
             {
                 passBox.Dispatcher.BeginInvoke((Action)(passBox.SelectAll));
+            }
+        }
+
+        static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
+        {
+            var numericUpDown = sender as NumericUpDown;
+            if (numericUpDown == null)
+                return;
+            if (GetSelectAllOnFocus(numericUpDown))
+            {
+                numericUpDown.Dispatcher.BeginInvoke((Action)(numericUpDown.SelectAll));
             }
         }
 

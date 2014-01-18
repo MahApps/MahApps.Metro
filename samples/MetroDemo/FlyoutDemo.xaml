@@ -70,7 +70,7 @@
 
                 </Grid>
             </Controls:Flyout>
-
+            
             <Controls:Flyout Header="New Goodness" Position="Right" Width="{Binding ElementName=settingsFlyout, Path=ActualWidth, Mode=OneWay}">
                 <StackPanel Orientation="Vertical"
                             Margin="10">
@@ -80,6 +80,27 @@
             </Controls:Flyout>
 
             <metroDemo:CustomFlyout Header="Third" Position="Right" />
+
+            <Controls:Flyout Header="Accented" Position="Right" Theme="Accent">
+                <Grid Margin="10"
+                      Width="400">
+                    <TextBlock Text="This flyout adapts its theme to the current accent" Foreground="{DynamicResource IdealForegroundColorBrush}" />
+                </Grid>
+            </Controls:Flyout>
+
+            <Controls:Flyout Header="Inverse" Position="Right" Theme="Inverse">
+                <Grid Margin="10"
+                      Width="400">
+                    <TextBlock Text="This flyout has the inverse theme of the current window theme" />
+                </Grid>
+            </Controls:Flyout>
+
+            <Controls:Flyout Header="Adapt" Position="Right" Theme="Adapt">
+                <Grid Margin="10"
+                      Width="400">
+                    <TextBlock Text="This flyout adapts the theme of the current window" />
+                </Grid>
+            </Controls:Flyout>
 
             <Controls:Flyout Header="Cool" Position="Right">
                 <Grid Margin="10"
@@ -193,6 +214,18 @@
                     Margin="2"
                     Click="ShowThird"
                     Content="Show 3" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Click="ShowAccent"
+                    Content="Accent" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Click="ShowInverse"
+                    Content="Inverse" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Click="ShowAdapt"
+                    Content="Adapt" />
             <Button MinWidth="90"
                     Margin="2"
                     Click="ShowSettings"

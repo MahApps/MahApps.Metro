@@ -67,7 +67,6 @@
         <Controls:WindowCommands>
             <Button Click="LaunchVisualStudioDemo" Content="VS Demo" />
             <Button Click="LaunchFlyoutDemo" Content="Flyout Demo" />
-            <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
             <Button Click="LaunchIcons" Content="Icons" />
             <Button Click="LauchCleanDemo" Content="Clean Demo" />
             <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
@@ -97,6 +96,7 @@
                 <MenuItem Header="Dialogs">
                     <MenuItem Header="Use Accent?" x:Name="UseAccentForDialogsMenuItem" IsCheckable="True" />
                     <Separator />
+                    <MenuItem Click="ShowInputDialog" Header="Show InputDialog" />
                     <MenuItem Click="ShowMessageDialog" Header="Show MessageDialog" />
                     <MenuItem Click="ShowProgressDialog" Header="Show ProgressDialog" />
                     <MenuItem Click="ShowSimpleDialog" Header="Show SimpleDialog" />
@@ -461,30 +461,32 @@
                                        Style="{StaticResource DescriptionHeaderStyle}" />
 
                                 <Label Content='Minimum="0", Maximum="10"' />
-                                <Controls:NumericUpDown Value="5"
-                                                        Minimum="0" 
+                                <Controls:NumericUpDown Value="5" TextAlignment="Left"
+                                                        Minimum="0" IsReadOnly="True"
                                                         Maximum="10" />
 
                                 <Label Content='SmallChange="2"' />
                                 <Controls:NumericUpDown Value="5" 
-                                                        SmallChange="2" />
+                                                        Interval="2" />
                                 <Label Content='SmallChange="5"' />
-                                <Controls:NumericUpDown Value="5" 
-                                                        SmallChange="5" />
+                                <Controls:NumericUpDown Value="5"  
+                                                        Controls:TextboxHelper.ClearTextButton="True"
+                                                        Interval="5" />
 
                                 <Label Content="No Speedup when long pressed" />
                                 <Controls:NumericUpDown Value="5" 
                                                         Speedup="false" />
                                 <Label Content="Speedup when long pressed" />
-                                <Controls:NumericUpDown Value="5" 
+                                <Controls:NumericUpDown Controls:TextboxHelper.Watermark="Test"
                                                         Speedup="true" />
 
                                 <Label Content="StringFormat" />
-                                <Controls:NumericUpDown Value="5" 
-                                                        SmallChange=".1"  
-                                                        StringFormat="C2" />
+                                <Label Content="{Binding ElementName=test, Path=Value}" />
+                                <Controls:NumericUpDown x:Name="test" Value="5" 
+                                                        Interval=".1"  
+                                                        StringFormat="E2" />
                                 <Controls:NumericUpDown Value="5"
-                                                        SmallChange=".1" 
+                                                        Interval=".1" 
                                                         StringFormat="N2" />
                             </StackPanel>
                         </Grid>
@@ -866,13 +868,6 @@
                                 <Controls:ProgressRing Grid.Column="1" IsActive="True" Width="40" Height="40" />
                                 <Controls:ProgressRing Grid.Column="2" IsActive="True" Width="20" Height="20" />
                             </Grid>
-                            <Label Margin="0, 10, 0, 0"
-                                   Content="ProgressIndicator"
-                                   Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:ProgressIndicator Width="100"
-                                                        Height="10"
-                                                        Margin="0, 10, 0, 0"
-                                                        ProgressColor="{DynamicResource AccentColorBrush}" />
                         </StackPanel>
                         <Grid Grid.Row="2" Grid.Column="2">
                             <Label VerticalAlignment="top" HorizontalAlignment="Center" Content="Sliders TickPlacement" Style="{StaticResource DescriptionHeaderStyle}" />
@@ -1249,14 +1244,6 @@
                                 </Controls:TransitioningContentControl.CustomVisualStates>
                             </Controls:TransitioningContentControl>
                         </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <Label Content="Tile" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:Tile Title="My cupcakes"
-                                           Margin="0, 10, 0, 0"
-                                           Count="23">
-                                <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
-                            </Controls:Tile>
-                        </StackPanel>
                         <Grid Grid.Row="1" Grid.ColumnSpan="2">
                             <Label Content="Context menu" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Label HorizontalAlignment="Stretch"
@@ -1286,16 +1273,31 @@
                             <StackPanel Orientation="Horizontal" Height="20" Margin="0 0 0 5">
                                 <CheckBox Height="20" Content="Show Banner?" x:Name="ShowBannerCheckBox" HorizontalAlignment="Right"/>
                             </StackPanel>
-                            <Controls:FlipView Height="200" IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="FlipView_SelectionChanged">
+                            <Controls:FlipView Height="200" 
+                                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" 
+                                               SelectionChanged="FlipView_SelectionChanged"
+                                               Margin="0, 0, 10, 0">
                                 <Controls:FlipView.Items>
-                                    <Grid Background="Blue">
-                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
+                                    <Grid Background="#2E8DEF">
+                                        <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                            <Rectangle.Fill>
+                                                <VisualBrush Visual="{StaticResource appbar_cupcake}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
                                     </Grid>
-                                    <Grid Background="Green">
-                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_xbox}" />
+                                    <Grid Background="#00A600">
+                                        <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                            <Rectangle.Fill>
+                                                <VisualBrush Visual="{StaticResource appbar_xbox}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
                                     </Grid>
-                                    <Grid Background="Red">
-                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_chess_horse}" />
+                                    <Grid Background="#BF1E4B">
+                                        <Rectangle Margin="0, 0, 10, 0" Width="50" Height="50">
+                                            <Rectangle.Fill>
+                                                <VisualBrush Visual="{StaticResource appbar_chess_horse}" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
                                     </Grid>
                                 </Controls:FlipView.Items>
                             </Controls:FlipView>

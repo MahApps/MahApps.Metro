@@ -14,8 +14,8 @@ namespace MahApps.Metro
     /// </summary>
     public static class ThemeManager
     {
-        private static readonly ResourceDictionary LightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
-        private static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
+        internal static readonly ResourceDictionary LightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
+        internal static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
 
         private static IList<Accent> _accents;
         /// <summary>
@@ -25,32 +25,20 @@ namespace MahApps.Metro
         {
             get
             {
-                return _accents ?? (_accents =
-                    new List<Accent>{
-                        new Accent("Red", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Red.xaml")),
-                        new Accent("Green", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml")),
-                        new Accent("Blue", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml")),
-                        new Accent("Purple", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Purple.xaml")),
-                        new Accent("Orange", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Orange.xaml")),
+                if (_accents != null)
+                    return _accents;
 
-                        new Accent("Lime", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Lime.xaml")),
-                        new Accent("Emerald", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Emerald.xaml")),
-                        new Accent("Teal", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Teal.xaml")),
-                        new Accent("Cyan", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cyan.xaml")),
-                        new Accent("Cobalt", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cobalt.xaml")),
-                        new Accent("Indigo", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Indigo.xaml")),
-                        new Accent("Violet", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Violet.xaml")),
-                        new Accent("Pink", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Pink.xaml")),
-                        new Accent("Magenta", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Magenta.xaml")),
-                        new Accent("Crimson", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Crimson.xaml")),
-                        new Accent("Amber", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Amber.xaml")),
-                        new Accent("Yellow", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Yellow.xaml")),
-                        new Accent("Brown", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Brown.xaml")),
-                        new Accent("Olive", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Olive.xaml")),
-                        new Accent("Steel", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Steel.xaml")),
-                        new Accent("Mauve", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Mauve.xaml")),
-                        new Accent("Sienna", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Sienna.xaml")),
-                    });
+                var colors = new[]{"Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt", 
+                    "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Sienna"};
+
+                _accents = new List<Accent>(colors.Length);
+
+                foreach (string color in colors)
+                {
+                    _accents.Add(new Accent(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color))));
+                }
+
+                return _accents;
             }
         }
 
@@ -148,6 +136,8 @@ namespace MahApps.Metro
 
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
         {
+            oldRd.BeginInit();
+
             foreach (DictionaryEntry r in newRd)
             {
                 if (oldRd.Contains(r.Key))
@@ -155,6 +145,8 @@ namespace MahApps.Metro
 
                 oldRd.Add(r.Key, r.Value);
             }
+
+            oldRd.EndInit();
         }
 
         /// <summary>
@@ -291,11 +283,12 @@ namespace MahApps.Metro
                 invalidateColors.Invoke(null, null);
             }
 
-            var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
-            if (invalidateParameters != null)
-            {
-                invalidateParameters.Invoke(null, null);
-            }
+            // See: https://github.com/MahApps/MahApps.Metro/issues/923
+            //var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
+            //if (invalidateParameters != null)
+            //{
+            //    invalidateParameters.Invoke(null, null);
+            //}
 
             var assembly = Assembly.GetAssembly(typeof(Window));
             if (assembly != null)

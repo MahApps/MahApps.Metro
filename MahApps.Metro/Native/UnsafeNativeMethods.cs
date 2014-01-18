@@ -37,11 +37,14 @@ namespace MahApps.Metro.Native
         [DllImport("user32")]
         internal static extern IntPtr MonitorFromWindow([In] IntPtr handle, [In] int flags);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr MonitorFromPoint(POINT pt, MONITORINFO.MonitorOptions dwFlags);
+
         /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms633545(v=vs.85).aspx</devdoc>
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
-        
+
         /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms647486%28v=vs.85%29.aspx</devdoc>
         [DllImport("user32", CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "LoadStringW", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         internal static extern int LoadString([In] [Optional] IntPtr hInstance, [In] uint uID, [Out] StringBuilder lpBuffer, [In] int nBufferMax);
@@ -64,7 +67,7 @@ namespace MahApps.Metro.Native
 
         /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms648390(v=vs.85).aspx</devdoc>
         [DllImport("user32")]
-        internal static extern bool GetCursorPos([Out] out Win32Point pt);
+        internal static extern bool GetCursorPos([Out] out POINT pt);
 
         /// <devdoc>http://msdn.microsoft.com/en-us/library/windows/desktop/ms646258(v=vs.85).aspx</devdoc>
         [DllImport("user32", CharSet = CharSet.Auto, ExactSpelling = true)]
@@ -84,6 +87,12 @@ namespace MahApps.Metro.Native
 
         [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
         internal static extern IntPtr SetClassLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "GetClassLong")]
+        internal static extern uint GetClassLong32(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetClassLongPtr")]
+        internal static extern IntPtr GetClassLong64(IntPtr hWnd, int nIndex);
 
         [DllImport("gdi32.dll")]
         internal static extern IntPtr CreateSolidBrush(int crColor);

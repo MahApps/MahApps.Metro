@@ -21,6 +21,7 @@
                     Height="40"
                     Width="40"
                     FontFamily="Segoe UI Symbol"
+                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     FontSize="16"
                     VerticalAlignment="Bottom">
                 <i:Interaction.Triggers>
@@ -43,7 +44,7 @@
                                           Canvas.Left="12"
                                           Canvas.Top="15"
                                           Stretch="Fill"
-                                          Fill="{DynamicResource BlackBrush}"
+                                          Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                                           Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z " />
                                 </Canvas>
                             </VisualBrush.Visual>
@@ -53,7 +54,6 @@
             </Button>
             <TextBlock Text="{Binding}"
                        x:Name="PART_BackButton"
-                       Foreground="{DynamicResource BlackBrush}"
                        FontSize="20"
                        Margin="15,0,0,0"
                        VerticalAlignment="Center" />
@@ -217,8 +217,6 @@
                 Value="Stretch" />
         <Setter Property="HeaderTemplate"
                 Value="{StaticResource HeaderTemplate}" />
-        <Setter Property="Background"
-                Value="{DynamicResource FlyoutBackgroundBrush}" />
         <Setter Property="Template"
                 Value="{StaticResource FlyoutTemplate}" />
         <Setter Property="FocusVisualStyle"

@@ -17,6 +17,23 @@ namespace MahApps.Metro.Behaviours
 {
     public class BorderlessWindowBehavior : Behavior<Window>
     {
+        private bool _isMaximize;
+        
+        #region Workaround for #897
+        /// <summary>
+        /// NO TOUCHY! This is a workaround for issue #897
+        /// </summary>
+        internal static readonly DependencyProperty BackgroundSetPropertyKey = DependencyProperty.RegisterAttached("BackgroundSet", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        internal static void SetBackgroundSet(UIElement element, Boolean value)
+        {
+            element.SetValue(BackgroundSetPropertyKey, value);
+        }
+        internal static Boolean GetBackgroundSet(UIElement element)
+        {
+            return (Boolean)element.GetValue(BackgroundSetPropertyKey);
+        }
+        #endregion
+
         public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
         public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false, new PropertyChangedCallback((obj, args) =>
@@ -66,7 +83,19 @@ namespace MahApps.Metro.Behaviours
             set { SetValue(AutoSizeToContentProperty, value); }
         }
 
-        public Border Border { get; set; }
+        Border _border;
+        public Border Border
+        {
+            get { return _border; }
+            set
+            {
+                // handles cases where window starts maximized
+                if (AssociatedObject.WindowState == WindowState.Maximized) {
+                    value.BorderBrush = null;
+                }
+                _border = value;
+            }
+        }
 
         private HwndSource _mHWNDSource;
         private IntPtr _mHWND;
@@ -76,35 +105,48 @@ namespace MahApps.Metro.Behaviours
             if (IntPtr.Size > 4)
                 return UnsafeNativeMethods.SetClassLongPtr64(hWnd, nIndex, dwNewLong);
 
-            return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
+            return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, (uint)dwNewLong));
         }
 
+        /*Taken from http://stackoverflow.com/questions/20941443/properly-maximizing-wpf-window-with-windowstyle-none */
         private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
-            var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+            POINT mousePosition;
+            UnsafeNativeMethods.GetCursorPos(out mousePosition);
 
-            // Adjust the maximized size and position to fit the work area of the correct monitor
-            IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
-
-            if (monitor != IntPtr.Zero)
+            IntPtr primaryScreen = UnsafeNativeMethods.MonitorFromPoint(new POINT(0, 0), MONITORINFO.MonitorOptions.MONITOR_DEFAULTTOPRIMARY);
+            MONITORINFO primaryScreenInfo = new MONITORINFO();
+            if (UnsafeNativeMethods.GetMonitorInfo(primaryScreen, primaryScreenInfo) == false)
             {
-                var monitorInfo = new MONITORINFO();
-                UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                RECT rcWorkArea = monitorInfo.rcWork;
-                RECT rcMonitorArea = monitorInfo.rcMonitor;
-                mmi.ptMaxPosition.X = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
-                mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-                mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-                mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+                return;
+            }
 
-                bool ignoreTaskBar = AssociatedObject as MetroWindow != null && (((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize || ((MetroWindow)this.AssociatedObject).UseNoneWindowStyle);
+            IntPtr currentScreen = UnsafeNativeMethods.MonitorFromPoint(mousePosition, MONITORINFO.MonitorOptions.MONITOR_DEFAULTTONEAREST);
 
-                if (!ignoreTaskBar)
-                {
-                    mmi.ptMaxTrackSize.X = mmi.ptMaxSize.X;
-                    mmi.ptMaxTrackSize.Y = mmi.ptMaxSize.Y;
-                    mmi = AdjustWorkingAreaForAutoHide(monitor, mmi);
-                }
+            MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+            if (primaryScreen.Equals(currentScreen))
+            {
+                mmi.ptMaxPosition.X = primaryScreenInfo.rcWork.left;
+                mmi.ptMaxPosition.Y = primaryScreenInfo.rcWork.top;
+                mmi.ptMaxSize.X = primaryScreenInfo.rcWork.right - primaryScreenInfo.rcWork.left;
+                mmi.ptMaxSize.Y = primaryScreenInfo.rcWork.bottom - primaryScreenInfo.rcWork.top;
+            }
+            else
+            {
+                mmi.ptMaxPosition.X = primaryScreenInfo.rcMonitor.left;
+                mmi.ptMaxPosition.Y = primaryScreenInfo.rcMonitor.top;
+                mmi.ptMaxSize.X = primaryScreenInfo.rcMonitor.right - primaryScreenInfo.rcMonitor.left;
+                mmi.ptMaxSize.Y = primaryScreenInfo.rcMonitor.bottom - primaryScreenInfo.rcMonitor.top;
+            }
+            bool ignoreTaskBar = AssociatedObject as MetroWindow != null && (((MetroWindow)this.AssociatedObject).IgnoreTaskbarOnMaximize || ((MetroWindow)this.AssociatedObject).UseNoneWindowStyle);
+
+            //Only do this on maximize and when mouse X position is not greater than the primary screen width
+            if (!(mousePosition.X >= (int)SystemParameters.PrimaryScreenWidth) && !ignoreTaskBar && primaryScreen.Equals(currentScreen) && _isMaximize)
+            {
+                mmi.ptMaxTrackSize.X = mmi.ptMaxSize.X;
+                mmi.ptMaxTrackSize.Y = mmi.ptMaxSize.Y;
+                mmi = AdjustWorkingAreaForAutoHide(primaryScreen, mmi);
+                _isMaximize = false;
             }
 
             Marshal.StructureToPtr(mmi, lParam, true);
@@ -221,6 +263,10 @@ namespace MahApps.Metro.Behaviours
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
+                if (this.Border != null) {
+                    this.Border.BorderBrush = null;
+                }
+                _isMaximize = true;
                 IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(_mHWND, Constants.MONITOR_DEFAULTTONEAREST);
                 if (monitor != IntPtr.Zero)
                 {
@@ -233,6 +279,8 @@ namespace MahApps.Metro.Behaviours
                     var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
                     UnsafeNativeMethods.SetWindowPos(_mHWND, new IntPtr(-2), x, y, cx, cy, 0x0040);
                 }
+            } else if (/*AssociatedObject.WindowState == WindowState.Normal && */this.Border != null) {
+                this.Border.BorderBrush = AssociatedObject.BorderBrush ?? _borderColor;
             }
         }
 
@@ -321,7 +369,19 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             AddHwndHook();
-            SetDefaultBackgroundColor();
+
+            try
+            {
+                SetDefaultBackgroundColor();
+            }
+            catch (OverflowException ex)
+            {
+                //known bug: see https://github.com/MahApps/MahApps.Metro/issues/897
+
+                throw new Exception(
+                     "Bug #897 has occurred.\r\n\tDWN Enabled: " + UnsafeNativeMethods.DwmIsCompositionEnabled().ToString() + "\r\n\tBackground: " + (AssociatedObject.Background as SolidColorBrush).Color.ToString()
+                    , ex);
+            }
         }
 
         private bool ShouldHaveBorder()
@@ -364,13 +424,21 @@ namespace MahApps.Metro.Behaviours
 
             if (bgSolidColorBrush != null)
             {
+                if (((bool)AssociatedObject.GetValue(BackgroundSetPropertyKey)))
+                    return;
+
                 var rgb = bgSolidColorBrush.Color.R | (bgSolidColorBrush.Color.G << 8) | (bgSolidColorBrush.Color.B << 16);
 
-                // set the default background color of the window -> this avoids the black stripes when resizing
-                var hBrushOld = SetClassLong(_mHWND, Constants.GCLP_HBRBACKGROUND, UnsafeNativeMethods.CreateSolidBrush(rgb));
+                if ((IntPtr)UnsafeNativeMethods.GetWindowLong(_mHWND, Constants.GCLP_HBRBACKGROUND) == IntPtr.Zero)
+                {
+                    // set the default background color of the window -> this avoids the black stripes when resizing
+                    var hBrushOld = SetClassLong(_mHWND, Constants.GCLP_HBRBACKGROUND, UnsafeNativeMethods.CreateSolidBrush(rgb));
 
-                if (hBrushOld != IntPtr.Zero)
-                    UnsafeNativeMethods.DeleteObject(hBrushOld);
+                    if (hBrushOld != IntPtr.Zero)
+                        UnsafeNativeMethods.DeleteObject(hBrushOld);
+
+                    AssociatedObject.SetValue(BackgroundSetPropertyKey, true);
+                }
             }
         }
 
