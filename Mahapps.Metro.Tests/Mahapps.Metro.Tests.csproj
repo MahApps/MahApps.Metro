@@ -79,6 +79,9 @@
     <Compile Include="MetroWindowTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SwitchContextToUiThreadAwaiter.cs" />
+    <Compile Include="TestApp.xaml.cs">
+      <DependentUpon>TestApp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TestHost.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +93,12 @@
       <Project>{5b1710d2-5dc8-4754-91b2-19165de49b3d}</Project>
       <Name>MahApps.Metro</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="TestApp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

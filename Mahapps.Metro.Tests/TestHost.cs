@@ -6,7 +6,7 @@ namespace Mahapps.Metro.Tests
 {
     public static class TestHost
     {
-        private static Application app;
+        private static TestApp app;
         private static Thread appThread;
         private static AutoResetEvent gate = new AutoResetEvent(false);
 
@@ -21,7 +21,7 @@ namespace Mahapps.Metro.Tests
 
         public static void StartDispatcher()
         {
-            app = new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };
+            app = new TestApp { ShutdownMode = ShutdownMode.OnExplicitShutdown };
             app.Startup += (sender, args) => gate.Set();
             app.Run();
         }
