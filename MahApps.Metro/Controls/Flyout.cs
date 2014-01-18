@@ -193,14 +193,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ThemeManager_IsThemeChanged(object sender, OnThemeChangedEventArgs e)
-        {
-            if (e.Accent != null)
-            {
-                this.ChangeFlyoutTheme(e.Accent, e.Theme);
-            }
-        }
-
         private static Tuple<Theme, Accent> DetectTheme(Flyout flyout)
         {
             if (flyout == null)
