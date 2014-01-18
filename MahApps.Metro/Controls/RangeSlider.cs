@@ -231,7 +231,6 @@ namespace MahApps.Metro.Controls
 
         public RangeSlider()
         {
-            //
             CommandBindings.Add(new CommandBinding(MoveBack, MoveBackHandler));
             CommandBindings.Add(new CommandBinding(MoveForward, MoveForwardHandler));
             CommandBindings.Add(new CommandBinding(MoveAllForward, MoveAllForwardHandler));
@@ -371,59 +370,117 @@ namespace MahApps.Metro.Controls
         }
 
         
-        private static void MoveThumb(FrameworkElement x, FrameworkElement y, double horizonalChange)
+        private static void MoveThumb(FrameworkElement x, FrameworkElement y, double horizonalChange, Orientation orientation)
         {
             double change = 0;
-            if (horizonalChange < 0) //slider went left
+            if (orientation == Orientation.Horizontal)
             {
-                change = GetChangeKeepPositive(x.Width, horizonalChange);
-                if (x.Name == "PART_MiddleThumb")
+                if (horizonalChange < 0) //slider went left
                 {
-                    if (x.Width > x.MinWidth)
+                    change = GetChangeKeepPositive(x.Width, horizonalChange);
+                    if (x.Name == "PART_MiddleThumb")
                     {
-                        if (x.Width + change < x.MinWidth)
+                        if (x.Width > x.MinWidth)
                         {
-                            double dif = x.Width - x.MinWidth;
-                            x.Width = x.MinWidth;
-                            y.Width += dif;
-                        }
-                        else
-                        {
-                            x.Width += change;
-                            y.Width -= change;
+                            if (x.Width + change < x.MinWidth)
+                            {
+                                double dif = x.Width - x.MinWidth;
+                                x.Width = x.MinWidth;
+                                y.Width += dif;
+                            }
+                            else
+                            {
+                                x.Width += change;
+                                y.Width -= change;
+                            }
                         }
                     }
+                    else
+                    {
+                        x.Width += change;
+                        y.Width -= change;
+                    }
                 }
-                else
+                else if (horizonalChange > 0) //slider went right if(horizontal change == 0 do nothing)
                 {
-                    x.Width += change;
-                    y.Width -= change;
+                    change = -GetChangeKeepPositive(y.Width, -horizonalChange);
+                    if (y.Name == "PART_MiddleThumb")
+                    {
+                        if (y.Width > y.MinWidth)
+                        {
+                            if (y.Width - change < y.MinWidth)
+                            {
+                                double dif = y.Width - y.MinWidth;
+                                y.Width = y.MinWidth;
+                                x.Width += dif;
+                            }
+                            else
+                            {
+                                x.Width += change;
+                                y.Width -= change;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        x.Width += change;
+                        y.Width -= change;
+                    }
                 }
             }
-            else if (horizonalChange > 0) //slider went right if(horizontal change == 0 do nothing)
+            else if (orientation == Orientation.Vertical)
             {
-                change = -GetChangeKeepPositive(y.Width, -horizonalChange);
-                if (y.Name == "PART_MiddleThumb")
+                if (horizonalChange < 0) //slider went left
                 {
-                    if (y.Width > y.MinWidth)
+                    change = GetChangeKeepPositive(x.Height, horizonalChange);
+                    if (x.Name == "PART_MiddleThumb")
                     {
-                        if (y.Width - change < y.MinWidth)
+                        if (x.Height > x.MinHeight)
                         {
-                            double dif = y.Width - y.MinWidth;
-                            y.Width = y.MinWidth;
-                            x.Width += dif;
-                        }
-                        else
-                        {
-                            x.Width += change;
-                            y.Width -= change;
+                            if (x.Height + change < x.MinHeight)
+                            {
+                                double dif = x.Height - x.MinHeight;
+                                x.Height = x.MinHeight;
+                                y.Height += dif;
+                            }
+                            else
+                            {
+                                x.Height += change;
+                                y.Height -= change;
+                            }
                         }
                     }
+                    else
+                    {
+                        x.Height += change;
+                        y.Height -= change;
+                    }
                 }
-                else
+                else if (horizonalChange > 0) //slider went right if(horizontal change == 0 do nothing)
                 {
-                    x.Width += change;
-                    y.Width -= change;
+                    change = -GetChangeKeepPositive(y.Height, -horizonalChange);
+                    if (y.Name == "PART_MiddleThumb")
+                    {
+                        if (y.Height > y.MinHeight)
+                        {
+                            if (y.Height - change < y.MinHeight)
+                            {
+                                double dif = y.Height - y.MinHeight;
+                                y.Height = y.MinHeight;
+                                x.Height += dif;
+                            }
+                            else
+                            {
+                                x.Height += change;
+                                y.Height -= change;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        x.Height += change;
+                        y.Height -= change;
+                    }
                 }
             }
         }
@@ -450,10 +507,30 @@ namespace MahApps.Metro.Controls
         {
             if (_leftButton != null && _rightButton != null && _centerThumb != null)
             {
-                _movableWidth = Math.Max(ActualWidth - _rightThumb.ActualWidth - _leftThumb.ActualWidth - _centerThumb.MinWidth, 1);
-                _leftButton.Width = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
-                _rightButton.Width = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
-                _centerThumb.Width = Math.Max(ActualWidth - _leftButton.Width - _rightButton.Width - _rightThumb.ActualWidth - _leftThumb.ActualWidth, 0);
+                if (Orientation == Orientation.Horizontal)
+                {
+                    _movableWidth =
+                        Math.Max(
+                            ActualWidth - _rightThumb.ActualWidth - _leftThumb.ActualWidth - _centerThumb.MinWidth, 1);
+                    _leftButton.Width = Math.Max(_movableWidth*(LowerValue - Minimum)/MovableRange, 0);
+                    _rightButton.Width = Math.Max(_movableWidth*(Maximum - UpperValue)/MovableRange, 0);
+                    _centerThumb.Width =
+                        Math.Max(
+                            ActualWidth - _leftButton.Width - _rightButton.Width - _rightThumb.ActualWidth -
+                            _leftThumb.ActualWidth, 0);
+                }
+                else if (Orientation == Orientation.Vertical)
+                {
+                    _movableWidth =
+                        Math.Max(
+                            ActualHeight - _rightThumb.ActualHeight - _leftThumb.ActualHeight - _centerThumb.MinHeight, 1);
+                    _leftButton.Height = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
+                    _rightButton.Height = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
+                    _centerThumb.Height =
+                        Math.Max(
+                            ActualHeight - _leftButton.Height - _rightButton.Height - _rightThumb.ActualHeight -
+                            _leftThumb.ActualHeight, 0);
+                }
             }
         }
 
@@ -462,29 +539,67 @@ namespace MahApps.Metro.Controls
             Double oldStart = 0, oldStop = 0;
 
             _internalUpdate = true;//set flag to signal that the properties are being set by the object itself
-            if (reCalculateStart)
+            if (Orientation == Orientation.Horizontal)
             {
-                oldStart = LowerValue;
+                if (reCalculateStart)
+                {
+                    oldStart = LowerValue;
 
-                // Make sure to get exactly rangestart if thumb is at the start
-                LowerValue = _leftButton.Width == 0.0 ? Minimum : Math.Max(Minimum, (Minimum + MovableRange * _leftButton.Width / _movableWidth));
+                    // Make sure to get exactly rangestart if thumb is at the start
+                    LowerValue = _leftButton.Width == 0.0
+                        ? Minimum
+                        : Math.Max(Minimum, (Minimum + MovableRange*_leftButton.Width/_movableWidth));
+                }
+
+                if (reCalculateStop)
+                {
+                    oldStop = UpperValue;
+
+                    // Make sure to get exactly rangestop if thumb is at the end
+                    UpperValue = _rightButton.Width == 0.0
+                        ? Maximum
+                        : Math.Min(Maximum, (Maximum - MovableRange*_rightButton.Width/_movableWidth));
+
+                }
+
+                _internalUpdate = false; //set flag to signal that the properties are being set by the object itself
+
+                if (reCalculateStart || reCalculateStop)
+                {
+                    //raise the RangeSelectionChanged event
+                    OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
+                }
             }
-
-            if (reCalculateStop)
+            else if (Orientation == Orientation.Vertical)
             {
-                oldStop = UpperValue;
+                if (reCalculateStart)
+                {
+                    oldStart = LowerValue;
 
-                // Make sure to get exactly rangestop if thumb is at the end
-                UpperValue = _rightButton.Width == 0.0 ? Maximum : Math.Min(Maximum, (Maximum - MovableRange * _rightButton.Width / _movableWidth));
+                    // Make sure to get exactly rangestart if thumb is at the start
+                    LowerValue = _leftButton.Height == 0.0
+                        ? Minimum
+                        : Math.Max(Minimum, (Minimum + MovableRange * _leftButton.Height / _movableWidth));
+                }
 
-            }
+                if (reCalculateStop)
+                {
+                    oldStop = UpperValue;
 
-            _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
+                    // Make sure to get exactly rangestop if thumb is at the end
+                    UpperValue = _rightButton.Height == 0.0
+                        ? Maximum
+                        : Math.Min(Maximum, (Maximum - MovableRange * _rightButton.Height / _movableWidth));
 
-            if (reCalculateStart || reCalculateStop)
-            {
-                //raise the RangeSelectionChanged event
-                OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
+                }
+
+                _internalUpdate = false; //set flag to signal that the properties are being set by the object itself
+
+                if (reCalculateStart || reCalculateStop)
+                {
+                    //raise the RangeSelectionChanged event
+                    OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
+                }
             }
 
             if (reCalculateStart && oldStart != LowerValue)
@@ -508,7 +623,7 @@ namespace MahApps.Metro.Controls
                 * _movableWidth / MovableRange;
 
             widthChange = isLeft ? -widthChange : widthChange;
-            MoveThumb(_leftButton, _rightButton, widthChange);
+            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
             ReCalculateRangeSelected(true, true);
         }
 
@@ -517,7 +632,7 @@ namespace MahApps.Metro.Controls
             double widthChange = Maximum - Minimum;
             widthChange = isStart ? -widthChange : widthChange;
 
-            MoveThumb(_leftButton, _rightButton, widthChange);
+            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
             ReCalculateRangeSelected(true, true);
         }
 
@@ -623,10 +738,22 @@ namespace MahApps.Metro.Controls
         private void InitializeVisualElementsContainer()
         {
             _visualElementsContainer.Orientation = Orientation;
-            _leftThumb.Width = DefaultSplittersThumbWidth;
-            _leftThumb.Tag = "left";
-            _rightThumb.Width = DefaultSplittersThumbWidth;
-            _rightThumb.Tag = "right";
+            if (Orientation == Orientation.Horizontal)
+            {
+                _leftThumb.Width = DefaultSplittersThumbWidth;
+                _leftThumb.Tag = "left";
+                _rightThumb.Width = DefaultSplittersThumbWidth;
+                _rightThumb.Tag = "right";
+                _centerThumb.MinWidth = 10;
+            }
+            else if (Orientation == Orientation.Vertical)
+            {
+                _leftThumb.Height = DefaultSplittersThumbWidth;
+                _leftThumb.Tag = "left";
+                _rightThumb.Height = DefaultSplittersThumbWidth;
+                _rightThumb.Tag = "right";
+                _centerThumb.MinHeight = 10;
+            }
 
 
             _leftThumb.DragCompleted += LeftThumbDragComplete;
@@ -659,7 +786,9 @@ namespace MahApps.Metro.Controls
 
         private void CenterThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            MoveThumb(_leftButton, _rightButton, e.HorizontalChange);
+            double change = Orientation == Orientation.Horizontal ? e.HorizontalChange :
+            e.VerticalChange;
+            MoveThumb(_leftButton, _rightButton, change, Orientation);
             ReCalculateRangeSelected(true, true);
             e.RoutedEvent = CentralThumbDragDeltaEvent;
             RaiseEvent(e);
@@ -667,8 +796,9 @@ namespace MahApps.Metro.Controls
 
         private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-
-            MoveThumb(_centerThumb, _rightButton, e.HorizontalChange);
+            double change = Orientation == Orientation.Horizontal ? e.HorizontalChange :
+            e.VerticalChange;
+            MoveThumb(_centerThumb, _rightButton, change, Orientation);
             ReCalculateRangeSelected(false, true);
             e.RoutedEvent = UpperThumbDragDeltaEvent;
             RaiseEvent(e);
@@ -676,7 +806,10 @@ namespace MahApps.Metro.Controls
 
         private void LeftThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            MoveThumb(_leftButton, _centerThumb, e.HorizontalChange);
+            double change = Orientation == Orientation.Horizontal
+                ? e.HorizontalChange
+                : e.VerticalChange;
+            MoveThumb(_leftButton, _centerThumb, change, Orientation);
             ReCalculateRangeSelected(true, false);
             e.RoutedEvent = LowerThumbDragDeltaEvent;
             RaiseEvent(e);

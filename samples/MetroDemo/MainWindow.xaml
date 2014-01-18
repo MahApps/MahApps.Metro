@@ -54,7 +54,7 @@
                 <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
             </Style>
-            
+
             <Dialog:SimpleDialog x:Key="SimpleDialogTest"
                                  Title="This dialog allows arbitrary content. It will close in 5 seconds."
                                  x:Name="SimpleTestDialog">
@@ -82,7 +82,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
+
             <Menu Grid.Row="0"
                   Margin="5"
                   VerticalAlignment="Stretch"
@@ -592,9 +592,9 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            
+
                             <Label Content="TreeView" Style="{StaticResource DescriptionHeaderStyle}" />
-                            
+
                             <TreeView Grid.Row="1">
                                 <TreeViewItem Header="Item 1">
                                     <TreeViewItem Header="Item 1.1">
@@ -786,7 +786,7 @@
                         <StackPanel Grid.Column="1">
                             <Label Content="Vertical Slider" Style="{StaticResource DescriptionHeaderStyle}" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Slider Orientation="Vertical" Height="200" />
+                                <Slider Orientation="Vertical" Height="200" Cursor="SizeNS" />
                                 <Slider Orientation="Vertical"
                                         Margin="10, 0, 0, 0"
                                         Height="200"  Style="{StaticResource FlatSlider}"
@@ -809,17 +809,16 @@
 
                             <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=LowerValue}" ToolTip="LowerValue"></Controls:NumericUpDown>
                             <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=UpperValue}" ToolTip="UpperValue"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}" ToolTip="Minimum"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}" ToolTip="Maximum"></Controls:NumericUpDown>
-                            
-                            <TextBlock Name="TestBlock" Width="300" MinHeight="30" TextWrapping="Wrap"></TextBlock>
+                            <!--<Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}" ToolTip="Minimum"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}" ToolTip="Maximum"></Controls:NumericUpDown>-->
 
-                            <Controls:RangeSlider Orientation="Horizontal" Width="200" x:Name="RangeSlider" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
+
+                            <Controls:RangeSlider Orientation="Vertical" Height="100" x:Name="RangeSlider" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
                                                   CentralThumbDragStarted="RangeSlider_OnCentralThumbDragStarted" CentralThumbDragCompleted="RangeSlider_OnCentralThumbDragCompleted"
                                                   LowerThumbDragDelta="RangeSlider_OnLowerThumbDragDelta" UpperThumbDragDelta="RangeSlider_OnUpperThumbDragDelta" CentralThumbDragDelta="RangeSlider_OnCentralThumbDragDelta"
                                                   LowerThumbDragStarted="RangeSlider_OnLowerThumbDragStarted" LowerThumbDragCompleted="RangeSlider_OnLowerThumbDragCompleted"
                                                   UpperThumbDragStarted="RangeSlider_OnUpperThumbDragStarted" UpperThumbDragCompleted="RangeSlider_OnUpperThumbDragCompleted"
-                                                  Margin="0, 10, 0, 0" Minimum="180" Maximum="200" LowerValue="181" UpperValue="195" />
+                                                  Margin="58,10,121,0" Minimum="180" Maximum="200" LowerValue="181" UpperValue="195" />
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"

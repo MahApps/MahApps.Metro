@@ -260,12 +260,10 @@ namespace MetroDemo
 
         private void RangeSlider_OnLowerThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            TestBlock.Text = RangeSlider.Result;
         }
 
         private void RangeSlider_OnUpperThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            TestBlock.Text = RangeSlider.Result;
         }
 
         private void RangeSlider_OnCentralThumbDragDelta(object sender, DragDeltaEventArgs e)
