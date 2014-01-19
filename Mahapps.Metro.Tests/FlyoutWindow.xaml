@@ -8,6 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
+            <controls:Flyout x:Name="DefaultFlyout" />
             <controls:Flyout x:Name="RightFlyout" Width="500" Header="Flyout" Position="Right" />
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
