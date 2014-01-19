@@ -319,7 +319,14 @@ namespace MahApps.Metro.Controls
         private static void MinBridgeWidthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             var slider = (RangeSlider)sender;
-            slider._centerThumb.MinWidth = slider.MinBridgeWidth;
+            if (slider.Orientation == Orientation.Horizontal)
+            {
+                slider._centerThumb.MinWidth = slider.MinBridgeWidth;
+            }
+            else
+            {
+                slider._centerThumb.MinHeight = slider.MinBridgeWidth;
+            }
             slider.ReCalculateWidths();
         }
 
@@ -891,7 +898,15 @@ namespace MahApps.Metro.Controls
         private static object CoerceMinBridgeWidth(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
-            double width = rs.ActualWidth - rs._leftThumb.ActualWidth - rs._rightThumb.ActualWidth;
+            double width = 0;
+            if (rs.Orientation == Orientation.Horizontal)
+            {
+                width = rs.ActualWidth - rs._leftThumb.ActualWidth - rs._rightThumb.ActualWidth;
+            }
+            else
+            {
+                width = rs.ActualHeight - rs._leftThumb.ActualHeight - rs._rightThumb.ActualHeight;
+            }
             return (Double)basevalue > width ? width : (Double)basevalue;
         }
 
