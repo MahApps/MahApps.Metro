@@ -27,6 +27,9 @@ namespace Mahapps.Metro.Tests
             app.Run();
         }
 
+        /// <summary>
+        /// Await this method in every test that should run on the UI thread.
+        /// </summary>
         public static SwitchContextToUiThreadAwaiter SwitchToAppThread()
         {
             return new SwitchContextToUiThreadAwaiter(app.Dispatcher);
