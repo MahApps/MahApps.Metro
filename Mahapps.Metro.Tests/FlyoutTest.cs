@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +30,6 @@ namespace Mahapps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-
-            await window.AwaitLoaded();
 
             Assert.Equal(Theme.Dark, window.RightFlyout.ActualTheme);
         }
@@ -82,6 +81,16 @@ namespace Mahapps.Metro.Tests
             window.RightFlyout.Theme = FlyoutTheme.Light;
 
             Assert.Equal(Theme.Light, window.RightFlyout.ActualTheme);
+        }
+
+        [Fact]
+        public async Task FlyoutIsClosedByDefault()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+            Assert.False(window.RightFlyout.IsOpen);
         }
     }
 }
