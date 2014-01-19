@@ -26,5 +26,20 @@ namespace Mahapps.Metro.Tests
 
             return completionSource.Task;
         }
+
+        public static async Task<T> CreateInvisibleWindowAsync<T>() where T : Window, new()
+        {
+            var wnd = new T
+            {
+                Visibility = Visibility.Hidden, 
+                ShowInTaskbar = false
+            };
+
+            wnd.Show();
+
+            await wnd.AwaitLoaded();
+
+            return wnd;
+        }
     }
 }
