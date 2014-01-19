@@ -10,7 +10,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Controls:RangeSlider}">
-                            <StackPanel Orientation="Horizontal"
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                                 Name="PART_RangeSliderContainer">
                                 <RepeatButton Name="PART_LeftEdge"
                                       Style="{DynamicResource HorizontalTrackLargeDecrease}" />
@@ -20,7 +20,7 @@
                                Width="{DynamicResource HorizontalThumbWidth}"
                                Style="{DynamicResource HorizontalSliderThumb}" />
                                 <Thumb Name="PART_MiddleThumb" 
-                               Cursor="SizeNS">
+                               Cursor="Hand">
                                     <Thumb.Style>
                                         <Style TargetType="Thumb">
                                             <Setter Property="Template">
@@ -51,7 +51,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Controls:RangeSlider}">
-                            <StackPanel Orientation="Horizontal"
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Center"
                                 Name="PART_RangeSliderContainer">
                                 <RepeatButton Name="PART_LeftEdge"
                                       Style="{DynamicResource VerticalTrackLargeDecrease}" />

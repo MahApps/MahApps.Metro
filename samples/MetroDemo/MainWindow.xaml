@@ -811,14 +811,16 @@
                             <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=UpperValue}" ToolTip="UpperValue"></Controls:NumericUpDown>
                             <!--<Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}" ToolTip="Minimum"></Controls:NumericUpDown>
                             <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}" ToolTip="Maximum"></Controls:NumericUpDown>-->
+                            <TextBlock Text="{Binding ElementName=RangeSlider, Path=ActualWidth}"></TextBlock>
 
 
-                            <Controls:RangeSlider Orientation="Vertical" Height="100" x:Name="RangeSlider" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
+                            <Controls:RangeSlider Orientation="Horizontal" Height="20" x:Name="RangeSlider" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
                                                   CentralThumbDragStarted="RangeSlider_OnCentralThumbDragStarted" CentralThumbDragCompleted="RangeSlider_OnCentralThumbDragCompleted"
                                                   LowerThumbDragDelta="RangeSlider_OnLowerThumbDragDelta" UpperThumbDragDelta="RangeSlider_OnUpperThumbDragDelta" CentralThumbDragDelta="RangeSlider_OnCentralThumbDragDelta"
                                                   LowerThumbDragStarted="RangeSlider_OnLowerThumbDragStarted" LowerThumbDragCompleted="RangeSlider_OnLowerThumbDragCompleted"
                                                   UpperThumbDragStarted="RangeSlider_OnUpperThumbDragStarted" UpperThumbDragCompleted="RangeSlider_OnUpperThumbDragCompleted"
-                                                  Margin="58,10,121,0" Minimum="180" Maximum="200" LowerValue="181" UpperValue="195" />
+                                                  Margin="58,10,105,0" Minimum="180" Maximum="200" LowerValue="181" UpperValue="195"  />
+                            <!--<Slider Value="{Binding ElementName=RangeSlider, Path=MinRangeWidth}" Minimum="0" Maximum="250" ></Slider>-->
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"

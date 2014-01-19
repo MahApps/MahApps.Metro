@@ -160,16 +160,27 @@ namespace MahApps.Metro.Controls
         #region Dependency properties
 
         public static readonly DependencyProperty LowerValueProperty =
-            DependencyProperty.Register("LowerValue", typeof (double), typeof (RangeSlider),
+            DependencyProperty.Register("LowerValue", typeof (Double), typeof (RangeSlider),
                 new UIPropertyMetadata((Double) 0, RangesChanged, CoerceLowerValue));
 
         public static readonly DependencyProperty UpperValueProperty =
-            DependencyProperty.Register("UpperValue", typeof (double), typeof (RangeSlider),
+            DependencyProperty.Register("UpperValue", typeof (Double), typeof (RangeSlider),
                 new UIPropertyMetadata((Double) 1, RangesChanged, CoerceUpperValue));
 
         public static readonly DependencyProperty MinRangeProperty =
-            DependencyProperty.Register("MinRange", typeof (double), typeof (RangeSlider),
+            DependencyProperty.Register("MinRange", typeof (Double), typeof (RangeSlider),
                 new UIPropertyMetadata((Double) 0, MinRangeChanged));
+
+        public static readonly DependencyProperty MinBridgeWidthProperty =
+            DependencyProperty.Register("MinRangeWidth", typeof(Double), typeof(RangeSlider),
+                new UIPropertyMetadata((Double)15, MinBridgeWidthChanged, CoerceMinBridgeWidth));
+
+        public Double MinBridgeWidth
+        {
+            get { return (Double)GetValue(MinBridgeWidthProperty); }
+            set { SetValue(MinBridgeWidthProperty, value); }
+        }
+
 
         /// <summary>
         /// Get/sets the beginning of the range selection.
@@ -216,16 +227,6 @@ namespace MahApps.Metro.Controls
         private Double _movableWidth;
 
 
-        public Thumb LowerThumb
-        {
-            get { return _leftThumb; }
-        }
-
-        public Thumb UpperThumb
-        {
-            get { return _rightThumb; }
-        }
-
         #endregion
 
 
@@ -242,11 +243,8 @@ namespace MahApps.Metro.Controls
         static RangeSlider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
-
-            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue, null, CoerceMinimum));
             MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue, null, CoerceMaximum));
-            OrientationProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(OrientationProperty.DefaultMetadata.DefaultValue));
-
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue, null, CoerceMinimum));
             
         }
 
@@ -316,6 +314,13 @@ namespace MahApps.Metro.Controls
 
             slider.ReCalculateWidths();
             slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider));
+        }
+
+        private static void MinBridgeWidthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var slider = (RangeSlider)sender;
+            slider._centerThumb.MinWidth = slider.MinBridgeWidth;
+            slider.ReCalculateWidths();
         }
 
         private static void MinRangeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -512,8 +517,8 @@ namespace MahApps.Metro.Controls
                     _movableWidth =
                         Math.Max(
                             ActualWidth - _rightThumb.ActualWidth - _leftThumb.ActualWidth - _centerThumb.MinWidth, 1);
-                    _leftButton.Width = Math.Max(_movableWidth*(LowerValue - Minimum)/MovableRange, 0);
-                    _rightButton.Width = Math.Max(_movableWidth*(Maximum - UpperValue)/MovableRange, 0);
+                    _leftButton.Width = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
+                    _rightButton.Width = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
                     _centerThumb.Width =
                         Math.Max(
                             ActualWidth - _leftButton.Width - _rightButton.Width - _rightThumb.ActualWidth -
@@ -719,6 +724,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
             _visualElementsContainer = EnforceInstance<StackPanel>("PART_RangeSliderContainer");
+            _visualElementsContainer.HorizontalAlignment = HorizontalAlignment.Stretch;
             _centerThumb = EnforceInstance<Thumb>("PART_MiddleThumb");
             _leftButton = EnforceInstance<RepeatButton>("PART_LeftEdge");
             _rightButton = EnforceInstance<RepeatButton>("PART_RightEdge");
@@ -848,22 +854,24 @@ namespace MahApps.Metro.Controls
         {
             RangeSlider rs = (RangeSlider)d;
 
-            double value = (double)basevalue;
+            //double value = (double)basevalue;
 
-            if (value <= rs.Minimum)
-                return rs.Minimum;
-            return Math.Min(value, rs.UpperValue);
+            //if (value <= rs.Minimum)
+            //    return rs.Minimum;
+            //return Math.Min(value, rs.UpperValue);
+            return (Double) basevalue;
         }
 
         private static object CoerceUpperValue(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
 
-            double value = (double)basevalue;
+            //double value = (double)basevalue;
 
-            if (value >= rs.Maximum)
-                return rs.Maximum;
-            return Math.Max(value, rs.LowerValue);
+            //if (value >= rs.Maximum)
+            //    return rs.Maximum;
+            //return Math.Max(value, rs.LowerValue);
+            return (Double) basevalue;
         }
 
         private static object CoerceMaximum(DependencyObject d, object basevalue)
@@ -878,6 +886,13 @@ namespace MahApps.Metro.Controls
             RangeSlider rs = (RangeSlider)d;
             return (Double) basevalue;
             //return (Double)basevalue > rs.Maximum ? rs.Maximum : (Double)basevalue;
+        }
+
+        private static object CoerceMinBridgeWidth(DependencyObject d, object basevalue)
+        {
+            RangeSlider rs = (RangeSlider)d;
+            double width = rs.ActualWidth - rs._leftThumb.ActualWidth - rs._rightThumb.ActualWidth;
+            return (Double)basevalue > width ? width : (Double)basevalue;
         }
 
     }
