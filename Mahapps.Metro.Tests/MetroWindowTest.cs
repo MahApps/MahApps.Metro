@@ -13,10 +13,17 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            Window window = new MetroWindow();
-            window.Visibility = Visibility.Hidden;
-            window.ShowInTaskbar = false;
-            window.Show();
+            await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+        }
+
+        [Fact]
+        public async Task ShowsWindowCommandsOnTopByDefault()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = new MetroWindow();
+
+            Assert.True(window.ShowWindowCommandsOnTop);
         }
     }
 }
