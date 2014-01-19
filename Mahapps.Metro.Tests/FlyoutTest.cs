@@ -15,13 +15,23 @@ namespace Mahapps.Metro.Tests
     public class FlyoutTest : AutomationTestBase
     {
         [Fact]
+        public async Task DefaultFlyoutPositionIsLeft()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+            Assert.Equal(Position.Left, window.DefaultFlyout.Position);
+        }
+
+        [Fact]
         public async Task DefaultFlyoutThemeIsDark()
         {
             await TestHost.SwitchToAppThread();
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.Equal(FlyoutTheme.Dark, window.RightFlyout.Theme);
+            Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
         }
 
         [Fact]
@@ -31,7 +41,7 @@ namespace Mahapps.Metro.Tests
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.Equal(Theme.Dark, window.RightFlyout.ActualTheme);
+            Assert.Equal(Theme.Dark, window.DefaultFlyout.ActualTheme);
         }
 
         [Fact]
@@ -67,9 +77,9 @@ namespace Mahapps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.RightFlyout.Theme = FlyoutTheme.Inverse;
+            window.DefaultFlyout.Theme = FlyoutTheme.Inverse;
 
-            Assert.Equal(Theme.Light, window.RightFlyout.ActualTheme);
+            Assert.Equal(Theme.Light, window.DefaultFlyout.ActualTheme);
         }
 
         [Fact]
@@ -78,9 +88,9 @@ namespace Mahapps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.RightFlyout.Theme = FlyoutTheme.Light;
+            window.DefaultFlyout.Theme = FlyoutTheme.Light;
 
-            Assert.Equal(Theme.Light, window.RightFlyout.ActualTheme);
+            Assert.Equal(Theme.Light, window.DefaultFlyout.ActualTheme);
         }
 
         [Fact]
@@ -90,7 +100,7 @@ namespace Mahapps.Metro.Tests
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.False(window.RightFlyout.IsOpen);
+            Assert.False(window.DefaultFlyout.IsOpen);
         }
     }
 }
