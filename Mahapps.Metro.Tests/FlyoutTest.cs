@@ -47,5 +47,41 @@ namespace Mahapps.Metro.Tests
 
             Assert.True(windowCommandsZIndex > flyoutindex);
         }
+
+        [Fact]
+        public async Task HiddenWindowCommandsAreBelowFlyout()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.ShowWindowCommandsOnTop = false;
+
+            int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands);
+            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+
+            Assert.True(flyoutindex < windowCommandsZIndex);
+        }
+
+        [Fact]
+        public async Task InverseFlyoutHasInverseWindowTheme()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.RightFlyout.Theme = FlyoutTheme.Inverse;
+
+            Assert.Equal(Theme.Light, window.RightFlyout.ActualTheme);
+        }
+
+        [Fact]
+        public async Task FlyoutRespondsToFlyoutThemeChange()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.RightFlyout.Theme = FlyoutTheme.Light;
+
+            Assert.Equal(Theme.Light, window.RightFlyout.ActualTheme);
+        }
     }
 }
