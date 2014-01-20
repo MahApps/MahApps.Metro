@@ -153,11 +153,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Gets or sets the amount of time, in milliseconds, the NumericUpDown waits while the up/down button is pressed
         ///     before it starts increasing/decreasing the
-        ///     <see cref="RangeBase.Value" /> for the specified <see cref="RangeBase.SmallChange" /> . The value must be
+        ///     <see cref="Value" /> for the specified <see cref="Interval" /> . The value must be
         ///     non-negative.
         /// </summary>
+        [Bindable(true)]
         [DefaultValue(DefaultDelay)]
-        [Category("Common")]
+        [Category("Behavior")]
         public int Delay
         {
             get { return (int)GetValue(DelayProperty); }
@@ -167,12 +168,18 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Gets or sets a value indicating whether the user can use the UP ARROW and DOWN ARROW keys to select values.
         /// </summary>
+        [Bindable(true)]
+        [Category("Behavior")]
+        [DefaultValue(true)]
         public bool InterceptArrowKeys
         {
             get { return (bool)GetValue(InterceptArrowKeysProperty); }
             set { SetValue(InterceptArrowKeysProperty, value); }
         }
 
+        [Bindable(true)]
+        [Category("Behavior")]
+        [DefaultValue(DefaultInterval)]
         public double Interval
         {
             get { return (double)GetValue(IntervalProperty); }
@@ -182,19 +189,24 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Gets or sets a value indicating whether the text can be changed by the use of the up or down buttons only.
         /// </summary>
-        [Category("Common")]
         public bool IsReadOnly
         {
             get { return (bool)GetValue(IsReadOnlyProperty); }
             set { SetValue(IsReadOnlyProperty, value); }
         }
 
+        [Bindable(true)]
+        [Category("Behavior")]
+        [DefaultValue(double.MaxValue)]
         public double Maximum
         {
             get { return (double)GetValue(MaximumProperty); }
             set { SetValue(MaximumProperty, value); }
         }
 
+        [Bindable(true)]
+        [Category("Behavior")]
+        [DefaultValue(double.MinValue)]
         public double Minimum
         {
             get { return (double)GetValue(MinimumProperty); }
@@ -202,11 +214,12 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the value to be added to or subtracted from remains always
-        ///     <see cref="RangeBase.SmallChange" /> or it will change to <see cref="RangeBase.LargeChange" /> and increase this.
+        ///     Gets or sets a value indicating whether the value to be added to or subtracted from <see cref="Value" /> remains
+        ///     always
+        ///     <see cref="Interval" /> or if it will increase faster after pressing the up/down button/arrow some time.
         /// </summary>
-        [DefaultValue(true)]
         [Category("Common")]
+        [DefaultValue(true)]
         public bool Speedup
         {
             get { return (bool)GetValue(SpeedupProperty); }
@@ -214,7 +227,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets the formatting for the displaying <see cref="RangeBase.Value" />
+        ///     Gets or sets the formatting for the displaying <see cref="Value" />
         /// </summary>
         /// <remarks>
         ///     <see href="http://msdn.microsoft.com/en-us/library/dwhawy9k.aspx"></see>
@@ -229,6 +242,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Gets or sets the horizontal alignment of the contents of the text box.
         /// </summary>
+        [Bindable(true)]
         [Category("Common")]
         [DefaultValue(TextAlignment.Right)]
         public TextAlignment TextAlignment
@@ -237,6 +251,7 @@ namespace MahApps.Metro.Controls
             set { SetValue(TextAlignmentProperty, value); }
         }
 
+        [Bindable(true)]
         [Category("Common")]
         [DefaultValue(null)]
         public double? Value
@@ -409,13 +424,13 @@ namespace MahApps.Metro.Controls
         protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup) {}
 
         /// <summary>
-        ///     Raises the <see cref="E:System.Windows.Controls.Primitives.RangeBase.ValueChanged" /> routed event.
+        ///     Raises the <see cref="ValueChanged" /> routed event.
         /// </summary>
         /// <param name="oldValue">
-        ///     Old value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value" /> property
+        ///     Old value of the <see cref="Value" /> property
         /// </param>
         /// <param name="newValue">
-        ///     New value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Value" /> property
+        ///     New value of the <see cref="Value" /> property
         /// </param>
         protected virtual void OnValueChanged(double? oldValue, double? newValue)
         {
