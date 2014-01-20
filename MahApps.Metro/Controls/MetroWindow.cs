@@ -419,6 +419,22 @@ namespace MahApps.Metro.Controls
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroDialogContainer = GetTemplateChild(PART_MetroDialogContainer) as Grid;
             flyoutModal = GetTemplateChild(PART_FlyoutModal) as Rectangle;
+            if (flyoutModal != null) {
+                flyoutModal.PreviewMouseDown += (o, e) => {
+                    foreach (Flyout flyout in Flyouts.Items) {
+                        flyout.IsOpen = false;
+                    }
+                };
+            }
+            this.PreviewMouseDown += (o, e) => {
+                DependencyObject obj = (e.OriginalSource as DependencyObject);
+
+                if (obj == null || obj.TryFindParent<Flyout>() == null) {
+                    foreach (Flyout flyout in Flyouts.Items) {
+                        flyout.IsOpen = false;
+                    }
+                }
+            };
 
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
 
