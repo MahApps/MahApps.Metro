@@ -484,7 +484,7 @@
                                 <Label Content="{Binding ElementName=test, Path=Value}" />
                                 <Controls:NumericUpDown x:Name="test" Value="5" 
                                                         Interval=".1"  
-                                                        StringFormat="E2" />
+                                                        StringFormat="{}{0:N2} pcs." />
                                 <Controls:NumericUpDown Value="5"
                                                         Interval=".1" 
                                                         StringFormat="N2" />
