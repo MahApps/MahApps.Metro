@@ -17,17 +17,21 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(Flyout))]
     public class FlyoutsControl : ItemsControl
     {
-        public static readonly DependencyProperty ExternalCloseButtonProperty =
-            DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(FlyoutsControl), new PropertyMetadata(MouseButton.Left));
-        public static readonly DependencyProperty OverrideIsPinnedProperty =
-            DependencyProperty.Register("OverrideIsPinned", typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(false));
+        public static readonly DependencyProperty OverrideExternalCloseButtonProperty = DependencyProperty.Register("OverrideExternalCloseButton", typeof(MouseButton?), typeof(FlyoutsControl), new PropertyMetadata(null));
+        public static readonly DependencyProperty OverrideIsPinnedProperty = DependencyProperty.Register("OverrideIsPinned", typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(false));
 
-        public MouseButton ExternalCloseButton
+        /// <summary>
+        /// Gets/sets whether <see cref="MahApps.Metro.Controls.Flyout.ExternalCloseButton"/> is ignored and all flyouts behave as if it was set to the value of this property.
+        /// </summary>
+        public MouseButton? OverrideExternalCloseButton
         {
-            get { return (MouseButton) GetValue(ExternalCloseButtonProperty); }
-            set { SetValue(ExternalCloseButtonProperty, value); }
+            get { return (MouseButton?) GetValue(OverrideExternalCloseButtonProperty); }
+            set { SetValue(OverrideExternalCloseButtonProperty, value); }
         }
-        
+
+        /// <summary>
+        /// Gets/sets whether <see cref="MahApps.Metro.Controls.Flyout.IsPinned"/> is ignored and all flyouts behave as if it was set false.
+        /// </summary>
         public bool OverrideIsPinned
         {
             get { return (bool) GetValue(OverrideIsPinnedProperty); }
