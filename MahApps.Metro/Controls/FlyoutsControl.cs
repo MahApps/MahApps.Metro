@@ -17,22 +17,13 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(Flyout))]
     public class FlyoutsControl : ItemsControl
     {
-        public static readonly DependencyProperty CloseOnExternalClickProperty =
-            DependencyProperty.Register("CloseOnExternalClick", typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(false));
+        public static readonly DependencyProperty NotPinnableCloseButtonProperty =
+            DependencyProperty.Register("NotPinnableCloseButton", typeof(MouseButton), typeof(FlyoutsControl), new PropertyMetadata(MouseButton.Left));
 
-        public bool CloseOnExternalClick
+        public MouseButton NotPinnableCloseButton
         {
-            get { return (bool) GetValue(CloseOnExternalClickProperty); }
-            set { SetValue(CloseOnExternalClickProperty, value); }
-        }
-
-        public static readonly DependencyProperty ExternalClickMouseButtonProperty =
-            DependencyProperty.Register("ExternalClickMouseButton", typeof(MouseButton), typeof(FlyoutsControl), new PropertyMetadata(MouseButton.Left));
-
-        public MouseButton ExternalClickMouseButton
-        {
-            get { return (MouseButton) GetValue(ExternalClickMouseButtonProperty); }
-            set { SetValue(ExternalClickMouseButtonProperty, value); }
+            get { return (MouseButton) GetValue(NotPinnableCloseButtonProperty); }
+            set { SetValue(NotPinnableCloseButtonProperty, value); }
         }
         
         static FlyoutsControl()
