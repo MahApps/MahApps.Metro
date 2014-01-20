@@ -419,19 +419,34 @@ namespace MahApps.Metro.Controls
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroDialogContainer = GetTemplateChild(PART_MetroDialogContainer) as Grid;
             flyoutModal = GetTemplateChild(PART_FlyoutModal) as Rectangle;
-            if (flyoutModal != null) {
-                flyoutModal.PreviewMouseDown += (o, e) => {
-                    foreach (Flyout flyout in Flyouts.Items) {
-                        flyout.IsOpen = false;
+            flyoutModal.PreviewMouseDown += (o, e) =>
+            {
+                if (e.ChangedButton == Flyouts.ExternalCloseButton)
+                {
+                    foreach (Flyout flyout in Flyouts.Items)
+                    {
+                        if (flyout.IsPinned == false)
+                        {
+                            flyout.IsOpen = false;
+                        }
                     }
-                };
-            }
-            this.PreviewMouseDown += (o, e) => {
-                DependencyObject obj = (e.OriginalSource as DependencyObject);
+                }
+            };
+            this.PreviewMouseDown += (o, e) =>
+            {
+                if (e.ChangedButton == Flyouts.ExternalCloseButton)
+                {
+                    DependencyObject obj = (e.OriginalSource as DependencyObject);
 
-                if (obj == null || obj.TryFindParent<Flyout>() == null) {
-                    foreach (Flyout flyout in Flyouts.Items) {
-                        flyout.IsOpen = false;
+                    if (obj == null || obj.TryFindParent<Flyout>() == null)
+                    {
+                        foreach (Flyout flyout in Flyouts.Items)
+                        {
+                            if (flyout.IsPinned == false)
+                            {
+                                flyout.IsOpen = false;
+                            }
+                        }
                     }
                 }
             };
