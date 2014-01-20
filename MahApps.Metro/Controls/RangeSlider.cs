@@ -172,8 +172,19 @@ namespace MahApps.Metro.Controls
                 new UIPropertyMetadata((Double) 0, MinRangeChanged));
 
         public static readonly DependencyProperty MinBridgeWidthProperty =
-            DependencyProperty.Register("MinRangeWidth", typeof(Double), typeof(RangeSlider),
+            DependencyProperty.Register("MinBridgeWidth", typeof(Double), typeof(RangeSlider),
                 new UIPropertyMetadata((Double)15, MinBridgeWidthChanged, CoerceMinBridgeWidth));
+
+        public static readonly DependencyProperty MoveWholeSelectionProperty =
+            DependencyProperty.Register("MoveWholeSelection", typeof(Boolean), typeof(RangeSlider),
+                new UIPropertyMetadata((Boolean)false));
+
+        //Will whole selection be moved when pressing on left or right pereat button
+        public Boolean MoveWholeSelection
+        {
+            get { return (Boolean)GetValue(MoveWholeSelectionProperty); }
+            set { SetValue(MoveWholeSelectionProperty, value); }
+        }
 
         public Double MinBridgeWidth
         {
@@ -360,6 +371,7 @@ namespace MahApps.Metro.Controls
 
         void MoveBackHandler(object sender, ExecutedRoutedEventArgs e)
         {
+            
             MoveSelection(true);
         }
 
@@ -372,13 +384,81 @@ namespace MahApps.Metro.Controls
 
         private void LeftButtonClick(object sender, RoutedEventArgs e)
         {
-            MoveSelection(true);
+            
+            if (IsMoveToPointEnabled && !MoveWholeSelection)
+            {
+                Point p = Mouse.GetPosition(_leftButton);
+                if (Orientation == Orientation.Horizontal)
+                {
+                    MoveThumb(_leftButton, _centerThumb, -(_leftButton.ActualWidth - p.X + (_leftThumb.ActualWidth/2)),
+                        Orientation);
+                }
+                else
+                {
+                    MoveThumb(_leftButton, _centerThumb, -(_leftButton.ActualHeight - p.Y + (_leftThumb.ActualHeight/2)),
+                        Orientation);
+                }
+                ReCalculateRangeSelected(true, false);
+            }
+            else if (IsMoveToPointEnabled && MoveWholeSelection)
+            {
+                Point p = Mouse.GetPosition(_leftButton);
+                if (Orientation == Orientation.Horizontal)
+                {
+                    MoveThumb(_leftButton, _rightButton, -(_leftButton.ActualWidth - p.X + (_leftThumb.ActualWidth / 2)),
+                        Orientation);
+                }
+                else
+                {
+                    MoveThumb(_leftButton, _rightButton, -(_leftButton.ActualHeight - p.Y + (_leftThumb.ActualHeight / 2)),
+                        Orientation);
+                }
+                ReCalculateRangeSelected(true, true);
+            }
+            else
+            {
+                MoveSelection(true);
+            }
         }
 
         private void RightButtonClick(object sender, RoutedEventArgs e)
         {
-            
-            MoveSelection(false);
+            if (IsMoveToPointEnabled && !MoveWholeSelection)
+            {
+                Point p = Mouse.GetPosition(_rightButton);
+                if (Orientation == Orientation.Horizontal)
+                {
+                    MoveThumb(_centerThumb, _rightButton, (p.X + (_rightThumb.ActualWidth / 2)), Orientation);
+                }
+                else
+                {
+                    MoveThumb(_centerThumb, _rightButton, (p.Y + (_rightThumb.ActualHeight / 2)), Orientation);
+                }
+                ReCalculateRangeSelected(false, true);
+            }
+            else if (IsMoveToPointEnabled && MoveWholeSelection)
+            {
+                Point p = Mouse.GetPosition(_rightButton);
+                if (Orientation == Orientation.Horizontal)
+                {
+                    MoveThumb(_leftButton, _rightButton, (p.X + (_rightThumb.ActualWidth / 2)),
+                        Orientation);
+                }
+                else
+                {
+                    MoveThumb(_leftButton, _rightButton, (p.Y + (_rightThumb.ActualHeight / 2)),
+                        Orientation);
+                }
+                ReCalculateRangeSelected(true, true);
+            }
+            else if (!IsMoveToPointEnabled && !MoveWholeSelection)
+            {
+                
+            }
+            else
+            {
+                MoveSelection(false);
+            }
         }
 
         
@@ -631,7 +711,8 @@ namespace MahApps.Metro.Controls
 
         public void MoveSelection(bool isLeft)
         {
-            double widthChange = RepeatButtonMoveRatio * (UpperValue - LowerValue)
+            //_leftButton.
+            double widthChange = SmallChange * (UpperValue - LowerValue)
                 * _movableWidth / MovableRange;
 
             widthChange = isLeft ? -widthChange : widthChange;
@@ -754,20 +835,15 @@ namespace MahApps.Metro.Controls
             if (Orientation == Orientation.Horizontal)
             {
                 _leftThumb.Width = DefaultSplittersThumbWidth;
-                _leftThumb.Tag = "left";
                 _rightThumb.Width = DefaultSplittersThumbWidth;
-                _rightThumb.Tag = "right";
                 _centerThumb.MinWidth = 10;
             }
             else if (Orientation == Orientation.Vertical)
             {
                 _leftThumb.Height = DefaultSplittersThumbWidth;
-                _leftThumb.Tag = "left";
                 _rightThumb.Height = DefaultSplittersThumbWidth;
-                _rightThumb.Tag = "right";
                 _centerThumb.MinHeight = 10;
             }
-
 
             _leftThumb.DragCompleted += LeftThumbDragComplete;
             _rightThumb.DragCompleted += RightThumbDragComplete;
