@@ -19,11 +19,19 @@ namespace MahApps.Metro.Controls
     {
         public static readonly DependencyProperty ExternalCloseButtonProperty =
             DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(FlyoutsControl), new PropertyMetadata(MouseButton.Left));
+        public static readonly DependencyProperty OverrideIsPinnedProperty =
+            DependencyProperty.Register("OverrideIsPinned", typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(false));
 
         public MouseButton ExternalCloseButton
         {
             get { return (MouseButton) GetValue(ExternalCloseButtonProperty); }
             set { SetValue(ExternalCloseButtonProperty, value); }
+        }
+        
+        public bool OverrideIsPinned
+        {
+            get { return (bool) GetValue(OverrideIsPinnedProperty); }
+            set { SetValue(OverrideIsPinnedProperty, value); }
         }
         
         static FlyoutsControl()
