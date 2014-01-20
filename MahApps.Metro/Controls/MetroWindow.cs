@@ -395,6 +395,30 @@ namespace MahApps.Metro.Controls
                 this.HandleWindowCommandsForFlyouts(flyouts);
             }
         }
+        
+        private void FlyoutsPreviewKeyDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Flyouts.OverrideExternalCloseButton == null)
+            {
+                foreach (Flyout flyout in Flyouts.Items)
+                {
+                    if (flyout.ExternalCloseButton == e.ChangedButton && (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true))
+                    {
+                        flyout.IsOpen = false;
+                    }
+                }
+            }
+            else if (Flyouts.OverrideExternalCloseButton == e.ChangedButton)
+            {
+                foreach (Flyout flyout in Flyouts.Items)
+                {
+                    if (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true)
+                    {
+                        flyout.IsOpen = false;
+                    }
+                }
+            }
+        }
 
         static MetroWindow()
         {
@@ -419,37 +443,8 @@ namespace MahApps.Metro.Controls
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroDialogContainer = GetTemplateChild(PART_MetroDialogContainer) as Grid;
             flyoutModal = GetTemplateChild(PART_FlyoutModal) as Rectangle;
-            flyoutModal.PreviewMouseDown += (o, e) =>
-            {
-                if (e.ChangedButton == Flyouts.ExternalCloseButton)
-                {
-                    foreach (Flyout flyout in Flyouts.Items)
-                    {
-                        if (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true)
-                        {
-                            flyout.IsOpen = false;
-                        }
-                    }
-                }
-            };
-            this.PreviewMouseDown += (o, e) =>
-            {
-                if (e.ChangedButton == Flyouts.ExternalCloseButton)
-                {
-                    DependencyObject obj = (e.OriginalSource as DependencyObject);
-
-                    if (obj == null || obj.TryFindParent<Flyout>() == null)
-                    {
-                        foreach (Flyout flyout in Flyouts.Items)
-                        {
-                            if (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true)
-                            {
-                                flyout.IsOpen = false;
-                            }
-                        }
-                    }
-                }
-            };
+            flyoutModal.PreviewMouseDown += FlyoutsPreviewKeyDown;
+            this.PreviewMouseDown += FlyoutsPreviewKeyDown;
 
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
 
