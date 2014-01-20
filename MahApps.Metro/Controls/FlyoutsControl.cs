@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
@@ -16,6 +17,24 @@ namespace MahApps.Metro.Controls
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(Flyout))]
     public class FlyoutsControl : ItemsControl
     {
+        public static readonly DependencyProperty CloseOnExternalClickProperty =
+            DependencyProperty.Register("CloseOnExternalClick", typeof(bool), typeof(FlyoutsControl), new PropertyMetadata(false));
+
+        public bool CloseOnExternalClick
+        {
+            get { return (bool) GetValue(CloseOnExternalClickProperty); }
+            set { SetValue(CloseOnExternalClickProperty, value); }
+        }
+
+        public static readonly DependencyProperty ExternalClickMouseButtonProperty =
+            DependencyProperty.Register("ExternalClickMouseButton", typeof(MouseButton), typeof(FlyoutsControl), new PropertyMetadata(MouseButton.Left));
+
+        public MouseButton ExternalClickMouseButton
+        {
+            get { return (MouseButton) GetValue(ExternalClickMouseButtonProperty); }
+            set { SetValue(ExternalClickMouseButtonProperty, value); }
+        }
+        
         static FlyoutsControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
