@@ -419,10 +419,12 @@ namespace MahApps.Metro.Controls
         /// </param>
         protected virtual void OnValueChanged(double? oldValue, double? newValue)
         {
-            if (!newValue.HasValue &&
-                _valueTextBox != null)
+            if (!newValue.HasValue)
             {
-                _valueTextBox.Text = null;
+                if (_valueTextBox != null)
+                {
+                    _valueTextBox.Text = null;
+                }
                 return;
             }
 
