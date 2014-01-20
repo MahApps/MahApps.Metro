@@ -476,7 +476,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
+                    _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
                 }
 
                 if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
