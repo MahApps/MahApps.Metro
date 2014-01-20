@@ -425,7 +425,7 @@ namespace MahApps.Metro.Controls
                 {
                     foreach (Flyout flyout in Flyouts.Items)
                     {
-                        if (flyout.IsPinned == false)
+                        if (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true)
                         {
                             flyout.IsOpen = false;
                         }
@@ -442,7 +442,7 @@ namespace MahApps.Metro.Controls
                     {
                         foreach (Flyout flyout in Flyouts.Items)
                         {
-                            if (flyout.IsPinned == false)
+                            if (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true)
                             {
                                 flyout.IsOpen = false;
                             }
