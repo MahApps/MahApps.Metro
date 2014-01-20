@@ -31,6 +31,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new PropertyMetadata(FlyoutTheme.Dark));
+        public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
 
         /// <summary>
         /// Gets the actual theme (dark/light) of this flyout.
@@ -66,7 +67,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets whether this flyout is pinnable.
+        /// Gets/sets whether this flyout stays open when the user clicks outside of it.
         /// </summary>
         public bool IsPinned
         {
@@ -108,6 +109,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (FlyoutTheme)GetValue(ThemeProperty); }
             set { SetValue(ThemeProperty, value); }
+        }
+        
+        /// <summary>
+        /// Gets/sets the mouse button that closes the flyout on an external mouse click.
+        /// </summary>
+        public MouseButton ExternalCloseButton
+        {
+            get { return (MouseButton) GetValue(ExternalCloseButtonProperty); }
+            set { SetValue(ExternalCloseButtonProperty, value); }
         }
 
         public Flyout()
