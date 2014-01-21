@@ -46,6 +46,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowWindowButtonsOnTopProperty = DependencyProperty.Register("ShowWindowButtonsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty TextBlockStyleProperty = DependencyProperty.Register("TextBlockStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(default(Style)));
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
 
@@ -84,6 +85,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)this.GetValue(ShowWindowCommandsOnTopProperty); }
             set { SetValue(ShowWindowCommandsOnTopProperty, value); }
+        }
+        
+        /// <summary>
+        /// Gets/sets whether the Window Buttons will show on top of a Flyout with it's position set to Top or Right.
+        /// </summary>
+        public bool ShowWindowButtonsOnTop
+        {
+            get { return (bool) GetValue(ShowWindowButtonsOnTopProperty); }
+            set { SetValue(ShowWindowButtonsOnTopProperty, value); }
         }
 
         /// <summary>
@@ -562,7 +572,7 @@ namespace MahApps.Metro.Controls
 
                 //if ShowWindowCommandsOnTop is true, set the window commands' zindex to a number that is higher than the flyout's. 
                 WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
-                WindowButtonCommands.SetValue(Panel.ZIndexProperty, zIndex);
+                WindowButtonCommands.SetValue(Panel.ZIndexProperty, this.ShowWindowButtonsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
                 
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
             }
