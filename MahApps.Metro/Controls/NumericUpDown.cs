@@ -491,6 +491,10 @@ namespace MahApps.Metro.Controls
                 {
                     _valueTextBox.Text = newValue.Value.ToString(culture);
                 }
+                else if (!StringFormat.Contains("{")) //then we may have a StringFormat of e.g. "N0"
+                {
+                    _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
+                }
                 else
                 {
                     _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);

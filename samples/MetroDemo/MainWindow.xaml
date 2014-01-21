@@ -460,15 +460,15 @@
                                 <Label Content="NumericUpDown"
                                        Style="{StaticResource DescriptionHeaderStyle}" />
 
-                                <Label Content='Minimum="0", Maximum="10"' />
+                                <Label Content='Minimum="0", Maximum="10" TextAlignment="Left"' />
                                 <Controls:NumericUpDown Value="5" TextAlignment="Left"
                                                         Minimum="0" IsReadOnly="True"
                                                         Maximum="10" />
 
-                                <Label Content='SmallChange="2"' />
+                                <Label Content='Interval="2"' />
                                 <Controls:NumericUpDown Value="5" 
                                                         Interval="2" />
-                                <Label Content='SmallChange="5"' />
+                                <Label Content='Interval="5"' />
                                 <Controls:NumericUpDown Value="5"  
                                                         Controls:TextboxHelper.ClearTextButton="True"
                                                         Interval="5" />
@@ -476,8 +476,8 @@
                                 <Label Content="No Speedup when long pressed" />
                                 <Controls:NumericUpDown Value="5" 
                                                         Speedup="false" />
-                                <Label Content="Speedup when long pressed" />
-                                <Controls:NumericUpDown Controls:TextboxHelper.Watermark="Test"
+                                <Label Content="Speedup when long pressed but after 500ms" />
+                                <Controls:NumericUpDown Controls:TextboxHelper.Watermark="Test" Delay="500"
                                                         Speedup="true" />
 
                                 <Label Content="StringFormat" />
@@ -487,7 +487,7 @@
                                                         StringFormat="{}{0:N2} pcs." />
                                 <Controls:NumericUpDown Value="5"
                                                         Interval=".1" 
-                                                        StringFormat="N2" />
+                                                        StringFormat="0,000.00" />
                             </StackPanel>
                         </Grid>
                     </AdornerDecorator>
