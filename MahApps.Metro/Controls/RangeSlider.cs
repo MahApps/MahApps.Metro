@@ -423,6 +423,7 @@ namespace MahApps.Metro.Controls
 
         private void RightButtonClick(object sender, RoutedEventArgs e)
         {
+            
             Point p = Mouse.GetPosition(_rightButton);
             if (IsMoveToPointEnabled && !MoveWholeSelection)
             {
@@ -863,33 +864,51 @@ namespace MahApps.Metro.Controls
             _leftButton.Click += LeftButtonClick;
             _rightButton.Click += RightButtonClick;
 
-            _centerThumb.MouseLeftButtonDown += _centerThumb_MouseLeftButtonDown;
-            _centerThumb.MouseRightButtonDown += _centerThumb_MouseRightButtonDown;
+            _centerThumb.PreviewMouseDown += _centerThumb_PreviewMouseDown;
         }
 
-        void _centerThumb_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        void _centerThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (IsMoveToPointEnabled && !MoveWholeSelection)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
-                Point p = Mouse.GetPosition(_centerThumb);
-                //if (Orientation == Orientation.Horizontal)
-                //{
-                //    MoveThumb(_centerThumb, _rightButton, -(p.X + (_leftThumb.ActualWidth / 2)),
-                //        Orientation);
-                //}
-                //else
-                //{
-                //    MoveThumb(_centerThumb, _rightButton, -(p.Y + (_leftThumb.ActualHeight / 2)),
-                //        Orientation);
-                //}
-                //ReCalculateRangeSelected(false, true);
+                if (IsMoveToPointEnabled && !MoveWholeSelection)
+                {
+                    Point p = Mouse.GetPosition(_centerThumb);
+                    if (Orientation == Orientation.Horizontal)
+                    {
+                        MoveThumb(_leftButton, _centerThumb,
+                            (p.X + (_rightThumb.ActualWidth/2)),
+                            Orientation);
+                    }
+                    else
+                    {
+                        MoveThumb(_leftButton, _centerThumb,
+                            (_centerThumb.ActualHeight - p.Y + (_rightThumb.ActualHeight/2)),
+                            Orientation);
+                    }
+                    ReCalculateRangeSelected(true, false);
+                }
             }
-        }
-
-        //Check here if Ctrl button pressed then left thum will be moved, else - right thumb will be moved
-        void _centerThumb_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
+            else if (e.RightButton == MouseButtonState.Pressed)
+            {
+                if (IsMoveToPointEnabled && !MoveWholeSelection)
+                {
+                    Point p = Mouse.GetPosition(_centerThumb);
+                    if (Orientation == Orientation.Horizontal)
+                    {
+                        MoveThumb(_centerThumb, _rightButton,
+                            -(_centerThumb.ActualWidth - p.X + (_rightThumb.ActualWidth / 2)),
+                            Orientation);
+                    }
+                    else
+                    {
+                        MoveThumb(_centerThumb, _rightButton,
+                            -(_centerThumb.ActualHeight - p.Y + (_rightThumb.ActualHeight / 2)),
+                            Orientation);
+                    }
+                    ReCalculateRangeSelected(false, true);
+                }
+            }
         }
 
         void CenterThumb_DragCompleted(object sender, DragCompletedEventArgs e)
