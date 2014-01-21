@@ -9,12 +9,22 @@
     <Style TargetType="{x:Type Controls:NumericUpDown}">
         <Setter Property="BorderThickness"
                 Value="1" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="VerticalAlignment"
                 Value="Center" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Controls:TextboxHelper.IsMonitoring"
                 Value="True" />
+        <Setter Property="MinHeight"
+                Value="26" />
+        <Setter Property="MinWidth"
+                Value="62" />
         <Setter Property="Validation.ErrorTemplate"
                 Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="Template">
@@ -24,10 +34,8 @@
                           Background="{TemplateBinding Background}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
-                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}"
-                                              MaxWidth="40" />
-                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}"
-                                              MaxWidth="40" />
+                            <ColumnDefinition Width="20" />
+                            <ColumnDefinition Width="20" />
                         </Grid.ColumnDefinitions>
 
                         <Border x:Name="Background"
@@ -35,10 +43,11 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}" />
-                        <ScrollViewer VerticalScrollBarVisibility="Hidden"
-                                      HorizontalScrollBarVisibility="Auto"
+                        <ScrollViewer Grid.Column="0"
+                                      VerticalScrollBarVisibility="Hidden"
                                       IsTabStop="False">
                             <TextBox x:Name="PART_TextBox"
+                                     MinWidth="20"
                                      HorizontalAlignment="Stretch"
                                      HorizontalContentAlignment="Right"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -54,29 +63,29 @@
                         </ScrollViewer>
                         <RepeatButton x:Name="PART_NumericUp"
                                       Grid.Column="1"
-                                      MinWidth="20"
                                       Margin="2,2,0,2"
+                                      Foreground="{TemplateBinding Foreground}"
                                       Style="{DynamicResource ChromelessButtonStyle}"
                                       IsTabStop="False">
                             <Path x:Name="PolygonUp"
                                   Width="14"
                                   Height="14"
                                   Stretch="Fill"
-                                  Fill="{DynamicResource BlackBrush}"
+                                  Fill="{DynamicResource GrayBrush1}"
                                   Data="F1 M 35,19L 41,19L 41,35L 57,35L 57,41L 41,41L 41,57L 35,57L 35,41L 19,41L 19,35L 35,35L 35,19 Z " />
                         </RepeatButton>
                         <RepeatButton x:Name="PART_NumericDown"
                                       Grid.Column="2"
-                                      MinWidth="20"
                                       Margin="0,2,2,2"
                                       VerticalContentAlignment="Center"
                                       Style="{DynamicResource ChromelessButtonStyle}"
+                                      Foreground="{TemplateBinding Foreground}"
                                       IsTabStop="False">
                             <Path x:Name="PolygonDown"
                                   Width="14"
                                   Height="3"
                                   Stretch="Fill"
-                                  Fill="{DynamicResource BlackBrush}"
+                                  Fill="{DynamicResource GrayBrush1}"
                                   Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z " />
                         </RepeatButton>
                     </Grid>
@@ -93,8 +102,8 @@
                             <Setter TargetName="PART_NumericUp"
                                     Property="Background"
                                     Value="{DynamicResource GrayBrush8}" />
-                            <Setter TargetName="PART_NumericUp"
-                                    Property="Foreground"
+                            <Setter TargetName="PolygonUp"
+                                    Property="Fill"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
@@ -103,8 +112,8 @@
                             <Setter TargetName="PART_NumericUp"
                                     Property="Background"
                                     Value="{DynamicResource BlackBrush}" />
-                            <Setter TargetName="PART_NumericUp"
-                                    Property="Foreground"
+                            <Setter TargetName="PolygonUp"
+                                    Property="Fill"
                                     Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
@@ -113,8 +122,8 @@
                             <Setter TargetName="PART_NumericDown"
                                     Property="Background"
                                     Value="{DynamicResource GrayBrush8}" />
-                            <Setter TargetName="PART_NumericDown"
-                                    Property="Foreground"
+                            <Setter TargetName="PolygonDown"
+                                    Property="Fill"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
@@ -123,8 +132,8 @@
                             <Setter TargetName="PART_NumericDown"
                                     Property="Background"
                                     Value="{DynamicResource BlackBrush}" />
-                            <Setter TargetName="PART_NumericDown"
-                                    Property="Foreground"
+                            <Setter TargetName="PolygonDown"
+                                    Property="Fill"
                                     Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
