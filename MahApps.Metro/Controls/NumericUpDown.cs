@@ -607,12 +607,6 @@ namespace MahApps.Metro.Controls
         {
             RaiseEvent(new RoutedEventArgs(toPositive ? IncrementValueEvent : DecrementValueEvent));
 
-            if (!Value.HasValue)
-            {
-                Value = 0;
-                return;
-            }
-
             if (Speedup)
             {
                 double d = Interval * _internalLargeChange;
@@ -625,12 +619,14 @@ namespace MahApps.Metro.Controls
 
             if (toPositive)
             {
-                Value = Value + _internalIntervalMultiplierForCalculation;
+                Value = Value.GetValueOrDefault() + _internalIntervalMultiplierForCalculation;
             }
             else
             {
-                Value = Value - _internalIntervalMultiplierForCalculation;
+                Value = Value.GetValueOrDefault() - _internalIntervalMultiplierForCalculation;
             }
+
+            _valueTextBox.CaretIndex = _valueTextBox.Text.Length;
         }
 
         private void EnableDisableDown()
