@@ -64,6 +64,7 @@
                         <RepeatButton x:Name="PART_NumericUp"
                                       Grid.Column="1"
                                       Margin="2,2,0,2"
+                                      Delay="{TemplateBinding Delay}"
                                       Foreground="{TemplateBinding Foreground}"
                                       Style="{DynamicResource ChromelessButtonStyle}"
                                       IsTabStop="False">
@@ -78,6 +79,7 @@
                                       Grid.Column="2"
                                       Margin="0,2,2,2"
                                       VerticalContentAlignment="Center"
+                                      Delay="{TemplateBinding Delay}"
                                       Style="{DynamicResource ChromelessButtonStyle}"
                                       Foreground="{TemplateBinding Foreground}"
                                       IsTabStop="False">
