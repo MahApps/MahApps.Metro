@@ -1,26 +1,44 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace Mahapps.Metro.Tests
 {
-    public static class TestHost
+    /// <summary>
+    /// This class is the ultimate hack to work around that we can't 
+    /// create more than one application in the same AppDomain
+    /// 
+    /// It is once initialized at the start and never properly cleaned up, 
+    /// this means the AppDomain will throw an exception when xUnit unloads it.
+    /// </summary>
+    public class TestHost
     {
-        private static TestApp app;
-        private static Thread appThread;
-        private static AutoResetEvent gate = new AutoResetEvent(false);
+        private TestApp app;
+        private readonly Thread appThread;
+        private readonly AutoResetEvent gate = new AutoResetEvent(false);
 
-        public static void Start()
+        private static TestHost testHost;
+
+        public static void Initialize()
+        {
+            if (testHost == null)
+            {
+                testHost = new TestHost();
+            }
+        }
+
+        private TestHost()
         {
             appThread = new Thread(StartDispatcher);
             appThread.SetApartmentState(ApartmentState.STA);
             appThread.Start();
-
+            
             gate.WaitOne();
         }
 
-        public static void StartDispatcher()
+        private void StartDispatcher()
         {
             app = new TestApp { ShutdownMode = ShutdownMode.OnExplicitShutdown };
             app.Startup += (sender, args) => gate.Set();
@@ -32,13 +50,7 @@ namespace Mahapps.Metro.Tests
         /// </summary>
         public static SwitchContextToUiThreadAwaiter SwitchToAppThread()
         {
-            return new SwitchContextToUiThreadAwaiter(app.Dispatcher);
-        }
-
-        public static void Shutdown()
-        {
-            app.Dispatcher.BeginInvokeShutdown(DispatcherPriority.Send);
-            appThread.Join();
+            return new SwitchContextToUiThreadAwaiter(testHost.app.Dispatcher);
         }
     }
 }
