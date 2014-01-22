@@ -308,8 +308,8 @@ namespace MahApps.Metro.Controls
             _valueTextBox.TextChanged += OnTextChanged;
             DataObject.AddPastingHandler(_valueTextBox, OnValueTextBoxPaste);
 
-            _repeatUp.Click += (o, e) => ChangeValue(true);
-            _repeatDown.Click += (o, e) => ChangeValue(false);
+            _repeatUp.Click += (o, e) => ChangeValueWithSpeedUp(true);
+            _repeatDown.Click += (o, e) => ChangeValueWithSpeedUp(false);
 
             _repeatUp.PreviewMouseUp += (o, e) => ResetInternal();
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
@@ -356,13 +356,24 @@ namespace MahApps.Metro.Controls
             switch (e.Key)
             {
                 case Key.Up:
-                    ChangeValue(true);
+                    ChangeValueWithSpeedUp(true);
                     e.Handled = true;
                     break;
                 case Key.Down:
-                    ChangeValue(false);
+                    ChangeValueWithSpeedUp(false);
                     e.Handled = true;
                     break;
+            }
+        }
+
+        protected override void OnPreviewKeyUp(KeyEventArgs e)
+        {
+            base.OnPreviewKeyUp(e);
+
+            if (e.Key == Key.Down ||
+                e.Key == Key.Up)
+            {
+                ResetInternal();
             }
         }
 
@@ -373,7 +384,7 @@ namespace MahApps.Metro.Controls
             if (InterceptMouseWheel && _valueTextBox.IsFocused)
             {
                 bool increment = e.Delta > 0;
-                ChangeValue(increment);
+                ChangeValueInternal(increment);
             }
         }
 
@@ -634,10 +645,8 @@ namespace MahApps.Metro.Controls
             return Convert.ToInt32(value) >= 0;
         }
 
-        private void ChangeValue(bool toPositive)
+        private void ChangeValueWithSpeedUp(bool toPositive)
         {
-            RaiseEvent(new RoutedEventArgs(toPositive ? IncrementValueEvent : DecrementValueEvent));
-
             if (Speedup)
             {
                 double d = Interval * _internalLargeChange;
@@ -648,6 +657,12 @@ namespace MahApps.Metro.Controls
                 }
             }
 
+            ChangeValueInternal(toPositive);
+        }
+
+        private void ChangeValueInternal(bool toPositive)
+        {
+            RaiseEvent(new RoutedEventArgs(toPositive ? IncrementValueEvent : DecrementValueEvent));
             if (toPositive)
             {
                 ChangeValueBy(_internalIntervalMultiplierForCalculation);
