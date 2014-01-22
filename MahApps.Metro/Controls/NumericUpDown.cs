@@ -81,6 +81,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown), 
             new FrameworkPropertyMetadata(true));
 
+
+        public static readonly DependencyProperty TrackMouseWheelWhenMouseOverProperty = DependencyProperty.Register("TrackMouseWheelWhenMouseOver", 
+            typeof(bool), 
+            typeof(NumericUpDown), 
+            new FrameworkPropertyMetadata(default(bool)));
+
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -191,6 +197,20 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(InterceptMouseWheelProperty); }
             set { SetValue(InterceptMouseWheelProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the control must have the focus in order to change values using the mouse wheel.
+        /// <remarks>
+        ///     If the value is false then the value changes when the mouse wheel is over the control. If the value is true then the value changes only if the control has the focus.
+        /// </remarks>
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(true)]
+        public bool TrackMouseWheelWhenMouseOver
+        {
+            get { return (bool)GetValue(TrackMouseWheelWhenMouseOverProperty); }
+            set { SetValue(TrackMouseWheelWhenMouseOverProperty, value); }
         }
 
         [Bindable(true)]
@@ -381,7 +401,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnPreviewMouseWheel(e);
 
-            if (InterceptMouseWheel && _valueTextBox.IsFocused)
+            if (InterceptMouseWheel && (_valueTextBox.IsFocused || TrackMouseWheelWhenMouseOver))
             {
                 bool increment = e.Delta > 0;
                 ChangeValueInternal(increment);
