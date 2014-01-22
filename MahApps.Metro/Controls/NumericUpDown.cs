@@ -76,6 +76,11 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(DefaultInterval, IntervalChanged));
 
+        public static readonly DependencyProperty InterceptMouseWheelProperty = DependencyProperty.Register("InterceptMouseWheel", 
+            typeof(bool), 
+            typeof(NumericUpDown), 
+            new FrameworkPropertyMetadata(true));
+
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -166,7 +171,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the user can use the UP ARROW and DOWN ARROW keys to select values.
+        ///     Gets or sets a value indicating whether the user can use the arrow keys to change values.
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
@@ -175,6 +180,17 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(InterceptArrowKeysProperty); }
             set { SetValue(InterceptArrowKeysProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the user can use the mouse wheel to change values.
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(true)]
+        public bool InterceptMouseWheel
+        {
+            get { return (bool)GetValue(InterceptMouseWheelProperty); }
+            set { SetValue(InterceptMouseWheelProperty, value); }
         }
 
         [Bindable(true)]
@@ -347,6 +363,17 @@ namespace MahApps.Metro.Controls
                     ChangeValue(false);
                     e.Handled = true;
                     break;
+            }
+        }
+
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnPreviewMouseWheel(e);
+
+            if (InterceptMouseWheel && _valueTextBox.IsFocused)
+            {
+                bool increment = e.Delta > 0;
+                ChangeValue(increment);
             }
         }
 
@@ -623,14 +650,19 @@ namespace MahApps.Metro.Controls
 
             if (toPositive)
             {
-                Value = Value.GetValueOrDefault() + _internalIntervalMultiplierForCalculation;
+                ChangeValueBy(_internalIntervalMultiplierForCalculation);
             }
             else
             {
-                Value = Value.GetValueOrDefault() - _internalIntervalMultiplierForCalculation;
+                ChangeValueBy(-_internalIntervalMultiplierForCalculation);
             }
 
             _valueTextBox.CaretIndex = _valueTextBox.Text.Length;
+        }
+
+        private void ChangeValueBy(double difference)
+        {
+            Value = Value.GetValueOrDefault() + difference;
         }
 
         private void EnableDisableDown()
