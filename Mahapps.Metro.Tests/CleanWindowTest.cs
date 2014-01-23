@@ -14,10 +14,10 @@ namespace Mahapps.Metro.Tests
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<CleanWindow>();
 
-            var blackBrush = (SolidColorBrush)ThemeManager.LightResource["BlackBrush"];
+            var blackBrushColor = ((SolidColorBrush)ThemeManager.LightResource["BlackBrush"]).Color;
 
-            Assert.Equal(blackBrush, (SolidColorBrush) window.WindowCommands.Foreground);
-            Assert.Equal(blackBrush, (SolidColorBrush) window.WindowButtonCommands.Foreground);
+            Assert.Equal(blackBrushColor, ((SolidColorBrush) window.WindowCommands.Foreground).Color);
+            Assert.Equal(blackBrushColor, ((SolidColorBrush) window.WindowButtonCommands.Foreground).Color);
         }
     }
 }
