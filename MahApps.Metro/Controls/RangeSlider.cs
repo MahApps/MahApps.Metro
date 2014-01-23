@@ -719,78 +719,7 @@ namespace MahApps.Metro.Controls
             ReCalculateRangeSelected(true, true);
         }
 
-        public void MoveSelection(double span)
-        {
-            if (span > 0)
-            {
-                if (UpperValue + span > Maximum)
-                    span = Maximum - UpperValue;
-            }
-            else
-            {
-                if (LowerValue + span < Minimum)
-                    span = Minimum - LowerValue;
-            }
-
-            if (span == 0)
-                return;
-
-            _internalUpdate = true;//set flag to signal that the properties are being set by the object itself
-            LowerValue += span;
-            UpperValue += span;
-            ReCalculateWidths();
-            _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
-
-            OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
-        }
-
-        public void SetSelectedRange(double selectionStart, double selectionStop)
-        {
-            double start = Math.Max(Minimum, selectionStart);
-            double stop = Math.Min(selectionStop, Maximum);
-            start = Math.Min(start, Maximum - MinRange);
-            stop = Math.Max(Minimum + MinRange, stop);
-            if (stop < start + MinRange)
-                return;
-
-            _internalUpdate = true;//set flag to signal that the properties are being set by the object itself
-            LowerValue = start;
-            UpperValue = stop;
-            ReCalculateWidths();
-            _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
-            OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
-        }
-
-        public void ZoomToSpan(double span)
-        {
-            _internalUpdate = true;//set flag to signal that the properties are being set by the object itself
-            // Ensure new span is within the valid range
-            span = Math.Min(span, Maximum - Minimum);
-            span = Math.Max(span, MinRange);
-            if (span == UpperValue - LowerValue)
-                return; // No change
-
-            // First zoom half of it to the right
-            double rightChange = (span - (UpperValue - LowerValue)) / 2;
-            double leftChange = rightChange;
-
-            // If we will hit the right edge, spill over the leftover change to the other side
-            if (rightChange > 0 && UpperValue + rightChange > Maximum)
-                leftChange += rightChange - (Maximum - UpperValue);
-            UpperValue = Math.Min(UpperValue + rightChange, Maximum);
-            rightChange = 0;
-
-            // If we will hit the left edge and there is space on the right, add the leftover change to the other side
-            if (leftChange > 0 && LowerValue - leftChange < Minimum)
-                rightChange = Minimum - (LowerValue - leftChange);
-            LowerValue = Math.Max(LowerValue - leftChange, Minimum);
-            if (rightChange > 0) // leftovers to the right
-                UpperValue = Math.Min(UpperValue + rightChange, Maximum);
-
-            ReCalculateWidths();
-            _internalUpdate = false;//set flag to signal that the properties are being set by the object itself
-            OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
-        }
+        
 
         private void OnRangeSelectionChanged(RangeSelectionChangedEventArgs e)
         {
@@ -851,7 +780,8 @@ namespace MahApps.Metro.Controls
 
             _leftButton.PreviewMouseLeftButtonDown += _leftButton_PreviewMouseLeftButtonDown;
             _rightButton.PreviewMouseLeftButtonDown += _rightButton_PreviewMouseLeftButtonDown;
-
+            _leftButton.PreviewMouseLeftButtonUp += _leftButton_PreviewMouseLeftButtonUp;
+            _rightButton.PreviewMouseLeftButtonUp += _rightButton_PreviewMouseLeftButtonUp;
 
             _centerThumb.PreviewMouseDown += _centerThumb_PreviewMouseDown;
             _centerThumb.PreviewMouseUp += _centerThumb_PreviewMouseUp;
@@ -860,6 +790,16 @@ namespace MahApps.Metro.Controls
             _rightButton.MouseLeave += _rightButton_MouseLeave;
 
             _visualElementsContainer.MouseWheel += _visualElementsContainer_MouseWheel;
+        }
+
+        void _rightButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            timer.Stop();
+        }
+
+        void _leftButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            timer.Stop();
         }
 
         void _rightButton_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -893,15 +833,9 @@ namespace MahApps.Metro.Controls
                     }
                     ReCalculateRangeSelected(true, true);
                 }
-                else if (!IsMoveToPointEnabled && !MoveWholeSelection)
+                else if (!IsMoveToPointEnabled)
                 {
                     position = Mouse.GetPosition(_visualElementsContainer);
-                    bType = ButtonType.Right;
-                    direction = Direction.Increase;
-                    timer.Start();
-                }
-                else if (!IsMoveToPointEnabled && MoveWholeSelection)
-                {
                     bType = ButtonType.Right;
                     direction = Direction.Increase;
                     timer.Start();
@@ -947,13 +881,12 @@ namespace MahApps.Metro.Controls
                     }
                     ReCalculateRangeSelected(true, true);
                 }
-                else if (!IsMoveToPointEnabled && !MoveWholeSelection)
+                else if (!IsMoveToPointEnabled)
                 {
+                    position = Mouse.GetPosition(_visualElementsContainer);
+                    bType = ButtonType.Left;
+                    direction = Direction.Decrease;
                     timer.Start();
-                }
-                else if (!IsMoveToPointEnabled && MoveWholeSelection)
-                {
-                    timer.Stop();
                 }
             }
         }
@@ -1082,12 +1015,13 @@ namespace MahApps.Metro.Controls
                 if (bType == ButtonType.Right && direction == Direction.Increase)
                 {
                     double widthChange = SmallChange;
+                    if (tickCount > 10)
+                    {
+                        widthChange = LargeChange;
+                    }
                     if (Orientation == Orientation.Horizontal)
                     {
-                        if (tickCount > 10)
-                        {
-                            widthChange = LargeChange;
-                        }
+                        
                         if (position.X > ActualWidth - _rightButton.ActualWidth)
                         {
                             MoveThumb(_centerThumb, _rightButton, widthChange, Orientation);
@@ -1100,9 +1034,123 @@ namespace MahApps.Metro.Controls
                     }
                     else
                     {
-                        MoveThumb(_centerThumb, _rightButton, widthChange, Orientation);
+                        if (position.Y > ActualHeight - _rightButton.ActualHeight)
+                        {
+                            MoveThumb(_centerThumb, _rightButton, widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
                     }
                     ReCalculateRangeSelected(false, true);
+                }
+                else if (bType == ButtonType.Left && direction == Direction.Decrease)
+                {
+                    double widthChange = SmallChange;
+                    if (tickCount > 10)
+                    {
+                        widthChange = LargeChange;
+                    }
+                    if (Orientation == Orientation.Horizontal)
+                    {
+
+                        if (position.X < _leftButton.ActualWidth)
+                        {
+                            MoveThumb(_leftButton, _centerThumb, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (position.Y < _leftButton.ActualWidth)
+                        {
+                            MoveThumb(_leftButton, _centerThumb, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    ReCalculateRangeSelected(false, true);
+                }
+                tickCount++;
+            }
+            else
+            {
+                if (bType == ButtonType.Right && direction == Direction.Increase)
+                {
+                    double widthChange = SmallChange;
+                    if (tickCount > 10)
+                    {
+                        widthChange = LargeChange;
+                    }
+                    if (Orientation == Orientation.Horizontal)
+                    {
+
+                        if (position.X > ActualWidth - _rightButton.ActualWidth)
+                        {
+                            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (position.Y > ActualHeight - _rightButton.ActualHeight)
+                        {
+                            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    ReCalculateRangeSelected(true, true);
+                }
+                else if (bType == ButtonType.Left && direction == Direction.Decrease)
+                {
+                    double widthChange = SmallChange;
+                    if (tickCount > 10)
+                    {
+                        widthChange = LargeChange;
+                    }
+                    if (Orientation == Orientation.Horizontal)
+                    {
+
+                        if (position.X < _leftButton.ActualWidth)
+                        {
+                            MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (position.Y < _leftButton.ActualWidth)
+                        {
+                            MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    ReCalculateRangeSelected(true, true);
                 }
                 tickCount++;
             }
@@ -1197,10 +1245,6 @@ namespace MahApps.Metro.Controls
         }
 
         
-
-        
-        
-
         private static object CoerceLowerValue(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
@@ -1254,5 +1298,84 @@ namespace MahApps.Metro.Controls
             return (Double)basevalue > width ? width : (Double)basevalue;
         }
 
+
+
+
+        #region Unused methods. Candidates for deletion
+
+        public void MoveSelection(double span)
+        {
+            if (span > 0)
+            {
+                if (UpperValue + span > Maximum)
+                    span = Maximum - UpperValue;
+            }
+            else
+            {
+                if (LowerValue + span < Minimum)
+                    span = Minimum - LowerValue;
+            }
+
+            if (span == 0)
+                return;
+
+            _internalUpdate = true; //set flag to signal that the properties are being set by the object itself
+            LowerValue += span;
+            UpperValue += span;
+            ReCalculateWidths();
+            _internalUpdate = false; //set flag to signal that the properties are being set by the object itself
+
+            OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
+        }
+
+        public void SetSelectedRange(double selectionStart, double selectionStop)
+        {
+            double start = Math.Max(Minimum, selectionStart);
+            double stop = Math.Min(selectionStop, Maximum);
+            start = Math.Min(start, Maximum - MinRange);
+            stop = Math.Max(Minimum + MinRange, stop);
+            if (stop < start + MinRange)
+                return;
+
+            _internalUpdate = true; //set flag to signal that the properties are being set by the object itself
+            LowerValue = start;
+            UpperValue = stop;
+            ReCalculateWidths();
+            _internalUpdate = false; //set flag to signal that the properties are being set by the object itself
+            OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
+        }
+
+        public void ZoomToSpan(double span)
+        {
+            _internalUpdate = true; //set flag to signal that the properties are being set by the object itself
+            // Ensure new span is within the valid range
+            span = Math.Min(span, Maximum - Minimum);
+            span = Math.Max(span, MinRange);
+            if (span == UpperValue - LowerValue)
+                return; // No change
+
+            // First zoom half of it to the right
+            double rightChange = (span - (UpperValue - LowerValue))/2;
+            double leftChange = rightChange;
+
+            // If we will hit the right edge, spill over the leftover change to the other side
+            if (rightChange > 0 && UpperValue + rightChange > Maximum)
+                leftChange += rightChange - (Maximum - UpperValue);
+            UpperValue = Math.Min(UpperValue + rightChange, Maximum);
+            rightChange = 0;
+
+            // If we will hit the left edge and there is space on the right, add the leftover change to the other side
+            if (leftChange > 0 && LowerValue - leftChange < Minimum)
+                rightChange = Minimum - (LowerValue - leftChange);
+            LowerValue = Math.Max(LowerValue - leftChange, Minimum);
+            if (rightChange > 0) // leftovers to the right
+                UpperValue = Math.Min(UpperValue + rightChange, Maximum);
+
+            ReCalculateWidths();
+            _internalUpdate = false; //set flag to signal that the properties are being set by the object itself
+            OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(this));
+        }
+
+        #endregion
     }
 }
