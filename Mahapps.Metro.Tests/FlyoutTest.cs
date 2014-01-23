@@ -81,7 +81,7 @@ namespace Mahapps.Metro.Tests
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
             window.DefaultFlyout.Theme = FlyoutTheme.Inverse;
 
-            Assert.Equal(Theme.Light, window.DefaultFlyout.ActualTheme);
+            Assert.Equal(Theme.Dark, window.DefaultFlyout.ActualTheme);
         }
 
         [Fact]
