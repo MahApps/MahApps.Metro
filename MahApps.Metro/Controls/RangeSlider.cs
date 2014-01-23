@@ -180,7 +180,17 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("MoveWholeSelection", typeof(Boolean), typeof(RangeSlider),
                 new UIPropertyMetadata((Boolean)false));
 
-        //Will whole selection be moved when pressing on left or right pereat button
+        public static readonly DependencyProperty ExtendedModeProperty =
+            DependencyProperty.Register("ExtendedMode", typeof(Boolean), typeof(RangeSlider),
+                new UIPropertyMetadata((Boolean)false));
+
+        public Boolean ExtendedMode
+        {
+            get { return (Boolean)GetValue(ExtendedModeProperty); }
+            set { SetValue(ExtendedModeProperty, value); }
+        }
+
+        //Property means Will whole selection be moved when pressing on left or right repeat button
         public Boolean MoveWholeSelection
         {
             get { return (Boolean)GetValue(MoveWholeSelectionProperty); }
@@ -849,7 +859,6 @@ namespace MahApps.Metro.Controls
             _rightButton.MouseRightButtonUp += _rightButton_MouseRightButtonUp;
             _rightButton.MouseLeave += _rightButton_MouseLeave;
 
-            _visualElementsContainer.MouseEnter += _visualElementsContainer_MouseEnter;
             _visualElementsContainer.MouseWheel += _visualElementsContainer_MouseWheel;
         }
 
@@ -954,61 +963,59 @@ namespace MahApps.Metro.Controls
             double change = 0;
             if (e.Delta > 0)
             {
-                change = SmallChange;
+                change = LargeChange;
             }
             else
             {
-                change = -SmallChange;
+                change = -LargeChange;
             }
             MoveThumb(_leftButton, _rightButton, change, Orientation);
             ReCalculateRangeSelected(true, true);
         }
 
-        void _visualElementsContainer_MouseEnter(object sender, MouseEventArgs e)
-        {
-            
-        }
-
         void _centerThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftCtrl))
+            if (ExtendedMode)
             {
-                if (IsMoveToPointEnabled && !MoveWholeSelection)
+                if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftCtrl))
                 {
-                    Point p = Mouse.GetPosition(_centerThumb);
-                    if (Orientation == Orientation.Horizontal)
+                    if (IsMoveToPointEnabled && !MoveWholeSelection)
                     {
-                        MoveThumb(_leftButton, _centerThumb,
-                            (p.X + (_rightThumb.ActualWidth / 2)),
-                            Orientation);
+                        Point p = Mouse.GetPosition(_centerThumb);
+                        if (Orientation == Orientation.Horizontal)
+                        {
+                            MoveThumb(_leftButton, _centerThumb,
+                                (p.X + (_rightThumb.ActualWidth/2)),
+                                Orientation);
+                        }
+                        else
+                        {
+                            MoveThumb(_leftButton, _centerThumb,
+                                (_centerThumb.ActualHeight - p.Y + (_rightThumb.ActualHeight/2)),
+                                Orientation);
+                        }
+                        ReCalculateRangeSelected(true, false);
                     }
-                    else
-                    {
-                        MoveThumb(_leftButton, _centerThumb,
-                            (_centerThumb.ActualHeight - p.Y + (_rightThumb.ActualHeight / 2)),
-                            Orientation);
-                    }
-                    ReCalculateRangeSelected(true, false);
                 }
-            }
-            else if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftCtrl))
-            {
-                if (IsMoveToPointEnabled && !MoveWholeSelection)
+                else if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftCtrl))
                 {
-                    Point p = Mouse.GetPosition(_centerThumb);
-                    if (Orientation == Orientation.Horizontal)
+                    if (IsMoveToPointEnabled && !MoveWholeSelection)
                     {
-                        MoveThumb(_centerThumb, _rightButton,
-                            -(_centerThumb.ActualWidth - p.X + (_rightThumb.ActualWidth / 2)),
-                            Orientation);
+                        Point p = Mouse.GetPosition(_centerThumb);
+                        if (Orientation == Orientation.Horizontal)
+                        {
+                            MoveThumb(_centerThumb, _rightButton,
+                                -(_centerThumb.ActualWidth - p.X + (_rightThumb.ActualWidth/2)),
+                                Orientation);
+                        }
+                        else
+                        {
+                            MoveThumb(_centerThumb, _rightButton,
+                                -(_centerThumb.ActualHeight - p.Y + (_rightThumb.ActualHeight/2)),
+                                Orientation);
+                        }
+                        ReCalculateRangeSelected(false, true);
                     }
-                    else
-                    {
-                        MoveThumb(_centerThumb, _rightButton,
-                            -(_centerThumb.ActualHeight - p.Y + (_rightThumb.ActualHeight / 2)),
-                            Orientation);
-                    }
-                    ReCalculateRangeSelected(false, true);
                 }
             }
         }
@@ -1019,7 +1026,6 @@ namespace MahApps.Metro.Controls
         }
 
         
-
         void _centerThumb_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             timer.Stop();
