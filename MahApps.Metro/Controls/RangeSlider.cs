@@ -979,29 +979,45 @@ namespace MahApps.Metro.Controls
             {
                 if (e.LeftButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftCtrl))
                 {
+                    Point p = Mouse.GetPosition(_centerThumb);
                     if (IsMoveToPointEnabled && !MoveWholeSelection)
                     {
-                        Point p = Mouse.GetPosition(_centerThumb);
                         if (Orientation == Orientation.Horizontal)
                         {
                             MoveThumb(_leftButton, _centerThumb,
-                                (p.X + (_rightThumb.ActualWidth/2)),
+                                (p.X + (_leftThumb.ActualWidth / 2)),
                                 Orientation);
                         }
                         else
                         {
                             MoveThumb(_leftButton, _centerThumb,
-                                (_centerThumb.ActualHeight - p.Y + (_rightThumb.ActualHeight/2)),
+                                (p.Y + (_leftThumb.ActualHeight / 2)),
                                 Orientation);
                         }
                         ReCalculateRangeSelected(true, false);
                     }
+                    else if (IsMoveToPointEnabled && MoveWholeSelection)
+                    {
+                        if (Orientation == Orientation.Horizontal)
+                        {
+                            MoveThumb(_leftButton, _rightButton,
+                                (p.X + (_leftThumb.ActualWidth / 2)),
+                                Orientation);
+                        }
+                        else
+                        {
+                            MoveThumb(_leftButton, _rightButton,
+                                (p.Y + (_leftThumb.ActualHeight / 2)),
+                                Orientation);
+                        }
+                        ReCalculateRangeSelected(true, true);
+                    }
                 }
                 else if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftCtrl))
                 {
+                    Point p = Mouse.GetPosition(_centerThumb);
                     if (IsMoveToPointEnabled && !MoveWholeSelection)
                     {
-                        Point p = Mouse.GetPosition(_centerThumb);
                         if (Orientation == Orientation.Horizontal)
                         {
                             MoveThumb(_centerThumb, _rightButton,
@@ -1015,6 +1031,22 @@ namespace MahApps.Metro.Controls
                                 Orientation);
                         }
                         ReCalculateRangeSelected(false, true);
+                    }
+                    else if (IsMoveToPointEnabled && MoveWholeSelection)
+                    {
+                        if (Orientation == Orientation.Horizontal)
+                        {
+                            MoveThumb(_leftButton, _rightButton,
+                                -(_centerThumb.ActualWidth - p.X + (_rightThumb.ActualWidth / 2)),
+                                Orientation);
+                        }
+                        else
+                        {
+                            MoveThumb(_leftButton, _rightButton,
+                                -(_centerThumb.ActualHeight - p.Y + (_rightThumb.ActualHeight / 2)),
+                                Orientation);
+                        }
+                        ReCalculateRangeSelected(true, true);
                     }
                 }
             }
