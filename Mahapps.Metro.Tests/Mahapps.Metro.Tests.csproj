@@ -76,7 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutomationTestBase.cs" />
+    <Compile Include="CleanWindowTest.cs" />
     <Compile Include="FlyoutTest.cs" />
+    <Compile Include="CleanWindow.xaml.cs">
+      <DependentUpon>CleanWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutWindow.xaml.cs">
       <DependentUpon>FlyoutWindow.xaml</DependentUpon>
     </Compile>
@@ -101,6 +105,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CleanWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="FlyoutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
