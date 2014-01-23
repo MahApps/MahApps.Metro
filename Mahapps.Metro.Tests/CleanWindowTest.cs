@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Media;
 using MahApps.Metro;
 using Xunit;
@@ -18,7 +14,10 @@ namespace Mahapps.Metro.Tests
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<CleanWindow>();
 
-            Assert.Equal((SolidColorBrush)ThemeManager.LightResource["BlackBrush"], (SolidColorBrush) window.WindowCommands.Foreground);
+            var blackBrush = (SolidColorBrush)ThemeManager.LightResource["BlackBrush"];
+
+            Assert.Equal(blackBrush, (SolidColorBrush) window.WindowCommands.Foreground);
+            Assert.Equal(blackBrush, (SolidColorBrush) window.WindowButtonCommands.Foreground);
         }
     }
 }

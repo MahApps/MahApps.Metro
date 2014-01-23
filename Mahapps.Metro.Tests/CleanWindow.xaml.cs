@@ -1,8 +1,8 @@
 ﻿namespace Mahapps.Metro.Tests
 {
-    public partial class FlyoutWindow
+    public partial class CleanWindow
     {
-        public FlyoutWindow()
+        public CleanWindow()
         {
             InitializeComponent();
         }
