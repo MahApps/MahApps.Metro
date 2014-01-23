@@ -18,6 +18,21 @@ namespace MahApps.Metro.Behaviours
     public class BorderlessWindowBehavior : Behavior<Window>
     {
         private bool _isMaximize;
+        
+        #region Workaround for #897
+        /// <summary>
+        /// NO TOUCHY! This is a workaround for issue #897
+        /// </summary>
+        internal static readonly DependencyProperty BackgroundSetPropertyKey = DependencyProperty.RegisterAttached("BackgroundSet", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        internal static void SetBackgroundSet(UIElement element, Boolean value)
+        {
+            element.SetValue(BackgroundSetPropertyKey, value);
+        }
+        internal static Boolean GetBackgroundSet(UIElement element)
+        {
+            return (Boolean)element.GetValue(BackgroundSetPropertyKey);
+        }
+        #endregion
 
         public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
         public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
@@ -90,7 +105,7 @@ namespace MahApps.Metro.Behaviours
             if (IntPtr.Size > 4)
                 return UnsafeNativeMethods.SetClassLongPtr64(hWnd, nIndex, dwNewLong);
 
-            return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, unchecked((uint)dwNewLong.ToInt32())));
+            return new IntPtr(UnsafeNativeMethods.SetClassLongPtr32(hWnd, nIndex, (uint)dwNewLong));
         }
 
         /*Taken from http://stackoverflow.com/questions/20941443/properly-maximizing-wpf-window-with-windowstyle-none */
@@ -354,7 +369,19 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             AddHwndHook();
-            SetDefaultBackgroundColor();
+
+            try
+            {
+                SetDefaultBackgroundColor();
+            }
+            catch (OverflowException ex)
+            {
+                //known bug: see https://github.com/MahApps/MahApps.Metro/issues/897
+
+                throw new Exception(
+                     "Bug #897 has occurred.\r\n\tDWN Enabled: " + UnsafeNativeMethods.DwmIsCompositionEnabled().ToString() + "\r\n\tBackground: " + (AssociatedObject.Background as SolidColorBrush).Color.ToString()
+                    , ex);
+            }
         }
 
         private bool ShouldHaveBorder()
@@ -397,13 +424,21 @@ namespace MahApps.Metro.Behaviours
 
             if (bgSolidColorBrush != null)
             {
+                if (((bool)AssociatedObject.GetValue(BackgroundSetPropertyKey)))
+                    return;
+
                 var rgb = bgSolidColorBrush.Color.R | (bgSolidColorBrush.Color.G << 8) | (bgSolidColorBrush.Color.B << 16);
 
-                // set the default background color of the window -> this avoids the black stripes when resizing
-                var hBrushOld = SetClassLong(_mHWND, Constants.GCLP_HBRBACKGROUND, UnsafeNativeMethods.CreateSolidBrush(rgb));
+                if ((IntPtr)UnsafeNativeMethods.GetWindowLong(_mHWND, Constants.GCLP_HBRBACKGROUND) == IntPtr.Zero)
+                {
+                    // set the default background color of the window -> this avoids the black stripes when resizing
+                    var hBrushOld = SetClassLong(_mHWND, Constants.GCLP_HBRBACKGROUND, UnsafeNativeMethods.CreateSolidBrush(rgb));
 
-                if (hBrushOld != IntPtr.Zero)
-                    UnsafeNativeMethods.DeleteObject(hBrushOld);
+                    if (hBrushOld != IntPtr.Zero)
+                        UnsafeNativeMethods.DeleteObject(hBrushOld);
+
+                    AssociatedObject.SetValue(BackgroundSetPropertyKey, true);
+                }
             }
         }
 

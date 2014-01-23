@@ -88,6 +88,12 @@ namespace MahApps.Metro.Native
         [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
         internal static extern IntPtr SetClassLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
+        [DllImport("user32.dll", EntryPoint = "GetClassLong")]
+        internal static extern uint GetClassLong32(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "GetClassLongPtr")]
+        internal static extern IntPtr GetClassLong64(IntPtr hWnd, int nIndex);
+
         [DllImport("gdi32.dll")]
         internal static extern IntPtr CreateSolidBrush(int crColor);
 

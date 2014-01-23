@@ -12,7 +12,7 @@ using MahApps.Metro.Controls;
 namespace MahApps.Metro.Behaviours
 {
     //in order to get around some short comings in XAML, I needed a code behind class that I could manipulate the window from.
-    internal class InternalCleanWindowGlueBehavior: Behavior<Window>
+    internal class InternalCleanWindowGlueBehavior : Behavior<Window>
     {
         public MetroWindow AssociatedMetroWindow { get { return this.AssociatedObject as MetroWindow; } }
 
