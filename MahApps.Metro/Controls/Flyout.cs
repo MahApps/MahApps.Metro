@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -17,7 +16,6 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
     public class Flyout : ContentControl
     {
-        
         /// <summary>
         /// An event that is raised when IsOpen changes.
         /// </summary>
@@ -30,7 +28,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
-        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new PropertyMetadata(FlyoutTheme.Dark));
+        public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged)));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
 
         /// <summary>
@@ -122,21 +120,23 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
-            this.Loaded += (sender, args) => 
+            this.Loaded += (sender, args) => UpdateFlyoutTheme();
+        }
+
+        private void UpdateFlyoutTheme()
+        {
+            var window = this.TryFindParent<MetroWindow>();
+            if (window != null)
             {
-                var window = this.TryFindParent<MetroWindow>();
-                if (window != null)
+                var windowTheme = DetectTheme(this);
+
+                if (windowTheme != null && windowTheme.Item2 != null)
                 {
-                    var windowTheme = DetectTheme(this);
+                    var accent = windowTheme.Item2;
 
-                    if (windowTheme != null && windowTheme.Item2 != null)
-                    {
-                        var accent = windowTheme.Item2;
-
-                        this.ChangeFlyoutTheme(accent, windowTheme.Item1);
-                    }
+                    this.ChangeFlyoutTheme(accent, windowTheme.Item1);
                 }
-            };
+            }
         }
 
         internal void ChangeFlyoutTheme(Accent windowAccent, Theme windowTheme)
@@ -238,6 +238,12 @@ namespace MahApps.Metro.Controls
             {
                 flyout.IsOpenChanged(flyout, EventArgs.Empty);
             }
+        }
+
+        private static void ThemeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var flyout = (Flyout) dependencyObject;
+            flyout.UpdateFlyoutTheme();
         }
 
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)

@@ -71,7 +71,9 @@ namespace MahApps.Metro.Controls
                     this.DetachHandlers(this.GetFlyouts(e.OldItems));
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    this.AttachHandlers(this.GetFlyouts(this.Items));
+                    List<Flyout> flyouts = this.GetFlyouts(this.Items).ToList();
+                    this.DetachHandlers(flyouts);
+                    this.AttachHandlers(flyouts);
                     break;
             }
         }
@@ -87,7 +89,9 @@ namespace MahApps.Metro.Controls
         private void AttachHandlers(Flyout item)
         {
             var isOpenChanged = DependencyPropertyDescriptor.FromProperty(Flyout.IsOpenProperty, typeof(Flyout));
-            isOpenChanged.AddValueChanged(item, this.FlyoutIsOpenChanged);
+            var themeChanged = DependencyPropertyDescriptor.FromProperty(Flyout.ThemeProperty, typeof(Flyout));
+            isOpenChanged.AddValueChanged(item, this.FlyoutStatusChanged);
+            themeChanged.AddValueChanged(item, this.FlyoutStatusChanged);
         }
 
         private void DetachHandlers(IEnumerable<Flyout> items)
@@ -101,10 +105,12 @@ namespace MahApps.Metro.Controls
         private void DetachHandlers(Flyout item)
         {
             var isOpenChanged = DependencyPropertyDescriptor.FromProperty(Flyout.IsOpenProperty, typeof(Flyout));
-            isOpenChanged.RemoveValueChanged(item, this.FlyoutIsOpenChanged);
+            var themeChanged = DependencyPropertyDescriptor.FromProperty(Flyout.ThemeProperty, typeof(Flyout));
+            isOpenChanged.RemoveValueChanged(item, this.FlyoutStatusChanged);
+            themeChanged.RemoveValueChanged(item, this.FlyoutStatusChanged);
         }
 
-        private void FlyoutIsOpenChanged(object sender, EventArgs e)
+        private void FlyoutStatusChanged(object sender, EventArgs e)
         {
             Flyout flyout = this.GetFlyout(sender); //Get the flyout that raised the handler.
 
