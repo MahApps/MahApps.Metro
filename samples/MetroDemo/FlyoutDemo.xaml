@@ -33,7 +33,7 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="settingsFlyout" Width="500" Header="Settings" Position="Right">
+            <Controls:Flyout x:Name="settingsFlyout" Margin="100 0 0 0" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth}" Header="Settings" Position="Right">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
