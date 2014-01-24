@@ -780,24 +780,21 @@ namespace MahApps.Metro.Controls
 
             _leftButton.PreviewMouseLeftButtonDown += _leftButton_PreviewMouseLeftButtonDown;
             _rightButton.PreviewMouseLeftButtonDown += _rightButton_PreviewMouseLeftButtonDown;
-            _leftButton.PreviewMouseLeftButtonUp += _leftButton_PreviewMouseLeftButtonUp;
-            _rightButton.PreviewMouseLeftButtonUp += _rightButton_PreviewMouseLeftButtonUp;
+
+            _visualElementsContainer.PreviewMouseUp += _visualElementsContainer_PreviewMouseUp;
+            _visualElementsContainer.MouseLeave += _visualElementsContainer_MouseLeave;
 
             _centerThumb.PreviewMouseDown += _centerThumb_PreviewMouseDown;
-            _centerThumb.PreviewMouseUp += _centerThumb_PreviewMouseUp;
-            _leftButton.MouseLeftButtonUp += _leftButton_MouseLeftButtonUp;
-            _rightButton.MouseRightButtonUp += _rightButton_MouseRightButtonUp;
-            _rightButton.MouseLeave += _rightButton_MouseLeave;
 
             _visualElementsContainer.MouseWheel += _visualElementsContainer_MouseWheel;
         }
 
-        void _rightButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        void _visualElementsContainer_MouseLeave(object sender, MouseEventArgs e)
         {
             timer.Stop();
         }
 
-        void _leftButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        void _visualElementsContainer_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             timer.Stop();
         }
@@ -985,29 +982,8 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        void _rightButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            timer.Stop();
-        }
-
         
-        void _centerThumb_PreviewMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            timer.Stop();
-        }
-
-        void _rightButton_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            timer.Stop();
-        }
-
-        void _leftButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            timer.Stop();
-        }
-
-        
-
+       
         void timer_Tick(object sender, EventArgs e)
         {
             if (!MoveWholeSelection)
