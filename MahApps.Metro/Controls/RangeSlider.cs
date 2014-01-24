@@ -942,6 +942,13 @@ namespace MahApps.Metro.Controls
                         }
                         ReCalculateRangeSelected(true, true);
                     }
+                    else if (!IsMoveToPointEnabled)
+                    {
+                        position = Mouse.GetPosition(_visualElementsContainer);
+                        bType = ButtonType.Left;
+                        direction = Direction.Increase;
+                        timer.Start();
+                    }
                 }
                 else if (e.RightButton == MouseButtonState.Pressed && Keyboard.IsKeyDown(Key.LeftCtrl))
                 {
@@ -977,6 +984,13 @@ namespace MahApps.Metro.Controls
                                 Orientation);
                         }
                         ReCalculateRangeSelected(true, true);
+                    }
+                    else if (!IsMoveToPointEnabled)
+                    {
+                        position = Mouse.GetPosition(_visualElementsContainer);
+                        bType = ButtonType.Right;
+                        direction = Direction.Decrease;
+                        timer.Start();
                     }
                 }
             }
@@ -1022,6 +1036,40 @@ namespace MahApps.Metro.Controls
                     }
                     ReCalculateRangeSelected(false, true);
                 }
+                else if (bType == ButtonType.Right && direction == Direction.Decrease)
+                {
+                    double widthChange = SmallChange;
+                    if (tickCount > 10)
+                    {
+                        widthChange = LargeChange;
+                    }
+                    if (Orientation == Orientation.Horizontal)
+                    {
+
+                        if (position.X < ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth)
+                        {
+                            MoveThumb(_centerThumb, _rightButton, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (position.Y < ActualHeight - _rightButton.ActualHeight - _rightThumb.ActualHeight)
+                        {
+                            MoveThumb(_centerThumb, _rightButton, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    ReCalculateRangeSelected(false, true);
+                }
                 else if (bType == ButtonType.Left && direction == Direction.Decrease)
                 {
                     double widthChange = SmallChange;
@@ -1044,9 +1092,43 @@ namespace MahApps.Metro.Controls
                     }
                     else
                     {
-                        if (position.Y < _leftButton.ActualWidth)
+                        if (position.Y < _leftButton.ActualHeight)
                         {
                             MoveThumb(_leftButton, _centerThumb, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    ReCalculateRangeSelected(true, false);
+                }
+                else if (bType == ButtonType.Left && direction == Direction.Increase)
+                {
+                    double widthChange = SmallChange;
+                    if (tickCount > 10)
+                    {
+                        widthChange = LargeChange;
+                    }
+                    if (Orientation == Orientation.Horizontal)
+                    {
+
+                        if (position.X > _leftButton.ActualWidth+_leftThumb.ActualWidth)
+                        {
+                            MoveThumb(_leftButton, _centerThumb, widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (position.Y > _leftButton.ActualHeight + _leftThumb.ActualHeight)
+                        {
+                            MoveThumb(_leftButton, _centerThumb, widthChange, Orientation);
                         }
                         else
                         {
@@ -1094,6 +1176,40 @@ namespace MahApps.Metro.Controls
                     }
                     ReCalculateRangeSelected(true, true);
                 }
+                else if (bType == ButtonType.Right && direction == Direction.Decrease)
+                {
+                    double widthChange = SmallChange;
+                    if (tickCount > 10)
+                    {
+                        widthChange = LargeChange;
+                    }
+                    if (Orientation == Orientation.Horizontal)
+                    {
+
+                        if (position.X < ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth)
+                        {
+                            MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (position.Y < ActualHeight - _rightButton.ActualHeight - _rightThumb.ActualHeight)
+                        {
+                            MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    ReCalculateRangeSelected(true, true);
+                }
                 else if (bType == ButtonType.Left && direction == Direction.Decrease)
                 {
                     double widthChange = SmallChange;
@@ -1116,9 +1232,43 @@ namespace MahApps.Metro.Controls
                     }
                     else
                     {
-                        if (position.Y < _leftButton.ActualWidth)
+                        if (position.Y < _leftButton.ActualHeight)
                         {
                             MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    ReCalculateRangeSelected(true, true);
+                }
+                else if (bType == ButtonType.Left && direction == Direction.Increase)
+                {
+                    double widthChange = SmallChange;
+                    if (tickCount > 10)
+                    {
+                        widthChange = LargeChange;
+                    }
+                    if (Orientation == Orientation.Horizontal)
+                    {
+
+                        if (position.X > _leftButton.ActualWidth + _leftThumb.ActualWidth)
+                        {
+                            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                        }
+                        else
+                        {
+                            timer.Stop();
+                            tickCount = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (position.Y > _leftButton.ActualHeight + _leftThumb.ActualHeight)
+                        {
+                            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
                         }
                         else
                         {
