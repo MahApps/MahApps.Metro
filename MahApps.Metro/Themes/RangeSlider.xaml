@@ -2,93 +2,106 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type Controls:RangeSlider}">
-        <Setter Property="Maximum"
-                Value="100" />
-        <Style.Triggers>
-            <Trigger Property="Orientation" Value="Horizontal">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Controls:RangeSlider}">
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                                Name="PART_RangeSliderContainer">
-                                <RepeatButton Name="PART_LeftEdge"
-                                      Style="{DynamicResource HorizontalTrackLargeDecrease}" />
-                                <Thumb Name="PART_LeftThumb"
-                               Cursor="Hand"
-                               Height="{DynamicResource HorizontalThumbHeight}"
-                               Width="{DynamicResource HorizontalThumbWidth}"
-                               Style="{DynamicResource HorizontalSliderThumb}" />
-                                <Thumb Name="PART_MiddleThumb" 
-                               Cursor="Hand">
-                                    <Thumb.Style>
-                                        <Style TargetType="Thumb">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate>
-                                                        <Rectangle Height="3"
-                                                           Margin="0,0,0,0"
-                                                           Fill="{DynamicResource AccentColorBrush}" />
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Thumb.Style>
-                                </Thumb>
-                                <Thumb Name="PART_RightThumb"
-                               Cursor="Hand"
-                               Height="{DynamicResource HorizontalThumbHeight}"
-                               Width="{DynamicResource HorizontalThumbWidth}"
-                               Style="{DynamicResource HorizontalSliderThumb}" />
-                                <RepeatButton Name="PART_RightEdge"
-                                      Style="{DynamicResource HorizontalTrackLargeDecrease}" />
-                            </StackPanel>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
+    
+    <ControlTemplate x:Key="RangeSliderHorizontal" TargetType="Controls:RangeSlider">
+        <StackPanel Name="PART_Container" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <TickBar Name="PART_TopTick" Placement="Top" Fill="{TemplateBinding Foreground}" Height="4" Margin="5,0,5,2" Visibility="Collapsed"></TickBar>
+            <StackPanel Name="PART_RangeSliderContainer" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <RepeatButton Name="PART_LeftEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
+                <Thumb Name="PART_LeftThumb" Cursor="Hand" 
+                       Height="{DynamicResource HorizontalThumbHeight}"
+                       Width="{DynamicResource HorizontalThumbWidth}"
+                       Style="{DynamicResource HorizontalSliderThumb}" />
+                <Thumb Name="PART_MiddleThumb" Cursor="SizeWE" MinWidth="10">
+                    <Thumb.Style>
+                        <Style TargetType="Thumb">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Rectangle Height="3" Margin="0,0,0,0" Fill="{DynamicResource AccentColorBrush}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Thumb.Style>
+                </Thumb>
+                <Thumb Name="PART_RightThumb" Cursor="Hand"
+                                    Height="{DynamicResource HorizontalThumbHeight}"
+                                    Width="{DynamicResource HorizontalThumbWidth}"
+                                    Style="{DynamicResource HorizontalSliderThumb}" />
+                <RepeatButton Name="PART_RightEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
+            </StackPanel>
+            <TickBar Name="PART_BottomTick" Fill="{TemplateBinding Foreground}" Placement="Top" Height="4" Margin="5,2,5,0" Visibility="Collapsed"></TickBar>
+        </StackPanel>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter Property="Visibility" TargetName="PART_TopTick" Value="Visible"/>
             </Trigger>
-            <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Controls:RangeSlider}">
-                            <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Center"
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter Property="Visibility" TargetName="PART_BottomTick" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter Property="Visibility" TargetName="PART_TopTick" Value="Visible"/>
+                <Setter Property="Visibility" TargetName="PART_BottomTick" Value="Visible"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <ControlTemplate x:Key="RangeSliderVertical" TargetType="Controls:RangeSlider">
+        <StackPanel Name="PART_Container" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+            <TickBar Name="PART_TopTick" Placement="Left" Fill="{TemplateBinding Foreground}" Width="4" Margin="0,5,2,5" Visibility="Collapsed"></TickBar>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Stretch"
                                 Name="PART_RangeSliderContainer">
-                                <RepeatButton Name="PART_LeftEdge"
+                <RepeatButton Name="PART_LeftEdge"
                                       Style="{DynamicResource VerticalTrackLargeDecrease}" />
-                                <Thumb Name="PART_LeftThumb"
+                <Thumb Name="PART_LeftThumb"
                                Cursor="Hand"
                                Height="{DynamicResource VerticalThumbHeight}"
                                Width="{DynamicResource VerticalThumbWidth}"
                                Style="{DynamicResource VerticalSliderThumb}" />
-                                <Thumb Name="PART_MiddleThumb" 
-                               Cursor="SizeNS">
-                                    <Thumb.Style>
-                                        <Style TargetType="Thumb">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate>
-                                                        <Rectangle Width="3"
-                                                           Margin="0,0,0,0"
-                                                           Fill="{DynamicResource AccentColorBrush}" />
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Thumb.Style>
-                                </Thumb>
-                                <Thumb Name="PART_RightThumb"
-                               Cursor="Hand"
-                               Height="{DynamicResource VerticalThumbHeight}"
-                               Width="{DynamicResource VerticalThumbWidth}"
-                               Style="{DynamicResource VerticalSliderThumb}" />
-                                <RepeatButton Name="PART_RightEdge"
-                                      Style="{DynamicResource VerticalTrackLargeDecrease}" />
-                            </StackPanel>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
+                <Thumb Name="PART_MiddleThumb" Cursor="SizeNS" MinHeight="10">
+                    <Thumb.Style>
+                        <Style TargetType="Thumb">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Rectangle Width="3" Margin="0,0,0,0" Fill="{DynamicResource AccentColorBrush}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Thumb.Style>
+                </Thumb>
+                <Thumb Name="PART_RightThumb" Cursor="Hand" 
+                       Height="{DynamicResource VerticalThumbHeight}"
+                       Width="{DynamicResource VerticalThumbWidth}"
+                       Style="{DynamicResource VerticalSliderThumb}" />
+                <RepeatButton Name="PART_RightEdge" Style="{DynamicResource VerticalTrackLargeDecrease}" />
+            </StackPanel>
+            <TickBar Name="PART_BottomTick" Fill="{TemplateBinding Foreground}" Placement="Right" Width="4" Margin="2,5,0,5" Visibility="Collapsed"></TickBar>
+        </StackPanel>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter Property="Visibility" TargetName="PART_TopTick" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter Property="Visibility" TargetName="PART_BottomTick" Value="Visible"/>
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter Property="Visibility" TargetName="PART_TopTick" Value="Visible"/>
+                <Setter Property="Visibility" TargetName="PART_BottomTick" Value="Visible"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
+    <Style TargetType="{x:Type Controls:RangeSlider}">
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Template" Value="{StaticResource RangeSliderHorizontal}"></Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource RangeSliderVertical}"></Setter>
             </Trigger>
         </Style.Triggers>
-        
     </Style>
+    
 </ResourceDictionary>

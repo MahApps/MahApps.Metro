@@ -15,11 +15,14 @@ namespace MahApps.Metro.Controls
     /// A slider control with the ability to select a range between two values.
     /// </summary>
     [DefaultEvent("RangeSelectionChanged"),
+    TemplatePart(Name = "PART_Container", Type = typeof(StackPanel)),
     TemplatePart(Name = "PART_RangeSliderContainer", Type = typeof(StackPanel)),
     TemplatePart(Name = "PART_LeftEdge", Type = typeof(RepeatButton)),
     TemplatePart(Name = "PART_RightEdge", Type = typeof(RepeatButton)),
     TemplatePart(Name = "PART_LeftThumb", Type = typeof(Thumb)),
     TemplatePart(Name = "PART_MiddleThumb", Type = typeof(Thumb)),
+    TemplatePart(Name = "PART_PART_TopTick", Type = typeof(TickBar)),
+    TemplatePart(Name = "PART_PART_BottomTick", Type = typeof(TickBar)),
     TemplatePart(Name = "PART_RightThumb", Type = typeof(Thumb))]
     public sealed class RangeSlider : Slider
     {
@@ -184,6 +187,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("ExtendedMode", typeof(Boolean), typeof(RangeSlider),
                 new UIPropertyMetadata((Boolean)false));
 
+
         public Boolean ExtendedMode
         {
             get { return (Boolean)GetValue(ExtendedModeProperty); }
@@ -236,8 +240,6 @@ namespace MahApps.Metro.Controls
 
         #region Variables
 
-        private const Double RepeatButtonMoveRatio = 0.1;
-        private const Double DefaultSplittersThumbWidth = 10;
         private bool _internalUpdate;
         private Thumb _centerThumb;
         private Thumb _leftThumb;
@@ -245,10 +247,14 @@ namespace MahApps.Metro.Controls
         private RepeatButton _leftButton;
         private RepeatButton _rightButton;
         private StackPanel _visualElementsContainer;
+        private StackPanel _container;
+        private TickBar _topTick;
+        private TickBar _bottomTick;
         //private double _movableRange;
         private Double _movableWidth;
         private DispatcherTimer timer = new DispatcherTimer();
         private uint tickCount = 0;
+
 
         #endregion
 
@@ -270,11 +276,23 @@ namespace MahApps.Metro.Controls
 
         static RangeSlider()
         {
+            
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
             MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue, null, CoerceMaximum));
             MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue, null, CoerceMinimum));
-            
+            TickFrequencyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(10.0, OnTickPlacementChanged));
         }
+
+        private static void OnTickPlacementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            RangeSlider slider = (RangeSlider) d;
+            if (slider._topTick != null && slider._bottomTick != null)
+            {
+                slider._topTick.TickFrequency = slider.TickFrequency;
+                slider._bottomTick.TickFrequency = slider.TickFrequency;
+            }
+        }
+
 
         /// <summary>
         /// Responds to a change in the value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/> property.
@@ -397,61 +415,6 @@ namespace MahApps.Metro.Controls
             MoveSelection(false);
         }
 
-        
-
-        private void LeftButtonClick(object sender, RoutedEventArgs e)
-        {
-            
-            
-        }
-
-        private void RightButtonClick(object sender, RoutedEventArgs e)
-        {
-            if (Mouse.RightButton == MouseButtonState.Pressed)
-            {
-                Point p = Mouse.GetPosition(_rightButton);
-                if (IsMoveToPointEnabled && !MoveWholeSelection)
-                {
-                    if (Orientation == Orientation.Horizontal)
-                    {
-                        MoveThumb(_centerThumb, _rightButton, (p.X + (_rightThumb.ActualWidth/2)), Orientation);
-                    }
-                    else
-                    {
-                        MoveThumb(_centerThumb, _rightButton, (p.Y + (_rightThumb.ActualHeight/2)), Orientation);
-                    }
-                    ReCalculateRangeSelected(false, true);
-                }
-                else if (IsMoveToPointEnabled && MoveWholeSelection)
-                {
-                    if (Orientation == Orientation.Horizontal)
-                    {
-                        MoveThumb(_leftButton, _rightButton, (p.X + (_rightThumb.ActualWidth/2)),
-                            Orientation);
-                    }
-                    else
-                    {
-                        MoveThumb(_leftButton, _rightButton, (p.Y + (_rightThumb.ActualHeight/2)),
-                            Orientation);
-                    }
-                    ReCalculateRangeSelected(true, true);
-                }
-                else if (!IsMoveToPointEnabled && !MoveWholeSelection)
-                {
-
-                }
-                else if (!IsMoveToPointEnabled && MoveWholeSelection)
-                {
-
-                }
-                //else
-                //{
-                //    MoveSelection(false);
-                //}
-            }
-        }
-
-        
         private static void MoveThumb(FrameworkElement x, FrameworkElement y, double horizonalChange, Orientation orientation)
         {
             double change = 0;
@@ -730,13 +693,15 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            _container = EnforceInstance<StackPanel>("PART_Container");
             _visualElementsContainer = EnforceInstance<StackPanel>("PART_RangeSliderContainer");
-            _visualElementsContainer.HorizontalAlignment = HorizontalAlignment.Stretch;
             _centerThumb = EnforceInstance<Thumb>("PART_MiddleThumb");
             _leftButton = EnforceInstance<RepeatButton>("PART_LeftEdge");
             _rightButton = EnforceInstance<RepeatButton>("PART_RightEdge");
             _leftThumb = EnforceInstance<Thumb>("PART_LeftThumb");
             _rightThumb = EnforceInstance<Thumb>("PART_RightThumb");
+            _topTick = EnforceInstance<TickBar>("PART_TopTick");
+            _bottomTick = EnforceInstance<TickBar>("PART_BottomTick");
             InitializeVisualElementsContainer();
             ReCalculateWidths();
         }
@@ -751,18 +716,9 @@ namespace MahApps.Metro.Controls
         private void InitializeVisualElementsContainer()
         {
             _visualElementsContainer.Orientation = Orientation;
-            if (Orientation == Orientation.Horizontal)
-            {
-                _leftThumb.Width = DefaultSplittersThumbWidth;
-                _rightThumb.Width = DefaultSplittersThumbWidth;
-                _centerThumb.MinWidth = 10;
-            }
-            else if (Orientation == Orientation.Vertical)
-            {
-                _leftThumb.Height = DefaultSplittersThumbWidth;
-                _rightThumb.Height = DefaultSplittersThumbWidth;
-                _centerThumb.MinHeight = 10;
-            }
+
+            _topTick.TickFrequency = TickFrequency;
+            _bottomTick.TickFrequency = TickFrequency;
 
             _leftThumb.DragCompleted += LeftThumbDragComplete;
             _rightThumb.DragCompleted += RightThumbDragComplete;
@@ -1424,8 +1380,7 @@ namespace MahApps.Metro.Controls
             return (Double)basevalue > width ? width : (Double)basevalue;
         }
 
-
-
+       
 
         #region Unused methods. Candidates for deletion
 
