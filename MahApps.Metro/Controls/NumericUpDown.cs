@@ -333,7 +333,6 @@ namespace MahApps.Metro.Controls
 
             _repeatUp.PreviewMouseUp += (o, e) => ResetInternal();
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
-            GotFocus += OnGetFocus;
             OnValueChanged(Value, Value);
         }
 
@@ -720,11 +719,6 @@ namespace MahApps.Metro.Controls
         {
             EnableDisableUp();
             EnableDisableDown();
-        }
-
-        private void OnGetFocus(object sender, RoutedEventArgs e)
-        {
-            _valueTextBox.Focus();
         }
 
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
