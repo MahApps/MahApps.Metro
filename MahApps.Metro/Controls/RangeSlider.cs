@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
@@ -548,6 +550,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private double density = 0;
         private void ReCalculateWidths()
         {
             if (_leftButton != null && _rightButton != null && _centerThumb != null)
@@ -576,6 +579,7 @@ namespace MahApps.Metro.Controls
                             ActualHeight - _leftButton.Height - _rightButton.Height - _rightThumb.ActualHeight -
                             _leftThumb.ActualHeight, 0);
                 }
+                density = _movableWidth / (Maximum - Minimum);
             }
         }
 
@@ -603,7 +607,22 @@ namespace MahApps.Metro.Controls
                     // Make sure to get exactly rangestop if thumb is at the end
                     UpperValue = _rightButton.Width == 0.0
                         ? Maximum
-                        : Math.Min(Maximum, (Maximum - MovableRange*_rightButton.Width/_movableWidth));
+                        : Math.Min(Maximum, (Maximum - MovableRange * _rightButton.Width / _movableWidth));
+                    if (IsSnapToTickEnabled)
+                    {
+                        //if (!Equals(UpperValue%TickFrequency, 0.0))
+                        //{
+                        //    double x = UpperValue/TickFrequency;
+                        //    UpperValue = (int) x*TickFrequency;
+                        //    if (Maximum - UpperValue < TickFrequency)
+                        //    {
+                        //        UpperValue = Maximum;
+                        //    }
+                        //}
+
+                        //Rounding value to avoid bug with incorrect cheking UpperValue%TickFrequency == 0
+                        UpperValue = Math.Round(UpperValue, 10, MidpointRounding.AwayFromZero);
+                    }
 
                 }
 
@@ -715,7 +734,7 @@ namespace MahApps.Metro.Controls
         //adds all visual element to the conatiner
         private void InitializeVisualElementsContainer()
         {
-            _visualElementsContainer.Orientation = Orientation;
+            //_visualElementsContainer.Orientation = Orientation;
 
             _topTick.TickFrequency = TickFrequency;
             _bottomTick.TickFrequency = TickFrequency;
@@ -956,287 +975,349 @@ namespace MahApps.Metro.Controls
        
         void timer_Tick(object sender, EventArgs e)
         {
-            if (!MoveWholeSelection)
+            if (!IsSnapToTickEnabled)
             {
-                if (bType == ButtonType.Right && direction == Direction.Increase)
+                if (!MoveWholeSelection)
                 {
-                    double widthChange = SmallChange;
-                    if (tickCount > 10)
+                    if (bType == ButtonType.Right && direction == Direction.Increase)
                     {
-                        widthChange = LargeChange;
-                    }
-                    if (Orientation == Orientation.Horizontal)
-                    {
-                        
-                        if (position.X > ActualWidth - _rightButton.ActualWidth)
+                        double widthChange = SmallChange;
+                        if (tickCount > 10)
                         {
-                            MoveThumb(_centerThumb, _rightButton, widthChange, Orientation);
+                            widthChange = LargeChange;
                         }
-                        else
+                        if (Orientation == Orientation.Horizontal)
                         {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    else
-                    {
-                        if (position.Y > ActualHeight - _rightButton.ActualHeight)
-                        {
-                            MoveThumb(_centerThumb, _rightButton, widthChange, Orientation);
-                        }
-                        else
-                        {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    ReCalculateRangeSelected(false, true);
-                }
-                else if (bType == ButtonType.Right && direction == Direction.Decrease)
-                {
-                    double widthChange = SmallChange;
-                    if (tickCount > 10)
-                    {
-                        widthChange = LargeChange;
-                    }
-                    if (Orientation == Orientation.Horizontal)
-                    {
 
-                        if (position.X < ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth)
-                        {
-                            MoveThumb(_centerThumb, _rightButton, -widthChange, Orientation);
+                            if (position.X > ActualWidth - _rightButton.ActualWidth)
+                            {
+                                MoveThumb(_centerThumb, _rightButton, widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
                         }
                         else
                         {
-                            timer.Stop();
-                            tickCount = 0;
+                            if (position.Y > ActualHeight - _rightButton.ActualHeight)
+                            {
+                                MoveThumb(_centerThumb, _rightButton, widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
                         }
+                        ReCalculateRangeSelected(false, true);
                     }
-                    else
+                    else if (bType == ButtonType.Right && direction == Direction.Decrease)
                     {
-                        if (position.Y < ActualHeight - _rightButton.ActualHeight - _rightThumb.ActualHeight)
+                        double widthChange = SmallChange;
+                        if (tickCount > 10)
                         {
-                            MoveThumb(_centerThumb, _rightButton, -widthChange, Orientation);
+                            widthChange = LargeChange;
                         }
-                        else
+                        if (Orientation == Orientation.Horizontal)
                         {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    ReCalculateRangeSelected(false, true);
-                }
-                else if (bType == ButtonType.Left && direction == Direction.Decrease)
-                {
-                    double widthChange = SmallChange;
-                    if (tickCount > 10)
-                    {
-                        widthChange = LargeChange;
-                    }
-                    if (Orientation == Orientation.Horizontal)
-                    {
 
-                        if (position.X < _leftButton.ActualWidth)
-                        {
-                            MoveThumb(_leftButton, _centerThumb, -widthChange, Orientation);
+                            if (position.X < ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth)
+                            {
+                                MoveThumb(_centerThumb, _rightButton, -widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
                         }
                         else
                         {
-                            timer.Stop();
-                            tickCount = 0;
+                            if (position.Y < ActualHeight - _rightButton.ActualHeight - _rightThumb.ActualHeight)
+                            {
+                                MoveThumb(_centerThumb, _rightButton, -widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
                         }
+                        ReCalculateRangeSelected(false, true);
                     }
-                    else
+                    else if (bType == ButtonType.Left && direction == Direction.Decrease)
                     {
-                        if (position.Y < _leftButton.ActualHeight)
+                        double widthChange = SmallChange;
+                        if (tickCount > 10)
                         {
-                            MoveThumb(_leftButton, _centerThumb, -widthChange, Orientation);
+                            widthChange = LargeChange;
                         }
-                        else
+                        if (Orientation == Orientation.Horizontal)
                         {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    ReCalculateRangeSelected(true, false);
-                }
-                else if (bType == ButtonType.Left && direction == Direction.Increase)
-                {
-                    double widthChange = SmallChange;
-                    if (tickCount > 10)
-                    {
-                        widthChange = LargeChange;
-                    }
-                    if (Orientation == Orientation.Horizontal)
-                    {
 
-                        if (position.X > _leftButton.ActualWidth+_leftThumb.ActualWidth)
-                        {
-                            MoveThumb(_leftButton, _centerThumb, widthChange, Orientation);
+                            if (position.X < _leftButton.ActualWidth)
+                            {
+                                MoveThumb(_leftButton, _centerThumb, -widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
                         }
                         else
                         {
-                            timer.Stop();
-                            tickCount = 0;
+                            if (position.Y < _leftButton.ActualHeight)
+                            {
+                                MoveThumb(_leftButton, _centerThumb, -widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
                         }
+                        ReCalculateRangeSelected(true, false);
                     }
-                    else
+                    else if (bType == ButtonType.Left && direction == Direction.Increase)
                     {
-                        if (position.Y > _leftButton.ActualHeight + _leftThumb.ActualHeight)
+                        double widthChange = SmallChange;
+                        if (tickCount > 10)
                         {
-                            MoveThumb(_leftButton, _centerThumb, widthChange, Orientation);
+                            widthChange = LargeChange;
+                        }
+                        if (Orientation == Orientation.Horizontal)
+                        {
+
+                            if (position.X > _leftButton.ActualWidth + _leftThumb.ActualWidth)
+                            {
+                                MoveThumb(_leftButton, _centerThumb, widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
                         }
                         else
                         {
-                            timer.Stop();
-                            tickCount = 0;
+                            if (position.Y > _leftButton.ActualHeight + _leftThumb.ActualHeight)
+                            {
+                                MoveThumb(_leftButton, _centerThumb, widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
                         }
+                        ReCalculateRangeSelected(false, true);
                     }
-                    ReCalculateRangeSelected(false, true);
+                    tickCount++;
                 }
-                tickCount++;
+                else
+                {
+                    if (bType == ButtonType.Right && direction == Direction.Increase)
+                    {
+                        double widthChange = SmallChange;
+                        if (tickCount > 10)
+                        {
+                            widthChange = LargeChange;
+                        }
+                        if (Orientation == Orientation.Horizontal)
+                        {
+
+                            if (position.X > ActualWidth - _rightButton.ActualWidth)
+                            {
+                                MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (position.Y > ActualHeight - _rightButton.ActualHeight)
+                            {
+                                MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
+                        }
+                        ReCalculateRangeSelected(true, true);
+                    }
+                    else if (bType == ButtonType.Right && direction == Direction.Decrease)
+                    {
+                        double widthChange = SmallChange;
+                        if (tickCount > 10)
+                        {
+                            widthChange = LargeChange;
+                        }
+                        if (Orientation == Orientation.Horizontal)
+                        {
+
+                            if (position.X < ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth)
+                            {
+                                MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (position.Y < ActualHeight - _rightButton.ActualHeight - _rightThumb.ActualHeight)
+                            {
+                                MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
+                        }
+                        ReCalculateRangeSelected(true, true);
+                    }
+                    else if (bType == ButtonType.Left && direction == Direction.Decrease)
+                    {
+                        double widthChange = SmallChange;
+                        if (tickCount > 10)
+                        {
+                            widthChange = LargeChange;
+                        }
+                        if (Orientation == Orientation.Horizontal)
+                        {
+
+                            if (position.X < _leftButton.ActualWidth)
+                            {
+                                MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (position.Y < _leftButton.ActualHeight)
+                            {
+                                MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
+                        }
+                        ReCalculateRangeSelected(true, true);
+                    }
+                    else if (bType == ButtonType.Left && direction == Direction.Increase)
+                    {
+                        double widthChange = SmallChange;
+                        if (tickCount > 10)
+                        {
+                            widthChange = LargeChange;
+                        }
+                        if (Orientation == Orientation.Horizontal)
+                        {
+
+                            if (position.X > _leftButton.ActualWidth + _leftThumb.ActualWidth)
+                            {
+                                MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (position.Y > _leftButton.ActualHeight + _leftThumb.ActualHeight)
+                            {
+                                MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
+                        }
+                        ReCalculateRangeSelected(true, true);
+                    }
+                    tickCount++;
+                }
             }
             else
             {
-                if (bType == ButtonType.Right && direction == Direction.Increase)
+                if (MoveWholeSelection)
                 {
-                    double widthChange = SmallChange;
-                    if (tickCount > 10)
+                    if (bType == ButtonType.Right && direction == Direction.Increase)
                     {
-                        widthChange = LargeChange;
-                    }
-                    if (Orientation == Orientation.Horizontal)
-                    {
-
-                        if (position.X > ActualWidth - _rightButton.ActualWidth)
+                        if (Orientation == Orientation.Horizontal)
                         {
-                            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                            double x = 0;
+                            if (tickCount%3 == 0)
+                            {
+                                if (UpperValue%TickFrequency != 0)
+                                {
+                                    x = UpperValue/TickFrequency;
+                                    double change = TickFrequency*(int) x;
+                                    change += TickFrequency;
+                                    if (position.X > ActualWidth - _rightButton.ActualWidth)
+                                    {
+                                        MoveThumb(_leftButton, _rightButton, (change - UpperValue)*density, Orientation);
+                                        ReCalculateRangeSelected(true, true);
+                                    }
+                                    else
+                                    {
+                                        timer.Stop();
+                                        tickCount = 0;
+                                    }
+                                }
+                                else
+                                {
+                                    if (position.X > ActualWidth - _rightButton.ActualWidth)
+                                    {
+                                        MoveThumb(_leftButton, _rightButton, TickFrequency*density, Orientation);
+                                        ReCalculateRangeSelected(true, true);
+                                    }
+                                    else
+                                    {
+                                        timer.Stop();
+                                        tickCount = 0;
+                                    }
+                                }
+                            }
                         }
                         else
                         {
-                            timer.Stop();
-                            tickCount = 0;
+                            if (position.Y > ActualHeight - _rightButton.ActualHeight)
+                            {
+                                //MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                            }
+                            else
+                            {
+                                timer.Stop();
+                                tickCount = 0;
+                            }
                         }
+                        ReCalculateRangeSelected(true, true);
                     }
-                    else
-                    {
-                        if (position.Y > ActualHeight - _rightButton.ActualHeight)
-                        {
-                            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
-                        }
-                        else
-                        {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    ReCalculateRangeSelected(true, true);
+                    tickCount++;
                 }
-                else if (bType == ButtonType.Right && direction == Direction.Decrease)
-                {
-                    double widthChange = SmallChange;
-                    if (tickCount > 10)
-                    {
-                        widthChange = LargeChange;
-                    }
-                    if (Orientation == Orientation.Horizontal)
-                    {
-
-                        if (position.X < ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth)
-                        {
-                            MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
-                        }
-                        else
-                        {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    else
-                    {
-                        if (position.Y < ActualHeight - _rightButton.ActualHeight - _rightThumb.ActualHeight)
-                        {
-                            MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
-                        }
-                        else
-                        {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    ReCalculateRangeSelected(true, true);
-                }
-                else if (bType == ButtonType.Left && direction == Direction.Decrease)
-                {
-                    double widthChange = SmallChange;
-                    if (tickCount > 10)
-                    {
-                        widthChange = LargeChange;
-                    }
-                    if (Orientation == Orientation.Horizontal)
-                    {
-
-                        if (position.X < _leftButton.ActualWidth)
-                        {
-                            MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
-                        }
-                        else
-                        {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    else
-                    {
-                        if (position.Y < _leftButton.ActualHeight)
-                        {
-                            MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
-                        }
-                        else
-                        {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    ReCalculateRangeSelected(true, true);
-                }
-                else if (bType == ButtonType.Left && direction == Direction.Increase)
-                {
-                    double widthChange = SmallChange;
-                    if (tickCount > 10)
-                    {
-                        widthChange = LargeChange;
-                    }
-                    if (Orientation == Orientation.Horizontal)
-                    {
-
-                        if (position.X > _leftButton.ActualWidth + _leftThumb.ActualWidth)
-                        {
-                            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
-                        }
-                        else
-                        {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    else
-                    {
-                        if (position.Y > _leftButton.ActualHeight + _leftThumb.ActualHeight)
-                        {
-                            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
-                        }
-                        else
-                        {
-                            timer.Stop();
-                            tickCount = 0;
-                        }
-                    }
-                    ReCalculateRangeSelected(true, true);
-                }
-                tickCount++;
             }
-            
+
         }
 
         enum ButtonType
@@ -1281,12 +1362,93 @@ namespace MahApps.Metro.Controls
             RaiseEvent(e);
         }
 
+        private double temp;
+        private Point currentPoint;
         private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            double change = Orientation == Orientation.Horizontal ? e.HorizontalChange :
-            e.VerticalChange;
-            MoveThumb(_centerThumb, _rightButton, change, Orientation);
-            ReCalculateRangeSelected(false, true);
+            double change = Orientation == Orientation.Horizontal
+                    ? e.HorizontalChange
+                    : e.VerticalChange;
+            if (!IsSnapToTickEnabled)
+            {
+                MoveThumb(_centerThumb, _rightButton, change, Orientation);
+                ReCalculateRangeSelected(false, true);
+            }
+            else
+            {
+                Direction localDirection;
+                currentPoint = Mouse.GetPosition(_container);
+                if (currentPoint.X < _container.ActualWidth  && currentPoint.X > _leftButton.ActualWidth + _leftThumb.ActualWidth + _centerThumb.MinWidth )
+                {
+                    if (currentPoint.X > basePoint.X)
+                    {
+                        localDirection = Direction.Increase;
+                    }
+                    else
+                    {
+                        localDirection = Direction.Decrease;
+                    }
+                    if (localDirection == Direction.Increase)
+                    {
+                        if (!Equals(UpperValue%TickFrequency, 0.0))
+                        {
+                            double x = UpperValue/TickFrequency;
+                            change = TickFrequency*(int) x;
+                            change += TickFrequency;
+                            change = (change - UpperValue)*density;
+                            MoveThumb(_centerThumb, _rightButton, change, Orientation);
+                            ReCalculateRangeSelected(false, true);
+                        }
+                        else
+                        {
+                            temp += change;
+                            double d = (TickFrequency*density)/2;
+                            if (temp > d+1)
+                            {
+                                double value = UpperValue + (temp / density);
+                                double x = value / TickFrequency;
+                                change = ((int)x * TickFrequency) + TickFrequency;
+                                value = (change - value) *density;
+                                temp += value;
+                                MoveThumb(_centerThumb, _rightButton, temp, Orientation);
+                                ReCalculateRangeSelected(false, true);
+                                temp = 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!Equals(UpperValue%TickFrequency, 0.0))
+                        {
+                            double x = UpperValue / TickFrequency;
+                            change = TickFrequency * (int)x;
+                            MoveThumb(_centerThumb, _rightButton, -((UpperValue - change) * density), Orientation);
+                            ReCalculateRangeSelected(false, true);
+                        }
+                        else
+                        {
+                            double d = -(TickFrequency*density)/2;
+                            temp += change;
+                            if (temp < d-1)
+                            {
+                                double value = UpperValue - (temp / density);
+                                double x = value / TickFrequency;
+                                change = (int)x * TickFrequency;
+                                value = (value - change) * density;
+                                temp += value;
+                                MoveThumb(_centerThumb, _rightButton, temp, Orientation);
+                                ReCalculateRangeSelected(false, true);
+                                temp = 0;
+                            }
+                        }
+                    }
+                    basePoint = Mouse.GetPosition(_container);
+                }
+                else
+                {
+                    temp = 0;
+                }
+            }
             e.RoutedEvent = UpperThumbDragDeltaEvent;
             RaiseEvent(e);
         }
@@ -1302,8 +1464,11 @@ namespace MahApps.Metro.Controls
             RaiseEvent(e);
         }
 
+        private Point basePoint;
+
         private void RightThumbDragStart(object sender, DragStartedEventArgs e)
         {
+            basePoint = Mouse.GetPosition(_container);
             e.RoutedEvent = UpperThumbDragStartedEvent;
             RaiseEvent(e);
         }
