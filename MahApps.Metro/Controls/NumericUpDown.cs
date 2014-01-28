@@ -558,6 +558,12 @@ namespace MahApps.Metro.Controls
 
         private void InternalSetText(double? newValue)
         {
+            if (!newValue.HasValue)
+            {
+                _valueTextBox.Text = null;
+                return;
+            }
+
             CultureInfo culture = SpecificCultureInfo;
             if (string.IsNullOrEmpty(StringFormat))
             {
