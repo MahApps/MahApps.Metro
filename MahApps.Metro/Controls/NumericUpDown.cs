@@ -492,6 +492,11 @@ namespace MahApps.Metro.Controls
         /// </param>
         protected virtual void OnValueChanged(double? oldValue, double? newValue)
         {
+            if (_manualChange)
+            {
+                return;
+            }
+
             if (!newValue.HasValue)
             {
                 if (_valueTextBox != null)
@@ -735,10 +740,7 @@ namespace MahApps.Metro.Controls
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
-            if (!_manualChange)
-            {
-                return;
-            }
+            _manualChange = false;
 
             double convertedValue;
             if (ValidateText(tb.Text, out convertedValue))
@@ -785,6 +787,15 @@ namespace MahApps.Metro.Controls
             if (String.IsNullOrEmpty(((TextBox)sender).Text))
             {
                 Value = null;
+            }
+            else if (_manualChange)
+            {
+                double convertedValue;
+                if (ValidateText(((TextBox)sender).Text, out convertedValue))
+                {
+                    Value = convertedValue;
+                    e.Handled = true;
+                }
             }
         }
 
