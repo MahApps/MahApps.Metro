@@ -23,6 +23,9 @@ namespace MahApps.Metro.Controls
     {
         #region Readonly
 
+        private const string ScientificNotationChar = "E";
+        private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
+
         public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
@@ -409,8 +412,6 @@ namespace MahApps.Metro.Controls
 
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            const string scientificNotationChar = "E";
-            const StringComparison strComp = StringComparison.InvariantCultureIgnoreCase;
 
             e.Handled = true;
             if (string.IsNullOrWhiteSpace(e.Text) ||
@@ -448,8 +449,8 @@ namespace MahApps.Metro.Controls
                             //check if text already has a + or - sign
                             if (textBox.Text.Length > 1)
                             {
-                                if (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, strComp) &&
-                                    !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, strComp))
+                                if (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, StrComp) &&
+                                    !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, StrComp))
                                 {
                                     e.Handled = false;
                                 }
@@ -462,15 +463,15 @@ namespace MahApps.Metro.Controls
                         else if (textBox.SelectionStart > 0)
                         {
                             string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
-                            if (elementBeforeCaret.Equals(scientificNotationChar, strComp))
+                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp))
                             {
                                 e.Handled = false;
                             }
                         }
                     }
-                    else if (text.Equals(scientificNotationChar, strComp) &&
+                    else if (text.Equals(ScientificNotationChar, StrComp) &&
                              textBox.SelectionStart > 0 &&
-                             !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(scientificNotationChar, strComp)))
+                             !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(ScientificNotationChar, StrComp)))
                     {
                         e.Handled = false;
                     }
@@ -817,6 +818,12 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
+            string format = StringFormat;
+            if (format.IndexOf("{", StrComp) > -1)
+            {
+                format = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray());
+                text = text.Replace(format, string.Empty);
+            }
             return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
         }
     }
