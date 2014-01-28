@@ -845,9 +845,13 @@ namespace MahApps.Metro.Controls
             {
                 if (indexOf > 0)
                 {
+                    //remove beginning e.g.
+                    //pcs. from "pcs. {0:N2}"
                     string toRemove = format.Substring(0, indexOf);
                     text = text.Replace(toRemove, string.Empty);
                 }
+                //remove tailing e.g.
+                //pcs. from "{0:N2} pcs."
                 format = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray());
                 text = text.Replace(format, string.Empty);
             }
