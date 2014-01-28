@@ -549,14 +549,14 @@ namespace MahApps.Metro.Controls
 
             if (_valueTextBox != null)
             {
-                InternalSetToTextBox(newValue);
+                InternalSetText(newValue);
             }
 
             var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue) { RoutedEvent = RangeBase.ValueChangedEvent };
             RaiseEvent(eventArgs);
         }
 
-        private void InternalSetToTextBox(double? newValue)
+        private void InternalSetText(double? newValue)
         {
             CultureInfo culture = SpecificCultureInfo;
             if (string.IsNullOrEmpty(StringFormat))
@@ -796,7 +796,7 @@ namespace MahApps.Metro.Controls
                     Value = convertedValue;
                     if (convertedValue != Value)
                     {
-                        InternalSetToTextBox(Value);
+                        InternalSetText(Value);
                     }
                     e.Handled = true;
                 }
