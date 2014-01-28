@@ -823,9 +823,16 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
+            //remove special string formattings in order to be able to parse it to double e.g. StringFormat = "{0:N2} pcs." then remove pcs. from text
             string format = StringFormat;
-            if (format.IndexOf("{", StrComp) > -1)
+            int indexOf = format.IndexOf("{", StrComp);
+            if (indexOf > -1)
             {
+                if (indexOf > 0)
+                {
+                    string toRemove = format.Substring(0, indexOf);
+                    text = text.Replace(toRemove, string.Empty);
+                }
                 format = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray());
                 text = text.Replace(format, string.Empty);
             }
