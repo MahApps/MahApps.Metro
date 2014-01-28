@@ -382,7 +382,7 @@ namespace MahApps.Metro.Controls
         {
             if (e.Accent != null)
             {
-                var flyouts = this.Flyouts.Items.Cast<Flyout>().ToList();
+                var flyouts = this.Flyouts.GetFlyouts().ToList();
 
                 if (!flyouts.Any())
                     return;

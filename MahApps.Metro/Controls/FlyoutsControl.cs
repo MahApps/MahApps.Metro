@@ -135,6 +135,11 @@ namespace MahApps.Metro.Controls
             return (Flyout)this.ItemContainerGenerator.ContainerFromItem(item);
         }
 
+        internal IEnumerable<Flyout> GetFlyouts()
+        {
+            return GetFlyouts(this.Items);
+        }
+
         private IEnumerable<Flyout> GetFlyouts(IEnumerable items)
         {
             return from object item in items select this.GetFlyout(item);
