@@ -54,7 +54,7 @@ namespace MahApps.Metro.Behaviours
 
         void AssociatedMetroWindow_FlyoutsStatusChanged(object sender, RoutedEventArgs e)
         {
-            var flyouts = this.AssociatedMetroWindow.Flyouts.Items.Cast<Flyout>().ToList();
+            var flyouts = this.AssociatedMetroWindow.Flyouts.GetFlyouts().ToList();
             this.AssociatedMetroWindow.HandleWindowCommandsForFlyouts(flyouts, (Brush) this.AssociatedMetroWindow.FindResource("BlackColorBrush"));
         }
     }
