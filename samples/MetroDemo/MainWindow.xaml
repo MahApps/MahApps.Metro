@@ -346,7 +346,7 @@
                                          Controls:TextboxHelper.Watermark="Watermark"
                                          Controls:ControlsHelper.ButtonWidth="30"
                                          Text="Big" />
-                                <TextBox Margin="0, 10, 0, 0"
+                                <TextBox Margin="0, 10, 0, 0" Name="test1"
                                          Controls:TextboxHelper.Watermark="Search style"
                                          Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                                          Style="{DynamicResource SearchMetroTextBox}" />
@@ -477,14 +477,13 @@
                                 <Controls:NumericUpDown Value="5" 
                                                         Speedup="false" />
                                 <Label Content="Speedup when long pressed but after 500ms" />
-                                <Controls:NumericUpDown Controls:TextboxHelper.Watermark="Test" Delay="500"
+                                <Controls:NumericUpDown Controls:TextboxHelper.Watermark="Test" Delay="500" 
                                                         Speedup="true" />
 
                                 <Label Content="StringFormat" />
                                 <Label Content="{Binding ElementName=test, Path=Value}" />
-                                <Controls:NumericUpDown x:Name="test" Value="5" 
-                                                        Interval=".1"  
-                                                        StringFormat="{}{0:N2} pcs." />
+                                <Controls:NumericUpDown Value="5" 
+                                                      x:Name="test"  StringFormat="pcs. {0:N2} pcs." Maximum="100"/>
                                 <Controls:NumericUpDown Value="5"
                                                         Interval=".1" 
                                                         StringFormat="0,000.00" />
