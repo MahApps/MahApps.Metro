@@ -544,28 +544,33 @@ namespace MahApps.Metro.Controls
 
             if (_valueTextBox != null)
             {
-                CultureInfo culture = SpecificCultureInfo;
-                if (string.IsNullOrEmpty(StringFormat))
-                {
-                    _valueTextBox.Text = newValue.Value.ToString(culture);
-                }
-                else if (!StringFormat.Contains("{")) //then we may have a StringFormat of e.g. "N0"
-                {
-                    _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
-                }
-                else
-                {
-                    _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
-                }
-
-                if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
-                {
-                    SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
-                }
+                InternalSetToTextBox(newValue);
             }
 
             var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue) { RoutedEvent = RangeBase.ValueChangedEvent };
             RaiseEvent(eventArgs);
+        }
+
+        private void InternalSetToTextBox(double? newValue)
+        {
+            CultureInfo culture = SpecificCultureInfo;
+            if (string.IsNullOrEmpty(StringFormat))
+            {
+                _valueTextBox.Text = newValue.Value.ToString(culture);
+            }
+            else if (!StringFormat.Contains("{")) //then we may have a StringFormat of e.g. "N0"
+            {
+                _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
+            }
+            else
+            {
+                _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
+            }
+
+            if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
+            {
+                SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
+            }
         }
 
         private static object CoerceMaximum(DependencyObject d, object value)
