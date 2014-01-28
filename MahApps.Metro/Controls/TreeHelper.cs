@@ -101,6 +101,34 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Analyzes the visual tree in order to find all elements of a given
+        /// type that are descendants of the <paramref name="source"/> item.
+        /// </summary>
+        /// <typeparam name="T">The type of the queried items.</typeparam>
+        /// <param name="source">The root element that marks the source of the search. If the
+        /// source is already of the requested type, it will not be included in the result.</param>
+        /// <returns>All visual descendants of <paramref name="source"/> that match the requested type.</returns>
+        public static IEnumerable<T> FindVisualChildren<T>(this DependencyObject source) where T : DependencyObject
+        {
+            if (source != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(source); i++)
+                {
+                    var child = VisualTreeHelper.GetChild(source, i);
+                    if (child is T)
+                    {
+                        yield return (T)child;
+                    }
+
+                    foreach (T childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// This method is an alternative to WPF's
         /// <see cref="VisualTreeHelper.GetChild"/> method, which also
         /// supports content elements. Keep in mind that for content elements,
