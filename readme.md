@@ -74,4 +74,4 @@ If you've improved MahApps.Metro and think that other people would enjoy it, sub
 
 ### Chatroom
 
-Drop in on the Gitter room - https://gitter.im/MahApps/MahApps.Metro - if you want to ask a question or dicuss something with the team.
+Drop in on the Gitter room - https://gitter.im/MahApps/MahApps.Metro - if you want to ask a question or discuss something with the team.
