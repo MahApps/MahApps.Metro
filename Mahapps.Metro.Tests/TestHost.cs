@@ -10,8 +10,12 @@ namespace Mahapps.Metro.Tests
     /// This class is the ultimate hack to work around that we can't 
     /// create more than one application in the same AppDomain
     /// 
-    /// It is once initialized at the start and never properly cleaned up, 
+    /// It is initialized once at startup and is never properly cleaned up, 
     /// this means the AppDomain will throw an exception when xUnit unloads it.
+    /// 
+    /// Your test runner will inevitably hate you and hang endlessly.
+    /// 
+    /// Better than no unit tests.
     /// </summary>
     public class TestHost
     {
