@@ -33,6 +33,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4166BE
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mahapps.Metro.Tests", "Mahapps.Metro.Tests\Mahapps.Metro.Tests.csproj", "{4B381135-F480-478E-9635-B76A425670B7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5B1710D2-5DC8-4754-91B2-19165DE49B3D} = {5B1710D2-5DC8-4754-91B2-19165DE49B3D}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +75,10 @@ Global
 		{6107F8A7-28DB-45D9-B822-0BB8C1AE2095}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6107F8A7-28DB-45D9-B822-0BB8C1AE2095}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6107F8A7-28DB-45D9-B822-0BB8C1AE2095}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B381135-F480-478E-9635-B76A425670B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B381135-F480-478E-9635-B76A425670B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B381135-F480-478E-9635-B76A425670B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B381135-F480-478E-9635-B76A425670B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
