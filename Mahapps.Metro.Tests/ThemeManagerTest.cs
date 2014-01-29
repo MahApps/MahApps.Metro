@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using Xunit;
@@ -16,11 +18,10 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = new MetroWindow();
-            window.Show();
+            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             Accent expectedAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Teal");
-            ThemeManager.ChangeTheme(window, expectedAccent, Theme.Dark);
+            ThemeManager.ChangeTheme(Application.Current, expectedAccent, Theme.Dark);
 
             var theme = ThemeManager.DetectTheme(window);
 
