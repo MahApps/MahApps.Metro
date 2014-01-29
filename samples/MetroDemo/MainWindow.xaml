@@ -1275,6 +1275,26 @@
                         </StackPanel>
                     </Grid>
                 </TabItem>
+                <TabItem Header="colors">
+                    <ScrollViewer>
+                        <StackPanel TextBlock.TextAlignment="Center" TextElement.FontFamily="{DynamicResource DefaultFont}" TextElement.FontSize="{DynamicResource NormalFontSize}">
+                            <TextBlock Height="40" Background="{DynamicResource AccentColorBrush}" Text="AccentColorBrush"/>
+                            <TextBlock Height="40" Background="{DynamicResource AccentColorBrush2}" Text="AccentColorBrush2"/>
+                            <TextBlock Height="40" Background="{DynamicResource AccentColorBrush3}" Text="AccentColorBrush3"/>
+                            <TextBlock Height="40" Background="{DynamicResource AccentColorBrush4}" Text="AccentColorBrush4"/>
+                            <TextBlock Height="40" Background="{DynamicResource HighlightBrush}" Text="HighlightBrush"/>
+                            <TextBlock Height="40" Background="{DynamicResource WindowTitleColorBrush}" Text="WindowTitleColorBrush"/>
+                            <TextBlock Height="40" Background="{DynamicResource AccentSelectedColorBrush}" Text="AccentSelectedColorBrush"/>
+
+                            <TextBlock Height="40" Background="{DynamicResource ProgressBrush}" Text="ProgressBrush"/>
+                            <TextBlock Height="40" Background="{DynamicResource CheckmarkFill}" Text="CheckmarkFill"/>
+                            <TextBlock Height="40" Background="{DynamicResource RightArrowFill}" Text="RightArrowFill"/>
+                            <TextBlock Height="40" Background="{DynamicResource IdealForegroundColorBrush}" Text="IdealForegroundColorBrush"/>
+
+
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
         </Grid>
     </Controls:MetroContentControl>
