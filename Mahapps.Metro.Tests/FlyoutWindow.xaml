@@ -6,6 +6,9 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
+    <controls:WindowCommands>
+        <Button Content="Test" />
+    </controls:WindowCommands>
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout x:Name="DefaultFlyout" />

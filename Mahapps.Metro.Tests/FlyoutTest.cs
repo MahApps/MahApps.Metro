@@ -25,7 +25,7 @@ namespace Mahapps.Metro.Tests
 
             Assert.Equal(Position.Left, window.DefaultFlyout.Position);
         }
-
+        
         [Fact]
         public async Task DefaultFlyoutThemeIsDark()
         {
@@ -35,7 +35,7 @@ namespace Mahapps.Metro.Tests
 
             Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
         }
-
+        
         [Fact]
         public async Task DefaultActualThemeIsDark()
         {
@@ -106,39 +106,39 @@ namespace Mahapps.Metro.Tests
         }
 
         [Theory]
-        [InlineData(FlyoutTheme.Dark, FlyoutTheme.Dark, Theme.Dark, "BlackBrush")]
-        [InlineData(FlyoutTheme.Dark, FlyoutTheme.Light, Theme.Dark, "BlackBrush")]
-        [InlineData(FlyoutTheme.Light, FlyoutTheme.Dark, Theme.Light, "BlackBrush")]
-        [InlineData(FlyoutTheme.Light, FlyoutTheme.Light, Theme.Light, "BlackBrush")]
+        [InlineData(FlyoutTheme.Dark, FlyoutTheme.Dark)]
+        [InlineData(FlyoutTheme.Dark, FlyoutTheme.Light)]
+        [InlineData(FlyoutTheme.Light, FlyoutTheme.Dark)]
+        [InlineData(FlyoutTheme.Light, FlyoutTheme.Light)]
         public async Task ClosingFlyoutWithOtherFlyoutBelowHasCorrectWindowCommandsColor(
-            FlyoutTheme belowTheme, FlyoutTheme upperTheme, Theme themeLookup, string brush)
+            FlyoutTheme underLyingFlyoutTheme, FlyoutTheme upperFlyoutTheme)
         {
             await TestHost.SwitchToAppThread();
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.RightFlyout.Theme = FlyoutTheme.Light;
-            window.RightFlyout2.Theme = FlyoutTheme.Light;
+            window.RightFlyout.Theme = underLyingFlyoutTheme;
+            window.RightFlyout2.Theme = upperFlyoutTheme;
 
             window.RightFlyout.IsOpen = true;
             window.RightFlyout2.IsOpen = true;
 
             window.RightFlyout2.IsOpen = false;
 
-            var brushColor = default(Color);
+            var expectedBrushColor = default(Color);
 
-            switch (themeLookup)
+            switch (window.RightFlyout.ActualTheme)
             {
                 case Theme.Dark:
-                    brushColor = ((SolidColorBrush)ThemeManager.DarkResource[brush]).Color;
+                    expectedBrushColor = ((SolidColorBrush)ThemeManager.DarkResource["BlackBrush"]).Color;
                     break;
 
                 case Theme.Light:
-                    brushColor = ((SolidColorBrush)ThemeManager.LightResource[brush]).Color;
+                    expectedBrushColor = ((SolidColorBrush)ThemeManager.LightResource["BlackBrush"]).Color;
                     break;
             }
-
-            Assert.Equal(brushColor, ((SolidColorBrush)window.WindowCommands.Foreground).Color);
-            Assert.Equal(brushColor, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
+            
+            Assert.True(window.WindowCommands.Items.Cast<Button>().All(x => ((SolidColorBrush) x.Foreground).Color == expectedBrushColor));
+            Assert.Equal(expectedBrushColor, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
         }
     }
 }

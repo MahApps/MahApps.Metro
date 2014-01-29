@@ -13,7 +13,8 @@ namespace Mahapps.Metro.Tests
     /// It is initialized once at startup and is never properly cleaned up, 
     /// this means the AppDomain will throw an exception when xUnit unloads it.
     /// 
-    /// Your test runner will inevitably hate you and hang endlessly.
+    /// Your test runner will inevitably hate you and hang endlessly after every test has run.
+    /// The Resharper runner will also throw an exception message in your face.
     /// 
     /// Better than no unit tests.
     /// </summary>
