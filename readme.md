@@ -72,6 +72,6 @@ namespace WpfApplication
 
 If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request.
 
-### IRC chatroom
+### Chatroom
 
-Drop in on the IRC room - `#mametro` on [Freenode](http://freenode.net/) - if you want to ask a question. If no one responds and you have to leave, please post your issue on the [issue tracker](https://github.com/MahApps/MahApps.Metro/issues).
+Drop in on the Gitter room - https://gitter.im/MahApps/MahApps.Metro - if you want to ask a question or dicuss something with the team.
