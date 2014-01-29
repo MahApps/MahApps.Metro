@@ -1362,6 +1362,65 @@ namespace MahApps.Metro.Controls
             RaiseEvent(e);
         }
 
+        
+        private void MoveToNextTick( Direction mDirection, ButtonType type, double change)
+        {
+            if (mDirection == Direction.Increase && type == ButtonType.Right)
+            {
+                if (!Equals(UpperValue % TickFrequency, 0.0))
+                {
+                    double x = UpperValue / TickFrequency;
+                    change = TickFrequency * (int)x;
+                    change += TickFrequency;
+                    change = (change - UpperValue) * density;
+                    MoveThumb(_centerThumb, _rightButton, change, Orientation);
+                    ReCalculateRangeSelected(false, true);
+                }
+                else
+                {
+                    temp = change;
+                    double d = (TickFrequency * density);
+                    if (temp > d / 2)
+                    {
+                        double currentValue = UpperValue + (temp / density);//в единицах
+                        double x = currentValue / TickFrequency;
+                        double nextvalue = ((int)x * TickFrequency) + TickFrequency;
+                        currentValue = (nextvalue - currentValue) * density;//переводим в пиксели
+                        temp += currentValue;
+                        MoveThumb(_centerThumb, _rightButton, temp, Orientation);
+                        ReCalculateRangeSelected(false, true);
+                        temp = 0;
+                    }
+                }
+            }
+            else if (mDirection == Direction.Decrease && type == ButtonType.Right)
+            {
+                if (!Equals(UpperValue % TickFrequency, 0.0))
+                {
+                    double x = UpperValue / TickFrequency;
+                    change = TickFrequency * (int)x;
+                    MoveThumb(_centerThumb, _rightButton, -((UpperValue - change) * density), Orientation);
+                    ReCalculateRangeSelected(false, true);
+                }
+                else
+                {
+                    double d = -(TickFrequency * density) / 2;
+                    temp = change;
+                    if (temp < d)
+                    {
+                        double value = UpperValue - (temp / density);
+                        double x = value / TickFrequency;
+                        change = (int)x * TickFrequency;
+                        value = (value - change) * density;
+                        temp += value;
+                        MoveThumb(_centerThumb, _rightButton, temp, Orientation);
+                        ReCalculateRangeSelected(false, true);
+                        temp = 0;
+                    }
+                }
+            }
+        }
+
         private double temp;
         private Point currentPoint;
         private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
@@ -1388,60 +1447,61 @@ namespace MahApps.Metro.Controls
                     {
                         localDirection = Direction.Decrease;
                     }
-                    if (localDirection == Direction.Increase)
-                    {
-                        if (!Equals(UpperValue%TickFrequency, 0.0))
-                        {
-                            double x = UpperValue/TickFrequency;
-                            change = TickFrequency*(int) x;
-                            change += TickFrequency;
-                            change = (change - UpperValue)*density;
-                            MoveThumb(_centerThumb, _rightButton, change, Orientation);
-                            ReCalculateRangeSelected(false, true);
-                        }
-                        else
-                        {
-                            temp += change;
-                            double d = (TickFrequency*density)/2;
-                            if (temp > d+1)
-                            {
-                                double value = UpperValue + (temp / density);
-                                double x = value / TickFrequency;
-                                change = ((int)x * TickFrequency) + TickFrequency;
-                                value = (change - value) *density;
-                                temp += value;
-                                MoveThumb(_centerThumb, _rightButton, temp, Orientation);
-                                ReCalculateRangeSelected(false, true);
-                                temp = 0;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (!Equals(UpperValue%TickFrequency, 0.0))
-                        {
-                            double x = UpperValue / TickFrequency;
-                            change = TickFrequency * (int)x;
-                            MoveThumb(_centerThumb, _rightButton, -((UpperValue - change) * density), Orientation);
-                            ReCalculateRangeSelected(false, true);
-                        }
-                        else
-                        {
-                            double d = -(TickFrequency*density)/2;
-                            temp += change;
-                            if (temp < d-1)
-                            {
-                                double value = UpperValue - (temp / density);
-                                double x = value / TickFrequency;
-                                change = (int)x * TickFrequency;
-                                value = (value - change) * density;
-                                temp += value;
-                                MoveThumb(_centerThumb, _rightButton, temp, Orientation);
-                                ReCalculateRangeSelected(false, true);
-                                temp = 0;
-                            }
-                        }
-                    }
+                    MoveToNextTick(localDirection, ButtonType.Right, change);
+                    //if (localDirection == Direction.Increase)
+                    //{
+                    //    if (!Equals(UpperValue%TickFrequency, 0.0))
+                    //    {
+                    //        double x = UpperValue/TickFrequency;
+                    //        change = TickFrequency*(int) x;
+                    //        change += TickFrequency;
+                    //        change = (change - UpperValue)*density;
+                    //        MoveThumb(_centerThumb, _rightButton, change, Orientation);
+                    //        ReCalculateRangeSelected(false, true);
+                    //    }
+                    //    else
+                    //    {
+                    //        temp = change;
+                    //        double d = (TickFrequency*density);
+                    //        if (temp > d/2)
+                    //        {
+                    //            double currentValue = UpperValue + (temp / density);//в единицах
+                    //            double x = currentValue / TickFrequency;
+                    //            double nextvalue = ((int)x * TickFrequency) + TickFrequency;
+                    //            currentValue = (nextvalue - currentValue) * density;//переводим в пиксели
+                    //            temp += currentValue;
+                    //            MoveThumb(_centerThumb, _rightButton, temp, Orientation);
+                    //            ReCalculateRangeSelected(false, true);
+                    //            temp = 0;
+                    //        }
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    if (!Equals(UpperValue%TickFrequency, 0.0))
+                    //    {
+                    //        double x = UpperValue / TickFrequency;
+                    //        change = TickFrequency * (int)x;
+                    //        MoveThumb(_centerThumb, _rightButton, -((UpperValue - change) * density), Orientation);
+                    //        ReCalculateRangeSelected(false, true);
+                    //    }
+                    //    else
+                    //    {
+                    //        double d = -(TickFrequency*density)/2;
+                    //        temp = change;
+                    //        if (temp < d)
+                    //        {
+                    //            double value = UpperValue - (temp / density);
+                    //            double x = value / TickFrequency;
+                    //            change = (int)x * TickFrequency;
+                    //            value = (value - change) * density;
+                    //            temp += value;
+                    //            MoveThumb(_centerThumb, _rightButton, temp, Orientation);
+                    //            ReCalculateRangeSelected(false, true);
+                    //            temp = 0;
+                    //        }
+                    //    }
+                    //}
                     basePoint = Mouse.GetPosition(_container);
                 }
                 else
