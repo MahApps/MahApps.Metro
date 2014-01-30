@@ -40,24 +40,24 @@ namespace MahApps.Metro.Behaviours
         {
             var behaviorClass = ((BorderlessWindowBehavior)obj);
 
-            if (behaviorClass.AssociatedObject != null && !(((Window)behaviorClass.AssociatedObject).IsLoaded))
+            if (behaviorClass.AssociatedObject != null && !(behaviorClass.AssociatedObject.IsLoaded))
                 if ((bool)args.NewValue && behaviorClass.AssociatedObject.AllowsTransparency)
                     throw new InvalidOperationException("EnableDWMDropShadow cannot be set to True when AllowsTransparency is True.");
         })));
 
         public static readonly DependencyProperty AllowsTransparencyProperty =
-            DependencyProperty.Register("AllowsTransparency", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true, new PropertyChangedCallback((obj, args) =>
+            DependencyProperty.Register("AllowsTransparency", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true, (obj, args) =>
             {
                 var behaviorClass = ((BorderlessWindowBehavior)obj);
 
-                if (behaviorClass.AssociatedObject != null && !(((Window)behaviorClass.AssociatedObject).IsLoaded))
+                if (behaviorClass.AssociatedObject != null && !(behaviorClass.AssociatedObject.IsLoaded))
                 {
                     if ((bool)args.NewValue && behaviorClass.EnableDWMDropShadow)
                         throw new InvalidOperationException("AllowsTransparency cannot be set to True when EnableDWMDropShadow is True.");
-                    else
-                        behaviorClass.AssociatedObject.AllowsTransparency = (bool)args.NewValue;
+
+                    behaviorClass.AssociatedObject.AllowsTransparency = (bool)args.NewValue;
                 }
-            })));
+            }));
 
         public bool AllowsTransparency
         {
@@ -115,15 +115,16 @@ namespace MahApps.Metro.Behaviours
             UnsafeNativeMethods.GetCursorPos(out mousePosition);
 
             IntPtr primaryScreen = UnsafeNativeMethods.MonitorFromPoint(new POINT(0, 0), MONITORINFO.MonitorOptions.MONITOR_DEFAULTTOPRIMARY);
-            MONITORINFO primaryScreenInfo = new MONITORINFO();
-            if (UnsafeNativeMethods.GetMonitorInfo(primaryScreen, primaryScreenInfo) == false)
+            var primaryScreenInfo = new MONITORINFO();
+
+            if (!UnsafeNativeMethods.GetMonitorInfo(primaryScreen, primaryScreenInfo))
             {
                 return;
             }
 
             IntPtr currentScreen = UnsafeNativeMethods.MonitorFromPoint(mousePosition, MONITORINFO.MonitorOptions.MONITOR_DEFAULTTONEAREST);
 
-            MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+            var mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
             if (primaryScreen.Equals(currentScreen))
             {
                 mmi.ptMaxPosition.X = primaryScreenInfo.rcWork.left;
@@ -171,7 +172,7 @@ namespace MahApps.Metro.Behaviours
                 }
                 catch (Exception)
                 {
-                    //For some reason, we can't determine if the window has loaded or not. So we will swallow the exception.
+                    //For some reason, we can't determine if the window has loaded or not, so we swallow the exception.
                 }
             }
             AssociatedObject.StateChanged += AssociatedObjectStateChanged;
@@ -378,13 +379,12 @@ namespace MahApps.Metro.Behaviours
             {
                 //known bug: see https://github.com/MahApps/MahApps.Metro/issues/897
 
-                throw new Exception(
-                     "Bug #897 has occurred.\r\n\tDWN Enabled: " + UnsafeNativeMethods.DwmIsCompositionEnabled().ToString() + "\r\n\tBackground: " + (AssociatedObject.Background as SolidColorBrush).Color.ToString()
-                    , ex);
+                throw new Exception(string.Format("Bug #897 has occurred.\r\n\tDWN Enabled: {0}\r\n\tBackground: {1}",
+                    UnsafeNativeMethods.DwmIsCompositionEnabled(), ((SolidColorBrush) AssociatedObject.Background).Color), ex);
             }
         }
 
-        private bool ShouldHaveBorder()
+        private static bool ShouldHaveBorder()
         {
             if (Environment.OSVersion.Version.Major < 6)
                 return true;
@@ -478,7 +478,7 @@ namespace MahApps.Metro.Behaviours
                          * "does not repaint the nonclient area to reflect the state change." */
                         returnval = UnsafeNativeMethods.DefWindowProc(hWnd, message, wParam, new IntPtr(-1));
 
-                        MetroWindow w = AssociatedObject as MetroWindow;
+                        var w = AssociatedObject as MetroWindow;
                         if ((w != null && w.GlowBrush == null) || ShouldHaveBorder())
                         {
                             if (wParam != IntPtr.Zero)
@@ -501,7 +501,7 @@ namespace MahApps.Metro.Behaviours
                 case Constants.WM_NCHITTEST:
 
                     // don't process the message on windows that can't be resized
-                    var resizeMode = AssociatedObject.ResizeMode;
+                    ResizeMode resizeMode = AssociatedObject.ResizeMode;
                     if (resizeMode == ResizeMode.CanMinimize || resizeMode == ResizeMode.NoResize || AssociatedObject.WindowState == WindowState.Maximized)
                         break;
 
@@ -509,8 +509,8 @@ namespace MahApps.Metro.Behaviours
                     var screenPoint = new Point(UnsafeNativeMethods.GET_X_LPARAM(lParam), UnsafeNativeMethods.GET_Y_LPARAM(lParam));
 
                     // convert to window coordinates
-                    var windowPoint = AssociatedObject.PointFromScreen(screenPoint);
-                    var windowSize = AssociatedObject.RenderSize;
+                    Point windowPoint = AssociatedObject.PointFromScreen(screenPoint);
+                    Size windowSize = AssociatedObject.RenderSize;
                     var windowRect = new Rect(windowSize);
                     windowRect.Inflate(-6, -6);
 
