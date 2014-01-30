@@ -43,9 +43,17 @@ namespace MahApps.Metro.Controls
 
         public static void ResetAllWindowCommandsBrush(this MetroWindow window)
         {
-            window.InvokeCommandButtons(x => x.ClearValue(Control.ForegroundProperty));
+            if (window.OverrideDefaultWindowCommandsBrush == null)
+            {
+                window.InvokeCommandButtons(x => x.ClearValue(Control.ForegroundProperty));
 
-            window.WindowButtonCommands.ClearValue(Control.ForegroundProperty);
+                window.WindowButtonCommands.ClearValue(Control.ForegroundProperty);
+            }
+
+            else
+            {
+                window.ChangeAllWindowCommandsBrush(window.OverrideDefaultWindowCommandsBrush);
+            }
         }
 
         public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
