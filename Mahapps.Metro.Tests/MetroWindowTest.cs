@@ -26,20 +26,5 @@ namespace Mahapps.Metro.Tests
 
             Assert.True(window.ShowWindowCommandsOnTop);
         }
-
-        [Fact]
-        public async Task AdaptsWindowCommandsToDarkFlyout()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
-
-            var flyout = new Flyout { Theme = FlyoutTheme.Dark };
-            window.Flyouts.Items.Add(flyout);
-
-            flyout.IsOpen = true;
-
-            Assert.Equal(((SolidColorBrush)ThemeManager.DarkResource["BlackBrush"]).Color, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
-        }
     }
 }

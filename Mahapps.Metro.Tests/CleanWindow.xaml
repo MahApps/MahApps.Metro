@@ -13,4 +13,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <controls:WindowCommands>
+        <Button Content="Test" />
+    </controls:WindowCommands>
 </controls:MetroWindow>
