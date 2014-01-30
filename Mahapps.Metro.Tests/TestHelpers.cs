@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using MahApps.Metro.Controls;
+using Xunit;
 
 namespace Mahapps.Metro.Tests
 {
@@ -29,6 +34,12 @@ namespace Mahapps.Metro.Tests
             window.Show();
 
             return completionSource.Task;
+        }
+
+        public static void AssertWindowCommandsColor(this MetroWindow window, Color color)
+        {
+            Assert.True(window.WindowCommands.Items.Cast<Button>().Select(x => ((SolidColorBrush)x.Foreground).Color).All(x => x == color));
+            Assert.Equal(color, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
         }
     }
 }

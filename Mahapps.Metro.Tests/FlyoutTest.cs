@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro;
@@ -137,8 +131,24 @@ namespace Mahapps.Metro.Tests
                     break;
             }
             
-            Assert.True(window.WindowCommands.Items.Cast<Button>().All(x => ((SolidColorBrush) x.Foreground).Color == expectedBrushColor));
-            Assert.Equal(expectedBrushColor, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
+            window.AssertWindowCommandsColor(expectedBrushColor);
+        }
+
+        [Fact]
+        public async Task AdaptsWindowCommandsToDarkFlyout()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+            var flyout = new Flyout { Theme = FlyoutTheme.Dark };
+            window.Flyouts.Items.Add(flyout);
+
+            flyout.IsOpen = true;
+
+            Color expectedColor = ((SolidColorBrush)ThemeManager.DarkResource["BlackBrush"]).Color;
+
+            window.AssertWindowCommandsColor(expectedColor);
         }
     }
 }
