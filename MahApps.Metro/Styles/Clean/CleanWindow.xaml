@@ -196,7 +196,6 @@
                     <Behaviours:BorderlessWindowBehavior />
                     <Behaviours:WindowsSettingBehaviour />
                     <Behaviours:GlowWindowBehavior />
-                    <Behaviours:InternalCleanWindowGlueBehavior />
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
@@ -207,6 +206,8 @@
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="TitleForeground"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="OverrideDefaultWindowCommandsBrush"
                 Value="{DynamicResource BlackBrush}" />
     </Style>
 </ResourceDictionary>
