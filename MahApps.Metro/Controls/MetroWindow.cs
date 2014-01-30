@@ -562,7 +562,7 @@ namespace MahApps.Metro.Controls
 
                 //if ShowWindowCommandsOnTop is true, set the window commands' zindex to a number that is higher than the flyout's. 
                 WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
-                WindowButtonCommands.SetValue(Panel.ZIndexProperty, zIndex);
+                WindowButtonCommands.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
                 
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
             }
