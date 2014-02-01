@@ -14,6 +14,7 @@ title: Controls
  - [RangeSlider]({{site.baseurl}}/controls/range-slider.html)
  - [TransitioningContentControl]({{site.baseurl}}/controls/transitioning-content-control.html)
  - [NumericUpDown]({{site.baseurl}}/controls/numericupdown.html)
+ - [FlipView]({{site.baseurl}}/controls/flipview.html)
  
  **Not documented yet**
  - DatePicker and Calendar
@@ -23,4 +24,3 @@ title: Controls
  - ProgressBar
  - DataGrid
  - Tile
- - FlipView
