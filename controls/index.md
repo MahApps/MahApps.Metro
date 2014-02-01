@@ -20,7 +20,7 @@ title: Controls
  - ListView and ListBox
  - ComboBox
  - Slider
- - ProgressBar and ProgressIndicator
+ - ProgressBar
  - DataGrid
  - Tile
  - FlipView
