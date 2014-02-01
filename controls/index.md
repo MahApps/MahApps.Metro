@@ -24,4 +24,3 @@ title: Controls
  - DataGrid
  - Tile
  - FlipView
- - Flyouts
