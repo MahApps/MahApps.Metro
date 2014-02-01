@@ -9,6 +9,7 @@ title: Controls
  - [TextBox]({{site.baseurl}}/controls/textbox.html)
  - [ProgressRing]({{site.baseurl}}/controls/progress-ring.html)
  - [TabControl]({{site.baseurl}}/controls/tab-control.html)
+ - [Flyouts]({{site.baseurl}}/controls/flyouts.html)
  - [RangeSlider]({{site.baseurl}}/controls/range-slider.html)
  - [TransitioningContentControl]({{site.baseurl}}/controls/transitioning-content-control.html)
  - [NumericUpDown]({{site.baseurl}}/controls/numericupdown.html)
