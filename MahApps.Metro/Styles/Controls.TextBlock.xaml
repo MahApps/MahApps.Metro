@@ -1,6 +1,13 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style TargetType="{x:Type TextBlock}" x:Key="MetroTextBlock">
-        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- note: default style for textblock is now in MetroWindow !!! -->
+    <!-- never ever make a default style for TextBlock in App.xaml !!!  -->
+    <Style TargetType="{x:Type TextBlock}"
+           x:Key="MetroTextBlock">
+        <Setter Property="Foreground"
+                Value="{DynamicResource LabelTextBrush}" />
     </Style>
+
 </ResourceDictionary>

@@ -2,19 +2,24 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <!--CheckBox Style-->
-    <Style TargetType="CheckBox" x:Key="MetroCheckBox">
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Background" Value="{DynamicResource CheckBoxBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="Padding" Value="4,1,0,0" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBrush}" />
-        <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+    <!-- ********************************** CheckBoxStyle **********************************-->
+    <!-- adapted from http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/ -->
+    <Style x:Key="MetroCheckBox"
+           TargetType="CheckBox">
+        <Setter Property="Foreground"
+                Value="{DynamicResource LabelTextBrush}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="6,0,0,0" />
+        <Setter Property="BorderThickness"
+                Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
@@ -24,168 +29,123 @@
                                 <VisualState x:Name="Normal" />
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="MouseOverRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="grid">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="hover" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="PressedRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="pressed" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentPresenter">
-                                            <SplineDoubleKeyFrame KeyTime="0" Value=".55" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="DisabledVisualElement">
-                                            <SplineDoubleKeyFrame KeyTime="0" Value="0.55" />
-                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0"
+                                                         To=".55"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="contentPresenter" />
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="disabled" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="CheckStates">
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="CheckIcon">
-                                            <SplineDoubleKeyFrame KeyTime="0" Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="checkBox" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unchecked" />
                                 <VisualState x:Name="Indeterminate">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="IndeterminateIcon">
-                                            <SplineDoubleKeyFrame KeyTime="0" Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="IndeterminateCheck" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="FocusStates">
                                 <VisualState x:Name="Focused">
-                                    <Storyboard />
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="focused" />
+                                    </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unfocused" />
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="ValidationStates">
-                                <VisualState x:Name="Valid" />
-                                <VisualState x:Name="InvalidUnfocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ValidationErrorElement">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="InvalidFocused">
-                                    <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility" Storyboard.TargetName="ValidationErrorElement">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <Visibility>Visible</Visibility>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsOpen" Storyboard.TargetName="validationTooltip">
-                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                <DiscreteObjectKeyFrame.Value>
-                                                    <System:Boolean>True</System:Boolean>
-                                                </DiscreteObjectKeyFrame.Value>
-                                            </DiscreteObjectKeyFrame>
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="16" />
+                            <ColumnDefinition Width="18" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <Grid x:Name="grid" Height="14" Width="14" Opacity="0.7">
-                                <Rectangle x:Name="Background" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="{TemplateBinding BorderThickness}" />
-                                <Rectangle x:Name="MouseOverRectangle" Stroke="{DynamicResource CheckBoxMouseOverBrush}" Opacity="0" />
-                                <Rectangle x:Name="PressedRectangle" Stroke="{DynamicResource BlackBrush}" Opacity="0" />
-                                <Path Opacity="0"
-                                      x:Name="CheckIcon"
-                                      Data="M49.4375,110.4375 L51.4995,112.812 L56.3745,107.24883"
-                                      HorizontalAlignment="Center"
-                                      Height="7.6"
-                                      Stretch="Fill"
-                                      Stroke="{DynamicResource BlackBrush}"
-                                      UseLayoutRounding="False"
-                                      VerticalAlignment="Center"
-                                      Width="8.9"
-                                      StrokeStartLineCap="Triangle"
-                                      StrokeEndLineCap="Triangle"
-                                      StrokeThickness="2" />
-                                <Rectangle x:Name="IndeterminateIcon" Height="8" Width="8" Opacity="0">
-                                    <Rectangle.Fill>
-                                        <SolidColorBrush Color="{DynamicResource Gray3}" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                                <Rectangle x:Name="DisabledVisualElement" Fill="{DynamicResource DisabledWhiteColorBrush}" Opacity="0" RadiusY="1" RadiusX="1" />
-                            </Grid>
-                            <Border x:Name="ValidationErrorElement"
-                                      BorderBrush="{DynamicResource ControlsValidationBrush}"
-                                      BorderThickness="1"
-                                      CornerRadius="1"
-                                      Margin="1"
-                                      ToolTipService.PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                      Visibility="Collapsed">   
-                                <ToolTipService.ToolTip>
-                                    <ToolTip x:Name="validationTooltip"
-                           DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                           Placement="Right"
-                           PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                           Template="{DynamicResource ValidationToolTipTemplate}">
-                                        <ToolTip.Triggers>
-                                            <EventTrigger RoutedEvent="Canvas.Loaded">
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible"
-                                                           Storyboard.TargetName="validationTooltip">
-                                                            <DiscreteObjectKeyFrame KeyTime="0">
-                                                                <DiscreteObjectKeyFrame.Value>
-                                                                    <System:Boolean>true</System:Boolean>
-                                                                </DiscreteObjectKeyFrame.Value>
-                                                            </DiscreteObjectKeyFrame>
-                                                        </ObjectAnimationUsingKeyFrames>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger>
-                                        </ToolTip.Triggers>
-                                    </ToolTip>
-                                </ToolTipService.ToolTip>
-                                <Grid Background="Transparent" HorizontalAlignment="Right" Height="10" Margin="0,-4,-4,0" VerticalAlignment="Top" Width="10">
-                                    <Path Data="M 1,0 L5,0 A 2,2 90 0 1 7,2 L7,6 z" Fill="{DynamicResource ValidationBrush5}" Margin="0,3,0,0" />
-                                    <Path Data="M 0,0 L2,0 L 7,5 L7,7" Fill="{DynamicResource WhiteColorBrush}" Margin="0,3,0,0" />
-                                </Grid>
-                            </Border>
-                        </Grid>
-                        <ContentControl Grid.Column="1" IsTabStop="False">
-                            <ContentControl.Foreground>
-                                <SolidColorBrush x:Name="ContentPresenterWrapperColor" Color="{DynamicResource BlackColor}" />
-                            </ContentControl.Foreground>
-                            <ContentPresenter x:Name="contentPresenter"
-                                              TextElement.Foreground="{TemplateBinding Foreground}"
-                                              RecognizesAccessKey="True"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Content="{TemplateBinding Content}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Margin="{TemplateBinding Padding}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </ContentControl>
+                        <Rectangle Fill="{DynamicResource TransparentWhiteBrush}" />
+                        <Rectangle x:Name="normal"
+                                   Opacity="1"
+                                   Stroke="{DynamicResource CheckBoxBrush}"
+                                   StrokeThickness="1"
+                                   Fill="{DynamicResource WhiteBrush}"
+                                   Width="18"
+                                   Height="18" />
+                        <Rectangle x:Name="hover"
+                                   Stroke="{DynamicResource CheckBoxMouseOverBrush}"
+                                   StrokeThickness="1"
+                                   Fill="{DynamicResource WhiteBrush}"
+                                   Opacity="0"
+                                   Width="18"
+                                   Height="18" />
+                        <Rectangle x:Name="pressed"
+                                   Opacity="0"
+                                   Stroke="{DynamicResource HighlightBrush}"
+                                   StrokeThickness="1"
+                                   Fill="{DynamicResource WhiteBrush}"
+                                   Width="18"
+                                   Height="18" />
+                        <Rectangle x:Name="focused"
+                                   Opacity="0"
+                                   Stroke="{DynamicResource HighlightBrush}"
+                                   StrokeThickness="1"
+                                   Fill="{DynamicResource WhiteBrush}"
+                                   Width="18"
+                                   Height="18" />
+                        <Path x:Name="checkBox"
+                              Height="10"
+                              Width="12"
+                              Stretch="Fill"
+                              Opacity="0"
+                              Data="M 1145.607177734375,430 C1145.607177734375,430 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1141.449951171875,435.0772705078125 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1139.232177734375,433.0999755859375 1138,434.5538330078125 1138,434.5538330078125 1138,434.5538330078125 1141.482177734375,438 1141.482177734375,438 1141.482177734375,438 1141.96875,437.9375 1141.96875,437.9375 1141.96875,437.9375 1147,431.34619140625 1147,431.34619140625 1147,431.34619140625 1145.607177734375,430 1145.607177734375,430 z"
+                              Fill="{DynamicResource HighlightBrush}"
+                              UseLayoutRounding="False" />
+                        <Rectangle x:Name="IndeterminateCheck"
+                                   Fill="{DynamicResource GrayBrush3}"
+                                   Height="3"
+                                   Width="8"
+                                   Opacity="0" />
+                        <Rectangle x:Name="disabled"
+                                   Opacity="0"
+                                   StrokeThickness="1"
+                                   Fill="{DynamicResource SemiTransparentWhiteBrush}"
+                                   Width="18"
+                                   Height="18" />
+                        <ContentPresenter x:Name="contentPresenter"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}"
+                                          Grid.Column="1"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

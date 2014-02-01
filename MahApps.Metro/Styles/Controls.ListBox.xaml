@@ -1,20 +1,47 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
-    <Style x:Key="MetroListBox" TargetType="{x:Type ListBox}">
-        <Setter Property="BorderBrush" Value="Transparent" />
+
+    <Style x:Key="MetroListBox"
+           TargetType="{x:Type ListBox}">
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteBrush}" />
+        <!-- default to 0 -->
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
-                    <ScrollViewer>
-                        <ItemsPresenter />
-                    </ScrollViewer>
+                    <Border Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ScrollViewer>
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter TargetName="Border"
+                                    Property="BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource Gray9}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="VirtualisedMetroListBox" TargetType="{x:Type ListBox}" BasedOn="{StaticResource MetroListBox}">
+    <Style x:Key="VirtualisedMetroListBox"
+           TargetType="{x:Type ListBox}"
+           BasedOn="{StaticResource MetroListBox}">
         <Setter Property="VirtualizingStackPanel.IsVirtualizing"
                 Value="True" />
         <Setter Property="VirtualizingStackPanel.VirtualizationMode"
@@ -23,53 +50,74 @@
                 Value="True" />
     </Style>
 
-    <Style x:Key="MetroListBoxItem" TargetType="{x:Type ListBoxItem}">
-        <Setter Property="MinHeight" Value="25" />
-        <Setter Property="Margin" Value="0" />
+    <Style x:Key="MetroListBoxItem"
+           TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="MinHeight"
+                Value="25" />
+        <Setter Property="Margin"
+                Value="0" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
                     <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
-                            SnapsToDevicePixels="True">
-                        <ContentPresenter Margin="5, 0, 0, 0" 
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter Margin="5, 0, 0, 0"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
+                        <Trigger Property="IsSelected"
+                                 Value="True">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource AccentSelectedColorBrush}" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor3}" />
-                                </Setter.Value>
-                            </Setter>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource AccentColorBrush3}" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush5}" />
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsEnabled" Value="False" />
-                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsEnabled"
+                                           Value="False" />
+                                <Condition Property="IsSelected"
+                                           Value="True" />
                             </MultiTrigger.Conditions>
-                            <MultiTrigger.Setters>
-                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush5}" />
-                                <Setter Property="Foreground" Value="{DynamicResource AccentSelectedColorBrush}" />
-                            </MultiTrigger.Setters>
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush7}" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource AccentSelectedColorBrush}" />
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True" />
-                                <Condition Property="Selector.IsSelectionActive" Value="True" />
+                                <Condition Property="IsSelected"
+                                           Value="True" />
+                                <Condition Property="Selector.IsSelectionActive"
+                                           Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource AccentColor2}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource AccentColorBrush2}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

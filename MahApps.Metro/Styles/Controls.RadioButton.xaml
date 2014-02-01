@@ -2,101 +2,140 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
 
-    <!--RadioButton Style-->
-    <Style TargetType="RadioButton" x:Key="MetroRadioButton">
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Background" Value="{DynamicResource CheckBoxBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource LabelTextBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Left" />
-        <Setter Property="VerticalContentAlignment" Value="Top" />
-        <Setter Property="Padding" Value="4,1,0,0" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBrush}" />
-        <!-- change SnapsToDevicePixels to true to view a better border and validation error -->
-        <Setter Property="SnapsToDevicePixels" Value="True" />
+    <!-- ********************************** RadioButton Style **********************************-->
+    <!-- adapted from http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/ -->
+    <Style x:Key="MetroRadioButton"
+           TargetType="RadioButton">
+        <Setter Property="Foreground"
+                Value="{DynamicResource LabelTextBrush}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="6,0,0,0" />
+        <Setter Property="BorderThickness"
+                Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
                     <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="hover" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="pressed" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0"
+                                                         To=".55"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="contentPresenter" />
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="disabled" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="Checked1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked" />
+                                <VisualState x:Name="Indeterminate" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FocusStates">
+                                <VisualState x:Name="Focused">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         Storyboard.TargetName="focused" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unfocused" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="16" />
+                            <ColumnDefinition Width="18" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
-                            <Grid x:Name="grid" Height="15" Width="15" Opacity="0.7">
-                                <Ellipse x:Name="Background" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" Margin="1" StrokeThickness="{TemplateBinding BorderThickness}" />
-                                <Ellipse x:Name="MouseOverEllipse" Stroke="{DynamicResource CheckBoxMouseOverBrush}" Margin="1" Opacity="0" />
-                                <Ellipse x:Name="PressedEllipse" Stroke="{DynamicResource BlackBrush}" Margin="1" Opacity="0" Fill="{DynamicResource BlackBrush}" />
-                                <Ellipse x:Name="CheckIcon" Fill="{DynamicResource BlackBrush}" Height="7" Opacity="0" Width="7" />
-                                <Ellipse x:Name="DisabledVisualElement" Fill="{DynamicResource DisabledWhiteColorBrush}" Opacity="0" />
-                                <Grid x:Name="ValidationErrorElement" ToolTipService.PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}" Visibility="Collapsed">
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip x:Name="validationTooltip"
-                                                 DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                                 Placement="Right"
-                                                 PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
-                                                 Template="{DynamicResource ValidationToolTipTemplate}">
-                                            <ToolTip.Triggers>
-                                                <EventTrigger RoutedEvent="Canvas.Loaded">
-                                                    <BeginStoryboard>
-                                                        <Storyboard>
-                                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="IsHitTestVisible" Storyboard.TargetName="validationTooltip">
-                                                                <DiscreteObjectKeyFrame KeyTime="0">
-                                                                    <DiscreteObjectKeyFrame.Value>
-                                                                        <System:Boolean>true</System:Boolean>
-                                                                    </DiscreteObjectKeyFrame.Value>
-                                                                </DiscreteObjectKeyFrame>
-                                                            </ObjectAnimationUsingKeyFrames>
-                                                        </Storyboard>
-                                                    </BeginStoryboard>
-                                                </EventTrigger>
-                                            </ToolTip.Triggers>
-                                        </ToolTip>
-                                    </ToolTipService.ToolTip>
-                                    <Ellipse Height="14" Stroke="{DynamicResource ControlsValidationBrush}" StrokeThickness="1" Width="14" />
-                                    <Ellipse Fill="{DynamicResource ControlsValidationBrush}" HorizontalAlignment="Right" Height="4" Margin="0,-2,-1,0" VerticalAlignment="Top" Width="4" />
-                                    <Ellipse Fill="Transparent" HorizontalAlignment="Right" Height="10" Margin="0,-5,-4,0" VerticalAlignment="Top" Width="10" />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <ContentControl Grid.Column="1" IsTabStop="False" Foreground="{TemplateBinding Foreground}">
-                            <ContentPresenter x:Name="contentPresenter"
-                                              TextElement.Foreground="{TemplateBinding Foreground}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Content="{TemplateBinding Content}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Margin="{TemplateBinding Padding}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </ContentControl>
+                        <Rectangle Fill="{DynamicResource TransparentWhiteBrush}"
+                                   Margin="-6,0" />
+                        <Ellipse x:Name="normal"
+                                 Opacity="1"
+                                 Stroke="{DynamicResource CheckBoxBrush}"
+                                 StrokeThickness="1"
+                                 Fill="{DynamicResource WhiteBrush}"
+                                 Width="18"
+                                 Height="18" />
+                        <Ellipse x:Name="hover"
+                                 Stroke="{DynamicResource CheckBoxMouseOverBrush}"
+                                 StrokeThickness="1"
+                                 Fill="{DynamicResource WhiteBrush}"
+                                 Opacity="0"
+                                 Width="18"
+                                 Height="18" />
+                        <Ellipse x:Name="pressed"
+                                 Opacity="0"
+                                 Stroke="{DynamicResource HighlightBrush}"
+                                 StrokeThickness="1"
+                                 Fill="{DynamicResource WhiteBrush}"
+                                 Width="18"
+                                 Height="18" />
+                        <Ellipse x:Name="focused"
+                                 Opacity="0"
+                                 Stroke="{DynamicResource HighlightBrush}"
+                                 StrokeThickness="1"
+                                 Fill="{DynamicResource WhiteBrush}"
+                                 Width="18"
+                                 Height="18" />
+                        <Ellipse x:Name="Checked1"
+                                 Fill="{DynamicResource HighlightBrush}"
+                                 Opacity="0"
+                                 Width="10"
+                                 Height="10" />
+                        <ContentPresenter x:Name="contentPresenter"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}"
+                                          Grid.Column="1"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <Ellipse x:Name="disabled"
+                                 Opacity="0"
+                                 StrokeThickness="1"
+                                 Fill="{DynamicResource SemiTransparentWhiteBrush}"
+                                 Width="18"
+                                 Height="18" />
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="RadioButton.IsChecked"  Value="true">
-                            <Setter TargetName="CheckIcon" Property="Opacity" Value="1" />
-                        </Trigger>
-                        <Trigger Property="RadioButton.IsPressed"  Value="true">
-                            <Setter TargetName="PressedEllipse" Property="Opacity" Value="1" />
-                        </Trigger>
-                        <Trigger Property="UIElement.IsMouseOver"  Value="true">
-                            <Setter TargetName="MouseOverEllipse" Property="Opacity" Value="1" />
-                            <Setter TargetName="grid" Property="Opacity" Value="1" />
-                        </Trigger>
-
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="RadioButton.IsChecked" Value="true"/>
-                                <Condition Property="RadioButton.IsPressed" Value="true"/>
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="CheckIcon" Property="Ellipse.Fill" Value="{DynamicResource WhiteBrush}" />
-                        </MultiTrigger>
-                        <Trigger Property="UIElement.IsEnabled"  Value="false">
-                            <Setter TargetName="contentPresenter" Property="Opacity" Value="0.55" />
-                            <Setter TargetName="grid" Property="Opacity" Value="0.55" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
 </ResourceDictionary>

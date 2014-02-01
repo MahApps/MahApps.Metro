@@ -1,0 +1,54 @@
+﻿<controls:MetroWindow x:Class="AccentColorRepro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="AccentColorBrush" Height="375" Width="525" GlowBrush="{DynamicResource AccentColorBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!--All icons used in the below section belong is from VS 2012 Image library-->
+        <!--http://www.microsoft.com/en-us/download/details.aspx?id=35825-->
+        <ToolBarTray Grid.Row="0">
+            <!--All enabled-->
+            <ToolBar Band="0" BandIndex="1">
+                <Button Content="Enabled" ToolTip="Testing tooltips" />
+                <Button Height="25" Width="25" ToolTip="Cut">
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Cut.png" />
+                </Button>
+                <Button Height="25" Width="25" ToolTip="Copy">
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Copy.png" />
+                </Button>
+                <Button Height="25" Width="25" ToolTip="Paste">
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Paste.png" />
+                </Button>
+            </ToolBar>
+            <!--All disabled-->
+            <ToolBar Band="0" BandIndex="1">
+                <Button Content="Disabled" ToolTip="Testing tooltips" IsEnabled="False" />
+                <Button Height="25" Width="25" ToolTip="Cut" IsEnabled="False">
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Cut.png" />
+                </Button>
+                <Button Height="25" Width="25" ToolTip="Copy" IsEnabled="False">
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Copy.png" />
+                </Button>
+                <Button Height="25" Width="25" ToolTip="Paste" IsEnabled="False">
+                    <Image Source="pack://application:,,,/AccentColorRepro;component/Images/Paste.png" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Grid.Row="1">
+            <Button Width="75" Height="23" Content="Dark" Margin="10" Click="DarkButtonClick"/>
+            <Button Width="75" Height="23" Content="Light" Margin="10" Click="LightButtonClick"/>
+            <Button Width="75" Height="23" Content="Blue" Margin="10" Click="BlueButtonClick"/>
+            <Button Width="75" Height="23" Content="Red" Margin="10" Click="RedButtonClick"/>
+            <Button Width="75" Height="23" Content="Green" Margin="10" Click="GreenButtonClick"/>
+        </StackPanel>
+        <GroupBox Grid.Row="2" Header="GroupBox">
+            <TextBlock Text="GroupBox contents" FontSize="16"/>
+        </GroupBox>
+    </Grid>
+</controls:MetroWindow>

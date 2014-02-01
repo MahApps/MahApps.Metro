@@ -9,6 +9,9 @@ namespace MahApps.Metro.Controls
 {
     public delegate void RangeSelectionChangedEventHandler(object sender, RangeSelectionChangedEventArgs e);
 
+    /// <summary>
+    /// A slider control with the ability to select a range between two values.
+    /// </summary>
     [DefaultEvent("RangeSelectionChanged"),
     TemplatePart(Name = "PART_RangeSliderContainer", Type = typeof(StackPanel)),
     TemplatePart(Name = "PART_LeftEdge", Type = typeof(RepeatButton)),
@@ -30,30 +33,45 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty RangeStopSelectedProperty = DependencyProperty.Register("RangeStopSelected", typeof(long), typeof(RangeSlider), new UIPropertyMetadata((long)1, RangesChanged));
         public static readonly DependencyProperty MinRangeProperty = DependencyProperty.Register("MinRange", typeof(long), typeof(RangeSlider), new UIPropertyMetadata((long)0, MinRangeChanged));
 
+        /// <summary>
+        /// Gets/sets the beginning of the range.
+        /// </summary>
         public long RangeStart
         {
             get { return (long)GetValue(RangeStartProperty); }
             set { SetValue(RangeStartProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the end of the range.
+        /// </summary>
         public long RangeStop
         {
             get { return (long)GetValue(RangeStopProperty); }
             set { SetValue(RangeStopProperty, value); }
         }
 
+        /// <summary>
+        /// Get/sets the beginning of the range selection.
+        /// </summary>
         public long RangeStartSelected
         {
             get { return (long)GetValue(RangeStartSelectedProperty); }
             set { SetValue(RangeStartSelectedProperty, value); }
         }
 
+        /// <summary>
+        /// Get/sets the end of the range selection.
+        /// </summary>
         public long RangeStopSelected
         {
             get { return (long)GetValue(RangeStopSelectedProperty); }
             set { SetValue(RangeStopSelectedProperty, value); }
         }
 
+        /// <summary>
+        /// Get/sets the minimum range that can be selected.
+        /// </summary>
         public long MinRange
         {
             get { return (long)GetValue(MinRangeProperty); }

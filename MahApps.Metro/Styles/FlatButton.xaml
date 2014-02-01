@@ -1,59 +1,57 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-  <Style x:Key="MetroFlatButton"
-         TargetType="{x:Type Button}">
-    <Setter Property="Background"
-            Value="#D5D5D5" />
-    <Setter Property="Foreground"
-            Value="#222222" />
-    <Setter Property="FontSize"
-            Value="16" />
-    <Setter Property="Padding"
-            Value="10,5,10,5" />
-    <Setter Property="BorderThickness"
-            Value="0" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type Button}">
-          <Grid Margin="3">
-            <Border x:Name="Border"
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}" />
+    <Style x:Key="MetroFlatButton"
+           TargetType="{x:Type Button}">
+        <Setter Property="Background"
+                Value="{DynamicResource FlatButtonBackgroundBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource FlatButtonForegroundBrush}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource FlatButtonFontSize}" />
+        <Setter Property="Padding"
+                Value="10,5,10,5" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Border"
+                            Margin="0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource FlatButtonPressedBackgroundBrush}"
+                                    TargetName="Border" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource GrayBrush2}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="DarkGray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              Margin="{TemplateBinding Padding}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              RecognizesAccessKey="True" />
-          </Grid>
-
-          <ControlTemplate.Triggers>
-            <Trigger Property="IsPressed"
-                     Value="true">
-              <Setter Property="Background"
-                      Value="#222222"
-                      TargetName="Border" />
-              <Setter Property="Foreground"
-                      Value="White" />
-            </Trigger>
-            <Trigger Property="IsEnabled"
-                     Value="false">
-              <Setter Property="Foreground"
-                      Value="#7f222222" />
-            </Trigger>
-            <Trigger Property="IsMouseOver"
-                     Value="True">
-              <Setter Property="Background"
-                      Value="DarkGray" />
-            </Trigger>
-          </ControlTemplate.Triggers>
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
-
-  <Style TargetType="{x:Type Button}"
-         BasedOn="{StaticResource MetroFlatButton}" />
+    <Style TargetType="{x:Type Button}"
+           BasedOn="{StaticResource MetroFlatButton}" />
 
 </ResourceDictionary>

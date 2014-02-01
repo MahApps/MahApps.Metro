@@ -50,3 +50,6 @@ MetroDemo/publish/*
 packages
 
 CommonAssemblyInfo.cs
+
+*.orig
+*.DotSettings
