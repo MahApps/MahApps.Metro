@@ -371,6 +371,15 @@ namespace MahApps.Metro.Controls.Dialogs
 
             win.Content = dialog;
 
+            EventHandler closingHandler = null;
+            closingHandler = (sender, args) => 
+            {
+                win.Closed -= closingHandler;
+                dialog.ParentDialogWindow = null;
+                win.Content = null;
+            };
+            win.Closed += closingHandler;
+
             return win;
         }
         #endregion
