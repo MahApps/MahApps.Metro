@@ -15,6 +15,7 @@ title: Controls
  - [TransitioningContentControl]({{site.baseurl}}/controls/transitioning-content-control.html)
  - [NumericUpDown]({{site.baseurl}}/controls/numericupdown.html)
  - [FlipView]({{site.baseurl}}/controls/flipview.html)
+ - [Tile]({{site.baseurl}}/controls/tile.html)
  
  **Not documented yet**
  - DatePicker and Calendar
@@ -23,4 +24,3 @@ title: Controls
  - Slider
  - ProgressBar
  - DataGrid
- - Tile
