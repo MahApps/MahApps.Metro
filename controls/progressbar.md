@@ -13,6 +13,6 @@ The upper two bars are the `ProgressBar` with different progress states. The thi
 
 `MetroProgressBar` is an alternative and simpler style. Instead of creating a normal `ProgressBar` use:
 
-<Controls:MetroProgressBar />
+    <Controls:MetroProgressBar />
 
 Its indeterminate state looks like a `ProgressRing` but not circular.
