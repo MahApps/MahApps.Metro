@@ -13,7 +13,7 @@ if you're stuck with .NET 4.0, you'll have to use continuations when using the d
 This tutorial uses .NET 4.5
 If you really want to use `async/await` with .NET 4.0, you can install [Microsoft Async](http://www.nuget.org/packages/microsoft.bcl.async)
 
-## Message dialog
+### Message dialog
 
 Simple message dialogs can be displayed with the `ShowMessageAsync` method. It is an extension method for `MetroWindow`, so call it from your window class.
 
@@ -21,7 +21,7 @@ Simple message dialogs can be displayed with the `ShowMessageAsync` method. It i
     
 There are additional optional paramaters for simple buttons, such as `Ok` and `Cancel` and settings for the color theme and animation options.
 
-## Progress dialog
+### Progress dialog
 
 There is a built-in dialog that displays a progress bar at the bottom of the dialog. Call it like this:
 
