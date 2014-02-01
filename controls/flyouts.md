@@ -30,7 +30,9 @@ The `Position` property can have the values
     Right,
     Top,
     Bottom
-    
+
+
+### Themed flyouts
 As of version 0.12, flyouts can have various themes, assignable through the `Theme` property, those are:
 
     Adapt,
@@ -46,3 +48,9 @@ As of version 0.12, flyouts can have various themes, assignable through the `The
 `Accent` adapts the flyout theme to the host window's theme, it looks like this for the blue theme:
 
 <img src="{{site.baseurl}}/images/flyout-demo-accent.png" style="width: 800px;"/>
+
+### Window commands
+`MetroWindow` has an option called `ShowWindowCommandsOnTop`, it makes the window commands the topmost element, even if a flyout is shown.  
+`True` is the default value
+
+![]({{site.baseurl}}/images/showwindowcommandsontop.png)
