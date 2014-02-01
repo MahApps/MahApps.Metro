@@ -9,6 +9,7 @@ title: Controls
  - [Flyouts]({{site.baseurl}}/controls/flyouts.html)
  - [MetroWindow]({{site.baseurl}}/controls/metro-window.html)
  - [NumericUpDown]({{site.baseurl}}/controls/numericupdown.html)
+ - [ProgressBar]({{site.baseurl}}/controls/progressbar.html)
  - [ProgressRing]({{site.baseurl}}/controls/progress-ring.html)
  - [RangeSlider]({{site.baseurl}}/controls/range-slider.html)
  - [TabControl]({{site.baseurl}}/controls/tab-control.html)
@@ -22,5 +23,4 @@ title: Controls
  - DataGrid
  - DatePicker and Calendar
  - ListView and ListBox
- - ProgressBar
  - Slider
