@@ -3,8 +3,9 @@ layout: no-sidebar
 title: NumericUpDown - MahApps.Metro
 ---
 
-The NumericUpDown control is used to increase or decrease a numeric value.
+> **Note:** This is the documentation for the new `NumericUpDown` control that isn't implemented yet. It will be available in v0.13
 
+The NumericUpDown control is used to increase or decrease a numeric value.
 
 ![]({{site.baseurl}}/images/numeric_up_down.png)
 
