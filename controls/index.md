@@ -10,6 +10,7 @@ title: Controls
  - [ProgressRing]({{site.baseurl}}/controls/progress-ring.html)
  - [TabControl]({{site.baseurl}}/controls/tab-control.html)
  - [Flyouts]({{site.baseurl}}/controls/flyouts.html)
+ - [Dialogs]({{site.baseurl}}/controls/dialogs.html)
  - [RangeSlider]({{site.baseurl}}/controls/range-slider.html)
  - [TransitioningContentControl]({{site.baseurl}}/controls/transitioning-content-control.html)
  - [NumericUpDown]({{site.baseurl}}/controls/numericupdown.html)
