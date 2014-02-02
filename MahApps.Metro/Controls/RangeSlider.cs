@@ -287,8 +287,8 @@ namespace MahApps.Metro.Controls
         {
             
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
-            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue, null, CoerceMaximum));
-            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue, null, CoerceMinimum));
+            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)10, null, CoerceMaximum));
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)0, null, CoerceMinimum));
             TickFrequencyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(10.0, OnTickPlacementChanged));
         }
 
@@ -615,7 +615,7 @@ namespace MahApps.Metro.Controls
                 if (IsSnapToTickEnabled)
                 {
                     //Rounding value to avoid bug with incorrect cheking UpperValue%TickFrequency == 0
-                    LowerValue = Math.Round(LowerValue, 13, MidpointRounding.AwayFromZero);
+                    LowerValue = Math.Round(LowerValue, 12, MidpointRounding.AwayFromZero);
                 }
             }
 
@@ -639,7 +639,7 @@ namespace MahApps.Metro.Controls
                 if (IsSnapToTickEnabled)
                 {
                     //Rounding value to avoid bug with incorrect cheking UpperValue%TickFrequency == 0
-                    UpperValue = Math.Round(UpperValue,13, MidpointRounding.AwayFromZero);
+                    UpperValue = Math.Round(UpperValue, 12, MidpointRounding.AwayFromZero);
                 }
             }
 
@@ -752,11 +752,13 @@ namespace MahApps.Metro.Controls
 
         void _visualElementsContainer_MouseLeave(object sender, MouseEventArgs e)
         {
+            _tickCount = 0;
             _timer.Stop();
         }
 
         void _visualElementsContainer_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
+            _tickCount = 0;
             _timer.Stop();
         }
 
@@ -1093,6 +1095,7 @@ namespace MahApps.Metro.Controls
                     }
                     else
                     {
+                        _tickCount = 0;
                         _timer.Stop();
                     }
                 }
@@ -1118,12 +1121,12 @@ namespace MahApps.Metro.Controls
                     }
                     else
                     {
+                        _tickCount = 0;
                         _timer.Stop();
                     }
                 }
             }
             _tickCount++;
-            Debug.WriteLine("Timer tick count = " + _tickCount);
         }
 
 
@@ -1144,48 +1147,20 @@ namespace MahApps.Metro.Controls
 
         private Double CalculateNextTick(Direction dir, double chekingValue, double distance, bool moveDirectlyToNextTick)
         {
-            if (!Equals(chekingValue%TickFrequency, 0.0))
+            if (!Equals(chekingValue % TickFrequency, 0.0))
             {
-                Debug.WriteLine("Enter in chekingValue%TickFrequency");
-                Debug.WriteLine("Start");
-                Debug.WriteLine("chekingValue = " + chekingValue);
-                Debug.WriteLine("TickFrequency = " + TickFrequency);
                 double x = chekingValue / TickFrequency;
-                Debug.WriteLine("x = "+x);
                 distance = TickFrequency * (int)x;
-                Debug.WriteLine("distance in values = " + distance);
                 if (dir == Direction.Increase)
                 {
                     distance += TickFrequency;
-                    double d = distance;
-                    //Debug.WriteLine("distance in values = " + distance);
                     _currenValue = 0;
-                    //Debug.WriteLine("density = " + density);
                     distance = (distance - chekingValue) * density;
-                    //if (Equals(distance, 0.0))
-                    //{
-                    //    d += TickFrequency;
-                    //    d = (d - chekingValue)*density;
-                    //    distance = d;
-                    //}
-                    //Debug.WriteLine("distance in pixels= " + distance);
-                    
                 }
                 else
                 {
-                    double d = distance;
                     distance = (chekingValue - distance) * density;
-                    Debug.WriteLine("distance in pixels= " + distance);
-                    //if (Equals(distance, 0.0))
-                    //{
-                    //    d -= TickFrequency;
-                    //    Debug.WriteLine("distance in values new = " + d);
-                    //    d = (chekingValue - d) * density;
-                    //    Debug.WriteLine("distance in pixels new = " + d);
-                    //    distance = d;
-                    //}
                 }
-                Debug.WriteLine("END");
             }
             else
             {
@@ -1197,18 +1172,14 @@ namespace MahApps.Metro.Controls
                 {
                     if (dir == Direction.Increase)
                     {
-                        Debug.WriteLine("Enter in Direction.Increase");
                         double currentValue = chekingValue + (distance / density);//в единицах
-                        //Debug.WriteLine();
                         double x = currentValue / TickFrequency;
                         double nextvalue = ((int)x * TickFrequency) + TickFrequency;
                         currentValue = (nextvalue - currentValue) * density;//переводим в пиксели
                         distance += currentValue;
-                        
                     }
                     else
                     {
-                        Debug.WriteLine("Enter in Direction.Decrease");
                         double currentValue = chekingValue + (distance / density);
                         double x = currentValue / TickFrequency;
                         double previousValue = (int)x * TickFrequency;
@@ -1226,20 +1197,10 @@ namespace MahApps.Metro.Controls
 
             if (mDirection == Direction.Increase)
             {
-                if (!Equals(chekingValue % TickFrequency, 0.0))
+                if (!Equals(chekingValue%TickFrequency, 0.0))
                 {
-                    Point p = Mouse.GetPosition(_container);
-                    double pos = Orientation == Orientation.Horizontal ? p.X : p.Y;
-                    double widthHeight = Orientation == Orientation.Horizontal ? ActualWidth : ActualHeight;
-                    double tickIntervalInPixels = TickFrequency * density;
-                    if ((distance > (tickIntervalInPixels / 2)) || widthHeight - pos < (tickIntervalInPixels / 2))
-                    //if (distance > (temp / 2))
+                    if ((distance >=temp/2))
                     {
-                        //Debug.WriteLine("chekingValue % TickFrequency");
-                        //Debug.WriteLine("---------------Direction.Increase--------------");
-                        //Debug.WriteLine("chekingValue = " + chekingValue);
-                        //Debug.WriteLine("temp = " + temp);
-                        //Debug.WriteLine("---------------end--------------");
                         if (type == ButtonType.Right)
                         {
                             MoveThumb(_centerThumb, _rightButton, temp, Orientation);
@@ -1265,13 +1226,6 @@ namespace MahApps.Metro.Controls
                     double tickIntervalInPixels = TickFrequency * density;
                     if ((distance > (tickIntervalInPixels / 2)) || widthHeight - pos < (tickIntervalInPixels / 2))
                     {
-                        //Debug.WriteLine("distance = " + distance);
-                        //Debug.WriteLine("temp = " + temp);
-                        //Debug.WriteLine("---------------Direction.Increase--------------");
-                        //Debug.WriteLine("distance = " + distance);
-                        //Debug.WriteLine("temp -> "+temp);
-                        //Debug.WriteLine("tickIntervalInPixels/2 = " +tickIntervalInPixels / 2);
-                        //Debug.WriteLine("---------------end--------------");
                         if (type == ButtonType.Right)
                         {
                             MoveThumb(_centerThumb, _rightButton, temp, Orientation);
@@ -1294,11 +1248,7 @@ namespace MahApps.Metro.Controls
             {
                 if (!Equals(chekingValue % TickFrequency, 0.0))
                 {
-                    Point p = Mouse.GetPosition(_container);
-                    double pos = Orientation == Orientation.Horizontal ? p.X : p.Y;
-                    double tickIntervalInPixels = TickFrequency * density;
-                    if (distance < tickIntervalInPixels / 2 || pos < (tickIntervalInPixels / 2))
-                    //if (distance < temp/2)
+                    if ((distance <= -temp/2))
                     {
                         if (type == ButtonType.Right)
                         {
@@ -1321,13 +1271,9 @@ namespace MahApps.Metro.Controls
                 {
                     Point p = Mouse.GetPosition(_container);
                     double pos = Orientation == Orientation.Horizontal ? p.X : p.Y;
-                    double tickIntervalInPixels = TickFrequency * density;
+                    double tickIntervalInPixels = -TickFrequency * density;
                     if (distance < tickIntervalInPixels / 2 || pos < (tickIntervalInPixels / 2))
                     {
-                        //Debug.WriteLine("---------------Direction.Decrease--------------");
-                        //Debug.WriteLine("temp <- " + temp);
-                        //Debug.WriteLine("tickIntervalInPixels/2 = " + tickIntervalInPixels / 2);
-                        //Debug.WriteLine("---------------end--------------");
                         if (type == ButtonType.Right)
                         {
                             MoveThumb(_centerThumb, _rightButton, temp, Orientation);
