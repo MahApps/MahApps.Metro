@@ -8,11 +8,11 @@
             <TickBar Name="PART_TopTick" Placement="Top" Fill="{TemplateBinding Foreground}" Height="4" Margin="5,0,5,2" Visibility="Collapsed"></TickBar>
             <StackPanel Name="PART_RangeSliderContainer" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <RepeatButton Name="PART_LeftEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
-                <Thumb Name="PART_LeftThumb" Cursor="Hand" 
+                <Thumb Name="PART_LeftThumb" Cursor="Arrow" 
                        Height="{DynamicResource HorizontalThumbHeight}"
                        Width="{DynamicResource HorizontalThumbWidth}"
                        Style="{DynamicResource HorizontalSliderThumb}" />
-                <Thumb Name="PART_MiddleThumb" Cursor="SizeWE" MinWidth="10">
+                <Thumb Name="PART_MiddleThumb" Cursor="Hand" MinWidth="10">
                     <Thumb.Style>
                         <Style TargetType="Thumb">
                             <Setter Property="Template">
@@ -25,7 +25,7 @@
                         </Style>
                     </Thumb.Style>
                 </Thumb>
-                <Thumb Name="PART_RightThumb" Cursor="Hand"
+                <Thumb Name="PART_RightThumb" Cursor="Arrow"
                                     Height="{DynamicResource HorizontalThumbHeight}"
                                     Width="{DynamicResource HorizontalThumbWidth}"
                                     Style="{DynamicResource HorizontalSliderThumb}" />
@@ -55,11 +55,11 @@
                 <RepeatButton Name="PART_LeftEdge"
                                       Style="{DynamicResource VerticalTrackLargeDecrease}" />
                 <Thumb Name="PART_LeftThumb"
-                               Cursor="Hand"
+                               Cursor="Arrow"
                                Height="{DynamicResource VerticalThumbHeight}"
                                Width="{DynamicResource VerticalThumbWidth}"
                                Style="{DynamicResource VerticalSliderThumb}" />
-                <Thumb Name="PART_MiddleThumb" Cursor="SizeNS" MinHeight="10">
+                <Thumb Name="PART_MiddleThumb" Cursor="Hand" MinHeight="10">
                     <Thumb.Style>
                         <Style TargetType="Thumb">
                             <Setter Property="Template">
@@ -72,7 +72,7 @@
                         </Style>
                     </Thumb.Style>
                 </Thumb>
-                <Thumb Name="PART_RightThumb" Cursor="Hand" 
+                <Thumb Name="PART_RightThumb" Cursor="Arrow" 
                        Height="{DynamicResource VerticalThumbHeight}"
                        Width="{DynamicResource VerticalThumbWidth}"
                        Style="{DynamicResource VerticalSliderThumb}" />

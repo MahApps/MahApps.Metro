@@ -819,8 +819,8 @@
                                                   LowerThumbDragDelta="RangeSlider_OnLowerThumbDragDelta" UpperThumbDragDelta="RangeSlider_OnUpperThumbDragDelta" CentralThumbDragDelta="RangeSlider_OnCentralThumbDragDelta"
                                                   LowerThumbDragStarted="RangeSlider_OnLowerThumbDragStarted" LowerThumbDragCompleted="RangeSlider_OnLowerThumbDragCompleted"
                                                   UpperThumbDragStarted="RangeSlider_OnUpperThumbDragStarted" UpperThumbDragCompleted="RangeSlider_OnUpperThumbDragCompleted"
-                                                  TickPlacement="Both" TickFrequency="20" IsSnapToTickEnabled="False"
-                                                  Width="200" Minimum="0" Maximum="200" IsMoveToPointEnabled="False" ExtendedMode="True" MoveWholeSelection="True" SmallChange="0.1" LowerValue="1" UpperValue="19" />
+                                                  TickPlacement="Both" TickFrequency="20" IsSnapToTickEnabled="True"
+                                                  Width="200" Minimum="0" Maximum="210" IsMoveToPointEnabled="False" ExtendedMode="True" MoveWholeSelection="True" SmallChange="0.1" LowerValue="1" UpperValue="19" />
                             <!--<Slider Value="{Binding ElementName=RangeSlider, Path=MinRangeWidth}" Minimum="0" Maximum="250" ></Slider>-->
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
