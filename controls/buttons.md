@@ -5,7 +5,7 @@ title: Buttons
 
 ### Default look
 
-This just replaces the standard button when you drop in the library, nothing fancy to activate it    
+This just replaces the standard button when you drop in the library, nothing fancy to activate it.
 ![]({{site.baseurl}}/images/08_RegularButton.png)
 
 ### MetroCircleButton
@@ -23,7 +23,7 @@ Add the following to a button to apply this style: `Style="{DynamicResource Squa
 
 ### AccentedAquareButton
 
-A slightly modified version of `SquareButton` that has the current accent color as background color
+A slightly modified version of `SquareButton` that has the current accent color as background color.
 
 ![]({{site.baseurl}}/images/accent-square-button.png)
 
