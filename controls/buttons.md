@@ -5,7 +5,7 @@ title: Buttons
 
 ### Default look
 
-This just replaces the standard button when you drop in the library, nothing fancy to activate it.
+This just replaces the standard button when you drop in the library, nothing fancy to activate it.    
 ![]({{site.baseurl}}/images/08_RegularButton.png)
 
 ### MetroCircleButton
