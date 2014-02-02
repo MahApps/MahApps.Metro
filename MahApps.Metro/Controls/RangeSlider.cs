@@ -265,6 +265,7 @@ namespace MahApps.Metro.Controls
         private Point _position;
         private Point _basePoint;
         private double _currenValue;
+        private double _density;
 
         #endregion
 
@@ -287,8 +288,8 @@ namespace MahApps.Metro.Controls
         {
             
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
-            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)10, null, CoerceMaximum));
             MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)0, null, CoerceMinimum));
+            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)10, null, CoerceMaximum));
             TickFrequencyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(10.0, OnTickPlacementChanged));
         }
 
@@ -310,7 +311,7 @@ namespace MahApps.Metro.Controls
         protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
         {
             base.OnMinimumChanged(oldMinimum, newMinimum);
-            CheckLowerValue();
+            //CheckLowerValue();
             ReCalculateRanges();
             ReCalculateWidths();
         }
@@ -322,7 +323,7 @@ namespace MahApps.Metro.Controls
         protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
         {
             base.OnMaximumChanged(oldMaximum, newMaximum);
-            CheckUpperValue();
+            //CheckUpperValue();
             ReCalculateRanges();
             ReCalculateWidths();
         }
@@ -557,7 +558,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private double density = 0;
+        
         private void ReCalculateWidths()
         {
             if (_leftButton != null && _rightButton != null && _centerThumb != null)
@@ -586,7 +587,7 @@ namespace MahApps.Metro.Controls
                             ActualHeight - _leftButton.Height - _rightButton.Height - _rightThumb.ActualHeight -
                             _leftThumb.ActualHeight, 0);
                 }
-                density = _movableWidth / (Maximum - Minimum);
+                _density = _movableWidth / (Maximum - Minimum);
             }
         }
 
@@ -1155,35 +1156,35 @@ namespace MahApps.Metro.Controls
                 {
                     distance += TickFrequency;
                     _currenValue = 0;
-                    distance = (distance - chekingValue) * density;
+                    distance = (distance - chekingValue) * _density;
                 }
                 else
                 {
-                    distance = (chekingValue - distance) * density;
+                    distance = (chekingValue - distance) * _density;
                 }
             }
             else
             {
                 if (moveDirectlyToNextTick)
                 {
-                    distance = TickFrequency*density;
+                    distance = TickFrequency*_density;
                 }
                 else
                 {
                     if (dir == Direction.Increase)
                     {
-                        double currentValue = chekingValue + (distance / density);//в единицах
+                        double currentValue = chekingValue + (distance / _density);//в единицах
                         double x = currentValue / TickFrequency;
                         double nextvalue = ((int)x * TickFrequency) + TickFrequency;
-                        currentValue = (nextvalue - currentValue) * density;//переводим в пиксели
+                        currentValue = (nextvalue - currentValue) * _density;//переводим в пиксели
                         distance += currentValue;
                     }
                     else
                     {
-                        double currentValue = chekingValue + (distance / density);
+                        double currentValue = chekingValue + (distance / _density);
                         double x = currentValue / TickFrequency;
                         double previousValue = (int)x * TickFrequency;
-                        currentValue = (currentValue - previousValue) * density;
+                        currentValue = (currentValue - previousValue) * _density;
                         distance -= currentValue;
                     }
                 }
@@ -1223,7 +1224,7 @@ namespace MahApps.Metro.Controls
                     Point p = Mouse.GetPosition(_container);
                     double pos = Orientation == Orientation.Horizontal? p.X: p.Y;
                     double widthHeight = Orientation == Orientation.Horizontal ? ActualWidth : ActualHeight;
-                    double tickIntervalInPixels = TickFrequency * density;
+                    double tickIntervalInPixels = TickFrequency * _density;
                     if ((distance > (tickIntervalInPixels / 2)) || widthHeight - pos < (tickIntervalInPixels / 2))
                     {
                         if (type == ButtonType.Right)
@@ -1271,7 +1272,7 @@ namespace MahApps.Metro.Controls
                 {
                     Point p = Mouse.GetPosition(_container);
                     double pos = Orientation == Orientation.Horizontal ? p.X : p.Y;
-                    double tickIntervalInPixels = -TickFrequency * density;
+                    double tickIntervalInPixels = -TickFrequency * _density;
                     if (distance < tickIntervalInPixels / 2 || pos < (tickIntervalInPixels / 2))
                     {
                         if (type == ButtonType.Right)
@@ -1445,38 +1446,39 @@ namespace MahApps.Metro.Controls
         {
             RangeSlider rs = (RangeSlider)d;
 
-            //double value = (double)basevalue;
+            double value = (double)basevalue;
 
-            //if (value <= rs.Minimum)
-            //    return rs.Minimum;
-            //return Math.Min(value, rs.UpperValue);
-            return (Double) basevalue;
+            if (value <= rs.Minimum)
+                return rs.Minimum;
+            return Math.Min(value, rs.UpperValue);
+            //return (Double) basevalue;
         }
 
         private static object CoerceUpperValue(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
 
-            //double value = (double)basevalue;
+            double value = (double)basevalue;
 
-            //if (value >= rs.Maximum)
-            //    return rs.Maximum;
-            //return Math.Max(value, rs.LowerValue);
-            return (Double) basevalue;
+            if (value >= rs.Maximum)
+                return rs.Maximum;
+            Debug.WriteLine("LowerValue = "+rs.LowerValue);
+            return Math.Max(value, rs.LowerValue);
+            //return (Double) basevalue;
         }
 
         private static object CoerceMaximum(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
-            return (Double)basevalue;
-            //return (Double)basevalue < rs.Minimum ? rs.Minimum : (Double)basevalue;
+            //return (Double)basevalue;
+            return (Double)basevalue < rs.Minimum ? rs.Minimum : (Double)basevalue;
         }
 
         private static object CoerceMinimum(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider)d;
-            return (Double) basevalue;
-            //return (Double)basevalue > rs.Maximum ? rs.Maximum : (Double)basevalue;
+            //return (Double) basevalue;
+            return (Double)basevalue > rs.Maximum ? rs.Maximum : (Double)basevalue;
         }
 
         private static object CoerceMinBridgeWidth(DependencyObject d, object basevalue)
