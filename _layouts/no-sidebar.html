@@ -17,7 +17,7 @@
 					<div class="12u">
 						<header id="header">
 							<div id="logo">
-                <h1><a href="{{site.baseurl}}/" id="logo">mahapps.metro</a></h1>
+                <h1><a href="{{site.baseurl}}/">mahapps.metro</a></h1>
 								<span>a UI toolkit for WPF</span>
 							</div>
 							<nav id="nav">
@@ -46,15 +46,15 @@
 				</div>
 			</div>
 		</div>
+    <script type="text/javascript">
+      (function () {
+          var nb = document.createElement('script');
+          nb.type = 'text/javascript';
+          nb.async = true;
+          nb.src = '{{site.baseurl}}/js/nuget.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(nb, s);
+      })();
+    </script>
 	</body>
-	<script type="text/javascript">
-    (function () {
-        var nb = document.createElement('script');
-        nb.type = 'text/javascript';
-        nb.async = true;
-        nb.src = '{{site.baseurl}}/js/nuget.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(nb, s);
-    })();
-</script>
 </html>

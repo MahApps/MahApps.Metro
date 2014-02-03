@@ -17,7 +17,7 @@
 					<div class="12u">
 						<header id="header">
 							<div id="logo">
-                <h1><a href="{{site.baseurl}}/" id="logo">mahapps.metro</a></h1>
+                <h1><a href="{{site.baseurl}}/">mahapps.metro</a></h1>
 								<span>a UI toolkit for WPF</span>
 							</div>
 							<nav id="nav">
@@ -37,22 +37,20 @@
 				<div class="row">
 					<div class="12u">
 						<div id="banner" class="box">
-							<div>
-								<div class="row">
-									<div class="12u">
-										<h2>let your desktop apps shine</h2>
-										<div id="home-container">
-                      <div><img alt="before" src="{{site.baseurl}}/images/home-title-light.png" width="1024" height="348" /></div>
-                      <div><img alt="after" src="{{site.baseurl}}/images/home-title-dark.png" width="1024" height="348" /></div>
-										</div>
-										<p>1. install it from NuGet
-											<pre class="nuget-button">Install-Package MahApps.Metro</pre>
-										</p>
-                    <p>2. read through the <a href="{{site.baseurl}}/guides/quick-start.html">quick start</a></p>
-										<p>3. go forth and be awesome</p>
-									</div>
-								</div>
-							</div>
+              <div class="row">
+                <div class="12u">
+                  <h2>let your desktop apps shine</h2>
+                  <div id="home-container">
+                    <div><img alt="before" src="{{site.baseurl}}/images/home-title-light.png" width="1024" height="348" /></div>
+                    <div><img alt="after" src="{{site.baseurl}}/images/home-title-dark.png" width="1024" height="348" /></div>
+                  </div>
+                  <p>1. install it from NuGet
+                  <pre class="nuget-button">Install-Package MahApps.Metro</pre>
+                  <p></p>
+                  <p>2. read through the <a href="{{site.baseurl}}/guides/quick-start.html">quick start</a></p>
+                  <p>3. go forth and be awesome</p>
+                </div>
+              </div>
 						</div>
 					</div>
 				</div>
@@ -126,26 +124,26 @@
 				</div>
 			</div>
 		</div>
+    <script type="text/javascript" src="{{site.baseurl}}/js/jquery.beforeafter-1.4.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+      $('#home-container').beforeAfter({
+        animateIntro : true,
+            introDelay : 2000,
+            introDuration : 500,
+            showFullLinks : false
+      });
+    });
+    </script>
+    <script type="text/javascript">
+      (function () {
+          var nb = document.createElement('script');
+          nb.type = 'text/javascript';
+          nb.async = true;
+          nb.src = '{{site.baseurl}}/js/nuget.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(nb, s);
+      })();
+    </script>
 	</body>
-  <script type="text/javascript" src="{{site.baseurl}}/js/jquery.beforeafter-1.4.min.js"></script>
-	<script type="text/javascript">
-	$(function(){
-		$('#home-container').beforeAfter({
-			animateIntro : true,
-	        introDelay : 2000,
-	        introDuration : 500,
-	        showFullLinks : false
-		});
-	});
-	</script>
-	<script type="text/javascript">
-    (function () {
-        var nb = document.createElement('script');
-        nb.type = 'text/javascript';
-        nb.async = true;
-        nb.src = '{{site.baseurl}}/js/nuget.js';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(nb, s);
-    })();
-  </script>
 </html>
