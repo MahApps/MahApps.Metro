@@ -1214,7 +1214,7 @@
                                     </VisualState>
                                 </Controls:TransitioningContentControl.CustomVisualStates>
                             </Controls:TransitioningContentControl>
-                                                        <Controls:TransitioningContentControl x:Name="SecondcustomTransitioning"
+                            <Controls:TransitioningContentControl x:Name="SecondcustomTransitioning"
                                                                   Width="250"
                                                                   Height="50"
                                                                   Margin="0, 10, 0, 0"
