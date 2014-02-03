@@ -48,11 +48,15 @@ namespace MahApps.Metro.Controls
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
                                                      ? HitTestValues.HTBOTTOMLEFT
                                                      : HitTestValues.HTLEFT;
-                    getCursor = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
+                    getCursor = p => {
+                        return (owner.ResizeMode == ResizeMode.NoResize || owner.ResizeMode == ResizeMode.CanMinimize)
+                                    ? owner.Cursor
+                                    : new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                          ? Cursors.SizeNWSE
                                          : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
                                                ? Cursors.SizeNESW
                                                : Cursors.SizeWE;
+                    };
                     break;
                 case GlowDirection.Right:
                     glow.Orientation = Orientation.Vertical;
@@ -66,11 +70,15 @@ namespace MahApps.Metro.Controls
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
                                                      ? HitTestValues.HTBOTTOMRIGHT
                                                      : HitTestValues.HTRIGHT;
-                    getCursor = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
+                    getCursor = p =>  {
+                        return (owner.ResizeMode == ResizeMode.NoResize || owner.ResizeMode == ResizeMode.CanMinimize)
+                                    ? owner.Cursor
+                                    : new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                          ? Cursors.SizeNESW
                                          : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
                                                ? Cursors.SizeNWSE
                                                : Cursors.SizeWE;
+                    };
                     break;
                 case GlowDirection.Top:
                     glow.Orientation = Orientation.Horizontal;
@@ -85,12 +93,16 @@ namespace MahApps.Metro.Controls
                                                           ActualHeight).Contains(p)
                                                      ? HitTestValues.HTTOPRIGHT
                                                      : HitTestValues.HTTOP;
-                    getCursor = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
+                    getCursor = p =>  {
+                        return (owner.ResizeMode == ResizeMode.NoResize || owner.ResizeMode == ResizeMode.CanMinimize)
+                                    ? owner.Cursor
+                                    : new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                          ? Cursors.SizeNWSE
                                          : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize, ActualHeight).
                                                Contains(p)
                                                ? Cursors.SizeNESW
                                                : Cursors.SizeNS;
+                    };
                     break;
                 case GlowDirection.Bottom:
                     glow.Orientation = Orientation.Horizontal;
@@ -105,12 +117,16 @@ namespace MahApps.Metro.Controls
                                                           ActualHeight).Contains(p)
                                                      ? HitTestValues.HTBOTTOMRIGHT
                                                      : HitTestValues.HTBOTTOM;
-                    getCursor = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
+                    getCursor = p =>  {
+                        return (owner.ResizeMode == ResizeMode.NoResize || owner.ResizeMode == ResizeMode.CanMinimize)
+                                    ? owner.Cursor
+                                    : new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                          ? Cursors.SizeNESW
                                          : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize, ActualHeight).
                                                Contains(p)
                                                ? Cursors.SizeNWSE
                                                : Cursors.SizeNS;
+                    };
                     break;
             }
 
