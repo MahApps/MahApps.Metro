@@ -330,7 +330,7 @@ namespace MahApps.Metro
                     }
                 };
 
-            if (UseTask)
+            if (InvalidateSystemResourcesOnBackgroundThread)
             {
                 Task.Factory.StartNew(apply);
             }
@@ -340,7 +340,7 @@ namespace MahApps.Metro
             }
         }
 
-        public static bool UseTask { get; set; }
+        public static bool InvalidateSystemResourcesOnBackgroundThread { get; set; }
     }
 
     public class OnThemeChangedEventArgs : EventArgs
