@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro;
-using MahApps.Metro.Controls;
 using MetroDemo.Models;
 using System.Windows.Input;
 
@@ -48,6 +46,8 @@ namespace MetroDemo
             
             Albums = SampleData.Albums;
             Artists = SampleData.Artists;
+
+            BrushResources = FindBrushResources();
         }
 
         public string Title { get; set; }
@@ -184,6 +184,28 @@ namespace MetroDemo
             {
 
             }
+        }
+
+        public IOrderedEnumerable<KeyValuePair<string, Brush>> BrushResources { get; private set; }
+
+        public IOrderedEnumerable<KeyValuePair<string, Brush>> FindBrushResources()
+        {
+            var rd = new ResourceDictionary
+                {
+                    Source = new Uri(@"/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
+                };
+
+            var resources = new Dictionary<string, Brush>();
+            foreach (var key in rd.Keys)
+            {
+                var brush = rd[key] as Brush;
+                if (brush != null)
+                {
+                    resources.Add(key.ToString(), brush);
+                }
+            }
+
+            return resources.OrderBy(t => t.Key);
         }
     }
 }
