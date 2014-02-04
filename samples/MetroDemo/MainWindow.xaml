@@ -1280,14 +1280,18 @@
                         <ItemsControl ItemsSource="{Binding BrushResources}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Height="40" 
-                                               FontSize="{DynamicResource NormalFontSize}"
-                                               TextAlignment="Center"
-                                               VerticalAlignment="Center"
-                                               Background="{Binding Value}" 
-                                               Foreground="{DynamicResource IdealForegroundColorBrush}" 
-                                               Text="{Binding Key}"
-                                               ToolTip="{Binding Key}"/>
+                                    <Grid ToolTip="{Binding Key}" MinHeight="40">
+                                        <Rectangle Fill="{Binding Value}" />
+                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Rectangle Fill="White" Opacity="0.6"/>
+                                        <TextBlock  Margin="4,2"
+                                                FontSize="{DynamicResource NormalFontSize}"
+                                                TextAlignment="Right"
+                                                Opacity="1"
+                                                Foreground="Black"
+                                                Text="{Binding Key}" />
+                                        </Grid>
+                                    </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
