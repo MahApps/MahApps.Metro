@@ -1172,6 +1172,28 @@
                         </DataGrid>
                     </Grid>
                 </TabItem>
+                <TabItem Header="colors">
+                    <ScrollViewer>
+                        <ItemsControl ItemsSource="{Binding BrushResources}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ToolTip="{Binding Key}" MinHeight="40">
+                                        <Rectangle Fill="{Binding Value}" />
+                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Rectangle Fill="White" Opacity="0.6"/>
+                                            <TextBlock  Margin="4,2"
+                                                        FontSize="{DynamicResource NormalFontSize}"
+                                                        TextAlignment="Right"
+                                                        Opacity="1"
+                                                        Foreground="Black"
+                                                        Text="{Binding Key}" />
+                                        </Grid>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </TabItem>
                 <TabItem Header="others">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -1274,28 +1296,6 @@
                             </Controls:FlipView>
                         </StackPanel>
                     </Grid>
-                </TabItem>
-                <TabItem Header="colors">
-                    <ScrollViewer>
-                        <ItemsControl ItemsSource="{Binding BrushResources}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid ToolTip="{Binding Key}" MinHeight="40">
-                                        <Rectangle Fill="{Binding Value}" />
-                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <Rectangle Fill="White" Opacity="0.6"/>
-                                        <TextBlock  Margin="4,2"
-                                                FontSize="{DynamicResource NormalFontSize}"
-                                                TextAlignment="Right"
-                                                Opacity="1"
-                                                Foreground="Black"
-                                                Text="{Binding Key}" />
-                                        </Grid>
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
         </Grid>
