@@ -9,6 +9,8 @@ using System.Windows;
 
 namespace MahApps.Metro
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// A class that allows for the detection and alteration of a MetroWindow's theme and accent.
     /// </summary>
@@ -18,6 +20,29 @@ namespace MahApps.Metro
         internal static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
 
         private static IList<Accent> _accents;
+
+        /// <summary>
+        /// Cached method info's for use in OnThemeChanged
+        /// </summary>
+        private static readonly MethodInfo SystemColors_InvalidateColors;
+        private static readonly MethodInfo SystemResources_OnThemeChanged;
+        private static readonly MethodInfo SystemResources_InvalidateResources;
+
+        static ThemeManager()
+        {
+            SystemColors_InvalidateColors = typeof(SystemColors).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic);
+            var assembly = Assembly.GetAssembly(typeof(Window));
+            if (assembly != null)
+            {
+                var systemResources = assembly.GetType("System.Windows.SystemResources");
+                if (systemResources != null)
+                {
+                    SystemResources_OnThemeChanged = systemResources.GetMethod("OnThemeChanged", BindingFlags.Static | BindingFlags.NonPublic);
+                    SystemResources_InvalidateResources = systemResources.GetMethod("InvalidateResources", BindingFlags.Static | BindingFlags.NonPublic);
+                }
+            }
+        }
+
         /// <summary>
         /// Gets a list of all of default themes.
         /// </summary>
@@ -82,7 +107,8 @@ namespace MahApps.Metro
                 if (oldAccent != null && oldAccent.Name != newAccent.Name)
                 {
                     var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
-                    if (oldAccentResource != null) {
+                    if (oldAccentResource != null)
+                    {
                         resources.MergedDictionaries.Add(newAccent.Resources);
                         var ok = resources.MergedDictionaries.Remove(oldAccentResource);
 
@@ -182,7 +208,7 @@ namespace MahApps.Metro
         public static Tuple<Theme, Accent> DetectTheme(Application app)
         {
             if (app == null) throw new ArgumentNullException("app");
-            
+
             return DetectTheme(app.Resources);
         }
 
@@ -199,7 +225,8 @@ namespace MahApps.Metro
             Tuple<Theme, Accent> detectedAccentTheme = null;
 
 
-            if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, resources)) {
+            if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, resources))
+            {
                 if (GetThemeFromResources(currentTheme, resources, ref detectedAccentTheme))
                     return new Tuple<Theme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
             }
@@ -231,7 +258,8 @@ namespace MahApps.Metro
                     return true;
                 }
 
-                if (DetectThemeFromResources(ref detectedTheme, ref themeRd, currentRd)) {
+                if (DetectThemeFromResources(ref detectedTheme, ref themeRd, currentRd))
+                {
                     return true;
                 }
             }
@@ -239,7 +267,7 @@ namespace MahApps.Metro
             enumerator.Dispose();
             return false;
         }
-        
+
         internal static bool GetThemeFromResources(Theme presetTheme, ResourceDictionary dict, ref Tuple<Theme, Accent> detectedAccentTheme)
         {
             Theme currentTheme = presetTheme;
@@ -277,39 +305,42 @@ namespace MahApps.Metro
         {
             SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { Theme = newTheme, Accent = newAccent });
 
-            var invalidateColors = typeof(SystemColors).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic);
-            if (invalidateColors != null)
-            {
-                invalidateColors.Invoke(null, null);
-            }
-
-            // See: https://github.com/MahApps/MahApps.Metro/issues/923
-            //var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
-            //if (invalidateParameters != null)
-            //{
-            //    invalidateParameters.Invoke(null, null);
-            //}
-
-            var assembly = Assembly.GetAssembly(typeof(Window));
-            if (assembly != null)
-            {
-                var systemResources = assembly.GetType("System.Windows.SystemResources");
-                if (systemResources != null)
+            Action apply = () =>
                 {
-                    var onThemeChanged = systemResources.GetMethod("OnThemeChanged", BindingFlags.Static | BindingFlags.NonPublic);
-                    if (onThemeChanged != null)
+                    if (SystemColors_InvalidateColors != null)
                     {
-                        onThemeChanged.Invoke(null, null);
+                        SystemColors_InvalidateColors.Invoke(null, null);
                     }
 
-                    var invalidateResources = systemResources.GetMethod("InvalidateResources", BindingFlags.Static | BindingFlags.NonPublic);
-                    if (invalidateResources != null)
+                    // See: https://github.com/MahApps/MahApps.Metro/issues/923
+                    //var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
+                    //if (invalidateParameters != null)
+                    //{
+                    //    invalidateParameters.Invoke(null, null);
+                    //}
+
+                    if (SystemResources_OnThemeChanged != null)
                     {
-                        invalidateResources.Invoke(null, new object[] { false });
+                        SystemResources_OnThemeChanged.Invoke(null, null);
                     }
-                }
+
+                    if (SystemResources_InvalidateResources != null)
+                    {
+                        SystemResources_InvalidateResources.Invoke(null, new object[] { false });
+                    }
+                };
+
+            if (InvalidateSystemResourcesOnBackgroundThread)
+            {
+                Task.Factory.StartNew(apply);
+            }
+            else
+            {
+                apply();
             }
         }
+
+        public static bool InvalidateSystemResourcesOnBackgroundThread { get; set; }
     }
 
     public class OnThemeChangedEventArgs : EventArgs
