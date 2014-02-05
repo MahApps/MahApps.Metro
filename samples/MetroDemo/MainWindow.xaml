@@ -6,6 +6,8 @@
                       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"
                       Title="MahApps.Metro - Demo Application"
                       Width="960"
                       Height="600"
@@ -1190,7 +1192,13 @@
                                             <RowDefinition/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Ellipse Fill="{Binding Value}" Stroke="#bdbdbd" Height="80" Width="80" Grid.Row="0"/>
+                                        <Ellipse Stroke="#bdbdbd" Height="80" Width="80" Grid.Row="0">
+                                            <i:Interaction.Behaviors>
+                                                <behaviours:BindableResourceBehavior
+                                                    ResourceName="{Binding Key}"
+                                                    Property="{x:Static Shape.FillProperty}"/>
+                                            </i:Interaction.Behaviors>
+                                        </Ellipse>
                                         <TextBlock
                                             HorizontalAlignment="Center"
                                             Grid.Row="1"
