@@ -12,7 +12,7 @@
                        Height="{DynamicResource HorizontalThumbHeight}"
                        Width="{DynamicResource HorizontalThumbWidth}"
                        Style="{DynamicResource HorizontalSliderThumb}" />
-                <Thumb Name="PART_MiddleThumb" Cursor="Hand" MinWidth="10">
+                <Thumb Name="PART_MiddleThumb" Cursor="Hand" MinWidth="30">
                     <Thumb.Style>
                         <Style TargetType="Thumb">
                             <Setter Property="Template">
