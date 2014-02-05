@@ -257,24 +257,33 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(typeof(Flyout)));
         }
 
+        Grid root;
+        EasingDoubleKeyFrame hideFrame;
+        EasingDoubleKeyFrame hideFrameY;
+        EasingDoubleKeyFrame showFrame;
+        EasingDoubleKeyFrame showFrameY;
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            
+            root = (Grid)GetTemplateChild("root");
+            if (root == null)
+                return;
+
+            hideFrame = (EasingDoubleKeyFrame)GetTemplateChild("hideFrame");
+            hideFrameY = (EasingDoubleKeyFrame)GetTemplateChild("hideFrameY");
+            showFrame = (EasingDoubleKeyFrame)GetTemplateChild("showFrame");
+            showFrameY = (EasingDoubleKeyFrame)GetTemplateChild("showFrameY");
+
+            if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
+                return;
+            
             ApplyAnimation(Position);
         }
 
         internal void ApplyAnimation(Position position)
         {
-            var root = (Grid)GetTemplateChild("root");
-            if (root == null)
-                return;
-
-            var hideFrame = (EasingDoubleKeyFrame)GetTemplateChild("hideFrame");
-            var hideFrameY = (EasingDoubleKeyFrame)GetTemplateChild("hideFrameY");
-            var showFrame = (EasingDoubleKeyFrame)GetTemplateChild("showFrame");
-            var showFrameY = (EasingDoubleKeyFrame)GetTemplateChild("showFrameY");
-
-            if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
+            if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
                 return;
 
             if (Position == Position.Left || Position == Position.Right)
@@ -317,24 +326,14 @@ namespace MahApps.Metro.Controls
             base.OnRenderSizeChanged(sizeInfo);
 
             if (!sizeInfo.WidthChanged && !sizeInfo.HeightChanged) return;
+            if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
+                return; // don't bother checking IsOpen and calling ApplyAnimation
 
             if (!IsOpen)
             {
                 ApplyAnimation(Position);
                 return;
             }
-
-            var root = (Grid)GetTemplateChild("root");
-            if (root == null)
-                return;
-
-            var hideFrame = (EasingDoubleKeyFrame)GetTemplateChild("hideFrame");
-            var hideFrameY = (EasingDoubleKeyFrame)GetTemplateChild("hideFrameY");
-            var showFrame = (EasingDoubleKeyFrame)GetTemplateChild("showFrame");
-            var showFrameY = (EasingDoubleKeyFrame)GetTemplateChild("showFrameY");
-
-            if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
-                return;
 
             if (Position == Position.Left || Position == Position.Right)
                 showFrame.Value = 0;
