@@ -19,6 +19,10 @@
                 Value="Center" />
         <Setter Property="RenderTransformOrigin"
                 Value="0.5,0.5" />
+        <Setter Property="TitleFontSize"
+                Value="16"/>
+        <Setter Property="CountFontSize"
+                Value="28"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:Tile">
@@ -28,7 +32,7 @@
                                     Orientation="Horizontal">
                             <ContentPresenter RecognizesAccessKey="True" />
                             <TextBlock Text="{TemplateBinding Count}"
-                                       FontSize="28"
+                                       FontSize="{Binding CountFontSize, RelativeSource={RelativeSource TemplatedParent}}"
                                        VerticalAlignment="Center" />
                         </StackPanel>
 
@@ -39,7 +43,7 @@
                             <AccessText Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
                                         Foreground="{TemplateBinding Foreground}"
                                         TextWrapping="Wrap"
-                                        FontSize="16"
+                                        FontSize="{Binding TitleFontSize, RelativeSource={RelativeSource TemplatedParent}}"
                                         Margin="3" />
                         </Label>
                     </Grid>
