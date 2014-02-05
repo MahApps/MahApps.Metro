@@ -43,5 +43,23 @@ namespace MahApps.Metro.Controls
             get { return (Int32)GetValue(TiltFactorProperty); }
             set { SetValue(TiltFactorProperty, value); }
         }
+
+        public static readonly DependencyProperty TitleFontSizeProperty =
+            DependencyProperty.Register("TitleFontSize", typeof(int), typeof(Tile), new PropertyMetadata(16));
+
+        public int TitleFontSize
+        {
+            get { return (int) GetValue(TitleFontSizeProperty); }
+            set { SetValue(TitleFontSizeProperty, value); }
+        }
+
+        public static readonly DependencyProperty CountFontSizeProperty =
+            DependencyProperty.Register("CountFontSize", typeof(int), typeof(Tile), new PropertyMetadata(28));
+
+        public int CountFontSize
+        {
+            get { return (int) GetValue(CountFontSizeProperty); }
+            set { SetValue(CountFontSizeProperty, value); }
+        }
     }
 }
