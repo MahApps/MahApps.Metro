@@ -254,6 +254,8 @@
                                         Value="Center" />
                                 <Setter Property="Padding"
                                         Value="1" />
+                                <Setter Property="FocusVisualStyle"
+                                        Value="{x:Null}"/>
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type Button}">
@@ -351,6 +353,7 @@
                     <StackPanel Orientation="Horizontal">
 
                         <Button x:Name="PART_Min"
+                                FocusVisualStyle="{x:Null}"
                                 IsTabStop="False"
                                 Width="34"
                                 Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
@@ -365,6 +368,7 @@
                         </Button>
 
                         <Button x:Name="PART_Max"
+                                FocusVisualStyle="{x:Null}"
                                 IsTabStop="False"
                                 Width="34"
                                 Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
@@ -387,6 +391,7 @@
                         </Button>
 
                         <Button x:Name="PART_Close"
+                                FocusVisualStyle="{x:Null}"
                                 IsTabStop="False"
                                 Width="34"
                                 Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
