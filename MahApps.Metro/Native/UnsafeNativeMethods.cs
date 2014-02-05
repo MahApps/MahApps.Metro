@@ -131,22 +131,22 @@ namespace MahApps.Metro.Native
             public readonly Int32 Y;
         };
 
-        internal static int GET_X_LPARAM(UIntPtr lParam)
+        internal static int GET_X_LPARAM(IntPtr lParam)
         {
-            return LOWORD(lParam.ToUInt32());
+            return LOWORD(lParam.ToInt64());
         }
 
-        internal static int GET_Y_LPARAM(UIntPtr lParam)
+        internal static int GET_Y_LPARAM(IntPtr lParam)
         {
-            return HIWORD(lParam.ToUInt32());
+            return HIWORD(lParam.ToInt64());
         }
 
-        private static int HIWORD(uint i)
+        private static int HIWORD(long i)
         {
             return (short)(i >> 16);
         }
 
-        private static int LOWORD(uint i)
+        private static int LOWORD(long i)
         {
             return (short)(i & 0xFFFF);
         }
