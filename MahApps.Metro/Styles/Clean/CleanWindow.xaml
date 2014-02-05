@@ -83,6 +83,7 @@
                                 Name="TitleLabel"
                                 Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 FontSize="{DynamicResource WindowTitleFontSize}"
+                                TextOptions.TextFormattingMode="{TemplateBinding TextOptions.TextFormattingMode}"
                                 Width="Auto" />
 
                         </Grid>

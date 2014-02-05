@@ -79,6 +79,7 @@
                                        Text="{TemplateBinding Title}"
                                        TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"
+                                       TextOptions.TextFormattingMode="{TemplateBinding TextOptions.TextFormattingMode}"
                                        Margin="8 -1 0 0"
                                        FontSize="{DynamicResource WindowTitleFontSize}"
                                        FontFamily="{DynamicResource HeaderFontFamily}">
