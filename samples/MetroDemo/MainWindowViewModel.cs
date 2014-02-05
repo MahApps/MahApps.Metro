@@ -186,26 +186,22 @@ namespace MetroDemo
             }
         }
 
-        public IOrderedEnumerable<KeyValuePair<string, Brush>> BrushResources { get; private set; }
+        public IEnumerable<string> BrushResources { get; private set; }
 
-        public IOrderedEnumerable<KeyValuePair<string, Brush>> FindBrushResources()
+        private IEnumerable<string> FindBrushResources()
         {
             var rd = new ResourceDictionary
                 {
                     Source = new Uri(@"/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
                 };
 
-            var resources = new Dictionary<string, Brush>();
-            foreach (var key in rd.Keys)
-            {
-                var brush = rd[key] as Brush;
-                if (brush != null)
-                {
-                    resources.Add(key.ToString(), brush);
-                }
-            }
+            var resources = rd.Keys.Cast<object>()
+                    .Where(key => rd[key] is Brush)
+                    .Select(key => key.ToString())
+                    .OrderBy(s => s)
+                    .ToList();
 
-            return resources.OrderBy(t => t.Key);
+            return resources;
         }
     }
 }
