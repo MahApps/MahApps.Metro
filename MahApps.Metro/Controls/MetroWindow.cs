@@ -410,7 +410,7 @@ namespace MahApps.Metro.Controls
         {
             if (Flyouts.OverrideExternalCloseButton == null)
             {
-                foreach (Flyout flyout in Flyouts.Items)
+                foreach (Flyout flyout in Flyouts.GetFlyouts())
                 {
                     if (flyout.ExternalCloseButton == e.ChangedButton && (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true))
                     {
@@ -420,7 +420,7 @@ namespace MahApps.Metro.Controls
             }
             else if (Flyouts.OverrideExternalCloseButton == e.ChangedButton)
             {
-                foreach (Flyout flyout in Flyouts.Items)
+                foreach (Flyout flyout in Flyouts.GetFlyouts())
                 {
                     if (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true)
                     {
