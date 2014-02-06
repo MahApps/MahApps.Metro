@@ -1566,43 +1566,29 @@ namespace MahApps.Metro.Controls
             Debug.WriteLine("chekingValue = " + chekingValue);
             Debug.WriteLine("chekingValue / TickFrequency = " + chekingValue / TickFrequency);
             Debug.WriteLine("ToInt = " + IsDoubleCloseToInt(chekingValue / TickFrequency));
-            if (!IsMoveToPointEnabled)
+            //if (!IsMoveToPointEnabled)
             {
-                if (!IsDoubleCloseToInt((chekingValue) / TickFrequency))
+                if (!IsDoubleCloseToInt((chekingValue - Minimum) / TickFrequency))
                 {
                     double x = (chekingValue-Minimum) / TickFrequency;
+                    distance = TickFrequency * (int)x;
                     Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
-                    if (dir == Direction.Increase)
+                    //if (dir == Direction.Increase)
                     {
-                        distance = TickFrequency * (int)x;
+                        //distance = TickFrequency * (int)x;
                         //if (distance >= 0)
+                        if (dir == Direction.Increase)
                         {
                             distance += TickFrequency;
                         }
-                        distance = (distance - chekingValue);
-                    }
-                    else
-                    {
-                        if (ApproximatelyEquals((((int)x + 1) - (x)), 0))
-                        {
-                            x -= 1;
-                            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
-                        }
-                        distance = TickFrequency * (int)x;
-                        //if during calculation we receive 0 (which is not possible), we do calculatedValue -= TickFrequency 
-                        //to get valid previous value
-                        if (Equals(distance, 0.0))
-                        {
-                            distance -= TickFrequency;
-                        }
-                        Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!Distance <---= " + distance);
-                        distance = (chekingValue - distance);
+                        distance = (distance - Math.Abs(chekingValue - Minimum));
                     }
                     Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!Distance---> = " + distance);
                     _currenValue = 0;
                 }
                 else
                 {
+                    //distance = 0;
                     if (moveDirectlyToNextTick)
                     {
                         distance = TickFrequency;
@@ -1613,44 +1599,24 @@ namespace MahApps.Metro.Controls
                         {
                             Debug.WriteLine("distance = " + distance);
                             Debug.WriteLine("chekingValue = " + chekingValue);
-                            double currentValue = chekingValue + (distance / _density); //в единицах
+                            double currentValue = chekingValue-Minimum + (distance / _density); //в единицах
                             Debug.WriteLine("currentValue = " + currentValue);
                             double x = currentValue / TickFrequency;
                             Debug.WriteLine("x = " + x);
                             double nextvalue = 0;
                             if (x.ToString().ToLower().Contains("e+"))
                             {
-                                if (chekingValue > 0)
-                                {
-                                    nextvalue = (x * TickFrequency) + TickFrequency;
-                                }
-                                else
-                                {
-                                    nextvalue = (x * TickFrequency);
-                                }
+                                nextvalue = (x * TickFrequency) + TickFrequency;
                             }
                             else
                             {
-                                if (chekingValue > 0)
-                                {
-                                    nextvalue = ((int)x * TickFrequency) + TickFrequency;
-                                }
-                                else
-                                {
-                                    nextvalue = ((int)x * TickFrequency);
-                                }
+                                nextvalue = ((int)x * TickFrequency) + TickFrequency;
                             }
 
-                            //double nextvalue = (x * TickFrequency) + TickFrequency;
                             Debug.WriteLine("nextvalue = " + nextvalue);
-                            currentValue = (nextvalue - chekingValue); //переводим в пиксели
+                            currentValue = (nextvalue - Math.Abs(chekingValue - Minimum));
                             Debug.WriteLine("currentValue = " + currentValue);
                             distance = currentValue;
-                            if (Equals(distance, 0.0))
-                            {
-                                distance += TickFrequency;
-                            }
-                            //distance = chekingValue + currentValue;
                             Debug.WriteLine("distance = " + distance);
                         }
                         else
@@ -1658,7 +1624,7 @@ namespace MahApps.Metro.Controls
                             Debug.WriteLine("Direction = " + dir);
                             Debug.WriteLine("distance = " + distance);
                             Debug.WriteLine("chekingValue = " + chekingValue);
-                            double currentValue = chekingValue + (distance / _density);
+                            double currentValue = chekingValue-Minimum + (distance / _density);
                             Debug.WriteLine("currentValue = " + currentValue);
                             double x = currentValue / TickFrequency;
                             Debug.WriteLine("x = " + x);
@@ -1670,27 +1636,17 @@ namespace MahApps.Metro.Controls
                             }
                             else
                             {
-                                if (ApproximatelyEquals((((int)x + 1) - (x)), 0))
-                                {
-                                    x -= 1;
-                                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
-                                }
                                 previousValue = (int)x * TickFrequency;
                             }
                             Debug.WriteLine("previousValue = " + previousValue);
-                            distance = (chekingValue - previousValue);
-                            if (Equals(distance, 0.0))
-                            {
-                                distance -= TickFrequency;
-                            }
+                            distance = (Math.Abs(chekingValue - Minimum)-previousValue);
                             //Debug.WriteLine("currentValue = " + currentValue);
-                            //distance -= currentValue;
                             Debug.WriteLine("distance = " + distance);
                         }
                     }
                 }
             }
-            else
+            /*else
             {
                 if (dir == Direction.Increase)
                 {
@@ -1770,7 +1726,7 @@ namespace MahApps.Metro.Controls
                     //distance -= currentValue;
                     Debug.WriteLine("distance = " + distance);
                 }
-            }
+            }*/
             return Math.Abs(distance);
         }
 
