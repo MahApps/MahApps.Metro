@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using MahApps.Metro.Native;
@@ -23,6 +24,11 @@ namespace MahApps.Metro.Controls
         {
             this.Loaded += this.CustomValidationPopup_Loaded;
             this.Opened += this.CustomValidationPopup_Opened;
+        }
+
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            this.IsOpen = false;
         }
 
         private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
