@@ -169,9 +169,9 @@
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
-                            <Setter TargetName="DisabledVisualElement"
+                            <Setter TargetName="PART_InnerGrid"
                                     Property="Opacity"
-                                    Value="1" />
+                                    Value="0.4" />
                         </Trigger>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
