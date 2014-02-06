@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Standard;
 
 namespace MahApps.Metro.Controls
 {
@@ -304,6 +303,7 @@ namespace MahApps.Metro.Controls
 
 
         #region Variables
+        private const double Epsilon = 0.00000153;
 
         private bool _internalUpdate;
         private Thumb _centerThumb;
@@ -756,6 +756,11 @@ namespace MahApps.Metro.Controls
                     UpperValueChangedEvent);
         }
 
+        private bool ApproximatelyEquals(double value1, double value2)
+        {
+            return Math.Abs(value1 - value2) <= Epsilon; 
+        }
+
 
         private void ReCalculateRangeSelected(bool reCalculateLowerValue, bool reCalculateUpperValue, double value, Direction direction)
         {
@@ -783,7 +788,7 @@ namespace MahApps.Metro.Controls
                 {
                     Debug.WriteLine("LowerValue = " + lower);
                     Debug.WriteLine("Value = " + value+"\n\n\n\n");
-                    if (DoubleUtilities.AreClose(lower, value))
+                    if (ApproximatelyEquals(lower, value))
                     {
                         if (direction == Direction.Increase)
                         {
@@ -834,7 +839,7 @@ namespace MahApps.Metro.Controls
                 {
                     Debug.WriteLine("UpperValue = " + upper);
                     Debug.WriteLine("Value = " + value + "\n\n\n\n");
-                    if (DoubleUtilities.AreClose(upper, value))
+                    if (ApproximatelyEquals(upper, value))
                     {
                         if (direction == Direction.Increase)
                         {
@@ -1549,8 +1554,9 @@ namespace MahApps.Metro.Controls
 
         private Boolean IsDoubleCloseToInt(double val)
         {
-            return DoubleUtilities.AreClose(Math.Abs(val - Math.Round(val)), 0);
+            return ApproximatelyEquals(Math.Abs(val - Math.Round(val)), 0);
         }
+
 
         private Double CalculateNextTick(Direction dir, double chekingValue, double distance, bool moveDirectlyToNextTick)
         {
@@ -1562,14 +1568,14 @@ namespace MahApps.Metro.Controls
             Debug.WriteLine("ToInt = " + IsDoubleCloseToInt(chekingValue / TickFrequency));
             if (!IsMoveToPointEnabled)
             {
-                if (!IsDoubleCloseToInt(chekingValue/TickFrequency))
+                if (!IsDoubleCloseToInt((chekingValue) / TickFrequency))
                 {
-                    double x = chekingValue/TickFrequency;
+                    double x = (chekingValue-Minimum) / TickFrequency;
                     Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
                     if (dir == Direction.Increase)
                     {
-                        distance = TickFrequency*(int) x;
-                        if (distance >= 0)
+                        distance = TickFrequency * (int)x;
+                        //if (distance >= 0)
                         {
                             distance += TickFrequency;
                         }
@@ -1577,12 +1583,12 @@ namespace MahApps.Metro.Controls
                     }
                     else
                     {
-                        if (DoubleUtilities.AreClose((((int) x + 1) - (x)), 0))
+                        if (ApproximatelyEquals((((int)x + 1) - (x)), 0))
                         {
                             x -= 1;
                             Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
                         }
-                        distance = TickFrequency*(int) x;
+                        distance = TickFrequency * (int)x;
                         //if during calculation we receive 0 (which is not possible), we do calculatedValue -= TickFrequency 
                         //to get valid previous value
                         if (Equals(distance, 0.0))
@@ -1607,31 +1613,31 @@ namespace MahApps.Metro.Controls
                         {
                             Debug.WriteLine("distance = " + distance);
                             Debug.WriteLine("chekingValue = " + chekingValue);
-                            double currentValue = chekingValue + (distance/_density); //в единицах
+                            double currentValue = chekingValue + (distance / _density); //в единицах
                             Debug.WriteLine("currentValue = " + currentValue);
-                            double x = currentValue/TickFrequency;
+                            double x = currentValue / TickFrequency;
                             Debug.WriteLine("x = " + x);
                             double nextvalue = 0;
                             if (x.ToString().ToLower().Contains("e+"))
                             {
                                 if (chekingValue > 0)
                                 {
-                                    nextvalue = (x*TickFrequency) + TickFrequency;
+                                    nextvalue = (x * TickFrequency) + TickFrequency;
                                 }
                                 else
                                 {
-                                    nextvalue = (x*TickFrequency);
+                                    nextvalue = (x * TickFrequency);
                                 }
                             }
                             else
                             {
                                 if (chekingValue > 0)
                                 {
-                                    nextvalue = ((int) x*TickFrequency) + TickFrequency;
+                                    nextvalue = ((int)x * TickFrequency) + TickFrequency;
                                 }
                                 else
                                 {
-                                    nextvalue = ((int) x*TickFrequency);
+                                    nextvalue = ((int)x * TickFrequency);
                                 }
                             }
 
@@ -1652,24 +1658,24 @@ namespace MahApps.Metro.Controls
                             Debug.WriteLine("Direction = " + dir);
                             Debug.WriteLine("distance = " + distance);
                             Debug.WriteLine("chekingValue = " + chekingValue);
-                            double currentValue = chekingValue + (distance/_density);
+                            double currentValue = chekingValue + (distance / _density);
                             Debug.WriteLine("currentValue = " + currentValue);
-                            double x = currentValue/TickFrequency;
+                            double x = currentValue / TickFrequency;
                             Debug.WriteLine("x = " + x);
                             double previousValue;
 
                             if (x.ToString().ToLower().Contains("e+"))
                             {
-                                previousValue = x*TickFrequency;
+                                previousValue = x * TickFrequency;
                             }
                             else
                             {
-                                if (DoubleUtilities.AreClose((((int) x + 1) - (x)), 0))
+                                if (ApproximatelyEquals((((int)x + 1) - (x)), 0))
                                 {
                                     x -= 1;
                                     Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
                                 }
-                                previousValue = (int) x*TickFrequency;
+                                previousValue = (int)x * TickFrequency;
                             }
                             Debug.WriteLine("previousValue = " + previousValue);
                             distance = (chekingValue - previousValue);
@@ -1747,7 +1753,7 @@ namespace MahApps.Metro.Controls
                     }
                     else
                     {
-                        if (DoubleUtilities.AreClose((((int)x + 1) - (x)), 0))
+                        if (ApproximatelyEquals((((int)x + 1) - (x)), 0))
                         {
                             x -= 1;
                             Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
@@ -1767,6 +1773,222 @@ namespace MahApps.Metro.Controls
             }
             return Math.Abs(distance);
         }
+
+        //private Double CalculateNextTick(Direction dir, double chekingValue, double distance, bool moveDirectlyToNextTick)
+        //{
+
+        //    Debug.WriteLine("\n\n\n\ndistance = " + distance);
+        //    Debug.WriteLine("TickFrequency = " + TickFrequency);
+        //    Debug.WriteLine("chekingValue = " + chekingValue);
+        //    Debug.WriteLine("chekingValue / TickFrequency = " + chekingValue / TickFrequency);
+        //    Debug.WriteLine("ToInt = " + IsDoubleCloseToInt(chekingValue / TickFrequency));
+        //    if (!IsMoveToPointEnabled)
+        //    {
+        //        if (!IsDoubleCloseToInt(chekingValue/TickFrequency))
+        //        {
+        //            double x = chekingValue/TickFrequency;
+        //            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
+        //            if (dir == Direction.Increase)
+        //            {
+        //                distance = TickFrequency*(int) x;
+        //                //if (distance >= 0)
+        //                {
+        //                    distance += TickFrequency;
+        //                }
+        //                distance = (distance - chekingValue);
+        //            }
+        //            else
+        //            {
+        //                if (DoubleUtilities.AreClose((((int) x + 1) - (x)), 0))
+        //                {
+        //                    x -= 1;
+        //                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
+        //                }
+        //                distance = TickFrequency*(int) x;
+        //                //if during calculation we receive 0 (which is not possible), we do calculatedValue -= TickFrequency 
+        //                //to get valid previous value
+        //                if (Equals(distance, 0.0))
+        //                {
+        //                    distance -= TickFrequency;
+        //                }
+        //                Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!Distance <---= " + distance);
+        //                distance = (chekingValue - distance);
+        //            }
+        //            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!Distance---> = " + distance);
+        //            _currenValue = 0;
+        //        }
+        //        else
+        //        {
+        //            if (moveDirectlyToNextTick)
+        //            {
+        //                distance = TickFrequency;
+        //            }
+        //            else
+        //            {
+        //                if (dir == Direction.Increase)
+        //                {
+        //                    Debug.WriteLine("distance = " + distance);
+        //                    Debug.WriteLine("chekingValue = " + chekingValue);
+        //                    double currentValue = chekingValue + (distance/_density); //в единицах
+        //                    Debug.WriteLine("currentValue = " + currentValue);
+        //                    double x = currentValue/TickFrequency;
+        //                    Debug.WriteLine("x = " + x);
+        //                    double nextvalue = 0;
+        //                    if (x.ToString().ToLower().Contains("e+"))
+        //                    {
+        //                        if (chekingValue > 0)
+        //                        {
+        //                            nextvalue = (x*TickFrequency) + TickFrequency;
+        //                        }
+        //                        else
+        //                        {
+        //                            nextvalue = (x*TickFrequency);
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        if (chekingValue > 0)
+        //                        {
+        //                            nextvalue = ((int) x*TickFrequency) + TickFrequency;
+        //                        }
+        //                        else
+        //                        {
+        //                            nextvalue = ((int) x*TickFrequency);
+        //                        }
+        //                    }
+
+        //                    //double nextvalue = (x * TickFrequency) + TickFrequency;
+        //                    Debug.WriteLine("nextvalue = " + nextvalue);
+        //                    currentValue = (nextvalue - chekingValue); //переводим в пиксели
+        //                    Debug.WriteLine("currentValue = " + currentValue);
+        //                    distance = currentValue;
+        //                    if (Equals(distance, 0.0))
+        //                    {
+        //                        distance += TickFrequency;
+        //                    }
+        //                    //distance = chekingValue + currentValue;
+        //                    Debug.WriteLine("distance = " + distance);
+        //                }
+        //                else
+        //                {
+        //                    Debug.WriteLine("Direction = " + dir);
+        //                    Debug.WriteLine("distance = " + distance);
+        //                    Debug.WriteLine("chekingValue = " + chekingValue);
+        //                    double currentValue = chekingValue + (distance/_density);
+        //                    Debug.WriteLine("currentValue = " + currentValue);
+        //                    double x = currentValue/TickFrequency;
+        //                    Debug.WriteLine("x = " + x);
+        //                    double previousValue;
+
+        //                    if (x.ToString().ToLower().Contains("e+"))
+        //                    {
+        //                        previousValue = x*TickFrequency;
+        //                    }
+        //                    else
+        //                    {
+        //                        if (DoubleUtilities.AreClose((((int) x + 1) - (x)), 0))
+        //                        {
+        //                            x -= 1;
+        //                            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
+        //                        }
+        //                        previousValue = (int) x*TickFrequency;
+        //                    }
+        //                    Debug.WriteLine("previousValue = " + previousValue);
+        //                    distance = (chekingValue - previousValue);
+        //                    if (Equals(distance, 0.0))
+        //                    {
+        //                        distance -= TickFrequency;
+        //                    }
+        //                    //Debug.WriteLine("currentValue = " + currentValue);
+        //                    //distance -= currentValue;
+        //                    Debug.WriteLine("distance = " + distance);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (dir == Direction.Increase)
+        //        {
+        //            Debug.WriteLine("distance = " + distance);
+        //            Debug.WriteLine("chekingValue = " + chekingValue);
+        //            double currentValue = chekingValue + (distance / _density); //в единицах
+        //            Debug.WriteLine("currentValue = " + currentValue);
+        //            double x = currentValue / TickFrequency;
+        //            Debug.WriteLine("x = " + x);
+        //            double nextvalue = 0;
+        //            if (x.ToString().ToLower().Contains("e+"))
+        //            {
+        //                if (chekingValue > 0)
+        //                {
+        //                    nextvalue = (x * TickFrequency) + TickFrequency;
+        //                }
+        //                else
+        //                {
+        //                    nextvalue = (x * TickFrequency);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                if (chekingValue > 0)
+        //                {
+        //                    nextvalue = ((int)x * TickFrequency) + TickFrequency;
+        //                }
+        //                else
+        //                {
+        //                    nextvalue = ((int)x * TickFrequency);
+        //                }
+        //            }
+
+        //            //double nextvalue = (x * TickFrequency) + TickFrequency;
+        //            Debug.WriteLine("nextvalue = " + nextvalue);
+        //            currentValue = (nextvalue - chekingValue); //переводим в пиксели
+        //            Debug.WriteLine("currentValue = " + currentValue);
+        //            distance = currentValue;
+        //            if (Equals(distance, 0.0))
+        //            {
+        //                distance += TickFrequency;
+        //            }
+        //            //distance = chekingValue + currentValue;
+        //            Debug.WriteLine("distance = " + distance);
+        //        }
+        //        else
+        //        {
+        //            Debug.WriteLine("Direction = " + dir);
+        //            Debug.WriteLine("distance = " + distance);
+        //            Debug.WriteLine("chekingValue = " + chekingValue);
+        //            double currentValue = chekingValue + (distance / _density);
+        //            Debug.WriteLine("currentValue = " + currentValue);
+        //            double x = currentValue / TickFrequency;
+        //            Debug.WriteLine("x = " + x);
+        //            double previousValue;
+
+        //            if (x.ToString().ToLower().Contains("e+"))
+        //            {
+        //                previousValue = x * TickFrequency;
+        //            }
+        //            else
+        //            {
+        //                if (DoubleUtilities.AreClose((((int)x + 1) - (x)), 0))
+        //                {
+        //                    x -= 1;
+        //                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
+        //                }
+        //                previousValue = (int)x * TickFrequency;
+        //            }
+        //            Debug.WriteLine("previousValue = " + previousValue);
+        //            distance = (chekingValue - previousValue);
+        //            if (Equals(distance, 0.0))
+        //            {
+        //                distance -= TickFrequency;
+        //            }
+        //            //Debug.WriteLine("currentValue = " + currentValue);
+        //            //distance -= currentValue;
+        //            Debug.WriteLine("distance = " + distance);
+        //        }
+        //    }
+        //    return Math.Abs(distance);
+        //}
 
         private void JumpToNextTick(Direction mDirection, ButtonType type, double distance, double chekingValue)
         {
