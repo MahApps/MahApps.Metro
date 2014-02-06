@@ -1174,20 +1174,32 @@
                 </TabItem>
                 <TabItem Header="colors">
                     <ScrollViewer>
-                        <ItemsControl ItemsSource="{Binding BrushResources}">
+                        <ItemsControl ItemsSource="{Binding BrushResources}"  Grid.IsSharedSizeScope="True" >
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid ToolTip="{Binding Key}" MinHeight="40">
-                                        <Rectangle Fill="{Binding Value}" />
-                                        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            <Rectangle Fill="White" Opacity="0.6"/>
-                                            <TextBlock  Margin="4,2"
-                                                        FontSize="{DynamicResource NormalFontSize}"
-                                                        TextAlignment="Right"
-                                                        Opacity="1"
-                                                        Foreground="Black"
-                                                        Text="{Binding Key}" />
-                                        </Grid>
+                                    <Grid ToolTip="{Binding Key}" MinHeight="40" Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition SharedSizeGroup="color"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Ellipse Fill="{Binding Value}" Stroke="#bdbdbd" Height="80" Width="80" Grid.Row="0"/>
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            Grid.Row="1"
+                                            Margin="4,2"
+                                            FontSize="{DynamicResource NormalFontSize}"
+                                            TextAlignment="Right"
+                                            Opacity="1"
+                                            Foreground="Black"
+                                            Text="{Binding Key}" />
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
