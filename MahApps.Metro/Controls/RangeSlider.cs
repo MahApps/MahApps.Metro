@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -174,7 +175,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty MinRangeProperty =
             DependencyProperty.Register("MinRange", typeof (Double), typeof (RangeSlider),
-                new UIPropertyMetadata((Double) 0, MinRangeChanged));
+                new FrameworkPropertyMetadata((Double)0, MinRangeChanged));
 
         public static readonly DependencyProperty MinBridgeWidthProperty =
             DependencyProperty.Register("MinBridgeWidth", typeof(Double), typeof(RangeSlider),
@@ -182,16 +183,16 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty MoveWholeRangeProperty =
             DependencyProperty.Register("MoveWholeRange", typeof(Boolean), typeof(RangeSlider),
-                new UIPropertyMetadata((Boolean)false));
+                new PropertyMetadata((Boolean)false));
 
         public static readonly DependencyProperty ExtendedModeProperty =
             DependencyProperty.Register("ExtendedMode", typeof(Boolean), typeof(RangeSlider),
-                new UIPropertyMetadata((Boolean)false));
+                new PropertyMetadata((Boolean)false));
 
 
         public static readonly DependencyProperty IsSnapToTickEnabledProperty =
             DependencyProperty.Register("IsSnapToTickEnabled", typeof(Boolean), typeof(RangeSlider),
-                new UIPropertyMetadata((Boolean)false));
+                new PropertyMetadata((Boolean)false));
 
         public static readonly DependencyProperty OrientationProperty =
             DependencyProperty.Register("Orientation", typeof(Orientation), typeof(RangeSlider),
@@ -199,24 +200,44 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty TickFrequencyProperty =
             DependencyProperty.Register("TickFrequency", typeof(Double), typeof(RangeSlider),
-                new UIPropertyMetadata((Double)10));
+                new UIPropertyMetadata((Double)10, TickFrequencyChangedCallback, CoerceTickFrequencyCallback));
+
+        
 
         public static readonly DependencyProperty IsMoveToPointEnabledProperty =
             DependencyProperty.Register("IsMoveToPointEnabled", typeof(Boolean), typeof(RangeSlider),
-                new UIPropertyMetadata((Boolean)false));
+                new PropertyMetadata((Boolean)false));
 
         public static readonly DependencyProperty TickPlacementProperty =
             DependencyProperty.Register("TickPlacement", typeof(TickPlacement), typeof(RangeSlider),
                 new FrameworkPropertyMetadata(TickPlacement.None));
 
+        
+
         public static readonly DependencyProperty AutoToolTipPlacementProperty =
             DependencyProperty.Register("AutoToolTipPlacement", typeof(AutoToolTipPlacement), typeof(RangeSlider),
                 new FrameworkPropertyMetadata(AutoToolTipPlacement.None));
 
+        public static readonly DependencyProperty AutoToolTipPrecisionProperty =
+            DependencyProperty.Register("AutoToolTipPrecision", typeof (Int32), typeof (RangeSlider),
+                new FrameworkPropertyMetadata(0), ValidateValueCallback);
+
+        private static bool ValidateValueCallback(object value)
+        {
+            return ((Int32) value >= 0);
+        }
+
+
+        public Int32 AutoToolTipPrecision
+        {
+            get { return (Int32)GetValue(AutoToolTipPrecisionProperty); }
+            set { SetValue(AutoToolTipPrecisionProperty, value); }
+        }
+
         public AutoToolTipPlacement AutoToolTipPlacement
         {
-            get { return (AutoToolTipPlacement)GetValue(TickPlacementProperty); }
-            set { SetValue(TickPlacementProperty, value); }
+            get { return (AutoToolTipPlacement)GetValue(AutoToolTipPlacementProperty); }
+            set { SetValue(AutoToolTipPlacementProperty, value); }
         }
 
         public TickPlacement TickPlacement
@@ -343,7 +364,6 @@ namespace MahApps.Metro.Controls
             DependencyPropertyDescriptor.FromProperty(ActualWidthProperty, typeof(RangeSlider)).AddValueChanged(this, delegate { ReCalculateWidths(); });
             _timer = new DispatcherTimer();
             _timer.Tick += SerialMovement;
-            //_timer.Interval = new TimeSpan(0,0,0,0,Interval);
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
         }
 
@@ -353,25 +373,15 @@ namespace MahApps.Metro.Controls
         {
             
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
-            //MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MinimumProperty.DefaultMetadata.DefaultValue, null, CoerceMinimum));
-            //MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(MaximumProperty.DefaultMetadata.DefaultValue, null, CoerceMaximum));
-            //TickPlacementProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(TickPlacement.None, OnTickPlacementChanged));
-            //TickFrequencyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(TickFrequencyProperty.DefaultMetadata.DefaultValue, OnTickFrequencyChanged, CoerceValueCallback));
-            //AutoToolTipPlacementProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(AutoToolTipPlacement.None, OnAutoToolTipPlacementChanged));
-            MinimumProperty.AddOwner(typeof (RangeSlider));
-            MaximumProperty.AddOwner(typeof(RangeSlider));
-            //AutoToolTipPlacementProperty.AddOwner(typeof (RangeSlider));
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, PropertyChangedCallback, CoerceMinimum));
+            //MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)1.0, FrameworkPropertyMetadataOptions.AffectsMeasure, CoerceMaximum));
         }
 
-        private static object CoerceValueCallback(DependencyObject dependencyObject, object baseValue)
+        private static void PropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            RangeSlider slider = (RangeSlider)dependencyObject;
-            //if ((Double) baseValue > slider.Maximum - slider.Minimum)
-            //{
-            //    return slider.Maximum - slider.Minimum;
-            //}
-            return (Double)baseValue;
+            
         }
+
 
         private static void OnTickPlacementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -380,16 +390,6 @@ namespace MahApps.Metro.Controls
             {
                 slider._topTick.Placement = (TickBarPlacement)e.NewValue;
                 slider._bottomTick.Placement = (TickBarPlacement)e.NewValue;
-            }
-        }
-
-        private static void OnTickFrequencyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            RangeSlider slider = (RangeSlider) d;
-            if (slider._topTick != null && slider._bottomTick != null)
-            {
-                slider._topTick.TickFrequency = (Double)e.NewValue;
-                slider._bottomTick.TickFrequency = (Double)e.NewValue;
             }
         }
 
@@ -904,119 +904,16 @@ namespace MahApps.Metro.Controls
             _internalUpdate = true; //set flag to signal that the properties are being set by the object itself
                 oldLower = LowerValue;
                 double lower;
-                if (Orientation == Orientation.Horizontal)
-                {
-                    // Make sure to get exactly rangestart if thumb is at the start
-                    lower = Equals(_leftButton.Width, 0.0)
-                        ? Minimum
-                        : Math.Max(Minimum, (Minimum + MovableRange * _leftButton.Width / _movableWidth));
-                }
-                else
-                {
-                    lower = Equals(_leftButton.Height, 0.0)
-                        ? Minimum
-                        : Math.Max(Minimum, (Minimum + MovableRange * _leftButton.Height / _movableWidth));
-                }
-                if (IsSnapToTickEnabled)
-                {
-                    //Debug.WriteLine("LowerValue = " + lower);
-                    //Debug.WriteLine("Value = " + newLower+"\n\n\n\n");
-                    //if (DoubleUtilities.AreClose(lower, newLower))
-                    //{
-                    //    if (direction == Direction.Increase)
-                    //    {
-                    //        lower = Math.Min(newLower, UpperValue - MinRange);
-                    //    }
-                    //    else
-                    //    {
-                    //        Debug.WriteLine("LowerValue = " + LowerValue);
-                    //        Debug.WriteLine("UpperValue = " + UpperValue);
-                    //        Debug.WriteLine("value = " + newLower);
-                    //        Debug.WriteLine("upper = " + lower);
-                    //        lower = Math.Max(Minimum, newLower);
-                    //        Debug.WriteLine("UpperValue = " + UpperValue);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    if (direction == Direction.Increase)
-                    //    {
-                    //        lower = Math.Min(UpperValue - MinRange, newLower);
-                    //    }
-                    //    else
-                    //    {
-                    //        lower = Math.Max(Minimum, newLower);
-                    //    }
-                    //}
-                }
                 oldUpper = UpperValue;
                 double upper;
-                if (Orientation == Orientation.Horizontal)
-                {
-                    // Make sure to get exactly rangestop if thumb is at the end
-                    upper = Equals(_rightButton.Width, 0.0)
-                        ? Maximum
-                        : Math.Min(Maximum, (Maximum - MovableRange * _rightButton.Width / _movableWidth));
-                }
-                else
-                {
-                    upper = Equals(_rightButton.Height, 0.0)
-                        ? Maximum
-                        : Math.Min(Maximum, (Maximum - MovableRange * _rightButton.Height / _movableWidth));
-                    
-                }
-            if (IsSnapToTickEnabled)
-                {
-                    //Debug.WriteLine("UpperValue = " + upper);
-                    //Debug.WriteLine("Value = " + newUpper + "\n\n\n\n");
-                    //if (DoubleUtilities.AreClose(upper, newUpper))
-                    //{
-                    //    if (direction == Direction.Increase)
-                    //    {
-                    //        upper = Math.Min(newUpper, Maximum);
-                    //    }
-                    //    else
-                    //    {
-                    //        Debug.WriteLine("LowerValue = " + LowerValue);
-                    //        Debug.WriteLine("UpperValue = " + UpperValue);
-                    //        Debug.WriteLine("value = " + newUpper);
-                    //        Debug.WriteLine("upper = " + upper);
-                    //        upper = Math.Max(lower + MinRange, newUpper);
-                    //        Debug.WriteLine("UpperValue = " + UpperValue);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    {
-                    //        if (direction == Direction.Increase)
-                    //        {
-                    //            upper = Math.Min(newUpper, Maximum);
-                    //        }
-                    //        else
-                    //        {
-                    //            Debug.WriteLine("LowerValue = " + LowerValue);
-                    //            Debug.WriteLine("UpperValue = " + UpperValue);
-                    //            Debug.WriteLine("value = " + newUpper);
-                    //            Debug.WriteLine("upper = " + upper);
-                    //            upper = Math.Max(LowerValue + MinRange, newUpper);
-                    //            Debug.WriteLine("UpperValue = " + UpperValue);
-                    //        }
-                    //    }
-                    //}
-                }
+                
             if (IsSnapToTickEnabled)
             {
                 if (direction == Direction.Increase)
                 {
                     Debug.WriteLine("зашёл внутрь encreasa");
                     lower = Math.Min(newLower, Maximum-(UpperValue - LowerValue));
-
-                    //lower = Math.Min(newLower, Maximum - (UpperValue - LowerValue));
-                    //Debug.WriteLine("newValue lower value = " + newValue1);
-                    //Debug.WriteLine("LowerValue ---> = " + LowerValue);
                     upper = Math.Min(newUpper, Maximum);
-                    //Debug.WriteLine("newValue = " + newValue2);
-                    //Debug.WriteLine("UpperValue ---> = " + UpperValue);
                     Debug.WriteLine("lower = " + lower);
                     Debug.WriteLine("upper = " + upper);
                 }
@@ -1024,19 +921,7 @@ namespace MahApps.Metro.Controls
                 {
                     Debug.WriteLine("зашёл внутрь decreasa");
                     lower = Math.Max(newLower, Minimum);
-                    //Debug.WriteLine("newValue <--- = " + newValue1);
-                    //Debug.WriteLine("LowerValue <--- = " + LowerValue);
-                    //upper = Math.Max((UpperValue - LowerValue), newUpper);
-                    
-                    
-                    //upper = Math.Max(newUpper, Minimum);
                     upper = Math.Max(Minimum+(UpperValue - LowerValue), newUpper);
-                    
-                    
-
-
-                    //Debug.WriteLine("newValue <--- = " + newValue2);
-                    //Debug.WriteLine("UpperValue <--- = " + UpperValue);
                     Debug.WriteLine("lower = " + lower);
                     Debug.WriteLine("upper = " + upper);
                 }
@@ -1122,8 +1007,6 @@ namespace MahApps.Metro.Controls
         //adds all visual element to the conatiner
         private void InitializeVisualElementsContainer()
         {
-            _topTick.TickFrequency = TickFrequency;
-            _bottomTick.TickFrequency = TickFrequency;
 
             _leftThumb.DragCompleted += LeftThumbDragComplete;
             _rightThumb.DragCompleted += RightThumbDragComplete;
@@ -1539,412 +1422,68 @@ namespace MahApps.Metro.Controls
         }
 
 
-        void CenterThumbDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            e.RoutedEvent = CentralThumbDragCompletedEvent;
-            RaiseEvent(e);
-        }
-
-        void CenterThumbDragStarted(object sender, DragStartedEventArgs e)
-        {
-            _basePoint = Mouse.GetPosition(_container);
-            e.RoutedEvent = CentralThumbDragStartedEvent;
-            RaiseEvent(e);
-        }
-
-        private Boolean IsDoubleCloseToInt(double val)
-        {
-            return ApproximatelyEquals(Math.Abs(val - Math.Round(val)), 0);
-        }
+        
 
 
         private Double CalculateNextTick(Direction dir, double chekingValue, double distance, bool moveDirectlyToNextTick)
         {
-
             Debug.WriteLine("\n\n\n\ndistance = " + distance);
             Debug.WriteLine("TickFrequency = " + TickFrequency);
             Debug.WriteLine("chekingValue = " + chekingValue);
             Debug.WriteLine("chekingValue / TickFrequency = " + chekingValue / TickFrequency);
             Debug.WriteLine("ToInt = " + IsDoubleCloseToInt(chekingValue / TickFrequency));
-            //if (!IsMoveToPointEnabled)
+            if (!IsMoveToPointEnabled)
             {
-                if (!IsDoubleCloseToInt((chekingValue - Minimum) / TickFrequency))
+                if (!IsDoubleCloseToInt((chekingValue - Minimum)/TickFrequency))
                 {
-                    double x = (chekingValue-Minimum) / TickFrequency;
-                    distance = TickFrequency * (int)x;
-                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
-                    //if (dir == Direction.Increase)
-                    {
-                        //distance = TickFrequency * (int)x;
-                        //if (distance >= 0)
-                        if (dir == Direction.Increase)
-                        {
-                            distance += TickFrequency;
-                        }
-                        distance = (distance - Math.Abs(chekingValue - Minimum));
-                    }
-                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!Distance---> = " + distance);
-                    _currenValue = 0;
-                }
-                else
-                {
-                    //distance = 0;
-                    if (moveDirectlyToNextTick)
-                    {
-                        distance = TickFrequency;
-                    }
-                    else
-                    {
-                        if (dir == Direction.Increase)
-                        {
-                            Debug.WriteLine("distance = " + distance);
-                            Debug.WriteLine("chekingValue = " + chekingValue);
-                            double currentValue = chekingValue-Minimum + (distance / _density); //в единицах
-                            Debug.WriteLine("currentValue = " + currentValue);
-                            double x = currentValue / TickFrequency;
-                            Debug.WriteLine("x = " + x);
-                            double nextvalue = 0;
-                            if (x.ToString().ToLower().Contains("e+"))
-                            {
-                                nextvalue = (x * TickFrequency) + TickFrequency;
-                            }
-                            else
-                            {
-                                nextvalue = ((int)x * TickFrequency) + TickFrequency;
-                            }
-
-                            Debug.WriteLine("nextvalue = " + nextvalue);
-                            currentValue = (nextvalue - Math.Abs(chekingValue - Minimum));
-                            Debug.WriteLine("currentValue = " + currentValue);
-                            distance = currentValue;
-                            Debug.WriteLine("distance = " + distance);
-                        }
-                        else
-                        {
-                            Debug.WriteLine("Direction = " + dir);
-                            Debug.WriteLine("distance = " + distance);
-                            Debug.WriteLine("chekingValue = " + chekingValue);
-                            double currentValue = chekingValue-Minimum + (distance / _density);
-                            Debug.WriteLine("currentValue = " + currentValue);
-                            double x = currentValue / TickFrequency;
-                            Debug.WriteLine("x = " + x);
-                            double previousValue;
-
-                            if (x.ToString().ToLower().Contains("e+"))
-                            {
-                                previousValue = x * TickFrequency;
-                            }
-                            else
-                            {
-                                previousValue = (int)x * TickFrequency;
-                            }
-                            Debug.WriteLine("previousValue = " + previousValue);
-                            distance = (Math.Abs(chekingValue - Minimum)-previousValue);
-                            //Debug.WriteLine("currentValue = " + currentValue);
-                            Debug.WriteLine("distance = " + distance);
-                        }
-                    }
-                }
-            }
-            /*else
-            {
-                if (dir == Direction.Increase)
-                {
-                    Debug.WriteLine("distance = " + distance);
-                    Debug.WriteLine("chekingValue = " + chekingValue);
-                    double currentValue = chekingValue + (distance / _density); //в единицах
-                    Debug.WriteLine("currentValue = " + currentValue);
-                    double x = currentValue / TickFrequency;
-                    Debug.WriteLine("x = " + x);
-                    double nextvalue = 0;
-                    if (x.ToString().ToLower().Contains("e+"))
-                    {
-                        if (chekingValue > 0)
-                        {
-                            nextvalue = (x * TickFrequency) + TickFrequency;
-                        }
-                        else
-                        {
-                            nextvalue = (x * TickFrequency);
-                        }
-                    }
-                    else
-                    {
-                        if (chekingValue > 0)
-                        {
-                            nextvalue = ((int)x * TickFrequency) + TickFrequency;
-                        }
-                        else
-                        {
-                            nextvalue = ((int)x * TickFrequency);
-                        }
-                    }
-
-                    //double nextvalue = (x * TickFrequency) + TickFrequency;
-                    Debug.WriteLine("nextvalue = " + nextvalue);
-                    currentValue = (nextvalue - chekingValue); //переводим в пиксели
-                    Debug.WriteLine("currentValue = " + currentValue);
-                    distance = currentValue;
-                    if (Equals(distance, 0.0))
+                    double x = (chekingValue - Minimum)/TickFrequency;
+                    distance = TickFrequency*(int) x;
+                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString());
+                    if (dir == Direction.Increase)
                     {
                         distance += TickFrequency;
                     }
-                    //distance = chekingValue + currentValue;
+                    distance = (distance - Math.Abs(chekingValue - Minimum));
+                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!Distance---> = " + distance);
+                    _currenValue = 0;
+                    return Math.Abs(distance);
+                }
+            }
+            if (moveDirectlyToNextTick)
+            {
+                distance = TickFrequency;
+            }
+            else
+            {
+                Debug.WriteLine("distance = " + distance);
+                Debug.WriteLine("chekingValue = " + chekingValue);
+                double currentValue = chekingValue - Minimum + (distance/_density); //в единицах
+                Debug.WriteLine("currentValue = " + currentValue);
+                double x = currentValue/TickFrequency;
+                Debug.WriteLine("x = " + x);
+                if (dir == Direction.Increase)
+                {
+                    double nextvalue = x.ToString().ToLower().Contains("e+")
+                        ? (x*TickFrequency) + TickFrequency
+                        : ((int) x*TickFrequency) + TickFrequency;
+
+                    Debug.WriteLine("nextvalue = " + nextvalue);
+                    distance = (nextvalue - Math.Abs(chekingValue - Minimum));
                     Debug.WriteLine("distance = " + distance);
                 }
                 else
                 {
-                    Debug.WriteLine("Direction = " + dir);
-                    Debug.WriteLine("distance = " + distance);
-                    Debug.WriteLine("chekingValue = " + chekingValue);
-                    double currentValue = chekingValue + (distance / _density);
-                    Debug.WriteLine("currentValue = " + currentValue);
-                    double x = currentValue / TickFrequency;
-                    Debug.WriteLine("x = " + x);
-                    double previousValue;
-
-                    if (x.ToString().ToLower().Contains("e+"))
-                    {
-                        previousValue = x * TickFrequency;
-                    }
-                    else
-                    {
-                        if (ApproximatelyEquals((((int)x + 1) - (x)), 0))
-                        {
-                            x -= 1;
-                            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
-                        }
-                        previousValue = (int)x * TickFrequency;
-                    }
+                    double previousValue = x.ToString().ToLower().Contains("e+")
+                        ? x*TickFrequency
+                        : (int) x*TickFrequency;
                     Debug.WriteLine("previousValue = " + previousValue);
-                    distance = (chekingValue - previousValue);
-                    if (Equals(distance, 0.0))
-                    {
-                        distance -= TickFrequency;
-                    }
-                    //Debug.WriteLine("currentValue = " + currentValue);
-                    //distance -= currentValue;
+                    distance = (Math.Abs(chekingValue - Minimum) - previousValue);
                     Debug.WriteLine("distance = " + distance);
                 }
-            }*/
+
+            }
             return Math.Abs(distance);
         }
-
-        //private Double CalculateNextTick(Direction dir, double chekingValue, double distance, bool moveDirectlyToNextTick)
-        //{
-
-        //    Debug.WriteLine("\n\n\n\ndistance = " + distance);
-        //    Debug.WriteLine("TickFrequency = " + TickFrequency);
-        //    Debug.WriteLine("chekingValue = " + chekingValue);
-        //    Debug.WriteLine("chekingValue / TickFrequency = " + chekingValue / TickFrequency);
-        //    Debug.WriteLine("ToInt = " + IsDoubleCloseToInt(chekingValue / TickFrequency));
-        //    if (!IsMoveToPointEnabled)
-        //    {
-        //        if (!IsDoubleCloseToInt(chekingValue/TickFrequency))
-        //        {
-        //            double x = chekingValue/TickFrequency;
-        //            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
-        //            if (dir == Direction.Increase)
-        //            {
-        //                distance = TickFrequency*(int) x;
-        //                //if (distance >= 0)
-        //                {
-        //                    distance += TickFrequency;
-        //                }
-        //                distance = (distance - chekingValue);
-        //            }
-        //            else
-        //            {
-        //                if (DoubleUtilities.AreClose((((int) x + 1) - (x)), 0))
-        //                {
-        //                    x -= 1;
-        //                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
-        //                }
-        //                distance = TickFrequency*(int) x;
-        //                //if during calculation we receive 0 (which is not possible), we do calculatedValue -= TickFrequency 
-        //                //to get valid previous value
-        //                if (Equals(distance, 0.0))
-        //                {
-        //                    distance -= TickFrequency;
-        //                }
-        //                Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!Distance <---= " + distance);
-        //                distance = (chekingValue - distance);
-        //            }
-        //            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!Distance---> = " + distance);
-        //            _currenValue = 0;
-        //        }
-        //        else
-        //        {
-        //            if (moveDirectlyToNextTick)
-        //            {
-        //                distance = TickFrequency;
-        //            }
-        //            else
-        //            {
-        //                if (dir == Direction.Increase)
-        //                {
-        //                    Debug.WriteLine("distance = " + distance);
-        //                    Debug.WriteLine("chekingValue = " + chekingValue);
-        //                    double currentValue = chekingValue + (distance/_density); //в единицах
-        //                    Debug.WriteLine("currentValue = " + currentValue);
-        //                    double x = currentValue/TickFrequency;
-        //                    Debug.WriteLine("x = " + x);
-        //                    double nextvalue = 0;
-        //                    if (x.ToString().ToLower().Contains("e+"))
-        //                    {
-        //                        if (chekingValue > 0)
-        //                        {
-        //                            nextvalue = (x*TickFrequency) + TickFrequency;
-        //                        }
-        //                        else
-        //                        {
-        //                            nextvalue = (x*TickFrequency);
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        if (chekingValue > 0)
-        //                        {
-        //                            nextvalue = ((int) x*TickFrequency) + TickFrequency;
-        //                        }
-        //                        else
-        //                        {
-        //                            nextvalue = ((int) x*TickFrequency);
-        //                        }
-        //                    }
-
-        //                    //double nextvalue = (x * TickFrequency) + TickFrequency;
-        //                    Debug.WriteLine("nextvalue = " + nextvalue);
-        //                    currentValue = (nextvalue - chekingValue); //переводим в пиксели
-        //                    Debug.WriteLine("currentValue = " + currentValue);
-        //                    distance = currentValue;
-        //                    if (Equals(distance, 0.0))
-        //                    {
-        //                        distance += TickFrequency;
-        //                    }
-        //                    //distance = chekingValue + currentValue;
-        //                    Debug.WriteLine("distance = " + distance);
-        //                }
-        //                else
-        //                {
-        //                    Debug.WriteLine("Direction = " + dir);
-        //                    Debug.WriteLine("distance = " + distance);
-        //                    Debug.WriteLine("chekingValue = " + chekingValue);
-        //                    double currentValue = chekingValue + (distance/_density);
-        //                    Debug.WriteLine("currentValue = " + currentValue);
-        //                    double x = currentValue/TickFrequency;
-        //                    Debug.WriteLine("x = " + x);
-        //                    double previousValue;
-
-        //                    if (x.ToString().ToLower().Contains("e+"))
-        //                    {
-        //                        previousValue = x*TickFrequency;
-        //                    }
-        //                    else
-        //                    {
-        //                        if (DoubleUtilities.AreClose((((int) x + 1) - (x)), 0))
-        //                        {
-        //                            x -= 1;
-        //                            Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
-        //                        }
-        //                        previousValue = (int) x*TickFrequency;
-        //                    }
-        //                    Debug.WriteLine("previousValue = " + previousValue);
-        //                    distance = (chekingValue - previousValue);
-        //                    if (Equals(distance, 0.0))
-        //                    {
-        //                        distance -= TickFrequency;
-        //                    }
-        //                    //Debug.WriteLine("currentValue = " + currentValue);
-        //                    //distance -= currentValue;
-        //                    Debug.WriteLine("distance = " + distance);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (dir == Direction.Increase)
-        //        {
-        //            Debug.WriteLine("distance = " + distance);
-        //            Debug.WriteLine("chekingValue = " + chekingValue);
-        //            double currentValue = chekingValue + (distance / _density); //в единицах
-        //            Debug.WriteLine("currentValue = " + currentValue);
-        //            double x = currentValue / TickFrequency;
-        //            Debug.WriteLine("x = " + x);
-        //            double nextvalue = 0;
-        //            if (x.ToString().ToLower().Contains("e+"))
-        //            {
-        //                if (chekingValue > 0)
-        //                {
-        //                    nextvalue = (x * TickFrequency) + TickFrequency;
-        //                }
-        //                else
-        //                {
-        //                    nextvalue = (x * TickFrequency);
-        //                }
-        //            }
-        //            else
-        //            {
-        //                if (chekingValue > 0)
-        //                {
-        //                    nextvalue = ((int)x * TickFrequency) + TickFrequency;
-        //                }
-        //                else
-        //                {
-        //                    nextvalue = ((int)x * TickFrequency);
-        //                }
-        //            }
-
-        //            //double nextvalue = (x * TickFrequency) + TickFrequency;
-        //            Debug.WriteLine("nextvalue = " + nextvalue);
-        //            currentValue = (nextvalue - chekingValue); //переводим в пиксели
-        //            Debug.WriteLine("currentValue = " + currentValue);
-        //            distance = currentValue;
-        //            if (Equals(distance, 0.0))
-        //            {
-        //                distance += TickFrequency;
-        //            }
-        //            //distance = chekingValue + currentValue;
-        //            Debug.WriteLine("distance = " + distance);
-        //        }
-        //        else
-        //        {
-        //            Debug.WriteLine("Direction = " + dir);
-        //            Debug.WriteLine("distance = " + distance);
-        //            Debug.WriteLine("chekingValue = " + chekingValue);
-        //            double currentValue = chekingValue + (distance / _density);
-        //            Debug.WriteLine("currentValue = " + currentValue);
-        //            double x = currentValue / TickFrequency;
-        //            Debug.WriteLine("x = " + x);
-        //            double previousValue;
-
-        //            if (x.ToString().ToLower().Contains("e+"))
-        //            {
-        //                previousValue = x * TickFrequency;
-        //            }
-        //            else
-        //            {
-        //                if (DoubleUtilities.AreClose((((int)x + 1) - (x)), 0))
-        //                {
-        //                    x -= 1;
-        //                    Debug.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!x = " + x.ToString("G15"));
-        //                }
-        //                previousValue = (int)x * TickFrequency;
-        //            }
-        //            Debug.WriteLine("previousValue = " + previousValue);
-        //            distance = (chekingValue - previousValue);
-        //            if (Equals(distance, 0.0))
-        //            {
-        //                distance -= TickFrequency;
-        //            }
-        //            //Debug.WriteLine("currentValue = " + currentValue);
-        //            //distance -= currentValue;
-        //            Debug.WriteLine("distance = " + distance);
-        //        }
-        //    }
-        //    return Math.Abs(distance);
-        //}
 
         private void JumpToNextTick(Direction mDirection, ButtonType type, double distance, double chekingValue)
         {
@@ -2051,6 +1590,198 @@ namespace MahApps.Metro.Controls
 
 
 
+        #region Event Handlers
+
+        private void LeftThumbDragStart(object sender, DragStartedEventArgs e)
+        {
+            if (AutoToolTipPlacement != AutoToolTipPlacement.None)
+            {
+                if (_autoToolTip == null)
+                {
+                    _autoToolTip = new ToolTip();
+                    _autoToolTip.Placement = PlacementMode.Custom;
+                    _autoToolTip.CustomPopupPlacementCallback = PopupPlacementCallback;
+                }
+                _autoToolTip.Content = GetLowerToolTipNumber();
+                _leftThumb.ToolTip = _autoToolTip.Content;
+                _autoToolTip.PlacementTarget = _leftThumb;
+                _autoToolTip.IsOpen = true;
+            }
+            _basePoint = Mouse.GetPosition(_container);
+            e.RoutedEvent = LowerThumbDragStartedEvent;
+            RaiseEvent(e);
+        }
+
+
+        private void LeftThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            double change = Orientation == Orientation.Horizontal
+                ? e.HorizontalChange
+                : e.VerticalChange;
+            if (!IsSnapToTickEnabled)
+            {
+                MoveThumb(_leftButton, _centerThumb, change, Orientation);
+                ReCalculateRangeSelected(true, false);
+            }
+            else
+            {
+                Direction localDirection;
+                Point currentPoint = Mouse.GetPosition(_container);
+                if (Orientation == Orientation.Horizontal)
+                {
+                    if (currentPoint.X >= 0 &&
+                        currentPoint.X <
+                        _container.ActualWidth -
+                        (_rightButton.ActualWidth + _rightThumb.ActualWidth + _centerThumb.MinWidth))
+                    {
+                        localDirection = currentPoint.X > _basePoint.X ? Direction.Increase : Direction.Decrease;
+                        JumpToNextTick(localDirection, ButtonType.Left, change, LowerValue);
+                    }
+                }
+                else
+                {
+                    if (currentPoint.Y >= 0 &&
+                        currentPoint.Y <
+                        _container.ActualHeight -
+                        (_rightButton.ActualHeight + _rightThumb.ActualHeight + _centerThumb.MinHeight))
+                    {
+                        localDirection = currentPoint.Y > _basePoint.Y ? Direction.Increase : Direction.Decrease;
+                        JumpToNextTick(localDirection, ButtonType.Left, change, LowerValue);
+                    }
+                }
+            }
+            _basePoint = Mouse.GetPosition(_container);
+            if (AutoToolTipPlacement != AutoToolTipPlacement.None)
+            {
+                _leftThumb.ToolTip = _autoToolTip;
+                _autoToolTip.Content = GetLowerToolTipNumber();
+                RelocateAutoToolTip();
+            }
+            
+            e.RoutedEvent = LowerThumbDragDeltaEvent;
+            RaiseEvent(e);
+        }
+
+        private void RelocateAutoToolTip()
+        {
+            var offset = _autoToolTip.HorizontalOffset;
+            _autoToolTip.HorizontalOffset = offset + 1;
+            _autoToolTip.HorizontalOffset = offset;
+        }
+
+        private void LeftThumbDragComplete(object sender, DragCompletedEventArgs e)
+        {
+            if (_autoToolTip != null)
+            {
+                _autoToolTip.IsOpen = false;
+                _leftThumb.ToolTip = String.Empty;
+                _autoToolTip = null;
+            }
+            e.RoutedEvent = LowerThumbDragCompletedEvent;
+            RaiseEvent(e);
+        }
+
+        private void RightThumbDragStart(object sender, DragStartedEventArgs e)
+        {
+            if (AutoToolTipPlacement != AutoToolTipPlacement.None)
+            {
+                if (_autoToolTip == null)
+                {
+                    _autoToolTip = new ToolTip();
+                    _autoToolTip.Placement = PlacementMode.Custom;
+                    _autoToolTip.CustomPopupPlacementCallback = PopupPlacementCallback;
+                }
+                _autoToolTip.Content = GetUpperToolTipNumber();
+                _rightThumb.ToolTip = _autoToolTip;
+                _autoToolTip.PlacementTarget = _rightThumb;
+                _autoToolTip.IsOpen = true;
+            }
+            _basePoint = Mouse.GetPosition(_container);
+            e.RoutedEvent = UpperThumbDragStartedEvent;
+            RaiseEvent(e);
+        }
+
+
+        private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            double change = Orientation == Orientation.Horizontal
+                ? e.HorizontalChange
+                : e.VerticalChange;
+            if (!IsSnapToTickEnabled)
+            {
+                MoveThumb(_centerThumb, _rightButton, change, Orientation);
+                ReCalculateRangeSelected(false, true);
+            }
+            else
+            {
+                Direction localDirection;
+                Point currentPoint = Mouse.GetPosition(_container);
+                if (Orientation == Orientation.Horizontal)
+                {
+                    if (currentPoint.X < _container.ActualWidth &&
+                        currentPoint.X > _leftButton.ActualWidth + _leftThumb.ActualWidth + _centerThumb.MinWidth)
+                    {
+                        localDirection = currentPoint.X > _basePoint.X ? Direction.Increase : Direction.Decrease;
+                        JumpToNextTick(localDirection, ButtonType.Right, change, UpperValue);
+                    }
+                }
+                else
+                {
+                    if (currentPoint.Y < _container.ActualHeight &&
+                        currentPoint.Y > _leftButton.ActualHeight + _leftThumb.ActualHeight + _centerThumb.MinHeight)
+                    {
+                        localDirection = currentPoint.Y > _basePoint.Y ? Direction.Increase : Direction.Decrease;
+                        JumpToNextTick(localDirection, ButtonType.Right, change, UpperValue);
+                    }
+                }
+                
+                _basePoint = Mouse.GetPosition(_container);
+            }
+            if (AutoToolTipPlacement != AutoToolTipPlacement.None)
+            {
+                _autoToolTip.Content = GetUpperToolTipNumber();
+                _leftThumb.ToolTip = _autoToolTip;
+                RelocateAutoToolTip();
+            }
+            e.RoutedEvent = UpperThumbDragDeltaEvent;
+            RaiseEvent(e);
+        }
+
+
+        private void RightThumbDragComplete(object sender, DragCompletedEventArgs e)
+        {
+            if (_autoToolTip != null)
+            {
+                _autoToolTip.IsOpen = false;
+                _rightThumb.ToolTip = String.Empty;
+                _autoToolTip = null;
+            }
+            e.RoutedEvent = UpperThumbDragCompletedEvent;
+            RaiseEvent(e);
+        }
+
+        private void CenterThumbDragStarted(object sender, DragStartedEventArgs e)
+        {
+            if (AutoToolTipPlacement != AutoToolTipPlacement.None)
+            {
+                if (_autoToolTip == null)
+                {
+                    _autoToolTip = new ToolTip
+                    {
+                        Placement = PlacementMode.Custom,
+                        CustomPopupPlacementCallback = PopupPlacementCallback
+                    };
+                }
+                _autoToolTip.Content = GetLowerToolTipNumber() + " ; " + GetUpperToolTipNumber();
+                _centerThumb.ToolTip = _autoToolTip.Content;
+                _autoToolTip.PlacementTarget = _centerThumb;
+                _autoToolTip.IsOpen = true;
+            }
+            _basePoint = Mouse.GetPosition(_container);
+            e.RoutedEvent = CentralThumbDragStartedEvent;
+            RaiseEvent(e);
+        }
+
         private void CenterThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
             double change = Orientation == Orientation.Horizontal
@@ -2071,8 +1802,8 @@ namespace MahApps.Metro.Controls
                         currentPoint.X < _container.ActualWidth)
                     {
                         localDirection = currentPoint.X > _basePoint.X ? Direction.Increase : Direction.Decrease;
-                            JumpToNextTick(localDirection, ButtonType.Both, change,
-                                localDirection == Direction.Increase ? UpperValue : LowerValue);
+                        JumpToNextTick(localDirection, ButtonType.Both, change,
+                            localDirection == Direction.Increase ? UpperValue : LowerValue);
                     }
                 }
                 else
@@ -2085,146 +1816,78 @@ namespace MahApps.Metro.Controls
                             localDirection == Direction.Increase ? UpperValue : LowerValue);
                     }
                 }
-                _basePoint = Mouse.GetPosition(_container);
+            }
+            _basePoint = Mouse.GetPosition(_container);
+            if (AutoToolTipPlacement != AutoToolTipPlacement.None)
+            {
+                _autoToolTip.Content = GetLowerToolTipNumber() +" ; "+ GetUpperToolTipNumber();
+                _centerThumb.ToolTip = _autoToolTip;
+                RelocateAutoToolTip();
             }
             e.RoutedEvent = CentralThumbDragDeltaEvent;
             RaiseEvent(e);
         }
 
-
-        private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
+        private void CenterThumbDragCompleted(object sender, DragCompletedEventArgs e)
         {
-            double change = Orientation == Orientation.Horizontal
-                    ? e.HorizontalChange
-                    : e.VerticalChange;
-            if (!IsSnapToTickEnabled)
+            if (_autoToolTip != null)
             {
-                MoveThumb(_centerThumb, _rightButton, change, Orientation);
-                ReCalculateRangeSelected(false, true);
+                _autoToolTip.IsOpen = false;
+                _centerThumb.ToolTip = String.Empty;
+                _autoToolTip = null;
             }
-            else
-            {
-                Direction localDirection;
-                Point currentPoint = Mouse.GetPosition(_container);
-                if (Orientation == Orientation.Horizontal)
-                {
-                    if (currentPoint.X < _container.ActualWidth &&
-                        currentPoint.X > _leftButton.ActualWidth + _leftThumb.ActualWidth + _centerThumb.MinWidth)
-                    {
-                        localDirection = currentPoint.X > _basePoint.X ? Direction.Increase : Direction.Decrease;
-                        JumpToNextTick(localDirection, ButtonType.Right, change, UpperValue);
-                        
-                    }
-                }
-                else
-                {
-                    if (currentPoint.Y < _container.ActualHeight &&
-                        currentPoint.Y > _leftButton.ActualHeight + _leftThumb.ActualHeight + _centerThumb.MinHeight)
-                    {
-                        localDirection = currentPoint.Y > _basePoint.Y ? Direction.Increase : Direction.Decrease;
-                        JumpToNextTick(localDirection, ButtonType.Right, change, UpperValue);
-                    }
-                }
-                //if (AutoToolTipPlacement != AutoToolTipPlacement.None)
-                //{
-                    
-                //    _autoToolTip.IsOpen = true;
-                //    _autoToolTip.Content = UpperValue;
-                //    _leftThumb.ToolTip = _autoToolTip;
-                //    _autoToolTip.HorizontalOffset = e.HorizontalChange;
-                //}
-                _basePoint = Mouse.GetPosition(_container);
-            }
-            e.RoutedEvent = UpperThumbDragDeltaEvent;
+            e.RoutedEvent = CentralThumbDragCompletedEvent;
             RaiseEvent(e);
         }
 
-        private void LeftThumbDragDelta(object sender, DragDeltaEventArgs e)
+        #endregion
+
+
+
+        #region Helper methods
+
+        private Boolean IsDoubleCloseToInt(double val)
         {
-            double change = Orientation == Orientation.Horizontal
-                ? e.HorizontalChange
-                : e.VerticalChange;
-            if (!IsSnapToTickEnabled)
-            {
-                MoveThumb(_leftButton, _centerThumb, change, Orientation);
-                ReCalculateRangeSelected(true, false);
-                //if (AutoToolTipPlacement != AutoToolTipPlacement.None)
-                //{
-                //    _autoToolTip.IsOpen = true;
-                //    _autoToolTip.Content = LowerValue;
-                //    _leftThumb.ToolTip = _autoToolTip;
-                //}
-            }
-            else
-            {
-                Direction localDirection;
-                Point currentPoint = Mouse.GetPosition(_container);
-                if (Orientation == Orientation.Horizontal)
-                {
-                    if (currentPoint.X >= 0 &&
-                        currentPoint.X < _container.ActualWidth - (_rightButton.ActualWidth + _rightThumb.ActualWidth + _centerThumb.MinWidth))
-                    {
-                        localDirection = currentPoint.X > _basePoint.X ? Direction.Increase : Direction.Decrease;
-                        JumpToNextTick(localDirection, ButtonType.Left, change, LowerValue);
-                    }
-                }
-                else
-                {
-                    if (currentPoint.Y >= 0 &&
-                        currentPoint.Y < _container.ActualHeight - (_rightButton.ActualHeight + _rightThumb.ActualHeight + _centerThumb.MinHeight))
-                    {
-                        localDirection = currentPoint.Y > _basePoint.Y ? Direction.Increase : Direction.Decrease;
-                        JumpToNextTick(localDirection, ButtonType.Left, change, LowerValue);
-                    }
-                }
-                _basePoint = Mouse.GetPosition(_container);
-            }
-            
-            
-            e.RoutedEvent = LowerThumbDragDeltaEvent;
-            RaiseEvent(e);
+            return ApproximatelyEquals(Math.Abs(val - Math.Round(val)), 0);
         }
 
-
-        private void RightThumbDragStart(object sender, DragStartedEventArgs e)
+        private String GetLowerToolTipNumber()
         {
-            if (AutoToolTipPlacement != AutoToolTipPlacement.None)
-            {
-                //if (_autoToolTip == null)
-                //{
-                //    _autoToolTip = new ToolTip();
-                //}
-                //_autoToolTip.Content = UpperValue;
-                //_autoToolTip.Placement = PlacementMode.Custom;
-                //_autoToolTip.PlacementTarget = _rightThumb;
-                //_autoToolTip.IsOpen = true;
-                //_autoToolTip.CustomPopupPlacementCallback = new CustomPopupPlacementCallback(CustomPopupPlacementCallback);
-            }
-            _basePoint = Mouse.GetPosition(_container);
-            e.RoutedEvent = UpperThumbDragStartedEvent;
-            RaiseEvent(e);
+            NumberFormatInfo format = (NumberFormatInfo) (NumberFormatInfo.CurrentInfo.Clone());
+            format.NumberDecimalDigits = AutoToolTipPrecision;
+            return LowerValue.ToString("N", format);
         }
 
-        private CustomPopupPlacement[] CustomPopupPlacementCallback(Size popupSize, Size targetSize, Point offset)
+        private String GetUpperToolTipNumber()
         {
-            switch (this.AutoToolTipPlacement)
+            NumberFormatInfo format = (NumberFormatInfo) (NumberFormatInfo.CurrentInfo.Clone());
+            format.NumberDecimalDigits = AutoToolTipPrecision;
+            return UpperValue.ToString("N", format);
+        }
+
+        private CustomPopupPlacement[] PopupPlacementCallback(Size popupSize, Size targetSize, Point offset)
+        {
+            switch (AutoToolTipPlacement)
             {
                 case AutoToolTipPlacement.TopLeft:
                     if (Orientation == Orientation.Horizontal)
                     {
                         // Place popup at top of thumb
-                        return new CustomPopupPlacement[]{new CustomPopupPlacement( 
-                            new Point((targetSize.Width - popupSize.Width) * 0.5, -popupSize.Height), 
-                            PopupPrimaryAxis.Horizontal)
+                        return new CustomPopupPlacement[]
+                        {
+                            new CustomPopupPlacement(
+                                new Point((targetSize.Width - popupSize.Width)*0.5, -popupSize.Height),
+                                PopupPrimaryAxis.Horizontal)
                         };
                     }
                     else
                     {
                         // Place popup at left of thumb 
-                        return new CustomPopupPlacement[] {
-                            new CustomPopupPlacement( 
-                            new Point(-popupSize.Width, (targetSize.Height - popupSize.Height) * 0.5), 
-                            PopupPrimaryAxis.Vertical)
+                        return new CustomPopupPlacement[]
+                        {
+                            new CustomPopupPlacement(
+                                new Point(-popupSize.Width, (targetSize.Height - popupSize.Height)*0.5),
+                                PopupPrimaryAxis.Vertical)
                         };
                     }
 
@@ -2232,56 +1895,32 @@ namespace MahApps.Metro.Controls
                     if (Orientation == Orientation.Horizontal)
                     {
                         // Place popup at bottom of thumb 
-                        return new CustomPopupPlacement[] { 
+                        return new CustomPopupPlacement[]
+                        {
                             new CustomPopupPlacement(
-                            new Point((targetSize.Width - popupSize.Width) * 0.5, targetSize.Height) , 
-                            PopupPrimaryAxis.Horizontal)
+                                new Point((targetSize.Width - popupSize.Width)*0.5, targetSize.Height),
+                                PopupPrimaryAxis.Horizontal)
                         };
 
                     }
                     else
                     {
                         // Place popup at right of thumb 
-                        return new CustomPopupPlacement[] {
-                            new CustomPopupPlacement( 
-                            new Point(targetSize.Width, (targetSize.Height - popupSize.Height) * 0.5),
-                            PopupPrimaryAxis.Vertical)
+                        return new CustomPopupPlacement[]
+                        {
+                            new CustomPopupPlacement(
+                                new Point(targetSize.Width, (targetSize.Height - popupSize.Height)*0.5),
+                                PopupPrimaryAxis.Vertical)
                         };
                     }
 
                 default:
-                    return new CustomPopupPlacement[] { };
+                    return new CustomPopupPlacement[] {};
             }
         }
 
-        private void LeftThumbDragComplete(object sender, DragCompletedEventArgs e)
-        {
+        #endregion
 
-            e.RoutedEvent = LowerThumbDragCompletedEvent;
-            RaiseEvent(e);
-        }
-
-        private void LeftThumbDragStart(object sender, DragStartedEventArgs e)
-        {
-            if (AutoToolTipPlacement != AutoToolTipPlacement.None)
-            {
-                //if (_autoToolTip == null)
-                //{
-                //    _autoToolTip = new ToolTip();
-                //    _autoToolTip.Placement = PlacementMode.MousePoint;
-                //    _autoToolTip.IsOpen = true;
-                //}
-            }
-            _basePoint = Mouse.GetPosition(_container);
-            e.RoutedEvent = LowerThumbDragStartedEvent;
-            RaiseEvent(e);
-        }
-
-        private void RightThumbDragComplete(object sender, DragCompletedEventArgs e)
-        {
-            e.RoutedEvent = UpperThumbDragCompletedEvent;
-            RaiseEvent(e);
-        }
 
 
         #region Coerce callbacks
@@ -2316,7 +1955,7 @@ namespace MahApps.Metro.Controls
         {
             RangeSlider rs = (RangeSlider) d;
             return (Double)basevalue;
-            //return Math.Max(rs.Minimum, (Double) basevalue);
+            //return Math.Max(rs.UpperValue, (Double) basevalue);
         }
 
         
@@ -2325,7 +1964,7 @@ namespace MahApps.Metro.Controls
         {
             RangeSlider rs = (RangeSlider) d;
             return (Double)basevalue;
-            //return Math.Min(rs.Maximum, (Double) basevalue);
+            //return Math.Min(rs.LowerValue, (Double) basevalue);
         }
 
         private static object CoerceMinBridgeWidth(DependencyObject d, object basevalue)
@@ -2343,6 +1982,40 @@ namespace MahApps.Metro.Controls
             return (Double) basevalue > width/2 ? width/2 : (Double) basevalue;
         }
 
+        private static object CoerceTickFrequencyCallback(DependencyObject dependencyObject, object baseValue)
+        {
+            if ((Double) baseValue <= 0)
+                return 0.1;
+            //double value = 0;
+            //RangeSlider rs = (RangeSlider)dependencyObject;
+            //if ((Double)baseValue > rs.Maximum - rs.Minimum)
+            //{
+            //    value = rs.Maximum - rs.Minimum;
+            //}
+            //return value;
+            return baseValue;
+        }
+
+        #endregion
+
+
+
+        #region PropertyChanged CallBacks
+
+        private static void TickFrequencyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            RangeSlider rs = (RangeSlider)dependencyObject;
+            if (rs._topTick != null && rs._bottomTick != null)
+            {
+                if ((Double)e.NewValue > 0 && (Double)e.NewValue <= rs.Maximum - rs.Minimum)
+                {
+                    rs._topTick.TickFrequency = (Double)e.NewValue;
+                    rs._bottomTick.TickFrequency = (Double)e.NewValue;
+                }
+            }
+        }
+
+        
         #endregion
 
 

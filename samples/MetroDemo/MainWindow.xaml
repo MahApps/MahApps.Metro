@@ -812,16 +812,16 @@
                             <!--<Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}" ToolTip="Minimum"></Controls:NumericUpDown>
                             <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}" ToolTip="Maximum"></Controls:NumericUpDown>-->
                             <TextBlock Text="{Binding ElementName=RangeSlider, Path=ActualWidth}"></TextBlock>
-
+                            <!--TickFrequency="20.5487961325467985"-->
 
                             <Controls:RangeSlider Orientation="Horizontal" x:Name="RangeSlider" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
                                                   CentralThumbDragStarted="RangeSlider_OnCentralThumbDragStarted" CentralThumbDragCompleted="RangeSlider_OnCentralThumbDragCompleted"
                                                   LowerThumbDragDelta="RangeSlider_OnLowerThumbDragDelta" UpperThumbDragDelta="RangeSlider_OnUpperThumbDragDelta" CentralThumbDragDelta="RangeSlider_OnCentralThumbDragDelta"
                                                   LowerThumbDragStarted="RangeSlider_OnLowerThumbDragStarted" LowerThumbDragCompleted="RangeSlider_OnLowerThumbDragCompleted"
                                                   UpperThumbDragStarted="RangeSlider_OnUpperThumbDragStarted" UpperThumbDragCompleted="RangeSlider_OnUpperThumbDragCompleted"
-                                                  TickPlacement="Both" TickFrequency="20.5487961325467985" IsSnapToTickEnabled="True" MinRange="0"
-                                                  Width="300" Minimum="-200" Maximum="200" IsMoveToPointEnabled="True" ExtendedMode="True" MoveWholeRange="False" SmallChange="0.1" 
-                                                  LowerValue="0" UpperValue="15" />
+                                                  TickPlacement="Both" TickFrequency="2" IsSnapToTickEnabled="True" MinRange="0"
+                                                  Width="300" Minimum="0" Maximum="2" IsMoveToPointEnabled="False" ExtendedMode="True" MoveWholeRange="False" SmallChange="0.1" 
+                                                  LowerValue="0" UpperValue="2" />
                             <!--<Slider Value="{Binding ElementName=RangeSlider, Path=MinRangeWidth}" Minimum="0" Maximum="250" ></Slider>-->
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
