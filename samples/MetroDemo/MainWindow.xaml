@@ -6,6 +6,8 @@
                       xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"
                       Title="MahApps.Metro - Demo Application"
                       Width="960"
                       Height="600"
@@ -1182,7 +1184,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid ToolTip="{Binding Key}" MinHeight="40" Margin="5">
+                                    <Grid ToolTip="{Binding}" MinHeight="40" Margin="5">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition SharedSizeGroup="color"/>
                                         </Grid.ColumnDefinitions>
@@ -1190,16 +1192,19 @@
                                             <RowDefinition/>
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
-                                        <Ellipse Fill="{Binding Value}" Stroke="#bdbdbd" Height="80" Width="80" Grid.Row="0"/>
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            Grid.Row="1"
-                                            Margin="4,2"
-                                            FontSize="{DynamicResource NormalFontSize}"
-                                            TextAlignment="Right"
-                                            Opacity="1"
-                                            Foreground="Black"
-                                            Text="{Binding Key}" />
+                                        <Ellipse Stroke="#bdbdbd" Height="80" Width="80" Grid.Row="0">
+                                            <i:Interaction.Behaviors>
+                                                <behaviours:BindableResourceBehavior
+                                                    ResourceName="{Binding}"
+                                                    Property="{x:Static Shape.FillProperty}"/>
+                                            </i:Interaction.Behaviors>
+                                        </Ellipse>
+                                        <TextBlock Grid.Row="1"
+                                                   Margin="4,2,4,10"
+                                                   FontSize="{DynamicResource NormalFontSize}"
+                                                   TextAlignment="Center"
+                                                   Foreground="Black"
+                                                   Text="{Binding}" />
                                     </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
