@@ -11,20 +11,26 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// The value of the new range's beginning.
         /// </summary>
-        public double NewRangeStart { get; set; }
+        public double NewLowerValue { get; set; }
         /// <summary>
         /// The value of the new range's ending.
         /// </summary>
-        public double NewRangeStop { get; set; }
+        public double NewUpperValue { get; set; }
 
-        internal RangeSelectionChangedEventArgs(double newRangeStart, double newRangeStop)
+        public double OldLowerValue { get; set; }
+
+        public double OldUpperValue { get; set; }
+
+        internal RangeSelectionChangedEventArgs(double newLowerValue, double newUpperValue, double oldLowerValue, double oldUpperValue)
         {
-            NewRangeStart = newRangeStart;
-            NewRangeStop = newRangeStop;
+            NewLowerValue = newLowerValue;
+            NewUpperValue = newUpperValue;
+            OldLowerValue = oldLowerValue;
+            OldUpperValue = oldUpperValue;
         }
 
-        internal RangeSelectionChangedEventArgs(RangeSlider slider)
-            : this(slider.LowerValue, slider.UpperValue)
-        { }
+        //internal RangeSelectionChangedEventArgs(RangeSlider slider)
+        //    : this(slider.LowerValue, slider.UpperValue)
+        //{ }
     }
 }

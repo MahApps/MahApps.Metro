@@ -5,7 +5,7 @@
     
     <ControlTemplate x:Key="RangeSliderHorizontal" TargetType="controls:RangeSlider">
         <StackPanel Name="PART_Container" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-            <TickBar Name="PART_TopTick" Placement="Top" Fill="{TemplateBinding Foreground}" Height="4" Margin="5,0,5,2" Visibility="Collapsed"></TickBar>
+            <TickBar Name="PART_TopTick" Placement="Top" Fill="{TemplateBinding Foreground}" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Height="4" Margin="5,0,5,2" Visibility="Collapsed"></TickBar>
             <StackPanel Name="PART_RangeSliderContainer" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <RepeatButton Name="PART_LeftEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
                 <Thumb Name="PART_LeftThumb" Cursor="Arrow" 
@@ -31,7 +31,7 @@
                                     Style="{DynamicResource HorizontalSliderThumb}" />
                 <RepeatButton Name="PART_RightEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
             </StackPanel>
-            <TickBar Name="PART_BottomTick" Fill="{TemplateBinding Foreground}" Placement="Top" Height="4" Margin="5,2,5,0" Visibility="Collapsed"></TickBar>
+            <TickBar Name="PART_BottomTick" Fill="{TemplateBinding Foreground}" Placement="Top" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Height="4" Margin="5,2,5,0" Visibility="Collapsed"></TickBar>
         </StackPanel>
         <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement" Value="TopLeft">
@@ -49,7 +49,7 @@
     
     <ControlTemplate x:Key="RangeSliderVertical" TargetType="controls:RangeSlider">
         <StackPanel Name="PART_Container" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-            <TickBar Name="PART_TopTick" Placement="Left" Fill="{TemplateBinding Foreground}" Width="4" Margin="0,5,2,5" Visibility="Collapsed"></TickBar>
+            <TickBar Name="PART_TopTick" Placement="Left" Fill="{TemplateBinding Foreground}" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Width="4" Margin="0,5,2,5" Visibility="Collapsed"></TickBar>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Stretch"
                                 Name="PART_RangeSliderContainer">
                 <RepeatButton Name="PART_LeftEdge" VerticalAlignment="Stretch"
@@ -78,7 +78,7 @@
                        Style="{DynamicResource VerticalSliderThumb}" />
                 <RepeatButton Name="PART_RightEdge" VerticalAlignment="Stretch" Style="{DynamicResource VerticalTrackLargeDecrease}" />
             </StackPanel>
-            <TickBar Name="PART_BottomTick" Fill="{TemplateBinding Foreground}" Placement="Right" Width="4" Margin="2,5,0,5" Visibility="Collapsed"></TickBar>
+            <TickBar Name="PART_BottomTick" Fill="{TemplateBinding Foreground}" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Placement="Right" Width="4" Margin="2,5,0,5" Visibility="Collapsed"></TickBar>
         </StackPanel>
         <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement" Value="TopLeft">
