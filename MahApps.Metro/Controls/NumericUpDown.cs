@@ -431,10 +431,11 @@ namespace MahApps.Metro.Controls
                 CultureInfo equivalentCulture = SpecificCultureInfo;
                 NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
                 TextBox textBox = ((TextBox)sender);
+                bool allTextSelected = textBox.SelectedText == textBox.Text;
 
                 if (numberFormatInfo.NumberDecimalSeparator == text)
                 {
-                    if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator))
+                    if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator) || allTextSelected)
                     {
                         e.Handled = false;
                     }
@@ -449,8 +450,9 @@ namespace MahApps.Metro.Controls
                             //check if text already has a + or - sign
                             if (textBox.Text.Length > 1)
                             {
-                                if (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, StrComp) &&
-                                    !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, StrComp))
+                                if (allTextSelected || 
+                                    (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, StrComp) &&
+                                    !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, StrComp)))
                                 {
                                     e.Handled = false;
                                 }
