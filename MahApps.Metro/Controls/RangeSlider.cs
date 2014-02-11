@@ -346,7 +346,6 @@ namespace MahApps.Metro.Controls
         private RepeatButton _rightButton;
         private StackPanel _visualElementsContainer;
         private StackPanel _container;
-        //private double _movableRange;
         private Double _movableWidth;
         private readonly DispatcherTimer _timer;
 
@@ -373,9 +372,10 @@ namespace MahApps.Metro.Controls
             CommandBindings.Add(new CommandBinding(MoveAllBack, MoveAllBackHandler));
 
             DependencyPropertyDescriptor.FromProperty(ActualWidthProperty, typeof(RangeSlider)).AddValueChanged(this, delegate { ReCalculateWidths(); });
+            DependencyPropertyDescriptor.FromProperty(ActualHeightProperty, typeof(RangeSlider)).AddValueChanged(this, delegate { ReCalculateWidths(); });
             _timer = new DispatcherTimer();
             _timer.Tick += SerialMovement;
-            _timer.Interval = new TimeSpan(0, 0, 0, 0, Interval);
+            _timer.Interval = TimeSpan.FromMilliseconds(Interval);
         }
 
        
@@ -384,18 +384,8 @@ namespace MahApps.Metro.Controls
         {
             
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
-            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, null, CoerceMinimum));
-            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)10.0, FrameworkPropertyMetadataOptions.AffectsMeasure, null,CoerceMaximum));
-        }
-
-        private static void MaxPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            
-        }
-
-        private static void MinPropertyChangedCallback (DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MinPropertyChangedCallback));
+            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)100.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MaxPropertyChangedCallback, CoerceMaximum));
         }
 
 
@@ -405,8 +395,6 @@ namespace MahApps.Metro.Controls
         /// <param name="oldMinimum">The old value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/> property.</param><param name="newMinimum">The new value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Minimum"/> property.</param>
         protected override void OnMinimumChanged(double oldMinimum, double newMinimum)
         {
-            base.OnMinimumChanged(oldMinimum, newMinimum);
-            CheckLowerValue();
             ReCalculateWidths();
         }
 
@@ -416,91 +404,9 @@ namespace MahApps.Metro.Controls
         /// <param name="oldMaximum">The old value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/> property.</param><param name="newMaximum">The new value of the <see cref="P:System.Windows.Controls.Primitives.RangeBase.Maximum"/> property.</param>
         protected override void OnMaximumChanged(double oldMaximum, double newMaximum)
         {
-            base.OnMaximumChanged(oldMaximum, newMaximum);
-            CheckUpperValue();
             ReCalculateWidths();
         }
 
-        //if LowerValue or UpperValue will not set before start of App, then width of Control will be
-        //calculated incorrect. Thats why we use CheckLowerValue and CheckUpperValue inside OnMaximum and OnMinimum
-        private void CheckLowerValue()
-        {
-            if (LowerValue < Minimum)
-            {
-                LowerValue = Minimum;
-            }
-            else if (LowerValue > Maximum)
-            {
-                LowerValue = Maximum;
-            }
-        }
-
-        private void CheckUpperValue()
-        {
-            if (UpperValue > Maximum)
-            {
-                UpperValue = Maximum;
-            }
-            else if (UpperValue < Minimum)
-            {
-                UpperValue = Minimum;
-            }
-        }
-
-        /*
-        private static void RangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-        {
-            var slider = (RangeSlider)dependencyObject;
-            if (slider._internalUpdate)
-                return;
-
-            slider.ReCalculateRanges();
-            slider.ReCalculateWidths();
-        }*/
-
-        private static void RangesChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            var slider = (RangeSlider)dependencyObject;
-            if (slider._internalUpdate)
-                return;
-
-            
-            slider.ReCalculateWidths();
-            slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue, slider._oldLower, slider._oldUpper));
-        }
-
-        private static void MinBridgeWidthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            var slider = (RangeSlider)sender;
-            if (slider.Orientation == Orientation.Horizontal)
-            {
-                slider._centerThumb.MinWidth = slider.MinBridgeWidth;
-            }
-            else
-            {
-                slider._centerThumb.MinHeight = slider.MinBridgeWidth;
-            }
-            slider.ReCalculateWidths();
-        }
-
-        private static void MinRangeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
-        {
-            if ((Double)e.NewValue < 0)
-                throw new ArgumentOutOfRangeException("value", "value for MinRange cannot be less than 0");
-            
-
-            var slider = (RangeSlider)sender;
-            if (slider._internalUpdate)
-                return;
-
-
-            slider._internalUpdate = true;
-            slider.UpperValue = Math.Max(slider.UpperValue, slider.LowerValue + (double)e.NewValue);
-            slider.Maximum = Math.Max(slider.Maximum, slider.UpperValue);
-            slider._internalUpdate = false;
-
-            slider.ReCalculateWidths();
-        }
 
         void MoveAllBackHandler(object sender, ExecutedRoutedEventArgs e)
         {
@@ -744,10 +650,6 @@ namespace MahApps.Metro.Controls
                     UpperValueChangedEvent);
         }
 
-        private bool ApproximatelyEquals(double value1, double value2)
-        {
-            return Math.Abs(value1 - value2) <= Epsilon; 
-        }
 
 
         private void ReCalculateRangeSelected(bool reCalculateLowerValue, bool reCalculateUpperValue, double value, Direction direction)
@@ -941,13 +843,14 @@ namespace MahApps.Metro.Controls
             ReCalculateWidths();
         }
 
+        //Get element from name. If it exist then element instance return, if not, new will be created
         T EnforceInstance<T>(string partName) where T : FrameworkElement, new()
         {
             T element = GetTemplateChild(partName) as T ?? new T();
             return element;
         }
 
-        //adds all visual element to the conatiner
+        //adds all visual element to the container
         private void InitializeVisualElementsContainer()
         {
             _leftThumb.DragCompleted += LeftThumbDragComplete;
@@ -1364,9 +1267,6 @@ namespace MahApps.Metro.Controls
         }
 
 
-        
-
-
         private Double CalculateNextTick(Direction dir, double chekingValue, double distance, bool moveDirectlyToNextTick)
         {
             if (!IsMoveToPointEnabled)
@@ -1554,7 +1454,7 @@ namespace MahApps.Metro.Controls
 
 
 
-        #region Event Handlers
+        #region Thumb Event Handlers
 
         private void LeftThumbDragStart(object sender, DragStartedEventArgs e)
         {
@@ -1810,6 +1710,11 @@ namespace MahApps.Metro.Controls
 
         #region Helper methods
 
+        private bool ApproximatelyEquals(double value1, double value2)
+        {
+            return Math.Abs(value1 - value2) <= Epsilon;
+        }
+
         private Boolean IsDoubleCloseToInt(double val)
         {
             return ApproximatelyEquals(Math.Abs(val - Math.Round(val)), 0);
@@ -1886,9 +1791,16 @@ namespace MahApps.Metro.Controls
         #endregion
 
 
+        #region Validation methods
+
+        private static bool IsValidPrecision(object value)
+        {
+            return ((Int32) value >= 0);
+        }
+
         private static bool IsValidTickFrequency(object value)
         {
-            double d = (double)value;
+            double d = (double) value;
             if (d <= 0.0 || Double.IsInfinity(d))
             {
                 return false;
@@ -1896,8 +1808,28 @@ namespace MahApps.Metro.Controls
             return true;
         }
 
+        #endregion
 
+        
         #region Coerce callbacks
+
+        private static void MaxPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            dependencyObject.CoerceValue(MaximumProperty);
+            dependencyObject.CoerceValue(UpperValueProperty);
+            //dependencyObject.CoerceValue(LowerValueProperty);
+            //dependencyObject.CoerceValue(MinimumProperty);
+
+        }
+
+        private static void MinPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            //dependencyObject.CoerceValue(MinimumProperty);
+            //dependencyObject.CoerceValue(MaximumProperty);
+            //dependencyObject.CoerceValue(UpperValueProperty);
+            dependencyObject.CoerceValue(LowerValueProperty);
+            
+        }
 
         private static object CoerceMinimum(DependencyObject d, object basevalue)
         {
@@ -1906,7 +1838,7 @@ namespace MahApps.Metro.Controls
             //if (value > rs.LowerValue)
             //    return rs.LowerValue;
 
-            return basevalue;
+            return value;
         }
 
         private static object CoerceMaximum(DependencyObject d, object basevalue)
@@ -1914,42 +1846,37 @@ namespace MahApps.Metro.Controls
             RangeSlider rs = (RangeSlider)d;
             double value = (double)basevalue;
 
-            //if (value < rs.UpperValue)
-            //    return rs.UpperValue;
+            if (value < rs.UpperValue)
+                return rs.UpperValue;
 
-            return basevalue;
+            return value;
         }
 
         private static object CoerceLowerValue(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider) d;
             double value = (double) basevalue;
-            //if (value < rs.Minimum)
-            //    return rs.Minimum;
+            if (value < rs.Minimum)
+                return rs.Minimum;
 
-            //if (value > rs.UpperValue- rs.MinRange)
-            //    return rs.UpperValue - rs.MinRange;
-            
-            //if (value > rs.UpperValue)
-            //    return rs.UpperValue;
+            if (value > rs.UpperValue - rs.MinRange)
+                return rs.UpperValue - rs.MinRange;
 
-            return basevalue;
+            return value;
         }
 
         private static object CoerceUpperValue(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider) d;
-
-            //double value = (double) basevalue;
-            //if (value > rs.Maximum)
-            //    return rs.Maximum;
-
-            //if (value < rs.LowerValue+ rs.MinRange)
-            //    return rs.LowerValue+rs.MinRange;
             
-            //if (value < rs.LowerValue)
-            //    return rs.LowerValue;
-            return basevalue;
+            double value = (double)basevalue;
+            if (value > rs.Maximum)
+                return rs.Maximum;
+
+            if (value < rs.LowerValue + rs.MinRange)
+                return rs.LowerValue + rs.MinRange;
+
+            return value;
         }
 
         private static object CoerceMinBridgeWidth(DependencyObject d, object basevalue)
@@ -1970,17 +1897,60 @@ namespace MahApps.Metro.Controls
 
         #endregion
 
-        private static bool IsValidPrecision(object value)
-        {
-            return ((Int32)value >= 0);
-        }
+        
 
         #region PropertyChanged CallBacks
+
+        //Lower/Upper values property changed callback
+        private static void RangesChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var slider = (RangeSlider)dependencyObject;
+            if (slider._internalUpdate)
+                return;
+            dependencyObject.CoerceValue(UpperValueProperty);
+            dependencyObject.CoerceValue(LowerValueProperty);
+
+            slider.ReCalculateWidths();
+            slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue, slider._oldLower, slider._oldUpper));
+        }
+
+
+        private static void MinBridgeWidthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            var slider = (RangeSlider)sender;
+            if (slider.Orientation == Orientation.Horizontal)
+            {
+                slider._centerThumb.MinWidth = slider.MinBridgeWidth;
+            }
+            else
+            {
+                slider._centerThumb.MinHeight = slider.MinBridgeWidth;
+            }
+            slider.ReCalculateWidths();
+        }
+
+        private static void MinRangeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((Double)e.NewValue < 0)
+                throw new ArgumentOutOfRangeException("value", "value for MinRange cannot be less than 0");
+
+
+            var slider = (RangeSlider)sender;
+            if (slider._internalUpdate)
+                return;
+
+            slider._internalUpdate = true;
+            slider.UpperValue = Math.Max(slider.UpperValue, slider.LowerValue + (double)e.NewValue);
+            slider.Maximum = Math.Max(slider.Maximum, slider.UpperValue);
+            slider._internalUpdate = false;
+
+            slider.ReCalculateWidths();
+        }
 
         private static void IntervalChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             RangeSlider rs = (RangeSlider)dependencyObject;
-            rs._timer.Interval = new TimeSpan(0, 0, 0, 0, (Int32)e.NewValue);
+            rs._timer.Interval = TimeSpan.FromMilliseconds((Int32)e.NewValue);
         }
         
         #endregion
