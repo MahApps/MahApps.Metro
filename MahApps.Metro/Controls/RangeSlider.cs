@@ -659,7 +659,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        
         private void ReCalculateWidths()
         {
             if (_leftButton != null && _rightButton != null && _centerThumb != null)
@@ -688,9 +687,10 @@ namespace MahApps.Metro.Controls
                             ActualHeight - _leftButton.Height - _rightButton.Height - _rightThumb.ActualHeight -
                             _leftThumb.ActualHeight, 0);
                 }
-                _density = _movableWidth / (Maximum - Minimum);
+                _density = _movableWidth / MovableRange;
             }
         }
+
 
         private void ReCalculateRangeSelected(bool reCalculateLowerValue, bool reCalculateUpperValue)
         {
@@ -1435,18 +1435,27 @@ namespace MahApps.Metro.Controls
                     {
                         if (type == ButtonType.Right)
                         {
-                            MoveThumb(_centerThumb, _rightButton, difference*_density, Orientation);
-                            ReCalculateRangeSelected(false, true, UpperValue + difference, mDirection);
+                            if (UpperValue < Maximum)
+                            {
+                                MoveThumb(_centerThumb, _rightButton, difference*_density, Orientation);
+                                ReCalculateRangeSelected(false, true, UpperValue + difference, mDirection);
+                            }
                         }
                         else if (type == ButtonType.Left)
                         {
-                            MoveThumb(_leftButton, _centerThumb, difference * _density, Orientation);
-                            ReCalculateRangeSelected(true, false, LowerValue + difference, mDirection);
+                            if (LowerValue < UpperValue - MinRange)
+                            {
+                                MoveThumb(_leftButton, _centerThumb, difference*_density, Orientation);
+                                ReCalculateRangeSelected(true, false, LowerValue + difference, mDirection);
+                            }
                         }
                         else if (type == ButtonType.Both)
                         {
-                            MoveThumb(_leftButton, _rightButton, difference * _density, Orientation);
-                            ReCalculateRangeSelected(LowerValue + difference, UpperValue + difference, mDirection);
+                            if (UpperValue < Maximum)
+                            {
+                                MoveThumb(_leftButton, _rightButton, difference*_density, Orientation);
+                                ReCalculateRangeSelected(LowerValue + difference, UpperValue + difference, mDirection);
+                            }
                         }
                     }
                 }
@@ -1456,18 +1465,27 @@ namespace MahApps.Metro.Controls
                     {
                         if (type == ButtonType.Right)
                         {
-                            MoveThumb(_centerThumb, _rightButton, difference*_density, Orientation);
-                            ReCalculateRangeSelected(false, true, UpperValue + difference, mDirection);
+                            if (UpperValue < Maximum)
+                            {
+                                MoveThumb(_centerThumb, _rightButton, difference*_density, Orientation);
+                                ReCalculateRangeSelected(false, true, UpperValue + difference, mDirection);
+                            }
                         }
                         else if (type == ButtonType.Left)
                         {
-                            MoveThumb(_leftButton, _centerThumb, difference * _density, Orientation);
-                            ReCalculateRangeSelected(true, false, LowerValue + difference, mDirection);
+                            if (LowerValue < UpperValue - MinRange)
+                            {
+                                MoveThumb(_leftButton, _centerThumb, difference*_density, Orientation);
+                                ReCalculateRangeSelected(true, false, LowerValue + difference, mDirection);
+                            }
                         }
                         else if (type == ButtonType.Both)
                         {
-                            MoveThumb(_leftButton, _rightButton, difference * _density, Orientation);
-                            ReCalculateRangeSelected(LowerValue + difference, UpperValue + difference, mDirection);
+                            if (UpperValue < Maximum)
+                            {
+                                MoveThumb(_leftButton, _rightButton, difference*_density, Orientation);
+                                ReCalculateRangeSelected(LowerValue + difference, UpperValue + difference, mDirection);
+                            }
                         }
                     }
                 }
@@ -1484,18 +1502,27 @@ namespace MahApps.Metro.Controls
                     {
                         if (type == ButtonType.Right)
                         {
-                            MoveThumb(_centerThumb, _rightButton, -difference * _density, Orientation);
-                            ReCalculateRangeSelected(false, true, UpperValue - difference, mDirection);
+                            if (UpperValue > LowerValue + MinRange)
+                            {
+                                MoveThumb(_centerThumb, _rightButton, -difference*_density, Orientation);
+                                ReCalculateRangeSelected(false, true, UpperValue - difference, mDirection);
+                            }
                         }
                         else if (type == ButtonType.Left)
                         {
-                            MoveThumb(_leftButton, _centerThumb, -difference * _density, Orientation);
-                            ReCalculateRangeSelected(true, false, LowerValue - difference, mDirection);
+                            if (LowerValue > Minimum)
+                            {
+                                MoveThumb(_leftButton, _centerThumb, -difference*_density, Orientation);
+                                ReCalculateRangeSelected(true, false, LowerValue - difference, mDirection);
+                            }
                         }
                         else if (type == ButtonType.Both)
                         {
-                            MoveThumb(_leftButton, _rightButton, -difference * _density, Orientation);
-                            ReCalculateRangeSelected(LowerValue - difference, UpperValue - difference, mDirection);
+                            if (LowerValue > Minimum)
+                            {
+                                MoveThumb(_leftButton, _rightButton, -difference*_density, Orientation);
+                                ReCalculateRangeSelected(LowerValue - difference, UpperValue - difference, mDirection);
+                            }
                         }
                     }
                 }
@@ -1506,18 +1533,27 @@ namespace MahApps.Metro.Controls
                     {
                         if (type == ButtonType.Right)
                         {
-                            MoveThumb(_centerThumb, _rightButton, -difference * _density, Orientation);
-                            ReCalculateRangeSelected(false, true, UpperValue - difference, mDirection);
+                            if (UpperValue > LowerValue + MinRange)
+                            {
+                                MoveThumb(_centerThumb, _rightButton, -difference*_density, Orientation);
+                                ReCalculateRangeSelected(false, true, UpperValue - difference, mDirection);
+                            }
                         }
                         else if (type == ButtonType.Left)
                         {
-                            MoveThumb(_leftButton, _centerThumb, -difference * _density, Orientation);
-                            ReCalculateRangeSelected(true, false, LowerValue - difference, mDirection);
+                            if (LowerValue > Minimum)
+                            {
+                                MoveThumb(_leftButton, _centerThumb, -difference*_density, Orientation);
+                                ReCalculateRangeSelected(true, false, LowerValue - difference, mDirection);
+                            }
                         }
                         else if (type == ButtonType.Both)
                         {
-                            MoveThumb(_leftButton, _rightButton, -difference * _density, Orientation);
-                            ReCalculateRangeSelected(LowerValue - difference, UpperValue - difference, mDirection);
+                            if (LowerValue > Minimum)
+                            {
+                                MoveThumb(_leftButton, _rightButton, -difference*_density, Orientation);
+                                ReCalculateRangeSelected(LowerValue - difference, UpperValue - difference, mDirection);
+                            }
                         }
                     }
                 }
@@ -1875,8 +1911,8 @@ namespace MahApps.Metro.Controls
         {
             RangeSlider rs = (RangeSlider)d;
             double value = (double)basevalue;
-            if (value > rs.LowerValue)
-                return rs.LowerValue;
+            //if (value > rs.LowerValue)
+            //    return rs.LowerValue;
 
             return basevalue;
         }
@@ -1886,8 +1922,8 @@ namespace MahApps.Metro.Controls
             RangeSlider rs = (RangeSlider)d;
             double value = (double)basevalue;
 
-            if (value < rs.UpperValue)
-                return rs.UpperValue;
+            //if (value < rs.UpperValue)
+            //    return rs.UpperValue;
 
             return basevalue;
         }
@@ -1896,11 +1932,14 @@ namespace MahApps.Metro.Controls
         {
             RangeSlider rs = (RangeSlider) d;
             double value = (double) basevalue;
-            if (value < rs.Minimum)
-                return rs.Minimum;
+            //if (value < rs.Minimum)
+            //    return rs.Minimum;
 
-            if (value > rs.UpperValue)
-                return rs.UpperValue;
+            //if (value > rs.UpperValue- rs.MinRange)
+            //    return rs.UpperValue - rs.MinRange;
+            
+            //if (value > rs.UpperValue)
+            //    return rs.UpperValue;
 
             return basevalue;
         }
@@ -1909,12 +1948,15 @@ namespace MahApps.Metro.Controls
         {
             RangeSlider rs = (RangeSlider) d;
 
-            double value = (double) basevalue;
-            if (value > rs.Maximum)
-                return rs.Maximum;
+            //double value = (double) basevalue;
+            //if (value > rs.Maximum)
+            //    return rs.Maximum;
 
-            if (value < rs.LowerValue)
-                return rs.LowerValue;
+            //if (value < rs.LowerValue+ rs.MinRange)
+            //    return rs.LowerValue+rs.MinRange;
+            
+            //if (value < rs.LowerValue)
+            //    return rs.LowerValue;
             return basevalue;
         }
 
