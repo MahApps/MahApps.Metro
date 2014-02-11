@@ -407,7 +407,6 @@ namespace MahApps.Metro.Controls
         {
             base.OnMinimumChanged(oldMinimum, newMinimum);
             CheckLowerValue();
-            ReCalculateRanges();
             ReCalculateWidths();
         }
 
@@ -419,7 +418,6 @@ namespace MahApps.Metro.Controls
         {
             base.OnMaximumChanged(oldMaximum, newMaximum);
             CheckUpperValue();
-            ReCalculateRanges();
             ReCalculateWidths();
         }
 
@@ -501,7 +499,6 @@ namespace MahApps.Metro.Controls
             slider.Maximum = Math.Max(slider.Maximum, slider.UpperValue);
             slider._internalUpdate = false;
 
-            slider.ReCalculateRanges();
             slider.ReCalculateWidths();
         }
 
@@ -644,11 +641,6 @@ namespace MahApps.Metro.Controls
         private static double GetChangeKeepPositive(double width, double increment)
         {
             return Math.Max(width + increment, 0) - width;
-        }
-
-        private void ReCalculateRanges()
-        {
-            //_movableRange = Maximum - Minimum - MinRange;
         }
 
         public double MovableRange
