@@ -133,20 +133,20 @@ namespace MahApps.Metro.Native
 
         internal static int GET_X_LPARAM(IntPtr lParam)
         {
-            return LOWORD(lParam.ToInt32());
+            return LOWORD(lParam.ToInt64());
         }
 
         internal static int GET_Y_LPARAM(IntPtr lParam)
         {
-            return HIWORD(lParam.ToInt32());
+            return HIWORD(lParam.ToInt64());
         }
 
-        private static int HIWORD(int i)
+        private static int HIWORD(long i)
         {
             return (short)(i >> 16);
         }
 
-        private static int LOWORD(int i)
+        private static int LOWORD(long i)
         {
             return (short)(i & 0xFFFF);
         }
