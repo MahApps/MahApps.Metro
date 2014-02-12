@@ -23,6 +23,9 @@ namespace MahApps.Metro.Controls
     {
         #region Readonly
 
+        private const string ScientificNotationChar = "E";
+        private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
+
         public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
@@ -75,6 +78,17 @@ namespace MahApps.Metro.Controls
             typeof(double),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(DefaultInterval, IntervalChanged));
+
+        public static readonly DependencyProperty InterceptMouseWheelProperty = DependencyProperty.Register("InterceptMouseWheel", 
+            typeof(bool), 
+            typeof(NumericUpDown), 
+            new FrameworkPropertyMetadata(true));
+
+
+        public static readonly DependencyProperty TrackMouseWheelWhenMouseOverProperty = DependencyProperty.Register("TrackMouseWheelWhenMouseOver", 
+            typeof(bool), 
+            typeof(NumericUpDown), 
+            new FrameworkPropertyMetadata(default(bool)));
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -166,7 +180,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the user can use the UP ARROW and DOWN ARROW keys to select values.
+        ///     Gets or sets a value indicating whether the user can use the arrow keys to change values.
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
@@ -175,6 +189,31 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(InterceptArrowKeysProperty); }
             set { SetValue(InterceptArrowKeysProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the user can use the mouse wheel to change values.
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(true)]
+        public bool InterceptMouseWheel
+        {
+            get { return (bool)GetValue(InterceptMouseWheelProperty); }
+            set { SetValue(InterceptMouseWheelProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the control must have the focus in order to change values using the mouse wheel.
+        /// <remarks>
+        ///     If the value is false then the value changes when the mouse wheel is over the control. If the value is true then the value changes only if the control has the focus.
+        /// </remarks>
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(true)]
+        public bool TrackMouseWheelWhenMouseOver
+        {
+            get { return (bool)GetValue(TrackMouseWheelWhenMouseOverProperty); }
+            set { SetValue(TrackMouseWheelWhenMouseOverProperty, value); }
         }
 
         [Bindable(true)]
@@ -292,12 +331,11 @@ namespace MahApps.Metro.Controls
             _valueTextBox.TextChanged += OnTextChanged;
             DataObject.AddPastingHandler(_valueTextBox, OnValueTextBoxPaste);
 
-            _repeatUp.Click += (o, e) => ChangeValue(true);
-            _repeatDown.Click += (o, e) => ChangeValue(false);
+            _repeatUp.Click += (o, e) => ChangeValueWithSpeedUp(true);
+            _repeatDown.Click += (o, e) => ChangeValueWithSpeedUp(false);
 
             _repeatUp.PreviewMouseUp += (o, e) => ResetInternal();
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
-            GotFocus += OnGetFocus;
             OnValueChanged(Value, Value);
         }
 
@@ -340,20 +378,40 @@ namespace MahApps.Metro.Controls
             switch (e.Key)
             {
                 case Key.Up:
-                    ChangeValue(true);
+                    ChangeValueWithSpeedUp(true);
                     e.Handled = true;
                     break;
                 case Key.Down:
-                    ChangeValue(false);
+                    ChangeValueWithSpeedUp(false);
                     e.Handled = true;
                     break;
             }
         }
 
+        protected override void OnPreviewKeyUp(KeyEventArgs e)
+        {
+            base.OnPreviewKeyUp(e);
+
+            if (e.Key == Key.Down ||
+                e.Key == Key.Up)
+            {
+                ResetInternal();
+            }
+        }
+
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnPreviewMouseWheel(e);
+
+            if (InterceptMouseWheel && (_valueTextBox.IsFocused || TrackMouseWheelWhenMouseOver))
+            {
+                bool increment = e.Delta > 0;
+                ChangeValueInternal(increment);
+            }
+        }
+
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            const string scientificNotationChar = "E";
-            const StringComparison strComp = StringComparison.InvariantCultureIgnoreCase;
 
             e.Handled = true;
             if (string.IsNullOrWhiteSpace(e.Text) ||
@@ -373,10 +431,11 @@ namespace MahApps.Metro.Controls
                 CultureInfo equivalentCulture = SpecificCultureInfo;
                 NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
                 TextBox textBox = ((TextBox)sender);
+                bool allTextSelected = textBox.SelectedText == textBox.Text;
 
                 if (numberFormatInfo.NumberDecimalSeparator == text)
                 {
-                    if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator))
+                    if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator) || allTextSelected)
                     {
                         e.Handled = false;
                     }
@@ -391,8 +450,9 @@ namespace MahApps.Metro.Controls
                             //check if text already has a + or - sign
                             if (textBox.Text.Length > 1)
                             {
-                                if (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, strComp) &&
-                                    !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, strComp))
+                                if (allTextSelected || 
+                                    (!textBox.Text.StartsWith(numberFormatInfo.NegativeSign, StrComp) &&
+                                    !textBox.Text.StartsWith(numberFormatInfo.PositiveSign, StrComp)))
                                 {
                                     e.Handled = false;
                                 }
@@ -405,15 +465,15 @@ namespace MahApps.Metro.Controls
                         else if (textBox.SelectionStart > 0)
                         {
                             string elementBeforeCaret = textBox.Text.ElementAt(textBox.SelectionStart - 1).ToString(equivalentCulture);
-                            if (elementBeforeCaret.Equals(scientificNotationChar, strComp))
+                            if (elementBeforeCaret.Equals(ScientificNotationChar, StrComp))
                             {
                                 e.Handled = false;
                             }
                         }
                     }
-                    else if (text.Equals(scientificNotationChar, strComp) &&
+                    else if (text.Equals(ScientificNotationChar, StrComp) &&
                              textBox.SelectionStart > 0 &&
-                             !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(scientificNotationChar, strComp)))
+                             !textBox.Text.Any(i => i.ToString(equivalentCulture).Equals(ScientificNotationChar, StrComp)))
                     {
                         e.Handled = false;
                     }
@@ -434,6 +494,11 @@ namespace MahApps.Metro.Controls
         /// </param>
         protected virtual void OnValueChanged(double? oldValue, double? newValue)
         {
+            if (_manualChange)
+            {
+                return;
+            }
+
             if (!newValue.HasValue)
             {
                 if (_valueTextBox != null)
@@ -486,28 +551,39 @@ namespace MahApps.Metro.Controls
 
             if (_valueTextBox != null)
             {
-                CultureInfo culture = SpecificCultureInfo;
-                if (string.IsNullOrEmpty(StringFormat))
-                {
-                    _valueTextBox.Text = newValue.Value.ToString(culture);
-                }
-                else if (!StringFormat.Contains("{")) //then we may have a StringFormat of e.g. "N0"
-                {
-                    _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
-                }
-                else
-                {
-                    _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
-                }
-
-                if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
-                {
-                    SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
-                }
+                InternalSetText(newValue);
             }
 
             var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue) { RoutedEvent = RangeBase.ValueChangedEvent };
             RaiseEvent(eventArgs);
+        }
+
+        private void InternalSetText(double? newValue)
+        {
+            if (!newValue.HasValue)
+            {
+                _valueTextBox.Text = null;
+                return;
+            }
+
+            CultureInfo culture = SpecificCultureInfo;
+            if (string.IsNullOrEmpty(StringFormat))
+            {
+                _valueTextBox.Text = newValue.Value.ToString(culture);
+            }
+            else if (!StringFormat.Contains("{")) //then we may have a StringFormat of e.g. "N0"
+            {
+                _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
+            }
+            else
+            {
+                _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
+            }
+
+            if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
+            {
+                SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
+            }
         }
 
         private static object CoerceMaximum(DependencyObject d, object value)
@@ -607,10 +683,8 @@ namespace MahApps.Metro.Controls
             return Convert.ToInt32(value) >= 0;
         }
 
-        private void ChangeValue(bool toPositive)
+        private void ChangeValueWithSpeedUp(bool toPositive)
         {
-            RaiseEvent(new RoutedEventArgs(toPositive ? IncrementValueEvent : DecrementValueEvent));
-
             if (Speedup)
             {
                 double d = Interval * _internalLargeChange;
@@ -621,16 +695,27 @@ namespace MahApps.Metro.Controls
                 }
             }
 
+            ChangeValueInternal(toPositive);
+        }
+
+        private void ChangeValueInternal(bool toPositive)
+        {
+            RaiseEvent(new RoutedEventArgs(toPositive ? IncrementValueEvent : DecrementValueEvent));
             if (toPositive)
             {
-                Value = Value.GetValueOrDefault() + _internalIntervalMultiplierForCalculation;
+                ChangeValueBy(_internalIntervalMultiplierForCalculation);
             }
             else
             {
-                Value = Value.GetValueOrDefault() - _internalIntervalMultiplierForCalculation;
+                ChangeValueBy(-_internalIntervalMultiplierForCalculation);
             }
 
             _valueTextBox.CaretIndex = _valueTextBox.Text.Length;
+        }
+
+        private void ChangeValueBy(double difference)
+        {
+            Value = Value.GetValueOrDefault() + difference;
         }
 
         private void EnableDisableDown()
@@ -655,11 +740,6 @@ namespace MahApps.Metro.Controls
             EnableDisableDown();
         }
 
-        private void OnGetFocus(object sender, RoutedEventArgs e)
-        {
-            _valueTextBox.Focus();
-        }
-
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             _manualChange = true;
@@ -668,10 +748,7 @@ namespace MahApps.Metro.Controls
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             TextBox tb = (TextBox)sender;
-            if (!_manualChange)
-            {
-                return;
-            }
+            _manualChange = false;
 
             double convertedValue;
             if (ValidateText(tb.Text, out convertedValue))
@@ -719,6 +796,19 @@ namespace MahApps.Metro.Controls
             {
                 Value = null;
             }
+            else if (_manualChange)
+            {
+                double convertedValue;
+                if (ValidateText(((TextBox)sender).Text, out convertedValue))
+                {
+                    Value = convertedValue;
+                    if (convertedValue != Value)
+                    {
+                        InternalSetText(Value);
+                    }
+                    e.Handled = true;
+                }
+            }
         }
 
         private void OnValueTextBoxPaste(object sender, DataObjectPastingEventArgs e)
@@ -756,6 +846,23 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
+            //remove special string formattings in order to be able to parse it to double e.g. StringFormat = "{0:N2} pcs." then remove pcs. from text
+            string format = StringFormat;
+            int indexOf = format.IndexOf("{", StrComp);
+            if (indexOf > -1)
+            {
+                if (indexOf > 0)
+                {
+                    //remove beginning e.g.
+                    //pcs. from "pcs. {0:N2}"
+                    string toRemove = format.Substring(0, indexOf);
+                    text = text.Replace(toRemove, string.Empty);
+                }
+                //remove tailing e.g.
+                //pcs. from "{0:N2} pcs."
+                format = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray());
+                text = text.Replace(format, string.Empty);
+            }
             return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
         }
     }
