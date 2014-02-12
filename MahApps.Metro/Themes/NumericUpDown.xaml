@@ -37,7 +37,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">
-                    <Grid VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                    <Grid Height="{TemplateBinding Height}"
+                          MinHeight="{TemplateBinding MinHeight}"
+                          MaxHeight="{TemplateBinding MaxHeight}"
+                          VerticalAlignment="{TemplateBinding VerticalAlignment}">
                         <Rectangle x:Name="Base"
                                    Stroke="{TemplateBinding BorderBrush}"
                                    StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
