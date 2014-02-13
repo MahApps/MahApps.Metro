@@ -1503,17 +1503,17 @@ namespace MahApps.Metro.Controls
                     {
                         if (_bType == ButtonType.Left)
                         {
-                            MoveThumb(_leftButton, _centerThumb, widthChange, Orientation);
+                            MoveThumb(_leftButton, _centerThumb, widthChange * _density, Orientation);
                             ReCalculateRangeSelected(true, false);
                         }
                         else if (_bType == ButtonType.Right)
                         {
-                            MoveThumb(_centerThumb, _rightButton, widthChange, Orientation);
+                            MoveThumb(_centerThumb, _rightButton, widthChange * _density, Orientation);
                             ReCalculateRangeSelected(false, true);
                         }
                         else if (_bType == ButtonType.Both)
                         {
-                            MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
+                            MoveThumb(_leftButton, _rightButton, widthChange * _density, Orientation);
                             ReCalculateRangeSelected(true, true);
                         }
                     }
@@ -1529,17 +1529,17 @@ namespace MahApps.Metro.Controls
                     {
                         if (_bType == ButtonType.Left)
                         {
-                            MoveThumb(_leftButton, _centerThumb, -widthChange, Orientation);
+                            MoveThumb(_leftButton, _centerThumb, -widthChange * _density, Orientation);
                             ReCalculateRangeSelected(true, false);
                         }
                         else if (_bType == ButtonType.Right)
                         {
-                            MoveThumb(_centerThumb, _rightButton, -widthChange, Orientation);
+                            MoveThumb(_centerThumb, _rightButton, -widthChange * _density, Orientation);
                             ReCalculateRangeSelected(false, true);
                         }
                         else if (_bType == ButtonType.Both)
                         {
-                            MoveThumb(_leftButton, _rightButton, -widthChange, Orientation);
+                            MoveThumb(_leftButton, _rightButton, -widthChange * _density, Orientation);
                             ReCalculateRangeSelected(true, true);
                         }
                     }
