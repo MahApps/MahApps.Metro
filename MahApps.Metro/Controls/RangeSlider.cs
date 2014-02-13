@@ -243,7 +243,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Get/sets value how fast thumbs will move when user press on left/right/central with left mouse button (IsMoveToPoint must be set to FALSE)
         /// </summary>
-        [Bindable(true), Category("Common")]
+        [Bindable(true), Category("Behavior")]
         public Int32 Interval
         {
             get { return (Int32)GetValue(IntervalProperty); }
@@ -253,7 +253,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Get/sets precision of the value, which displaying inside AutotToolTip
         /// </summary>
-        [Bindable(true), Category("Common")]
+        [Bindable(true), Category("Appearance")]
         public Int32 AutoToolTipPrecision
         {
             get { return (Int32)GetValue(AutoToolTipPrecisionProperty); }
@@ -263,7 +263,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Get/sets tooltip, which will show while dragging thumbs and display currect value
         /// </summary>
-        [Bindable(true), Category("Common")]
+        [Bindable(true), Category("Behavior")]
         public AutoToolTipPlacement AutoToolTipPlacement
         {
             get { return (AutoToolTipPlacement)GetValue(AutoToolTipPlacementProperty); }
@@ -313,7 +313,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
         /// </summary>
-        [Bindable(true), Category("Common")]
+        [Bindable(true), Category("Appearance")]
         public Boolean IsSnapToTickEnabled
         {
             get { return (Boolean)GetValue(IsSnapToTickEnabledProperty); }
@@ -323,7 +323,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
         /// </summary>
-        [Bindable(true), Category("Common")]
+        [Bindable(true), Category("Behavior")]
         public Boolean ExtendedMode
         {
             get { return (Boolean)GetValue(ExtendedModeProperty); }
@@ -333,7 +333,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Get/sets whether whole range will be moved when press on right/left/central part of control
         /// </summary>
-        [Bindable(true), Category("Common")]
+        [Bindable(true), Category("Behavior")]
         public Boolean MoveWholeRange
         {
             get { return (Boolean)GetValue(MoveWholeRangeProperty); }
