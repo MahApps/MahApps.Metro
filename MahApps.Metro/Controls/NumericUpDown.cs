@@ -802,10 +802,6 @@ namespace MahApps.Metro.Controls
                 if (ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
                     Value = convertedValue;
-                    if (convertedValue != Value)
-                    {
-                        InternalSetText(Value);
-                    }
                     e.Handled = true;
                 }
             }
