@@ -117,7 +117,35 @@ namespace MetroDemo
                 }
             }
         }
+        
+        private ICommand textBoxButtonCmdWithParameter;
 
+        public ICommand TextBoxButtonCmdWithParameter
+        {
+            get
+            {
+                return this.textBoxButtonCmdWithParameter ?? (this.textBoxButtonCmdWithParameter = new TextBoxButtonCommandWithIntParameter());
+            }
+        }
+
+        public class TextBoxButtonCommandWithIntParameter : ICommand
+        {
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public event EventHandler CanExecuteChanged;
+
+            public void Execute(object parameter)
+            {
+                if (parameter is String)
+                {
+                    MessageBox.Show("TextBox Button was clicked with parameter!" + Environment.NewLine + "Text: " + parameter);
+                }
+            }
+        }
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>

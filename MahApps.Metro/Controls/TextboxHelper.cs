@@ -20,6 +20,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextboxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextboxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty ButtonCommandParameterProperty = DependencyProperty.RegisterAttached("ButtonCommandParameter", typeof(object), typeof(TextboxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextboxHelper), new FrameworkPropertyMetadata("r"));
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextboxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
@@ -213,6 +214,16 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonCommandProperty, value);
         }
 
+        public static object GetButtonCommandParameter(DependencyObject d)
+        {
+            return (object)d.GetValue(ButtonCommandParameterProperty);
+        }
+
+        public static void SetButtonCommandParameter(DependencyObject obj, object value)
+        {
+            obj.SetValue(ButtonCommandParameterProperty, value);
+        }
+
         public static object GetButtonContent(DependencyObject d)
         {
             return (object)d.GetValue(ButtonContentProperty);
@@ -352,7 +363,9 @@ namespace MahApps.Metro.Controls
             var command = GetButtonCommand(parent);
             if (command != null && command.CanExecute(parent))
             {
-                command.Execute(parent);
+                var commandParameter = GetButtonCommandParameter(parent);
+               
+                command.Execute(commandParameter ?? parent);
             }
 
             if (GetClearTextButton(parent))
