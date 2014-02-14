@@ -643,8 +643,7 @@ namespace MahApps.Metro.Controls
                     {
                         _centerThumb.Width =
                             Math.Max(
-                                ActualWidth - (_leftButton.ActualWidth + _rightButton.ActualWidth + _rightThumb.ActualWidth +
-                                               _leftThumb.ActualWidth), 0);
+                                ActualWidth - (_rightThumb.ActualWidth + _leftThumb.ActualWidth), 0);
                     }
                 }
                 else if (Orientation == Orientation.Vertical)
@@ -674,8 +673,7 @@ namespace MahApps.Metro.Controls
                     {
                         _centerThumb.Height =
                             Math.Max(
-                                ActualHeight - (_leftButton.ActualHeight + _rightButton.ActualHeight + _rightThumb.ActualHeight +
-                                _leftThumb.ActualHeight), 0);
+                                ActualHeight - (_rightThumb.ActualHeight + _leftThumb.ActualHeight), 0);
                     }
                 }
                 _density = _movableWidth / MovableRange;
@@ -1994,11 +1992,11 @@ namespace MahApps.Metro.Controls
             if (value < rs.Minimum)
                 return rs.Minimum;
 
-            if (value > rs.UpperValue - rs.MinRange && rs.UpperValue - rs.MinRange >= rs.Minimum)
-                return rs.UpperValue - rs.MinRange;
-
             if (rs.UpperValue - rs.MinRange < rs.Minimum)
                 return rs.Minimum;
+
+            if (value > rs.UpperValue - rs.MinRange && rs.UpperValue - rs.MinRange > rs.Minimum)
+                return rs.UpperValue - rs.MinRange;
 
             return value;
         }
@@ -2011,11 +2009,11 @@ namespace MahApps.Metro.Controls
             if (value > rs.Maximum)
                 return rs.Maximum;
 
-            if (value < rs.LowerValue + rs.MinRange && rs.LowerValue + rs.MinRange <= rs.Maximum)
-                return rs.LowerValue + rs.MinRange;
-
             if (rs.LowerValue + rs.MinRange > rs.Maximum)
                 return rs.Maximum;
+
+            if (value < rs.LowerValue + rs.MinRange && rs.LowerValue + rs.MinRange <= rs.Maximum)
+                return rs.LowerValue + rs.MinRange;
 
             return value;
         }
