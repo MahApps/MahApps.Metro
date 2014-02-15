@@ -2077,23 +2077,9 @@ namespace MahApps.Metro.Controls
             
             dependencyObject.CoerceValue(UpperValueProperty);
             dependencyObject.CoerceValue(LowerValueProperty);
-            if (!Equals(slider._oldLower, slider.LowerValue) || !Equals(slider._oldUpper, slider.UpperValue))
-            {
-                slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue,
-                    slider._oldLower, slider._oldUpper));
-            }
-            if (!Equals(slider._oldLower, slider.LowerValue))
-            {
-                slider.OnRangeParameterChanged(
-                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, slider._oldLower, slider.LowerValue),
-                    LowerValueChangedEvent);
-            }
-            if (!Equals(slider._oldUpper, slider.UpperValue))
-            {
-                slider.OnRangeParameterChanged(
-                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, slider._oldUpper, slider.UpperValue),
-                    UpperValueChangedEvent);
-            }
+            
+            RaiseValueChangedEvents(dependencyObject);
+            
             slider._oldLower = slider.LowerValue;
             slider._oldUpper = slider.UpperValue;
             slider.ReCalculateSize();
@@ -2106,30 +2092,19 @@ namespace MahApps.Metro.Controls
                 value = 0;
 
             var slider = (RangeSlider)sender;
+
             slider._internalUpdate = true;
             slider.UpperValue = Math.Max(slider.UpperValue, slider.LowerValue + value);
             slider.UpperValue = Math.Min(slider.UpperValue, slider.Maximum);
             slider._internalUpdate = false;
+
             slider.CoerceValue(UpperValueProperty);
-            if (!Equals(slider._oldLower, slider.LowerValue) || !Equals(slider._oldUpper, slider.UpperValue))
-            {
-                slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue,
-                    slider._oldLower, slider._oldUpper));
-            }
-            if (!Equals(slider._oldLower, slider.LowerValue))
-            {
-                slider.OnRangeParameterChanged(
-                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, slider._oldLower, slider.LowerValue),
-                    LowerValueChangedEvent);
-            }
-            if (!Equals(slider._oldUpper, slider.UpperValue))
-            {
-                slider.OnRangeParameterChanged(
-                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, slider._oldUpper, slider.UpperValue),
-                    UpperValueChangedEvent);
-            }
+
+            RaiseValueChangedEvents(sender);
+            
             slider._oldLower = slider.LowerValue;
             slider._oldUpper = slider.UpperValue;
+            
             slider.ReCalculateSize();
         }
 
@@ -2145,6 +2120,29 @@ namespace MahApps.Metro.Controls
         {
             RangeSlider rs = (RangeSlider)dependencyObject;
             rs._timer.Interval = TimeSpan.FromMilliseconds((Int32)e.NewValue);
+        }
+
+        //Raises all value changes events
+        private static void RaiseValueChangedEvents(DependencyObject dependencyObject)
+        {
+            var slider = (RangeSlider) dependencyObject;
+            if (!Equals(slider._oldLower, slider.LowerValue) || !Equals(slider._oldUpper, slider.UpperValue))
+            {
+                slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue,
+                    slider._oldLower, slider._oldUpper));
+            }
+            if (!Equals(slider._oldLower, slider.LowerValue))
+            {
+                slider.OnRangeParameterChanged(
+                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, slider._oldLower, slider.LowerValue),
+                    LowerValueChangedEvent);
+            }
+            if (!Equals(slider._oldUpper, slider.UpperValue))
+            {
+                slider.OnRangeParameterChanged(
+                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, slider._oldUpper, slider.UpperValue),
+                    UpperValueChangedEvent);
+            }
         }
         
         #endregion
