@@ -743,19 +743,22 @@ namespace MahApps.Metro.Controls
             }
 
             if (reCalculateLowerValue && !Equals(_oldLower, LowerValue))
+            {
                 OnRangeParameterChanged(
                     new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, _oldLower, LowerValue),
                     LowerValueChangedEvent);
-            else if (reCalculateUpperValue && !Equals(_oldUpper, UpperValue))
+            }
+            if (reCalculateUpperValue && !Equals(_oldUpper, UpperValue))
+            {
                 OnRangeParameterChanged(
                     new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, _oldUpper, UpperValue),
                     UpperValueChangedEvent);
+            }
         }
 
         //Method used for cheking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving separately)
         private void ReCalculateRangeSelected(bool reCalculateLowerValue, bool reCalculateUpperValue, double value, Direction direction)
         {
-
             _internalUpdate = true; //set flag to signal that the properties are being set by the object itself
             if (reCalculateLowerValue)
             {
@@ -825,13 +828,17 @@ namespace MahApps.Metro.Controls
             }
 
             if (reCalculateLowerValue && !Equals(_oldLower, LowerValue))
+            {
                 OnRangeParameterChanged(
                     new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, _oldLower, LowerValue),
                     LowerValueChangedEvent);
-            else if (reCalculateUpperValue && !Equals(_oldUpper, UpperValue))
+            }
+            if (reCalculateUpperValue && !Equals(_oldUpper, UpperValue))
+            {
                 OnRangeParameterChanged(
                     new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, _oldUpper, UpperValue),
                     UpperValueChangedEvent);
+            }
         }
 
         //Method used for cheking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving together)
@@ -896,12 +903,17 @@ namespace MahApps.Metro.Controls
             }
 
             if (!Equals(_oldLower, LowerValue))
+            {
                 OnRangeParameterChanged(
                     new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, _oldLower, LowerValue),
                     LowerValueChangedEvent);
-            else if (!Equals(_oldUpper, UpperValue)) OnRangeParameterChanged(
+            }
+            if (!Equals(_oldUpper, UpperValue)) 
+            {
+                OnRangeParameterChanged(
                     new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, _oldUpper, UpperValue),
                     UpperValueChangedEvent);
+            }
         }
 
 
@@ -1992,10 +2004,10 @@ namespace MahApps.Metro.Controls
             if (value < rs.Minimum)
                 return rs.Minimum;
 
-            if (rs.UpperValue - rs.MinRange < rs.Minimum)
+            if (rs.UpperValue - rs.MinRange<rs.Minimum)
                 return rs.Minimum;
 
-            if (value > rs.UpperValue - rs.MinRange && rs.UpperValue - rs.MinRange > rs.Minimum)
+            if (value > rs.UpperValue - rs.MinRange)
                 return rs.UpperValue - rs.MinRange;
 
             return value;
@@ -2012,7 +2024,7 @@ namespace MahApps.Metro.Controls
             if (rs.LowerValue + rs.MinRange > rs.Maximum)
                 return rs.Maximum;
 
-            if (value < rs.LowerValue + rs.MinRange && rs.LowerValue + rs.MinRange <= rs.Maximum)
+            if (value < rs.LowerValue + rs.MinRange)
                 return rs.LowerValue + rs.MinRange;
 
             return value;
@@ -2046,14 +2058,15 @@ namespace MahApps.Metro.Controls
 
         private static void MaxPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            dependencyObject.CoerceValue(MinimumProperty);
             dependencyObject.CoerceValue(MaximumProperty);
+            dependencyObject.CoerceValue(MinimumProperty);
             dependencyObject.CoerceValue(UpperValueProperty);
         }
 
         private static void MinPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             dependencyObject.CoerceValue(MinimumProperty);
+            dependencyObject.CoerceValue(MaximumProperty);
             dependencyObject.CoerceValue(LowerValueProperty);
         }
 
@@ -2063,12 +2076,29 @@ namespace MahApps.Metro.Controls
             var slider = (RangeSlider)dependencyObject;
             if (slider._internalUpdate)
                 return;
-            dependencyObject.CoerceValue(MaximumProperty);
+            
             dependencyObject.CoerceValue(UpperValueProperty);
             dependencyObject.CoerceValue(LowerValueProperty);
-
+            if (!Equals(slider._oldLower, slider.LowerValue) || !Equals(slider._oldUpper, slider.UpperValue))
+            {
+                slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue,
+                    slider._oldLower, slider._oldUpper));
+            }
+            if (!Equals(slider._oldLower, slider.LowerValue))
+            {
+                slider.OnRangeParameterChanged(
+                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, slider._oldLower, slider.LowerValue),
+                    LowerValueChangedEvent);
+            }
+            if (!Equals(slider._oldUpper, slider.UpperValue))
+            {
+                slider.OnRangeParameterChanged(
+                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, slider._oldUpper, slider.UpperValue),
+                    UpperValueChangedEvent);
+            }
+            slider._oldLower = slider.LowerValue;
+            slider._oldUpper = slider.UpperValue;
             slider.ReCalculateSize();
-            slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue, slider._oldLower, slider._oldUpper));
         }
 
         private static void MinRangeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -2083,7 +2113,25 @@ namespace MahApps.Metro.Controls
             slider.UpperValue = Math.Min(slider.UpperValue, slider.Maximum);
             slider._internalUpdate = false;
             slider.CoerceValue(UpperValueProperty);
-
+            if (!Equals(slider._oldLower, slider.LowerValue) || !Equals(slider._oldUpper, slider.UpperValue))
+            {
+                slider.OnRangeSelectionChanged(new RangeSelectionChangedEventArgs(slider.LowerValue, slider.UpperValue,
+                    slider._oldLower, slider._oldUpper));
+            }
+            if (!Equals(slider._oldLower, slider.LowerValue))
+            {
+                slider.OnRangeParameterChanged(
+                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Lower, slider._oldLower, slider.LowerValue),
+                    LowerValueChangedEvent);
+            }
+            if (!Equals(slider._oldUpper, slider.UpperValue))
+            {
+                slider.OnRangeParameterChanged(
+                    new RangeParameterChangedEventArgs(RangeParameterChangeType.Upper, slider._oldUpper, slider.UpperValue),
+                    UpperValueChangedEvent);
+            }
+            slider._oldLower = slider.LowerValue;
+            slider._oldUpper = slider.UpperValue;
             slider.ReCalculateSize();
         }
 
