@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -617,7 +616,6 @@ namespace MahApps.Metro.Controls
             {
                 if (Orientation == Orientation.Horizontal)
                 {
-                    Debug.WriteLine(MinRangeWidth);
                     _movableWidth =
                         Math.Max(
                             ActualWidth - _rightThumb.ActualWidth - _leftThumb.ActualWidth - MinRangeWidth, 1);
