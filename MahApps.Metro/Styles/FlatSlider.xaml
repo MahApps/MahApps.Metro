@@ -157,7 +157,7 @@
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"
                                   Command="Slider.DecreaseLarge"
                                   Background="{TemplateBinding Slider.Foreground}" 
-                                  Height="{TemplateBinding Slider.Width}"/>
+                                  Height="{TemplateBinding Slider.Height}"/>
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Thumb Height="{TemplateBinding Slider.Width}"
@@ -169,7 +169,7 @@
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"
                                   Command="Slider.IncreaseLarge"
                                   Background="{TemplateBinding Slider.Background}"
-                                  Height="{TemplateBinding Slider.Width}" />
+                                  Height="{TemplateBinding Slider.Height}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <TickBar x:Name="BottomTick"
