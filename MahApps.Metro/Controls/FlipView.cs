@@ -82,7 +82,10 @@ namespace MahApps.Metro.Controls
 
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
-            (element as FlipViewItem).Content = item;
+            if (element != item)
+                element.SetCurrentValue(DataContextProperty, item); //dont want to set the datacontext to itself. taken from MetroTabControl.cs
+
+            base.PrepareContainerForItemOverride(element, item);
         }
 
         void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
