@@ -70,6 +70,21 @@ namespace MahApps.Metro.Controls
 
         private delegate void EmptyDelegate();
 
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            return item is FlipViewItem;
+        }
+
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new FlipViewItem();
+        }
+
+        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        {
+            (element as FlipViewItem).Content = item;
+        }
+
         void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             DetectControlButtonsStatus();
@@ -372,5 +387,9 @@ namespace MahApps.Metro.Controls
                 flipview.Loaded += handler;
             }
         }
+    }
+
+    public class FlipViewItem : ContentControl
+    {
     }
 }
