@@ -700,15 +700,12 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueInternal(bool toPositive)
         {
-            RaiseEvent(new RoutedEventArgs(toPositive ? IncrementValueEvent : DecrementValueEvent));
-            if (toPositive)
-            {
-                ChangeValueBy(_internalIntervalMultiplierForCalculation);
-            }
-            else
-            {
-                ChangeValueBy(-_internalIntervalMultiplierForCalculation);
-            }
+            NumericUpDownChangedRoutedEventArgs routedEvent = toPositive ?
+                new NumericUpDownChangedRoutedEventArgs(IncrementValueEvent, Interval) :
+                new NumericUpDownChangedRoutedEventArgs(DecrementValueEvent, -Interval);
+
+            RaiseEvent(routedEvent);
+            ChangeValueBy(routedEvent.Interval);
 
             _valueTextBox.CaretIndex = _valueTextBox.Text.Length;
         }
