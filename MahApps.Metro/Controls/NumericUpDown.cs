@@ -26,8 +26,8 @@ namespace MahApps.Metro.Controls
         private const string ScientificNotationChar = "E";
         private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
 
-        public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
+        public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
+        public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MaximumReachedEvent = EventManager.RegisterRoutedEvent("MaximumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MinimumReachedEvent = EventManager.RegisterRoutedEvent("MinimumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
@@ -146,13 +146,13 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(MinimumReachedEvent, value); }
         }
 
-        public event RoutedEventHandler IncrementValue
+        public event NumericUpDownChangedRoutedEventHandler IncrementValue
         {
             add { AddHandler(IncrementValueEvent, value); }
             remove { RemoveHandler(IncrementValueEvent, value); }
         }
 
-        public event RoutedEventHandler DecrementValue
+        public event NumericUpDownChangedRoutedEventHandler DecrementValue
         {
             add { AddHandler(DecrementValueEvent, value); }
             remove { RemoveHandler(DecrementValueEvent, value); }
