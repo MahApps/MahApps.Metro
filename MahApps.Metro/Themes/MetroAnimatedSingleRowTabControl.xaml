@@ -68,9 +68,6 @@
                             <Setter Property="Height"
                                     TargetName="RowDefinition1"
                                     Value="Auto" />
-                            <Setter Property="Margin"
-                                    TargetName="HeaderPanelScroll"
-                                    Value="2,0,2,2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement"
                                  Value="Left">
@@ -100,9 +97,6 @@
                             <Setter Property="Height"
                                     TargetName="RowDefinition1"
                                     Value="0" />
-                            <Setter Property="Margin"
-                                    TargetName="HeaderPanelScroll"
-                                    Value="2,2,0,2" />
                             <Setter Property="VerticalScrollBarVisibility"
                                     TargetName="HeaderPanelScroll"
                                     Value="Auto" />
@@ -136,9 +130,6 @@
                             <Setter Property="Height"
                                     TargetName="RowDefinition1"
                                     Value="0" />
-                            <Setter Property="Margin"
-                                    TargetName="HeaderPanelScroll"
-                                    Value="0,2,2,2" />
                             <Setter Property="VerticalScrollBarVisibility"
                                     TargetName="HeaderPanelScroll"
                                     Value="Auto" />
