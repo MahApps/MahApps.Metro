@@ -865,14 +865,28 @@
                         <StackPanel Grid.Row="1" Grid.Column="1">
                             <Label Content="ProgressRing" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Grid Margin="20, 0, 20, 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Controls:ProgressRing Grid.Column="0" IsActive="True" />
-                                <Controls:ProgressRing Grid.Column="1" IsActive="True" Width="40" Height="40" />
-                                <Controls:ProgressRing Grid.Column="2" IsActive="True" Width="20" Height="20" />
+                                <Controls:ProgressRing Grid.Row="0" Grid.Column="1" IsActive="True" Width="40" Height="40" />
+                                <Controls:ProgressRing Grid.Row="0" Grid.Column="2" IsActive="True" Width="20" Height="20" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="0" IsActive="True" Width="20" Height="20" Style="{StaticResource DoubleBounceProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="1" IsActive="True" Width="20" Height="20" Style="{StaticResource WaveProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="2" IsActive="True" Style="{StaticResource WanderingCubesProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="0" IsActive="True" Width="20" Height="20" Style="{StaticResource PulseProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="1" IsActive="True" Width="20" Height="20" Style="{StaticResource ChasingDotsProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="2" IsActive="True" Style="{StaticResource ThreeBounceProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="3" Grid.Column="0" IsActive="True" Style="{StaticResource CircleProgressRingStyle}" />
                             </Grid>
                         </StackPanel>
                         <Grid Grid.Row="2" Grid.Column="2">
