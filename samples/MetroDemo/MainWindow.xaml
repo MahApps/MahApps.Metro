@@ -77,7 +77,6 @@
             <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
             <Button Click="InteropDemo" Content="Interop Demo" />
             <Button Click="LaunchNavigationDemo" Content="Navigation Demo"/>
-            <ToggleButton Content="ToggleButton" x:Name="MagicToggleButton" IsChecked="True"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
@@ -875,7 +874,7 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-
+                                
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
