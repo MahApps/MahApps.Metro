@@ -35,7 +35,7 @@
                                        Margin="2"
                                        HorizontalAlignment="Center">
                                 <Rectangle.Fill>
-                                    <VisualBrush Stretch="Fill" Visual="{Binding Path=Visual}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{Binding Path=Visual}" />
                                 </Rectangle.Fill>
                             </Rectangle>
                             <TextBlock HorizontalAlignment="Center" Text="{Binding Path=Name}" />
