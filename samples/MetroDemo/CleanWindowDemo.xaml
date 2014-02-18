@@ -9,6 +9,7 @@
         Title="CleanWindowDemo" Height="300" Width="300" Style="{DynamicResource CleanWindowStyleKey}">
     <i:Interaction.Behaviors>
         <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" AllowsTransparency="False" />
+        <behaviours:GlowWindowBehavior />
     </i:Interaction.Behaviors>
 
     <Window.Resources>
