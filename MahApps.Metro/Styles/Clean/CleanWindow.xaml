@@ -5,6 +5,8 @@
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
+    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
+
     <ControlTemplate x:Key="CleanWindowTemplate" TargetType="{x:Type Controls:MetroWindow}">
         <ControlTemplate.Resources>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
