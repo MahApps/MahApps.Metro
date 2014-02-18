@@ -22,6 +22,7 @@ namespace MahApps.Metro.Controls
         private IntPtr handle;
         private IntPtr ownerHandle;
         private static double? _dpiFactor = null;
+        private bool closing = false;
 
         public GlowWindow(Window owner, GlowDirection direction)
         {
@@ -40,7 +41,7 @@ namespace MahApps.Metro.Controls
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Right;
                     getLeft = (dpi) => Math.Round((owner.Left - glowSize) * dpi);
-                    getTop = (dpi) =>  Math.Round((owner.Top - glowSize) * dpi);
+                    getTop = (dpi) => Math.Round((owner.Top - glowSize) * dpi);
                     getWidth = (dpi) => glowSize * dpi;
                     getHeight = (dpi) => (owner.ActualHeight + glowSize * 2.0) * dpi;
                     getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
@@ -48,7 +49,8 @@ namespace MahApps.Metro.Controls
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
                                                      ? HitTestValues.HTBOTTOMLEFT
                                                      : HitTestValues.HTLEFT;
-                    getCursor = p => {
+                    getCursor = p =>
+                    {
                         return (owner.ResizeMode == ResizeMode.NoResize || owner.ResizeMode == ResizeMode.CanMinimize)
                                     ? owner.Cursor
                                     : new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
@@ -70,7 +72,8 @@ namespace MahApps.Metro.Controls
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
                                                      ? HitTestValues.HTBOTTOMRIGHT
                                                      : HitTestValues.HTRIGHT;
-                    getCursor = p =>  {
+                    getCursor = p =>
+                    {
                         return (owner.ResizeMode == ResizeMode.NoResize || owner.ResizeMode == ResizeMode.CanMinimize)
                                     ? owner.Cursor
                                     : new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
@@ -84,7 +87,7 @@ namespace MahApps.Metro.Controls
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Bottom;
                     getLeft = (dpi) => owner.Left * dpi;
-                    getTop = (dpi) =>  Math.Round((owner.Top - glowSize) * dpi);
+                    getTop = (dpi) => Math.Round((owner.Top - glowSize) * dpi);
                     getWidth = (dpi) => Math.Round(owner.ActualWidth * dpi);
                     getHeight = (dpi) => glowSize * dpi;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
@@ -93,7 +96,8 @@ namespace MahApps.Metro.Controls
                                                           ActualHeight).Contains(p)
                                                      ? HitTestValues.HTTOPRIGHT
                                                      : HitTestValues.HTTOP;
-                    getCursor = p =>  {
+                    getCursor = p =>
+                    {
                         return (owner.ResizeMode == ResizeMode.NoResize || owner.ResizeMode == ResizeMode.CanMinimize)
                                     ? owner.Cursor
                                     : new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
@@ -117,7 +121,8 @@ namespace MahApps.Metro.Controls
                                                           ActualHeight).Contains(p)
                                                      ? HitTestValues.HTBOTTOMRIGHT
                                                      : HitTestValues.HTBOTTOM;
-                    getCursor = p =>  {
+                    getCursor = p =>
+                    {
                         return (owner.ResizeMode == ResizeMode.NoResize || owner.ResizeMode == ResizeMode.CanMinimize)
                                     ? owner.Cursor
                                     : new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
@@ -131,15 +136,21 @@ namespace MahApps.Metro.Controls
             }
 
             owner.ContentRendered += (sender, e) => glow.Visibility = Visibility.Visible;
-            owner.Activated += (sender, e) => {
-                                   Update();
-                                   glow.IsGlow = true;
-                               };
-            owner.Deactivated += (sender, e) => glow.IsGlow = false;
+            owner.Activated += (sender, e) =>
+            {
+                Update();
+                glow.IsGlow = true;
+            };
+            owner.Deactivated += (sender, e) => 
+                glow.IsGlow = false;
             owner.LocationChanged += (sender, e) => Update();
             owner.SizeChanged += (sender, e) => Update();
             owner.StateChanged += (sender, e) => Update();
-            owner.Closed += (sender, e) => Close();
+            owner.Closed += (sender, e) =>
+            {
+                closing = true;
+                Close();
+            };
         }
 
         public double DpiFactor
@@ -163,12 +174,13 @@ namespace MahApps.Metro.Controls
                 }
                 return _dpiFactor.Value;
             }
-            
+
         }
 
         public Storyboard OpacityStoryboard { get; set; }
 
-        public override void OnApplyTemplate() {
+        public override void OnApplyTemplate()
+        {
             base.OnApplyTemplate();
 
             this.OpacityStoryboard = this.TryFindResource("OpacityStoryboard") as Storyboard;
@@ -178,7 +190,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnSourceInitialized(e);
 
-            var source = (HwndSource) PresentationSource.FromVisual(this);
+            var source = (HwndSource)PresentationSource.FromVisual(this);
             WS ws = source.Handle.GetWindowLong();
             WSEX wsex = source.Handle.GetWindowLongEx();
 
@@ -203,6 +215,8 @@ namespace MahApps.Metro.Controls
             }
             else if (Owner.WindowState == WindowState.Normal)
             {
+                if (this.closing) return;
+
                 Visibility = Visibility.Visible;
 
                 UpdateCore();
@@ -223,31 +237,31 @@ namespace MahApps.Metro.Controls
             NativeMethods.SetWindowPos(
                 handle,
                 ownerHandle,
-                (int) (getLeft(DpiFactor)),
-                (int) (getTop(DpiFactor)),
-                (int) (getWidth(DpiFactor)),
-                (int) (getHeight(DpiFactor)),
+                (int)(getLeft(DpiFactor)),
+                (int)(getTop(DpiFactor)),
+                (int)(getWidth(DpiFactor)),
+                (int)(getHeight(DpiFactor)),
                 SWP.NOACTIVATE);
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == (int) WM.MOUSEACTIVATE)
+            if (msg == (int)WM.MOUSEACTIVATE)
             {
                 handled = true;
                 return new IntPtr(3);
             }
 
-            if (msg == (int) WM.LBUTTONDOWN)
+            if (msg == (int)WM.LBUTTONDOWN)
             {
-                var pt = new Point((int) lParam & 0xFFFF, ((int) lParam >> 16) & 0xFFFF);
+                var pt = new Point((int)lParam & 0xFFFF, ((int)lParam >> 16) & 0xFFFF);
 
-                NativeMethods.PostMessage(ownerHandle, (uint) WM.NCLBUTTONDOWN, (IntPtr) getHitTestValue(pt),
+                NativeMethods.PostMessage(ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)getHitTestValue(pt),
                                           IntPtr.Zero);
             }
-            if (msg == (int) WM.NCHITTEST)
+            if (msg == (int)WM.NCHITTEST)
             {
-                var ptScreen = new Point((int) lParam & 0xFFFF, ((int) lParam >> 16) & 0xFFFF);
+                var ptScreen = new Point((int)lParam & 0xFFFF, ((int)lParam >> 16) & 0xFFFF);
                 Point ptClient = PointFromScreen(ptScreen);
                 Cursor cursor = getCursor(ptClient);
                 if (cursor != Cursor) Cursor = cursor;
