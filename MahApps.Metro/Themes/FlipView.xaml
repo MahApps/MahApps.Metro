@@ -52,6 +52,7 @@
                     </Grid>
                     <Controls:TransitioningContentControl Content="{TemplateBinding SelectedItem}"
                                                           ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                           x:Name="PART_Presenter"
                                                           Panel.ZIndex="1"
                                                           IsTabStop="False" />
