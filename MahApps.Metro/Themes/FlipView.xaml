@@ -4,8 +4,7 @@
 
     <ControlTemplate x:Key="FlipViewTemplate"
                      TargetType="{x:Type Controls:FlipView}">
-        <Grid x:Name="root"
-              FocusVisualStyle="{x:Null}">
+        <Grid x:Name="root">
             <Border Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}">

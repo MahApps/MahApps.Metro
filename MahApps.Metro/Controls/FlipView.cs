@@ -59,6 +59,12 @@ namespace MahApps.Metro.Controls
         {
             this.Unloaded += FlipView_Unloaded;
             this.Loaded += FlipView_Loaded;
+            this.MouseLeftButtonDown += FlipView_MouseLeftButtonDown;
+        }
+
+        void FlipView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Focus();
         }
         ~FlipView()
         {
@@ -139,6 +145,7 @@ namespace MahApps.Metro.Controls
         void FlipView_Unloaded(object sender, RoutedEventArgs e)
         {
             this.Unloaded -= FlipView_Unloaded;
+            this.MouseLeftButtonDown -= FlipView_MouseLeftButtonDown;
             this.SelectionChanged -= FlipView_SelectionChanged;
 
             this.PreviewKeyDown -= FlipView_PreviewKeyDown;
