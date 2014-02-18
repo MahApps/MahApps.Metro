@@ -526,14 +526,16 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
-            else if (e.ChangedButton == MouseButton.Right)
-            {
-                ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePosition));
-            }
         }
 
         protected void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
         {
+            var mousePosition = e.GetPosition(this);
+            bool isIconClick = ShowIconOnTitleBar && mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight;
+            if (e.ChangedButton == MouseButton.Right && !isIconClick)
+            {
+                ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePosition));
+            }
             isDragging = false;
         }
 
