@@ -30,6 +30,15 @@ namespace MahApps.Metro.Controls
         static ProgressRing()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ProgressRing), new FrameworkPropertyMetadata(typeof(ProgressRing)));
+            VisibilityProperty.OverrideMetadata(typeof(ProgressRing), new FrameworkPropertyMetadata(new PropertyChangedCallback((ringObject, e) =>
+                {
+                    //auto set IsActive to false if we're hiding it.
+                    if ((Visibility)e.NewValue != Visibility.Visible)
+                    {
+                        var ring = (ProgressRing)ringObject;
+                        ring.SetCurrentValue(ProgressRing.IsActiveProperty, false); //sets the value without overriding it's binding (if any).
+                    }
+                })));
         }
 
         public ProgressRing()

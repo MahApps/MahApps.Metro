@@ -62,6 +62,8 @@
                                  x:Name="SimpleTestDialog">
                 <Button Content="Hello"/>
             </Dialog:SimpleDialog>
+            
+            <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -74,7 +76,7 @@
             <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
             <Button Click="InteropDemo" Content="Interop Demo" />
             <Button Click="LaunchNavigationDemo" Content="Navigation Demo"/>
-            <ToggleButton Content="ToggleButton"/>
+            <ToggleButton Content="ToggleButton" x:Name="MagicToggleButton" IsChecked="True"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
@@ -871,7 +873,7 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Controls:ProgressRing Grid.Column="0" IsActive="True" />
+                                <Controls:ProgressRing Grid.Column="0" IsActive="True" Visibility="{Binding ElementName=MagicToggleButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
                                 <Controls:ProgressRing Grid.Column="1" IsActive="True" Width="40" Height="40" />
                                 <Controls:ProgressRing Grid.Column="2" IsActive="True" Width="20" Height="20" />
                             </Grid>
