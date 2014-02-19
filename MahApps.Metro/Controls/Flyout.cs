@@ -233,6 +233,11 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
+            if ((bool)e.NewValue)
+            {
+                flyout.ApplyAnimation(flyout.Position);
+            }
+
             VisualStateManager.GoToState(flyout, (bool) e.NewValue == false ? "Hide" : "Show", true);
             if (flyout.IsOpenChanged != null)
             {
@@ -327,15 +332,10 @@ namespace MahApps.Metro.Controls
         {
             base.OnRenderSizeChanged(sizeInfo);
 
+            if (!IsOpen) return; // no changes for invisible flyouts, ApplyAnimation is called now in visible changed event
             if (!sizeInfo.WidthChanged && !sizeInfo.HeightChanged) return;
             if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
                 return; // don't bother checking IsOpen and calling ApplyAnimation
-
-            if (!IsOpen)
-            {
-                ApplyAnimation(Position);
-                return;
-            }
 
             if (Position == Position.Left || Position == Position.Right)
                 showFrame.Value = 0;
