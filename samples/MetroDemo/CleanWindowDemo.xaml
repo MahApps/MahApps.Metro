@@ -34,6 +34,7 @@
         <Controls:WindowCommands>
             <Button Content="Test"/>
             <Button Content="Another Test"/>
+            <ToggleButton Content="ToggleButton Test"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
     <Controls:MetroWindow.Flyouts>

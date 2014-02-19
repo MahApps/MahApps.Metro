@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -87,9 +88,9 @@ namespace MahApps.Metro.Controls
             window.InvokeCommandButtons(x => x.SetValue(Control.ForegroundProperty, brush));
         }
 
-        private static void InvokeCommandButtons(this MetroWindow window, Action<Button> action)
+        private static void InvokeCommandButtons(this MetroWindow window, Action<ButtonBase> action)
         {
-            foreach (Button b in ((WindowCommands)window.WindowCommandsPresenter.Content).FindChildren<Button>())
+            foreach (ButtonBase b in ((WindowCommands)window.WindowCommandsPresenter.Content).FindChildren<ButtonBase>())
             {
                 action(b);
             }
