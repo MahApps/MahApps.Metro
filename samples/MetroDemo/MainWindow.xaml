@@ -24,6 +24,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ProgressRing.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="22" />
@@ -868,14 +869,29 @@
                         <StackPanel Grid.Row="1" Grid.Column="1">
                             <Label Content="ProgressRing" Style="{StaticResource DescriptionHeaderStyle}" />
                             <Grid Margin="20, 0, 20, 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
+
                                 <Controls:ProgressRing Grid.Column="0" IsActive="True" Visibility="{Binding ElementName=MagicToggleButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
                                 <Controls:ProgressRing Grid.Column="1" IsActive="True" Width="40" Height="40" />
                                 <Controls:ProgressRing Grid.Column="2" IsActive="True" Width="20" Height="20" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="0" IsActive="True" Width="40" Height="40" Style="{DynamicResource DoubleBounceProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="1" IsActive="True" Width="40" Height="40" Style="{DynamicResource WaveProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="2" IsActive="True" Style="{DynamicResource WanderingCubesProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="0" IsActive="True" Width="40" Height="40" Style="{DynamicResource PulseProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="1" IsActive="True" Width="40" Height="40" Style="{DynamicResource ChasingDotsProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="2" IsActive="True" Width="40" Height="40" Style="{DynamicResource ThreeBounceProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="3" Grid.Column="0" IsActive="True" Width="40" Height="40" Style="{DynamicResource CircleProgressRingStyle}" />
                             </Grid>
                         </StackPanel>
                         <Grid Grid.Row="2" Grid.Column="2">
