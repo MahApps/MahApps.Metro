@@ -24,6 +24,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/ProgressRing.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
                 <Setter Property="FontSize" Value="22" />
@@ -880,13 +881,13 @@
                                 <Controls:ProgressRing Grid.Column="0" IsActive="True" />
                                 <Controls:ProgressRing Grid.Row="0" Grid.Column="1" IsActive="True" Width="40" Height="40" />
                                 <Controls:ProgressRing Grid.Row="0" Grid.Column="2" IsActive="True" Width="20" Height="20" />
-                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="0" IsActive="True" Width="20" Height="20" Style="{StaticResource DoubleBounceProgressRingStyle}" />
-                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="1" IsActive="True" Width="20" Height="20" Style="{StaticResource WaveProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="0" IsActive="True" Width="40" Height="40" Style="{StaticResource DoubleBounceProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="1" IsActive="True" Width="40" Height="40" Style="{StaticResource WaveProgressRingStyle}" />
                                 <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="2" IsActive="True" Style="{StaticResource WanderingCubesProgressRingStyle}" />
-                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="0" IsActive="True" Width="20" Height="20" Style="{StaticResource PulseProgressRingStyle}" />
-                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="1" IsActive="True" Width="20" Height="20" Style="{StaticResource ChasingDotsProgressRingStyle}" />
-                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="2" IsActive="True" Style="{StaticResource ThreeBounceProgressRingStyle}" />
-                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="3" Grid.Column="0" IsActive="True" Style="{StaticResource CircleProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="0" IsActive="True" Width="40" Height="40" Style="{StaticResource PulseProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="1" IsActive="True" Width="40" Height="40" Style="{StaticResource ChasingDotsProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="2" Grid.Column="2" IsActive="True" Width="40" Height="40" Style="{StaticResource ThreeBounceProgressRingStyle}" />
+                                <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="3" Grid.Column="0" IsActive="True" Width="40" Height="40" Style="{StaticResource CircleProgressRingStyle}" />
                             </Grid>
                         </StackPanel>
                         <Grid Grid.Row="2" Grid.Column="2">
