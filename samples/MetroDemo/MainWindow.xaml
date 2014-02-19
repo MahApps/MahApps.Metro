@@ -57,12 +57,14 @@
                 <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
             </Style>
-            
+
             <Dialog:SimpleDialog x:Key="SimpleDialogTest"
                                  Title="This dialog allows arbitrary content. It will close in 5 seconds."
                                  x:Name="SimpleTestDialog">
                 <Button Content="Hello"/>
             </Dialog:SimpleDialog>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -75,7 +77,7 @@
             <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
             <Button Click="InteropDemo" Content="Interop Demo" />
             <Button Click="LaunchNavigationDemo" Content="Navigation Demo"/>
-            <ToggleButton Content="ToggleButton"/>
+            <ToggleButton Content="ToggleButton" x:Name="MagicToggleButton" IsChecked="True"/>
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 
@@ -85,7 +87,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
+
             <Menu Grid.Row="0"
                   Margin="5"
                   VerticalAlignment="Stretch"
@@ -602,9 +604,9 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            
+
                             <Label Content="TreeView" Style="{StaticResource DescriptionHeaderStyle}" />
-                            
+
                             <TreeView Grid.Row="1">
                                 <TreeViewItem Header="Item 1">
                                     <TreeViewItem Header="Item 1.1">
@@ -873,15 +875,16 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                 </Grid.RowDefinitions>
-                                
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Controls:ProgressRing Grid.Column="0" IsActive="True" />
-                                <Controls:ProgressRing Grid.Row="0" Grid.Column="1" IsActive="True" Width="40" Height="40" />
-                                <Controls:ProgressRing Grid.Row="0" Grid.Column="2" IsActive="True" Width="20" Height="20" />
+
+                                <Controls:ProgressRing Grid.Column="0" IsActive="True" Visibility="{Binding ElementName=MagicToggleButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
+                                <Controls:ProgressRing Grid.Column="1" IsActive="True" Width="40" Height="40" />
+                                <Controls:ProgressRing Grid.Column="2" IsActive="True" Width="20" Height="20" />
                                 <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="0" IsActive="True" Width="40" Height="40" Style="{StaticResource DoubleBounceProgressRingStyle}" />
                                 <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="1" IsActive="True" Width="40" Height="40" Style="{StaticResource WaveProgressRingStyle}" />
                                 <Controls:ProgressRing Margin="0,20,0,0" Grid.Row="1" Grid.Column="2" IsActive="True" Style="{StaticResource WanderingCubesProgressRingStyle}" />
