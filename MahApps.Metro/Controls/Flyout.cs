@@ -290,7 +290,9 @@ namespace MahApps.Metro.Controls
                 showFrame.Value = 0;
             if (Position == Position.Top || Position == Position.Bottom)
                 showFrameY.Value = 0;
-            root.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+
+            // I mean, we don't need this anymore, because we use ActualWidth and ActualHeight of the root
+            //root.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
 
             switch (position)
             {
