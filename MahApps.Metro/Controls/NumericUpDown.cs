@@ -554,7 +554,7 @@ namespace MahApps.Metro.Controls
                 InternalSetText(newValue);
             }
 
-            var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue) { RoutedEvent = RangeBase.ValueChangedEvent };
+            var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue) { RoutedEvent = ValueChangedEvent };
             RaiseEvent(eventArgs);
         }
 
