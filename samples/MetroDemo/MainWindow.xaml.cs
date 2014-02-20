@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 using MahApps.Metro;
@@ -223,6 +224,60 @@ namespace MetroDemo
 
             navWin.Show();
             navWin.Navigate(new Navigation.HomePage());
+        }
+
+        
+        private void RangeSlider_OnLowerValueChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            //MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
+        }
+
+        private void RangeSlider_OnUpperValueChanged(object sender, RangeParameterChangedEventArgs e)
+        {
+            //MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
+        }
+
+        private void RangeSlider_OnLowerThumbDragStarted(object sender, DragStartedEventArgs e)
+        {
+            //TestBlock.Text = "lower thumb drag started";
+        }
+
+        private void RangeSlider_OnLowerThumbDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            //TestBlock.Text = "lower thumb drag completed";
+        }
+
+        private void RangeSlider_OnUpperThumbDragStarted(object sender, DragStartedEventArgs e)
+        {
+            //TestBlock.Text = "upper thumb drag started";
+        }
+
+        private void RangeSlider_OnUpperThumbDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            //TestBlock.Text = "upper thumb drag completed";
+        }
+
+        private void RangeSlider_OnCentralThumbDragStarted(object sender, DragStartedEventArgs e)
+        {
+            //TestBlock.Text = "central thumb drag started";
+        }
+
+        private void RangeSlider_OnCentralThumbDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            //TestBlock.Text = "central thumb drag completed";
+        }
+
+        private void RangeSlider_OnLowerThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+        }
+
+        private void RangeSlider_OnUpperThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+        }
+
+        private void RangeSlider_OnCentralThumbDragDelta(object sender, DragDeltaEventArgs e)
+        {
+            //TestBlock.Text = "central thumb drag delta";
         }
     }
 }

@@ -56,7 +56,7 @@
                 <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
                 <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
             </Style>
-            
+
             <Dialog:SimpleDialog x:Key="SimpleDialogTest"
                                  Title="This dialog allows arbitrary content. It will close in 5 seconds."
                                  x:Name="SimpleTestDialog">
@@ -86,7 +86,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
+
             <Menu Grid.Row="0"
                   Margin="5"
                   VerticalAlignment="Stretch"
@@ -603,9 +603,9 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            
+
                             <Label Content="TreeView" Style="{StaticResource DescriptionHeaderStyle}" />
-                            
+
                             <TreeView Grid.Row="1">
                                 <TreeViewItem Header="Item 1">
                                     <TreeViewItem Header="Item 1.1">
@@ -797,7 +797,7 @@
                         <StackPanel Grid.Column="1">
                             <Label Content="Vertical Slider" Style="{StaticResource DescriptionHeaderStyle}" />
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Slider Orientation="Vertical" Height="200" />
+                                <Slider Orientation="Vertical" Height="200" Cursor="SizeNS" />
                                 <Slider Orientation="Vertical"
                                         Margin="10, 0, 0, 0"
                                         Height="200"  Style="{StaticResource FlatSlider}"
@@ -815,14 +815,30 @@
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <Label Content="RangeSlider" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:RangeSlider Width="200"
-                                                  Height="20"
-                                                  Margin="0, 10, 0, 0" />
+
+                            <Label Content="Look Tooltip of NumericUpDown"></Label>
+
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=LowerValue}" ToolTip="LowerValue"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=UpperValue}" ToolTip="UpperValue"></Controls:NumericUpDown>
+                            <!--<Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}" ToolTip="Minimum"></Controls:NumericUpDown>
+                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}" ToolTip="Maximum"></Controls:NumericUpDown>-->
+                            <TextBlock Text="{Binding ElementName=RangeSlider, Path=ActualWidth}"></TextBlock>
+                            <!--TickFrequency="20.5487961325467985"-->
+
+                            <Controls:RangeSlider Orientation="Horizontal" MinRangeWidth="20" x:Name="RangeSlider" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
+                                                  CentralThumbDragStarted="RangeSlider_OnCentralThumbDragStarted" CentralThumbDragCompleted="RangeSlider_OnCentralThumbDragCompleted"
+                                                  LowerThumbDragDelta="RangeSlider_OnLowerThumbDragDelta" UpperThumbDragDelta="RangeSlider_OnUpperThumbDragDelta" CentralThumbDragDelta="RangeSlider_OnCentralThumbDragDelta"
+                                                  LowerThumbDragStarted="RangeSlider_OnLowerThumbDragStarted" LowerThumbDragCompleted="RangeSlider_OnLowerThumbDragCompleted"
+                                                  UpperThumbDragStarted="RangeSlider_OnUpperThumbDragStarted" UpperThumbDragCompleted="RangeSlider_OnUpperThumbDragCompleted"
+                                                  TickPlacement="Both" TickFrequency="20" IsSnapToTickEnabled="True" MinRange="50"
+                                                  Width="300" Minimum="30" Maximum="200" IsMoveToPointEnabled="False" ExtendedMode="True" MoveWholeRange="False" SmallChange="0.1" 
+                                                  LowerValue="70" UpperValue="60" />
+                            <!--<Slider Value="{Binding ElementName=RangeSlider, Path=MinRangeWidth}" Minimum="0" Maximum="250" ></Slider>-->
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"
-                                                  RangeStartSelected="20"
-                                                  RangeStopSelected="60" />
+                                                  LowerValue="20"
+                                                  UpperValue="60" />
                             <Controls:RangeSlider Width="200"
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"
@@ -831,8 +847,8 @@
                                                   Height="20"
                                                   Margin="0, 10, 0, 0"
                                                   IsEnabled="False"
-                                                  RangeStartSelected="20"
-                                                  RangeStopSelected="60" />
+                                                  LowerValue="20"
+                                                  UpperValue="60" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="0">
                             <Label Content="ProgressBar" Style="{StaticResource DescriptionHeaderStyle}" />
