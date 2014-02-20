@@ -146,8 +146,7 @@
                                              Duration="00:00:00.400"
                                              Storyboard.TargetProperty="(UIElement.Opacity)"
                                              Storyboard.TargetName="root" />
-                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Duration="00:00:00.600"
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00.500"
                                                            Storyboard.TargetProperty="(UIElement.Visibility)"
                                                            Storyboard.TargetName="root">
                                 <DiscreteObjectKeyFrame KeyTime="0"
