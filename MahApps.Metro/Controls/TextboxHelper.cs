@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -30,6 +31,98 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty MouseOverBorderBrushProperty = DependencyProperty.RegisterAttached("MouseOverBorderBrush", typeof(Brush), typeof(TextboxHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         private static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
+
+        private static readonly DependencyProperty UseSpellCheckContextMenuProperty = DependencyProperty.RegisterAttached("UseSpellCheckContextMenu", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
+
+        private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is TextBoxBase && (bool)e.NewValue) {
+
+                var tb = (TextBoxBase)d;
+
+                // set the spell check to true
+                tb.SetValue(SpellCheck.IsEnabledProperty, true);
+
+                // override pre defined context menu
+                tb.ContextMenu = GetContextMenu();
+
+                tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
+            }
+        }
+
+        private static void TextBoxBaseContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            var tbBase = (TextBoxBase)sender;
+            var textBox = tbBase as TextBox;
+            var richTextBox = tbBase as RichTextBox;
+
+            tbBase.ContextMenu = GetContextMenu();
+
+            var cmdIndex = 0;
+            var spellingError = textBox != null
+                ? textBox.GetSpellingError(textBox.CaretIndex)
+                : (richTextBox != null
+                    ? richTextBox.GetSpellingError(richTextBox.CaretPosition)
+                    : null);
+            if (spellingError != null) {
+                var suggestions = spellingError.Suggestions;
+                foreach (var suggestion in suggestions) {
+                    var mi = new MenuItem();
+                    mi.Header = suggestion;
+                    mi.FontWeight = FontWeights.Bold;
+                    mi.Command = EditingCommands.CorrectSpellingError;
+                    mi.CommandParameter = suggestion;
+                    mi.CommandTarget = tbBase;
+                    mi.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                    tbBase.ContextMenu.Items.Insert(cmdIndex, mi);
+                    cmdIndex++;
+                }
+                // add a separator
+                tbBase.ContextMenu.Items.Insert(cmdIndex, new Separator());
+                cmdIndex++;
+                var ignoreAllMI = new MenuItem();
+                ignoreAllMI.Header = "Ignore All";
+                ignoreAllMI.Command = EditingCommands.IgnoreSpellingError;
+                ignoreAllMI.CommandTarget = tbBase;
+                ignoreAllMI.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                tbBase.ContextMenu.Items.Insert(cmdIndex, ignoreAllMI);
+                cmdIndex++;
+                // add another separator
+                var separatorMenuItem2 = new Separator();
+                tbBase.ContextMenu.Items.Insert(cmdIndex, separatorMenuItem2);
+            }
+        }
+
+        // Gets a fresh context menu. 
+        private static ContextMenu GetContextMenu()
+        {
+            var cm = new ContextMenu();
+
+            var m1 = new MenuItem();
+            m1.Command = ApplicationCommands.Cut;
+            m1.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            var m2 = new MenuItem();
+            m2.Command = ApplicationCommands.Copy;
+            m2.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            var m3 = new MenuItem();
+            m3.Command = ApplicationCommands.Paste;
+            m3.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+
+            cm.Items.Add(m1);
+            cm.Items.Add(m2);
+            cm.Items.Add(m3);
+
+            return cm;
+        }
+
+        /// <summary>
+        /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
+        /// </summary>
+        public bool UseSpellCheckContextMenu
+        {
+            get { return (bool)GetValue(UseSpellCheckContextMenuProperty); }
+            set { SetValue(UseSpellCheckContextMenuProperty, value); }
+        }
 
         /// <summary>
         /// Gets/sets the brush used to draw the focus border.

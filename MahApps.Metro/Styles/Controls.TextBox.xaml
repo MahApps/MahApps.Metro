@@ -12,6 +12,8 @@
            x:Key="MetroTextBox">
         <Setter Property="ContextMenu"
                 Value="{DynamicResource TextBoxMetroContextMenu}" />
+        <Setter Property="Controls:TextboxHelper.UseSpellCheckContextMenu"
+                Value="true" />
         <Setter Property="Controls:TextboxHelper.IsMonitoring"
                 Value="True" />
         <Setter Property="Controls:ControlsHelper.ButtonWidth"
