@@ -104,6 +104,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 case MetroDialogColorScheme.Accented:
                     this.PART_NegativeButton.Style = this.FindResource("HighlightedSquareButtonStyle") as Style;
+                    PART_TextBox.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                     break;
                 default:
                     break;

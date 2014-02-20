@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
-            return window.ShowOverlayAsync().ContinueWith(z =>
+            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
                     return (Task<string>)window.Dispatcher.Invoke(new Func<Task<string>>(() =>
                         {
@@ -70,7 +70,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                                                 window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
-                                                return window.HideOverlayAsync();
+                                                return HandleOverlayOnHide(settings, window);
                                                 //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
 
                                             }))).ContinueWith(y3 => y).Unwrap();
@@ -91,7 +91,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
-            return window.ShowOverlayAsync().ContinueWith(z =>
+            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
                     return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
                         {
@@ -138,7 +138,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                                                 window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
-                                                return window.HideOverlayAsync();
+                                                return HandleOverlayOnHide(settings, window);
                                                 //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
 
                                             }))).ContinueWith(y3 => y).Unwrap();
@@ -148,6 +148,7 @@ namespace MahApps.Metro.Controls.Dialogs
                         }));
                 }).Unwrap();
         }
+
         /// <summary>
         /// Creates a ProgressDialog inside of the current window.
         /// </summary>
@@ -160,7 +161,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             window.Dispatcher.VerifyAccess();
 
-            return window.ShowOverlayAsync().ContinueWith(z =>
+            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
                 return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                     {
@@ -207,7 +208,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                                         window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
-                                        return window.HideOverlayAsync();
+                                        return HandleOverlayOnHide(settings, window);
                                         //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
                                     }));
                                 }).Unwrap();
@@ -215,6 +216,15 @@ namespace MahApps.Metro.Controls.Dialogs
                         });
                     })));
             }).Unwrap();
+        }
+
+        private static Task HandleOverlayOnHide(MetroDialogSettings settings, MetroWindow window)
+        {
+            return (settings == null || settings.UseAnimations ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(() => window.HideOverlay()))));
+        }
+        private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
+        {
+            return (settings == null || settings.UseAnimations ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(() => window.ShowOverlay()))));
         }
 
         /// <summary>

@@ -341,6 +341,18 @@ namespace MahApps.Metro.Controls
         {
             return overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity >= 0.7;
         }
+        public void ShowOverlay()
+        {
+            overlayBox.Visibility = Visibility.Visible;
+            //overlayBox.Opacity = 0.7;
+            overlayBox.SetCurrentValue(Grid.OpacityProperty, 0.7);
+        }
+        public void HideOverlay()
+        {
+            //overlayBox.Opacity = 0.0;
+            overlayBox.SetCurrentValue(Grid.OpacityProperty, 0.0);
+            overlayBox.Visibility = System.Windows.Visibility.Hidden;
+        }
 
         /// <summary>
         /// Initializes a new instance of the MahApps.Metro.Controls.MetroWindow class.
