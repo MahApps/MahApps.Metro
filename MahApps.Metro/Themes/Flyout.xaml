@@ -106,7 +106,9 @@
 
     <ControlTemplate x:Key="FlyoutTemplate"
                      TargetType="{x:Type Controls:Flyout}">
-        <Grid x:Name="root" Margin="{TemplateBinding Margin}"
+        <Grid x:Name="root"
+              Margin="{TemplateBinding Margin}"
+              Visibility="Hidden"
               Background="{TemplateBinding Background}">
             <Grid.RenderTransform>
                 <TranslateTransform />
@@ -138,14 +140,27 @@
                                     </EasingDoubleKeyFrame.EasingFunction>
                                 </EasingDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
-                            <DoubleAnimation From="1" To="0" BeginTime="00:00:00"
+                            <DoubleAnimation From="1"
+                                             To="0"
+                                             BeginTime="00:00:00"
                                              Duration="00:00:00.400"
                                              Storyboard.TargetProperty="(UIElement.Opacity)"
                                              Storyboard.TargetName="root" />
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00.500"
+                                                           Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                           Storyboard.TargetName="root">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{x:Static Visibility.Hidden}" />
+                            </ObjectAnimationUsingKeyFrames>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Show">
                         <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                           Storyboard.TargetName="root">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{x:Static Visibility.Visible}" />
+                            </ObjectAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
@@ -168,7 +183,9 @@
                                     </EasingDoubleKeyFrame.EasingFunction>
                                 </EasingDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
-                            <DoubleAnimation From="0" To="1" BeginTime="00:00:00"
+                            <DoubleAnimation From="0"
+                                             To="1"
+                                             BeginTime="00:00:00"
                                              Duration="00:00:00.400"
                                              Storyboard.TargetProperty="(UIElement.Opacity)"
                                              Storyboard.TargetName="root" />

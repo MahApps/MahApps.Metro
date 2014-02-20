@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro;
@@ -149,6 +152,20 @@ namespace Mahapps.Metro.Tests
             Color expectedColor = ((SolidColorBrush)ThemeManager.DarkResource["BlackBrush"]).Color;
 
             window.AssertWindowCommandsColor(expectedColor);
+        }
+
+        [Fact]
+        public async Task FlyoutIsHiddenByDefault()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+            // find the root grid in the visual tree
+            var rootGrid = window.DefaultFlyout.FindChildren<Grid>(true).FirstOrDefault();
+            Assert.NotNull(rootGrid);
+            // root grid should be hidden
+            Assert.Equal(Visibility.Hidden, rootGrid.Visibility);
         }
     }
 }
