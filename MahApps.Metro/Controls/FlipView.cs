@@ -251,7 +251,7 @@ namespace MahApps.Metro.Controls
 
         private void HideBanner()
         {
-            if (this.Height > 0.0)
+            if (this.ActualHeight > 0.0)
             {
                 bannerLabel.BeginStoryboard(HideControlStoryboard);
                 bannerGrid.BeginStoryboard(HideBannerStoryboard);
