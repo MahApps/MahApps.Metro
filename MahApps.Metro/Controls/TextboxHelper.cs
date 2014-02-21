@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -32,21 +34,43 @@ namespace MahApps.Metro.Controls
 
         private static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
 
-        private static readonly DependencyProperty UseSpellCheckContextMenuProperty = DependencyProperty.RegisterAttached("UseSpellCheckContextMenu", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
+        private static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
+
+        /// <summary>
+        /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        public static bool GetIsSpellCheckContextMenuEnabled(UIElement element)
+        {
+            return (bool)element.GetValue(IsSpellCheckContextMenuEnabledProperty);
+        }
+
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        public static void SetIsSpellCheckContextMenuEnabled(UIElement element, bool value)
+        {
+            element.SetValue(IsSpellCheckContextMenuEnabledProperty, value);
+        }
 
         private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is TextBoxBase && (bool)e.NewValue) {
+            var tb = d as TextBoxBase;
+            if (null == tb)
+            {
+                throw new InvalidOperationException("The property 'IsSpellCheckContextMenuEnabled' may only be set on TextBoxBase elements.");
+            }
 
-                var tb = (TextBoxBase)d;
-
+            if ((bool)e.NewValue) {
                 // set the spell check to true
                 tb.SetValue(SpellCheck.IsEnabledProperty, true);
-
                 // override pre defined context menu
-                tb.ContextMenu = GetContextMenu();
-
+                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
                 tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
+            }
+            else
+            {
+                tb.SetValue(SpellCheck.IsEnabledProperty, false);
+                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+                tb.ContextMenuOpening -= TextBoxBaseContextMenuOpening;
             }
         }
 
@@ -56,7 +80,7 @@ namespace MahApps.Metro.Controls
             var textBox = tbBase as TextBox;
             var richTextBox = tbBase as RichTextBox;
 
-            tbBase.ContextMenu = GetContextMenu();
+            tbBase.ContextMenu = GetDefaultTextBoxBaseContextMenu();
 
             var cmdIndex = 0;
             var spellingError = textBox != null
@@ -66,20 +90,22 @@ namespace MahApps.Metro.Controls
                     : null);
             if (spellingError != null) {
                 var suggestions = spellingError.Suggestions;
-                foreach (var suggestion in suggestions) {
-                    var mi = new MenuItem();
-                    mi.Header = suggestion;
-                    mi.FontWeight = FontWeights.Bold;
-                    mi.Command = EditingCommands.CorrectSpellingError;
-                    mi.CommandParameter = suggestion;
-                    mi.CommandTarget = tbBase;
-                    mi.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
-                    tbBase.ContextMenu.Items.Insert(cmdIndex, mi);
+                if (suggestions.Any()) {
+                    foreach (var suggestion in suggestions) {
+                        var mi = new MenuItem();
+                        mi.Header = suggestion;
+                        mi.FontWeight = FontWeights.Bold;
+                        mi.Command = EditingCommands.CorrectSpellingError;
+                        mi.CommandParameter = suggestion;
+                        mi.CommandTarget = tbBase;
+                        mi.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                        tbBase.ContextMenu.Items.Insert(cmdIndex, mi);
+                        cmdIndex++;
+                    }
+                    // add a separator
+                    tbBase.ContextMenu.Items.Insert(cmdIndex, new Separator());
                     cmdIndex++;
                 }
-                // add a separator
-                tbBase.ContextMenu.Items.Insert(cmdIndex, new Separator());
-                cmdIndex++;
                 var ignoreAllMI = new MenuItem();
                 ignoreAllMI.Header = "Ignore All";
                 ignoreAllMI.Command = EditingCommands.IgnoreSpellingError;
@@ -94,34 +120,22 @@ namespace MahApps.Metro.Controls
         }
 
         // Gets a fresh context menu. 
-        private static ContextMenu GetContextMenu()
+        private static ContextMenu GetDefaultTextBoxBaseContextMenu()
         {
-            var cm = new ContextMenu();
+            var defaultMenu = new ContextMenu();
 
-            var m1 = new MenuItem();
-            m1.Command = ApplicationCommands.Cut;
+            var m1 = new MenuItem { Command = ApplicationCommands.Cut };
             m1.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
-            var m2 = new MenuItem();
-            m2.Command = ApplicationCommands.Copy;
+            var m2 = new MenuItem { Command = ApplicationCommands.Copy };
             m2.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
-            var m3 = new MenuItem();
-            m3.Command = ApplicationCommands.Paste;
+            var m3 = new MenuItem { Command = ApplicationCommands.Paste };
             m3.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
 
-            cm.Items.Add(m1);
-            cm.Items.Add(m2);
-            cm.Items.Add(m3);
+            defaultMenu.Items.Add(m1);
+            defaultMenu.Items.Add(m2);
+            defaultMenu.Items.Add(m3);
 
-            return cm;
-        }
-
-        /// <summary>
-        /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
-        /// </summary>
-        public bool UseSpellCheckContextMenu
-        {
-            get { return (bool)GetValue(UseSpellCheckContextMenuProperty); }
-            set { SetValue(UseSpellCheckContextMenuProperty, value); }
+            return defaultMenu;
         }
 
         /// <summary>

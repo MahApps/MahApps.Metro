@@ -321,6 +321,7 @@
                                 <Label Content="TextBox"
                                        Style="{StaticResource DescriptionHeaderStyle}" />
                                 <TextBox Margin="0, 10, 0, 0"
+                                         Controls:TextboxHelper.IsSpellCheckContextMenuEnabled="True"
                                          Text="Enabled" />
                                 <CheckBox Margin="0, 10, 0, 0"
                                           Content="Wait for...."
@@ -406,6 +407,7 @@
                                 <Label Content="RichTextBox"
                                        Style="{StaticResource DescriptionHeaderStyle}" />
                                 <RichTextBox Margin="0, 10, 0, 0"
+                                             Controls:TextboxHelper.IsSpellCheckContextMenuEnabled="True"
                                              Padding="5"
                                              IsDocumentEnabled="True">
                                     <FlowDocument>
