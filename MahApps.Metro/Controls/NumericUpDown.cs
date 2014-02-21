@@ -494,68 +494,69 @@ namespace MahApps.Metro.Controls
         /// </param>
         protected virtual void OnValueChanged(double? oldValue, double? newValue)
         {
-            if (_manualChange)
+            if (!_manualChange)
             {
-                return;
-            }
+                if (!newValue.HasValue)
+                {
+                    if (_valueTextBox != null)
+                    {
+                        _valueTextBox.Text = null;
+                    }
+                    return;
+                }
 
-            if (!newValue.HasValue)
-            {
+                if (_repeatUp != null &&
+                    !_repeatUp.IsEnabled)
+                {
+                    _repeatUp.IsEnabled = true;
+                }
+
+                if (_repeatDown != null &&
+                    !_repeatDown.IsEnabled)
+                {
+                    _repeatDown.IsEnabled = true;
+                }
+
+                if (newValue <= Minimum)
+                {
+                    if (_repeatDown != null)
+                    {
+                        _repeatDown.IsEnabled = false;
+                    }
+
+                    ResetInternal();
+
+                    if (IsLoaded)
+                    {
+                        RaiseEvent(new RoutedEventArgs(MinimumReachedEvent));
+                    }
+                }
+
+                if (newValue >= Maximum)
+                {
+                    if (_repeatUp != null)
+                    {
+                        _repeatUp.IsEnabled = false;
+                    }
+
+                    ResetInternal();
+                    if (IsLoaded)
+                    {
+                        RaiseEvent(new RoutedEventArgs(MaximumReachedEvent));
+                    }
+                }
+
                 if (_valueTextBox != null)
                 {
-                    _valueTextBox.Text = null;
-                }
-                return;
-            }
-
-            if (_repeatUp != null &&
-                !_repeatUp.IsEnabled)
-            {
-                _repeatUp.IsEnabled = true;
-            }
-
-            if (_repeatDown != null &&
-                !_repeatDown.IsEnabled)
-            {
-                _repeatDown.IsEnabled = true;
-            }
-
-            if (newValue <= Minimum)
-            {
-                if (_repeatDown != null)
-                {
-                    _repeatDown.IsEnabled = false;
-                }
-
-                ResetInternal();
-
-                if (IsLoaded)
-                {
-                    RaiseEvent(new RoutedEventArgs(MinimumReachedEvent));
+                    InternalSetText(newValue);
                 }
             }
 
-            if (newValue >= Maximum)
+            if (oldValue != newValue)
             {
-                if (_repeatUp != null)
-                {
-                    _repeatUp.IsEnabled = false;
-                }
-
-                ResetInternal();
-                if (IsLoaded)
-                {
-                    RaiseEvent(new RoutedEventArgs(MaximumReachedEvent));
-                }
+                var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent);
+                RaiseEvent(eventArgs);
             }
-
-            if (_valueTextBox != null)
-            {
-                InternalSetText(newValue);
-            }
-
-            var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent);
-            RaiseEvent(eventArgs);
         }
 
         private void InternalSetText(double? newValue)
