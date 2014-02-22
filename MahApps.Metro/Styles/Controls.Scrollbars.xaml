@@ -54,24 +54,24 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Path Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
-                              Height="6"
+                              Height="10"
                               Stretch="Uniform"
-                              Width="4"
+                              Width="6"
                               Fill="{DynamicResource GrayBrush1}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
-                              Height="6"
+                              Height="10"
                               Stretch="Uniform"
-                              Width="4"
+                              Width="6"
                               UseLayoutRounding="False"
                               Opacity="0"
                               Margin="1,1,0,0"
                               Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
-                              Height="6"
+                              Height="10"
                               Stretch="Uniform"
-                              Width="4"
+                              Width="6"
                               UseLayoutRounding="False"
                               Opacity="0"
                               Margin="1,1,0,0"
@@ -122,25 +122,24 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Path Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
-                              Height="6"
+                              Height="10"
                               Stretch="Uniform"
-                              Width="4"
+                              Width="6"
                               Fill="{DynamicResource GrayBrush1}" />
-
                         <Path x:Name="HoverPath"
                               Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
-                              Height="6"
+                              Height="10"
                               Stretch="Uniform"
-                              Width="4"
+                              Width="6"
                               UseLayoutRounding="False"
                               Opacity="0"
                               Margin="0,1,0,0"
                               Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
-                              Height="6"
+                              Height="10"
                               Stretch="Uniform"
-                              Width="4"
+                              Width="6"
                               UseLayoutRounding="False"
                               Opacity="0"
                               Margin="0,1,0,0"
@@ -224,7 +223,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
             <Grid x:Name="HorizontalRoot"
-                  Height="11">
+                  Height="13">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="0.00001*" />
@@ -320,24 +319,25 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Path Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
-                              Height="4"
+                              Height="6"
                               Stretch="Uniform"
-                              Width="6"
+                              Width="10"
+                              Margin="1,0,0,0"
                               Fill="{DynamicResource GrayBrush1}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
-                              Height="4"
+                              Height="6"
                               Stretch="Uniform"
-                              Width="6"
+                              Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
                               Margin="1,0,0,0"
                               Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
-                              Height="4"
+                              Height="6"
                               Stretch="Uniform"
-                              Width="6"
+                              Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
                               Margin="1,0,0,0"
@@ -388,24 +388,25 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Path Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
-                              Height="4"
+                              Height="6"
                               Stretch="Uniform"
-                              Width="6"
+                              Width="10"
+                              Margin="0.5,0,0,0"
                               Fill="{DynamicResource GrayBrush1}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
-                              Height="4"
+                              Height="6"
                               Stretch="Uniform"
-                              Width="6"
+                              Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
                               Margin="1,0,0,0"
                               Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
-                              Height="4"
+                              Height="6"
                               Stretch="Uniform"
-                              Width="6"
+                              Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
                               Margin="1,0,0,0"
@@ -490,7 +491,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
             <Grid x:Name="VerticalRoot"
-                  Width="11">
+                  Width="13">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="0.00001*" />
@@ -553,14 +554,14 @@
                 <Setter Property="Width"
                         Value="Auto" />
                 <Setter Property="Height"
-                        Value="12" />
+                        Value="14" />
                 <Setter Property="Template"
                         Value="{DynamicResource HorizontalScrollBar}" />
             </Trigger>
             <Trigger Property="Orientation"
                      Value="Vertical">
                 <Setter Property="Width"
-                        Value="12" />
+                        Value="14" />
                 <Setter Property="Height"
                         Value="Auto" />
                 <Setter Property="Template"
