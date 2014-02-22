@@ -31,8 +31,8 @@ namespace MahApps.Metro.Controls
         public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MaximumReachedEvent = EventManager.RegisterRoutedEvent("MaximumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MinimumReachedEvent = EventManager.RegisterRoutedEvent("MinimumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
-
+        public static readonly RoutedEvent ValueChangedEvent =  EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<double?>), typeof(NumericUpDown));
+        
         public static readonly DependencyProperty DelayProperty = DependencyProperty.Register("Delay",
             typeof(int),
             typeof(NumericUpDown),
@@ -122,7 +122,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public event RoutedEventHandler ValueChanged
+        public event RoutedPropertyChangedEventHandler<double?> ValueChanged
         {
             add { AddHandler(ValueChangedEvent, value); }
             remove { RemoveHandler(ValueChangedEvent, value); }
@@ -494,68 +494,69 @@ namespace MahApps.Metro.Controls
         /// </param>
         protected virtual void OnValueChanged(double? oldValue, double? newValue)
         {
-            if (_manualChange)
+            if (!_manualChange)
             {
-                return;
-            }
+                if (!newValue.HasValue)
+                {
+                    if (_valueTextBox != null)
+                    {
+                        _valueTextBox.Text = null;
+                    }
+                    return;
+                }
 
-            if (!newValue.HasValue)
-            {
+                if (_repeatUp != null &&
+                    !_repeatUp.IsEnabled)
+                {
+                    _repeatUp.IsEnabled = true;
+                }
+
+                if (_repeatDown != null &&
+                    !_repeatDown.IsEnabled)
+                {
+                    _repeatDown.IsEnabled = true;
+                }
+
+                if (newValue <= Minimum)
+                {
+                    if (_repeatDown != null)
+                    {
+                        _repeatDown.IsEnabled = false;
+                    }
+
+                    ResetInternal();
+
+                    if (IsLoaded)
+                    {
+                        RaiseEvent(new RoutedEventArgs(MinimumReachedEvent));
+                    }
+                }
+
+                if (newValue >= Maximum)
+                {
+                    if (_repeatUp != null)
+                    {
+                        _repeatUp.IsEnabled = false;
+                    }
+
+                    ResetInternal();
+                    if (IsLoaded)
+                    {
+                        RaiseEvent(new RoutedEventArgs(MaximumReachedEvent));
+                    }
+                }
+
                 if (_valueTextBox != null)
                 {
-                    _valueTextBox.Text = null;
-                }
-                return;
-            }
-
-            if (_repeatUp != null &&
-                !_repeatUp.IsEnabled)
-            {
-                _repeatUp.IsEnabled = true;
-            }
-
-            if (_repeatDown != null &&
-                !_repeatDown.IsEnabled)
-            {
-                _repeatDown.IsEnabled = true;
-            }
-
-            if (newValue <= Minimum)
-            {
-                if (_repeatDown != null)
-                {
-                    _repeatDown.IsEnabled = false;
-                }
-
-                ResetInternal();
-
-                if (IsLoaded)
-                {
-                    RaiseEvent(new RoutedEventArgs(MinimumReachedEvent));
+                    InternalSetText(newValue);
                 }
             }
 
-            if (newValue >= Maximum)
+            if (oldValue != newValue)
             {
-                if (_repeatUp != null)
-                {
-                    _repeatUp.IsEnabled = false;
-                }
-
-                ResetInternal();
-                if (IsLoaded)
-                {
-                    RaiseEvent(new RoutedEventArgs(MaximumReachedEvent));
-                }
+                var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent);
+                RaiseEvent(eventArgs);
             }
-
-            if (_valueTextBox != null)
-            {
-                InternalSetText(newValue);
-            }
-
-            var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue) { RoutedEvent = RangeBase.ValueChangedEvent };
-            RaiseEvent(eventArgs);
         }
 
         private void InternalSetText(double? newValue)
