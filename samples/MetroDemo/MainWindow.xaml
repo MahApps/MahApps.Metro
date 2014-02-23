@@ -62,7 +62,7 @@
                                  x:Name="SimpleTestDialog">
                 <Button Content="Hello"/>
             </Dialog:SimpleDialog>
-            
+
             <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
@@ -815,40 +815,36 @@
                         </StackPanel>
                         <StackPanel Grid.Column="2">
                             <Label Content="RangeSlider" Style="{StaticResource DescriptionHeaderStyle}" />
-
-                            <Label Content="Look Tooltip of NumericUpDown"></Label>
-
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=LowerValue}" ToolTip="LowerValue"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=UpperValue}" ToolTip="UpperValue"></Controls:NumericUpDown>
-                            <!--<Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Minimum}" ToolTip="Minimum"></Controls:NumericUpDown>
-                            <Controls:NumericUpDown Value="{Binding ElementName=RangeSlider, Path=Maximum}" ToolTip="Maximum"></Controls:NumericUpDown>-->
-                            <TextBlock Text="{Binding ElementName=RangeSlider, Path=ActualWidth}"></TextBlock>
-                            <!--TickFrequency="20.5487961325467985"-->
-
-                            <Controls:RangeSlider Orientation="Horizontal" MinRangeWidth="20" x:Name="RangeSlider" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <Controls:RangeSlider Orientation="Vertical" MinRangeWidth="20" Height="200" x:Name="RangeSlider" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
                                                   CentralThumbDragStarted="RangeSlider_OnCentralThumbDragStarted" CentralThumbDragCompleted="RangeSlider_OnCentralThumbDragCompleted"
-                                                  LowerThumbDragDelta="RangeSlider_OnLowerThumbDragDelta" UpperThumbDragDelta="RangeSlider_OnUpperThumbDragDelta" CentralThumbDragDelta="RangeSlider_OnCentralThumbDragDelta"
-                                                  LowerThumbDragStarted="RangeSlider_OnLowerThumbDragStarted" LowerThumbDragCompleted="RangeSlider_OnLowerThumbDragCompleted"
-                                                  UpperThumbDragStarted="RangeSlider_OnUpperThumbDragStarted" UpperThumbDragCompleted="RangeSlider_OnUpperThumbDragCompleted"
-                                                  TickPlacement="Both" TickFrequency="20" IsSnapToTickEnabled="True" MinRange="50"
-                                                  Width="300" Minimum="30" Maximum="200" IsMoveToPointEnabled="False" ExtendedMode="True" MoveWholeRange="False" SmallChange="0.1" 
-                                                  LowerValue="70" UpperValue="60" />
-                            <!--<Slider Value="{Binding ElementName=RangeSlider, Path=MinRangeWidth}" Minimum="0" Maximum="250" ></Slider>-->
-                            <Controls:RangeSlider Width="200"
-                                                  Height="20"
-                                                  Margin="0, 10, 0, 0"
-                                                  LowerValue="20"
-                                                  UpperValue="60" />
-                            <Controls:RangeSlider Width="200"
-                                                  Height="20"
-                                                  Margin="0, 10, 0, 0"
-                                                  IsEnabled="False" />
-                            <Controls:RangeSlider Width="200"
-                                                  Height="20"
-                                                  Margin="0, 10, 0, 0"
-                                                  IsEnabled="False"
-                                                  LowerValue="20"
-                                                  UpperValue="60" />
+                                                  TickPlacement="Both" TickFrequency="20" IsSnapToTickEnabled="True" MinRange="0" Minimum="-200" Maximum="200" IsMoveToPointEnabled="True" ExtendedMode="True" MoveWholeRange="False" SmallChange="0.1" 
+                                                  LowerValue="-70" UpperValue="60" />
+                                <StackPanel Orientation="Vertical">
+                                    <Controls:RangeSlider Orientation="Horizontal" MinRangeWidth="20" x:Name="RangeSlider1" AutoToolTipPlacement="BottomRight" AutoToolTipPrecision="2" LowerValueChanged="RangeSlider_OnLowerValueChanged" UpperValueChanged="RangeSlider_OnUpperValueChanged"
+                                		CentralThumbDragStarted="RangeSlider_OnCentralThumbDragStarted" CentralThumbDragCompleted="RangeSlider_OnCentralThumbDragCompleted"
+                                		LowerThumbDragDelta="RangeSlider_OnLowerThumbDragDelta" UpperThumbDragDelta="RangeSlider_OnUpperThumbDragDelta" CentralThumbDragDelta="RangeSlider_OnCentralThumbDragDelta"
+                                		LowerThumbDragStarted="RangeSlider_OnLowerThumbDragStarted" LowerThumbDragCompleted="RangeSlider_OnLowerThumbDragCompleted"
+                                		UpperThumbDragStarted="RangeSlider_OnUpperThumbDragStarted" UpperThumbDragCompleted="RangeSlider_OnUpperThumbDragCompleted"
+                                		TickPlacement="TopLeft" TickFrequency="20" IsSnapToTickEnabled="False" MinRange="50"
+                                		Width="250" Minimum="-200" Maximum="200" IsMoveToPointEnabled="True" ExtendedMode="True" MoveWholeRange="False" SmallChange="0.1" 
+                                		LowerValue="-70" UpperValue="60" Height="28" Margin="0,0,0,20"  />
+
+                                    <Controls:RangeSlider Width="250" TickPlacement="Both"
+                                		LowerValue="20"
+                                		UpperValue="60" Margin="0,0,0,20" />
+
+                                    <Controls:RangeSlider Width="250" TickPlacement="Both"
+                                		IsEnabled="False" Margin="0,0,0,20" />
+                                    <Controls:RangeSlider Width="250"
+                                		Height="20"
+                                		IsEnabled="False"
+                                		LowerValue="20"
+                                		UpperValue="60" Margin="0,0,0,20"/>
+                                </StackPanel>
+                            </StackPanel>
+                            
+                           
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="0">
                             <Label Content="ProgressBar" Style="{StaticResource DescriptionHeaderStyle}" />
@@ -895,12 +891,12 @@
                             </Grid>
                         </StackPanel>
                         <Grid Grid.Row="2" Grid.Column="2">
-                            <Label VerticalAlignment="top" HorizontalAlignment="Center" Content="Sliders TickPlacement" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Slider Style="{DynamicResource FlatSlider}" VerticalAlignment="top" HorizontalAlignment="Left" Width="132" Margin="122,39,0,0"  TickPlacement="Both" TickFrequency="25"/>
+                            <Label VerticalAlignment="top" Content="Sliders TickPlacement" Style="{StaticResource DescriptionHeaderStyle}" />
+                            <Slider Style="{DynamicResource FlatSlider}" VerticalAlignment="top" IsSnapToTickEnabled="True" HorizontalAlignment="Left" Width="132" Margin="122,39,0,0"  TickPlacement="Both" TickFrequency="25"/>
                             <Slider VerticalAlignment="top" HorizontalAlignment="Left" Width="132" Margin="122,112,0,0"  TickPlacement="BottomRight" TickFrequency="25" Value="50"/>
                             <Slider VerticalAlignment="top" HorizontalAlignment="Left" Width="132" Margin="122,207,0,0"  TickPlacement="TopLeft" TickFrequency="25" Value="50"/>
                             <Slider Style="{DynamicResource FlatSlider}" VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="10,44,0,0"  TickPlacement="Both" TickFrequency="25" Value="50" Orientation="Vertical"/>
-                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="40,126,0,0"  TickPlacement="BottomRight" TickFrequency="25" Value="50" Orientation="Vertical"/>
+                            <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="27,44,0,0"  TickPlacement="BottomRight" TickFrequency="25" Value="50" Orientation="Vertical"/>
                             <Slider VerticalAlignment="top" HorizontalAlignment="Left" Height="113" Margin="70,44,0,0"  TickPlacement="TopLeft" TickFrequency="25" Value="50" Orientation="Vertical"/>
                         </Grid>
                     </Grid>
