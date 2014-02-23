@@ -335,9 +335,10 @@
                             <Setter TargetName="PART_DropDownToggle"
                                     Property="Focusable"
                                     Value="False" />
+                            <!-- #1037 : don't know why we set this to transparent ???
                             <Setter TargetName="PART_DropDownToggle"
                                     Property="Background"
-                                    Value="Transparent" />
+                                    Value="Transparent" /> -->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
