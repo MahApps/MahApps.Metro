@@ -6,7 +6,9 @@ namespace MetroDemo
 
     public partial class FlyoutDemo
     {
-        public FlyoutDemo() {
+        public FlyoutDemo()
+        {
+            DataContext = new MainWindowViewModel();
             this.InitializeComponent();
         }
 

@@ -13,6 +13,7 @@
                       BorderThickness="1"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       mc:Ignorable="d"
+                      d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
                       x:Name="flyoutsDemo">
 
     <Window.Resources>
@@ -240,18 +241,22 @@
                     Content="Close" />
         </StackPanel>
 
-        <StackPanel Margin="10"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-            <Button MinWidth="90"
-                    Margin="2"
-                    Click="ShowTop"
-                    Content="Show Top" />
-            <Button MinWidth="90"
-                    Margin="2"
-                    Click="ShowBottom"
-                    Content="Show Bottom" />
-        </StackPanel>
+        <AdornerDecorator Margin="10"
+                          Width="180"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+            <StackPanel>
+                <Button Margin="2"
+                        Click="ShowTop"
+                        Content="Show Top" />
+                <Button Margin="2"
+                        Click="ShowBottom"
+                        Content="Show Bottom" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.Watermark="Number smaller than 10"
+                         Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+            </StackPanel>
+        </AdornerDecorator>
 
         <StackPanel Margin="10" HorizontalAlignment="Right">
             <Button MinWidth="90"
