@@ -254,7 +254,18 @@ namespace MahApps.Metro.Controls
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (Flyout) dependencyObject;
+            var wasOpen = flyout.IsOpen;
+            if (wasOpen)
+            {
+                flyout.IsOpen = false;
+            }
+
             flyout.ApplyAnimation((Position)e.NewValue);
+
+            if (wasOpen)
+            {
+                flyout.IsOpen = true;
+            }
         }
 
         static Flyout()
