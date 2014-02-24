@@ -40,6 +40,7 @@ This control was updated to have more features
 - **AutotoolTipPrecision** property - set the number of digits, which will be shown after dot in autotooltip.
 
 
+```
 	<Сontrols:RangeSlider Style="{StaticResource RangeSliderCameraCommonStyle}" 
             Minimum="{Binding Path=MinValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
             Maximum="{Binding Path=MaxValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -52,4 +53,5 @@ This control was updated to have more features
             UpperThumbDragCompleted="OnUpperDragCompleted" 
             AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="2"
             IsSnapToTickEnabled="True" IsMoveToPoint="True"></Сontrols:RangeSlider>
+```
 
