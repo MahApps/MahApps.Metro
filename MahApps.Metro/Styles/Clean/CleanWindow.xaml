@@ -3,7 +3,8 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:airspace="clr-namespace:Microsoft.DwayneNeed.Interop">
 
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
 
@@ -98,7 +99,7 @@
                                           TextElement.Foreground="{DynamicResource BlackColorBrush}"
                                           Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                           Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                        
+
                         <!-- the window button commands -->
                         <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
                                                        Panel.ZIndex="1"
@@ -108,9 +109,16 @@
                                                        Foreground="{DynamicResource BlackColorBrush}"
                                                        Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
 
-                        <ContentPresenter Grid.Row="1" 
+                        <!--main window content-->
+                        <airspace:AirspaceDecorator Grid.Row="1" 
                                           Grid.Column="0" 
-                                          Grid.ColumnSpan="3" />
+                                          Grid.ColumnSpan="3" 
+                                          AirspaceMode="Redirect"
+                                          Background="{TemplateBinding Background}"
+                                          IsInputRedirectionEnabled="True"
+                                          IsOutputRedirectionEnabled="True">
+                            <ContentPresenter />
+                        </airspace:AirspaceDecorator>
 
                         <!-- disables the main content when a modal flyout is shown -->
                         <Rectangle Grid.RowSpan="2" 
