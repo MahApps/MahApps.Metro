@@ -9,37 +9,45 @@ Taken from the [Avalon Controls Library](http://avaloncontrolslib.codeplex.com/)
 
 This control was updated to have more features
 
-**What was added:**
+###Events
+More events was added:
+DragStared/DragDelta/DragCompleted for Lower/Central/Upper thumbs
+Events for lower/upper value changed
+OldValues parameters in event args for rangeChanged event
 
-- **DragStared/DragDelta/DragCompleted** for Lower/Centra/Upper thumbs
+###Orientation
+Now range slider support vertical orientation
 
-- Events for lower/upper value changed
+###MoveToPoint
+`IsMoveToPointEnabled` feature work like in Slider
 
-- OldValues in event args for rangeChanged event
+###SmallChange/LargeChange
+when `IsMoveToPointEnabled = False` thumbs will move on the value you set in Small/LargeChange
 
-- Vertical orientation support
+###Interval 
+This property will set interval between changing values when using Small/Larnge change. 
 
-- **IsMoveToPointEnabled** feature like in Slider
+###IsSnapToTickEnabled
+If set to true, thumbs will snap to ticks like in standard Slider.
 
-- **SmallChange/LargeChange** - when MoveToPoint = False thumbs will move on the value you set in Small/LargeChange
+###TickBars and Tickplacement
+Range Slider receive support for displaying/hiding ticks and change its ticks width according to minimum and maximum values changed
 
-- **Interval** property will set interval between changing values when you using Small/Larnge change. 
+###ExtendedMode
+If it set `ExtendedMode = False` you **cannot** do any manipulations **inside** range except moving thumbs closer/farther to each other with mouse, but if it enabled you **can** use MoveToPoint or Small/Large change **inside** range by clicking **Left mouse button + left or right control button** to move left thumb and **Right mouse button + left or right control button to move right thumb inside range**. If Extended mode = true you also can without problems move whole range by clicking leftmouse button
+
+###MoveWholeRange
+This property will let you move whole range when using MoveToPoint or Small/Large change (working also inside range)
  
-- **IsSnapToTickEnabled** feature with TickFrequency. If set to true, thumbs will snap to ticks.
+###MinRangeWidth
+Sets minimum width of **central** Thumb. It can be in range **from 0 to range_slider_width/2**.
 
-- **TickBars and Tickplacement** property for displaying/hiding ticks (Change its ticks width according to minimum and maximum values changed)
+###AutoToolTipPlacement and AutotoolTipPrecision
+`AutoToolTipPlacement` will display tooltip, which will move with Thumb and display current value. Implemented for left/central/right thumbs.
  
-- **ExtendedMode** property. If it set to **false**, you **cannot** do any manipulations inside range except moving thumbs closer/farther to each other with mouse, but if it enabled you **can** use MoveToPoint or Small/Large change **inside** range by clicking **Left mouse button + left or right control button** to move left thumb and **Right mouse button + left or right control button to move right thumb inside range**. If Extended mode = true you also can without problems move whole range by clicking leftmouse button
- 
-- **MoveWholeRange** property will let you move whole range when using MoveToPoint or Small/Large change (working also inside range)
- 
-- **MinRangeWidth property** sets minimum width of **central** Thumb. It can be in range **from 0 to range slider width/2**.
+`AutotoolTipPrecision` set the number of digits, which will be shown after dot in autotooltip.
 
-- **AutoToolTipPlacement** - will display tooltip, which will move with Thumb and display current value. Implemented for left/central/right thumbs
-
-- **AutotoolTipPrecision** property - set the number of digits, which will be shown after dot in autotooltip.
-
-
+###Small Example
 ```
 	<Сontrols:RangeSlider Style="{StaticResource RangeSliderCameraCommonStyle}" 
             Minimum="{Binding Path=MinValue, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
@@ -47,11 +55,11 @@ This control was updated to have more features
             LowerValue="{Binding Path=CurrentMinValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             UpperValue="{Binding Path=CurrentMaxValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             LowerValueChanged="OnLowerValueChanged" UpperValueChanged="OnUpperValueChanged"
-            LowerThumbDragStarted="SliderCameraMinX_OnDragStarted"
-            LowerThumbDragCompleted="SliderCameraMinX_OnDragCompleted"
+            LowerThumbDragStarted="OnLowerDragStarted"
+            LowerThumbDragCompleted="OnLowerDragCompleted"
             UpperThumbDragStarted="OnUpperDragStarted" 
             UpperThumbDragCompleted="OnUpperDragCompleted" 
-            AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="2"
-            IsSnapToTickEnabled="True" IsMoveToPoint="True"></Сontrols:RangeSlider>
+            AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="2" MoveWholeRange="True"
+            IsSnapToTickEnabled="True" IsMoveToPoint="True" ExtendedMode="True"></Сontrols:RangeSlider>
 ```
 
