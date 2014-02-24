@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+
+    <ControlTemplate x:Key="UserControlTemplateKey" TargetType="{x:Type Controls:MetroUserControl}">
+        <Grid>
+            <AdornerDecorator>
+                <Controls:MetroContentControl FocusVisualStyle="{x:Null}"
+                                              IsTabStop="False"
+                                              OnlyLoadTransition="True">
+                    <Grid Background="{TemplateBinding Background}">
+                        <!--  the main window content  -->
+                        <ContentPresenter />
+                        <!--  disables the main content when a modal flyout is shown  -->
+                        <Rectangle Name="PART_FlyoutModal"
+                                   Fill="{DynamicResource BlackColorBrush}"
+                                   Opacity="0.5"
+                                   Visibility="Hidden" />
+                        <!--  flyouts  -->
+                        <ContentControl VerticalAlignment="Stretch"
+                                        Panel.ZIndex="1"
+                                        Content="{Binding Flyouts,
+                                                          Mode=OneWay,
+                                                          RelativeSource={RelativeSource FindAncestor,
+                                                                                         AncestorType={x:Type Controls:MetroUserControl}}}"
+                                        Focusable="False"
+                                        KeyboardNavigation.TabNavigation="None" />
+                    </Grid>
+                </Controls:MetroContentControl>
+            </AdornerDecorator>
+        </Grid>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type Controls:MetroUserControl}">
+        <Setter Property="Template" Value="{StaticResource UserControlTemplateKey}" />
+    </Style>
+
+</ResourceDictionary>

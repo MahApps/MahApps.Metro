@@ -279,5 +279,17 @@ namespace MetroDemo
         {
             //TestBlock.Text = "central thumb drag delta";
         }
+
+        private void ShowUserControl1_Click(object sender, RoutedEventArgs e)
+        {
+            var newControl1 = new UserControl1();
+            TccRoot.Content = newControl1;
+        }
+
+        private void ShowUserControl2_Click(object sender, RoutedEventArgs e)
+        {
+            var newControl2 = new UserControl2();
+            TccRoot.Content = newControl2;
+        }
     }
 }
