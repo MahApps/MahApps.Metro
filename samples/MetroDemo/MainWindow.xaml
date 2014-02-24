@@ -1146,6 +1146,22 @@
 
                     </ScrollViewer>
                 </TabItem>
+                <TabItem Header="user control">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0">
+                            <Button Content="User Control 1" Margin="5" Click="ShowUserControl1_Click" />
+                            <Button Content="User Control 2" Margin="5" Click="ShowUserControl2_Click" />
+                        </StackPanel>
+                        <Controls:TransitioningContentControl Name="TccRoot" Grid.Row="1" />
+                    </Grid>
+                </TabItem>
                 <TabItem Header="datagrid">
                     <Grid>
                         <Grid.ColumnDefinitions>
