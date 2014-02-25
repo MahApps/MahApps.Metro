@@ -95,9 +95,10 @@
                 </Grid>
             </Controls:Flyout>
             <Controls:Flyout Header="Cool"
+                             AnimateOnPositionChange="{Binding AnimateOnPositionChange}"
                              Position="Right">
                 <Grid Margin="10"
-                      Width="250">
+                      Width="270">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -125,9 +126,12 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
                             Content="Save" />
-                    <UniformGrid Columns="2"
+                    <UniformGrid Columns="3"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="2"
                                  Grid.Row="2"
                                  Margin="10">
+                        <CheckBox IsChecked="{Binding AnimateOnPositionChange}">Animate</CheckBox>
                         <Button Style="{DynamicResource SquareButtonStyle}"
                                 Margin="10"
                                 Click="ShowSettingsLeft"
