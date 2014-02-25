@@ -205,7 +205,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Gets or sets a value indicating whether the control must have the focus in order to change values using the mouse wheel.
         /// <remarks>
-        ///     If the value is false then the value changes when the mouse wheel is over the control. If the value is true then the value changes only if the control has the focus.
+        ///     If the value is true then the value changes when the mouse wheel is over the control. If the value is false then the value changes only if the control has the focus.
         /// </remarks>
         /// </summary>
         [Category("Common")]
