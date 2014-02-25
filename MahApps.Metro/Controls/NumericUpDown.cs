@@ -706,9 +706,12 @@ namespace MahApps.Metro.Controls
                 new NumericUpDownChangedRoutedEventArgs(DecrementValueEvent, -Interval);
 
             RaiseEvent(routedEvent);
-            ChangeValueBy(routedEvent.Interval);
 
-            _valueTextBox.CaretIndex = _valueTextBox.Text.Length;
+            if (!routedEvent.Handled)
+            {
+                ChangeValueBy(routedEvent.Interval);
+                _valueTextBox.CaretIndex = _valueTextBox.Text.Length;
+            }
         }
 
         private void ChangeValueBy(double difference)
