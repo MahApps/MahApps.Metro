@@ -209,7 +209,7 @@ namespace MahApps.Metro.Controls
         /// </remarks>
         /// </summary>
         [Category("Common")]
-        [DefaultValue(true)]
+        [DefaultValue(false)]
         public bool TrackMouseWheelWhenMouseOver
         {
             get { return (bool)GetValue(TrackMouseWheelWhenMouseOverProperty); }
