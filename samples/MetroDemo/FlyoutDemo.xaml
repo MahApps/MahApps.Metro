@@ -15,7 +15,6 @@
                       mc:Ignorable="d"
                       d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
                       x:Name="flyoutsDemo">
-
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -24,14 +23,12 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
             <Button FontFamily="Wingdings" FontSize="20" Content="B" />
             <Button FontFamily="Wingdings" FontSize="20" Content="C" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
-
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
             <Controls:Flyout x:Name="settingsFlyout" Margin="100 0 0 0" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth}" Header="Settings" Position="Right">
@@ -57,7 +54,6 @@
                             <TextBox Margin="0,5,0,0" Controls:TextboxHelper.Watermark="TextBox 10" />
                         </StackPanel>
                     </ScrollViewer>
-
                     <UniformGrid Columns="2"
                                  Grid.Row="2"
                                  Margin="10">
@@ -68,7 +64,6 @@
                                 Margin="10"
                                 Content="Cancel" />
                     </UniformGrid>
-
                 </Grid>
             </Controls:Flyout>
             
@@ -79,7 +74,6 @@
                     <Button Content="cancel" />
                 </StackPanel>
             </Controls:Flyout>
-
             <metroDemo:CustomFlyout Header="Third" Position="Right" />
 
             <Controls:Flyout Header="Accented" Position="Right" Theme="Accent">
@@ -88,24 +82,23 @@
                     <TextBlock Text="This flyout adapts its theme to the current accent" Foreground="{DynamicResource IdealForegroundColorBrush}" />
                 </Grid>
             </Controls:Flyout>
-
             <Controls:Flyout Header="Inverse" Position="Right" Theme="Inverse">
                 <Grid Margin="10"
                       Width="400">
                     <TextBlock Text="This flyout has the inverse theme of the current window theme" />
                 </Grid>
             </Controls:Flyout>
-
             <Controls:Flyout Header="Adapt" Position="Right" Theme="Adapt">
                 <Grid Margin="10"
                       Width="400">
                     <TextBlock Text="This flyout adapts the theme of the current window" />
                 </Grid>
             </Controls:Flyout>
-
-            <Controls:Flyout Header="Cool" Position="Right">
+            <Controls:Flyout Header="Cool"
+                             AnimateOnPositionChange="{Binding AnimateOnPositionChange}"
+                             Position="Right">
                 <Grid Margin="10"
-                      Width="250">
+                      Width="270">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -113,30 +106,43 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
-
                     <Label Grid.Row="0"
-                       Grid.Column="0"
-                       Margin="5"
-                       VerticalAlignment="Center"
-                       Content="Download language:" />
+                           Grid.Column="0"
+                           Margin="5"
+                           VerticalAlignment="Center"
+                           Content="Download language:" />
                     <ComboBox x:Name="flyoutSettingsComboboxDownloadlanguage"
-                          Grid.Row="0"
-                          Grid.Column="1"
-                          Margin="0,5,5,5"
-                          VerticalAlignment="Center" />
-
+                              Grid.Row="0"
+                              Grid.Column="1"
+                              Margin="0,5,5,5"
+                              VerticalAlignment="Center" />
                     <Button x:Name="flyoutSettingsButtonSave"
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Width="75"
-                        Margin="5"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
-                        Content="Save" />
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Width="75"
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Content="Save" />
+                    <UniformGrid Columns="3"
+                                 Grid.Column="0"
+                                 Grid.ColumnSpan="2"
+                                 Grid.Row="2"
+                                 Margin="10">
+                        <CheckBox IsChecked="{Binding AnimateOnPositionChange}">Animate</CheckBox>
+                        <Button Style="{DynamicResource SquareButtonStyle}"
+                                Margin="10"
+                                Click="ShowSettingsLeft"
+                                Content="Left" />
+                        <Button Style="{DynamicResource SquareButtonStyle}"
+                                Margin="10"
+                                Click="ShowSettingsRight"
+                                Content="Right" />
+                    </UniformGrid>
                 </Grid>
             </Controls:Flyout>
-
             <Controls:Flyout Header="Left" Position="Left">
                 <StackPanel Width="150" Margin="5,5,5,5">
                     <TextBlock Text="a test for left" />
@@ -149,17 +155,16 @@
                     </ComboBox>
                 </StackPanel>
             </Controls:Flyout>
-
             <Controls:Flyout Header="Top" Position="Top">
                 <StackPanel Height="100"
-                        Margin="5,5,5,5"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
+                            Margin="5,5,5,5"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
                     <Button Width="40"
-                        Height="40"
-                        FontFamily="Segoe UI Symbol"
-                        FontSize="16"
-                        Style="{DynamicResource MetroCircleButtonStyle}">
+                            Height="40"
+                            FontFamily="Segoe UI Symbol"
+                            FontSize="16"
+                            Style="{DynamicResource MetroCircleButtonStyle}">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.Fill>
                                 <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
@@ -170,14 +175,14 @@
             </Controls:Flyout>
             <Controls:Flyout Header="Bottom" Position="Bottom">
                 <StackPanel Height="80"
-                        Margin="5,5,5,5"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
+                            Margin="5,5,5,5"
+                            HorizontalAlignment="Right"
+                            Orientation="Horizontal">
                     <Button Width="40"
-                        Height="40"
-                        FontFamily="Segoe UI Symbol"
-                        FontSize="16"
-                        Style="{DynamicResource MetroCircleButtonStyle}">
+                            Height="40"
+                            FontFamily="Segoe UI Symbol"
+                            FontSize="16"
+                            Style="{DynamicResource MetroCircleButtonStyle}">
                         <Rectangle Width="20" Height="20">
                             <Rectangle.Fill>
                                 <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_add}" />
@@ -188,14 +193,13 @@
             </Controls:Flyout>
             <Controls:Flyout Header="Modal" Position="Right" IsModal="True">
                 <StackPanel Height="80"
-                        Margin="5,5,5,5"
-                        Orientation="Horizontal">
+                            Margin="5,5,5,5"
+                            Orientation="Horizontal">
                     <TextBlock>Modal Flyout</TextBlock>
                 </StackPanel>
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
-
     <Grid>
         <StackPanel Margin="10" HorizontalAlignment="Left">
             <CheckBox Content="ShowWindowCommandsOnTop"
@@ -240,7 +244,6 @@
                     Click="CloseMe"
                     Content="Close" />
         </StackPanel>
-
         <AdornerDecorator Margin="10"
                           Width="180"
                           HorizontalAlignment="Center"
@@ -265,5 +268,4 @@
                     Content="Show Left" />
         </StackPanel>
     </Grid>
-
 </Controls:MetroWindow>

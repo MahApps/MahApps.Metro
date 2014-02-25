@@ -73,5 +73,17 @@ namespace MetroDemo
 
             flyout.IsOpen = !flyout.IsOpen;
         }
+
+        private void ShowSettingsLeft(object sender, RoutedEventArgs e)
+        {
+            var flyout = (Flyout)this.Flyouts.Items[6];
+            flyout.Position = Position.Left;
+        }
+
+        private void ShowSettingsRight(object sender, RoutedEventArgs e)
+        {
+            var flyout = (Flyout)this.Flyouts.Items[6];
+            flyout.Position = Position.Right;
+        }
     }
 }

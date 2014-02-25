@@ -25,6 +25,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register("IsPinned", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+        public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register("AnimateOnPositionChange", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
@@ -62,6 +63,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets whether this flyout uses the open/close animation when changing the <see cref="Position"/> property. (default is true)
+        /// </summary>
+        public bool AnimateOnPositionChange
+        {
+            get { return (bool)GetValue(AnimateOnPositionChangeProperty); }
+            set { SetValue(AnimateOnPositionChangeProperty, value); }
         }
 
         /// <summary>
@@ -254,7 +264,22 @@ namespace MahApps.Metro.Controls
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (Flyout) dependencyObject;
-            flyout.ApplyAnimation((Position)e.NewValue);
+            var wasOpen = flyout.IsOpen;
+            if (wasOpen && flyout.AnimateOnPositionChange)
+            {
+                flyout.ApplyAnimation((Position)e.NewValue);
+                VisualStateManager.GoToState(flyout, "Hide", true);
+            }
+            else
+            {
+                flyout.ApplyAnimation((Position)e.NewValue, false);
+            }
+
+            if (wasOpen && flyout.AnimateOnPositionChange)
+            {
+                flyout.ApplyAnimation((Position)e.NewValue);
+                VisualStateManager.GoToState(flyout, "Show", true);
+            }
         }
 
         static Flyout()
@@ -286,7 +311,7 @@ namespace MahApps.Metro.Controls
             ApplyAnimation(Position);
         }
 
-        internal void ApplyAnimation(Position position)
+        internal void ApplyAnimation(Position position, bool resetShowFrame = true)
         {
             if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
                 return;
@@ -305,25 +330,29 @@ namespace MahApps.Metro.Controls
                     HorizontalAlignment = HorizontalAlignment.Left;
                     VerticalAlignment = VerticalAlignment.Stretch;
                     hideFrame.Value = -root.ActualWidth;
-                    root.RenderTransform = new TranslateTransform(-root.ActualWidth, 0);
+                    if (resetShowFrame)
+                        root.RenderTransform = new TranslateTransform(-root.ActualWidth, 0);
                     break;
                 case Position.Right:
                     HorizontalAlignment = HorizontalAlignment.Right;
                     VerticalAlignment = VerticalAlignment.Stretch;
                     hideFrame.Value = root.ActualWidth;
-                    root.RenderTransform = new TranslateTransform(root.ActualWidth, 0);
+                    if (resetShowFrame)
+                        root.RenderTransform = new TranslateTransform(root.ActualWidth, 0);
                     break;
                 case Position.Top:
                     HorizontalAlignment = HorizontalAlignment.Stretch;
                     VerticalAlignment = VerticalAlignment.Top;
                     hideFrameY.Value = -root.ActualHeight - 1;
-                    root.RenderTransform = new TranslateTransform(0, -root.ActualHeight - 1);
+                    if (resetShowFrame)
+                        root.RenderTransform = new TranslateTransform(0, -root.ActualHeight - 1);
                     break;
                 case Position.Bottom:
                     HorizontalAlignment = HorizontalAlignment.Stretch;
                     VerticalAlignment = VerticalAlignment.Bottom;
                     hideFrameY.Value = root.ActualHeight;
-                    root.RenderTransform = new TranslateTransform(0, root.ActualHeight);
+                    if (resetShowFrame)
+                        root.RenderTransform = new TranslateTransform(0, root.ActualHeight);
                     break;
             }
         }

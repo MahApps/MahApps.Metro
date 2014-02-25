@@ -34,6 +34,7 @@ namespace MetroDemo
     public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         int? _integerGreater10Property;
+        private bool _animateOnPositionChange = true;
 
         public MainWindowViewModel()
         {
@@ -215,6 +216,20 @@ namespace MetroDemo
         }
 
         public IEnumerable<string> BrushResources { get; private set; }
+
+        public bool AnimateOnPositionChange
+        {
+            get
+            {
+                return _animateOnPositionChange;
+            }
+            set
+            {
+                if (Equals(_animateOnPositionChange, value)) return;
+                _animateOnPositionChange = value;
+                RaisePropertyChanged("AnimateOnPositionChange");
+            }
+        }
 
         private IEnumerable<string> FindBrushResources()
         {
