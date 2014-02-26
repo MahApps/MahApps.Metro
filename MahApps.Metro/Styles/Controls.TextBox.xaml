@@ -273,7 +273,7 @@
 
     <Style TargetType="{x:Type TextBox}"
            BasedOn="{StaticResource MetroTextBox}"
-           x:Key="ButtonCommandMetroTextBox">
+           x:Key="MetroButtonTextBox">
         <Setter Property="Controls:TextboxHelper.ButtonTemplate"
                 Value="{DynamicResource ChromelessButtonTemplate}" />
         <!-- change SnapsToDevicePixels to True to view a better border and validation error -->
@@ -438,8 +438,12 @@
     </Style>
 
     <Style TargetType="{x:Type TextBox}"
+           BasedOn="MetroButtonTextBox"
+           x:Key="ButtonCommandMetroTextBox" />
+
+    <Style TargetType="{x:Type TextBox}"
            x:Key="SearchMetroTextBox"
-           BasedOn="{StaticResource ButtonCommandMetroTextBox}">
+           BasedOn="{StaticResource MetroButtonTextBox}">
         <Setter Property="Controls:TextboxHelper.ButtonTemplate">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">

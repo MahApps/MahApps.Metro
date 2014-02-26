@@ -372,7 +372,7 @@
                                          Controls:TextboxHelper.Watermark="Custom icon style"
                                          Controls:TextboxHelper.ButtonContent="s"
                                          Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                         Style="{DynamicResource ButtonCommandMetroTextBox}" />
+                                         Style="{DynamicResource MetroButtonTextBox}" />
                                 <TextBox Margin="0, 10, 0, 0"
                                          Controls:TextboxHelper.Watermark="Number smaller than 10"
                                          Text="{Binding IntegerGreater10Property,
