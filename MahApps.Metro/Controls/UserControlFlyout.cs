@@ -25,6 +25,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(UserControlFlyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register("IsPinned", typeof(bool), typeof(UserControlFlyout), new PropertyMetadata(true));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(UserControlFlyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+        public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register("AnimateOnPositionChange", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(UserControlFlyout));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(UserControlFlyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(UserControlFlyout), new UIPropertyMetadata(null));
@@ -62,6 +63,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets whether this flyout uses the open/close animation when changing the <see cref="Position"/> property. (default is true)
+        /// </summary>
+        public bool AnimateOnPositionChange
+        {
+            get { return (bool)GetValue(AnimateOnPositionChangeProperty); }
+            set { SetValue(AnimateOnPositionChangeProperty, value); }
         }
 
         /// <summary>
@@ -232,6 +242,10 @@ namespace MahApps.Metro.Controls
         private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (UserControlFlyout)dependencyObject;
+            if ((bool)e.NewValue)
+            {
+                flyout.ApplyAnimation(flyout.Position);
+            }
 
             VisualStateManager.GoToState(flyout, (bool) e.NewValue == false ? "Hide" : "Show", true);
             if (flyout.IsOpenChanged != null)
@@ -249,7 +263,22 @@ namespace MahApps.Metro.Controls
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (UserControlFlyout) dependencyObject;
+            var wasOpen = flyout.IsOpen;
+            if (wasOpen && flyout.AnimateOnPositionChange)
+            {
             flyout.ApplyAnimation((Position)e.NewValue);
+                VisualStateManager.GoToState(flyout, "Hide", true);
+            }
+            else
+            {
+                flyout.ApplyAnimation((Position)e.NewValue, false);
+            }
+
+            if (wasOpen && flyout.AnimateOnPositionChange)
+            {
+                flyout.ApplyAnimation((Position)e.NewValue);
+                VisualStateManager.GoToState(flyout, "Show", true);
+            }
         }
 
         static UserControlFlyout()
@@ -281,7 +310,7 @@ namespace MahApps.Metro.Controls
             ApplyAnimation(Position);
         }
 
-        internal void ApplyAnimation(Position position)
+        internal void ApplyAnimation(Position position, bool resetShowFrame = true)
         {
             if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
                 return;
@@ -290,7 +319,9 @@ namespace MahApps.Metro.Controls
                 showFrame.Value = 0;
             if (Position == Position.Top || Position == Position.Bottom)
                 showFrameY.Value = 0;
-            root.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+
+            // I mean, we don't need this anymore, because we use ActualWidth and ActualHeight of the root
+            //root.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
 
             switch (position)
             {
@@ -298,25 +329,29 @@ namespace MahApps.Metro.Controls
                     HorizontalAlignment = HorizontalAlignment.Left;
                     VerticalAlignment = VerticalAlignment.Stretch;
                     hideFrame.Value = -root.ActualWidth;
-                    root.RenderTransform = new TranslateTransform(-root.ActualWidth, 0);
+                    if (resetShowFrame)
+                        root.RenderTransform = new TranslateTransform(-root.ActualWidth, 0);
                     break;
                 case Position.Right:
                     HorizontalAlignment = HorizontalAlignment.Right;
                     VerticalAlignment = VerticalAlignment.Stretch;
                     hideFrame.Value = root.ActualWidth;
-                    root.RenderTransform = new TranslateTransform(root.ActualWidth, 0);
+                    if (resetShowFrame)
+                        root.RenderTransform = new TranslateTransform(root.ActualWidth, 0);
                     break;
                 case Position.Top:
                     HorizontalAlignment = HorizontalAlignment.Stretch;
                     VerticalAlignment = VerticalAlignment.Top;
                     hideFrameY.Value = -root.ActualHeight - 1;
-                    root.RenderTransform = new TranslateTransform(0, -root.ActualHeight - 1);
+                    if (resetShowFrame)
+                        root.RenderTransform = new TranslateTransform(0, -root.ActualHeight - 1);
                     break;
                 case Position.Bottom:
                     HorizontalAlignment = HorizontalAlignment.Stretch;
                     VerticalAlignment = VerticalAlignment.Bottom;
                     hideFrameY.Value = root.ActualHeight;
-                    root.RenderTransform = new TranslateTransform(0, root.ActualHeight);
+                    if (resetShowFrame)
+                        root.RenderTransform = new TranslateTransform(0, root.ActualHeight);
                     break;
             }
         }
@@ -325,15 +360,10 @@ namespace MahApps.Metro.Controls
         {
             base.OnRenderSizeChanged(sizeInfo);
 
+            if (!IsOpen) return; // no changes for invisible flyouts, ApplyAnimation is called now in visible changed event
             if (!sizeInfo.WidthChanged && !sizeInfo.HeightChanged) return;
             if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
                 return; // don't bother checking IsOpen and calling ApplyAnimation
-
-            if (!IsOpen)
-            {
-                ApplyAnimation(Position);
-                return;
-            }
 
             if (Position == Position.Left || Position == Position.Right)
                 showFrame.Value = 0;
