@@ -465,6 +465,12 @@
                                              Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                                              Style="{DynamicResource MetroButtonCommandPasswordBox}" />
                                 <PasswordBox Margin="0, 10, 0, 0"
+                                             Controls:TextboxHelper.Watermark="Another custom icon style"
+                                             Controls:TextboxHelper.ButtonFontFamily="Wingdings"
+                                             Controls:TextboxHelper.ButtonContent="à"
+                                             Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                                             Style="{DynamicResource MetroButtonCommandPasswordBox}" />
+                                <PasswordBox Margin="0, 10, 0, 0"
                                              IsEnabled="False"
                                              Password="Password" />
                                 <PasswordBox Margin="0, 10, 0, 0"
