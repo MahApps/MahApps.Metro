@@ -32,6 +32,8 @@
                 Value="26" />
         <Setter Property="MinWidth"
                 Value="62" />
+        <Setter Property="Background"
+                Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="Validation.ErrorTemplate"
                 Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="Template">
@@ -40,7 +42,8 @@
                     <Grid Height="{TemplateBinding Height}"
                           MinHeight="{TemplateBinding MinHeight}"
                           MaxHeight="{TemplateBinding MaxHeight}"
-                          VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                          VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                          Background="{TemplateBinding Background}">
                         <Rectangle x:Name="Base"
                                    Stroke="{TemplateBinding BorderBrush}"
                                    StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
@@ -48,7 +51,7 @@
                         <Rectangle x:Name="FocusRectangle"
                                    Visibility="Collapsed"
                                    StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" />
-                        <Grid Background="{TemplateBinding Background}">
+                        <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition Width="20" />
