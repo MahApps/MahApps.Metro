@@ -321,10 +321,6 @@ namespace MahApps.Metro.Controls.Dialogs
 
             dialog.OnShown();
 
-            if (window.TextBlockStyle != null && !dialog.Resources.Contains(typeof(TextBlock)))
-            {
-                dialog.Resources.Add(typeof(TextBlock), window.TextBlockStyle);
-            }
             return sizeHandler;
         }
         #endregion
