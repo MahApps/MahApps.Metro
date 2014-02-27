@@ -1,0 +1,46 @@
+﻿<controls:MetroUserControl x:Class="MetroDemo.UserControl2"
+                           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                           xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                           xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                           d:DesignHeight="300"
+                           d:DesignWidth="300"
+                           mc:Ignorable="d">
+    <controls:MetroUserControl.Flyouts>
+        <controls:UserControlFlyoutsControl>
+            <controls:UserControlFlyout Header="New Goodness"
+                                        Position="Top"
+                                        Theme="Accent">
+                <StackPanel Margin="10" Height="150" Orientation="Vertical">
+                    <Button Content="create" />
+                    <Button Content="cancel" />
+                </StackPanel>
+            </controls:UserControlFlyout>
+            <controls:UserControlFlyout Header="More Goodness" Position="Bottom">
+                <StackPanel Margin="10" Orientation="Vertical" Height="150">
+                    <Button Content="create" />
+                </StackPanel>
+            </controls:UserControlFlyout>
+        </controls:UserControlFlyoutsControl>
+    </controls:MetroUserControl.Flyouts>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1">
+            <Label HorizontalAlignment="Center" Content="User Control 2" />
+            <Button Width="120"
+                    Height="25"
+                    Click="ShowTop_Click"
+                    Content="Toggle Top Flyout" />
+            <Button Width="120"
+                    Height="25"
+                    Click="ShowBottom_Click"
+                    Content="Toggle Bottom Flyout" Margin="0,0,0,8" />
+        </StackPanel>
+    </Grid>
+</controls:MetroUserControl>
