@@ -858,7 +858,7 @@ namespace MahApps.Metro.Controls
                 //remove tailing e.g.
                 //pcs. from "{0:N2} pcs."
                 format = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray());
-                text = text.Replace(format, string.Empty);
+                text = text.Replace(format.Trim(), string.Empty);
             }
             return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
         }
