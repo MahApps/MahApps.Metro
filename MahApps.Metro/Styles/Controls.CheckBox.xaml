@@ -147,6 +147,16 @@
                                           Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="FlowDirection" Value="RightToLeft">
+                            <Setter TargetName="checkBox"
+                                    Property="LayoutTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="-1" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

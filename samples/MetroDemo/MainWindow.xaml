@@ -264,6 +264,7 @@
                                     HorizontalAlignment="Center">
                             <Label Content="Checkbox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <CheckBox Margin="0, 10, 0, 0" Content="Enabled" />
+                            <CheckBox Margin="0, 10, 0, 0" FlowDirection="RightToLeft" Content="RightToLeft:" />
                             <CheckBox Margin="0, 10, 0, 0"
                                       Content="Enabled"
                                       IsChecked="True" />
