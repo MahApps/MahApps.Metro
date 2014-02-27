@@ -25,6 +25,7 @@ namespace MahApps.Metro.Controls
 
         private const string ScientificNotationChar = "E";
         private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
+        private Tuple<string, string> _removeFromText = new Tuple<string, string>(string.Empty, string.Empty);
 
         public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
@@ -665,6 +666,7 @@ namespace MahApps.Metro.Controls
         {
             NumericUpDown nud = (NumericUpDown)d;
 
+            nud.SetRemoveStringFormatFromText((string)e.NewValue);
             if (nud._valueTextBox != null &&
                 nud.Value.HasValue)
             {
@@ -843,24 +845,45 @@ namespace MahApps.Metro.Controls
 
         private bool ValidateText(string text, out double convertedValue)
         {
-            //remove special string formattings in order to be able to parse it to double e.g. StringFormat = "{0:N2} pcs." then remove pcs. from text
-            string format = StringFormat;
+            text = RemoveStringFormatFromText(text);
+
+            return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
+        }
+
+        private string RemoveStringFormatFromText(string text)
+        {
+            // remove special string formattings in order to be able to parse it to double e.g. StringFormat = "{0:N2} pcs." then remove pcs. from text
+            if (!string.IsNullOrEmpty(_removeFromText.Item1))
+            {
+                text = text.Replace(_removeFromText.Item1, string.Empty);
+            }
+            if (!string.IsNullOrEmpty(_removeFromText.Item2))
+            {
+                text = text.Replace(_removeFromText.Item2, string.Empty);
+            }
+            return text;
+        }
+
+        private void SetRemoveStringFormatFromText(string stringFormat)
+        {
+            string tailing = string.Empty;
+            string leading = string.Empty;
+            string format = stringFormat;
             int indexOf = format.IndexOf("{", StrComp);
             if (indexOf > -1)
             {
                 if (indexOf > 0)
                 {
-                    //remove beginning e.g.
-                    //pcs. from "pcs. {0:N2}"
-                    string toRemove = format.Substring(0, indexOf);
-                    text = text.Replace(toRemove, string.Empty);
+                    // remove beginning e.g.
+                    // pcs. from "pcs. {0:N2}"
+                    tailing = format.Substring(0, indexOf);
                 }
-                //remove tailing e.g.
-                //pcs. from "{0:N2} pcs."
-                format = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray());
-                text = text.Replace(format.Trim(), string.Empty);
+                // remove tailing e.g.
+                // pcs. from "{0:N2} pcs."
+                leading = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray()).Trim();
             }
-            return double.TryParse(text, NumberStyles.Any, SpecificCultureInfo, out convertedValue);
+
+            _removeFromText = new Tuple<string, string>(tailing,leading);
         }
     }
 }
