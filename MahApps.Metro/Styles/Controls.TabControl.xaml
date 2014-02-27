@@ -183,18 +183,21 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected"
                                  Value="true">
-                            <Setter Property="Foreground"
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="false">
-                            <Setter Property="Foreground"
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
                                     Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         <Trigger SourceName="ContentSite"
                                  Property="IsMouseOver"
                                  Value="True">
-                            <Setter Property="Foreground"
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
                                     Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>

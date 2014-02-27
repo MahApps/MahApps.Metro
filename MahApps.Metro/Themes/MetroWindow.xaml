@@ -208,8 +208,6 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
-        <Setter Property="TextBlockStyle"
-                Value="{StaticResource MetroTextBlock}" />
         <Setter Property="TextElement.FontSize"
                 Value="{DynamicResource ContentFontSize}"/>
         <Setter Property="Background"

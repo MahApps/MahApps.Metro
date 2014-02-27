@@ -46,6 +46,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        [Obsolete("This propery isn't needed anymore, it will be deleted in next release...")]
         public static readonly DependencyProperty TextBlockStyleProperty = DependencyProperty.Register("TextBlockStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(default(Style)));
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
         internal static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
@@ -79,6 +80,7 @@ namespace MahApps.Metro.Controls
 
         public MetroDialogSettings MetroDialogOptions { get; private set; }
 
+        [Obsolete("This propery isn't needed anymore, it will be deleted in next release...")]
         public Style TextBlockStyle
         {
             get { return (Style)this.GetValue(TextBlockStyleProperty); }
@@ -456,11 +458,6 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            if (TextBlockStyle != null && !this.Resources.Contains(typeof(TextBlock)))
-            {
-                this.Resources.Add(typeof(TextBlock), TextBlockStyle);
-            }
 
             if (WindowCommands == null)
                 WindowCommands = new WindowCommands();

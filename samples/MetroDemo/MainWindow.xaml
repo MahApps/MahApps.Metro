@@ -1239,7 +1239,6 @@
                                                    Margin="4,2,4,10"
                                                    FontSize="{DynamicResource NormalFontSize}"
                                                    TextAlignment="Center"
-                                                   Foreground="Black"
                                                    Text="{Binding}" />
                                     </Grid>
                                 </DataTemplate>

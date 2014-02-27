@@ -51,6 +51,7 @@
                                               TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                               TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                               TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
                                               ContentSource="Header"
                                               RecognizesAccessKey="True" />
                             <Button x:Name="PART_CloseButton"
@@ -71,18 +72,21 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected"
                                  Value="true">
-                            <Setter Property="Foreground"
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="false">
-                            <Setter Property="Foreground"
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
                                     Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         <Trigger SourceName="ContentSite"
                                  Property="IsMouseOver"
                                  Value="True">
-                            <Setter Property="Foreground"
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
                                     Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
                         <Trigger SourceName="PART_CloseButton"
