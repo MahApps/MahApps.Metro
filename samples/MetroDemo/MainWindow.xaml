@@ -264,7 +264,8 @@
                                     HorizontalAlignment="Center">
                             <Label Content="Checkbox" Style="{StaticResource DescriptionHeaderStyle}" />
                             <CheckBox Margin="0, 10, 0, 0" Content="Enabled" />
-                            <CheckBox Margin="0, 10, 0, 0" FlowDirection="RightToLeft" Content="RightToLeft:" />
+                            <CheckBox Margin="0, 10, 0, 0" FlowDirection="RightToLeft" Content="FlowDirection RightToLeft:" />
+                            <CheckBox Margin="0, 10, 0, 0" Controls:ControlsHelper.ContentDirection="RightToLeft" Content="ContentDirection RightToLeft:" />
                             <CheckBox Margin="0, 10, 0, 0"
                                       Content="Enabled"
                                       IsChecked="True" />
@@ -296,6 +297,8 @@
                                          Content="Enabled"
                                          GroupName="1"
                                          IsChecked="True" />
+                            <RadioButton Margin="0, 10, 0, 0" GroupName="1" FlowDirection="RightToLeft" Content="FlowDirection RightToLeft:" />
+                            <RadioButton Margin="0, 10, 0, 0" GroupName="1" Controls:ControlsHelper.ContentDirection="RightToLeft" Content="ContentDirection RightToLeft:" />
                             <RadioButton Margin="0, 10, 0, 0"
                                          Content="Disabled"
                                          GroupName="2"
