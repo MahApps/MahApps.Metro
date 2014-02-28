@@ -1,7 +1,5 @@
 namespace MahApps.Metro.Controls
 {
-    #region Using Directives
-
     using System;
     using System.ComponentModel;
     using System.Globalization;
@@ -11,8 +9,6 @@ namespace MahApps.Metro.Controls
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
 
-    #endregion
-
     /// <summary>
     ///     Represents a Windows spin box (also known as an up-down control) that displays numeric values.
     /// </summary>
@@ -21,20 +17,15 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementTextBox, Type = typeof(TextBox))]
     public class NumericUpDown : Control
     {
-        #region Readonly
-
-        private const string ScientificNotationChar = "E";
-        private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
-        private Tuple<string, string> _removeFromText = new Tuple<string, string>(string.Empty, string.Empty);
-
         public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MaximumReachedEvent = EventManager.RegisterRoutedEvent("MaximumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MinimumReachedEvent = EventManager.RegisterRoutedEvent("MinimumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent ValueChangedEvent =  EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<double?>), typeof(NumericUpDown));
+        public static readonly RoutedEvent ValueChangedEvent = EventManager.RegisterRoutedEvent("ValueChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<double?>), typeof(NumericUpDown));
         
-        public static readonly DependencyProperty DelayProperty = DependencyProperty.Register("Delay",
+        public static readonly DependencyProperty DelayProperty = DependencyProperty.Register(
+            "Delay",
             typeof(int),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(DefaultDelay, OnDelayChanged),
@@ -42,51 +33,60 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty TextAlignmentProperty = TextBox.TextAlignmentProperty.AddOwner(typeof(NumericUpDown));
 
-        public static readonly DependencyProperty SpeedupProperty = DependencyProperty.Register("Speedup",
+        public static readonly DependencyProperty SpeedupProperty = DependencyProperty.Register(
+            "Speedup",
             typeof(bool),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, OnSpeedupChanged));
 
-        public static readonly DependencyProperty IsReadOnlyProperty = TextBoxBase.IsReadOnlyProperty.AddOwner(typeof(NumericUpDown),
+        public static readonly DependencyProperty IsReadOnlyProperty = TextBoxBase.IsReadOnlyProperty.AddOwner(
+            typeof(NumericUpDown),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
 
-        public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register("StringFormat",
+        public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register(
+            "StringFormat",
             typeof(string),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(string.Empty, OnStringFormatChanged, CoerceStringFormat));
 
-        public static readonly DependencyProperty InterceptArrowKeysProperty = DependencyProperty.Register("InterceptArrowKeys",
+        public static readonly DependencyProperty InterceptArrowKeysProperty = DependencyProperty.Register(
+            "InterceptArrowKeys",
             typeof(bool),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true));
 
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register("Value",
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
+            "Value",
             typeof(double?),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(default(double?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged, CoerceValue));
 
-        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register("Minimum",
+        public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
+            "Minimum",
             typeof(double),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(double.MinValue, OnMinimumChanged));
 
-        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register("Maximum",
+        public static readonly DependencyProperty MaximumProperty = DependencyProperty.Register(
+            "Maximum",
             typeof(double),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(double.MaxValue, OnMaximumChanged, CoerceMaximum));
 
-        public static readonly DependencyProperty IntervalProperty = DependencyProperty.Register("Interval",
+        public static readonly DependencyProperty IntervalProperty = DependencyProperty.Register(
+            "Interval",
             typeof(double),
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(DefaultInterval, IntervalChanged));
 
-        public static readonly DependencyProperty InterceptMouseWheelProperty = DependencyProperty.Register("InterceptMouseWheel", 
+        public static readonly DependencyProperty InterceptMouseWheelProperty = DependencyProperty.Register(
+            "InterceptMouseWheel", 
             typeof(bool), 
             typeof(NumericUpDown), 
             new FrameworkPropertyMetadata(true));
 
-
-        public static readonly DependencyProperty TrackMouseWheelWhenMouseOverProperty = DependencyProperty.Register("TrackMouseWheelWhenMouseOver", 
+        public static readonly DependencyProperty TrackMouseWheelWhenMouseOverProperty = DependencyProperty.Register(
+            "TrackMouseWheelWhenMouseOver", 
             typeof(bool), 
             typeof(NumericUpDown), 
             new FrameworkPropertyMetadata(default(bool)));
@@ -96,9 +96,10 @@ namespace MahApps.Metro.Controls
         private const string ElementNumericDown = "PART_NumericDown";
         private const string ElementNumericUp = "PART_NumericUp";
         private const string ElementTextBox = "PART_TextBox";
+        private const string ScientificNotationChar = "E";
+        private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
 
-        #endregion
-
+        private Tuple<string, string> _removeFromText = new Tuple<string, string>(string.Empty, string.Empty);
         private double _internalIntervalMultiplierForCalculation = DefaultInterval;
         private double _internalLargeChange = DefaultInterval * 100;
         private double _intervalValueSinceReset;
@@ -364,8 +365,13 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected virtual void OnMaximumChanged(double oldMaximum, double newMaximum) {}
-        protected virtual void OnMinimumChanged(double oldMinimum, double newMinimum) {}
+        protected virtual void OnMaximumChanged(double oldMaximum, double newMaximum)
+        {
+        }
+
+        protected virtual void OnMinimumChanged(double oldMinimum, double newMinimum)
+        {
+        }
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
@@ -413,7 +419,6 @@ namespace MahApps.Metro.Controls
 
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-
             e.Handled = true;
             if (string.IsNullOrWhiteSpace(e.Text) ||
                 e.Text.Length != 1)
@@ -423,7 +428,7 @@ namespace MahApps.Metro.Controls
 
             string text = e.Text;
 
-            if (Char.IsDigit(text[0]))
+            if (char.IsDigit(text[0]))
             {
                 e.Handled = false;
             }
@@ -431,7 +436,7 @@ namespace MahApps.Metro.Controls
             {
                 CultureInfo equivalentCulture = SpecificCultureInfo;
                 NumberFormatInfo numberFormatInfo = equivalentCulture.NumberFormat;
-                TextBox textBox = ((TextBox)sender);
+                TextBox textBox = (TextBox)sender;
                 bool allTextSelected = textBox.SelectedText == textBox.Text;
 
                 if (numberFormatInfo.NumberDecimalSeparator == text)
@@ -448,7 +453,7 @@ namespace MahApps.Metro.Controls
                     {
                         if (textBox.SelectionStart == 0)
                         {
-                            //check if text already has a + or - sign
+                            // check if text already has a + or - sign
                             if (textBox.Text.Length > 1)
                             {
                                 if (allTextSelected || 
@@ -482,7 +487,9 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup) {}
+        protected virtual void OnSpeedupChanged(bool oldSpeedup, bool newSpeedup)
+        {
+        }
 
         /// <summary>
         ///     Raises the <see cref="ValueChanged" /> routed event.
@@ -557,34 +564,6 @@ namespace MahApps.Metro.Controls
             {
                 var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent);
                 RaiseEvent(eventArgs);
-            }
-        }
-
-        private void InternalSetText(double? newValue)
-        {
-            if (!newValue.HasValue)
-            {
-                _valueTextBox.Text = null;
-                return;
-            }
-
-            CultureInfo culture = SpecificCultureInfo;
-            if (string.IsNullOrEmpty(StringFormat))
-            {
-                _valueTextBox.Text = newValue.Value.ToString(culture);
-            }
-            else if (!StringFormat.Contains("{")) //then we may have a StringFormat of e.g. "N0"
-            {
-                _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
-            }
-            else
-            {
-                _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
-            }
-
-            if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
-            {
-                SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
             }
         }
 
@@ -684,6 +663,35 @@ namespace MahApps.Metro.Controls
         private static bool ValidateDelay(object value)
         {
             return Convert.ToInt32(value) >= 0;
+        }
+
+        private void InternalSetText(double? newValue)
+        {
+            if (!newValue.HasValue)
+            {
+                _valueTextBox.Text = null;
+                return;
+            }
+
+            CultureInfo culture = SpecificCultureInfo;
+            if (string.IsNullOrEmpty(StringFormat))
+            {
+                _valueTextBox.Text = newValue.Value.ToString(culture);
+            }
+            else if (!StringFormat.Contains("{")) 
+            {
+                // then we may have a StringFormat of e.g. "N0"
+                _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
+            }
+            else
+            {
+                _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
+            }
+
+            if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
+            {
+                SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
+            }
         }
 
         private void ChangeValueWithSpeedUp(bool toPositive)
@@ -795,7 +803,7 @@ namespace MahApps.Metro.Controls
 
         private void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (String.IsNullOrEmpty(((TextBox)sender).Text))
+            if (string.IsNullOrEmpty(((TextBox)sender).Text))
             {
                 Value = null;
             }
@@ -812,7 +820,7 @@ namespace MahApps.Metro.Controls
 
         private void OnValueTextBoxPaste(object sender, DataObjectPastingEventArgs e)
         {
-            var textBox = ((TextBox)sender);
+            var textBox = (TextBox)sender;
             string textPresent = textBox.Text;
 
             var isText = e.SourceDataObject.GetDataPresent(DataFormats.Text, true);
@@ -878,12 +886,13 @@ namespace MahApps.Metro.Controls
                     // pcs. from "pcs. {0:N2}"
                     tailing = format.Substring(0, indexOf);
                 }
+
                 // remove tailing e.g.
                 // pcs. from "{0:N2} pcs."
                 leading = new string(format.SkipWhile(i => i != '}').Skip(1).ToArray()).Trim();
             }
 
-            _removeFromText = new Tuple<string, string>(tailing,leading);
+            _removeFromText = new Tuple<string, string>(tailing, leading);
         }
     }
 }
