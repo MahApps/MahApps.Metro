@@ -3,7 +3,8 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters"
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
+                    xmlns:airspace="clr-namespace:Microsoft.DwayneNeed.Interop">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
@@ -112,9 +113,15 @@
                                                        Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
 
                         <!-- the main window content -->
-                        <ContentPresenter Grid.Row="1"
+                        <airspace:AirspaceDecorator Grid.Row="1"
                                           Grid.Column="0"
-                                          Grid.ColumnSpan="3" />
+                                          Grid.ColumnSpan="3"
+                                          AirspaceMode="Redirect"
+                                          Background="{TemplateBinding Background}"
+                                          IsInputRedirectionEnabled="True"
+                                          IsOutputRedirectionEnabled="True">
+                            <ContentPresenter  />
+                        </airspace:AirspaceDecorator>
 
                         <!-- disables the main content when a modal flyout is shown -->
                         <Rectangle Grid.RowSpan="2" 
@@ -123,7 +130,7 @@
                                    Fill="{DynamicResource BlackColorBrush}"
                                    Opacity="0.5"
                                    Visibility="Hidden"/>
-                        
+
                         <!-- flyouts -->
                         <ContentControl Grid.Row="0"
                                         Grid.Column="0"
@@ -134,8 +141,8 @@
                                         KeyboardNavigation.TabNavigation="None"
                                         Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                         VerticalAlignment="Stretch" />
-                        
-                        
+
+
                         <!--Used to create that overlay effect. Can be used for anything.-->
                         <Grid Grid.Row="0"
                               Grid.Column="0"
@@ -147,7 +154,7 @@
                               Background="{DynamicResource BlackColorBrush}"
                               Opacity="0"
                               Visibility="Hidden" />
-                        
+
                         <Grid Grid.Row="0"
                               Grid.Column="0"
                               Grid.ColumnSpan="3"

@@ -48,6 +48,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\MahApps.Metro.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -142,6 +143,104 @@
     <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converters\TreeViewMarginConverter.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\DispatcherExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\ElementExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\EventHandlerExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\HwndHostExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\HwndSourceExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\Int32CollectionExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\Int32RectExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\MeshGeometry3DExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\PresentationSourceExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\RectExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Extensions\WebBrowserExtensions.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Input\RoutedCommand.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\AirspaceDecorator.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\AirspaceMode.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\AirspaceScrollViewer.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\CallbackHwndHost.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\CopyBitsBehavior.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\DeviceContextCachePolicy.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\HwndHostCommands.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\HwndHostEx.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\HwndSourceHost.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\HwndSourceHostRoot.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\MouseActivateParameter.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\RedirectedHwndHost.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\RedirectedHwndSourceHost.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\RedirectedWindow.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\RedirectionVisibility.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\WindowBase.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\WindowClass.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\WindowClassType.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\WindowParameters.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Interop\WindowShowState.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\ComCtl32\StrongHWND.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\ComCtl32\StrongHWNDSubclass.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\ComCtl32\SUBCLASSPROC.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\ComCtl32\WindowSubclass.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Common\ThreadAffinitizedHandle.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\DwmApi\DWM_EC.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\BI.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\BITMAPINFO.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\BKMODE.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\CHARSET.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\CLIP.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\COLOR.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\COLORREF.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\DIB.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\FF.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\FW.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\GDC.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\HBRUSH.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\HDC.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\HGDIOBJ.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\OBJ.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\OUTPRECIS.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\PITCH.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\PITCH_FF.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\QUALITY.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Gdi32\ROP.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Kernel32\Error.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Kernel32\MEM.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Kernel32\PAGE.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Kernel32\SEC.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Kernel32\SYSTEM_INFO.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\Kernel32\_PROCESSOR_INFO_UNION.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\NativeMacros.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\NativeMethods.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\UrlMon\INTERNETFEATURELIST.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\UrlMon\SET_FEATURE.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\CS.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\DT.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\GA.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\GCL.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\GCW.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\GW.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\GWL.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\HARDWAREINPUT.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\HWND.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\INPUT.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\KEYBDINPUT.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\KEYEVENTF.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\LWA.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\MA.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\MOUSEEVENTF.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\MOUSEINPUT.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\POINT.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\PW.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\RDW.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\RECT.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\SW.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\SWP.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\TIMERPROC.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\VK.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\WINDOWPOS.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\WM.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\WNDCLASSEX.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\WNDPROC.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\WS.cs" />
+    <Compile Include="Microsoft.DwayneNeed.Interop\Win32\User32\WS_EX.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\Debug.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\DoubleUtil.cs" />
@@ -614,6 +713,10 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Microsoft.DwayneNeed.Interop\Win32\Documentation\API.xlsx" />
+    <None Include="Microsoft.DwayneNeed.Interop\Win32\Documentation\readme.docx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
