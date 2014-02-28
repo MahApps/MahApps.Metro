@@ -106,10 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CleanWindowDemo.xaml.cs">
+    <Compile Include="ExampleWindows\CleanWindowDemo.xaml.cs">
       <DependentUpon>CleanWindowDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomFlyout.xaml.cs">
+    <Compile Include="ExampleWindows\CustomFlyout.xaml.cs">
       <DependentUpon>CustomFlyout.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExampleViews\ButtonsExample.xaml.cs">
@@ -139,13 +139,13 @@
     <Compile Include="ExampleViews\TextExamples.xaml.cs">
       <DependentUpon>TextExamples.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FlyoutDemo.xaml.cs">
+    <Compile Include="ExampleWindows\FlyoutDemo.xaml.cs">
       <DependentUpon>FlyoutDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IconsWindow.xaml.cs">
+    <Compile Include="ExampleWindows\IconsWindow.xaml.cs">
       <DependentUpon>IconsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InteropDemo.xaml.cs">
+    <Compile Include="ExampleWindows\InteropDemo.xaml.cs">
       <DependentUpon>InteropDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindowViewModel.cs" />
@@ -159,14 +159,14 @@
     <Compile Include="Navigation\InterestingPage.xaml.cs">
       <DependentUpon>InterestingPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VSDemo.xaml.cs">
+    <Compile Include="ExampleWindows\VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
-    <Page Include="CleanWindowDemo.xaml">
+    <Page Include="ExampleWindows\CleanWindowDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CustomFlyout.xaml">
+    <Page Include="ExampleWindows\CustomFlyout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,15 +206,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="FlyoutDemo.xaml">
+    <Page Include="ExampleWindows\FlyoutDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="IconsWindow.xaml">
+    <Page Include="ExampleWindows\IconsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InteropDemo.xaml">
+    <Page Include="ExampleWindows\InteropDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -243,7 +243,7 @@
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
     </Page>
-    <Page Include="VSDemo.xaml">
+    <Page Include="ExampleWindows\VSDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

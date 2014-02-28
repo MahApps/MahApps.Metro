@@ -1,4 +1,4 @@
-﻿namespace MetroDemo
+﻿namespace MetroDemo.ExampleWindows
 {
     public partial class InteropDemo
     {
