@@ -1,0 +1,234 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.TextExamples"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <AdornerDecorator>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0"
+                        Width="150">
+                <Label Content="TextBox"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.IsSpellCheckContextMenuEnabled="True"
+                         Text="Enabled" />
+                <CheckBox Margin="0, 10, 0, 0"
+                          Content="Wait for...."
+                          IsChecked="{Binding ElementName=waitingTextBox, Path=(Controls:TextboxHelper.IsWaitingForData)}" />
+                <TextBox x:Name="waitingTextBox"
+                         Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.Watermark="Watermark"
+                         Controls:TextboxHelper.IsWaitingForData="True"
+                         ToolTip="Default alignment" />
+                <TextBox Margin="0, 10, 0, 0"
+                         HorizontalContentAlignment="Center"
+                         Controls:TextboxHelper.Watermark="Watermark"
+                         ToolTip="Text and watermark at center" />
+                <TextBox Margin="0, 10, 0, 0"
+                         HorizontalContentAlignment="Right"
+                         TextAlignment="Left"
+                         Controls:TextboxHelper.Watermark="Watermark"
+                         ToolTip="Text at left, watermark at right" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.ClearTextButton="True"
+                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                         Controls:TextboxHelper.Watermark="Watermark"
+                         Text="Clear button" />
+                <TextBox Margin="0, 10, 0, 0"
+                         FontSize="20"
+                         Controls:TextboxHelper.ClearTextButton="True"
+                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                         Controls:TextboxHelper.Watermark="Watermark"
+                         Controls:ControlsHelper.ButtonWidth="30"
+                         Text="Big" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Name="test1"
+                         Controls:TextboxHelper.Watermark="Search style"
+                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                         Style="{DynamicResource SearchMetroTextBox}" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Name="test2"
+                         Controls:TextboxHelper.Watermark="Enter parameter"
+                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}"
+                         Controls:TextboxHelper.ButtonCommandParameter="{Binding ElementName=test2, Path=Text}"
+                         Style="{DynamicResource SearchMetroTextBox}" />
+                <TextBox Margin="0, 10, 0, 0"
+                         FontSize="18"
+                         Controls:TextboxHelper.Watermark="Search style"
+                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                         Style="{DynamicResource SearchMetroTextBox}"
+                         Controls:ControlsHelper.ButtonWidth="28"
+                         Text="Big search" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.Watermark="Custom icon style"
+                         Controls:TextboxHelper.ButtonContent="s"
+                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                         Style="{DynamicResource MetroButtonTextBox}" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.Watermark="Number smaller than 10"
+                         Text="{Binding IntegerGreater10Property,
+                                                    ValidatesOnDataErrors=True,
+                                                    UpdateSourceTrigger=PropertyChanged,
+                                                    NotifyOnValidationError=True}" />
+                <TextBox Margin="0, 10, 0, 0"
+                         IsEnabled="False"
+                         Text="Disabled" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.Watermark="Watermark"
+                         IsEnabled="False" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.ClearTextButton="True"
+                         Controls:TextboxHelper.Watermark="Watermark"
+                         IsEnabled="False"
+                         Text="Clear button" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.Watermark="Search style"
+                         IsEnabled="False"
+                         Style="{DynamicResource SearchMetroTextBox}" />
+                <TextBox Margin="0, 10, 0, 0"
+                         Controls:TextboxHelper.Watermark="Number smaller than 10"
+                         IsEnabled="False"
+                         Text="{Binding IntegerGreater10Property,
+                                                    ValidatesOnDataErrors=True,
+                                                    UpdateSourceTrigger=PropertyChanged,
+                                                    NotifyOnValidationError=True}" />
+            </StackPanel>
+            <StackPanel Grid.Column="1"
+                        Width="150">
+                <Label Content="RichTextBox"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+                <RichTextBox Margin="0, 10, 0, 0"
+                             Controls:TextboxHelper.IsSpellCheckContextMenuEnabled="True"
+                             Padding="5"
+                             IsDocumentEnabled="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                <Run Text="Normal" />
+                            </Hyperlink>
+                            <LineBreak />
+                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <RichTextBox Margin="0, 10, 0, 0"
+                             IsReadOnly="True"
+                             Padding="5"
+                             IsDocumentEnabled="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                <Run Text="ReadOnly" />
+                            </Hyperlink>
+                            <LineBreak />
+                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <RichTextBox Margin="0, 10, 0, 0"
+                             IsEnabled="False"
+                             Padding="5"
+                             IsDocumentEnabled="True">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+                                <Run Text="Disabled" />
+                            </Hyperlink>
+                            <LineBreak />
+                            <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </StackPanel>
+            <StackPanel Grid.Column="2"
+                        Width="150">
+                <Label Content="PasswordBox"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+                <PasswordBox Margin="0, 10, 0, 0"
+                             Password="Password" />
+                <PasswordBox Margin="0, 10, 0, 0"
+                             Controls:TextboxHelper.ClearTextButton="True"
+                             Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             Password="Password" />
+                <PasswordBox Margin="0, 10, 0, 0"
+                             Controls:TextboxHelper.Watermark="Custom icon style"
+                             Controls:TextboxHelper.ButtonContent="4"
+                             Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             Style="{DynamicResource MetroButtonPasswordBox}" />
+                <PasswordBox Margin="0, 10, 0, 0"
+                             Controls:TextboxHelper.Watermark="Another custom icon style"
+                             Controls:TextboxHelper.ButtonFontFamily="Wingdings"
+                             Controls:TextboxHelper.ButtonContent="à"
+                             Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             Style="{DynamicResource MetroButtonPasswordBox}" />
+                <PasswordBox Margin="0, 10, 0, 0"
+                             IsEnabled="False"
+                             Password="Password" />
+                <PasswordBox Margin="0, 10, 0, 0"
+                             Controls:TextboxHelper.ClearTextButton="True"
+                             IsEnabled="False"
+                             Password="Password" />
+            </StackPanel>
+            <StackPanel Grid.Column="3"
+                        Width="200">
+                <Label Content="NumericUpDown"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+
+                <Label Content='Minimum="0", Maximum="10" TextAlignment="Left"' />
+                <Controls:NumericUpDown Value="5"
+                                        TextAlignment="Left"
+                                        Minimum="0"
+                                        IsReadOnly="True"
+                                        Maximum="10" />
+
+                <Label Content='Interval="2"' />
+                <Controls:NumericUpDown Value="5"
+                                        Interval="2" />
+                <Label Content='Interval="5"' />
+                <Controls:NumericUpDown Value="5"
+                                        Controls:TextboxHelper.ClearTextButton="True"
+                                        Interval="5" />
+
+                <Label Content="No Speedup when long pressed" />
+                <Controls:NumericUpDown Value="5"
+                                        Speedup="false" />
+                <Label Content="Speedup when long pressed but after 500ms" />
+                <Controls:NumericUpDown Controls:TextboxHelper.Watermark="Test"
+                                        Delay="500"
+                                        Speedup="true" />
+
+                <Label Content="StringFormat" />
+                <Label Content="{Binding ElementName=test, Path=Value}" />
+                <Controls:NumericUpDown Value="5"
+                                        x:Name="test"
+                                        StringFormat="pcs. {0:N2} pcs."
+                                        Maximum="100" />
+                <Controls:NumericUpDown Value="5"
+                                        Interval=".1"
+                                        StringFormat="0,000.00" />
+            </StackPanel>
+        </Grid>
+    </AdornerDecorator>
+
+</UserControl>

@@ -92,6 +92,7 @@ namespace MahApps.Metro.Controls
                 forwardButton.Visibility = Visibility.Hidden;
             }
         }
+
         void FlipView_Loaded(object sender, RoutedEventArgs e)
         {
             /* Loaded event fires twice if its a child of a TabControl.
@@ -108,12 +109,6 @@ namespace MahApps.Metro.Controls
 
             this.SelectionChanged += FlipView_SelectionChanged;
             this.PreviewKeyDown += FlipView_PreviewKeyDown;
-
-            ShowBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
-            HideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
-
-            ShowControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
-            HideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
 
             SelectedIndex = 0;
 
@@ -159,6 +154,12 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+
+            ShowBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
+            HideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
+
+            ShowControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
+            HideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
 
             presenter = GetTemplateChild(PART_Presenter) as TransitioningContentControl;
             backButton = GetTemplateChild(PART_BackButton) as Button;

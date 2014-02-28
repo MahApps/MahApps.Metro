@@ -20,17 +20,6 @@ namespace MetroDemo
         {
             DataContext = new MainWindowViewModel();
             InitializeComponent();
-            var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
-
-            CollectionViewSource.GetDefaultView(groupingComboBox.ItemsSource).GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
-        }
-
-        void Tick(object sender, EventArgs e)
-        {
-            var dateTime = DateTime.Now;
-            transitioning.Content = new TextBlock { Text = "Transitioning Content! " + dateTime, SnapsToDevicePixels = true };
-            customTransitioning.Content = new TextBlock { Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true };
-            SecondcustomTransitioning.Content = new TextBlock { Text = "Second custom transistion! " + dateTime, SnapsToDevicePixels = true };
         }
 
         private void ThemeLight(object sender, RoutedEventArgs e)
@@ -184,29 +173,6 @@ namespace MetroDemo
             await this.ShowMessageAsync("Hello", "Hello " + result + "!");
         }
 
-        private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var flipview = ((FlipView)sender);
-            switch (flipview.SelectedIndex)
-            {
-                case 0:
-                    flipview.BannerText = "Cupcakes!";
-                    break;
-                case 1:
-                    flipview.BannerText = "Xbox!";
-                    break;
-                case 2:
-                    flipview.BannerText = "Chess!";
-                    break;
-            }
-        }
-
-        private void MetroTabControl_TabItemClosingEvent(object sender, BaseMetroTabControl.TabItemClosingEventArgs e)
-        {
-            if (e.ClosingTabItem.Header.ToString().StartsWith("sizes"))
-                e.Cancel = true;
-        }
-
         private void InteropDemo(object sender, RoutedEventArgs e)
         {
             new InteropDemo().Show();
@@ -224,60 +190,6 @@ namespace MetroDemo
 
             navWin.Show();
             navWin.Navigate(new Navigation.HomePage());
-        }
-
-        
-        private void RangeSlider_OnLowerValueChanged(object sender, RangeParameterChangedEventArgs e)
-        {
-            //MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
-        }
-
-        private void RangeSlider_OnUpperValueChanged(object sender, RangeParameterChangedEventArgs e)
-        {
-            //MessageBox.Show(e.OldValue.ToString() + "->" + e.NewValue.ToString());
-        }
-
-        private void RangeSlider_OnLowerThumbDragStarted(object sender, DragStartedEventArgs e)
-        {
-            //TestBlock.Text = "lower thumb drag started";
-        }
-
-        private void RangeSlider_OnLowerThumbDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            //TestBlock.Text = "lower thumb drag completed";
-        }
-
-        private void RangeSlider_OnUpperThumbDragStarted(object sender, DragStartedEventArgs e)
-        {
-            //TestBlock.Text = "upper thumb drag started";
-        }
-
-        private void RangeSlider_OnUpperThumbDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            //TestBlock.Text = "upper thumb drag completed";
-        }
-
-        private void RangeSlider_OnCentralThumbDragStarted(object sender, DragStartedEventArgs e)
-        {
-            //TestBlock.Text = "central thumb drag started";
-        }
-
-        private void RangeSlider_OnCentralThumbDragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            //TestBlock.Text = "central thumb drag completed";
-        }
-
-        private void RangeSlider_OnLowerThumbDragDelta(object sender, DragDeltaEventArgs e)
-        {
-        }
-
-        private void RangeSlider_OnUpperThumbDragDelta(object sender, DragDeltaEventArgs e)
-        {
-        }
-
-        private void RangeSlider_OnCentralThumbDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            //TestBlock.Text = "central thumb drag delta";
         }
     }
 }

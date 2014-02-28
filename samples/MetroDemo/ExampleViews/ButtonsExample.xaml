@@ -1,0 +1,265 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.ButtonsExample"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0">
+            <Label Content="Default button"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Button Width="100"
+                    Margin="0, 10, 0, 0"
+                    Content="Enabled" />
+            <Button Width="100"
+                    Margin="0, 10, 0, 0"
+                    Content="Disabled"
+                    IsEnabled="False" />
+        </StackPanel>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="1">
+            <Label Content="Square button"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Button Width="100"
+                    Margin="0, 10, 0, 0"
+                    Content="Enabled"
+                    Style="{DynamicResource SquareButtonStyle}" />
+            <Button Width="100"
+                    Margin="0, 10, 0, 0"
+                    Content="Enabled"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+            <Button Width="100"
+                    Margin="0, 10, 0, 0"
+                    Content="Disabled"
+                    IsEnabled="False"
+                    Style="{DynamicResource SquareButtonStyle}" />
+            <Button Width="100"
+                    Margin="0, 10, 0, 0"
+                    Content="Disabled"
+                    IsEnabled="False"
+                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+        </StackPanel>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="2">
+            <Label Content="Toggle button"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <ToggleButton Width="100"
+                          Margin="0, 10, 0, 0"
+                          Content="Enabled" />
+            <ToggleButton Width="100"
+                          Margin="0, 10, 0, 0"
+                          Content="Disabled"
+                          IsEnabled="False" />
+            <ToggleButton Width="50"
+                          Height="50"
+                          Margin="0, 10, 0, 0"
+                          Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                <Rectangle Width="20"
+                           Height="20">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill"
+                                     Visual="{DynamicResource appbar_city}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </ToggleButton>
+            <ToggleButton Width="50"
+                          Height="50"
+                          Margin="0, 10, 0, 0"
+                          IsEnabled="False"
+                          Style="{DynamicResource MetroCircleToggleButtonStyle}">
+                <Rectangle Width="20"
+                           Height="20">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill"
+                                     Visual="{DynamicResource appbar_city}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </ToggleButton>
+        </StackPanel>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="3">
+            <StackPanel.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </StackPanel.Resources>
+            <Label Content="Flat button"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Button Width="100"
+                    Margin="0, 10, 0, 0"
+                    Content="Enabled" />
+            <Button Width="100"
+                    Margin="0, 10, 0, 0"
+                    Content="Disabled"
+                    IsEnabled="False" />
+        </StackPanel>
+        <StackPanel Grid.Row="0"
+                    Grid.Column="4">
+            <Label Content="Circle button"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Button Width="50"
+                    Height="50"
+                    Margin="0, 10, 0, 0"
+                    Style="{DynamicResource MetroCircleButtonStyle}">
+                <Rectangle Width="20"
+                           Height="20">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill"
+                                     Visual="{DynamicResource appbar_city}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Button>
+            <Button Width="50"
+                    Height="50"
+                    Margin="0, 10, 0, 0"
+                    IsEnabled="False"
+                    Style="{DynamicResource MetroCircleButtonStyle}">
+                <Rectangle Width="20"
+                           Height="20">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill"
+                                     Visual="{DynamicResource appbar_city}" />
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center">
+            <StackPanel.Resources>
+                <Style x:Key="CustomMetroToggleSwitch"
+                       TargetType="{x:Type Controls:ToggleSwitch}"
+                       BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}">
+                    <Setter Property="SwitchForeground"
+                            Value="Red" />
+                    <Setter Property="OnLabel"
+                            Value="True" />
+                    <Setter Property="OffLabel"
+                            Value="False" />
+                </Style>
+            </StackPanel.Resources>
+            <Label Content="Toggle switch"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Controls:ToggleSwitch IsChecked="True"
+                                   Header="With Header" />
+            <Controls:ToggleSwitch IsChecked="True"
+                                   Header="right to left"
+                                   ContentDirection="RightToLeft" />
+            <Controls:ToggleSwitch Style="{DynamicResource CustomMetroToggleSwitch}"
+                                   IsChecked="True" />
+            <Controls:ToggleSwitch IsChecked="True"
+                                   IsEnabled="False" />
+            <Controls:ToggleSwitch IsEnabled="False" />
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center">
+            <StackPanel.Resources>
+                <BooleanToVisibilityConverter x:Key="btv" />
+            </StackPanel.Resources>
+            <Label Content="Toggle switch enable/visible demo"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Controls:ToggleSwitch x:Name="enabledSwitch"
+                                   IsChecked="True"
+                                   OnLabel="Enabled"
+                                   OffLabel="Disabled" />
+            <Controls:ToggleSwitch x:Name="visibleSwitch"
+                                   IsChecked="False"
+                                   OnLabel="Visible"
+                                   OffLabel="Collapsed" />
+            <Controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}"
+                                   Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="2"
+                    HorizontalAlignment="Center">
+            <Label Content="Checkbox"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <CheckBox Margin="0, 10, 0, 0"
+                      Content="Enabled" />
+            <CheckBox Margin="0, 10, 0, 0"
+                      FlowDirection="RightToLeft"
+                      Content="FlowDirection RightToLeft:" />
+            <CheckBox Margin="0, 10, 0, 0"
+                      Controls:ControlsHelper.ContentDirection="RightToLeft"
+                      Content="ContentDirection RightToLeft:" />
+            <CheckBox Margin="0, 10, 0, 0"
+                      Content="Enabled"
+                      IsChecked="True" />
+            <CheckBox Margin="0, 10, 0, 0"
+                      Content="Enabled"
+                      IsChecked="{x:Null}"
+                      IsThreeState="True" />
+            <CheckBox Margin="0, 10, 0, 0"
+                      Content="Disabled"
+                      IsEnabled="False" />
+            <CheckBox Margin="0, 10, 0, 0"
+                      Content="Disabled"
+                      IsChecked="True"
+                      IsEnabled="False" />
+            <CheckBox Margin="0, 10, 0, 0"
+                      Content="Disabled"
+                      IsEnabled="False"
+                      IsChecked="{x:Null}"
+                      IsThreeState="True" />
+        </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="3"
+                    HorizontalAlignment="Center">
+            <Label Content="Radio button"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <RadioButton Margin="0, 10, 0, 0"
+                         Content="Enabled"
+                         GroupName="1" />
+            <RadioButton Margin="0, 10, 0, 0"
+                         Content="Enabled"
+                         GroupName="1"
+                         IsChecked="True" />
+            <RadioButton Margin="0, 10, 0, 0"
+                         GroupName="1"
+                         FlowDirection="RightToLeft"
+                         Content="FlowDirection RightToLeft:" />
+            <RadioButton Margin="0, 10, 0, 0"
+                         GroupName="1"
+                         Controls:ControlsHelper.ContentDirection="RightToLeft"
+                         Content="ContentDirection RightToLeft:" />
+            <RadioButton Margin="0, 10, 0, 0"
+                         Content="Disabled"
+                         GroupName="2"
+                         IsEnabled="False" />
+            <RadioButton Margin="0, 10, 0, 0"
+                         Content="Disabled"
+                         GroupName="2"
+                         IsChecked="True"
+                         IsEnabled="False" />
+        </StackPanel>
+    </Grid>
+
+</UserControl>
