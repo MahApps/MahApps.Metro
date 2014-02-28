@@ -98,7 +98,7 @@ namespace MahApps.Metro.Controls
              * Once because the TabControl seems to initiali(z|s)e everything.
              * And a second time when the Tab (housing the FlipView) is switched to. */
 
-            if (backButton == null) //OnApplyTemplate hasn't been called yet.
+            if (backButton == null || forwardButton == null) //OnApplyTemplate hasn't been called yet.
                 ApplyTemplate();
 
             if (loaded) return; //Counteracts the double 'Loaded' event issue.
