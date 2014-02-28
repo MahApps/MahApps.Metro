@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MetroDemo.Models;
-using System.ComponentModel;
 
-namespace MetroDemo
+namespace MetroDemo.ExampleWindows
 {
     /// <summary>
     /// Interaction logic for CustomFlyout.xaml
@@ -15,7 +15,7 @@ namespace MetroDemo
 
         public CustomFlyout()
         {
-            Artists = SampleData.Artists;
+            this.Artists = SampleData.Artists;
             InitializeComponent();
         }
 
@@ -26,11 +26,11 @@ namespace MetroDemo
             get { return this.canCloseFlyout; }
             set
             {
-                if (Equals(value, canCloseFlyout)) {
+                if (Equals(value, this.canCloseFlyout)) {
                     return;
                 }
-                canCloseFlyout = value;
-                RaisePropertyChanged("CanCloseFlyout");
+                this.canCloseFlyout = value;
+                this.RaisePropertyChanged("CanCloseFlyout");
             }
         }
 
@@ -40,7 +40,7 @@ namespace MetroDemo
         {
             get
             {
-                return this.closeCmd ?? (closeCmd = new SimpleCommand {
+                return this.closeCmd ?? (this.closeCmd = new SimpleCommand {
                     CanExecuteDelegate = x => this.CanCloseFlyout,
                     ExecuteDelegate = x => this.IsOpen = false
                 });
@@ -51,8 +51,8 @@ namespace MetroDemo
 
         private void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null) {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            if (this.PropertyChanged != null) {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
