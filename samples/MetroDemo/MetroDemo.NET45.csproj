@@ -40,7 +40,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\NET45\Debug\</OutputPath>
-	<IntermediateOutputPath>obj\NET45\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\NET45\Debug\</IntermediateOutputPath>
     <DefineConstants>TRACE;DEBUG;NET_4_5</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -57,7 +57,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
     <OutputPath>bin\NET45\Release\</OutputPath>
-	<IntermediateOutputPath>obj\NET45\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\NET45\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="GrayscaleEffect">
@@ -100,6 +100,33 @@
     <Compile Include="CustomFlyout.xaml.cs">
       <DependentUpon>CustomFlyout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExampleViews\ButtonsExample.xaml.cs">
+      <DependentUpon>ButtonsExample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\ColorExample.xaml.cs">
+      <DependentUpon>ColorExample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\DataGridExamples.xaml.cs">
+      <DependentUpon>DataGridExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\DateExamples.xaml.cs">
+      <DependentUpon>DateExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\OtherExamples.xaml.cs">
+      <DependentUpon>OtherExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\SelectionExamples.xaml.cs">
+      <DependentUpon>SelectionExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\SliderProgressExamples.xaml.cs">
+      <DependentUpon>SliderProgressExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\TabControlExamples.xaml.cs">
+      <DependentUpon>TabControlExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\TextExamples.xaml.cs">
+      <DependentUpon>TextExamples.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutDemo.xaml.cs">
       <DependentUpon>FlyoutDemo.xaml</DependentUpon>
     </Compile>
@@ -128,6 +155,42 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="CustomFlyout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\ButtonsExample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\ColorExample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\DataGridExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\DateExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\OtherExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\SelectionExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\SliderProgressExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\TabControlExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\TextExamples.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

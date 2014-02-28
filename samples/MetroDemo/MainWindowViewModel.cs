@@ -88,6 +88,22 @@ namespace MetroDemo
             }
         }
 
+        bool _magicToggleButtonIsChecked = true;
+        public bool MagicToggleButtonIsChecked
+        {
+            get { return this._magicToggleButtonIsChecked; }
+            set
+            {
+                if (Equals(value, _magicToggleButtonIsChecked))
+                {
+                    return;
+                }
+
+                _magicToggleButtonIsChecked = value;
+                RaisePropertyChanged("MagicToggleButtonIsChecked");
+            }
+        }
+
         private ICommand textBoxButtonCmd;
 
         public ICommand TextBoxButtonCmd
