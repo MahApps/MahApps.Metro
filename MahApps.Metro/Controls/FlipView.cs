@@ -57,10 +57,8 @@ namespace MahApps.Metro.Controls
         }
         public FlipView()
         {
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)) {
-                this.Unloaded += FlipView_Unloaded;
-                this.Loaded += FlipView_Loaded;
-            }
+            this.Unloaded += FlipView_Unloaded;
+            this.Loaded += FlipView_Loaded;
         }
         ~FlipView()
         {
