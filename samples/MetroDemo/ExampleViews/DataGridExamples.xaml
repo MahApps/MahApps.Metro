@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
              d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <UserControl.Resources>
@@ -59,7 +59,7 @@
         <DataGrid ItemsSource="{Binding Path=Albums}"
                   Grid.Row="0"
                   Grid.Column="1"
-                  Style="{StaticResource AzureDataGrid}"
+                  Style="{DynamicResource AzureDataGrid}"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title"
@@ -76,7 +76,7 @@
                   Grid.Row="1"
                   IsEnabled="False"
                   Grid.Column="1"
-                  Style="{StaticResource AzureDataGrid}"
+                  Style="{DynamicResource AzureDataGrid}"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Title"

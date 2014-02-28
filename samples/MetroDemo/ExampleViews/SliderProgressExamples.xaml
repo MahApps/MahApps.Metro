@@ -6,8 +6,8 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
              d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <UserControl.Resources>
@@ -42,14 +42,14 @@
                     Width="200"
                     Margin="0, 10, 0, 0" />
             <Slider Width="200"
-                    Style="{StaticResource FlatSlider}"
+                    Style="{DynamicResource FlatSlider}"
                     Margin="0, 10, 0, 0"
                     Value="50" />
             <Slider Width="200"
                     Margin="0, 10, 0, 0"
                     IsEnabled="False" />
             <Slider Width="200"
-                    Style="{StaticResource FlatSlider}"
+                    Style="{DynamicResource FlatSlider}"
                     Margin="0, 10, 0, 0"
                     IsEnabled="False"
                     Value="50" />
@@ -66,7 +66,7 @@
                 <Slider Orientation="Vertical"
                         Margin="10, 0, 0, 0"
                         Height="200"
-                        Style="{StaticResource FlatSlider}"
+                        Style="{DynamicResource FlatSlider}"
                         Value="50" />
                 <Slider Orientation="Vertical"
                         Height="200"
@@ -75,7 +75,7 @@
                 <Slider Orientation="Vertical"
                         Margin="10, 0, 0, 0"
                         Height="200"
-                        Style="{StaticResource FlatSlider}"
+                        Style="{DynamicResource FlatSlider}"
                         Value="50"
                         IsEnabled="False" />
             </StackPanel>

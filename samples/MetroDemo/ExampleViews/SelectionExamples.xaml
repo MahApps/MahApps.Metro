@@ -6,8 +6,8 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
              d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <UserControl.Resources>

@@ -15,23 +15,16 @@
                       ShowTitleBar="True"
                       WindowStartupLocation="CenterScreen"
                       GlowBrush="{DynamicResource AccentColorBrush}"
-                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
-                      mc:Ignorable="d">
+                      mc:Ignorable="d"
+                      d:DesignHeight="600"
+                      d:DesignWidth="800"
+                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <Style x:Key="DescriptionHeaderStyle"
-                   TargetType="Label">
-                <Setter Property="FontSize"
-                        Value="22" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Center" />
-            </Style>
 
             <Ellipse x:Key="DarkThemeMenuIcon"
                      x:Shared="False"
@@ -133,6 +126,7 @@
                               Header="Show SimpleDialog Externally" />
                 </MenuItem>
             </Menu>
+
 
             <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
                 <TabItem Header="buttons">
