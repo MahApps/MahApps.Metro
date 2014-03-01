@@ -168,15 +168,15 @@
             <Label Content="Toggle switch"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:ToggleSwitch IsChecked="True"
-                                   Header="With Header" />
-            <Controls:ToggleSwitch IsChecked="True"
-                                   Header="right to left"
-                                   ContentDirection="RightToLeft" />
+                                   Header="ToggleSwitch Header" />
             <Controls:ToggleSwitch Style="{DynamicResource CustomMetroToggleSwitch}"
-                                   IsChecked="True" />
+                                   IsChecked="True"
+                                   Margin="0, 5, 0, 0" />
             <Controls:ToggleSwitch IsChecked="True"
-                                   IsEnabled="False" />
-            <Controls:ToggleSwitch IsEnabled="False" />
+                                   IsEnabled="False"
+                                   Margin="0, 5, 0, 0" />
+            <Controls:ToggleSwitch IsEnabled="False"
+                                   Margin="0, 5, 0, 0" />
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="1"
@@ -189,11 +189,13 @@
             <Controls:ToggleSwitch x:Name="enabledSwitch"
                                    IsChecked="True"
                                    OnLabel="Enabled"
-                                   OffLabel="Disabled" />
+                                   OffLabel="Disabled"
+                                   Margin="0, 5, 0, 0"/>
             <Controls:ToggleSwitch x:Name="visibleSwitch"
                                    IsChecked="False"
                                    OnLabel="Visible"
-                                   OffLabel="Collapsed" />
+                                   OffLabel="Collapsed"
+                                   Margin="0, 5, 0, 0"/>
             <Controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}"
                                    Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
         </StackPanel>
@@ -204,12 +206,6 @@
                    Style="{DynamicResource DescriptionHeaderStyle}" />
             <CheckBox Margin="0, 10, 0, 0"
                       Content="Enabled" />
-            <CheckBox Margin="0, 10, 0, 0"
-                      FlowDirection="RightToLeft"
-                      Content="FlowDirection RightToLeft:" />
-            <CheckBox Margin="0, 10, 0, 0"
-                      Controls:ControlsHelper.ContentDirection="RightToLeft"
-                      Content="ContentDirection RightToLeft:" />
             <CheckBox Margin="0, 10, 0, 0"
                       Content="Enabled"
                       IsChecked="True" />
@@ -242,14 +238,6 @@
                          Content="Enabled"
                          GroupName="1"
                          IsChecked="True" />
-            <RadioButton Margin="0, 10, 0, 0"
-                         GroupName="1"
-                         FlowDirection="RightToLeft"
-                         Content="FlowDirection RightToLeft:" />
-            <RadioButton Margin="0, 10, 0, 0"
-                         GroupName="1"
-                         Controls:ControlsHelper.ContentDirection="RightToLeft"
-                         Content="ContentDirection RightToLeft:" />
             <RadioButton Margin="0, 10, 0, 0"
                          Content="Disabled"
                          GroupName="2"
