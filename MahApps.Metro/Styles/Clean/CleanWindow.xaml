@@ -55,7 +55,7 @@
                                               FocusVisualStyle="{x:Null}"
                                               OnlyLoadTransition="True"
                                               TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
-                    <Grid Background="{DynamicResource WhiteBrush}">
+                    <Grid Background="{TemplateBinding Background}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
