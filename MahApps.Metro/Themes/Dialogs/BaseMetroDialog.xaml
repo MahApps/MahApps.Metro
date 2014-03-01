@@ -51,9 +51,9 @@
 
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="25*" />
-                            <ColumnDefinition Width="50*" />
-                            <ColumnDefinition Width="25*" />
+                            <ColumnDefinition Width="{TemplateBinding SideColumnWidthPercent}" />
+                            <ColumnDefinition Width="{TemplateBinding MainColumnWidthPercent}" />
+                            <ColumnDefinition Width="{TemplateBinding SideColumnWidthPercent}" />
                         </Grid.ColumnDefinitions>
 
                         <!--Content area-->

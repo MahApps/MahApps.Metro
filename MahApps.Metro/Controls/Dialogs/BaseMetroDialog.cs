@@ -15,6 +15,8 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty MainColumnWidthPercentProperty = DependencyProperty.Register("MainColumnWidthPercent", typeof(GridLength), typeof(BaseMetroDialog), new PropertyMetadata(default(GridLength)));
+        public static readonly DependencyProperty SideColumnWidthPercentProperty = DependencyProperty.Register("SideColumnWidthPercent", typeof(GridLength), typeof(BaseMetroDialog), new PropertyMetadata(default(GridLength)));
 
         protected MetroDialogSettings DialogSettings { get; private set; }
 
@@ -54,6 +56,18 @@ namespace MahApps.Metro.Controls.Dialogs
             set { SetValue(DialogBottomProperty, value); }
         }
 
+        public GridLength MainColumnWidthPercent
+        {
+            get { return (GridLength)GetValue(MainColumnWidthPercentProperty); }
+            set { SetValue(MainColumnWidthPercentProperty, value); }
+        }
+
+        public GridLength SideColumnWidthPercent
+        {
+            get { return (GridLength)GetValue(SideColumnWidthPercentProperty); }
+            set { SetValue(SideColumnWidthPercentProperty, value); }
+        }
+
         internal SizeChangedEventHandler SizeChangedHandler { get; set; }
 
 
@@ -83,6 +97,8 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             OwningWindow = owningWindow;
+
+            SetDialogWidth(DialogSettings.DialogWidthPercentage);
         }
 
         /// <summary>
@@ -205,6 +221,20 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return tcs.Task;
         }
+
+        private void SetDialogWidth(int dialogWidthPercentage)
+        {
+            // Make sure value is between 0 and 100
+            if (dialogWidthPercentage > 100) dialogWidthPercentage = 100;
+            if (dialogWidthPercentage < 0) dialogWidthPercentage = 50;
+
+            // Get values
+            var remainder = 100 - dialogWidthPercentage;
+            var sideColumnWidth = remainder / 2;
+
+            MainColumnWidthPercent = new GridLength(dialogWidthPercentage, GridUnitType.Star);
+            SideColumnWidthPercent = new GridLength(sideColumnWidth, GridUnitType.Star);
+        }
     }
 
     /// <summary>
@@ -219,6 +249,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
             ColorScheme = MetroDialogColorScheme.Theme;
             UseAnimations = true;
+
+            DialogWidthPercentage = 50;
         }
 
         /// <summary>
@@ -238,6 +270,8 @@ namespace MahApps.Metro.Controls.Dialogs
         public MetroDialogColorScheme ColorScheme { get; set; }
 
         public bool UseAnimations { get; set; }
+
+        public int DialogWidthPercentage { get; set; }
     }
 
     /// <summary>
