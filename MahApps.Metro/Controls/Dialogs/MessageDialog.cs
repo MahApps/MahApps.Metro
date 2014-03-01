@@ -26,11 +26,11 @@ namespace MahApps.Metro.Controls.Dialogs
         //    //DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageDialog), new FrameworkPropertyMetadata(typeof(MessageDialog)));
         //}
 
-        internal MessageDialog(MetroWindow parentWindow)
+        protected internal MessageDialog(MetroWindow parentWindow)
             : this(parentWindow, null)
         {
         }
-        internal MessageDialog(MetroWindow parentWindow, MetroDialogSettings settings)
+        protected internal MessageDialog(MetroWindow parentWindow, MetroDialogSettings settings)
             : base(parentWindow, settings)
         {
             InitializeComponent();
