@@ -506,7 +506,7 @@ namespace MahApps.Metro.Behaviours
                         break;
 
                     // get X & Y out of the message                   
-                    var screenPoint = new Point(UnsafeNativeMethods.GET_X_LPARAM(lParam), UnsafeNativeMethods.GET_Y_LPARAM(lParam));
+                    var screenPoint = UnsafeNativeMethods.GetPoint(lParam);
 
                     // convert to window coordinates
                     Point windowPoint = AssociatedObject.PointFromScreen(screenPoint);
