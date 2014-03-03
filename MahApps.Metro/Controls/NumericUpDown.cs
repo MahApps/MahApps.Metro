@@ -808,10 +808,11 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
+                    var oldValue = Value;
                     Value = Math.Max(Minimum, Math.Min(convertedValue, Maximum));
                     e.Handled = true;
 
-                    if (Value == Minimum || Value == Maximum)
+                    if (Value != oldValue && (Value == Minimum || Value == Maximum))
                     {
                         _manualChange = false;
                         InternalSetText(Value);
