@@ -55,7 +55,7 @@
 
                         <Rectangle x:Name="PART_WindowTitleBackground"
                                    Fill="{DynamicResource WindowTitleColorBrush}"
-                                   Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                    Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                    Grid.Column="0"
                                    Grid.ColumnSpan="3"
@@ -64,7 +64,7 @@
                         <!-- the title bar -->
                         <Grid x:Name="PART_TitleBar"
                               Background="Transparent"
-                              Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                              Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                               Grid.Column="0">
                             <Grid.ColumnDefinitions>
@@ -98,19 +98,19 @@
 
                         <!-- the window commands -->
                         <ContentPresenter x:Name="PART_WindowCommands"
-                                          Content="{Binding WindowCommands, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                          Content="{Binding WindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                           Panel.ZIndex="1"
                                           Grid.Column="1"
                                           Grid.RowSpan="2"
                                           VerticalAlignment="Top"
-                                          Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
                         <!-- the window button commands -->
                         <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
                                                        Panel.ZIndex="1"
                                                        Grid.Column="2"
                                                        Grid.RowSpan="2"
                                                        VerticalAlignment="Top"
-                                                       Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
                         <!-- the main window content -->
                         <ContentPresenter Grid.Row="1"
@@ -133,7 +133,7 @@
                                         Panel.ZIndex="2"
                                         Focusable="False"
                                         KeyboardNavigation.TabNavigation="None"
-                                        Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                        Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                         VerticalAlignment="Stretch" />
 
 
@@ -203,7 +203,7 @@
                      Value="True">
                 <Setter TargetName="WindowTitleTextBlock"
                         Property="Text"
-                        Value="{Binding Path=Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+                        Value="{Binding Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
