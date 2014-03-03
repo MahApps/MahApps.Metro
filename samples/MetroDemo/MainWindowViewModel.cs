@@ -262,5 +262,20 @@ namespace MetroDemo
 
             return resources;
         }
+
+
+        #region NumericUpDownValue
+        private double? numericUpDownValue = 5;
+        public double? NumericUpDownValue
+        {
+            get { return numericUpDownValue; }
+            set
+            {
+                numericUpDownValue = value;
+                RaisePropertyChanged("NumericUpDownValue");
+            }
+        }
+
+        #endregion // NumericUpDownValue
     }
 }

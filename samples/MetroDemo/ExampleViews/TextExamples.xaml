@@ -219,8 +219,9 @@
                                         Speedup="true" />
 
                 <Label Content="StringFormat" />
-                <Label Content="{Binding ElementName=test, Path=Value}" />
-                <Controls:NumericUpDown Value="5"
+                <Label Content="{Binding ElementName=test, Path=Value}" ContentStringFormat="{}NumericUpDownValue: {0}" />
+                <Label Content="{Binding NumericUpDownValue}" ContentStringFormat="{}ViewModel value: {0}" />
+                <Controls:NumericUpDown Value="{Binding NumericUpDownValue}"
                                         x:Name="test"
                                         StringFormat="pcs. {0:N2} pcs."
                                         Maximum="100" />
