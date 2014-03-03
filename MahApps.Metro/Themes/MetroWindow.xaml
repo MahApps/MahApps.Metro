@@ -62,7 +62,8 @@
                                    StrokeThickness="0" />
 
                         <!-- the title bar -->
-                        <Grid x:Name="PART_TitleBar" Background="Transparent"
+                        <Grid x:Name="PART_TitleBar"
+                              Background="Transparent"
                               Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                               Grid.Column="0">
@@ -117,13 +118,13 @@
                                           Grid.ColumnSpan="3" />
 
                         <!-- disables the main content when a modal flyout is shown -->
-                        <Rectangle Grid.RowSpan="2" 
-                                   Grid.ColumnSpan="3" 
-                                   Name="PART_FlyoutModal" 
+                        <Rectangle Grid.RowSpan="2"
+                                   Grid.ColumnSpan="3"
+                                   Name="PART_FlyoutModal"
                                    Fill="{DynamicResource BlackColorBrush}"
                                    Opacity="0.5"
-                                   Visibility="Hidden"/>
-                        
+                                   Visibility="Hidden" />
+
                         <!-- flyouts -->
                         <ContentControl Grid.Row="0"
                                         Grid.Column="0"
@@ -134,8 +135,8 @@
                                         KeyboardNavigation.TabNavigation="None"
                                         Content="{Binding Flyouts, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                         VerticalAlignment="Stretch" />
-                        
-                        
+
+
                         <!--Used to create that overlay effect. Can be used for anything.-->
                         <Grid Grid.Row="0"
                               Grid.Column="0"
@@ -147,7 +148,7 @@
                               Background="{DynamicResource BlackColorBrush}"
                               Opacity="0"
                               Visibility="Hidden" />
-                        
+
                         <Grid Grid.Row="0"
                               Grid.Column="0"
                               Grid.ColumnSpan="3"
@@ -171,16 +172,16 @@
                         VerticalAlignment="Bottom" />
         </Grid>
         <ControlTemplate.Resources>
-            <Storyboard x:Key="OverlayFastSemiFadeIn" 
+            <Storyboard x:Key="OverlayFastSemiFadeIn"
                         BeginTime="0:0:0"
-                        AccelerationRatio=".97" 
+                        AccelerationRatio=".97"
                         Storyboard.TargetProperty="Opacity"
                         SpeedRatio="2.7">
                 <DoubleAnimation To=".7" />
             </Storyboard>
-            <Storyboard x:Key="OverlayFastSemiFadeOut" 
+            <Storyboard x:Key="OverlayFastSemiFadeOut"
                         BeginTime="0:0:0"
-                        AccelerationRatio=".97" 
+                        AccelerationRatio=".97"
                         Storyboard.TargetProperty="Opacity"
                         SpeedRatio="2.7">
                 <DoubleAnimation To="0.0" />
@@ -209,7 +210,7 @@
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="TextElement.FontSize"
-                Value="{DynamicResource ContentFontSize}"/>
+                Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Background"
                 Value="{DynamicResource WhiteBrush}" />
         <Setter Property="Foreground"
@@ -253,7 +254,7 @@
                                 <Setter Property="Padding"
                                         Value="1" />
                                 <Setter Property="FocusVisualStyle"
-                                        Value="{x:Null}"/>
+                                        Value="{x:Null}" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type Button}">
@@ -309,10 +310,14 @@
                             </Style>
                             <Style TargetType="{x:Type ToggleButton}">
                                 <!--Modified version of spiritdead's code-->
-                                <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                <Setter Property="Padding" Value="1" />
+                                <Setter Property="Background"
+                                        Value="{DynamicResource TransparentWhiteBrush}" />
+                                <Setter Property="HorizontalContentAlignment"
+                                        Value="Center" />
+                                <Setter Property="VerticalContentAlignment"
+                                        Value="Center" />
+                                <Setter Property="Padding"
+                                        Value="1" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -336,19 +341,27 @@
                                                            Margin="10,0,0,0" />
                                             </Grid>
                                             <ControlTemplate.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
+                                                <Trigger Property="IsMouseOver"
+                                                         Value="True">
+                                                    <Setter TargetName="contentPresenter"
+                                                            Property="Opacity"
+                                                            Value="1" />
                                                 </Trigger>
-                                                <Trigger Property="IsChecked" Value="true">
-                                                    <Setter TargetName="contentPresenter" Property="Opacity" Value="1" />
+                                                <Trigger Property="IsChecked"
+                                                         Value="true">
+                                                    <Setter TargetName="contentPresenter"
+                                                            Property="Opacity"
+                                                            Value="1" />
                                                 </Trigger>
-                                                <Trigger Property="IsEnabled" Value="false">
-                                                    <Setter Property="Foreground" Value="#ADADAD" />
+                                                <Trigger Property="IsEnabled"
+                                                         Value="false">
+                                                    <Setter Property="Foreground"
+                                                            Value="#ADADAD" />
                                                 </Trigger>
                                                 <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                                        Value="True">
+                                                             Value="True">
                                                     <Setter Property="Foreground"
-                                                        Value="White" />
+                                                            Value="White" />
                                                 </DataTrigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
