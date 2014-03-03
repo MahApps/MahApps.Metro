@@ -438,7 +438,7 @@
     </Style>
 
     <Style TargetType="{x:Type TextBox}"
-           BasedOn="MetroButtonTextBox"
+           BasedOn="{StaticResource MetroButtonTextBox}"
            x:Key="ButtonCommandMetroTextBox" />
 
     <Style TargetType="{x:Type TextBox}"
