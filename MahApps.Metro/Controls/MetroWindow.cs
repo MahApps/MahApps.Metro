@@ -499,6 +499,10 @@ namespace MahApps.Metro.Controls
 
         protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (this.TitlebarHeight <= 0) {
+                return;
+            }
+            
             var mousePosition = e.GetPosition(this);
             bool isIconClick = ShowIconOnTitleBar && mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight;
 
