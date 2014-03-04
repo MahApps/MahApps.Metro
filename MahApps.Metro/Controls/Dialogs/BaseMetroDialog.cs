@@ -9,10 +9,21 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
+    [System.Windows.Markup.ContentProperty("DialogBody")]
     public abstract class BaseMetroDialog : Control
     {
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null, (o, e) => {
+            BaseMetroDialog dialog = (o as BaseMetroDialog);
+            if (dialog != null) {
+                if (e.OldValue != null) {
+                    dialog.RemoveLogicalChild(e.OldValue);
+                }
+                if (e.NewValue != null) {
+                    dialog.AddLogicalChild(e.NewValue);
+                }
+            }
+        }));
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
 
