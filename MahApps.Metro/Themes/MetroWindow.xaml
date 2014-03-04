@@ -79,31 +79,26 @@
                                         Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <!-- the title bar -->
-                        <Grid x:Name="PART_TitleBar"
-                              Grid.Row="0"
-                              Grid.Column="1"
-                              Background="Transparent"
-                              Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                              Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <TextBlock x:Name="WindowTitleTextBlock"
-                                       Text="{TemplateBinding Title}"
-                                       TextTrimming="CharacterEllipsis"
-                                       VerticalAlignment="Center"
-                                       Margin="8 -1 0 0"
-                                       FontSize="{DynamicResource WindowTitleFontSize}"
-                                       FontFamily="{DynamicResource HeaderFontFamily}">
-                                <TextBlock.Foreground>
-                                    <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                        <Binding ElementName="PART_WindowTitleBackground"
-                                                 Path="Fill"
-                                                 Mode="OneWay" />
-                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                                 Path="TitleForeground"
-                                                 Mode="OneWay" />
-                                    </MultiBinding>
-                                </TextBlock.Foreground>
-                            </TextBlock>
-                        </Grid>
+                        <ContentControl x:Name="PART_TitleBar"
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Content="{TemplateBinding Title}"
+                                        ContentTemplate="{TemplateBinding TitleTemplate}"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ContentControl.Foreground>
+                                <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                    <Binding ElementName="PART_WindowTitleBackground"
+                                             Path="Fill"
+                                             Mode="OneWay" />
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                             Path="TitleForeground"
+                                             Mode="OneWay" />
+                                </MultiBinding>
+                            </ContentControl.Foreground>
+                        </ContentControl>
 
                         <!-- the window commands -->
                         <ContentPresenter x:Name="PART_WindowCommands"
@@ -149,7 +144,6 @@
                                         KeyboardNavigation.TabNavigation="None"
                                         Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                         VerticalAlignment="Stretch" />
-
 
                         <!--Used to create that overlay effect. Can be used for anything.-->
                         <Grid Grid.Row="0"
@@ -225,12 +219,6 @@
                         TargetName="WindowResizeGrip"
                         Value="Visible" />
             </MultiTrigger>
-            <Trigger Property="TitleCaps"
-                     Value="True">
-                <Setter TargetName="WindowTitleTextBlock"
-                        Property="Text"
-                        Value="{Binding Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -254,7 +242,34 @@
                 Value="White" />
         <Setter Property="Template"
                 Value="{StaticResource WindowTemplateKey}" />
+        <Setter Property="TitleTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock Text="{TemplateBinding Content}"
+                               TextTrimming="CharacterEllipsis"
+                               VerticalAlignment="Center"
+                               Margin="8 -1 0 0"
+                               FontSize="{DynamicResource WindowTitleFontSize}"
+                               FontFamily="{DynamicResource HeaderFontFamily}" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=TitleCaps, Mode=OneWay, Converter={StaticResource ToUpperConverter}}"
+                         Value="True">
+                <Setter Property="TitleTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}"
+                                       TextTrimming="CharacterEllipsis"
+                                       VerticalAlignment="Center"
+                                       Margin="8 -1 0 0"
+                                       FontSize="{DynamicResource WindowTitleFontSize}"
+                                       FontFamily="{DynamicResource HeaderFontFamily}" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}"
                          Value="False">
                 <Setter Property="IconTemplate">

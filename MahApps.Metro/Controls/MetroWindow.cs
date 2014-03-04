@@ -18,6 +18,7 @@ namespace MahApps.Metro.Controls
     /// </summary>
     [TemplatePart(Name = PART_Icon, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
+    [TemplatePart(Name = PART_WindowTitleBackground, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
     [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
@@ -27,6 +28,7 @@ namespace MahApps.Metro.Controls
     {
         private const string PART_Icon = "PART_Icon";
         private const string PART_TitleBar = "PART_TitleBar";
+        private const string PART_WindowTitleBackground = "PART_WindowTitleBackground";
         private const string PART_WindowCommands = "PART_WindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
         private const string PART_OverlayBox = "PART_OverlayBox";
@@ -49,6 +51,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         
         public static readonly DependencyProperty WindowCommandsProperty = DependencyProperty.Register("WindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -61,6 +64,7 @@ namespace MahApps.Metro.Controls
         internal WindowButtonCommands WindowButtonCommands;
         UIElement icon;
         UIElement titleBar;
+        UIElement titleBarBackground;
         internal Grid overlayBox;
         internal Grid metroDialogContainer;
         private Storyboard overlayStoryboard;
@@ -128,6 +132,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (DataTemplate)GetValue(IconTemplateProperty); }
             set { SetValue(IconTemplateProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the title content template to show a custom title.
+        /// </summary>
+        public DataTemplate TitleTemplate
+        {
+            get { return (DataTemplate)GetValue(TitleTemplateProperty); }
+            set { SetValue(TitleTemplateProperty, value); }
         }
 
         /// <summary>
@@ -496,11 +509,20 @@ namespace MahApps.Metro.Controls
 
             icon = GetTemplateChild(PART_Icon) as UIElement;
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
+            titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
 
             if (icon != null && icon.Visibility == Visibility.Visible)
             {
                 icon.MouseDown += IconMouseDown;
                 icon.MouseUp += IconMouseUp;
+            }
+
+            // handle mouse events if title template use HorizontalAlignment != Center
+            if (titleBarBackground != null && titleBarBackground.Visibility == Visibility.Visible)
+            {
+                titleBarBackground.MouseDown += TitleBarMouseDown;
+                titleBarBackground.MouseUp += TitleBarMouseUp;
+                titleBarBackground.MouseMove += TitleBarMouseMove;
             }
 
             if (titleBar != null && titleBar.Visibility == Visibility.Visible)

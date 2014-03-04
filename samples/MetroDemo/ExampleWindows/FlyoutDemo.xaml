@@ -42,6 +42,18 @@
         </DataTemplate>
     </Controls:MetroWindow.IconTemplate>
 
+    <Controls:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}"
+                       TextTrimming="CharacterEllipsis"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="0 -1 8 0"
+                       FontSize="{DynamicResource WindowTitleFontSize}"
+                       FontFamily="{DynamicResource HeaderFontFamily}" />
+        </DataTemplate>
+    </Controls:MetroWindow.TitleTemplate>
+
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
             <Button FontFamily="Wingdings"
