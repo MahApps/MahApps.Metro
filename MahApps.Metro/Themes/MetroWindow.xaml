@@ -67,14 +67,16 @@
                                    StrokeThickness="0" />
 
                         <!-- icon -->
-                        <Image x:Name="PART_Icon"
-                               Grid.Row="0"
-                               Grid.Column="0"
-                               Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                               Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-                               Source="{TemplateBinding Icon}"
-                               RenderOptions.EdgeMode="Aliased"
-                               RenderOptions.BitmapScalingMode="HighQuality" />
+                        <ContentControl x:Name="PART_Icon"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Content="{TemplateBinding Icon}"
+                                        ContentTemplate="{TemplateBinding IconTemplate}"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <!-- the title bar -->
                         <Grid x:Name="PART_TitleBar"
@@ -112,7 +114,7 @@
                                           Grid.RowSpan="2"
                                           VerticalAlignment="Top"
                                           Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-                        
+
                         <!-- the window button commands -->
                         <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
                                                        Panel.ZIndex="1"
@@ -200,6 +202,18 @@
             </Storyboard>
         </ControlTemplate.Resources>
         <ControlTemplate.Triggers>
+            <!-- no icon and no icon content template -> collapse the icon content control -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="Icon"
+                               Value="{x:Null}" />
+                    <Condition Property="IconTemplate"
+                               Value="{x:Null}" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Icon"
+                        Property="Visibility"
+                        Value="Collapsed" />
+            </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="ResizeMode"
@@ -240,6 +254,22 @@
                 Value="White" />
         <Setter Property="Template"
                 Value="{StaticResource WindowTemplateKey}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Icon, Mode=OneWay, Converter={x:Static Converters:IsNullConverter.Instance}}"
+                         Value="False">
+                <Setter Property="IconTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Image Width="{TemplateBinding Width}"
+                                   Height="{TemplateBinding Height}"
+                                   Source="{TemplateBinding Content}"
+                                   RenderOptions.EdgeMode="Aliased"
+                                   RenderOptions.BitmapScalingMode="HighQuality" />
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type Controls:WindowCommands}">

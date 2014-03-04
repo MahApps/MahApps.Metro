@@ -26,6 +26,22 @@
         </ResourceDictionary>
     </Window.Resources>
 
+    <Controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Grid Width="{TemplateBinding Width}"
+                  Height="{TemplateBinding Height}"
+                  Margin="4"
+                  Background="{DynamicResource WhiteBrush}"
+                  RenderOptions.EdgeMode="Aliased"
+                  RenderOptions.BitmapScalingMode="HighQuality">
+                <Grid.OpacityMask>
+                    <VisualBrush Stretch="Uniform"
+                                 Visual="{DynamicResource appbar_box}" />
+                </Grid.OpacityMask>
+            </Grid>
+        </DataTemplate>
+    </Controls:MetroWindow.IconTemplate>
+
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
             <Button FontFamily="Wingdings"
