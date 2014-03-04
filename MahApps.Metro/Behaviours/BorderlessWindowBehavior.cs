@@ -189,7 +189,12 @@ namespace MahApps.Metro.Behaviours
                     Border = ancestors;
                     if (ShouldHaveBorder())
                         AddBorder();
-                    var titleBar = window.GetPart<Grid>("PART_TitleBar");
+                    var icon = window.GetPart<UIElement>("PART_Icon");
+                    if (icon != null)
+                    {
+                        icon.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    }
+                    var titleBar = window.GetPart<UIElement>("PART_TitleBar");
                     if (titleBar != null)
                     {
                         titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);

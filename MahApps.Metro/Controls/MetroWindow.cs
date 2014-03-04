@@ -16,6 +16,7 @@ namespace MahApps.Metro.Controls
     /// <summary>
     /// An extended, metrofied Window class.
     /// </summary>
+    [TemplatePart(Name = PART_Icon, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
@@ -24,6 +25,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_FlyoutModal, Type = typeof(Rectangle))]
     public class MetroWindow : Window
     {
+        private const string PART_Icon = "PART_Icon";
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowCommands = "PART_WindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
@@ -54,6 +56,7 @@ namespace MahApps.Metro.Controls
         bool isDragging;
         internal ContentPresenter WindowCommandsPresenter;
         internal WindowButtonCommands WindowButtonCommands;
+        UIElement icon;
         UIElement titleBar;
         internal Grid overlayBox;
         internal Grid metroDialogContainer;
@@ -382,7 +385,7 @@ namespace MahApps.Metro.Controls
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
             }
 
-            if (!ShowTitleBar)
+            if (!ShowTitleBar && (icon == null || icon.Visibility != Visibility.Visible))
             {
                 //Disables the system menu for reasons other than clicking an invisible titlebar.
                 IntPtr handle = new WindowInteropHelper(this).Handle;
@@ -479,7 +482,14 @@ namespace MahApps.Metro.Controls
             flyoutModal.PreviewMouseDown += FlyoutsPreviewMouseDown;
             this.PreviewMouseDown += FlyoutsPreviewMouseDown;
 
+            icon = GetTemplateChild(PART_Icon) as UIElement;
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
+
+            if (icon != null && icon.Visibility == Visibility.Visible)
+            {
+                icon.MouseDown += IconMouseDown;
+                icon.MouseUp += IconMouseUp;
+            }
 
             if (titleBar != null && titleBar.Visibility == Visibility.Visible)
             {
@@ -505,10 +515,30 @@ namespace MahApps.Metro.Controls
             base.OnStateChanged(e);
         }
 
+        protected void IconMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (e.ClickCount == 2)
+                {
+                    Close();
+                }
+                else
+                {
+                    ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitlebarHeight)));
+                }
+            }
+        }
+
+        protected void IconMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = false;
+        }
+
         protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
             var mousePosition = e.GetPosition(this);
-            bool isIconClick = ShowIconOnTitleBar && mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight;
+            var isIconClick = icon == null && ShowIconOnTitleBar && mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight;
 
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -548,7 +578,7 @@ namespace MahApps.Metro.Controls
         protected void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
         {
             var mousePosition = e.GetPosition(this);
-            bool isIconClick = ShowIconOnTitleBar && mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight;
+            var isIconClick = icon == null && ShowIconOnTitleBar && mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight;
             if (e.ChangedButton == MouseButton.Right && !isIconClick)
             {
                 ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePosition));
