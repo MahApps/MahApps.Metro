@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="HighlightColor">#FFE51400</Color>
+    <Color x:Key="HighlightColor">#FFA90E00</Color>
     
     <Color x:Key="AccentColor">#CCE51400</Color>
     <!--60%-->
@@ -29,7 +29,7 @@
     <SolidColorBrush x:Key="CheckmarkFill" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="RightArrowFill" Color="{StaticResource AccentColor}" />
 
-    <Color x:Key="IdealForegroundColor">Black</Color>
+    <Color x:Key="IdealForegroundColor">White</Color>
     <SolidColorBrush x:Key="IdealForegroundColorBrush" Color="{StaticResource IdealForegroundColor}"/>
 
 </ResourceDictionary>
