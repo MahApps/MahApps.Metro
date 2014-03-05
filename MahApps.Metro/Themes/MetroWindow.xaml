@@ -445,6 +445,7 @@
                                 Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
                                 ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
                                 Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                IsEnabled="{Binding CloseButtonEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 Foreground="{TemplateBinding Foreground}">
                             <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
                                   SnapsToDevicePixels="True"
