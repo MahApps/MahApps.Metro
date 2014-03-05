@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Color x:Key="HighlightColor">#FF008A00</Color>
+    <Color x:Key="HighlightColor">#FF006600</Color>
     
     <Color x:Key="AccentColor">#CC008A00</Color>
     <!--60%-->

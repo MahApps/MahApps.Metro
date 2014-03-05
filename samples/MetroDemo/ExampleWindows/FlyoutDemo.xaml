@@ -107,8 +107,11 @@
                              Theme="Accent">
                 <Grid Margin="10"
                       Width="400">
-                    <TextBlock Text="This flyout adapts its theme to the current accent"
+                    <StackPanel>
+                        <TextBlock Text="This flyout adapts its theme to the current accent"
                                Foreground="{DynamicResource IdealForegroundColorBrush}" />
+                        <GroupBox Margin="10" Height="250" Header="Flyout Group Box" />
+                    </StackPanel>
                 </Grid>
             </Controls:Flyout>
             <Controls:Flyout Header="Inverse"
