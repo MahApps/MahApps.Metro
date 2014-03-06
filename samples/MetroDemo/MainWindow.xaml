@@ -69,19 +69,26 @@
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
             <Button Click="LaunchVisualStudioDemo"
-                    Content="VS Demo" />
+                    ToolTip="Visual Studio style demo"
+                    Content="VS" />
             <Button Click="LaunchFlyoutDemo"
-                    Content="Flyout Demo" />
+                    ToolTip="Flyouts demo window"
+                    Content="Flyouts" />
             <Button Click="LaunchIcons"
+                    ToolTip="All MahApp icons"
                     Content="Icons" />
             <Button Click="LauchCleanDemo"
-                    Content="Clean Demo" />
+                    ToolTip="Clean window style demo"
+                    Content="Clean" />
             <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
             <Button Click="InteropDemo"
-                    Content="Interop Demo" />
+                    ToolTip="The interop demo"
+                    Content="Interop" />
             <Button Click="LaunchNavigationDemo"
-                    Content="Navigation Demo" />
+                    ToolTip="Window navigation demo"
+                    Content="Navigation" />
             <ToggleButton Content="ToggleButton"
+                          ToolTip="Shows the toggle button magic"
                           x:Name="MagicToggleButton"
                           IsChecked="{Binding MagicToggleButtonIsChecked}" />
         </Controls:WindowCommands>
