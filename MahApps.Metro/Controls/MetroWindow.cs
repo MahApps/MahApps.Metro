@@ -476,8 +476,14 @@ namespace MahApps.Metro.Controls
             // if UseNoneWindowStyle = true no title bar, window commands or min, max, close buttons should be shown
             if (UseNoneWindowStyle)
             {
-                LeftWindowCommandsPresenter.Visibility = Visibility.Collapsed;
-                WindowCommandsPresenter.Visibility = Visibility.Collapsed;
+                if (LeftWindowCommandsPresenter != null)
+                {
+                    LeftWindowCommandsPresenter.Visibility = Visibility.Collapsed;
+                }
+                if (WindowCommandsPresenter != null)
+                {
+                    WindowCommandsPresenter.Visibility = Visibility.Collapsed;
+                }
                 ShowMinButton = false;
                 ShowMaxRestoreButton = false;
                 ShowCloseButton = false;
@@ -751,9 +757,18 @@ namespace MahApps.Metro.Controls
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
 
                 //if ShowWindowCommandsOnTop is true, set the window commands' zindex to a number that is higher than the flyout's. 
-                LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
-                WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
-                WindowButtonCommands.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
+                if (LeftWindowCommandsPresenter != null)
+                {
+                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
+                }
+                if (WindowCommandsPresenter != null)
+                {
+                    WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
+                }
+                if (WindowButtonCommands != null)
+                {
+                    WindowButtonCommands.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
+                }
 
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
             }
