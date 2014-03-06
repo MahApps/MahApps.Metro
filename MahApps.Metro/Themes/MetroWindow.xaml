@@ -398,7 +398,7 @@
                                                                   RecognizesAccessKey="True"
                                                                   Opacity=".5"
                                                                   Margin="9,1,9,1" />
-                                                
+
                                                 <Rectangle x:Name="border"
                                                            SnapsToDevicePixels="True"
                                                            IsHitTestVisible="False"
@@ -482,13 +482,9 @@
                     <StackPanel Orientation="Horizontal">
 
                         <Button x:Name="PART_Min"
-                                FocusVisualStyle="{x:Null}"
-                                IsTabStop="False"
-                                Width="34"
                                 Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
-                                MaxHeight="34"
-                                Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
-                                Padding="0"
+                                Style="{DynamicResource MetroWindowButtonSytle}"
+                                Foreground="{TemplateBinding Foreground}"
                                 ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
                                 Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
@@ -497,16 +493,11 @@
                         </Button>
 
                         <Button x:Name="PART_Max"
-                                FocusVisualStyle="{x:Null}"
-                                IsTabStop="False"
-                                Width="34"
                                 Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
-                                MaxHeight="34"
-                                Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
-                                Padding="0"
+                                Style="{DynamicResource MetroWindowButtonSytle}"
                                 Foreground="{TemplateBinding Foreground}"
-                                Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
+                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
+                                Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Grid>
                                 <Path x:Name="MaximisePath"
                                       SnapsToDevicePixels="True"
@@ -520,15 +511,11 @@
                         </Button>
 
                         <Button x:Name="PART_Close"
-                                FocusVisualStyle="{x:Null}"
-                                IsTabStop="False"
-                                Width="34"
                                 Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
-                                MaxHeight="34"
-                                Style="{DynamicResource IronicallyNamedChromelessButtonStyle}"
+                                Style="{DynamicResource MetroWindowButtonSytle}"
+                                Foreground="{TemplateBinding Foreground}"
                                 ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
-                                Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                Foreground="{TemplateBinding Foreground}">
+                                Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
                                   SnapsToDevicePixels="True"
                                   Fill="{TemplateBinding Foreground}" />
