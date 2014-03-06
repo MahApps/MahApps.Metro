@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls.Dialogs
@@ -12,14 +13,21 @@ namespace MahApps.Metro.Controls.Dialogs
     [System.Windows.Markup.ContentProperty("DialogBody")]
     public abstract class BaseMetroDialog : Control
     {
+        private const string PART_DialogBody_ContentPresenter = "PART_DialogBody_ContentPresenter";
+        private ContentPresenter DialogBody_ContentPresenter = null;
+
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null, (o, e) => {
+        public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null, (o, e) =>
+        {
             BaseMetroDialog dialog = (o as BaseMetroDialog);
-            if (dialog != null) {
-                if (e.OldValue != null) {
+            if (dialog != null)
+            {
+                if (e.OldValue != null)
+                {
                     dialog.RemoveLogicalChild(e.OldValue);
                 }
-                if (e.NewValue != null) {
+                if (e.NewValue != null)
+                {
                     dialog.AddLogicalChild(e.NewValue);
                 }
             }
@@ -73,6 +81,36 @@ namespace MahApps.Metro.Controls.Dialogs
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseMetroDialog), new FrameworkPropertyMetadata(typeof(BaseMetroDialog)));
         }
 
+        public override void OnApplyTemplate()
+        {
+            DialogBody_ContentPresenter = GetTemplateChild(PART_DialogBody_ContentPresenter) as ContentPresenter;
+
+            if (DialogBody_ContentPresenter != null && DialogBody_ContentPresenter.Content != null)
+            {
+                //because of the logical child stuff, we have to inject our resources into the content in DialogBody.
+
+                var content = ((FrameworkElement)DialogBody_ContentPresenter.Content);
+
+                var oldContentResources = content.Resources; //save the resources that the dialog had.
+
+                content.Resources = this.Template.Resources; //its weird. we have to apply our resources on top of theirs and THEN, add their resources ON TOP of ours.
+
+                foreach (ResourceDictionary resource in oldContentResources.MergedDictionaries)
+                {
+                    if (!content.Resources.MergedDictionaries.Contains(resource))
+                        content.Resources.MergedDictionaries.Add(resource);
+                }
+
+                foreach (System.Collections.DictionaryEntry resource in oldContentResources)
+                {
+                    if (!content.Resources.Contains(resource))
+                        content.Resources.Add(resource.Key, resource.Value);
+                }
+            }
+
+            base.OnApplyTemplate();
+        }
+
         /// <summary>
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
         /// </summary>
@@ -81,20 +119,11 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             DialogSettings = settings == null ? owningWindow.MetroDialogOptions : settings;
 
-            switch (DialogSettings.ColorScheme)
-            {
-                case MetroDialogColorScheme.Theme:
-                    this.SetResourceReference(BackgroundProperty, "WhiteColorBrush");
-                    this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                    break;
-                case MetroDialogColorScheme.Accented:
-                    this.SetResourceReference(BackgroundProperty, "HighlightBrush");
-                    this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
-                    break;
-            }
+            Initialize();
 
             OwningWindow = owningWindow;
         }
+
 
         /// <summary>
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
@@ -102,6 +131,27 @@ namespace MahApps.Metro.Controls.Dialogs
         protected BaseMetroDialog()
         {
             DialogSettings = new MetroDialogSettings();
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            if (DialogSettings != null)
+            {
+                switch (DialogSettings.ColorScheme)
+                {
+                    case MetroDialogColorScheme.Theme:
+                        this.SetResourceReference(BackgroundProperty, "WhiteColorBrush");
+                        this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
+                        break;
+                    case MetroDialogColorScheme.Accented:
+                        this.SetResourceReference(BackgroundProperty, "HighlightBrush");
+                        this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
+                        break;
+                }
+            }
+
         }
 
         /// <summary>
