@@ -334,7 +334,7 @@
                                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                                   RecognizesAccessKey="True"
                                                                   Opacity="0.75"
-                                                                  Margin="11,1,11,1" />
+                                                                  Margin="9,1,9,1" />
 
                                                 <Rectangle x:Name="border"
                                                            SnapsToDevicePixels="True"
@@ -345,7 +345,7 @@
                                                            VerticalAlignment="Stretch"
                                                            HorizontalAlignment="Right"
                                                            Fill="{TemplateBinding Foreground}"
-                                                           Margin="10,0,0,0" />
+                                                           Margin="8,0,0,0" />
                                             </Grid>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver"
@@ -397,7 +397,8 @@
                                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                                   RecognizesAccessKey="True"
                                                                   Opacity=".5"
-                                                                  Margin="11,1,11,1" />
+                                                                  Margin="9,1,9,1" />
+                                                
                                                 <Rectangle x:Name="border"
                                                            SnapsToDevicePixels="True"
                                                            IsHitTestVisible="False"
@@ -407,7 +408,7 @@
                                                            VerticalAlignment="Stretch"
                                                            HorizontalAlignment="Right"
                                                            Fill="{TemplateBinding Foreground}"
-                                                           Margin="10,0,0,0" />
+                                                           Margin="8,0,0,0" />
                                             </Grid>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver"
