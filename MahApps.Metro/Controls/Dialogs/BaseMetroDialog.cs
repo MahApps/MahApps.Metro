@@ -85,29 +85,6 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             DialogBody_ContentPresenter = GetTemplateChild(PART_DialogBody_ContentPresenter) as ContentPresenter;
 
-            if (DialogBody_ContentPresenter != null && DialogBody_ContentPresenter.Content != null)
-            {
-                //because of the logical child stuff, we have to inject our resources into the content in DialogBody.
-
-                var content = ((FrameworkElement)DialogBody_ContentPresenter.Content);
-
-                var oldContentResources = content.Resources; //save the resources that the dialog had.
-
-                content.Resources = this.Template.Resources; //its weird. we have to apply our resources on top of theirs and THEN, add their resources ON TOP of ours.
-
-                foreach (ResourceDictionary resource in oldContentResources.MergedDictionaries)
-                {
-                    if (!content.Resources.MergedDictionaries.Contains(resource))
-                        content.Resources.MergedDictionaries.Add(resource);
-                }
-
-                foreach (System.Collections.DictionaryEntry resource in oldContentResources)
-                {
-                    if (!content.Resources.Contains(resource))
-                        content.Resources.Add(resource.Key, resource.Value);
-                }
-            }
-
             base.OnApplyTemplate();
         }
 
@@ -151,6 +128,8 @@ namespace MahApps.Metro.Controls.Dialogs
                         break;
                 }
             }
+
+            this.Resources.MergedDictionaries.Add(new System.Windows.ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
 
         }
 
@@ -242,7 +221,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (DialogSettings.UseAnimations)
             {
-                Storyboard closingStoryboard = this.Template.Resources["DialogCloseStoryboard"] as Storyboard;
+                Storyboard closingStoryboard = this.Resources["DialogCloseStoryboard"] as Storyboard;
+
+                if (closingStoryboard == null)
+                    throw new InvalidOperationException("Unable to find the dialog closing storyboard. Did you forget to add BaseMetroDialog.xaml to your merged dictionaries?");
 
                 EventHandler handler = null;
                 handler = new EventHandler((sender, args) =>
