@@ -199,6 +199,11 @@ namespace MahApps.Metro.Behaviours
                     {
                         titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
                     }
+                    var leftWindowCommands = window.GetPart<ContentPresenter>("PART_LeftWindowCommands");
+                    if (leftWindowCommands != null)
+                    {
+                        leftWindowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    }
                     var windowCommands = window.GetPart<ContentPresenter>("PART_WindowCommands");
                     if (windowCommands != null)
                     {

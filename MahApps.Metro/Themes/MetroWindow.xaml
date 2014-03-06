@@ -46,6 +46,8 @@
                         <Grid.ColumnDefinitions>
                             <!-- icon -->
                             <ColumnDefinition Width="Auto" />
+                            <!-- left window commands -->
+                            <ColumnDefinition Width="Auto" />
                             <!-- title -->
                             <ColumnDefinition Width="*" />
                             <!-- right window commands -->
@@ -63,7 +65,7 @@
                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                    Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                    Grid.Column="0"
-                                   Grid.ColumnSpan="4"
+                                   Grid.ColumnSpan="5"
                                    StrokeThickness="0" />
 
                         <!-- icon -->
@@ -78,10 +80,20 @@
                                         Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                         Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
+                        <!-- the left window commands -->
+                        <ContentPresenter x:Name="PART_LeftWindowCommands"
+                                          Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                          Panel.ZIndex="1"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          Grid.RowSpan="2"
+                                          VerticalAlignment="Top"
+                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+
                         <!-- the title bar -->
                         <ContentControl x:Name="PART_TitleBar"
                                         Grid.Row="0"
-                                        Grid.Column="1"
+                                        Grid.Column="2"
                                         Content="{TemplateBinding Title}"
                                         ContentTemplate="{TemplateBinding TitleTemplate}"
                                         HorizontalContentAlignment="Stretch"
@@ -100,12 +112,12 @@
                             </ContentControl.Foreground>
                         </ContentControl>
 
-                        <!-- the window commands -->
+                        <!-- the right window commands -->
                         <ContentPresenter x:Name="PART_WindowCommands"
                                           Content="{Binding WindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                           Panel.ZIndex="1"
                                           Grid.Row="0"
-                                          Grid.Column="2"
+                                          Grid.Column="3"
                                           Grid.RowSpan="2"
                                           VerticalAlignment="Top"
                                           Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
@@ -114,7 +126,7 @@
                         <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
                                                        Panel.ZIndex="1"
                                                        Grid.Row="0"
-                                                       Grid.Column="3"
+                                                       Grid.Column="4"
                                                        Grid.RowSpan="2"
                                                        VerticalAlignment="Top"
                                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
@@ -122,7 +134,7 @@
                         <!-- the main window content -->
                         <ContentPresenter Grid.Row="1"
                                           Grid.Column="0"
-                                          Grid.ColumnSpan="4" />
+                                          Grid.ColumnSpan="5" />
 
                         <!-- disables the main content when a modal flyout is shown -->
                         <Rectangle Grid.Row="0"
@@ -137,7 +149,7 @@
                         <!-- flyouts -->
                         <ContentControl Grid.Row="0"
                                         Grid.Column="0"
-                                        Grid.ColumnSpan="4"
+                                        Grid.ColumnSpan="5"
                                         Grid.RowSpan="2"
                                         Panel.ZIndex="2"
                                         Focusable="False"
@@ -148,7 +160,7 @@
                         <!--Used to create that overlay effect. Can be used for anything.-->
                         <Grid Grid.Row="0"
                               Grid.Column="0"
-                              Grid.ColumnSpan="4"
+                              Grid.ColumnSpan="5"
                               Grid.RowSpan="2"
                               Panel.ZIndex="3"
                               FocusVisualStyle="{x:Null}"
@@ -159,7 +171,7 @@
 
                         <Grid Grid.Row="0"
                               Grid.Column="0"
-                              Grid.ColumnSpan="4"
+                              Grid.ColumnSpan="5"
                               Grid.RowSpan="2"
                               Panel.ZIndex="4"
                               FocusVisualStyle="{x:Null}"

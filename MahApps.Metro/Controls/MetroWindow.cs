@@ -19,6 +19,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_Icon, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleBackground, Type = typeof(UIElement))]
+    [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
     [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
@@ -29,6 +30,7 @@ namespace MahApps.Metro.Controls
         private const string PART_Icon = "PART_Icon";
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowTitleBackground = "PART_WindowTitleBackground";
+        private const string PART_LeftWindowCommands = "PART_LeftWindowCommands";
         private const string PART_WindowCommands = "PART_WindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
         private const string PART_OverlayBox = "PART_OverlayBox";
@@ -53,8 +55,10 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         
+        public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register("LeftWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowCommandsProperty = DependencyProperty.Register("WindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        
         [Obsolete("This propery isn't needed anymore, it will be deleted in next release...")]
         public static readonly DependencyProperty TextBlockStyleProperty = DependencyProperty.Register("TextBlockStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(default(Style)));
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
@@ -65,6 +69,7 @@ namespace MahApps.Metro.Controls
         UIElement icon;
         UIElement titleBar;
         UIElement titleBarBackground;
+        internal ContentPresenter LeftWindowCommandsPresenter;
         internal ContentPresenter WindowCommandsPresenter;
         internal WindowButtonCommands WindowButtonCommands;
         
@@ -147,7 +152,16 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets the right WindowCommands that hosts the window's flyouts.
+        /// Gets/sets the left WindowCommands that hosts the user commands.
+        /// </summary>
+        public WindowCommands LeftWindowCommands
+        {
+            get { return (WindowCommands)GetValue(LeftWindowCommandsProperty); }
+            set { SetValue(LeftWindowCommandsProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the right WindowCommands that hosts the user commands.
         /// </summary>
         public WindowCommands WindowCommands
         {
@@ -287,6 +301,10 @@ namespace MahApps.Metro.Controls
             if (this.titleBarBackground != null)
             {
                 this.titleBarBackground.Visibility = newVisibility;
+            }
+            if (this.LeftWindowCommandsPresenter != null)
+            {
+                this.LeftWindowCommandsPresenter.Visibility = newVisibility;
             }
             if (this.WindowCommandsPresenter != null)
             {
@@ -458,6 +476,7 @@ namespace MahApps.Metro.Controls
             // if UseNoneWindowStyle = true no title bar, window commands or min, max, close buttons should be shown
             if (UseNoneWindowStyle)
             {
+                LeftWindowCommandsPresenter.Visibility = Visibility.Collapsed;
                 WindowCommandsPresenter.Visibility = Visibility.Collapsed;
                 ShowMinButton = false;
                 ShowMaxRestoreButton = false;
@@ -532,9 +551,12 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
+            if (LeftWindowCommands == null)
+                LeftWindowCommands = new WindowCommands();
             if (WindowCommands == null)
                 WindowCommands = new WindowCommands();
 
+            LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
             WindowCommandsPresenter = GetTemplateChild(PART_WindowCommands) as ContentPresenter;
             WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
 
@@ -729,6 +751,7 @@ namespace MahApps.Metro.Controls
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
 
                 //if ShowWindowCommandsOnTop is true, set the window commands' zindex to a number that is higher than the flyout's. 
+                LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
                 WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
                 WindowButtonCommands.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
 
