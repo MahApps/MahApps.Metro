@@ -155,7 +155,7 @@
     </Style>
 
     <!-- base button style for min, max and close window buttons -->
-    <Style x:Key="MetroBaseWindowButtonSytle"
+    <Style x:Key="MetroBaseWindowButtonStyle"
            TargetType="{x:Type Button}">
         <Setter Property="Background"
                 Value="{DynamicResource TransparentWhiteBrush}" />
@@ -214,9 +214,9 @@
     </Style>
 
     <!-- default button style for min, max and close window buttons -->
-    <Style x:Key="MetroWindowButtonSytle"
+    <Style x:Key="MetroWindowButtonStyle"
            TargetType="{x:Type Button}"
-           BasedOn="{StaticResource MetroBaseWindowButtonSytle}">
+           BasedOn="{StaticResource MetroBaseWindowButtonStyle}">
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="IsTabStop"
@@ -232,7 +232,7 @@
     <!-- obsolete, will be deleted in 0.14 -->
     <Style x:Key="IronicallyNamedChromelessButtonStyle"
            TargetType="{x:Type Button}"
-           BasedOn="{StaticResource MetroBaseWindowButtonSytle}"/>
+           BasedOn="{StaticResource MetroBaseWindowButtonStyle}"/>
 
     <!-- style for default button -->
     <Style TargetType="{x:Type Button}"

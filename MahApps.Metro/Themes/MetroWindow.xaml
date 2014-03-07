@@ -242,11 +242,11 @@
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="WindowMinButtonStyle"
-                Value="{DynamicResource MetroWindowButtonSytle}" />
+                Value="{DynamicResource MetroWindowButtonStyle}" />
         <Setter Property="WindowMaxButtonStyle"
-                Value="{DynamicResource MetroWindowButtonSytle}" />
+                Value="{DynamicResource MetroWindowButtonStyle}" />
         <Setter Property="WindowCloseButtonStyle"
-                Value="{DynamicResource MetroWindowButtonSytle}" />
+                Value="{DynamicResource MetroWindowButtonStyle}" />
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>
