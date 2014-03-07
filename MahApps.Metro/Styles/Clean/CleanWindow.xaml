@@ -188,26 +188,14 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}"
+           BasedOn="{StaticResource {x:Type Controls:MetroWindow}}"
            x:Key="CleanWindowStyleKey">
         <Setter Property="ShowTitleBar"
                 Value="True" />
         <Setter Property="MinWidth"
                 Value="400" />
-        <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
-            <Setter.Value>
-                <Behaviours:StylizedBehaviorCollection>
-                    <Behaviours:BorderlessWindowBehavior />
-                    <Behaviours:WindowsSettingBehaviour />
-                    <Behaviours:GlowWindowBehavior />
-                </Behaviours:StylizedBehaviorCollection>
-            </Setter.Value>
-        </Setter>
         <Setter Property="Template"
                 Value="{StaticResource CleanWindowTemplate}" />
-        <Setter Property="Background"
-                Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
         <Setter Property="TitleForeground"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="OverrideDefaultWindowCommandsBrush"
