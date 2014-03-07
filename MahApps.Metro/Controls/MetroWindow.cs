@@ -320,7 +320,7 @@ namespace MahApps.Metro.Controls
 
         private void ToggleVisibiltyForAllTitleElements(bool visible)
         {
-            var newVisibility = visible ? Visibility.Visible : Visibility.Collapsed;
+            var newVisibility = visible && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
             if (this.icon != null)
             {
                 this.icon.Visibility = newVisibility;
