@@ -8,8 +8,8 @@
                       ShowIconOnTitleBar="True"
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       Title="CleanWindowDemo"
-                      Height="300"
-                      Width="300"
+                      Height="400"
+                      Width="800"
                       Style="{DynamicResource CleanWindowStyleKey}">
 
     <i:Interaction.Behaviors>
