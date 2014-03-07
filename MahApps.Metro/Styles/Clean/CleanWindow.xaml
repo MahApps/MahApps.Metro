@@ -2,27 +2,27 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
-                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
 
-    <ControlTemplate x:Key="CleanWindowTemplate" TargetType="{x:Type Controls:MetroWindow}">
+    <ControlTemplate x:Key="CleanWindowTemplate"
+                     TargetType="{x:Type Controls:MetroWindow}">
         <ControlTemplate.Resources>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-            <Storyboard x:Key="OverlayFastSemiFadeIn" 
-                                    BeginTime="0:0:0"
-                                    AccelerationRatio=".97" 
-                                    Storyboard.TargetProperty="Opacity"
-                                    SpeedRatio="2.7">
+            <Storyboard x:Key="OverlayFastSemiFadeIn"
+                        BeginTime="0:0:0"
+                        AccelerationRatio=".97"
+                        Storyboard.TargetProperty="Opacity"
+                        SpeedRatio="2.7">
                 <DoubleAnimation To=".7" />
             </Storyboard>
-            <Storyboard x:Key="OverlayFastSemiFadeOut" 
-                                    BeginTime="0:0:0"
-                                    AccelerationRatio=".97" 
-                                    Storyboard.TargetProperty="Opacity"
-                                    SpeedRatio="2.7">
+            <Storyboard x:Key="OverlayFastSemiFadeOut"
+                        BeginTime="0:0:0"
+                        AccelerationRatio=".97"
+                        Storyboard.TargetProperty="Opacity"
+                        SpeedRatio="2.7">
                 <DoubleAnimation To="0." />
             </Storyboard>
         </ControlTemplate.Resources>
@@ -66,26 +66,26 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="PART_TitleBar"
-                            Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                            Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="3"
-                            Grid.Row="0">
+                              Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                              Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              Grid.Row="0">
 
                             <Image Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    Source="{TemplateBinding Icon}"
-                                    RenderOptions.EdgeMode="Aliased"
-                                    RenderOptions.BitmapScalingMode="HighQuality"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top" />
+                                   Source="{TemplateBinding Icon}"
+                                   RenderOptions.EdgeMode="Aliased"
+                                   RenderOptions.BitmapScalingMode="HighQuality"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top" />
 
                             <Label HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Center"
-                                VerticalAlignment="Top"
-                                Name="TitleLabel"
-                                Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                FontSize="{DynamicResource WindowTitleFontSize}"
-                                Width="Auto" />
+                                   HorizontalContentAlignment="Center"
+                                   VerticalAlignment="Top"
+                                   Name="TitleLabel"
+                                   Content="{Binding Title, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                   FontSize="{DynamicResource WindowTitleFontSize}"
+                                   Width="Auto" />
 
                         </Grid>
                         <!-- the window commands -->
@@ -98,7 +98,7 @@
                                           TextElement.Foreground="{DynamicResource BlackColorBrush}"
                                           Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                           Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                        
+
                         <!-- the window button commands -->
                         <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
                                                        Panel.ZIndex="1"
@@ -108,17 +108,17 @@
                                                        Foreground="{DynamicResource BlackColorBrush}"
                                                        Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
 
-                        <ContentPresenter Grid.Row="1" 
-                                          Grid.Column="0" 
+                        <ContentPresenter Grid.Row="1"
+                                          Grid.Column="0"
                                           Grid.ColumnSpan="3" />
 
                         <!-- disables the main content when a modal flyout is shown -->
-                        <Rectangle Grid.RowSpan="2" 
-                                    Grid.ColumnSpan="3" 
-                                    Name="PART_FlyoutModal" 
-                                    Fill="{DynamicResource BlackColorBrush}"
-                                    Opacity="0.5"
-                                    Visibility="Hidden"/>
+                        <Rectangle Grid.RowSpan="2"
+                                   Grid.ColumnSpan="3"
+                                   Name="PART_FlyoutModal"
+                                   Fill="{DynamicResource BlackColorBrush}"
+                                   Opacity="0.5"
+                                   Visibility="Hidden" />
 
                         <ContentControl Grid.Row="0"
                                         Grid.RowSpan="2"
@@ -132,22 +132,22 @@
 
                         <!--Used to create that overlay effect. Can be used for anything.-->
                         <Grid Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Panel.ZIndex="3"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="3"
-                            x:Name="PART_OverlayBox"
-                            Background="{DynamicResource BlackColorBrush}"
-                            Opacity=".7"
-                            Visibility="Hidden">
+                              Grid.RowSpan="2"
+                              Panel.ZIndex="3"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              x:Name="PART_OverlayBox"
+                              Background="{DynamicResource BlackColorBrush}"
+                              Opacity=".7"
+                              Visibility="Hidden">
                         </Grid>
 
                         <Grid Grid.Row="0"
-                            Grid.RowSpan="2"
-                            Panel.ZIndex="4"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="3"
-                            x:Name="PART_MetroDialogContainer">
+                              Grid.RowSpan="2"
+                              Panel.ZIndex="4"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              x:Name="PART_MetroDialogContainer">
 
                         </Grid>
                     </Grid>
@@ -170,18 +170,19 @@
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="ResizeMode"
-                                           Value="CanResizeWithGrip" />
+                               Value="CanResizeWithGrip" />
                     <Condition Property="WindowState"
-                                           Value="Normal" />
+                               Value="Normal" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Visibility"
-                                    TargetName="WindowResizeGrip"
-                                    Value="Visible" />
+                        TargetName="WindowResizeGrip"
+                        Value="Visible" />
             </MultiTrigger>
-            <Trigger Property="TitleCaps" Value="True">
-                <Setter TargetName="TitleLabel" 
-                                    Property="Content" 
-                                    Value="{Binding Path=Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+            <Trigger Property="TitleCaps"
+                     Value="True">
+                <Setter TargetName="TitleLabel"
+                        Property="Content"
+                        Value="{Binding Path=Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -201,7 +202,7 @@
                 </Behaviours:StylizedBehaviorCollection>
             </Setter.Value>
         </Setter>
-        <Setter Property="Template" 
+        <Setter Property="Template"
                 Value="{StaticResource CleanWindowTemplate}" />
         <Setter Property="Background"
                 Value="{DynamicResource WhiteBrush}" />
@@ -212,4 +213,5 @@
         <Setter Property="OverrideDefaultWindowCommandsBrush"
                 Value="{DynamicResource BlackBrush}" />
     </Style>
+
 </ResourceDictionary>
