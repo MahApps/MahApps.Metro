@@ -782,7 +782,7 @@ namespace MahApps.Metro.Controls
         internal void HandleFlyoutStatusChange(Flyout flyout, IEnumerable<Flyout> visibleFlyouts)
         {
             //checks a recently opened flyout's position.
-            if (flyout.Position == Position.Right || flyout.Position == Position.Top)
+            if (flyout.Position == Position.Left || flyout.Position == Position.Right || flyout.Position == Position.Top)
             {
                 //get it's zindex
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;

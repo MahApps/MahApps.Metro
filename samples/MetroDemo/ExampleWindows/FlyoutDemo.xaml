@@ -54,6 +54,14 @@
         </DataTemplate>
     </Controls:MetroWindow.TitleTemplate>
 
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Button FontFamily="Wingdings"
+                    FontSize="20"
+                    Content="A" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
     <Controls:MetroWindow.WindowCommands>
         <Controls:WindowCommands>
             <Button FontFamily="Wingdings"
