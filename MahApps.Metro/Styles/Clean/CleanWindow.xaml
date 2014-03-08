@@ -59,6 +59,7 @@
                         <ContentControl x:Name="PART_Icon"
                                         Grid.Row="0"
                                         Grid.Column="0"
+                                        Panel.ZIndex="1"
                                         Content="{TemplateBinding Icon}"
                                         ContentTemplate="{TemplateBinding IconTemplate}"
                                         HorizontalContentAlignment="Stretch"
