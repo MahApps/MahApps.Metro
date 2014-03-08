@@ -90,7 +90,15 @@ namespace MahApps.Metro.Controls
 
         private static void InvokeCommandButtons(this MetroWindow window, Action<ButtonBase> action)
         {
-            foreach (ButtonBase b in ((WindowCommands)window.WindowCommandsPresenter.Content).FindChildren<ButtonBase>())
+            if (window.WindowCommandsPresenter == null || window.LeftWindowCommandsPresenter == null)
+            {
+                return;
+            }
+
+            var allCommandButtons = ((WindowCommands)window.WindowCommandsPresenter.Content)
+                .FindChildren<ButtonBase>()
+                .Concat(((WindowCommands)window.LeftWindowCommandsPresenter.Content).FindChildren<ButtonBase>());
+            foreach (var b in allCommandButtons)
             {
                 action(b);
             }

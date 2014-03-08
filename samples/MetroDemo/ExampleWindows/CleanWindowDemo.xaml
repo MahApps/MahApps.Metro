@@ -37,11 +37,16 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <Button Content="Test" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
+    <Controls:MetroWindow.WindowCommands>
+        <Controls:WindowCommands>
             <Button Content="Another Test" />
-            <ToggleButton Content="ToggleButton Test" />
+            <ToggleButton Content="ToggleButton" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.WindowCommands>
 

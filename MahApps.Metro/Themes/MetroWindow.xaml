@@ -37,6 +37,7 @@
                     <VisualState x:Name="BeforeUnloaded" />
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
+            
             <AdornerDecorator>
                 <Controls:MetroContentControl IsTabStop="False"
                                               FocusVisualStyle="{x:Null}"
@@ -88,7 +89,8 @@
                                           Grid.Column="1"
                                           Grid.RowSpan="2"
                                           VerticalAlignment="Top"
-                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                          Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <!-- the title bar -->
                         <ContentControl x:Name="PART_TitleBar"
@@ -120,7 +122,8 @@
                                           Grid.Column="3"
                                           Grid.RowSpan="2"
                                           VerticalAlignment="Top"
-                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                          Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <!-- the window button commands -->
                         <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
@@ -157,7 +160,7 @@
                                         Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                         VerticalAlignment="Stretch" />
 
-                        <!--Used to create that overlay effect. Can be used for anything.-->
+                        <!-- Used to create that overlay effect. Can be used for anything. -->
                         <Grid Grid.Row="0"
                               Grid.Column="0"
                               Grid.ColumnSpan="5"
@@ -191,6 +194,7 @@
                         Visibility="Collapsed"
                         VerticalAlignment="Bottom" />
         </Grid>
+        
         <ControlTemplate.Resources>
             <Storyboard x:Key="OverlayFastSemiFadeIn"
                         BeginTime="0:0:0"
