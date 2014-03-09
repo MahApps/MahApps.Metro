@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:MahApps.Metro.Controls">
-        <ResourceDictionary.MergedDictionaries>
-            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
-        </ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate TargetType="{x:Type local:SplitButton}" x:Key="SplitButtonHorizontal">
         <StackPanel x:Name="PART_Container" Orientation="Horizontal" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
@@ -16,7 +16,7 @@
                     <ContentControl MinWidth="20"
                             x:Name="PART_ButtonContent" HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Center" VerticalAlignment="{TemplateBinding VerticalAlignment}" VerticalContentAlignment="Center"
-                            Content="{TemplateBinding SelectedItem}"
+                            Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                             ContentTemplate="{TemplateBinding ItemTemplate}">
                     </ContentControl>
                 </StackPanel>
@@ -30,8 +30,8 @@
                 StaysOpen="False">
                 <ListBox
                     x:Name="PART_ListBox" SelectionMode="Single"
-                    SelectedItem="{TemplateBinding SelectedItem}"
-                    SelectedIndex="{TemplateBinding SelectedIndex}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                     ItemTemplate="{TemplateBinding ItemTemplate}"
                     ItemsSource="{TemplateBinding ItemsSource}"/>
             </Popup>
@@ -49,7 +49,7 @@
                     <ContentControl MinHeight="20"
                             x:Name="PART_ButtonContent" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                            Content="{TemplateBinding SelectedItem}"
+                            Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                             ContentTemplate="{TemplateBinding ItemTemplate}">
                     </ContentControl>
                 </StackPanel>
@@ -63,8 +63,8 @@
                 StaysOpen="False">
                 <ListBox
                     x:Name="PART_ListBox" SelectionMode="Single"
-                    SelectedItem="{TemplateBinding SelectedItem}"
-                    SelectedIndex="{TemplateBinding SelectedIndex}"
+                    SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                    SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                     ItemTemplate="{TemplateBinding ItemTemplate}"
                     ItemsSource="{TemplateBinding ItemsSource}"/>
             </Popup>
