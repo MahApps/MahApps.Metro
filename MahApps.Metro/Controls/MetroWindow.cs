@@ -20,7 +20,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleBackground, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(WindowCommands))]
-    [TemplatePart(Name = PART_WindowCommands, Type = typeof(WindowCommands))]
+    [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
     [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
     [TemplatePart(Name = PART_MetroDialogContainer, Type = typeof(Grid))]
@@ -31,7 +31,7 @@ namespace MahApps.Metro.Controls
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowTitleBackground = "PART_WindowTitleBackground";
         private const string PART_LeftWindowCommands = "PART_LeftWindowCommands";
-        private const string PART_WindowCommands = "PART_WindowCommands";
+        private const string PART_RightWindowCommands = "PART_RightWindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
         private const string PART_OverlayBox = "PART_OverlayBox";
         private const string PART_MetroDialogContainer = "PART_MetroDialogContainer";
@@ -56,7 +56,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         
         public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register("LeftWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty WindowCommandsProperty = DependencyProperty.Register("WindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register("RightWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
+        [Obsolete("This property is obsolete and will be delete in next release, use RightWindowCommands instead.")]
+        public static readonly DependencyProperty WindowCommandsProperty = DependencyProperty.Register("WindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, WindowCommandsPropertyChangedCallback));
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty WindowMinButtonStyleProperty = DependencyProperty.Register("WindowMinButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
@@ -74,7 +76,7 @@ namespace MahApps.Metro.Controls
         UIElement titleBar;
         UIElement titleBarBackground;
         internal ContentPresenter LeftWindowCommandsPresenter;
-        internal ContentPresenter WindowCommandsPresenter;
+        internal ContentPresenter RightWindowCommandsPresenter;
         internal WindowButtonCommands WindowButtonCommands;
         
         internal Grid overlayBox;
@@ -183,7 +185,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets the left WindowCommands that hosts the user commands.
+        /// Gets/sets the left window commands that hosts the user commands.
         /// </summary>
         public WindowCommands LeftWindowCommands
         {
@@ -192,12 +194,30 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets the right WindowCommands that hosts the user commands.
+        /// Gets/sets the right window commands that hosts the user commands.
         /// </summary>
+        public WindowCommands RightWindowCommands
+        {
+            get { return (WindowCommands)GetValue(RightWindowCommandsProperty); }
+            set { SetValue(RightWindowCommandsProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the right window commands that hosts the user commands.
+        /// </summary>
+        [Obsolete("This property is obsolete and will be delete in next release, use RightWindowCommands instead.")]
         public WindowCommands WindowCommands
         {
             get { return (WindowCommands)GetValue(WindowCommandsProperty); }
             set { SetValue(WindowCommandsProperty, value); }
+        }
+
+        private static void WindowCommandsPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue && e.NewValue != null)
+            {
+                ((MetroWindow)dependencyObject).RightWindowCommands = (WindowCommands)e.NewValue;
+            }
         }
 
         /// <summary>
@@ -337,9 +357,9 @@ namespace MahApps.Metro.Controls
             {
                 this.LeftWindowCommandsPresenter.Visibility = newVisibility;
             }
-            if (this.WindowCommandsPresenter != null)
+            if (this.RightWindowCommandsPresenter != null)
             {
-                this.WindowCommandsPresenter.Visibility = newVisibility;
+                this.RightWindowCommandsPresenter.Visibility = newVisibility;
             }
             if (this.WindowButtonCommands != null)
             {
@@ -511,9 +531,9 @@ namespace MahApps.Metro.Controls
                 {
                     LeftWindowCommandsPresenter.Visibility = Visibility.Collapsed;
                 }
-                if (WindowCommandsPresenter != null)
+                if (RightWindowCommandsPresenter != null)
                 {
-                    WindowCommandsPresenter.Visibility = Visibility.Collapsed;
+                    RightWindowCommandsPresenter.Visibility = Visibility.Collapsed;
                 }
                 ShowMinButton = false;
                 ShowMaxRestoreButton = false;
@@ -590,11 +610,11 @@ namespace MahApps.Metro.Controls
 
             if (LeftWindowCommands == null)
                 LeftWindowCommands = new WindowCommands();
-            if (WindowCommands == null)
-                WindowCommands = new WindowCommands();
+            if (RightWindowCommands == null)
+                RightWindowCommands = new WindowCommands();
 
             LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
-            WindowCommandsPresenter = GetTemplateChild(PART_WindowCommands) as ContentPresenter;
+            RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
             WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
@@ -796,9 +816,9 @@ namespace MahApps.Metro.Controls
                 {
                     LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
                 }
-                if (WindowCommandsPresenter != null)
+                if (RightWindowCommandsPresenter != null)
                 {
-                    WindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
+                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : (zIndex > 0 ? zIndex - 1 : 0));
                 }
                 if (WindowButtonCommands != null)
                 {

@@ -19,9 +19,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <controls:MetroWindow.WindowCommands>
+    <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Button Content="Test"/>
         </controls:WindowCommands>
-    </controls:MetroWindow.WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
 </controls:MetroWindow>

@@ -38,7 +38,7 @@ namespace Mahapps.Metro.Tests
 
         public static void AssertWindowCommandsColor(this MetroWindow window, Color color)
         {
-            Assert.True(window.WindowCommands.Items.Cast<Button>().Select(x => ((SolidColorBrush)x.Foreground).Color).All(x => x == color));
+            Assert.True(window.RightWindowCommands.Items.Cast<Button>().Select(x => ((SolidColorBrush)x.Foreground).Color).All(x => x == color));
             Assert.Equal(color, ((SolidColorBrush)window.WindowButtonCommands.Foreground).Color);
         }
     }

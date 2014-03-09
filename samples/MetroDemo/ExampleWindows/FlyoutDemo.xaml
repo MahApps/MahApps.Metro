@@ -62,7 +62,7 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
 
-    <Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button FontFamily="Wingdings"
                     FontSize="20"
@@ -71,7 +71,7 @@
                     FontSize="20"
                     Content="C" />
         </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>

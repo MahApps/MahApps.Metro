@@ -117,12 +117,12 @@ namespace MahApps.Metro.Controls
 
         private static void InvokeCommandButtons(this MetroWindow window, Action<ButtonBase> action)
         {
-            if (window.WindowCommandsPresenter == null || window.LeftWindowCommandsPresenter == null)
+            if (window.RightWindowCommandsPresenter == null || window.LeftWindowCommandsPresenter == null)
             {
                 return;
             }
 
-            var allCommandButtons = ((WindowCommands)window.WindowCommandsPresenter.Content)
+            var allCommandButtons = ((WindowCommands)window.RightWindowCommandsPresenter.Content)
                 .FindChildren<ButtonBase>()
                 .Concat(((WindowCommands)window.LeftWindowCommandsPresenter.Content).FindChildren<ButtonBase>());
             foreach (var b in allCommandButtons)
@@ -133,7 +133,7 @@ namespace MahApps.Metro.Controls
 
         private static void InvokeCommandButtons(this MetroWindow window, Action<ButtonBase> action, Position position)
         {
-            if (window.WindowCommandsPresenter == null || window.LeftWindowCommandsPresenter == null)
+            if (window.RightWindowCommandsPresenter == null || window.LeftWindowCommandsPresenter == null)
             {
                 return;
             }
@@ -141,7 +141,7 @@ namespace MahApps.Metro.Controls
             var allCommandButtons = Enumerable.Empty<ButtonBase>();
             if (position == Position.Right || position == Position.Top)
             {
-                allCommandButtons = allCommandButtons.Concat(((WindowCommands)window.WindowCommandsPresenter.Content).FindChildren<ButtonBase>());
+                allCommandButtons = allCommandButtons.Concat(((WindowCommands)window.RightWindowCommandsPresenter.Content).FindChildren<ButtonBase>());
             }
             if (position == Position.Left || position == Position.Top)
             {

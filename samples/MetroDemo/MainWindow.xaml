@@ -95,7 +95,7 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
 
-    <Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Click="LaunchVisualStudioDemo"
                     ToolTip="Visual Studio style demo"
@@ -121,7 +121,7 @@
                           x:Name="MagicToggleButton"
                           IsChecked="{Binding MagicToggleButtonIsChecked}" />
         </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroContentControl>
         <Grid>

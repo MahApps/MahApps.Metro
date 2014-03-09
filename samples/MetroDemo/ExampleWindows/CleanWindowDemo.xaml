@@ -43,12 +43,12 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.LeftWindowCommands>
 
-    <Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Content="Another Test" />
             <ToggleButton Content="ToggleButton" />
         </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>

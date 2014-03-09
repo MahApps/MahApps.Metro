@@ -116,8 +116,8 @@
                         </ContentControl>
 
                         <!-- the right window commands -->
-                        <ContentPresenter x:Name="PART_WindowCommands"
-                                          Content="{Binding WindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                        <ContentPresenter x:Name="PART_RightWindowCommands"
+                                          Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                           Panel.ZIndex="1"
                                           Grid.Row="0"
                                           Grid.Column="3"
