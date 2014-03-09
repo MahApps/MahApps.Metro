@@ -189,12 +189,22 @@ namespace MahApps.Metro.Behaviours
                     Border = ancestors;
                     if (ShouldHaveBorder())
                         AddBorder();
-                    var titleBar = window.GetPart<Grid>("PART_TitleBar");
+                    var icon = window.GetPart<UIElement>("PART_Icon");
+                    if (icon != null)
+                    {
+                        icon.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    }
+                    var titleBar = window.GetPart<UIElement>("PART_TitleBar");
                     if (titleBar != null)
                     {
                         titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
                     }
-                    var windowCommands = window.GetPart<ContentPresenter>("PART_WindowCommands");
+                    var leftWindowCommands = window.GetPart<ContentPresenter>("PART_LeftWindowCommands");
+                    if (leftWindowCommands != null)
+                    {
+                        leftWindowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                    }
+                    var windowCommands = window.GetPart<ContentPresenter>("PART_RightWindowCommands");
                     if (windowCommands != null)
                     {
                         windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
