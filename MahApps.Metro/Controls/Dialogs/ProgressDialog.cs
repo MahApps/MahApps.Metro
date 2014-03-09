@@ -25,7 +25,7 @@ namespace MahApps.Metro.Controls.Dialogs
         //{
         //    //DefaultStyleKeyProperty.OverrideMetadata(typeof(MessageDialog), new FrameworkPropertyMetadata(typeof(MessageDialog)));
         //}
-        internal ProgressDialog(MetroWindow parentWindow, MetroDialogSettings settings)
+        protected internal ProgressDialog(MetroWindow parentWindow, MetroDialogSettings settings)
             : base(parentWindow, settings)
         {
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace MahApps.Metro.Controls.Dialogs
             else
                 ProgressBarForeground = Brushes.White;
         }
-        internal ProgressDialog(MetroWindow parentWindow)
+        protected internal ProgressDialog(MetroWindow parentWindow)
             : this(parentWindow, null)
         {
             
