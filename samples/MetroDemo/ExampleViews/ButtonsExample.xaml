@@ -80,11 +80,12 @@
                           Margin="0, 10, 0, 0"
                           Style="{DynamicResource MetroCircleToggleButtonStyle}">
                 <Rectangle Width="20"
-                           Height="20">
-                    <Rectangle.Fill>
+                           Height="20"
+                           Fill="{DynamicResource BlackBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                                      Visual="{DynamicResource appbar_city}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
             <ToggleButton Width="50"
@@ -93,11 +94,12 @@
                           IsEnabled="False"
                           Style="{DynamicResource MetroCircleToggleButtonStyle}">
                 <Rectangle Width="20"
-                           Height="20">
-                    <Rectangle.Fill>
+                           Height="20"
+                           Fill="{DynamicResource BlackBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                                      Visual="{DynamicResource appbar_city}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
         </StackPanel>
@@ -129,11 +131,12 @@
                     Margin="0, 10, 0, 0"
                     Style="{DynamicResource MetroCircleButtonStyle}">
                 <Rectangle Width="20"
-                           Height="20">
-                    <Rectangle.Fill>
+                           Height="20"
+                           Fill="{DynamicResource BlackBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                                      Visual="{DynamicResource appbar_city}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
             <Button Width="50"
@@ -142,11 +145,12 @@
                     IsEnabled="False"
                     Style="{DynamicResource MetroCircleButtonStyle}">
                 <Rectangle Width="20"
-                           Height="20">
-                    <Rectangle.Fill>
+                           Height="20"
+                           Fill="{DynamicResource BlackBrush}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
                                      Visual="{DynamicResource appbar_city}" />
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
         </StackPanel>
