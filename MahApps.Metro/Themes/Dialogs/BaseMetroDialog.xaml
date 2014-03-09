@@ -4,37 +4,33 @@
                     xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters">
 
-    <ControlTemplate TargetType="{x:Type Dialogs:BaseMetroDialog}"
-                     x:Key="MetroDialogTemplate">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
-        <ControlTemplate.Resources>
-            <ResourceDictionary>
-                <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
-                </ResourceDictionary.MergedDictionaries>
-
-                <Style TargetType="{x:Type Button}"
+    <Style TargetType="{x:Type Button}"
                        BasedOn="{StaticResource SquareButtonStyle}">
-                    <Setter Property="FocusVisualStyle"
-                            Value="{x:Null}" />                    
-                </Style>
+        <Setter Property="FocusVisualStyle"
+                            Value="{x:Null}" />
+    </Style>
 
-                <Style TargetType="{x:Type Button}"
+    <Style TargetType="{x:Type Button}"
                        BasedOn="{StaticResource AccentedSquareButtonStyle}"
                        x:Key="AccentedDialogSquareButton">
-                    <Setter Property="FocusVisualStyle"
+        <Setter Property="FocusVisualStyle"
                             Value="{x:Null}" />
-                </Style>
+    </Style>
 
 
-                <Storyboard x:Key="DialogShownStoryboard">
-                    <DoubleAnimation To="1" BeginTime="0:0:0" Duration="0:0:0.2" AccelerationRatio=".9" Storyboard.TargetProperty="Opacity" />
-                </Storyboard>
-                <Storyboard x:Key="DialogCloseStoryboard">
-                    <DoubleAnimation To="0" BeginTime="0:0:0" Duration="0:0:0.2" AccelerationRatio=".9" Storyboard.TargetProperty="Opacity" />
-                </Storyboard>
-            </ResourceDictionary>
-        </ControlTemplate.Resources>
+    <Storyboard x:Key="DialogShownStoryboard">
+        <DoubleAnimation To="1" BeginTime="0:0:0" Duration="0:0:0.2" AccelerationRatio=".9" Storyboard.TargetProperty="Opacity" />
+    </Storyboard>
+    <Storyboard x:Key="DialogCloseStoryboard">
+        <DoubleAnimation To="0" BeginTime="0:0:0" Duration="0:0:0.2" AccelerationRatio=".9" Storyboard.TargetProperty="Opacity" />
+    </Storyboard>
+
+    <ControlTemplate TargetType="{x:Type Dialogs:BaseMetroDialog}"
+                     x:Key="MetroDialogTemplate">
 
         <Grid Background="{TemplateBinding Background}">
             <Border Focusable="False"
@@ -69,6 +65,7 @@
                                    TextWrapping="Wrap"
                                    Foreground="{TemplateBinding Foreground}" />
                             <ContentPresenter Grid.Row="1"
+                                   x:Name="PART_DialogBody_ContentPresenter"
                                    Content="{TemplateBinding DialogBody}"/>
                         </Grid>
                     </Grid>
