@@ -255,7 +255,6 @@
         <StackPanel Grid.Row="1"
                     Grid.Column="4"
                     HorizontalAlignment="Stretch">
-
             <Label Content="DropDownButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
@@ -279,6 +278,30 @@
             <CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
             <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             </CheckBox>
+            <Label Content="SplitButton"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            
+            <Controls:SplitButton Width="100" Height="30" SelectedIndex="3">
+                <Controls:SplitButton.ItemsSource>
+                    <Int32Collection>
+                        4654
+                        465
+                        8879
+                        99879
+                    </Int32Collection>
+                </Controls:SplitButton.ItemsSource>
+            </Controls:SplitButton>
+
+            <Controls:SplitButton Margin="0,20,0,0" Width="100" Orientation="Vertical" SelectedIndex="0">
+                <Controls:SplitButton.ItemsSource>
+                    <Int32Collection>
+                        4654
+                        465
+                        8879
+                        99879
+                    </Int32Collection>
+                </Controls:SplitButton.ItemsSource>
+            </Controls:SplitButton>
 
         </StackPanel>
     </Grid>
