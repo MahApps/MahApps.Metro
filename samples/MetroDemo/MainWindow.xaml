@@ -83,9 +83,11 @@
     <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <Button Click="LaunchMahAppsOnGitHub"
-                    ToolTip="MahApps.Metro on GitHub">
+                    ToolTip="MahApps.Metro on GitHub"
+                    Background="{DynamicResource TransparentWhiteBrush}">
                 <Rectangle Width="22"
-                           Height="22" Fill="{DynamicResource WhiteBrush}">
+                           Height="22"
+                           Fill="{DynamicResource WhiteBrush}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Uniform"
                                      Visual="{StaticResource appbar_github}" />
