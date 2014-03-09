@@ -210,6 +210,9 @@
                 <Setter TargetName="PART_Icon"
                         Property="Visibility"
                         Value="Collapsed" />
+                <Setter TargetName="PART_Icon"
+                        Property="MinWidth"
+                        Value="0" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
