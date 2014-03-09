@@ -1,0 +1,83 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MahApps.Metro.Controls">
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
+        </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate TargetType="{x:Type local:SplitButton}" x:Key="SplitButtonHorizontal">
+        <StackPanel x:Name="PART_Container" Orientation="Horizontal" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+            <Button  Height="{TemplateBinding Height}" Style="{StaticResource MetroFlatButton}"
+                        x:Name="PART_Button" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left" 
+                        VerticalContentAlignment="Center">
+                <StackPanel Orientation="Horizontal" >
+                    <Image x:Name="PART_Image" Source="{TemplateBinding Icon}" Stretch="Uniform"></Image>
+                    <ContentControl MinWidth="20"
+                            x:Name="PART_ButtonContent" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center" VerticalAlignment="{TemplateBinding VerticalAlignment}" VerticalContentAlignment="Center"
+                            Content="{TemplateBinding SelectedItem}"
+                            ContentTemplate="{TemplateBinding ItemTemplate}">
+                    </ContentControl>
+                </StackPanel>
+            </Button>
+            <Separator Margin="0,0,0,0" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" VerticalAlignment="Stretch"></Separator>
+            <Button x:Name="PART_Expander" VerticalContentAlignment="Center" Style="{StaticResource MetroFlatButton}"  Content="▼" VerticalAlignment="Stretch"/>
+            <Popup Name="PART_Popup"
+                IsOpen="{TemplateBinding IsExpanded}"
+                PlacementTarget="{Binding ElementName=PART_Button}"
+                PopupAnimation="Fade" MinWidth="{TemplateBinding ActualWidth}"
+                StaysOpen="False">
+                <ListBox
+                    x:Name="PART_ListBox" SelectionMode="Single"
+                    SelectedItem="{TemplateBinding SelectedItem}"
+                    SelectedIndex="{TemplateBinding SelectedIndex}"
+                    ItemTemplate="{TemplateBinding ItemTemplate}"
+                    ItemsSource="{TemplateBinding ItemsSource}"/>
+            </Popup>
+        </StackPanel>
+    </ControlTemplate>
+
+    <ControlTemplate TargetType="{x:Type local:SplitButton}" x:Key="SplitButtonVertical">
+        <StackPanel x:Name="PART_Container" Orientation="Vertical" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+            <Button  Width="{TemplateBinding Width}" Style="{StaticResource MetroFlatButton}"
+                        x:Name="PART_Button" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" 
+                        VerticalContentAlignment="Top">
+                <StackPanel Orientation="Vertical">
+                    <Image x:Name="PART_Image" Source="{TemplateBinding Icon}" Stretch="Uniform"></Image>
+                    <ContentControl MinHeight="20"
+                            x:Name="PART_ButtonContent" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                            Content="{TemplateBinding SelectedItem}"
+                            ContentTemplate="{TemplateBinding ItemTemplate}">
+                    </ContentControl>
+                </StackPanel>
+            </Button>
+            <Separator Margin="0,0,0,0"></Separator>
+            <Button x:Name="PART_Expander" VerticalContentAlignment="Center" Style="{StaticResource MetroFlatButton}" Content="▼" HorizontalAlignment="Stretch"/>
+            <Popup
+                IsOpen="{TemplateBinding IsExpanded}"
+                PlacementTarget="{Binding ElementName=PART_Expander}"
+                PopupAnimation="Fade" MinWidth="{TemplateBinding ActualWidth}"
+                StaysOpen="False">
+                <ListBox
+                    x:Name="PART_ListBox" SelectionMode="Single"
+                    SelectedItem="{TemplateBinding SelectedItem}"
+                    SelectedIndex="{TemplateBinding SelectedIndex}"
+                    ItemTemplate="{TemplateBinding ItemTemplate}"
+                    ItemsSource="{TemplateBinding ItemsSource}"/>
+            </Popup>
+        </StackPanel>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type local:SplitButton}">
+        <Setter Property="Template" Value="{StaticResource SplitButtonHorizontal}"></Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation"  Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource SplitButtonVertical}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
