@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
@@ -12,6 +13,7 @@ namespace MahApps.Metro.Controls
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
+    [ContentProperty("ItemsSource")]
     [DefaultEvent("SelectionChanged"),
     TemplatePart(Name = "PART_Container", Type = typeof(StackPanel)),
     TemplatePart(Name = "PART_Button", Type = typeof(Button)),
@@ -61,8 +63,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("IsExpanded", typeof(bool), typeof(SplitButton));
 
         public static readonly DependencyProperty SelectedIndexProperty =
-            DependencyProperty.Register("SelectedIndex", typeof(Int32), typeof(SplitButton),
-                new FrameworkPropertyMetadata(SelectedIndexPropertyChanged));
+            DependencyProperty.Register("SelectedIndex", typeof(Int32), typeof(SplitButton), new FrameworkPropertyMetadata(0));
 
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register("SelectedItem", typeof(Object), typeof(SplitButton));
@@ -139,18 +140,8 @@ namespace MahApps.Metro.Controls
         #endregion
 
 
-        private static void SelectedIndexPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs eventArgs)
-        {
-            SplitButton splitButton = dependencyObject as SplitButton;
-            if (splitButton != null && splitButton._listBox != null)
-            {
-                splitButton._listBox.SelectedIndex = splitButton.SelectedIndex;
-            }
-        }
-
         public SplitButton()
         {
-
         }
         static SplitButton()
         {
@@ -165,8 +156,6 @@ namespace MahApps.Metro.Controls
 
         private void ListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedIndex = ((ListBox)sender).SelectedIndex;
-            SelectedItem = ((ListBox)sender).SelectedItem;
             e.RoutedEvent = SelectionChangedEvent;
             RaiseEvent(e);
 
@@ -213,7 +202,6 @@ namespace MahApps.Metro.Controls
             _expander.Click += ExpanderClick;
             _clickButton.Click += ButtonClick;
             _listBox.SelectionChanged += ListBoxSelectionChanged;
-            _listBox.SelectedIndex = SelectedIndex;
             SizeChanged += SplitButtonSizeChanged;
             LostMouseCapture += SplitButton_LostMouseCapture;
             MouseLeave += SplitButton_MouseLeave;

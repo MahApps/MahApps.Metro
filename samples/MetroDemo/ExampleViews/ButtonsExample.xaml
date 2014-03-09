@@ -266,26 +266,17 @@
             <Label Content="SplitButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
             
-            <Controls:SplitButton Width="100" Height="30" SelectedIndex="3">
-                <Controls:SplitButton.ItemsSource>
-                    <Int32Collection>
-                        4654
-                        465
-                        8879
-                        99879
-                    </Int32Collection>
-                </Controls:SplitButton.ItemsSource>
+            <Controls:SplitButton Name="Splitbutton0" Width="100" Height="30" SelectedIndex="3">
+                <Int32Collection>
+                    4654
+                    465
+                    8879
+                    99879
+                </Int32Collection>
             </Controls:SplitButton>
 
-            <Controls:SplitButton Margin="0,20,0,0" Width="100" Orientation="Vertical" SelectedIndex="0">
-                <Controls:SplitButton.ItemsSource>
-                    <Int32Collection>
-                        4654
-                        465
-                        8879
-                        99879
-                    </Int32Collection>
-                </Controls:SplitButton.ItemsSource>
+            <Controls:SplitButton Margin="0,20,0,0" Width="100" Orientation="Vertical" SelectedIndex="{Binding SelectedIndex, ElementName=Splitbutton0}" ItemsSource="{Binding ItemsSource, ElementName=Splitbutton0}">
+
             </Controls:SplitButton>
 
         </StackPanel>
