@@ -6,10 +6,12 @@
     </ResourceDictionary.MergedDictionaries>
 
     <ControlTemplate TargetType="{x:Type local:SplitButton}" x:Key="SplitButtonHorizontal">
+        <Border BorderThickness="1">
         <StackPanel x:Name="PART_Container" Orientation="Horizontal" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
             <Button  Height="{TemplateBinding Height}" Style="{StaticResource MetroFlatButton}"
                         x:Name="PART_Button" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Left" 
+                        HorizontalContentAlignment="Left" Command="{TemplateBinding Command}" 
+                     CommandParameter="{TemplateBinding CommandParameter}" CommandTarget="{TemplateBinding CommandTarget}"
                         VerticalContentAlignment="Center">
                 <StackPanel Orientation="Horizontal" >
                     <Image x:Name="PART_Image" Source="{TemplateBinding Icon}" Stretch="Uniform"></Image>
@@ -36,13 +38,15 @@
                     ItemsSource="{TemplateBinding ItemsSource}"/>
             </Popup>
         </StackPanel>
+        </Border>
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:SplitButton}" x:Key="SplitButtonVertical">
         <StackPanel x:Name="PART_Container" Orientation="Vertical" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
             <Button  Width="{TemplateBinding Width}" Style="{StaticResource MetroFlatButton}"
                         x:Name="PART_Button" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" 
+                        HorizontalContentAlignment="Center" Command="{TemplateBinding Command}" 
+                     CommandParameter="{TemplateBinding CommandParameter}" CommandTarget="{TemplateBinding CommandTarget}"
                         VerticalContentAlignment="Top">
                 <StackPanel Orientation="Vertical">
                     <Image x:Name="PART_Image" Source="{TemplateBinding Icon}" Stretch="Uniform"></Image>
