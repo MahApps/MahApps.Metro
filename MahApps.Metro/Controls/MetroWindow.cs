@@ -558,13 +558,16 @@ namespace MahApps.Metro.Controls
                 var flyouts = this.Flyouts.GetFlyouts().ToList();
 
                 if (!flyouts.Any())
+                {
+                    // we must update the window command brushes!!!
+                    this.ResetAllWindowCommandsBrush();
                     return;
+                }
 
-                foreach (Flyout flyout in flyouts)
+                foreach (var flyout in flyouts)
                 {
                     flyout.ChangeFlyoutTheme(e.Accent, e.Theme);
                 }
-
                 this.HandleWindowCommandsForFlyouts(flyouts);
             }
         }
