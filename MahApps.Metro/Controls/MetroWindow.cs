@@ -68,7 +68,7 @@ namespace MahApps.Metro.Controls
         [Obsolete("This propery isn't needed anymore, it will be deleted in next release...")]
         public static readonly DependencyProperty TextBlockStyleProperty = DependencyProperty.Register("TextBlockStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(default(Style)));
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
-        internal static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
+        public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
         
         bool isDragging;
         
@@ -97,7 +97,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// CleanWindow sets this so it has the correct default window commands brush
         /// </summary>
-        internal SolidColorBrush OverrideDefaultWindowCommandsBrush
+        public SolidColorBrush OverrideDefaultWindowCommandsBrush
         {
             get { return (SolidColorBrush)this.GetValue(OverrideDefaultWindowCommandsBrushProperty); }
             set { this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value); }
