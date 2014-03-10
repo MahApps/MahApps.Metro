@@ -8,9 +8,9 @@
         <Setter Property="ShowTitleBar"
                 Value="True" />
         <Setter Property="GlowBrush"
-                Value="#017ACC" />
+                Value="{DynamicResource WindowGlowBrush}" />
         <Setter Property="TitleForeground"
-                Value="#999988" />
+                Value="{DynamicResource WindowTitleForeground}" />
     </Style>
 
 </ResourceDictionary>
