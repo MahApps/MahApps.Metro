@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls
     /// </summary>
     [ContentProperty("ItemsSource")]
     [DefaultEvent("SelectionChanged"),
-    TemplatePart(Name = "PART_Container", Type = typeof(StackPanel)),
+    TemplatePart(Name = "PART_Container", Type = typeof(Grid)),
     TemplatePart(Name = "PART_Button", Type = typeof(Button)),
     TemplatePart(Name = "PART_Image", Type = typeof(Image)),
     TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl)),
@@ -205,11 +205,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void SplitButtonSizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            RecalculateDimensions();
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -231,26 +226,14 @@ namespace MahApps.Metro.Controls
             _expander.Click += ExpanderClick;
             _clickButton.Click += ButtonClick;
             _listBox.SelectionChanged += ListBoxSelectionChanged;
-            SizeChanged += SplitButtonSizeChanged;
             LostMouseCapture += SplitButton_LostMouseCapture;
             MouseLeave += SplitButton_MouseLeave;
+            
         }
 
-        void SplitButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        void SplitButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            _mouseLeaved = true;
-        }
-
-        private void RecalculateDimensions()
-        {
-            if (Orientation == Orientation.Horizontal && !Double.IsNaN(Width))
-            {
-                _clickButton.Width = Math.Max(ActualWidth - _expander.ActualWidth, 0);
-            }
-            else if (Orientation == Orientation.Vertical && !Double.IsNaN(Height))
-            {
-                _clickButton.Height = Math.Max(ActualHeight - _expander.ActualHeight, 0);
-            }
+            _mouseLeaved = true; 
         }
 
     }
