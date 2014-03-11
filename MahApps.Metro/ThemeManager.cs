@@ -16,9 +16,8 @@ namespace MahApps.Metro
     /// </summary>
     public static class ThemeManager
     {
-        internal static readonly ResourceDictionary LightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
-        internal static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
-
+        private static readonly ResourceDictionary DefaultLightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
+        private static readonly ResourceDictionary DefaultDarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
         private static IList<Accent> _accents;
 
         /// <summary>
@@ -41,7 +40,26 @@ namespace MahApps.Metro
                     SystemResources_InvalidateResources = systemResources.GetMethod("InvalidateResources", BindingFlags.Static | BindingFlags.NonPublic);
                 }
             }
+
+            LightResource = DefaultLightResource;
+            DarkResource = DefaultDarkResource;
         }
+
+        /// <summary>
+        /// Gets or sets the light resource fro the theme.
+        /// </summary>
+        /// <value>
+        /// The light resource dictionary.
+        /// </value>
+        internal static ResourceDictionary LightResource { get; set; }
+
+        /// <summary>
+        /// Gets or sets the dark resource for the theme.
+        /// </summary>
+        /// <value>
+        /// The dark resource dictionary.
+        /// </value>
+        internal static ResourceDictionary DarkResource { get; set; }
 
         /// <summary>
         /// Gets a list of all of default themes.
@@ -64,6 +82,63 @@ namespace MahApps.Metro
                 }
 
                 return _accents;
+            }
+        }
+
+        /// <summary>
+        /// Change the base theme for the whole application.
+        /// </summary>
+        /// <param name="app">The instance of Application to change.</param>
+        /// <param name="lightResource">The light resource to apply.</param>
+        /// <param name="darkResource">The dark resource to apply.</param>
+        [SecurityCritical]
+        public static void ChangeBaseTheme(Application app, ResourceDictionary lightResource, ResourceDictionary darkResource)
+        {
+            if (app == null) throw new ArgumentNullException("app");
+
+            var oldTheme = DetectTheme(app);
+            ChangeBaseTheme(app.Resources, oldTheme, lightResource, darkResource);
+        }
+
+        /// <summary>
+        /// Change the base theme for the given window.
+        /// </summary>
+        /// <param name="window">The window to change.</param>
+        /// <param name="lightResource">The light resource to apply.</param>
+        /// <param name="darkResource">The dark resource to apply.</param>
+        [SecurityCritical]
+        public static void ChangeBaseTheme(Window window, ResourceDictionary lightResource, ResourceDictionary darkResource)
+        {
+            if (window == null) throw new ArgumentNullException("window");
+
+            var oldTheme = DetectTheme(window);
+            ChangeBaseTheme(window.Resources, oldTheme, lightResource, darkResource);
+        }
+
+        private static void ChangeBaseTheme(ResourceDictionary resources, Tuple<Theme, Accent> oldThemeInfo, ResourceDictionary lightResource, ResourceDictionary darkResource)
+        {
+            if (LightResource.Source == lightResource.Source && DarkResource.Source == darkResource.Source) return;
+
+            var themeChanged = false;
+
+            var oldTheme = oldThemeInfo.Item1;
+            var oldResource = (oldTheme == Theme.Light) ? LightResource : DarkResource;
+            var md = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldResource.Source);
+            if (md != null)
+            {
+                var newThemeResource = (oldTheme == Theme.Light) ? lightResource : darkResource;
+                resources.MergedDictionaries.Add(newThemeResource);
+                var ok = resources.MergedDictionaries.Remove(md);
+
+                LightResource = lightResource;
+                DarkResource = darkResource;
+
+                themeChanged = true;
+            }
+
+            if (themeChanged)
+            {
+                OnThemeChanged(oldThemeInfo.Item2, oldThemeInfo.Item1);
             }
         }
 
