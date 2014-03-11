@@ -78,7 +78,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" Width="{TemplateBinding Width}"
+                <Button Grid.Row="0" Width="{TemplateBinding Width}" Style="{StaticResource {x:Type Button}}"
                         x:Name="PART_Button" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center" Command="{TemplateBinding Command}" 
                      CommandParameter="{TemplateBinding CommandParameter}" CommandTarget="{TemplateBinding CommandTarget}"
