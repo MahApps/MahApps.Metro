@@ -31,7 +31,7 @@
             <Grid Width="{TemplateBinding Width}"
                   Height="{TemplateBinding Height}"
                   Margin="4"
-                  Background="{DynamicResource WhiteBrush}"
+                  Background="{DynamicResource IdealForegroundColorBrush}"
                   RenderOptions.EdgeMode="Aliased"
                   RenderOptions.BitmapScalingMode="HighQuality">
                 <Grid.OpacityMask>
