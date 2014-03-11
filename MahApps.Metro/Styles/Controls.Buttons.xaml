@@ -494,23 +494,12 @@
     </Style>
 
     <Style x:Key="HighlightedSquareButtonStyle"
+           BasedOn="{StaticResource SquareButtonStyle}"
            TargetType="{x:Type Button}">
-        <Setter Property="MinHeight"
-                Value="25" />
-        <Setter Property="FontFamily"
-                Value="{DynamicResource DefaultFont}" />
-        <Setter Property="FontWeight"
-                Value="SemiBold" />
         <Setter Property="Background"
-                Value="{DynamicResource GrayBrush10}" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource BlackBrush}" />
+                Value="{DynamicResource HighlightBrush}" />
         <Setter Property="Foreground"
                 Value="{DynamicResource IdealForegroundColorBrush}" />
-        <Setter Property="Padding"
-                Value="5,6" />
-        <Setter Property="BorderThickness"
-                Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -579,7 +568,7 @@
                         <Border x:Name="Background"
                                 BorderBrush="{DynamicResource BlackBrush}"
                                 BorderThickness="2"
-                                Background="{DynamicResource HighlightBrush}" />
+                                Background="{TemplateBinding Background}" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
                                    IsHitTestVisible="false"
@@ -602,15 +591,15 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource WhiteBrush}" />
-                        </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource IdealForegroundColorBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
