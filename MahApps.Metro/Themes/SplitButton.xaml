@@ -2,112 +2,144 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type Button}">
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
         <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}"></Setter>
         <Setter Property="Foreground" Value="{DynamicResource BlackColorBrush}"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource GrayBrush6}"></Setter>
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource BlackColorBrush}"></Setter>
-                <Setter Property="Foreground" Value="{DynamicResource WhiteColorBrush}"></Setter>
-            </Trigger>
-        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border 
+                        x:Name="Border"  
+                        CornerRadius="0" 
+                        BorderThickness="0"
+                        Background="{DynamicResource WhiteColorBrush}"
+                        BorderBrush="{DynamicResource WhiteColorBrush}">
+                    <ContentPresenter Margin="2"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!--<Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#202020" />
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="true">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#202020" />
+                        </Trigger>-->
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush8}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource BlackColorBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource WhiteColorBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush10}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <ControlTemplate TargetType="{x:Type local:SplitButton}" x:Key="SplitButtonHorizontal">
-        <Border BorderThickness="1" BorderBrush="{DynamicResource BlackColorBrush}">
+        <Border Name="PART_Border"  BorderThickness="1" BorderBrush="{DynamicResource BlackColorBrush}">
             <Grid x:Name="PART_Container" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" VerticalAlignment="Stretch" VerticalContentAlignment="Center" Style="{StaticResource {x:Type Button}}"
-                    x:Name="PART_Button" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" x:Name="PART_Button" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"  Style="{StaticResource {x:Type Button}}"
                     Command="{TemplateBinding Command}" CommandParameter="{TemplateBinding CommandParameter}" CommandTarget="{TemplateBinding CommandTarget}">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
-                    <Image x:Name="PART_Image" Source="{TemplateBinding Icon}" Stretch="Uniform"></Image>
-                    <ContentControl MinWidth="20"
-                        x:Name="PART_ButtonContent" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" VerticalAlignment="{TemplateBinding VerticalAlignment}" VerticalContentAlignment="Center"
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Image x:Name="PART_Image" Source="{TemplateBinding Icon}" Stretch="Uniform"></Image>
+                        <ContentControl MinWidth="20"
+                        x:Name="PART_ButtonContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                         Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                         ContentTemplate="{TemplateBinding ItemTemplate}">
-                    </ContentControl>
-                </StackPanel>
-            </Button>
-                <Separator Grid.Column="1" Margin="0,0,0,0" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" BorderBrush="{DynamicResource BlackColorBrush}" VerticalAlignment="Stretch"></Separator>
-                <Button Grid.Column="2" x:Name="PART_Expander" VerticalAlignment="Stretch" HorizontalAlignment="Center" Style="{StaticResource {x:Type Button}}">
-                <Button.Content>
-                        <Rectangle Height="16" Width="18" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Rectangle.Fill>
-                            <VisualBrush Stretch="Uniform" >
-                            <VisualBrush.Visual>
+                        </ContentControl>
+                    </StackPanel>
+                </Button>
+                <Button Grid.Column="1" x:Name="PART_Expander" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Style="{StaticResource {x:Type Button}}">
+                    <Button.Content>
+                        <Rectangle Name="PART_Rectangle" Height="16" Width="22" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Uniform">
+                                    <VisualBrush.Visual>
                                         <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" UseLayoutRounding="False" >
-                                        <Path Width="18" Height="16" Canvas.Left="14.9063" Canvas.Top="15.75" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
-                                    </Canvas>
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                </Button.Content>
-            </Button>
-            <Popup Name="PART_Popup"
+                                            <Path Width="18" Height="16" Canvas.Left="14.9063" Canvas.Top="15.75" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" 
+                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                        </Canvas>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
+                    </Button.Content>
+                </Button>
+                <Popup Name="PART_Popup"
                 IsOpen="{TemplateBinding IsExpanded}"
                 PlacementTarget="{Binding ElementName=PART_Button}"
                 PopupAnimation="Fade" MinWidth="{TemplateBinding ActualWidth}"
                 StaysOpen="False">
-                <ListBox
+                    <ListBox
                     x:Name="PART_ListBox" SelectionMode="Single"
                     SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                     SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                     ItemTemplate="{TemplateBinding ItemTemplate}"
                     ItemsSource="{TemplateBinding ItemsSource}"/>
-            </Popup>
+                </Popup>
             </Grid>
         </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsFocused" Value="True" SourceName="PART_Button">
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" TargetName="PART_Border"></Setter>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True" SourceName="PART_Expander">
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" TargetName="PART_Border"></Setter>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True" >
+                <Setter TargetName="PART_Rectangle" Property="Fill" Value="{DynamicResource AccentColorBrush}"></Setter>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:SplitButton}" x:Key="SplitButtonVertical">
-        <Border BorderThickness="1" BorderBrush="{DynamicResource BlackColorBrush}">
+        <Border Name="PART_Border" BorderThickness="1" BorderBrush="{DynamicResource BlackColorBrush}">
             <Grid x:Name="PART_Container" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0" Width="{TemplateBinding Width}" Style="{StaticResource {x:Type Button}}"
-                        x:Name="PART_Button" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" Command="{TemplateBinding Command}" 
-                     CommandParameter="{TemplateBinding CommandParameter}" CommandTarget="{TemplateBinding CommandTarget}"
-                        VerticalContentAlignment="Top">
+                        x:Name="PART_Button" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                        Command="{TemplateBinding Command}" CommandParameter="{TemplateBinding CommandParameter}" CommandTarget="{TemplateBinding CommandTarget}">
                     <Button.Content>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Image x:Name="PART_Image" Source="{TemplateBinding Icon}" Stretch="Uniform"></Image>
                             <ContentControl MinHeight="20"
-                            x:Name="PART_ButtonContent" HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                            x:Name="PART_ButtonContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                             Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                             ContentTemplate="{TemplateBinding ItemTemplate}">
                             </ContentControl>
                         </StackPanel>
                     </Button.Content>
             </Button>
-                <Separator Margin="0,0,0,0" Grid.Row="1" BorderBrush="{DynamicResource BlackColorBrush}"></Separator>
-                <Button x:Name="PART_Expander" Grid.Row="2" VerticalContentAlignment="Center" Style="{StaticResource {x:Type Button}}" HorizontalAlignment="Stretch">
-                <Button.Content>
-                    <Rectangle Height="16" Width="18" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Rectangle.Fill>
-                            <VisualBrush Stretch="Uniform" >
-                                <VisualBrush.Visual>
-                                    <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" UseLayoutRounding="False" >
-                                        <Path Width="18" Height="16" Canvas.Left="14.9063" Canvas.Top="15.75" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+            <Button x:Name="PART_Expander" Grid.Row="1" VerticalContentAlignment="Center" Style="{StaticResource {x:Type Button}}" HorizontalAlignment="Stretch">
+            <Button.Content>
+                <Rectangle Name="PART_Rectangle" Height="16" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center" Fill="{DynamicResource BlackColorBrush}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform">
+                            <VisualBrush.Visual>
+                                <Canvas Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0" UseLayoutRounding="False" >
+                                    <Path Width="18" Height="16" Canvas.Left="14.9063" Canvas.Top="15.75" Stretch="Fill" Fill="{DynamicResource BlackColorBrush}" 
+                                            Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
                                     </Canvas>
                                 </VisualBrush.Visual>
                             </VisualBrush>
-                        </Rectangle.Fill>
+                        </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button.Content>
             </Button>
@@ -125,6 +157,17 @@
             </Popup>
             </Grid>
         </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsFocused" Value="True" SourceName="PART_Button">
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" TargetName="PART_Border"></Setter>
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True" SourceName="PART_Expander">
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" TargetName="PART_Border"></Setter>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True" >
+                <Setter TargetName="PART_Rectangle" Property="Fill" Value="{DynamicResource AccentColorBrush}"></Setter>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style TargetType="{x:Type local:SplitButton}">
