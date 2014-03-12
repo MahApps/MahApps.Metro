@@ -31,32 +31,40 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\NET45\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET_4_5</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\NET45\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>mahapps.metro.logo2.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\NET45\Debug\</OutputPath>
+    <IntermediateOutputPath>obj\NET45\Debug\</IntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;NET_4_5</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DefineConstants>TRACE;NET_4_5</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+    <OutputPath>bin\NET45\Release\</OutputPath>
+    <IntermediateOutputPath>obj\NET45\Release\</IntermediateOutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="GrayscaleEffect">
       <HintPath>..\..\Lib\GrayscaleEffect.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.165\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\packages\Newtonsoft.Json.4.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -68,6 +76,9 @@
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\NET45\System.Windows.Interactivity.dll</HintPath>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\Lib\NET45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -80,17 +91,57 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="FlyoutDemo.xaml.cs">
+    <Compile Include="ExampleViews\ButtonsExample.xaml.cs">
+      <DependentUpon>ButtonsExample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\ColorExample.xaml.cs">
+      <DependentUpon>ColorExample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\DataGridExamples.xaml.cs">
+      <DependentUpon>DataGridExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\DateExamples.xaml.cs">
+      <DependentUpon>DateExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\OtherExamples.xaml.cs">
+      <DependentUpon>OtherExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\SelectionExamples.xaml.cs">
+      <DependentUpon>SelectionExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\SliderProgressExamples.xaml.cs">
+      <DependentUpon>SliderProgressExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\TabControlExamples.xaml.cs">
+      <DependentUpon>TabControlExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\TextExamples.xaml.cs">
+      <DependentUpon>TextExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleWindows\CleanWindowDemo.xaml.cs">
+      <DependentUpon>CleanWindowDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleWindows\CustomFlyout.xaml.cs">
+      <DependentUpon>CustomFlyout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleWindows\FlyoutDemo.xaml.cs">
       <DependentUpon>FlyoutDemo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IconsWindow.xaml.cs">
+    <Compile Include="ExampleWindows\IconsWindow.xaml.cs">
       <DependentUpon>IconsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleWindows\InteropDemo.xaml.cs">
+      <DependentUpon>InteropDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleWindows\VSDemo.xaml.cs">
+      <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Models\Album.cs" />
@@ -102,14 +153,72 @@
     </Compile>
     <Compile Include="VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
+    <Compile Include="Models\SimpleCommand.cs" />
+    <Compile Include="Navigation\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Page Include="FlyoutDemo.xaml">
+    <Compile Include="Navigation\InterestingPage.xaml.cs">
+      <DependentUpon>InterestingPage.xaml</DependentUpon>
+    </Compile>
+    <Page Include="ExampleViews\ButtonsExample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="IconsWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="ExampleViews\ColorExample.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\DataGridExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\DateExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\OtherExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\SelectionExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\SliderProgressExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\TabControlExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\TextExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleWindows\CleanWindowDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleWindows\CustomFlyout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleWindows\FlyoutDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleWindows\IconsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleWindows\InteropDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleWindows\VSDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -123,9 +232,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PanoramaDemo.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Navigation\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Navigation\InterestingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Properties\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
       <Generator>MSBuild:Compile</Generator>
@@ -142,9 +255,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PanoramaDemo.xaml.cs">
-      <DependentUpon>PanoramaDemo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -223,4 +333,5 @@
   <Target Name="AfterCompile">
     <NotifyPropertyWeaverMsBuildTask.WeavingTask />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

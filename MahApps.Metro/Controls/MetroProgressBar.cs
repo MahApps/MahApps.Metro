@@ -7,21 +7,24 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A metrofied ProgressBar.
+    /// <see cref="ProgressBar"/>
+    /// </summary>
     public class MetroProgressBar : ProgressBar
     {
         public static readonly DependencyProperty EllipseDiameterProperty =
-            DependencyProperty.Register("EllipseDiameter", typeof (double), typeof (MetroProgressBar),
+            DependencyProperty.Register("EllipseDiameter", typeof(double), typeof(MetroProgressBar),
                                         new PropertyMetadata(default(double)));
 
         public static readonly DependencyProperty EllipseOffsetProperty =
-            DependencyProperty.Register("EllipseOffset", typeof (double), typeof (MetroProgressBar),
+            DependencyProperty.Register("EllipseOffset", typeof(double), typeof(MetroProgressBar),
                                         new PropertyMetadata(default(double)));
 
         static MetroProgressBar()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof (MetroProgressBar),
-                                                     new FrameworkPropertyMetadata(typeof (MetroProgressBar)));
-
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroProgressBar), new FrameworkPropertyMetadata(typeof(MetroProgressBar)));
+            IsIndeterminateProperty.OverrideMetadata(typeof(MetroProgressBar), new FrameworkPropertyMetadata(OnIsIndeterminateChanged));
         }
 
         public MetroProgressBar()
@@ -29,15 +32,42 @@ namespace MahApps.Metro.Controls
             SizeChanged += SizeChangedHandler;
         }
 
+        private static void OnIsIndeterminateChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var bar = dependencyObject as MetroProgressBar;
+            if (bar != null && e.NewValue != e.OldValue)
+            {
+                var indeterminateState = bar.GetIndeterminate();
+                var containingObject = bar.GetTemplateChild("ContainingGrid") as FrameworkElement;
+                if (indeterminateState != null && containingObject != null)
+                {
+                    if ((bool)e.NewValue)
+                    {
+                        indeterminateState.Storyboard.Begin(containingObject, true);
+                    }
+                    else
+                    {
+                        indeterminateState.Storyboard.Stop(containingObject);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets/sets the diameter of the ellipses used in the indeterminate animation.
+        /// </summary>
         public double EllipseDiameter
         {
-            get { return (double) GetValue(EllipseDiameterProperty); }
+            get { return (double)GetValue(EllipseDiameterProperty); }
             set { SetValue(EllipseDiameterProperty, value); }
         }
 
+        /// <summary>
+        /// Gets/sets the offset of the ellipses used in the indeterminate animation.
+        /// </summary>
         public double EllipseOffset
         {
-            get { return (double) GetValue(EllipseOffsetProperty); }
+            get { return (double)GetValue(EllipseOffsetProperty); }
             set { SetValue(EllipseOffsetProperty, value); }
         }
 
@@ -45,15 +75,13 @@ namespace MahApps.Metro.Controls
         {
             double actualWidth = ActualWidth;
             MetroProgressBar bar = this;
-
-            bar.ResetStoryboard(actualWidth);
+            if (this.Visibility == System.Windows.Visibility.Visible)
+                bar.ResetStoryboard(actualWidth);
         }
-
 
         private void ResetStoryboard(double width)
         {
-            
-            lock(this)
+            lock (this)
             {
                 //perform calculations
                 double containerAnimStart = CalcContainerAnimStart(width);
@@ -70,18 +98,12 @@ namespace MahApps.Metro.Controls
                         Storyboard newStoryboard = indeterminate.Storyboard.Clone();
                         Timeline doubleAnim = newStoryboard.Children.First(t => t.Name == "MainDoubleAnim");
                         doubleAnim.SetValue(DoubleAnimation.FromProperty, containerAnimStart);
-                        //doubleAnim.InvalidateProperty(DoubleAnimation.FromProperty);
                         doubleAnim.SetValue(DoubleAnimation.ToProperty, containerAnimEnd);
-                        //doubleAnim.InvalidateProperty(DoubleAnimation.ToProperty);
-                        //indeterminate.Storyboard.Begin();
 
-                        var namesOfElements = new[] {"E1", "E2", "E3", "E4", "E5"};
+                        var namesOfElements = new[] { "E1", "E2", "E3", "E4", "E5" };
                         foreach (string elemName in namesOfElements)
                         {
-
-                            var doubleAnimParent =
-                                (DoubleAnimationUsingKeyFrames)
-                                newStoryboard.Children.First(t => t.Name == elemName + "Anim");
+                            var doubleAnimParent = (DoubleAnimationUsingKeyFrames)newStoryboard.Children.First(t => t.Name == elemName + "Anim");
                             DoubleKeyFrame first, second, third;
                             if (elemName == "E1")
                             {
@@ -103,22 +125,19 @@ namespace MahApps.Metro.Controls
                             second.InvalidateProperty(DoubleKeyFrame.ValueProperty);
                             third.InvalidateProperty(DoubleKeyFrame.ValueProperty);
 
-
-
                             doubleAnimParent.InvalidateProperty(Storyboard.TargetPropertyProperty);
                             doubleAnimParent.InvalidateProperty(Storyboard.TargetNameProperty);
-
-
                         }
+
                         indeterminate.Storyboard.Remove();
                         indeterminate.Storyboard = newStoryboard;
-                        if (IsIndeterminate)
+
+                        if (!IsIndeterminate)
                         {
-                            indeterminate.Storyboard.Begin((FrameworkElement) GetTemplateChild("ContainingGrid"));
+                            return;
                         }
 
-
-
+                        indeterminate.Storyboard.Begin((FrameworkElement)GetTemplateChild("ContainingGrid"), true);
                     }
                 }
                 catch (Exception)
@@ -130,12 +149,16 @@ namespace MahApps.Metro.Controls
 
         private VisualState GetIndeterminate()
         {
-            DependencyObject templateGrid = GetTemplateChild("ContainingGrid");
-            IList groups = VisualStateManager.GetVisualStateGroups((FrameworkElement) templateGrid);
+            var templateGrid = GetTemplateChild("ContainingGrid") as FrameworkElement;
+            if (templateGrid == null)
+            {
+                return null;
+            }
+            IList groups = VisualStateManager.GetVisualStateGroups(templateGrid);
             return groups != null
-                       ? groups.Cast<VisualStateGroup>().SelectMany(@group => @group.States.Cast<VisualState>()).
-                             FirstOrDefault(state =>
-                                            state.Name == "Indeterminate")
+                       ? groups.Cast<VisualStateGroup>()
+                               .SelectMany(@group => @group.States.Cast<VisualState>())
+                               .FirstOrDefault(state => state.Name == "Indeterminate")
                        : null;
         }
 
@@ -184,7 +207,7 @@ namespace MahApps.Metro.Controls
 
         private double CalcContainerAnimEnd(double width)
         {
-            double firstPart = 0.4352*width;
+            double firstPart = 0.4352 * width;
             if (width <= 180)
                 return firstPart - 25.731;
             if (width <= 280)
@@ -195,12 +218,12 @@ namespace MahApps.Metro.Controls
 
         private double CalcEllipseAnimWell(double width)
         {
-            return width*1.0/3.0;
+            return width * 1.0 / 3.0;
         }
 
         private double CalcEllipseAnimEnd(double width)
         {
-            return width*2.0/3.0;
+            return width * 2.0 / 3.0;
         }
 
 
@@ -209,7 +232,7 @@ namespace MahApps.Metro.Controls
             base.OnApplyTemplate();
             SizeChangedHandler(null, null);
         }
-        
+
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);

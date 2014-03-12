@@ -5,24 +5,25 @@
                     xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate x:Key="HeaderTemplate"
                   x:Shared="False">
         <DockPanel x:Name="dpHeader"
-                   Margin="10"
-                   VerticalAlignment="Top"
+                   Margin="10,25,10,10"
+                   VerticalAlignment="Center"
                    LastChildFill="True">
             <Button x:Name="nav"
+                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommand, Mode=OneWay}"
                     DockPanel.Dock="Left"
-                    Foreground="{DynamicResource FlyoutWhiteBrush}"
                     Style="{DynamicResource MetroCircleButtonStyle}"
                     Height="40"
                     Width="40"
                     FontFamily="Segoe UI Symbol"
+                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     FontSize="16"
-                    VerticalAlignment="Top">
+                    VerticalAlignment="Bottom">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
@@ -30,8 +31,9 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <Rectangle Width="20"
-                           Height="15">
-                    <Rectangle.Fill>
+                           Height="15"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill">
                             <VisualBrush.Visual>
                                 <Canvas Width="48"
@@ -43,17 +45,16 @@
                                           Canvas.Left="12"
                                           Canvas.Top="15"
                                           Stretch="Fill"
-                                          Fill="{DynamicResource FlyoutWhiteBrush}"
+                                          Fill="Black"
                                           Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z " />
                                 </Canvas>
                             </VisualBrush.Visual>
                         </VisualBrush>
-                    </Rectangle.Fill>
+                    </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
             <TextBlock Text="{Binding}"
                        x:Name="PART_BackButton"
-                       Foreground="{DynamicResource FlyoutWhiteBrush}"
                        FontSize="20"
                        Margin="15,0,0,0"
                        VerticalAlignment="Center" />
@@ -79,16 +80,21 @@
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
                          Value="Top">
+                <Setter TargetName="dpHeader"
+                        Property="Margin"
+                        Value="10" />
                 <Setter TargetName="nav"
                         Property="LayoutTransform">
                     <Setter.Value>
                         <RotateTransform Angle="-90" />
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="dpHeader" Property="VerticalAlignment" Value="Bottom" />
             </DataTrigger>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
                          Value="Bottom">
+                <Setter TargetName="dpHeader"
+                        Property="Margin"
+                        Value="10" />
                 <Setter TargetName="nav"
                         Property="LayoutTransform">
                     <Setter.Value>
@@ -102,6 +108,8 @@
     <ControlTemplate x:Key="FlyoutTemplate"
                      TargetType="{x:Type Controls:Flyout}">
         <Grid x:Name="root"
+              Margin="{TemplateBinding Margin}"
+              Visibility="Hidden"
               Background="{TemplateBinding Background}">
             <Grid.RenderTransform>
                 <TranslateTransform />
@@ -114,7 +122,7 @@
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
-                                <EasingDoubleKeyFrame KeyTime="00:00:00.500"
+                                <EasingDoubleKeyFrame KeyTime="00:00:00.400"
                                                       Value="0"
                                                       x:Name="hideFrame">
                                     <EasingDoubleKeyFrame.EasingFunction>
@@ -133,15 +141,31 @@
                                     </EasingDoubleKeyFrame.EasingFunction>
                                 </EasingDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimation From="1"
+                                             To="0"
+                                             BeginTime="00:00:00"
+                                             Duration="00:00:00.400"
+                                             Storyboard.TargetProperty="(UIElement.Opacity)"
+                                             Storyboard.TargetName="root" />
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00.500"
+                                                           Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                           Storyboard.TargetName="root">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{x:Static Visibility.Hidden}" />
+                            </ObjectAnimationUsingKeyFrames>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Show">
                         <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+                                                           Storyboard.TargetName="root">
+                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                        Value="{x:Static Visibility.Visible}" />
+                            </ObjectAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           x:Name="trabslateShow"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
-                                <EasingDoubleKeyFrame KeyTime="00:00:00.600"
+                                <EasingDoubleKeyFrame KeyTime="00:00:00.400"
                                                       Value="0"
                                                       x:Name="showFrame">
                                     <EasingDoubleKeyFrame.EasingFunction>
@@ -160,6 +184,12 @@
                                     </EasingDoubleKeyFrame.EasingFunction>
                                 </EasingDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimation From="0"
+                                             To="1"
+                                             BeginTime="00:00:00"
+                                             Duration="00:00:00.400"
+                                             Storyboard.TargetProperty="(UIElement.Opacity)"
+                                             Storyboard.TargetName="root" />
                         </Storyboard>
                     </VisualState>
                 </VisualStateGroup>
@@ -197,10 +227,6 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Flyout}">
-        <Style.Resources>
-            <SolidColorBrush x:Key="LabelTextBrush"
-                             Color="{StaticResource FlyoutWhiteColor}" />
-        </Style.Resources>
         <Setter Property="KeyboardNavigation.TabNavigation"
                 Value="Cycle" />
         <Setter Property="VerticalAlignment"
@@ -209,8 +235,6 @@
                 Value="Stretch" />
         <Setter Property="HeaderTemplate"
                 Value="{StaticResource HeaderTemplate}" />
-        <Setter Property="Background"
-                Value="#FF252525" />
         <Setter Property="Template"
                 Value="{StaticResource FlyoutTemplate}" />
         <Setter Property="FocusVisualStyle"

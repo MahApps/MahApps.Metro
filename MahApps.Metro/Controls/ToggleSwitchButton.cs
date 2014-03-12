@@ -6,6 +6,9 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    /// <summary>
+    /// A Button that allows the user to toggle between two states.
+    /// </summary>
     [TemplateVisualState(Name = NormalState, GroupName = CommonStates)]
     [TemplateVisualState(Name = DisabledState, GroupName = CommonStates)]
     [TemplateVisualState(Name = CheckedState, GroupName = CheckStates)]
@@ -38,6 +41,9 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null));
 
+        /// <summary>
+        /// Gets/sets the brush used for the control's foreground.
+        /// </summary>
         public Brush SwitchForeground
         {
             get

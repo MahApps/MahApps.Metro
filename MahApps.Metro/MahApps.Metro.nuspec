@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro</id>
-    <version>0.10.0.0</version>
+    <version>0.12.1.0</version>
     <title>MahApps.Metro</title>
-    <authors>Paul Jenkins; Jake Ginnivan</authors>
+    <authors>Paul Jenkins; Jake Ginnivan; Brendan Forster (shiftkey); Alex Mitchell (Amrykid); Dennis Daume (flagbug); Jan Karger (punker76)</authors>
     <owners>Paul Jenkins; Jake Ginnivan</owners>
     <licenseUrl>http://www.opensource.org/licenses/MS-PL</licenseUrl>
     <projectUrl>https://github.com/MahApps/MahApps.Metro</projectUrl>
@@ -12,14 +12,16 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>The goal of MahApps.Metro is to allow devs to quickly and easily cobble togther a "Metro" UI for their WPF4+ apps, with minimal effort.</description>
     <summary>The goal of MahApps.Metro is to allow devs to quickly and easily cobble togther a "Metro" UI for their WPF4+ apps, with minimal effort.</summary>
-    <releaseNotes></releaseNotes>
-	 <tags>WPF UI Metro</tags>
-  </metadata>
-  <files>
-    <file src="bin\Release\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />
-    <file src="bin\Release\System.Windows.Interactivity.dll" target="lib\net40\System.Windows.Interactivity.dll" />
-    <file src="bin\Release\NET45\MahApps.Metro.dll" target="lib\net45\MahApps.Metro.dll" />
-    <file src="bin\Release\NET45\System.Windows.Interactivity.dll" target="lib\net45\System.Windows.Interactivity.dll" />
-	<file src="tools\install.ps1" target="tools\install.ps1" />
-  </files>
+    <releaseNotes />
+	  <tags>WPF UI Metro</tags>
+    </metadata>
+    <files>
+      <file src="bin\Release\MahApps.Metro.dll" target="lib\net40\MahApps.Metro.dll" />
+      <file src="bin\Release\MahApps.Metro.XML" target="lib\net40\MahApps.Metro.XML" />
+      <file src="bin\Release\System.Windows.Interactivity.dll" target="lib\net40\System.Windows.Interactivity.dll" />
+      <file src="bin\Release\NET45\MahApps.Metro.dll" target="lib\net45\MahApps.Metro.dll" />
+      <file src="bin\Release\NET45\MahApps.Metro.XML" target="lib\net45\MahApps.Metro.XML" />
+      <file src="bin\Release\NET45\System.Windows.Interactivity.dll" target="lib\net45\System.Windows.Interactivity.dll" />
+      <file src="tools\install.ps1" target="tools\install.ps1" />
+    </files>
 </package>

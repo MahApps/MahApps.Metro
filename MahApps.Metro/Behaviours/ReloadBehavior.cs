@@ -35,24 +35,24 @@ namespace MahApps.Metro.Behaviours
         public static DependencyProperty OnSelectedTabChangedProperty =
             DependencyProperty.RegisterAttached("OnSelectedTabChanged", typeof(bool), typeof(ReloadBehavior), new PropertyMetadata(OnSelectedTabChanged));
 
-        public static bool GetOnSelectedTabChanged(MetroContentControl element)
+        public static bool GetOnSelectedTabChanged(ContentControl element)
         {
             return (bool)element.GetValue(OnDataContextChangedProperty);
         }
 
-        public static void SetOnSelectedTabChanged(MetroContentControl element, bool value)
+        public static void SetOnSelectedTabChanged(ContentControl element, bool value)
         {
             element.SetValue(OnDataContextChangedProperty, value);
         }
 
         private static void OnSelectedTabChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((MetroContentControl)d).Loaded += ReloadLoaded;
+            ((ContentControl)d).Loaded += ReloadLoaded;
         }
 
         static void ReloadLoaded(object sender, RoutedEventArgs e)
         {
-            var metroContentControl = ((MetroContentControl)sender);
+            var metroContentControl = ((ContentControl)sender);
             var tab = Ancestors(metroContentControl)
                 .OfType<TabControl>()
                 .FirstOrDefault();
@@ -60,6 +60,7 @@ namespace MahApps.Metro.Behaviours
             if (tab == null) return;
 
             SetMetroContentControl(tab, metroContentControl);
+            tab.SelectionChanged -= ReloadSelectionChanged;
             tab.SelectionChanged += ReloadSelectionChanged;
         }
 
@@ -79,20 +80,31 @@ namespace MahApps.Metro.Behaviours
             if (e.OriginalSource != sender)
                 return;
 
-            GetMetroContentControl((TabControl)sender).Reload();
+            var contentControl = GetMetroContentControl((TabControl)sender);
+            var metroContentControl = contentControl as MetroContentControl;
+            if (metroContentControl != null)
+            {
+                metroContentControl.Reload();
+            }
+            
+            var transitioningContentControl = contentControl as TransitioningContentControl;
+            if (transitioningContentControl != null)
+            {
+                transitioningContentControl.ReloadTransition();
+            }
         }
 
         public static readonly DependencyProperty MetroContentControlProperty =
-            DependencyProperty.RegisterAttached("MetroContentControl", typeof(MetroContentControl), typeof(ReloadBehavior), new PropertyMetadata(default(MetroContentControl)));
+            DependencyProperty.RegisterAttached("MetroContentControl", typeof(ContentControl), typeof(ReloadBehavior), new PropertyMetadata(default(ContentControl)));
 
-        public static void SetMetroContentControl(UIElement element, MetroContentControl value)
+        public static void SetMetroContentControl(UIElement element, ContentControl value)
         {
             element.SetValue(MetroContentControlProperty, value);
         }
 
-        public static MetroContentControl GetMetroContentControl(UIElement element)
+        public static ContentControl GetMetroContentControl(UIElement element)
         {
-            return (MetroContentControl)element.GetValue(MetroContentControlProperty);
+            return (ContentControl)element.GetValue(MetroContentControlProperty);
         }
     }
 }

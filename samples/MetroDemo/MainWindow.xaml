@@ -3,765 +3,197 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:MetroDemo="clr-namespace:MetroDemo"
+                      xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      Title="MahApps.Metro.Demo"
-                      Width="800"
+                      xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
+                      Title="MahApps.Metro - Demo Application"
+                      Width="960"
                       Height="600"
                       Icon="mahapps.metro.logo2.ico"
-                      ShowIconOnTitleBar="true"
+                      ShowIconOnTitleBar="True"
                       ShowTitleBar="True"
                       WindowStartupLocation="CenterScreen"
-                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
-                      mc:Ignorable="d">
+                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      mc:Ignorable="d"
+                      d:DesignHeight="600"
+                      d:DesignWidth="800"
+                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="22" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
+
+            <Canvas x:Key="appbar_github"
+                    Width="48"
+                    Height="48"
+                    Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                    UseLayoutRounding="False">
+                <Path Width="43.4333"
+                      Height="34.724"
+                      Canvas.Left="2.06666"
+                      Canvas.Top="9.0482"
+                      Stretch="Fill"
+                      Fill="{DynamicResource BlackBrush}"
+                      Data="F1 M 20.4727,24.1087C 20.4727,25.2202 19.8462,26.1209 19.0743,26.1209C 18.3018,26.1209 17.6761,25.2202 17.6761,24.1087C 17.6761,22.9967 18.3018,22.0955 19.0743,22.0955C 19.8462,22.0955 20.4727,22.9967 20.4727,24.1087 Z M 31.7243,24.1087C 31.7243,25.2202 31.0982,26.1209 30.3259,26.1209C 29.5539,26.1209 28.9278,25.2202 28.9278,24.1087C 28.9278,22.9967 29.5539,22.0955 30.3259,22.0955C 31.0982,22.0955 31.7243,22.9967 31.7243,24.1087 Z M 25.0517,26.752C 25.0517,27.0417 24.8168,27.2766 24.5271,27.2766C 24.2372,27.2766 24.0026,27.0417 24.0026,26.752C 24.0026,26.4623 24.2372,26.2275 24.5271,26.2275C 24.8168,26.2275 25.0517,26.4623 25.0517,26.752 Z M 23.3051,28.0781C 23.2741,27.9901 23.3204,27.894 23.4079,27.8631C 23.4957,27.8319 23.5922,27.8782 23.6232,27.9657C 23.758,28.3467 24.1193,28.6027 24.5227,28.6027C 24.926,28.6027 25.2874,28.3467 25.4224,27.9657C 25.4533,27.8777 25.5497,27.8319 25.6377,27.8631C 25.7254,27.894 25.7712,27.9901 25.7403,28.0781C 25.5579,28.5933 25.0683,28.9396 24.5227,28.9396C 23.977,28.9396 23.4879,28.5933 23.3051,28.0781 Z M 45.4666,25.8891C 41.7383,25.1435 39.5769,25.1425 37.2874,25.2403C 37.2044,25.5172 37.1111,25.7865 37.004,26.0452C 39.2636,26.1111 41.5963,27.0572 45.4253,28.1372L 45.3796,28.2994C 41.5286,27.2128 39.1693,26.2736 36.9323,26.2122C 35.8027,28.7747 33.3519,30.4238 28.2447,30.9302C 29.1208,31.5249 30.0168,32.6517 30.0168,34.7794L 30.0168,40.2354C 30.0168,40.2354 30.1292,41.5855 31.3669,42.0354C 31.3669,42.0354 32.0976,42.5419 31.3103,42.8227C 31.3103,42.8227 27.8793,43.1041 27.8793,40.2917L 27.8793,36.1295C 27.8793,36.1295 28.0148,34.5951 27.2044,33.9639L 27.2044,40.7416C 27.2044,40.7416 27.2604,42.3729 28.1041,42.9917C 28.1041,42.9917 28.6664,44.0039 27.4294,43.723C 27.4294,43.723 25.0669,43.3855 24.9545,40.6292L 24.9004,33.7107L 24.3329,33.7107L 24.2791,40.6292C 24.1664,43.3855 21.8042,43.723 21.8042,43.723C 20.5667,44.0039 21.1292,42.9917 21.1292,42.9917C 21.9731,42.3729 22.029,40.7416 22.029,40.7416L 22.029,33.905C 21.2185,34.4786 21.3543,36.1295 21.3543,36.1295L 21.3543,40.2917C 21.3543,43.1041 17.923,42.8227 17.923,42.8227C 17.1355,42.5419 17.8667,42.0354 17.8667,42.0354C 19.1044,41.5855 19.2168,40.2354 19.2168,40.2354L 19.2168,36.4182C 13.9026,37.6038 12.8015,33.9086 12.8015,33.9086C 11.9575,31.7419 10.7337,31.1653 10.7337,31.1653C 9.03174,29.998 10.8601,30.0259 10.8601,30.0259C 12.7451,30.167 13.7299,31.9675 13.7299,31.9675C 15.4891,34.9934 18.4212,33.9118 19.3473,33.469C 19.6287,32.1551 20.3218,31.3786 21.0017,30.9219C 16.2126,30.4057 13.5206,28.7618 12.1552,26.2167C 9.892,26.2859 5.95582,27.5698 2.18687,28.6327L 2.1411,28.4706C 5.88063,27.4157 9.78237,26.1245 12.0677,26.0508C 11.9342,25.7865 11.815,25.5129 11.7081,25.231C 9.39687,25.1435 5.7021,24.8353 2.09986,25.5558L 2.06666,25.3903C 5.64753,24.6741 9.31942,24.975 11.6447,25.0595C 11.1589,23.6976 10.9597,22.1307 10.9597,20.3838C 10.9597,18.07 11.7961,16.1828 13.1661,14.7044C 12.9471,14.1686 12.2264,12.0107 13.3921,9.09626C 13.3921,9.09626 15.1775,8.53096 19.2226,11.2908C 20.9195,10.8253 22.7388,10.596 24.5393,10.596C 26.1759,10.596 27.8099,10.7853 29.3453,11.1691C 33.2647,8.54605 34.9973,9.09626 34.9973,9.09626C 35.9797,11.5523 35.6222,13.4712 35.3543,14.335C 36.886,15.8637 37.8295,17.8726 37.8295,20.3838C 37.8295,22.1347 37.7156,23.7049 37.3369,25.0693C 39.6423,24.9735 41.7864,24.981 45.5,25.7236L 45.4666,25.8891 Z M 32.8338,20.2655C 31.019,18.6227 27.9632,19.5073 24.4975,19.5073C 21.018,19.5073 17.9506,18.6315 16.1386,20.2856C 15.052,21.2782 14.4173,22.4741 14.4173,23.7621C 14.4173,29.142 18.9301,29.9804 24.4975,29.9804C 30.0642,29.9804 34.5775,29.8161 34.5775,23.7621C 34.5775,22.4656 33.934,21.2621 32.8338,20.2655 Z " />
+            </Canvas>
+
+            <Ellipse x:Key="DarkThemeMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     StrokeThickness="1"
+                     Stroke="{DynamicResource BlackBrush}"
+                     Fill="{DynamicResource WhiteBrush}" />
+            <Ellipse x:Key="LightThemeMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     StrokeThickness="1"
+                     Stroke="{DynamicResource BlackBrush}"
+                     Fill="{DynamicResource BlackBrush}" />
+            <Ellipse x:Key="AccentMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     Fill="{Binding ColorBrush, Mode=OneWay}" />
+
+            <Style x:Key="AccentColorMenuItemStyle"
+                   TargetType="{x:Type MenuItem}"
+                   BasedOn="{StaticResource MetroMenuItem}">
+                <Setter Property="Command"
+                        Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Icon"
+                        Value="{StaticResource AccentMenuIcon}" />
+                <Setter Property="Header"
+                        Value="{Binding Name, Mode=OneWay}" />
             </Style>
+
+            <Dialog:SimpleDialog x:Key="SimpleDialogTest"
+                                 Title="This dialog allows arbitrary content. It will close in 5 seconds."
+                                 x:Name="SimpleTestDialog">
+                <Button Content="Hello" />
+            </Dialog:SimpleDialog>
+
         </ResourceDictionary>
     </Window.Resources>
 
-    <Controls:MetroWindow.GlowBrush>
-        <SolidColorBrush Color="{DynamicResource AccentColor}" />
-    </Controls:MetroWindow.GlowBrush>
-
-    <Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
-            <Button Click="LaunchVisualStudioDemo" Content="VS Demo" />
-            <Button Click="LaunchFlyoutDemo" Content="Flyout Demo" />
-            <Button Click="LaunchPanoramaDemo" Content="Panorama Demo" />
-            <Button Click="LaunchIcons" Content="Icons" />
-            <Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />
+            <Button Click="LaunchMahAppsOnGitHub"
+                    ToolTip="MahApps.Metro on GitHub">
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_github}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
         </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Click="LaunchVisualStudioDemo"
+                    ToolTip="Visual Studio style demo"
+                    Content="VS" />
+            <Button Click="LaunchFlyoutDemo"
+                    ToolTip="Flyouts demo window"
+                    Content="Flyouts" />
+            <Button Click="LaunchIcons"
+                    ToolTip="All MahApp icons"
+                    Content="Icons" />
+            <Button Click="LauchCleanDemo"
+                    ToolTip="Clean window style demo"
+                    Content="Clean" />
+            <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
+            <Button Click="InteropDemo"
+                    ToolTip="The interop demo"
+                    Content="Interop" />
+            <Button Click="LaunchNavigationDemo"
+                    ToolTip="Window navigation demo"
+                    Content="Navigation" />
+            <ToggleButton Content="ToggleButton"
+                          ToolTip="Shows the toggle button magic"
+                          x:Name="MagicToggleButton"
+                          IsChecked="{Binding MagicToggleButtonIsChecked}" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroContentControl>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Menu Grid.Row="0" VerticalAlignment="Center">
-                <MenuItem Header="Appearance">
-                    <MenuItem Header="Theme">
-                        <MenuItem Click="ThemeLight" Header="Light" />
-                        <MenuItem Click="ThemeDark" Header="Dark" />
-                    </MenuItem>
-                    <MenuItem Header="Accent">
-                        <MenuItem Click="AccentBlue" Header="Blue" />
-                        <MenuItem Click="AccentRed" Header="Red" />
-                        <MenuItem Click="AccentGreen" Header="Green" />
-                        <MenuItem Click="AccentOrange" Header="Orange" />
-                        <MenuItem Click="AccentPurple" Header="Purple" />
-                    </MenuItem>
+
+            <Menu Grid.Row="0"
+                  Margin="5"
+                  VerticalAlignment="Stretch"
+                  HorizontalAlignment="Left">
+                <MenuItem Header="Theme">
+                    <MenuItem Click="ThemeLight"
+                              Header="Light"
+                              Icon="{StaticResource DarkThemeMenuIcon}" />
+                    <MenuItem Click="ThemeDark"
+                              Header="Dark"
+                              Icon="{StaticResource LightThemeMenuIcon}" />
+                </MenuItem>
+                <MenuItem Header="Accent"
+                          ItemsSource="{Binding AccentColors, Mode=OneWay}"
+                          ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" />
+                <MenuItem Header="Dialogs">
+                    <MenuItem Header="Use Accent?"
+                              x:Name="UseAccentForDialogsMenuItem"
+                              IsCheckable="True" />
+                    <Separator />
+                    <MenuItem Click="ShowInputDialog"
+                              Header="Show InputDialog" />
+                    <MenuItem Click="ShowMessageDialog"
+                              Header="Show MessageDialog" />
+                    <MenuItem Click="ShowProgressDialog"
+                              Header="Show ProgressDialog" />
+                    <MenuItem Click="ShowSimpleDialog"
+                              Header="Show SimpleDialog" />
+                    <MenuItem Click="ShowDialogOutside"
+                              Header="Show SimpleDialog Externally" />
                 </MenuItem>
             </Menu>
+
             <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
                 <TabItem Header="buttons">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <Label Content="Default button" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Button Width="100"
-                                    Margin="0, 10, 0, 0"
-                                    Content="Enabled" />
-                            <Button Width="100"
-                                    Margin="0, 10, 0, 0"
-                                    Content="Disabled"
-                                    IsEnabled="False" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <Label Content="Square button" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Button Width="100"
-                                    Margin="0, 10, 0, 0"
-                                    Content="Enabled"
-                                    Style="{StaticResource SquareButtonStyle}" />
-                            <Button Width="100"
-                                    Margin="0, 10, 0, 0"
-                                    Content="Disabled"
-                                    IsEnabled="False"
-                                    Style="{StaticResource SquareButtonStyle}" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="2">
-                            <Label Content="Toggle button" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <ToggleButton Width="100"
-                                          Margin="0, 10, 0, 0"
-                                          Content="Enabled" />
-                            <ToggleButton Width="100"
-                                          Margin="0, 10, 0, 0"
-                                          Content="Disabled"
-                                          IsEnabled="False" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="3">
-                            <StackPanel.Resources>
-                                <ResourceDictionary>
-                                    <ResourceDictionary.MergedDictionaries>
-                                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
-                                    </ResourceDictionary.MergedDictionaries>
-                                </ResourceDictionary>
-                            </StackPanel.Resources>
-                            <Label Content="Flat button" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Button Width="100"
-                                    Margin="0, 10, 0, 0"
-                                    Content="Enabled" />
-                            <Button Width="100"
-                                    Margin="0, 10, 0, 0"
-                                    Content="Disabled"
-                                    IsEnabled="False" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="4">
-                            <Label Content="Circle button" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Button Width="50"
-                                    Height="50"
-                                    Margin="0, 10, 0, 0"
-                                    Style="{DynamicResource MetroCircleButtonStyle}">
-                                <Rectangle Width="20" Height="20">
-                                    <Rectangle.Fill>
-                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </Button>
-                            <Button Width="50"
-                                    Height="50"
-                                    Margin="0, 10, 0, 0"
-                                    IsEnabled="False"
-                                    Style="{DynamicResource MetroCircleButtonStyle}">
-                                <Rectangle Width="20" Height="20">
-                                    <Rectangle.Fill>
-                                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_city}" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </Button>
-                        </StackPanel>
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Center">
-                            <Label Content="Toggle switch" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:ToggleSwitch IsChecked="True" />
-                            <Controls:ToggleSwitch />
-                            <Controls:ToggleSwitch IsChecked="True" IsEnabled="False" />
-                            <Controls:ToggleSwitch IsEnabled="False" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Center">
-                            <Label Content="Checkbox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <CheckBox Margin="0, 10, 0, 0" Content="Enabled" />
-                            <CheckBox Margin="0, 10, 0, 0"
-                                      Content="Enabled"
-                                      IsChecked="True" />
-                            <CheckBox Margin="0, 10, 0, 0"
-                                      Content="Enabled" 
-                                      IsChecked="{x:Null}"
-                                      IsThreeState="True" />
-                            <CheckBox Margin="0, 10, 0, 0"
-                                      Content="Disabled"
-                                      IsEnabled="False" />
-                            <CheckBox Margin="0, 10, 0, 0"
-                                      Content="Disabled"
-                                      IsChecked="True"
-                                      IsEnabled="False" />
-                            <CheckBox Margin="0, 10, 0, 0"
-                                      Content="Enabled" 
-                                      IsEnabled="False"
-                                      IsChecked="{x:Null}"
-                                      IsThreeState="True" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="1"
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Center">
-                            <Label Content="Radio button" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <RadioButton Margin="0, 10, 0, 0"
-                                         Content="Enabled"
-                                         GroupName="1" />
-                            <RadioButton Margin="0, 10, 0, 0"
-                                         Content="Enabled"
-                                         GroupName="1"
-                                         IsChecked="True" />
-                            <RadioButton Margin="0, 10, 0, 0"
-                                         Content="Disabled"
-                                         GroupName="2"
-                                         IsEnabled="False" />
-                            <RadioButton Margin="0, 10, 0, 0"
-                                         Content="Disabled"
-                                         GroupName="2"
-                                         IsChecked="True"
-                                         IsEnabled="False" />
-                        </StackPanel>
-                    </Grid>
+                    <exampleViews:ButtonsExample DataContext="{Binding}" />
                 </TabItem>
                 <TabItem Header="text">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Width="150">
-                            <Label Content="Textbox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <TextBox Margin="0, 10, 0, 0" Text="Enabled" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
-                                     Controls:TextboxHelper.Watermark="Watermark" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
-                                     Controls:TextboxHelper.ClearTextButton="True"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     Text="Clear button" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
-                                     Controls:TextboxHelper.Watermark="Number smaller than 10"
-                                     Text="{Binding IntegerGreater10Property,
-                                                    ValidatesOnDataErrors=True,
-                                                    UpdateSourceTrigger=PropertyChanged,
-                                                    NotifyOnValidationError=True}" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     IsEnabled="False"
-                                     Text="Disabled" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     IsEnabled="False" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
-                                     Controls:TextboxHelper.ClearTextButton="True"
-                                     Controls:TextboxHelper.Watermark="Watermark"
-                                     IsEnabled="False"
-                                     Text="Clear button" />
-                            <TextBox Margin="0, 10, 0, 0"
-                                     VerticalContentAlignment="Center"
-                                     Controls:TextboxHelper.Watermark="Number smaller than 10"
-                                     IsEnabled="False"
-                                     Text="{Binding IntegerGreater10Property,
-                                                    ValidatesOnDataErrors=True,
-                                                    UpdateSourceTrigger=PropertyChanged,
-                                                    NotifyOnValidationError=True}" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Width="150">
-                            <Label Content="RichTextBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <RichTextBox Margin="0, 10, 0, 0" Padding="5">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                            <RichTextBox Margin="0, 10, 0, 0"
-                                         IsEnabled="False"
-                                         Padding="5">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        <Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                        </StackPanel>
-                        <StackPanel Grid.Column="2" Width="150">
-                            <Label Content="Passwordbox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <PasswordBox Margin="0, 10, 0, 0" Password="Password" />
-                            <PasswordBox Margin="0, 10, 0, 0"
-                                         Controls:TextboxHelper.ClearTextButton="True"
-                                         Password="Password" />
-                            <PasswordBox Margin="0, 10, 0, 0"
-                                         IsEnabled="False"
-                                         Password="Password" />
-                            <PasswordBox Margin="0, 10, 0, 0"
-                                         Controls:TextboxHelper.ClearTextButton="True"
-                                         IsEnabled="False"
-                                         Password="Password" />
-                        </StackPanel>
-                    </Grid>
+                    <exampleViews:TextExamples DataContext="{Binding}" />
                 </TabItem>
                 <TabItem Header="dates">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel>
-                            <TextBlock Text="date picker"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <DatePicker Width="150"
-                                        HorizontalAlignment="Center"
-                                        Controls:TextboxHelper.Watermark="Select a date" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="1">
-                            <TextBlock Text="disabled date picker"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <DatePicker Width="150"
-                                        HorizontalAlignment="Center"
-                                        Controls:TextboxHelper.Watermark="Select a date" 
-                                        IsEnabled="False"/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" >
-                            <TextBlock Text="calendar"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <Calendar />
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1" Grid.Row="1">
-                            <TextBlock Text="disabled calendar"
-                                       Margin="0,5"
-                                       FontSize="20"
-                                       HorizontalAlignment="Center" />
-                            <Calendar IsEnabled="False"/>
-                        </StackPanel>
-                    </Grid>
+                    <exampleViews:DateExamples DataContext="{Binding}" />
                 </TabItem>
                 <TabItem Header="selection">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.RowSpan="2"
-                                    Grid.Column="0"
-                                    Width="350">
-                            <Label Content="List/GridView" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <ListView Height="200"
-                                      Margin="0, 10, 0, 0"
-                                      BorderThickness="0"
-                                      ItemsSource="{Binding Artists}"
-                                      SelectedIndex="0">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                            <ListView Height="200"
-                                      Margin="0, 10, 0, 0"
-                                      BorderThickness="0"
-                                      IsEnabled="False"
-                                      ItemsSource="{Binding Artists}"
-                                      SelectedIndex="0">
-                                <ListView.View>
-                                    <GridView>
-                                        <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
-                                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
-                                    </GridView>
-                                </ListView.View>
-                            </ListView>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Width="150">
-                            <Label Content="ListBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <ListBox Grid.Row="0"
-                                     Grid.Column="1"
-                                     Margin="0, 10, 0, 0"
-                                     SelectedIndex="0">
-                                <ListBoxItem Content="Item 1" />
-                                <ListBoxItem Content="Item 2" />
-                                <ListBoxItem Content="Item 3" />
-                            </ListBox>
-                            <ListBox Grid.Row="0"
-                                     Grid.Column="1"
-                                     Margin="0, 10, 0, 0"
-                                     IsEnabled="False"
-                                     SelectedIndex="0">
-                                <ListBoxItem Content="Item 1" />
-                                <ListBoxItem Content="Item 2" />
-                                <ListBoxItem Content="Item 3" />
-                            </ListBox>
-                        </StackPanel>
-                        <StackPanel Grid.Row="1" Grid.Column="1">
-                            <Label Content="ComboBox" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <ComboBox Width="200"
-                                      Margin="0, 10, 0, 0"
-                                      SelectedIndex="0">
-                                <ComboBoxItem Content="Item 1" />
-                                <ComboBoxItem Content="Item 2" />
-                                <ComboBoxItem Content="Item 3" />
-                                <ComboBoxItem Content="Item 4" />
-                            </ComboBox>
-                            <ComboBox Width="200"
-                                      Margin="0, 10, 0, 0"
-                                      Controls:TextboxHelper.Watermark="Autocompletion"
-                                      DisplayMemberPath="Title"
-                                      IsEditable="True"
-                                      ItemsSource="{Binding Albums}"
-                                      MaxDropDownHeight="50"
-                                      Text="{Binding Path=Title,
-                                                     Mode=TwoWay}" />
-                            <ComboBox Width="200"
-                                      Margin="0, 10, 0, 0"
-                                      IsEnabled="False"
-                                      SelectedIndex="0">
-                                <ComboBoxItem Content="Item 1" />
-                                <ComboBoxItem Content="Item 2" />
-                                <ComboBoxItem Content="Item 3" />
-                                <ComboBoxItem Content="Item 4" />
-                            </ComboBox>
-                            <ComboBox Width="200"
-                                      Margin="0, 10, 0, 0"
-                                      Controls:TextboxHelper.Watermark="Autocompletion"
-                                      DisplayMemberPath="Title"
-                                      IsEditable="True"
-                                      IsEnabled="False"
-                                      ItemsSource="{Binding Albums}"
-                                      MaxDropDownHeight="50"
-                                      Text="{Binding Path=Title,
-                                                     Mode=TwoWay}" />
-                        </StackPanel>
-                    </Grid>
+                    <exampleViews:SelectionExamples DataContext="{Binding}" />
                 </TabItem>
                 <TabItem Header="sliders and progress">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <Label Content="Horizontal Slider" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Slider Width="200" Margin="0, 10, 0, 0" />
-                            <Slider Width="200"
-                                    Margin="0, 10, 0, 0"
-                                    Value="50" />
-                            <Slider Width="200"
-                                    Margin="0, 10, 0, 0"
-                                    IsEnabled="False" />
-                            <Slider Width="200"
-                                    Margin="0, 10, 0, 0"
-                                    IsEnabled="False"
-                                    Value="50" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <Label Content="Vertical Slider" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Slider Orientation="Vertical" Height="200" />
-                                <Slider Orientation="Vertical"
-                                        Margin="10, 0, 0, 0"
-                                        Height="200" 
-                                        Value="50" />
-                                <Slider Orientation="Vertical" 
-                                        Height="200"
-                                        Margin="10, 0, 0, 0"
-                                        IsEnabled="False" />
-                                <Slider Orientation="Vertical"
-                                        Margin="10, 0, 0, 0"
-                                        Height="200" 
-                                        Value="50"
-                                        IsEnabled="False" />
-                            </StackPanel>
-                        </StackPanel>
-                        <StackPanel Grid.Column="2">
-                            <Label Content="RangeSlider" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:RangeSlider Width="200"
-                                                  Height="20"
-                                                  Margin="0, 10, 0, 0" />
-                            <Controls:RangeSlider Width="200"
-                                                  Height="20"
-                                                  Margin="0, 10, 0, 0"
-                                                  RangeStartSelected="20"
-                                                  RangeStopSelected="60" />
-                            <Controls:RangeSlider Width="200"
-                                                  Height="20"
-                                                  Margin="0, 10, 0, 0"
-                                                  IsEnabled="False" />
-                            <Controls:RangeSlider Width="200"
-                                                  Height="20"
-                                                  Margin="0, 10, 0, 0"
-                                                  IsEnabled="False"
-                                                  RangeStartSelected="20"
-                                                  RangeStopSelected="60" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="1" Grid.Column="0">
-                            <Label Content="ProgressBar" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <ProgressBar Width="200" Margin="0, 10, 0, 0" />
-                            <ProgressBar Width="200"
-                                         Margin="0, 10, 0, 0"
-                                         Value="50" />
-                            <ProgressBar Width="200"
-                                         Margin="0, 10, 0, 0"
-                                         IsIndeterminate="True"
-                                         Value="100" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="1" Grid.Column="1">
-                            <Label Content="ProgressRing" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:ProgressRing Margin="0, 10, 0, 0" IsActive="True" />
-                            <Label Margin="0, 10, 0, 0"
-                                   Content="ProgressIndicator"
-                                   Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:ProgressIndicator Width="100"
-                                                        Height="10"
-                                                        Margin="0, 10, 0, 0"
-                                                        ProgressColour="DeepSkyBlue" />
-                        </StackPanel>
-                    </Grid>
+                    <exampleViews:SliderProgressExamples DataContext="{Binding}" />
                 </TabItem>
                 <TabItem Header="tabcontrol">
-                    <ScrollViewer>
-                        <StackPanel Margin="15, 10, 15, 0">
-                            <Label Content="Default TabControl" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <TabControl>
-                                <Controls:MetroTabItem Header="headers" HeaderFontSize="20">
-                                    <TextBlock FontSize="30" Text="Content" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="can" HeaderFontSize="22">
-                                    <TextBlock FontSize="30" Text="More content" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="have" HeaderFontSize="24">
-                                    <TextBlock FontSize="30" Text="More more content" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="different" HeaderFontSize="26">
-                                    <TextBlock FontSize="30" Text="So much content!" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="font" HeaderFontSize="28">
-                                    <TextBlock FontSize="30" Text="Content!" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="sizes" HeaderFontSize="30">
-                                    <TextBlock FontSize="30" Text="This is not content (it is)" />
-                                </Controls:MetroTabItem>
-                            </TabControl>
-                            <Label Margin="0, 40, 0, 0"
-                               Content="MetroAnimatedTabControl"
-                               Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Grid>
-                                <Grid.Resources>
-                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
-                                </Grid.Resources>
-                                <Controls:MetroAnimatedSingleRowTabControl>
-                                    <TabItem Header="this tabcontrol">
-                                        <TextBlock FontSize="30" Text="Cool transition" />
-                                    </TabItem>
-                                    <TabItem Header="animates its content">
-                                        <TextBlock FontSize="30" Text="More cool transition" />
-                                    </TabItem>
-                                    <TabItem Header="with a transition">
-                                        <TextBlock FontSize="30" Text="Animate everything!" />
-                                    </TabItem>
-                                </Controls:MetroAnimatedSingleRowTabControl>
-                            </Grid>
-                            <Label Margin="0, 40, 0, 0"
-                               Content="MetroAnimatedSingleRowTabControl"
-                               Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Grid>
-                                <Grid.Resources>
-                                    <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />
-                                </Grid.Resources>
-                                <Controls:MetroAnimatedSingleRowTabControl>
-                                    <TabItem Header="this tabcontrols tabs">
-                                        <TextBlock FontSize="30" Text="Content" />
-                                    </TabItem>
-                                    <TabItem Header="appear only on a single line">
-                                        <TextBlock FontSize="30" Text="Content" />
-                                    </TabItem>
-                                    <TabItem Header="if they are overflowing">
-                                        <TextBlock FontSize="30" Text="Content" />
-                                    </TabItem>
-                                    <TabItem Header="instead of wrapping them">
-                                        <TextBlock FontSize="30" Text="Content" />
-                                    </TabItem>
-                                </Controls:MetroAnimatedSingleRowTabControl>
-                            </Grid>
-                            <Label Content="TabControl w/ Closable Items" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:MetroTabControl>
-                                <!-- CloseTabCommand="{Binding CloseTabCommand}"-->
-                                <Controls:MetroTabItem Header="headers" HeaderFontSize="20" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="Content" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="can" HeaderFontSize="22" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="More content" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="have" HeaderFontSize="24" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="More more content" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="different" HeaderFontSize="26" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="So much content!" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="font" HeaderFontSize="28" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="Content!" />
-                                </Controls:MetroTabItem>
-                                <Controls:MetroTabItem Header="sizes" HeaderFontSize="30" CloseButtonEnabled="True">
-                                    <TextBlock FontSize="30" Text="This is not content (it is)" />
-                                </Controls:MetroTabItem>
-                            </Controls:MetroTabControl>
-                        </StackPanel>
-
-                    </ScrollViewer>
+                    <exampleViews:TabControlExamples DataContext="{Binding}" />
                 </TabItem>
                 <TabItem Header="datagrid">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <DataGrid ItemsSource="{Binding Path=Albums}" 
-                                  Grid.Row="0"
-                                  AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
-                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
-                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
-                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <DataGrid ItemsSource="{Binding Path=Albums}" 
-                                  Grid.Row="1" 
-                                  IsEnabled="False" 
-                                  AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
-                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
-                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
-                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="0" Grid.Column="1" Style="{StaticResource AzureDataGrid}" AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
-                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
-                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
-                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <DataGrid ItemsSource="{Binding Path=Albums}" Grid.Row="1" IsEnabled="False" Grid.Column="1" Style="{StaticResource AzureDataGrid}"  AutoGenerateColumns="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Title" Binding="{Binding Title}" />
-                                <DataGridTextColumn Header="Artist" Binding="{Binding Artist.Name}" />
-                                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}" />
-                                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=c}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
+                    <exampleViews:DataGridExamples DataContext="{Binding}" />
+                </TabItem>
+                <TabItem Header="colors">
+                    <exampleViews:ColorExample DataContext="{Binding}" />
                 </TabItem>
                 <TabItem Header="others">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <StackPanel>
-                            <Label Content="Transitions" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:TransitioningContentControl x:Name="transitioning"
-                                                                  Width="250"
-                                                                  Height="50"
-                                                                  Margin="0, 10, 0, 0"
-                                                                  Transition="DownTransition" />
-                            <Controls:TransitioningContentControl x:Name="customTransitioning"
-                                                                  Width="250"
-                                                                  Height="50"
-                                                                  Margin="0, 10, 0, 0"
-                                                                  Transition="CustomTransition">
-                                <Controls:TransitioningContentControl.CustomVisualStates>
-                                    <VisualState x:Name="CustomTransition">
-                                        <Storyboard>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                           Storyboard.TargetName="CurrentContentPresentationSite"
-                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
-                                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
-                                                <SplineDoubleKeyFrame KeyTime="00:00:00.700" Value="1" />
-                                            </DoubleAnimationUsingKeyFrames>
-                                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                                           Storyboard.TargetName="PreviousContentPresentationSite"
-                                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
-                                                <SplineDoubleKeyFrame KeyTime="00:00:00" Value="1" />
-                                                <SplineDoubleKeyFrame KeyTime="00:00:00.700" Value="0" />
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </Controls:TransitioningContentControl.CustomVisualStates>
-                            </Controls:TransitioningContentControl>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <Label Content="Tile" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Controls:Tile Title="My cupcakes"
-                                           Margin="0, 10, 0, 0"
-                                           Count="23">
-                                <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
-                            </Controls:Tile>
-                        </StackPanel>
-                        <Grid Grid.Row="1" Grid.ColumnSpan="2">
-                            <Label Content="Context menu" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <Label HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Center"
-                                   VerticalContentAlignment="Center"
-                                   Content="Right click here to open a context menu">
-                                <Label.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="Menu 1">
-                                            <MenuItem Header="Submenu 1" />
-                                            <MenuItem Header="Submenu 2" />
-                                        </MenuItem>
-                                        <MenuItem Header="Menu 2" />
-                                        <MenuItem Header="Menu 3" />
-                                    </ContextMenu>
-                                </Label.ContextMenu>
-                            </Label>
-                        </Grid>
-                        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
-                            <Label Content="FlipView" Style="{StaticResource DescriptionHeaderStyle}" />
-                            <StackPanel Orientation="Horizontal" Height="20" Margin="0 0 0 5">
-                                <CheckBox Height="20" Content="Show Banner?" x:Name="ShowBannerCheckBox" HorizontalAlignment="Right"/>
-                            </StackPanel>
-                            <Controls:FlipView Height="200" IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="FlipView_SelectionChanged">
-                                <Controls:FlipView.Items>
-                                    <Grid Background="Blue">
-                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_cupcake}" />
-                                    </Grid>
-                                    <Grid Background="Green">
-                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_xbox}" />
-                                    </Grid>
-                                    <Grid Background="Red">
-                                        <Controls:MetroImage Margin="0, 0, 10, 0" Source="{StaticResource appbar_chess_horse}" />
-                                    </Grid>
-                                </Controls:FlipView.Items>
-                            </Controls:FlipView>
-                        </StackPanel>
-                    </Grid>
+                    <exampleViews:OtherExamples DataContext="{Binding}" />
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
+
         </Grid>
     </Controls:MetroContentControl>
 </Controls:MetroWindow>

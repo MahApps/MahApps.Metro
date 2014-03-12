@@ -2,54 +2,65 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--Tooltip Style-->
-    <Style x:Key="MetroToolTip" TargetType="ToolTip">
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
-        <Setter Property="Padding" Value="3,1,3,1" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource ItemSelectedBrush}" />
+    <Style x:Key="MetroToolTip"
+           TargetType="ToolTip">
+        <Setter Property="Background"
+                Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Padding"
+                Value="3,1,3,1" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource GrayBrush7}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToolTip">
                     <Border x:Name="Root"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{DynamicResource BlackBrush}"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}"
                             Effect="{DynamicResource DropShadowBrush}"
                             Opacity="0">
+                        <Border.Resources>
+                            <Storyboard x:Key="Visible State" />
+                            <Storyboard x:Key="Normal State" />
+                        </Border.Resources>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition From="Open" GeneratedDuration="0:0:0.3" To="Closed" />
+                                    <VisualTransition From="Open"
+                                                      GeneratedDuration="0:0:0.3"
+                                                      To="Closed" />
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Closed">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Root">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0" />
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                                       Storyboard.TargetName="Root">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4"
+                                                                  Value="0" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Open">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="Root">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                                       Storyboard.TargetName="Root">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                                                  Value="1" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border Padding="{TemplateBinding Padding}">
-                            <Border.Resources>
-                                <Storyboard x:Key="Visible State" />
-                                <Storyboard x:Key="Normal State" />
-                            </Border.Resources>
-                            <Border.Background>
-                                <DynamicResource ResourceKey="BlackBrush" />
-                            </Border.Background>
-                            <ContentPresenter Cursor="{TemplateBinding Cursor}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Content="{TemplateBinding Content}"
-                                              Margin="{TemplateBinding Padding}" />
-                        </Border>
+                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontSize="{DynamicResource ContentFontSize}"
+                                          Cursor="{TemplateBinding Cursor}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}"
+                                          Margin="{TemplateBinding Padding}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

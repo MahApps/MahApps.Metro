@@ -1,22 +1,173 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// Password watermarking code from: http://prabu-guru.blogspot.com/2010/06/how-to-add-watermark-text-to-textbox.html
+    /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
+    /// <remarks>
+    /// Password watermarking code from: http://prabu-guru.blogspot.com/2010/06/how-to-add-watermark-text-to-textbox.html
+    /// </remarks>
     public class TextboxHelper : DependencyObject
     {
         public static readonly DependencyProperty IsMonitoringProperty = DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false, OnIsMonitoringChanged));
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextboxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextboxHelper), new UIPropertyMetadata(0));
-        public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ClearTextChanged));
+        public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
+        
+        public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextboxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty ButtonCommandParameterProperty = DependencyProperty.RegisterAttached("ButtonCommandParameter", typeof(object), typeof(TextboxHelper), new FrameworkPropertyMetadata(null));
+        public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextboxHelper), new FrameworkPropertyMetadata("r"));
+        public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextboxHelper), new FrameworkPropertyMetadata(null));
+        public static readonly DependencyProperty ButtonFontFamilyProperty = DependencyProperty.RegisterAttached("ButtonFontFamily", typeof(FontFamily), typeof(TextboxHelper), new FrameworkPropertyMetadata((new FontFamilyConverter()).ConvertFromString("Marlett")));
+        
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
+        public static readonly DependencyProperty IsWaitingForDataProperty = DependencyProperty.RegisterAttached("IsWaitingForData", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false));
 
-        private static readonly DependencyProperty hasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
+        public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(TextboxHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+        public static readonly DependencyProperty MouseOverBorderBrushProperty = DependencyProperty.RegisterAttached("MouseOverBorderBrush", typeof(Brush), typeof(TextboxHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        private static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
+
+        private static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
+
+        /// <summary>
+        /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        public static bool GetIsSpellCheckContextMenuEnabled(UIElement element)
+        {
+            return (bool)element.GetValue(IsSpellCheckContextMenuEnabledProperty);
+        }
+
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        public static void SetIsSpellCheckContextMenuEnabled(UIElement element, bool value)
+        {
+            element.SetValue(IsSpellCheckContextMenuEnabledProperty, value);
+        }
+
+        private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tb = d as TextBoxBase;
+            if (null == tb)
+            {
+                throw new InvalidOperationException("The property 'IsSpellCheckContextMenuEnabled' may only be set on TextBoxBase elements.");
+            }
+
+            if ((bool)e.NewValue) {
+                // set the spell check to true
+                tb.SetValue(SpellCheck.IsEnabledProperty, true);
+                // override pre defined context menu
+                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+                tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
+            }
+            else
+            {
+                tb.SetValue(SpellCheck.IsEnabledProperty, false);
+                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+                tb.ContextMenuOpening -= TextBoxBaseContextMenuOpening;
+            }
+        }
+
+        private static void TextBoxBaseContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            var tbBase = (TextBoxBase)sender;
+            var textBox = tbBase as TextBox;
+            var richTextBox = tbBase as RichTextBox;
+
+            tbBase.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+
+            var cmdIndex = 0;
+            var spellingError = textBox != null
+                ? textBox.GetSpellingError(textBox.CaretIndex)
+                : (richTextBox != null
+                    ? richTextBox.GetSpellingError(richTextBox.CaretPosition)
+                    : null);
+            if (spellingError != null) {
+                var suggestions = spellingError.Suggestions;
+                if (suggestions.Any()) {
+                    foreach (var suggestion in suggestions) {
+                        var mi = new MenuItem();
+                        mi.Header = suggestion;
+                        mi.FontWeight = FontWeights.Bold;
+                        mi.Command = EditingCommands.CorrectSpellingError;
+                        mi.CommandParameter = suggestion;
+                        mi.CommandTarget = tbBase;
+                        mi.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                        tbBase.ContextMenu.Items.Insert(cmdIndex, mi);
+                        cmdIndex++;
+                    }
+                    // add a separator
+                    tbBase.ContextMenu.Items.Insert(cmdIndex, new Separator());
+                    cmdIndex++;
+                }
+                var ignoreAllMI = new MenuItem();
+                ignoreAllMI.Header = "Ignore All";
+                ignoreAllMI.Command = EditingCommands.IgnoreSpellingError;
+                ignoreAllMI.CommandTarget = tbBase;
+                ignoreAllMI.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                tbBase.ContextMenu.Items.Insert(cmdIndex, ignoreAllMI);
+                cmdIndex++;
+                // add another separator
+                var separatorMenuItem2 = new Separator();
+                tbBase.ContextMenu.Items.Insert(cmdIndex, separatorMenuItem2);
+            }
+        }
+
+        // Gets a fresh context menu. 
+        private static ContextMenu GetDefaultTextBoxBaseContextMenu()
+        {
+            var defaultMenu = new ContextMenu();
+
+            var m1 = new MenuItem { Command = ApplicationCommands.Cut };
+            m1.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            var m2 = new MenuItem { Command = ApplicationCommands.Copy };
+            m2.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            var m3 = new MenuItem { Command = ApplicationCommands.Paste };
+            m3.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+
+            defaultMenu.Items.Add(m1);
+            defaultMenu.Items.Add(m2);
+            defaultMenu.Items.Add(m3);
+
+            return defaultMenu;
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used to draw the focus border.
+        /// </summary>
+        public Brush FocusBorderBrush
+        {
+            get { return (Brush)GetValue(FocusBorderBrushProperty); }
+            set { SetValue(FocusBorderBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used to draw the mouse over brush.
+        /// </summary>
+        public Brush MouseOverBorderBrush
+        {
+            get { return (Brush)GetValue(MouseOverBorderBrushProperty); }
+            set { SetValue(MouseOverBorderBrushProperty, value); }
+        }
+
+        public static void SetIsWaitingForData(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsWaitingForDataProperty, value);
+        }
+        
+        public static bool GetIsWaitingForData(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsWaitingForDataProperty);
+        }
 
         public static void SetSelectAllOnFocus(DependencyObject obj, bool value)
         {
@@ -46,12 +197,15 @@ namespace MahApps.Metro.Controls
         private static void SetTextLength(DependencyObject obj, int value)
         {
             obj.SetValue(TextLengthProperty, value);
-            obj.SetValue(hasTextProperty, value >= 1);
+            obj.SetValue(HasTextProperty, value >= 1);
         }
 
+        /// <summary>
+        /// Gets if the attached TextBox has text.
+        /// </summary>
         public bool HasText
         {
-            get { return (bool)GetValue(hasTextProperty); }
+            get { return (bool)GetValue(HasTextProperty); }
         }
 
         static void OnIsMonitoringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -84,6 +238,19 @@ namespace MahApps.Metro.Controls
                 {
                     passBox.PasswordChanged -= PasswordChanged;
                     passBox.GotFocus -= PasswordGotFocus;
+                }
+            }
+            else if (d is NumericUpDown)
+            {
+                var numericUpDown = d as NumericUpDown;
+
+                if ((bool)e.NewValue)
+                {
+                    numericUpDown.GotFocus += NumericUpDownGotFocus;
+                }
+                else
+                {
+                    numericUpDown.GotFocus -= NumericUpDownGotFocus;
                 }
             }
         }
@@ -126,6 +293,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
+        {
+            var numericUpDown = sender as NumericUpDown;
+            if (numericUpDown == null)
+                return;
+            if (GetSelectAllOnFocus(numericUpDown))
+            {
+                numericUpDown.Dispatcher.BeginInvoke((Action)(numericUpDown.SelectAll));
+            }
+        }
+
         public static bool GetClearTextButton(DependencyObject d)
         {
             return (bool)d.GetValue(ClearTextButtonProperty);
@@ -136,41 +314,115 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ClearTextButtonProperty, value);
         }
 
-        private static void ClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static ICommand GetButtonCommand(DependencyObject d)
+        {
+            return (ICommand)d.GetValue(ButtonCommandProperty);
+        }
+
+        public static void SetButtonCommand(DependencyObject obj, ICommand value)
+        {
+            obj.SetValue(ButtonCommandProperty, value);
+        }
+
+        public static object GetButtonCommandParameter(DependencyObject d)
+        {
+            return (object)d.GetValue(ButtonCommandParameterProperty);
+        }
+
+        public static void SetButtonCommandParameter(DependencyObject obj, object value)
+        {
+            obj.SetValue(ButtonCommandParameterProperty, value);
+        }
+
+        public static object GetButtonContent(DependencyObject d)
+        {
+            return (object)d.GetValue(ButtonContentProperty);
+        }
+
+        public static void SetButtonContent(DependencyObject obj, object value)
+        {
+            obj.SetValue(ButtonContentProperty, value);
+        }
+
+        public static ControlTemplate GetButtonTemplate(DependencyObject d)
+        {
+            return (ControlTemplate)d.GetValue(ButtonTemplateProperty);
+        }
+
+        public static void SetButtonTemplate(DependencyObject obj, ControlTemplate value)
+        {
+            obj.SetValue(ButtonTemplateProperty, value);
+        }
+
+        public static FontFamily GetButtonFontFamily(DependencyObject d)
+        {
+            return (FontFamily)d.GetValue(ButtonFontFamilyProperty);
+        }
+
+        public static void SetButtonFontFamily(DependencyObject obj, FontFamily value)
+        {
+            obj.SetValue(ButtonFontFamilyProperty, value);
+        }
+
+        private static void ButtonCommandOrClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var textbox = d as TextBox;
             if (textbox != null)
             {
-                if ((bool)e.NewValue)
-                {
-                    textbox.Loaded += TextBoxLoaded;
-                }
-                else
-                {
-                    textbox.Loaded -= TextBoxLoaded;
-                }
+                // only one loaded event
+                textbox.Loaded -= TextBoxLoaded;
+                textbox.Loaded += TextBoxLoaded;
             }
             var passbox = d as PasswordBox;
             if (passbox != null)
             {
-                if ((bool)e.NewValue)
-                {
-                    passbox.Loaded += PassBoxLoaded;
-                }
-                else
-                {
-                    passbox.Loaded -= PassBoxLoaded;
-                }
+                // only one loaded event
+                passbox.Loaded -= PassBoxLoaded;
+                passbox.Loaded += PassBoxLoaded;
+            }
+            var combobox = d as ComboBox;
+            if (combobox != null)
+            {
+                // only one loaded event
+                combobox.Loaded -= ComboBoxLoaded;
+                combobox.Loaded += ComboBoxLoaded;
+            }
+        }
+
+        static void ComboBoxLoaded(object sender, RoutedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+            if (comboBox == null || comboBox.Style == null)
+                return;
+
+            var template = comboBox.Template;
+            if (template == null)
+                return;
+
+            var dropDown = template.FindName("PART_DropDownToggle", comboBox) as ToggleButton;
+            if (dropDown == null || dropDown.Template == null)
+                return;
+
+            var button = dropDown.Template.FindName("PART_ClearText", dropDown) as Button;
+            if (button == null)
+                return;
+
+            if (GetClearTextButton(comboBox))
+            {
+                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
+                button.Click -= ButtonClicked;
+                button.Click += ButtonClicked;
+            }
+            else
+            {
+                button.Click -= ButtonClicked;
             }
         }
 
         static void PassBoxLoaded(object sender, RoutedEventArgs e)
         {
-            if (!(sender is PasswordBox))
-                return;
-
             var passbox = sender as PasswordBox;
-            if (passbox.Style == null)
+            if (passbox == null || passbox.Style == null)
                 return;
 
             var template = passbox.Template;
@@ -181,24 +433,22 @@ namespace MahApps.Metro.Controls
             if (button == null)
                 return;
 
-            if (GetClearTextButton(passbox))
+            if (GetButtonCommand(passbox) != null || GetClearTextButton(passbox))
             {
-                button.Click += ClearPassClicked;
+                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
+                button.Click -= ButtonClicked;
+                button.Click += ButtonClicked;
             }
             else
             {
-                button.Click -= ClearPassClicked;
+                button.Click -= ButtonClicked;
             }
         }
 
-
         static void TextBoxLoaded(object sender, RoutedEventArgs e)
         {
-            if (!(sender is TextBox))
-                return;
-
             var textbox = sender as TextBox;
-            if (textbox.Style == null)
+            if (textbox == null || textbox.Style == null)
                 return;
 
             var template = textbox.Template;
@@ -209,38 +459,50 @@ namespace MahApps.Metro.Controls
             if (button == null)
                 return;
 
-            if (GetClearTextButton(textbox))
+            if (GetButtonCommand(textbox) != null || GetClearTextButton(textbox))
             {
-                button.Click += ClearTextClicked;
+                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
+                button.Click -= ButtonClicked;
+                button.Click += ButtonClicked;
             }
             else
             {
-                button.Click -= ClearTextClicked;
+                button.Click -= ButtonClicked;
             }
         }
 
-        static void ClearTextClicked(object sender, RoutedEventArgs e)
+        static void ButtonClicked(object sender, RoutedEventArgs e)
         {
             var button = ((Button)sender);
             var parent = VisualTreeHelper.GetParent(button);
-            while (!(parent is TextBox))
+            while (!(parent is TextBox || parent is PasswordBox || parent is ComboBox))
             {
                 parent = VisualTreeHelper.GetParent(parent);
             }
-
-            ((TextBox)parent).Clear();
-        }
-
-        static void ClearPassClicked(object sender, RoutedEventArgs e)
-        {
-            var button = ((Button)sender);
-            var parent = VisualTreeHelper.GetParent(button);
-            while (!(parent is PasswordBox))
+            
+            var command = GetButtonCommand(parent);
+            if (command != null && command.CanExecute(parent))
             {
-                parent = VisualTreeHelper.GetParent(parent);
+                var commandParameter = GetButtonCommandParameter(parent);
+               
+                command.Execute(commandParameter ?? parent);
             }
 
-            ((PasswordBox)parent).Clear();
+            if (GetClearTextButton(parent))
+            { 
+                if (parent is TextBox)
+                {
+                    ((TextBox)parent).Clear();
+                }
+                else if (parent is PasswordBox)
+                {
+                    ((PasswordBox)parent).Clear();
+                }
+                else if (parent is ComboBox)
+                {
+                    ((ComboBox)parent).SelectedItem = null;
+                }
+            }
         }
     }
 
