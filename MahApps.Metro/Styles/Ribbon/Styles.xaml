@@ -1,9 +1,29 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Ribbon.xaml"/>
-        <ResourceDictionary Source="RibbonGroup.xaml"/>
-        <ResourceDictionary Source="RibbonTab.xaml"/>
-        <ResourceDictionary Source="RibbonTabHeader.xaml"/>
+        <ResourceDictionary Source="Ribbon.xaml" />
+        <ResourceDictionary Source="RibbonApplicationMenu.xaml" />
+        <ResourceDictionary Source="RibbonApplicationMenuItem.xaml" />
+        <ResourceDictionary Source="RibbonApplicationSplitMenuItem.xaml" />
+        <ResourceDictionary Source="RibbonButton.xaml" />
+        <ResourceDictionary Source="RibbonCheckBox.xaml" />
+        <ResourceDictionary Source="RibbonComboBox.xaml" />
+        <ResourceDictionary Source="RibbonContextMenu.xaml" />
+        <ResourceDictionary Source="RibbonContextualTabGroup.xaml" />
+        <ResourceDictionary Source="RibbonGallery.xaml" />
+        <ResourceDictionary Source="RibbonGalleryCategory.xaml" />
+        <ResourceDictionary Source="RibbonGalleryItem.xaml" />
+        <ResourceDictionary Source="RibbonGroup.xaml" />
+        <ResourceDictionary Source="RibbonMenuButton.xaml" />
+        <ResourceDictionary Source="RibbonMenuItem.xaml" />
+        <ResourceDictionary Source="RibbonQuickAccessToolBar.xaml" />
+        <ResourceDictionary Source="RibbonRadioButton.xaml" />
+        <ResourceDictionary Source="RibbonSeparator.xaml" />
+        <ResourceDictionary Source="RibbonSplitButton.xaml" />
+        <ResourceDictionary Source="RibbonSplitMenuItem.xaml" />
+        <ResourceDictionary Source="RibbonTab.xaml" />
+        <ResourceDictionary Source="RibbonTabHeader.xaml" />
+        <ResourceDictionary Source="RibbonTextBox.xaml" />
+        <ResourceDictionary Source="RibbonToggleButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

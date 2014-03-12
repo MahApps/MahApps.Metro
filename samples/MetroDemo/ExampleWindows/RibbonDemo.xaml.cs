@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 
-namespace MetroDemo
+namespace MetroDemo.ExampleWindows
 {
     /// <summary>
     /// Interaction logic for RibbonDemo.xaml

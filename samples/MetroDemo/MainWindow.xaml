@@ -110,7 +110,9 @@
             <Button Click="LauchCleanDemo"
                     ToolTip="Clean window style demo"
                     Content="Clean" />
-            <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
+            <Button Click="LaunchRibbonDemo"
+                    ToolTip="The ribbon demo"
+                    Content="Ribbon (.NET 4.5)" />
             <Button Click="InteropDemo"
                     ToolTip="The interop demo"
                     Content="Interop" />

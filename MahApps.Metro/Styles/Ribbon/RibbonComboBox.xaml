@@ -1,0 +1,1034 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mwt="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+
+    <Style TargetType="RibbonComboBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RibbonComboBox}">
+                    <Border Name="MainBorder">
+                        <Grid Margin="1,0,1,0" SnapsToDevicePixels="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Name="OuterTextColumn" Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Image Name="Image"
+                                   Grid.Row="0"
+                                   Grid.Column="1"
+                                   Width="32"
+                                   Height="32"
+                                   Margin="1,1,1,1"
+                                   HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                                   VerticalAlignment="Center"
+                                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                   Source="{TemplateBinding RibbonControlService.LargeImageSource}" />
+                            <Grid Name="Grid"
+                                  Grid.Row="1"
+                                  Grid.Column="1"
+                                  Margin="1,1,1,1"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Top">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Name="TextColumn" Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Name="TwoLineTextPanel"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center">
+                                    <RibbonTwoLineText Name="TwoLineText"
+                                                       Margin="2,0,2,0"
+                                                       LineHeight="13"
+                                                       LineStackingStrategy="BlockLineHeight"
+                                                       Text="{TemplateBinding RibbonControlService.Label}"
+                                                       TextAlignment="Center" />
+                                    <Rectangle Name="FocusVisual"
+                                               Margin="1,1,1,1"
+                                               Stroke="#FF000000"
+                                               StrokeDashArray="1 2"
+                                               StrokeThickness="1"
+                                               Visibility="Collapsed" />
+                                </Grid>
+                                <Border Name="Border"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="2"
+                                        Height="20"
+                                        Background="{TemplateBinding Panel.Background}"
+                                        BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                        BorderThickness="{TemplateBinding Border.BorderThickness}" />
+                                <Grid Grid.Column="1"
+                                      Height="20"
+                                      Grid.IsSharedSizeScope="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="Auto" SharedSizeGroup="ToggleButtonGroup" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Width="{TemplateBinding RibbonComboBox.SelectionBoxWidth}"
+                                          Margin="{TemplateBinding Control.Padding}"
+                                          HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}"
+                                          IsHitTestVisible="False"
+                                          SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}">
+                                        <ContentPresenter Name="PART_ContentHost"
+                                                          Margin="2,0,2,0"
+                                                          Content="{TemplateBinding RibbonComboBox.SelectionBoxItem}"
+                                                          ContentStringFormat="{TemplateBinding RibbonComboBox.SelectionBoxItemStringFormat}"
+                                                          ContentTemplate="{TemplateBinding RibbonComboBox.SelectionBoxItemTemplate}" />
+                                    </Grid>
+                                    <RibbonToggleButton Name="PART_ToggleButton"
+                                                        Grid.ColumnSpan="2"
+                                                        Background="#00FFFFFF"
+                                                        BorderBrush="#00FFFFFF"
+                                                        BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                                        CheckedBackground="{TemplateBinding RibbonControlService.PressedBackground}"
+                                                        CheckedBorderBrush="{TemplateBinding RibbonControlService.PressedBorderBrush}"
+                                                        IsChecked="False"
+                                                        PressedBackground="{TemplateBinding RibbonControlService.PressedBackground}"
+                                                        PressedBorderBrush="{TemplateBinding RibbonControlService.PressedBorderBrush}">
+                                        <RibbonToggleButton.Style>
+                                            <Style TargetType="RibbonToggleButton">
+                                                <Style.Resources>
+                                                    <ResourceDictionary />
+                                                </Style.Resources>
+                                                <Setter Property="RibbonControlService.MouseOverBorderBrush">
+                                                    <Setter.Value>
+                                                        <Binding Path="Ribbon.MouseOverBorderBrush" RelativeSource="{RelativeSource Mode=Self}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="RibbonControlService.MouseOverBackground">
+                                                    <Setter.Value>
+                                                        <Binding Path="Ribbon.MouseOverBackground" RelativeSource="{RelativeSource Mode=Self}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="RibbonControlService.PressedBorderBrush">
+                                                    <Setter.Value>
+                                                        <Binding Path="Ribbon.PressedBorderBrush" RelativeSource="{RelativeSource Mode=Self}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="RibbonControlService.PressedBackground">
+                                                    <Setter.Value>
+                                                        <Binding Path="Ribbon.PressedBackground" RelativeSource="{RelativeSource Mode=Self}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="RibbonControlService.CheckedBorderBrush">
+                                                    <Setter.Value>
+                                                        <Binding Path="Ribbon.CheckedBorderBrush" RelativeSource="{RelativeSource Mode=Self}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="RibbonControlService.CheckedBackground">
+                                                    <Setter.Value>
+                                                        <Binding Path="Ribbon.CheckedBackground" RelativeSource="{RelativeSource Mode=Self}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="RibbonControlService.FocusedBorderBrush">
+                                                    <Setter.Value>
+                                                        <Binding Path="Ribbon.FocusedBorderBrush" RelativeSource="{RelativeSource Mode=Self}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="RibbonControlService.FocusedBackground">
+                                                    <Setter.Value>
+                                                        <Binding Path="Ribbon.FocusedBackground" RelativeSource="{RelativeSource Mode=Self}" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="ButtonBase.ClickMode">
+                                                    <Setter.Value>
+                                                        <x:Static Member="ClickMode.Press" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Border.BorderThickness">
+                                                    <Setter.Value>
+                                                        <Thickness>1,1,1,1</Thickness>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Control.Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="RibbonToggleButton">
+                                                            <Grid Background="#00FFFFFF">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="Auto" SharedSizeGroup="ToggleButtonGroup" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Border Name="OuterBorder"
+                                                                        Grid.Column="1"
+                                                                        Width="14"
+                                                                        Background="{TemplateBinding Panel.Background}"
+                                                                        BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                                                        BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                                                        SnapsToDevicePixels="True">
+                                                                    <Border Name="InnerBorder"
+                                                                            Background="#00FFFFFF"
+                                                                            BorderBrush="#00FFFFFF"
+                                                                            BorderThickness="1,1,1,1"
+                                                                            SnapsToDevicePixels="True">
+                                                                        <Path Name="Arrow"
+                                                                              HorizontalAlignment="Center"
+                                                                              VerticalAlignment="Center"
+                                                                              Data="M0,0L2.5,3 5,0z"
+                                                                              Fill="{TemplateBinding TextElement.Foreground}" />
+                                                                    </Border>
+                                                                </Border>
+                                                            </Grid>
+                                                            <ControlTemplate.Triggers>
+                                                                <Trigger Property="UIElement.IsMouseOver">
+                                                                    <Setter TargetName="OuterBorder" Property="Panel.Background">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="MouseOverBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="MouseOverBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush>#80FFFFFF</SolidColorBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Trigger.Value>
+                                                                        <s:Boolean>True</s:Boolean>
+                                                                    </Trigger.Value>
+                                                                </Trigger>
+                                                                <Trigger Property="UIElement.IsKeyboardFocused">
+                                                                    <Setter TargetName="OuterBorder" Property="Panel.Background">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="FocusedBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="FocusedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush>#80FFFFFF</SolidColorBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Trigger.Value>
+                                                                        <s:Boolean>True</s:Boolean>
+                                                                    </Trigger.Value>
+                                                                </Trigger>
+                                                                <Trigger Property="ToggleButton.IsChecked">
+                                                                    <Setter TargetName="OuterBorder" Property="Panel.Background">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="CheckedBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="CheckedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                                <LinearGradientBrush.GradientStops>
+                                                                                    <GradientStop Offset="0" Color="#FFE7CBAD" />
+                                                                                    <GradientStop Offset="0.1" Color="#FFF7D7B5" />
+                                                                                    <GradientStop Offset="0.36" Color="#FFFFD38C" />
+                                                                                    <GradientStop Offset="0.36" Color="#FFFFC75A" />
+                                                                                    <GradientStop Offset="1" Color="#FFFFEFA5" />
+                                                                                </LinearGradientBrush.GradientStops>
+                                                                            </LinearGradientBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Trigger.Value>
+                                                                        <s:Boolean>True</s:Boolean>
+                                                                    </Trigger.Value>
+                                                                </Trigger>
+                                                                <Trigger Property="ButtonBase.IsPressed">
+                                                                    <Setter TargetName="OuterBorder" Property="Panel.Background">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="PressedBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <Binding Path="PressedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Trigger.Value>
+                                                                        <s:Boolean>True</s:Boolean>
+                                                                    </Trigger.Value>
+                                                                </Trigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                                                                        <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter TargetName="OuterBorder" Property="Panel.Background">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.HighlightBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.ControlBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="Arrow" Property="Shape.Fill">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.HighlightTextBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding Path=IsPressed, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                                                                        <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter TargetName="OuterBorder" Property="Panel.Background">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.HighlightBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.ControlBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="Arrow" Property="Shape.Fill">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.HighlightTextBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                                                                        <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter TargetName="OuterBorder" Property="Panel.Background">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.HighlightBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.ControlLightBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="Arrow" Property="Shape.Fill">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.HighlightTextBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding Path=IsKeyboardFocused, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                                                                        <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter TargetName="OuterBorder" Property="Panel.Background">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.HighlightBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.ControlLightBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Setter TargetName="Arrow" Property="Shape.Fill">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.HighlightTextBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                                                                        <Condition Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                                                                        <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                                                                        <Setter.Value>
+                                                                            <DynamicResource ResourceKey="{x:Static SystemColors.HighlightBrushKey}" />
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </MultiDataTrigger>
+                                                            </ControlTemplate.Triggers>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </RibbonToggleButton.Style>
+                                    </RibbonToggleButton>
+                                </Grid>
+                            </Grid>
+                            <Popup Name="PART_Popup"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   HorizontalOffset="1"
+                                   IsOpen="False"
+                                   Placement="Bottom"
+                                   PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                                   VerticalOffset="-1">
+                                <mwt:SystemDropShadowChrome Name="Shadow"
+                                                            MinWidth="0"
+                                                            KeyTipService.IsKeyTipScope="True"
+                                                            RenderOptions.ClearTypeHint="Enabled"
+                                                            Color="#00FFFFFF">
+                                    <Border Name="MenuBorder"
+                                            Background="{x:Null}"
+                                            BorderBrush="{x:Null}"
+                                            BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                            CornerRadius="2,2,2,2">
+                                        <Border Name="SubMenuInnerBorder"
+                                                Background="#F0FFFFFF"
+                                                CornerRadius="2,2,2,2">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <ItemsPresenter Name="ItemsPresenter"
+                                                                Grid.Row="1"
+                                                                Margin="1,1,1,1"
+                                                                Grid.IsSharedSizeScope="True"
+                                                                KeyboardNavigation.DirectionalNavigation="Cycle"
+                                                                KeyboardNavigation.TabNavigation="Cycle"
+                                                                SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                                                <Border Name="ResizeControl"
+                                                        Grid.Row="2"
+                                                        Background="#FFE5EFF9"
+                                                        BorderBrush="{x:Null}"
+                                                        BorderThickness="0,1,0,0"
+                                                        Visibility="Collapsed">
+                                                    <Thumb Name="PART_ResizeThumb">
+                                                        <Thumb.Style>
+                                                            <Style TargetType="Thumb">
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="FrameworkElement.FlowDirection">
+                                                                        <Setter Property="FrameworkElement.Cursor">
+                                                                            <Setter.Value>
+                                                                                <Cursor>SizeNESW</Cursor>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Trigger.Value>
+                                                                            <x:Static Member="FlowDirection.RightToLeft" />
+                                                                        </Trigger.Value>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                                <Style.Resources>
+                                                                    <ResourceDictionary />
+                                                                </Style.Resources>
+                                                                <Setter Property="FrameworkElement.Width">
+                                                                    <Setter.Value>
+                                                                        <s:Double>11</s:Double>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="FrameworkElement.Height">
+                                                                    <Setter.Value>
+                                                                        <s:Double>11</s:Double>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="FrameworkElement.VerticalAlignment">
+                                                                    <Setter.Value>
+                                                                        <x:Static Member="VerticalAlignment.Bottom" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="FrameworkElement.HorizontalAlignment">
+                                                                    <Setter.Value>
+                                                                        <x:Static Member="HorizontalAlignment.Right" />
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="FrameworkElement.Cursor">
+                                                                    <Setter.Value>
+                                                                        <Cursor>SizeNWSE</Cursor>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                                <Setter Property="Control.Template">
+                                                                    <Setter.Value>
+                                                                        <ControlTemplate TargetType="Thumb">
+                                                                            <Border Background="#00FFFFFF">
+                                                                                <Path Margin="0,0,2,2" Data="M9,0L11,0 11,11 0,11 0,9 3,9 3,6 6,6 6,3 9,3z">
+                                                                                    <Path.Fill>
+                                                                                        <DrawingBrush TileMode="Tile"
+                                                                                                      Viewbox="0,0,3,3"
+                                                                                                      ViewboxUnits="Absolute"
+                                                                                                      Viewport="0,0,3,3"
+                                                                                                      ViewportUnits="Absolute">
+                                                                                            <DrawingBrush.Drawing>
+                                                                                                <DrawingGroup>
+                                                                                                    <DrawingGroup.Children>
+                                                                                                        <GeometryDrawing Brush="#FF6C747D" Geometry="M0,0L2,0 2,2 0,2z" />
+                                                                                                    </DrawingGroup.Children>
+                                                                                                </DrawingGroup>
+                                                                                            </DrawingBrush.Drawing>
+                                                                                        </DrawingBrush>
+                                                                                    </Path.Fill>
+                                                                                </Path>
+                                                                            </Border>
+                                                                        </ControlTemplate>
+                                                                    </Setter.Value>
+                                                                </Setter>
+                                                            </Style>
+                                                        </Thumb.Style>
+                                                    </Thumb>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Border>
+                                </mwt:SystemDropShadowChrome>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Path=ControlSizeDefinition.Width.IsStar, RelativeSource={RelativeSource Mode=Self}}" Value="True">
+                            <Setter TargetName="TextColumn" Property="ColumnDefinition.Width">
+                                <Setter.Value>
+                                    <GridLength>*</GridLength>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="OuterTextColumn" Property="ColumnDefinition.Width">
+                                <Setter.Value>
+                                    <GridLength>*</GridLength>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_ContentHost" Property="FrameworkElement.Width">
+                                <Setter.Value>
+                                    <s:Double>NaN</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_ContentHost" Property="FrameworkElement.HorizontalAlignment">
+                                <Setter.Value>
+                                    <x:Static Member="HorizontalAlignment.Stretch" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Grid" Property="FrameworkElement.HorizontalAlignment">
+                                <Setter.Value>
+                                    <x:Static Member="HorizontalAlignment.Stretch" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=ControlSizeDefinition.ImageSize, RelativeSource={RelativeSource Mode=Self}}" Value="Large">
+                            <Setter Property="FrameworkElement.MinWidth">
+                                <Setter.Value>
+                                    <s:Double>44</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="FrameworkElement.Height">
+                                <Setter.Value>
+                                    <s:Double>66</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Image" Property="FrameworkElement.Height">
+                                <Setter.Value>
+                                    <s:Double>32</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Image" Property="FrameworkElement.Width">
+                                <Setter.Value>
+                                    <s:Double>32</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Grid" Property="FrameworkElement.MinHeight">
+                                <Setter.Value>
+                                    <s:Double>26</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="TwoLineText" Property="RibbonTwoLineText.HasTwoLines">
+                                <Setter.Value>
+                                    <s:Boolean>True</s:Boolean>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=ControlSizeDefinition.ImageSize, RelativeSource={RelativeSource Mode=Self}}" Value="Small">
+                            <Setter Property="FrameworkElement.Height">
+                                <Setter.Value>
+                                    <s:Double>22</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Image" Property="Image.Source">
+                                <Setter.Value>
+                                    <Binding Path="SmallImageSource" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Image" Property="FrameworkElement.Height">
+                                <Setter.Value>
+                                    <s:Double>16</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Image" Property="FrameworkElement.Width">
+                                <Setter.Value>
+                                    <s:Double>16</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Image" Property="FrameworkElement.HorizontalAlignment">
+                                <Setter.Value>
+                                    <x:Static Member="HorizontalAlignment.Left" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Image" Property="FrameworkElement.Margin">
+                                <Setter.Value>
+                                    <Thickness>2,0,1,0</Thickness>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="TwoLineText" Property="FrameworkElement.Margin">
+                                <Setter.Value>
+                                    <Thickness>2,0,1,0</Thickness>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="TwoLineText" Property="RibbonTwoLineText.HasTwoLines">
+                                <Setter.Value>
+                                    <s:Boolean>False</s:Boolean>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Image" Property="Grid.Column">
+                                <Setter.Value>
+                                    <s:Int32>0</s:Int32>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Image" Property="Grid.Row">
+                                <Setter.Value>
+                                    <s:Int32>1</s:Int32>
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=ControlSizeDefinition.ImageSize, RelativeSource={RelativeSource Mode=Self}}" Value="Collapsed">
+                            <Setter TargetName="Image" Property="UIElement.Visibility">
+                                <Setter.Value>
+                                    <x:Static Member="Visibility.Collapsed" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=ControlSizeDefinition.IsLabelVisible, RelativeSource={RelativeSource Mode=Self}}" Value="False">
+                            <Setter TargetName="TwoLineTextPanel" Property="UIElement.Visibility">
+                                <Setter.Value>
+                                    <x:Static Member="Visibility.Collapsed" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False" />
+                                <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <Binding Path="MouseOverBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Border" Property="Panel.Background">
+                                <Setter.Value>
+                                    <Binding Path="MouseOverBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_ToggleButton" Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <Binding Path="MouseOverBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_ToggleButton" Property="Panel.Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="#FFE4F0FE" />
+                                            <GradientStop Offset="0.49" Color="#FFE4F0FE" />
+                                            <GradientStop Offset="0.5" Color="#FFCFDFF3" />
+                                            <GradientStop Offset="1" Color="#FFE8F1FD" />
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="False" />
+                                <Condition Binding="{Binding Path=IsKeyboardFocused, ElementName=PART_ToggleButton}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Panel.Background">
+                                <Setter.Value>
+                                    <Binding Path="FocusedBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Border" Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <Binding Path="FocusedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+                        <Trigger Property="RibbonControlService.ShowKeyboardCues">
+                            <Setter TargetName="FocusVisual" Property="UIElement.Visibility">
+                                <Setter.Value>
+                                    <x:Static Member="Visibility.Visible" />
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>True</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <Trigger Property="UIElement.IsEnabled">
+                            <Setter TargetName="Image" Property="UIElement.Opacity">
+                                <Setter.Value>
+                                    <s:Double>0.5</s:Double>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Border" Property="Panel.Background">
+                                <Setter.Value>
+                                    <SolidColorBrush>#90DEDEDE</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Border" Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush>#90B1BBC6</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="MainBorder" Property="TextElement.Foreground">
+                                <Setter.Value>
+                                    <SolidColorBrush>#FF9E9E9E</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>False</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <Trigger Property="RibbonControlService.IsInControlGroup">
+                            <Setter TargetName="MainBorder" Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <Binding Path="Ribbon.BorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="MainBorder" Property="Border.BorderThickness">
+                                <Setter.Value>
+                                    <Thickness>0,0,1,0</Thickness>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>True</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="RibbonMenuButton.CanUserResizeHorizontally">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Property="RibbonMenuButton.CanUserResizeVertically">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ResizeControl" Property="UIElement.Visibility">
+                                <Setter.Value>
+                                    <x:Static Member="Visibility.Visible" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="RibbonMenuButton.CanUserResizeHorizontally">
+                                    <Condition.Value>
+                                        <s:Boolean>False</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Property="RibbonMenuButton.CanUserResizeVertically">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ResizeControl" Property="UIElement.Visibility">
+                                <Setter.Value>
+                                    <x:Static Member="Visibility.Visible" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_ResizeThumb" Property="FrameworkElement.Style">
+                                <Setter.Value>
+                                    <Style TargetType="Thumb">
+                                        <Style.Resources>
+                                            <ResourceDictionary />
+                                        </Style.Resources>
+                                        <Setter Property="FrameworkElement.Height">
+                                            <Setter.Value>
+                                                <s:Double>11</s:Double>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.Cursor">
+                                            <Setter.Value>
+                                                <Cursor>SizeNS</Cursor>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Thumb">
+                                                    <Border Background="#00FFFFFF">
+                                                        <Path Margin="0,0,2,2"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Bottom">
+                                                            <Path.Data>
+                                                                <RectangleGeometry Rect="0,0,11,3" />
+                                                            </Path.Data>
+                                                            <Path.Fill>
+                                                                <DrawingBrush TileMode="Tile"
+                                                                              Viewbox="0,0,3,3"
+                                                                              ViewboxUnits="Absolute"
+                                                                              Viewport="0,0,3,3"
+                                                                              ViewportUnits="Absolute">
+                                                                    <DrawingBrush.Drawing>
+                                                                        <DrawingGroup>
+                                                                            <DrawingGroup.Children>
+                                                                                <GeometryDrawing Brush="#FF6C747D" Geometry="M0,0L2,0 2,2 0,2z" />
+                                                                            </DrawingGroup.Children>
+                                                                        </DrawingGroup>
+                                                                    </DrawingBrush.Drawing>
+                                                                </DrawingBrush>
+                                                            </Path.Fill>
+                                                        </Path>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <Trigger Property="RibbonMenuButton.IsDropDownPositionedAbove">
+                            <Setter TargetName="ResizeControl" Property="Grid.Row">
+                                <Setter.Value>
+                                    <s:Int32>0</s:Int32>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ResizeControl" Property="Border.BorderThickness">
+                                <Setter.Value>
+                                    <Thickness>0,0,0,1</Thickness>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>True</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="RibbonMenuButton.IsDropDownPositionedAbove">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Property="RibbonMenuButton.CanUserResizeHorizontally">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Property="RibbonMenuButton.CanUserResizeVertically">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ResizeThumb" Property="FrameworkElement.Style">
+                                <Setter.Value>
+                                    <Style TargetType="Thumb">
+                                        <Style.Triggers>
+                                            <Trigger Property="FrameworkElement.FlowDirection">
+                                                <Setter Property="FrameworkElement.Cursor">
+                                                    <Setter.Value>
+                                                        <Cursor>SizeNWSE</Cursor>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Trigger.Value>
+                                                    <x:Static Member="FlowDirection.RightToLeft" />
+                                                </Trigger.Value>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                        <Style.Resources>
+                                            <ResourceDictionary />
+                                        </Style.Resources>
+                                        <Setter Property="FrameworkElement.Width">
+                                            <Setter.Value>
+                                                <s:Double>11</s:Double>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.Height">
+                                            <Setter.Value>
+                                                <s:Double>11</s:Double>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.VerticalAlignment">
+                                            <Setter.Value>
+                                                <x:Static Member="VerticalAlignment.Top" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.HorizontalAlignment">
+                                            <Setter.Value>
+                                                <x:Static Member="HorizontalAlignment.Right" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.Cursor">
+                                            <Setter.Value>
+                                                <Cursor>SizeNESW</Cursor>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Thumb">
+                                                    <Border Background="#00FFFFFF">
+                                                        <Path Margin="0,2,2,0" Data="M0,0L0,3 3,3 3,6 6,6 6,9 9,9 9,11 11,11 11,0z">
+                                                            <Path.Fill>
+                                                                <DrawingBrush TileMode="Tile"
+                                                                              Viewbox="0,0,3,3"
+                                                                              ViewboxUnits="Absolute"
+                                                                              Viewport="0,0,3,3"
+                                                                              ViewportUnits="Absolute">
+                                                                    <DrawingBrush.Drawing>
+                                                                        <DrawingGroup>
+                                                                            <DrawingGroup.Children>
+                                                                                <GeometryDrawing Brush="#FF6C747D" Geometry="M0,0L2,0 2,2 0,2z" />
+                                                                            </DrawingGroup.Children>
+                                                                        </DrawingGroup>
+                                                                    </DrawingBrush.Drawing>
+                                                                </DrawingBrush>
+                                                            </Path.Fill>
+                                                        </Path>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <Trigger SourceName="PART_Popup" Property="Popup.HasDropShadow">
+                            <Setter TargetName="Shadow" Property="FrameworkElement.Margin">
+                                <Setter.Value>
+                                    <Thickness>0,0,5,5</Thickness>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Shadow" Property="mwt:SystemDropShadowChrome.Color">
+                                <Setter.Value>
+                                    <Color>#71000000</Color>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>True</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <Trigger SourceName="PART_Popup" Property="Popup.IsOpen">
+                            <Setter TargetName="PART_Popup" Property="Popup.PopupAnimation">
+                                <Setter.Value>
+                                    <x:Static Member="PopupAnimation.None" />
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>False</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
+                            <Setter TargetName="Shadow" Property="mwt:SystemDropShadowChrome.Color">
+                                <Setter.Value>
+                                    <Color>#00FFFFFF</Color>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Popup" Property="Popup.PopupAnimation">
+                                <Setter.Value>
+                                    <x:Static Member="PopupAnimation.None" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="MenuBorder" Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="MenuBorder" Property="Panel.Background">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.MenuBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ResizeControl" Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ResizeControl" Property="Panel.Background">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.MenuBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="SubMenuInnerBorder" Property="Panel.Background">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Panel.Background">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.WindowBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Border" Property="Panel.Background">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Border" Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlLightBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="FocusVisual" Property="Shape.Stroke">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.WindowFrameBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="MainBorder" Property="TextElement.Foreground">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.MenuTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsInControlGroup, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="MainBorder" Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlLightLightBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Mode=Self}}" Value="False" />
+                                <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="MainBorder" Property="TextElement.Foreground">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.GrayTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiDataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
