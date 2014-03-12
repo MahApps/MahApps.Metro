@@ -41,7 +41,7 @@ After installing MahApps.Metro:
  - change `<Window ...` to `<Controls:MetroWindow ...` (remember to change the closing tag too!)
 
 You should have something like this (don't copy and paste this):
-  ```xml
+```xml
   <controls:MetroWindow x:Class="WpfApplication2.MainWindow"
                         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -51,21 +51,21 @@ You should have something like this (don't copy and paste this):
                         Width="525">
       <!-- your layout here -->
   </controls:MetroWindow>
-  ```
+```
 
 You'll need to modify the `MainWindow.xaml.cs` file  so that the base class for `MainWindow` matches the MetroWindow type:
-  ```csharp
+```csharp
   public partial class MainWindow : MetroWindow
   {
   }
-  ```
+```
 
 But in most cases you can just drop the base class (because this is a `partial` class the XAML should take care of this):
-  ```csharp
+```csharp
   public partial class MainWindow
   {
   }
-  ```
+```
 
  Which will give us this:
 
@@ -76,7 +76,7 @@ Which looks different - but we're on the right track.
 Next we need to add the resources and styles.
 
 In your App.xaml, add the following:
-  ```xml	
+```xml
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -88,7 +88,7 @@ In your App.xaml, add the following:
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Application.Resources>
-  ```
+```
 	
 ![]({{site.baseurl}}/images/03_StyledWindow.png)
 
@@ -114,7 +114,7 @@ If you don't like the elements that are labelled, fear not, they're all optional
 `WindowCommands` are the minimise, maximise/restore, and close buttons. You can add your own controls to `WindowsCommands` - by default, buttons have a style automatically applied to them to make them fit in with the rest of the `WindowsCommands`. As of 0.9, you are no longer limited to just buttons, but any control. Be aware, you're responsible for styling anything other than buttons.
 
 Including this within the `MetroWindow` tag (under the `Window.Resources` section),
-  ```xml
+```xml
   <Controls:MetroWindow.WindowCommands>
     <Controls:WindowCommands>
       <Button Content="settings" />
@@ -134,7 +134,7 @@ Including this within the `MetroWindow` tag (under the `Window.Resources` sectio
       </Button>
     </Controls:WindowCommands>
   </Controls:MetroWindow.WindowCommands>
-  ```
+```
 
 > Make sure to include the [icons](#icons) to get the cupcake
 
