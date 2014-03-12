@@ -100,21 +100,6 @@ namespace MahApps.Metro
             ChangeBaseTheme(app.Resources, oldTheme, lightResource, darkResource);
         }
 
-        /// <summary>
-        /// Change the base theme for the given window.
-        /// </summary>
-        /// <param name="window">The window to change.</param>
-        /// <param name="lightResource">The light resource to apply.</param>
-        /// <param name="darkResource">The dark resource to apply.</param>
-        [SecurityCritical]
-        public static void ChangeBaseTheme(Window window, ResourceDictionary lightResource, ResourceDictionary darkResource)
-        {
-            if (window == null) throw new ArgumentNullException("window");
-
-            var oldTheme = DetectTheme(window);
-            ChangeBaseTheme(window.Resources, oldTheme, lightResource, darkResource);
-        }
-
         private static void ChangeBaseTheme(ResourceDictionary resources, Tuple<Theme, Accent> oldThemeInfo, ResourceDictionary lightResource, ResourceDictionary darkResource)
         {
             if (LightResource.Source == lightResource.Source && DarkResource.Source == darkResource.Source) return;
