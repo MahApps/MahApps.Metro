@@ -112,24 +112,27 @@ If you don't like the elements that are labelled, fear not, they're all optional
 
 Including this within the `MetroWindow` tag (under the `Window.Resources` section),
 
-	<Controls:MetroWindow.WindowCommands>
-	    <Controls:WindowCommands>
-	        <Button Content="settings" />
-            <Button>
-                <StackPanel Orientation="Horizontal">
-                    <Rectangle Width="20" Height="20">
-                        <Rectangle.Resources>
-                            <SolidColorBrush x:Key="BlackBrush" Color="White" />
-                        </Rectangle.Resources>
-                        <Rectangle.Fill>
-                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_cupcake}" />
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <TextBlock Text="deploy cupcakes" />
-                </StackPanel>
-            </Button>
-        </Controls:WindowCommands>
-	</Controls:MetroWindow.WindowCommands>
+```xml
+<Controls:MetroWindow.WindowCommands>
+  <Controls:WindowCommands>
+    <Button Content="settings" />
+    <Button>
+      <StackPanel Orientation="Horizontal">
+        <Rectangle Width="20" Height="20"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+          <Rectangle.OpacityMask>
+            <VisualBrush Stretch="Fill"
+                         Visual="{StaticResource appbar_cupcake}" />
+          </Rectangle.OpacityMask>
+        </Rectangle>
+        <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Text="deploy cupcakes" />
+      </StackPanel>
+    </Button>
+  </Controls:WindowCommands>
+</Controls:MetroWindow.WindowCommands>
+```
 
 > Make sure to include the [icons](#icons) to get the cupcake
 
