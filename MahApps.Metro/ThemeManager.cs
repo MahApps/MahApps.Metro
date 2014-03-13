@@ -46,7 +46,7 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Gets or sets the light resource fro the theme.
+        /// Gets or sets the light resource for the theme.
         /// </summary>
         /// <value>
         /// The light resource dictionary.
@@ -62,7 +62,7 @@ namespace MahApps.Metro
         public static ResourceDictionary DarkResource { get; set; }
 
         /// <summary>
-        /// Gets a list of all of default themes.
+        /// Gets a list of all of default accents.
         /// </summary>
         public static IList<Accent> DefaultAccents
         {
@@ -98,6 +98,21 @@ namespace MahApps.Metro
 
             var oldTheme = DetectTheme(app);
             ChangeBaseTheme(app.Resources, oldTheme, lightResource, darkResource);
+        }
+
+        /// <summary>
+        /// Change the base theme for the given window.
+        /// </summary>
+        /// <param name="window">The window to change.</param>
+        /// <param name="lightResource">The light resource to apply.</param>
+        /// <param name="darkResource">The dark resource to apply.</param>
+        [SecurityCritical]
+        public static void ChangeBaseTheme(Window window, ResourceDictionary lightResource, ResourceDictionary darkResource)
+        {
+            if (window == null) throw new ArgumentNullException("window");
+
+            var oldTheme = DetectTheme(window);
+            ChangeBaseTheme(window.Resources, oldTheme, lightResource, darkResource);
         }
 
         private static void ChangeBaseTheme(ResourceDictionary resources, Tuple<Theme, Accent> oldThemeInfo, ResourceDictionary lightResource, ResourceDictionary darkResource)
