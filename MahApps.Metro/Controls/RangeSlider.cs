@@ -986,15 +986,49 @@ namespace MahApps.Metro.Controls
             _leftThumb.DragDelta += LeftThumbDragDelta;
             _rightThumb.DragDelta += RightThumbDragDelta;
 
-            _leftButton.PreviewMouseLeftButtonDown += LeftButtonPreviewMouseLeftButtonDown;
-            _rightButton.PreviewMouseLeftButtonDown += RightButtonPreviewMouseLeftButtonDown;
-
+            _visualElementsContainer.PreviewMouseDown += VisualElementsContainerPreviewMouseDown;
             _visualElementsContainer.PreviewMouseUp += VisualElementsContainerPreviewMouseUp;
             _visualElementsContainer.MouseLeave += VisualElementsContainerMouseLeave;
 
-            _centerThumb.PreviewMouseDown += CenterThumbPreviewMouseDown;
-
             _visualElementsContainer.MouseDown += VisualElementsContainerMouseDown;
+        }
+
+        //Handler for preview mouse button down for the whole StackPanel container
+        void VisualElementsContainerPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Point position = Mouse.GetPosition(_visualElementsContainer);
+            if (Orientation == Orientation.Horizontal)
+            {
+                if (position.X < _leftButton.ActualWidth)
+                {
+                    LeftButtonMouseDown();
+                }
+                else if (position.X > ActualWidth - _rightButton.ActualWidth)
+                {
+                    RightButtonMouseDown();
+                }
+                else if (position.X > (_leftButton.ActualWidth + _leftThumb.ActualWidth) &&
+                         position.X < (ActualWidth - (_rightButton.ActualWidth + _rightThumb.ActualWidth)))
+                {
+                    CentralThumbMouseDown();
+                }
+            }
+            else
+            {
+                if (position.Y > ActualHeight - _leftButton.ActualHeight)
+                {
+                    LeftButtonMouseDown();
+                }
+                else if (position.Y < _rightButton.ActualHeight)
+                {
+                    RightButtonMouseDown();
+                }
+                else if (position.Y > (_rightButton.ActualHeight + _rightButton.ActualHeight) &&
+                         position.Y < (ActualHeight - (_leftButton.ActualHeight + _leftThumb.ActualHeight)))
+                {
+                    CentralThumbMouseDown();
+                }
+            }
         }
 
 
@@ -1022,59 +1056,14 @@ namespace MahApps.Metro.Controls
             _centerThumbBlocked = false;
         }
 
-        private void RightButtonPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void LeftButtonMouseDown()
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
                 Point p = Mouse.GetPosition(_visualElementsContainer);
                 double change = Orientation == Orientation.Horizontal
-                    ? _rightButton.ActualWidth - (ActualWidth- (p.X + (_rightThumb.ActualWidth/2)))
-                    : -(_rightButton.ActualHeight - (p.Y - (_rightThumb.ActualHeight/2)));
-                if (!IsSnapToTickEnabled)
-                {
-                    if (IsMoveToPointEnabled && !MoveWholeRange)
-                    {
-                        MoveThumb(_centerThumb, _rightButton, change, Orientation);
-                        ReCalculateRangeSelected(false, true);
-                    }
-                    else if (IsMoveToPointEnabled && MoveWholeRange)
-                    {
-                        MoveThumb(_leftButton, _rightButton, change, Orientation);
-                        ReCalculateRangeSelected(true, true);
-                    }
-                }
-                else
-                {
-                    if (IsMoveToPointEnabled && !MoveWholeRange)
-                    {
-                        JumpToNextTick(Direction.Increase, ButtonType.TopRight, change, UpperValue, true);
-                    }
-                    else if (IsMoveToPointEnabled && MoveWholeRange)
-                    {
-                        JumpToNextTick(Direction.Increase, ButtonType.Both, change, UpperValue, true);
-                    }
-                }
-                if (!IsMoveToPointEnabled)
-                {
-                    _position = Mouse.GetPosition(_visualElementsContainer);
-                    _bType = MoveWholeRange ? ButtonType.Both : ButtonType.TopRight;
-                    _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
-                    _currenValue = UpperValue;
-                    _direction = Direction.Increase;
-                    _isInsideRange = false;
-                    _timer.Start();
-                }
-            }
-        }
-
-        private void LeftButtonPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                Point p = Mouse.GetPosition(_visualElementsContainer);
-                double change = Orientation == Orientation.Horizontal
-                    ? _leftButton.ActualWidth - p.X + (_leftThumb.ActualWidth/2)
-                    : -(_leftButton.ActualHeight - (ActualHeight - p.Y - (_leftThumb.ActualHeight/2)));
+                    ? _leftButton.ActualWidth - p.X + (_leftThumb.ActualWidth / 2)
+                    : -(_leftButton.ActualHeight - (ActualHeight - (p.Y + (_leftThumb.ActualHeight / 2))));
                 if (!IsSnapToTickEnabled)
                 {
                     if (IsMoveToPointEnabled && !MoveWholeRange)
@@ -1112,18 +1101,63 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void CenterThumbPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void RightButtonMouseDown()
+        {
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                Point p = Mouse.GetPosition(_visualElementsContainer);
+                double change = Orientation == Orientation.Horizontal
+                    ? _rightButton.ActualWidth - (ActualWidth - (p.X + (_rightThumb.ActualWidth / 2)))
+                    : -(_rightButton.ActualHeight - (p.Y - (_rightThumb.ActualHeight / 2)));
+                if (!IsSnapToTickEnabled)
+                {
+                    if (IsMoveToPointEnabled && !MoveWholeRange)
+                    {
+                        MoveThumb(_centerThumb, _rightButton, change, Orientation);
+                        ReCalculateRangeSelected(false, true);
+                    }
+                    else if (IsMoveToPointEnabled && MoveWholeRange)
+                    {
+                        MoveThumb(_leftButton, _rightButton, change, Orientation);
+                        ReCalculateRangeSelected(true, true);
+                    }
+                }
+                else
+                {
+                    if (IsMoveToPointEnabled && !MoveWholeRange)
+                    {
+                        JumpToNextTick(Direction.Increase, ButtonType.TopRight, change, UpperValue, true);
+                    }
+                    else if (IsMoveToPointEnabled && MoveWholeRange)
+                    {
+                        JumpToNextTick(Direction.Increase, ButtonType.Both, change, UpperValue, true);
+                    }
+                }
+                if (!IsMoveToPointEnabled)
+                {
+                    _position = Mouse.GetPosition(_visualElementsContainer);
+                    _bType = MoveWholeRange ? ButtonType.Both : ButtonType.TopRight;
+                    _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
+                    _currenValue = UpperValue;
+                    _direction = Direction.Increase;
+                    _isInsideRange = false;
+                    _timer.Start();
+                }
+            }
+        }
+
+        private void CentralThumbMouseDown()
         {
             if (ExtendedMode)
             {
-                if (e.LeftButton == MouseButtonState.Pressed &&
+                if (Mouse.LeftButton == MouseButtonState.Pressed &&
                     (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
                 {
                     _centerThumbBlocked = true;
                     Point p = Mouse.GetPosition(_visualElementsContainer);
                     double change = Orientation == Orientation.Horizontal
-                        ? (p.X + (_leftThumb.ActualWidth/2) - (_leftButton.ActualWidth +_leftThumb.ActualWidth))
-                        : -(ActualHeight - ((p.Y + (_leftThumb.ActualHeight/2)) + _leftButton.ActualHeight));
+                        ? (p.X + (_leftThumb.ActualWidth / 2) - (_leftButton.ActualWidth + _leftThumb.ActualWidth))
+                        : -(ActualHeight - ((p.Y + (_leftThumb.ActualHeight / 2)) + _leftButton.ActualHeight));
                     if (!IsSnapToTickEnabled)
                     {
                         if (IsMoveToPointEnabled && !MoveWholeRange)
@@ -1159,14 +1193,14 @@ namespace MahApps.Metro.Controls
                         _timer.Start();
                     }
                 }
-                else if (e.RightButton == MouseButtonState.Pressed &&
+                else if (Mouse.RightButton == MouseButtonState.Pressed &&
                          (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
                 {
                     _centerThumbBlocked = true;
                     Point p = Mouse.GetPosition(_visualElementsContainer);
                     double change = Orientation == Orientation.Horizontal
-                        ? ActualWidth - (p.X + (_rightThumb.ActualWidth/2)+_rightButton.ActualWidth)
-                        : -(p.Y + (_rightThumb.ActualHeight/2) - (_rightButton.ActualHeight+_rightThumb.ActualHeight));
+                        ? ActualWidth - (p.X + (_rightThumb.ActualWidth / 2) + _rightButton.ActualWidth)
+                        : -(p.Y + (_rightThumb.ActualHeight / 2) - (_rightButton.ActualHeight + _rightThumb.ActualHeight));
                     if (!IsSnapToTickEnabled)
                     {
                         if (IsMoveToPointEnabled && !MoveWholeRange)

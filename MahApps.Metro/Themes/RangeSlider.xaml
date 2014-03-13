@@ -6,7 +6,7 @@
     <ControlTemplate x:Key="RangeSliderHorizontal" TargetType="controls:RangeSlider">
         <StackPanel Name="PART_Container" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
             <TickBar Name="PART_TopTick" Placement="Top" Fill="{TemplateBinding Foreground}" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Height="4" Margin="5,0,5,2" Visibility="Collapsed"></TickBar>
-            <StackPanel Name="PART_RangeSliderContainer" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <StackPanel Name="PART_RangeSliderContainer" Background="Transparent" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                 <RepeatButton Name="PART_LeftEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
                 <Thumb Name="PART_LeftThumb" Cursor="Arrow" 
                        Height="{DynamicResource HorizontalThumbHeight}"
@@ -50,7 +50,7 @@
     <ControlTemplate x:Key="RangeSliderVertical" TargetType="controls:RangeSlider">
         <StackPanel Name="PART_Container" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch">
             <TickBar Name="PART_TopTick" Placement="Left" Fill="{TemplateBinding Foreground}" TickFrequency="{TemplateBinding TickFrequency}" Minimum="{TemplateBinding Minimum}" Maximum="{TemplateBinding Maximum}" Width="4" Margin="0,5,2,5" Visibility="Collapsed"></TickBar>
-            <StackPanel Orientation="Vertical"  HorizontalAlignment="Center" VerticalAlignment="Stretch"
+            <StackPanel Orientation="Vertical"  HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="Transparent"
                                 Name="PART_RangeSliderContainer">
                 <RepeatButton Name="PART_RightEdge"  VerticalAlignment="Stretch" Style="{DynamicResource VerticalTrackLargeDecrease}" />
                 <Thumb Name="PART_RightThumb" Cursor="Arrow" 
