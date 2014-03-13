@@ -51,7 +51,7 @@ namespace MahApps.Metro
         /// <value>
         /// The light resource dictionary.
         /// </value>
-        internal static ResourceDictionary LightResource { get; set; }
+        public static ResourceDictionary LightResource { get; set; }
 
         /// <summary>
         /// Gets or sets the dark resource for the theme.
@@ -59,7 +59,7 @@ namespace MahApps.Metro
         /// <value>
         /// The dark resource dictionary.
         /// </value>
-        internal static ResourceDictionary DarkResource { get; set; }
+        public static ResourceDictionary DarkResource { get; set; }
 
         /// <summary>
         /// Gets a list of all of default themes.
