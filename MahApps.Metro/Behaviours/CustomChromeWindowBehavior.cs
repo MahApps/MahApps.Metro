@@ -43,8 +43,19 @@ namespace MahApps.Metro.Behaviours
         private System.IntPtr WindowProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam, ref bool handled)
         {
             var returnval = IntPtr.Zero;
-            
+
             switch (msg) {
+                case Constants.WM_NCPAINT:
+                    var metroWindow = AssociatedObject as MetroWindow;
+                    var enableDWMDropShadow = metroWindow != null && metroWindow.EnableDWMDropShadow && metroWindow.GlowBrush == null;
+                    if (enableDWMDropShadow) {
+                        var val = 2;
+                        UnsafeNativeMethods.DwmSetWindowAttribute(hwnd, 2, ref val, 4);
+                        var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
+                        UnsafeNativeMethods.DwmExtendFrameIntoClientArea(hwnd, ref m);
+                    }
+                    handled = true;
+                    break;
                 case Constants.WM_GETMINMAXINFO:
                     WmGetMinMaxInfo(hwnd, lParam);
                     /* Setting handled to false enables the application to process it's own Min/Max requirements,

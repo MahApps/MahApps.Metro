@@ -69,7 +69,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TextBlockStyleProperty = DependencyProperty.Register("TextBlockStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(default(Style)));
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
-        
+
+        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+
         bool isDragging;
         
         UIElement icon;
@@ -110,6 +112,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (Style)this.GetValue(TextBlockStyleProperty); }
             set { SetValue(TextBlockStyleProperty, value); }
+        }
+
+        public bool EnableDWMDropShadow
+        {
+            get { return (bool)GetValue(EnableDWMDropShadowProperty); }
+            set { SetValue(EnableDWMDropShadowProperty, value); }
         }
 
         /// <summary>
