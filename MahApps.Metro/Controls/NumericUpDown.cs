@@ -386,6 +386,12 @@ namespace MahApps.Metro.Controls
                     e.Handled = true;
                     break;
             }
+
+            if (e.Handled)
+            {
+                _manualChange = false;
+                InternalSetText(Value);
+            }
         }
 
         protected override void OnPreviewKeyUp(KeyEventArgs e)
@@ -716,7 +722,7 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueBy(double difference)
         {
-            Value = Value.GetValueOrDefault() + difference;
+            Value = Math.Max(Minimum, Math.Min(Value.GetValueOrDefault() + difference, Maximum));
         }
 
         private void EnableDisableDown()
@@ -802,8 +808,15 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
-                    Value = convertedValue;
+                    var oldValue = Value;
+                    Value = Math.Max(Minimum, Math.Min(convertedValue, Maximum));
                     e.Handled = true;
+
+                    if (Value != oldValue && (Value == Minimum || Value == Maximum))
+                    {
+                        _manualChange = false;
+                        InternalSetText(Value);
+                    }
                 }
             }
         }
