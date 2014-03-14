@@ -109,9 +109,15 @@
                                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
                     <!-- the main window content -->
-                    <ContentPresenter Grid.Row="1"
-                                      Grid.Column="0"
-                                      Grid.ColumnSpan="5" />
+                    <Controls:MetroContentControl Grid.Row="1"
+                                                  Grid.Column="0"
+                                                  Grid.ColumnSpan="5"
+                                                  IsTabStop="False"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  OnlyLoadTransition="True"
+                                                  TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
+                        <ContentPresenter />
+                    </Controls:MetroContentControl>
 
                     <!-- disables the main content when a modal flyout is shown -->
                     <Rectangle Grid.Row="0"
@@ -155,7 +161,7 @@
                           x:Name="PART_MetroDialogContainer" />
                 </Grid>
             </AdornerDecorator>
-            
+
             <Border x:Name="PART_Border"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
