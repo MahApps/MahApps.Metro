@@ -23,6 +23,7 @@ namespace MahApps.Metro.Behaviours
     {
         private AdornerDecorator rootElement;
         private IntPtr handle;
+        private WindowChrome windowChrome;
 
         protected override void OnAttached()
         {
@@ -34,7 +35,7 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.StateChanged += (sender, args) => HandleMaximize();
             AssociatedObject.Activated += (sender, args) => HandleMaximize();
 
-            var windowChrome = new WindowChrome();
+            windowChrome = new WindowChrome();
             windowChrome.ResizeBorderThickness = new Thickness(6);
             windowChrome.CaptionHeight = 0;
             windowChrome.CornerRadius = new CornerRadius(0);
@@ -75,9 +76,10 @@ namespace MahApps.Metro.Behaviours
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
+                windowChrome.ResizeBorderThickness = new Thickness(0);
+                
                 IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
-                if (monitor != IntPtr.Zero)
-                {
+                if (monitor != IntPtr.Zero) {
                     var monitorInfo = new MONITORINFO();
                     UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
                     var metroWindow = AssociatedObject as MetroWindow;
@@ -88,6 +90,10 @@ namespace MahApps.Metro.Behaviours
                     var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
                     UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                 }
+            }
+            else
+            {
+                windowChrome.ResizeBorderThickness = new Thickness(6);
             }
         }
 
