@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
 using MahApps.Metro.Controls;
@@ -21,7 +16,6 @@ namespace MahApps.Metro.Behaviours
 {
     public class CustomChromeWindowBehavior : Behavior<Window>
     {
-        private AdornerDecorator rootElement;
         private IntPtr handle;
         private WindowChrome windowChrome;
 
@@ -29,6 +23,8 @@ namespace MahApps.Metro.Behaviours
         {
             base.OnAttached();
 
+            // no transparany, because it hase more then one unwanted issues
+            AssociatedObject.AllowsTransparency = false;
             AssociatedObject.WindowStyle = WindowStyle.None;
             AssociatedObject.Loaded += AssociatedObject_Loaded;
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
@@ -145,8 +141,6 @@ namespace MahApps.Metro.Behaviours
             {
                 return;
             }
-
-            rootElement = window.GetPart<AdornerDecorator>("PART_ROOT");
 
             var icon = window.GetPart<UIElement>("PART_Icon");
             if (icon != null)
