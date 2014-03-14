@@ -662,7 +662,7 @@ namespace MahApps.Metro.Controls
 
         protected override void OnStateChanged(EventArgs e)
         {
-            if (WindowButtonCommands != null)
+            if (WindowButtonCommands != null && !this.UseNoneWindowStyle)
             {
                 WindowButtonCommands.RefreshMaximiseIconState();
             }
