@@ -15,6 +15,7 @@ using System.Windows.Shell;
 
 namespace MahApps.Metro.Behaviours
 {
+    [Obsolete("BorderlessWindowBehavior is obsolete, use CustomChromeWindowBehavior instead!")]
     public class BorderlessWindowBehavior : Behavior<Window>
     {
         private bool _isMaximize;

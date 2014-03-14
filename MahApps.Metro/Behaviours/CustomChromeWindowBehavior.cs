@@ -14,6 +14,9 @@ using System.Windows.Shell;
 
 namespace MahApps.Metro.Behaviours
 {
+    /// <summary>
+    /// With this class we can make custom window styles.
+    /// </summary>
     public class CustomChromeWindowBehavior : Behavior<Window>
     {
         private IntPtr handle;
