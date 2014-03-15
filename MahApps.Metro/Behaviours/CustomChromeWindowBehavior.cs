@@ -21,6 +21,7 @@ namespace MahApps.Metro.Behaviours
     {
         private IntPtr handle;
         private WindowChrome windowChrome;
+        private Thickness? savedBorderThickness = null;
 
         protected override void OnAttached()
         {
@@ -90,6 +91,11 @@ namespace MahApps.Metro.Behaviours
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
                 windowChrome.ResizeBorderThickness = new Thickness(0);
+                if (savedBorderThickness == null)
+                {
+                    savedBorderThickness = AssociatedObject.BorderThickness;
+                }
+                AssociatedObject.BorderThickness = new Thickness(0);
                 
                 IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
                 if (monitor != IntPtr.Zero) {
@@ -107,6 +113,7 @@ namespace MahApps.Metro.Behaviours
             else
             {
                 windowChrome.ResizeBorderThickness = new Thickness(6);
+                AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
             }
         }
 
