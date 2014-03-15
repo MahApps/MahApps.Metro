@@ -252,6 +252,27 @@
                          IsChecked="True"
                          IsEnabled="False" />
         </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="4"
+                    HorizontalAlignment="Stretch">
+            <Label Content="SplitButton"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            
+            <Controls:SplitButton Name="Splitbutton0" HorizontalContentAlignment="Center"  HorizontalAlignment="Center"  VerticalContentAlignment="Center"  Height="30" Width="100" SelectedIndex="2" VerticalAlignment="Center" >
+                <Int32Collection>
+                    4654
+                    465
+                    8879
+                    99879
+                </Int32Collection>
+            </Controls:SplitButton>
+
+            <Controls:SplitButton Margin="0,120,0,0" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Orientation="Vertical" SelectedIndex="{Binding SelectedIndex, ElementName=Splitbutton0, Mode=TwoWay}" 
+                                  ItemsSource="{Binding ItemsSource, ElementName=Splitbutton0, Mode=TwoWay}">
+
+            </Controls:SplitButton>
+
+        </StackPanel>
     </Grid>
 
 </UserControl>

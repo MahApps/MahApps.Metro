@@ -119,6 +119,7 @@
     <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
+    <Compile Include="Controls\SplitButton.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="Converters\FontSizeOffsetConverter.cs" />
@@ -494,6 +495,10 @@
     <Page Include="Themes\RangeSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\SplitButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Tile.xaml">
       <SubType>Designer</SubType>
