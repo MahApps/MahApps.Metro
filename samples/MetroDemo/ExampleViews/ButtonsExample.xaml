@@ -276,6 +276,9 @@
                 <MenuItem Header="test5"></MenuItem>
                 <Button Width="Auto" Content="test6"></Button>
             </Controls:DropDownButton>
+            <CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </CheckBox>
 
         </StackPanel>
     </Grid>

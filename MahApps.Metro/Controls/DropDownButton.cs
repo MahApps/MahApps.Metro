@@ -44,7 +44,17 @@ namespace MahApps.Metro.Controls
                 new UIPropertyMetadata(null));
 
         public static readonly DependencyProperty IsExpandedProperty =
-            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(DropDownButton));
+            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(DropDownButton), new FrameworkPropertyMetadata(new PropertyChangedCallback(Target)));
+
+        private static void Target(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            DropDownButton button = (DropDownButton) dependencyObject;
+            if (button._clickButton != null && button._expander != null)
+            {
+                button._menu.Placement = PlacementMode.Bottom;
+                button._menu.PlacementTarget = button.Orientation == Orientation.Horizontal ? button._clickButton : button._expander;
+            }
+        }
 
         public static readonly DependencyProperty ExtraTagProperty =
             DependencyProperty.Register("ExtraTag", typeof(Object), typeof(DropDownButton));
@@ -139,7 +149,6 @@ namespace MahApps.Metro.Controls
         private ContextMenu _menu;
 
         #endregion
-
 
         public DropDownButton()
         {
