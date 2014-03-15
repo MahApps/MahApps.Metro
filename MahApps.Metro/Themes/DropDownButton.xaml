@@ -48,7 +48,6 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" x:Name="PART_Button" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"  Style="{StaticResource {x:Type Button}}"
-                        ContextMenuService.Placement="Bottom"
                     Command="{TemplateBinding Command}" CommandParameter="{TemplateBinding CommandParameter}" CommandTarget="{TemplateBinding CommandTarget}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Image x:Name="PART_Image" Source="{TemplateBinding Icon}" Stretch="Uniform"></Image>
@@ -59,12 +58,12 @@
                         </ContentControl>
                     </StackPanel>
                     <Button.ContextMenu>
-                        <ContextMenu Name="PART_Menu" PlacementTarget="{Binding ElementName=PART_Button }"
+                        <ContextMenu Name="PART_Menu"
                                 ItemTemplate="{TemplateBinding ItemTemplate}"
                                 ItemsSource="{TemplateBinding ItemsSource}"
                                 StaysOpen="False"
                                 MinWidth="{TemplateBinding ActualWidth}"
-                                IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource Self}}">
+                                IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
@@ -107,7 +106,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" Width="{TemplateBinding Width}" Style="{StaticResource {x:Type Button}}"
+                <Button Grid.Row="0" Width="{TemplateBinding Width}" Style="{StaticResource {x:Type Button}}" 
                         x:Name="PART_Button" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                         Command="{TemplateBinding Command}" CommandParameter="{TemplateBinding CommandParameter}" CommandTarget="{TemplateBinding CommandTarget}">
                     <Button.Content>
@@ -121,12 +120,12 @@
                         </StackPanel>
                     </Button.Content>
                     <Button.ContextMenu>
-                        <ContextMenu Name="PART_Menu" PlacementTarget="{Binding ElementName=PART_Expander}"
+                        <ContextMenu Name="PART_Menu"
                                 ItemTemplate="{TemplateBinding ItemTemplate}"
                                 ItemsSource="{TemplateBinding ItemsSource}"
                                 StaysOpen="False"
                                 MinWidth="{TemplateBinding ActualWidth}"
-                                IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource Self}}">
+                                IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>

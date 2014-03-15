@@ -159,15 +159,9 @@ namespace MahApps.Metro.Controls
         private void ExpanderClick(object sender, RoutedEventArgs e)
         {
             _menu.Placement = PlacementMode.Bottom;
-            if (Orientation == Orientation.Horizontal)
-            {
-                _menu.PlacementTarget = _clickButton;
-            }
-            else
-            {
-                _menu.PlacementTarget = _expander;
-            }
-            _menu.IsOpen = true;
+            //change PlacementTarget depending from Control Orientation
+            _menu.PlacementTarget = Orientation == Orientation.Horizontal ? _clickButton : _expander;
+            IsExpanded = true;
         }
 
         public override void OnApplyTemplate()
@@ -195,9 +189,7 @@ namespace MahApps.Metro.Controls
 
         void DropDownButton_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            _menu.Visibility = Visibility.Visible;
             e.Handled = true;
         }
-
     }
 }
