@@ -252,6 +252,35 @@
                          IsChecked="True"
                          IsEnabled="False" />
         </StackPanel>
+        <StackPanel Grid.Row="1"
+                    Grid.Column="4"
+                    HorizontalAlignment="Stretch">
+
+            <Label Content="DropDownButton"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+
+            <Controls:DropDownButton Name="DownButton" Height="30" Width="150" Content="Test">
+                <MenuItem Header="test1" IsChecked="True"></MenuItem>
+                <MenuItem Header="test2"></MenuItem>
+                <MenuItem Header="test3"></MenuItem>
+                <MenuItem Header="test4"></MenuItem>
+                <MenuItem Header="test5"></MenuItem>
+                <Button Width="Auto" Content="test6"></Button>
+            </Controls:DropDownButton>
+
+            <Controls:DropDownButton Name="DownButton1" Orientation="Vertical" Margin="0,10,0,0" Width="150" Content="Test">
+                <MenuItem Header="test1" IsChecked="True"></MenuItem>
+                <MenuItem Header="test2"></MenuItem>
+                <MenuItem Header="test3"></MenuItem>
+                <MenuItem Header="test4"></MenuItem>
+                <MenuItem Header="test5"></MenuItem>
+                <Button Width="Auto" Content="test6"></Button>
+            </Controls:DropDownButton>
+            <CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </CheckBox>
+
+        </StackPanel>
     </Grid>
 
 </UserControl>
