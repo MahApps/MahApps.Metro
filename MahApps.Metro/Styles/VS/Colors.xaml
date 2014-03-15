@@ -44,6 +44,7 @@
 
     <!--Foreground-->
     <SolidColorBrush x:Key="Foreground" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="WindowTitleForeground" Color="#999988"/>
 
     <!--General-->
     <SolidColorBrush x:Key="BackgroundHighlighted" Color="#54545C"/>
@@ -52,6 +53,7 @@
     <SolidColorBrush x:Key="BorderBrushSelected" Color="#1C97EA"/>
     <SolidColorBrush x:Key="BackgroundNormal" Color="#3F3F46"/>
     <SolidColorBrush x:Key="BorderBrushNormal" Color="#54545C"/>
+    <SolidColorBrush x:Key="WindowGlowBrush" Color="#017ACC"/>
 
     <!--Text Box-->
     <SolidColorBrush x:Key="TextBoxBackground" Color="#333337"/>

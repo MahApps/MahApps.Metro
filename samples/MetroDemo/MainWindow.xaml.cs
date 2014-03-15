@@ -35,6 +35,11 @@ namespace MetroDemo
             ThemeManager.ChangeTheme(Application.Current, theme.Item2, Theme.Dark);
         }
 
+        private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/MahApps/MahApps.Metro");
+        }
+
         private void LaunchVisualStudioDemo(object sender, RoutedEventArgs e)
         {
             new VSDemo().Show();

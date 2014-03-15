@@ -7,7 +7,7 @@
                       Height="800"
                       Width="1000"
                       WindowStartupLocation="CenterScreen"
-                      TitleForeground="#999988">
+                      Style="{DynamicResource VSWindowStyleKey}">
 
     <Window.Resources>
         <ResourceDictionary>

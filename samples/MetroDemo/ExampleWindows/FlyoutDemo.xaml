@@ -26,7 +26,43 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Grid Width="{TemplateBinding Width}"
+                  Height="{TemplateBinding Height}"
+                  Margin="4"
+                  Background="{DynamicResource IdealForegroundColorBrush}"
+                  RenderOptions.EdgeMode="Aliased"
+                  RenderOptions.BitmapScalingMode="HighQuality">
+                <Grid.OpacityMask>
+                    <VisualBrush Stretch="Uniform"
+                                 Visual="{DynamicResource appbar_box}" />
+                </Grid.OpacityMask>
+            </Grid>
+        </DataTemplate>
+    </Controls:MetroWindow.IconTemplate>
+
+    <Controls:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}"
+                       TextTrimming="CharacterEllipsis"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="0 -1 8 0"
+                       FontSize="{DynamicResource WindowTitleFontSize}"
+                       FontFamily="{DynamicResource HeaderFontFamily}" />
+        </DataTemplate>
+    </Controls:MetroWindow.TitleTemplate>
+
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Button FontFamily="Wingdings"
+                    FontSize="20"
+                    Content="A" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
+    <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button FontFamily="Wingdings"
                     FontSize="20"
@@ -35,7 +71,7 @@
                     FontSize="20"
                     Content="C" />
         </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>

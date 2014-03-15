@@ -108,7 +108,7 @@
                                       SmallChange="0.1"
                                       LowerValue="-70"
                                       UpperValue="60" />
-                <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical" Margin="5, 0, 0, 0">
                     <Controls:RangeSlider Orientation="Horizontal"
                                           MinRangeWidth="20"
                                           x:Name="RangeSlider1"
@@ -187,12 +187,7 @@
                                        Width="200"
                                        Foreground="{DynamicResource AccentColorBrush}"
                                        Margin="0, 10, 0, 0" />
-            <CheckBox x:Name="indeterminateCB"
-                      Content="IsIndeterminate"
-                      Width="200"
-                      Margin="0, 10, 0, 0"
-                      IsChecked="True" />
-            <Controls:MetroProgressBar IsIndeterminate="{Binding ElementName=indeterminateCB, Path=IsChecked}"
+            <Controls:MetroProgressBar IsIndeterminate="True"
                                        Value="{Binding ElementName=horizSlider, Path=Value}"
                                        Minimum="0"
                                        Maximum="100"
