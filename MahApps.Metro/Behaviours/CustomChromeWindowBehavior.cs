@@ -24,8 +24,6 @@ namespace MahApps.Metro.Behaviours
 
         protected override void OnAttached()
         {
-            base.OnAttached();
-
             // no transparany, because it hase more then one unwanted issues
             AssociatedObject.AllowsTransparency = false;
             AssociatedObject.WindowStyle = WindowStyle.None;
@@ -41,6 +39,19 @@ namespace MahApps.Metro.Behaviours
             windowChrome.GlassFrameThickness = new Thickness(0);
 
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
+
+            // handle size to content (thanks @lynnx)
+            var autoSizeToContent = AssociatedObject.SizeToContent == SizeToContent.WidthAndHeight;
+            AssociatedObject.SizeToContent = SizeToContent.Height;
+            AssociatedObject.SizeToContent = autoSizeToContent ? SizeToContent.WidthAndHeight : SizeToContent.Manual;
+            AssociatedObject.IsVisibleChanged += (sender, args) => {
+                                                     if (args.NewValue != args.OldValue && (bool)args.NewValue)
+                                                     {
+                                                         AssociatedObject.SizeToContent = SizeToContent.Manual;
+                                                     }
+                                                 };
+
+            base.OnAttached();
         }
 
         private System.IntPtr WindowProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam, ref bool handled)
