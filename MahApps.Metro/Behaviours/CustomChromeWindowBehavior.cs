@@ -37,6 +37,9 @@ namespace MahApps.Metro.Behaviours
             windowChrome.CaptionHeight = 0;
             windowChrome.CornerRadius = new CornerRadius(0);
             windowChrome.GlassFrameThickness = new Thickness(0);
+#if NET4_5
+            windowChrome.UseAeroCaptionButtons = false;
+#endif
 
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
 
@@ -124,15 +127,15 @@ namespace MahApps.Metro.Behaviours
                 RECT rcMonitorArea = monitorInfo.rcMonitor;
                 mmi.ptMaxPosition.X = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
                 mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-                mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-                mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
+//                mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
+//                mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
 
-//                var metroWindow = AssociatedObject as MetroWindow;
-//                var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
-//                var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
-//                var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
-//                mmi.ptMaxSize.X = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
-//                mmi.ptMaxSize.Y = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
+                var metroWindow = AssociatedObject as MetroWindow;
+                var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
+                var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
+                var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
+                mmi.ptMaxSize.X = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
+                mmi.ptMaxSize.Y = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
             }
 
             Marshal.StructureToPtr(mmi, lParam, true);
