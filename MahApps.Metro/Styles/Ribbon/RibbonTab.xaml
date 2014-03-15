@@ -76,12 +76,13 @@
                                                                             CanVerticallyScroll="False"
                                                                             Content="{TemplateBinding ContentControl.Content}"
                                                                             ContentTemplate="{TemplateBinding ContentControl.ContentTemplate}" />
+                                                    <!-- Setting the Visibility to Hidden so it does not show.  It was on Visible-->
                                                     <RepeatButton Grid.Column="0"
                                                                   HorizontalContentAlignment="Left"
                                                                   Command="ScrollBar.LineLeftCommand"
                                                                   CommandTarget="{x:Null}"
                                                                   Focusable="False"
-                                                                  Visibility="Visible">
+                                                                  Visibility="Hidden">
                                                         <RepeatButton.Style>
                                                             <Style TargetType="RepeatButton">
                                                                 <Style.Resources>
@@ -234,12 +235,13 @@
                                                             </Style>
                                                         </RepeatButton.Style>
                                                     </RepeatButton>
+                                                    <!-- Setting the Visibility to Hidden so it does not show.  It was on Visible-->
                                                     <RepeatButton Grid.Column="2"
                                                                   HorizontalContentAlignment="Right"
                                                                   Command="ScrollBar.LineRightCommand"
                                                                   CommandTarget="{x:Null}"
                                                                   Focusable="False"
-                                                                  Visibility="Visible">
+                                                                  Visibility="Hidden">
                                                         <RepeatButton.Style>
                                                             <Style TargetType="RepeatButton">
                                                                 <Style.Resources>
