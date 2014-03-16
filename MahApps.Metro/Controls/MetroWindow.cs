@@ -504,6 +504,7 @@ namespace MahApps.Metro.Controls
         public MetroWindow()
         {
             Loaded += this.MetroWindow_Loaded;
+            SizeChanged += this.MetroWindow_SizeChanged;
 
             if (MetroDialogOptions == null)
                 MetroDialogOptions = new MetroDialogSettings();
@@ -549,6 +550,39 @@ namespace MahApps.Metro.Controls
 
             ThemeManager.IsThemeChanged += ThemeManagerOnIsThemeChanged;
             this.Unloaded += (o, args) => ThemeManager.IsThemeChanged -= ThemeManagerOnIsThemeChanged;
+        }
+        
+        private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
+        {
+            if (titleBar.GetType() == typeof(Grid))
+            {
+                Grid titleBarGrid = titleBar as Grid;
+                Label titleBarLabel = titleBarGrid.Children[0] as Label;
+                ContentControl titleControl = titleBarLabel.Content as ContentControl;
+                ContentControl iconContentControl = icon as ContentControl;
+
+                //Half of this MetroWindow
+                double halfDistance = this.Width / 2;
+                //Distance between center and left/right
+                double distanceToCenter = titleControl.ActualWidth / 2;
+                //Distance between right edge from LeftWindowCommands to left window side
+                double distanceFromLeft = iconContentControl.ActualWidth + LeftWindowCommands.ActualWidth;
+                //Distance between left edge from RightWindowCommands to right window side
+                double distanceFromRight = WindowButtonCommands.ActualWidth + RightWindowCommands.ActualWidth;
+                //Margin
+                double horizontalMargin = 5;
+
+                if ((distanceFromLeft + distanceToCenter + horizontalMargin < halfDistance) && (distanceFromRight + distanceToCenter + horizontalMargin < halfDistance))
+                {
+                    Grid.SetColumn(titleBarGrid, 0);
+                    Grid.SetColumnSpan(titleBarGrid, 5);
+                }
+                else
+                {
+                    Grid.SetColumn(titleBarGrid, 2);
+                    Grid.SetColumnSpan(titleBarGrid, 1);
+                }
+            }
         }
 
         private void ThemeManagerOnIsThemeChanged(object sender, OnThemeChangedEventArgs e)
