@@ -1,13 +1,15 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <!--<ResourceDictionary Source="Ribbon.xaml" />
+        <ResourceDictionary Source="Ribbon.xaml" />
         <ResourceDictionary Source="RibbonApplicationMenu.xaml" />
         <ResourceDictionary Source="RibbonApplicationMenuItem.xaml" />
         <ResourceDictionary Source="RibbonApplicationSplitMenuItem.xaml" />
         <ResourceDictionary Source="RibbonButton.xaml" />
         <ResourceDictionary Source="RibbonCheckBox.xaml" />
-        <ResourceDictionary Source="RibbonComboBox.xaml" />
+        <!--
+            Commented out until we fix the drop down not showing issue
+            <ResourceDictionary Source="RibbonComboBox.xaml" />
+        -->
         <ResourceDictionary Source="RibbonContextMenu.xaml" />
         <ResourceDictionary Source="RibbonContextualTabGroup.xaml" />
         <ResourceDictionary Source="RibbonGallery.xaml" />
@@ -24,6 +26,34 @@
         <ResourceDictionary Source="RibbonTab.xaml" />
         <ResourceDictionary Source="RibbonTabHeader.xaml" />
         <ResourceDictionary Source="RibbonTextBox.xaml" />
-        <ResourceDictionary Source="RibbonToggleButton.xaml" />-->
+        <ResourceDictionary Source="RibbonToggleButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
+
+    <Style BasedOn="{StaticResource RibbonStyleKey}" TargetType="{x:Type Ribbon}" />
+    <Style BasedOn="{StaticResource RibbonApplicationMenuStyleKey}" TargetType="{x:Type RibbonApplicationMenu}" />
+    <Style BasedOn="{StaticResource RibbonApplicationMenuItemStyleKey}" TargetType="{x:Type RibbonApplicationMenuItem}" />
+    <Style BasedOn="{StaticResource RibbonApplicationSplitMenuItemStyleKey}" TargetType="{x:Type RibbonApplicationSplitMenuItem}" />
+    <Style BasedOn="{StaticResource RibbonButtonStyleKey}" TargetType="{x:Type RibbonButton}" />
+    <Style BasedOn="{StaticResource RibbonCheckBoxStyleKey}" TargetType="{x:Type RibbonCheckBox}" />
+    <!--
+        Commented out until we fix the drop down not showing issue
+        <Style TargetType="{x:Type RibbonComboBox}" BasedOn="{StaticResource RibbonComboBoxStyleKey}"/>
+    -->
+    <Style BasedOn="{StaticResource RibbonContextMenuStyleKey}" TargetType="{x:Type RibbonContextMenu}" />
+    <Style BasedOn="{StaticResource RibbonContextualTabGroupStyleKey}" TargetType="{x:Type RibbonContextualTabGroup}" />
+    <Style BasedOn="{StaticResource RibbonGalleryStyleKey}" TargetType="{x:Type RibbonGallery}" />
+    <Style BasedOn="{StaticResource RibbonGalleryCategoryStyleKey}" TargetType="{x:Type RibbonGalleryCategory}" />
+    <Style BasedOn="{StaticResource RibbonGalleryItemStyleKey}" TargetType="{x:Type RibbonGalleryItem}" />
+    <Style BasedOn="{StaticResource RibbonGroupStyleKey}" TargetType="{x:Type RibbonGroup}" />
+    <Style BasedOn="{StaticResource RibbonMenuButtonStyleKey}" TargetType="{x:Type RibbonMenuButton}" />
+    <Style BasedOn="{StaticResource RibbonMenuItemStyleKey}" TargetType="{x:Type RibbonMenuItem}" />
+    <Style BasedOn="{StaticResource RibbonQuickAccessToolBarStyleKey}" TargetType="{x:Type RibbonQuickAccessToolBar}" />
+    <Style BasedOn="{StaticResource RibbonRadioButtonStyleKey}" TargetType="{x:Type RibbonRadioButton}" />
+    <Style BasedOn="{StaticResource RibbonSeparatorStyleKey}" TargetType="{x:Type RibbonSeparator}" />
+    <Style BasedOn="{StaticResource RibbonSplitButtonStyleKey}" TargetType="{x:Type RibbonSplitButton}" />
+    <Style BasedOn="{StaticResource RibbonSplitMenuItemStyleKey}" TargetType="{x:Type RibbonSplitMenuItem}" />
+    <Style BasedOn="{StaticResource RibbonTabStyleKey}" TargetType="{x:Type RibbonTab}" />
+    <Style BasedOn="{StaticResource RibbonTabHeaderStyleKey}" TargetType="{x:Type RibbonTabHeader}" />
+    <Style BasedOn="{StaticResource RibbonTextBoxStyleKey}" TargetType="{x:Type RibbonTextBox}" />
+    <Style BasedOn="{StaticResource RibbonToggleButtonStyleKey}" TargetType="{x:Type RibbonToggleButton}" />
 </ResourceDictionary>

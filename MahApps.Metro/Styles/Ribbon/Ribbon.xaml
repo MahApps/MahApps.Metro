@@ -4,10 +4,14 @@
                     xmlns:s="clr-namespace:System;assembly=mscorlib"
                     xmlns:swcrp="clr-namespace:System.Windows.Controls.Ribbon.Primitives;assembly=System.Windows.Controls.Ribbon">
     
-    <Style TargetType="Ribbon">
+    <Style x:Key="RibbonStyleKey" TargetType="{x:Type Ribbon}">
         <!--<Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
         <Setter Property="BorderBrush" Value="{x:Null}" />-->
+        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush5}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Ribbon}">
@@ -57,7 +61,7 @@
                             <Border Name="groupsBorder"
                                     Height="91"
                                     BorderBrush="{TemplateBinding Border.BorderBrush}"
-                                    BorderThickness="1,0,1,1"
+                                    BorderThickness="0,0,0,1"
                                     SnapsToDevicePixels="True">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">

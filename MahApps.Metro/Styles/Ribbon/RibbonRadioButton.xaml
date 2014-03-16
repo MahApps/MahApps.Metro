@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
 
-    <Style TargetType="RibbonRadioButton">
+    <Style x:Key="RibbonRadioButtonStyleKey" TargetType="{x:Type RibbonRadioButton}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonRadioButton}">

@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
 
-    <Style TargetType="RibbonCheckBox">
+    <Style x:Key="RibbonCheckBoxStyleKey" TargetType="{x:Type RibbonCheckBox}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonCheckBox}">

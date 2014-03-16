@@ -3,7 +3,9 @@
                     xmlns:mwt="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
 
-    <Style TargetType="RibbonApplicationMenu">
+    <Style x:Key="RibbonApplicationMenuStyleKey" TargetType="{x:Type RibbonApplicationMenu}">
+        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonApplicationMenu}">
@@ -13,10 +15,10 @@
                         <RibbonToggleButton Name="PART_ToggleButton"
                                             Width="Auto"
                                             Height="Auto"
-                                            Background="{TemplateBinding Panel.Background}"
-                                            BorderBrush="{TemplateBinding Border.BorderBrush}"
-                                            BorderThickness="{TemplateBinding Border.BorderThickness}"
-                                            FocusVisualStyle="{TemplateBinding FrameworkElement.FocusVisualStyle}"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                                             IsChecked="False"
                                             SmallImageSource="{TemplateBinding RibbonControlService.SmallImageSource}"
                                             ToolTipDescription="{TemplateBinding RibbonControlService.ToolTipDescription}"
@@ -30,67 +32,18 @@
                                     <Style.Resources>
                                         <ResourceDictionary />
                                     </Style.Resources>
-                                    <Setter Property="Border.BorderBrush">
-                                        <Setter.Value>
-                                            <SolidColorBrush>#FF114EAF</SolidColorBrush>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="Panel.Background">
-                                        <Setter.Value>
-                                            <SolidColorBrush>#FF114EAF</SolidColorBrush>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="Border.BorderThickness">
-                                        <Setter.Value>
-                                            <Thickness>1,1,1,1</Thickness>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="TextElement.Foreground">
-                                        <Setter.Value>
-                                            <RadialGradientBrush>
-                                                <RadialGradientBrush.GradientStops>
-                                                    <GradientStop Offset="0" Color="#FFD3D3D3" />
-                                                    <GradientStop Offset="0.4" Color="#FFFFFFFF" />
-                                                </RadialGradientBrush.GradientStops>
-                                            </RadialGradientBrush>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="ButtonBase.ClickMode">
-                                        <Setter.Value>
-                                            <x:Static Member="ClickMode.Press" />
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="FrameworkElement.FocusVisualStyle">
-                                        <Setter.Value>
-                                            <x:Null />
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="FocusManager.IsFocusScope">
-                                        <Setter.Value>
-                                            <s:Boolean>False</s:Boolean>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="FrameworkElement.VerticalAlignment">
-                                        <Setter.Value>
-                                            <x:Static Member="VerticalAlignment.Bottom" />
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="ToolTipService.InitialShowDelay">
-                                        <Setter.Value>
-                                            <s:Int32>900</s:Int32>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="ToolTipService.ShowDuration">
-                                        <Setter.Value>
-                                            <s:Int32>20000</s:Int32>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="ToolTipService.BetweenShowDelay">
-                                        <Setter.Value>
-                                            <s:Int32>0</s:Int32>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Setter Property="Control.Template">
+                                    <Setter Property="BorderBrush" Value="#FF114EAF"/>
+                                    <Setter Property="Background" Value="#FF114EAF"/>
+                                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                    <Setter Property="TextElement.Foreground" Value="White"/>
+                                    <Setter Property="ButtonBase.ClickMode" Value="Press"/>
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    <Setter Property="FocusManager.IsFocusScope" Value="False"/>
+                                    <Setter Property="VerticalAlignment" Value="Stretch"/>
+                                    <Setter Property="ToolTipService.InitialShowDelay" Value="900"/>
+                                    <Setter Property="ToolTipService.ShowDuration" Value="20000"/>
+                                    <Setter Property="ToolTipService.BetweenShowDelay" Value="0"/>
+                                    <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="RibbonToggleButton">
                                                 <Grid Width="Auto"
@@ -101,40 +54,7 @@
                                                             VerticalAlignment="Stretch"
                                                             Background="{TemplateBinding Panel.Background}"
                                                             BorderBrush="{TemplateBinding Border.BorderBrush}"
-                                                            BorderThickness="{TemplateBinding Border.BorderThickness}"
-                                                            CornerRadius="0,2,0,0" />
-                                                    <Border Name="MiddleBorder"
-                                                            HorizontalAlignment="Stretch"
-                                                            VerticalAlignment="Stretch"
-                                                            BorderBrush="#00FFFFFF"
-                                                            BorderThickness="{TemplateBinding Border.BorderThickness}"
-                                                            CornerRadius="0,2,0,0">
-                                                        <Border.Background>
-                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                <LinearGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#90FFFFFF" />
-                                                                    <GradientStop Offset="0.5" Color="#30FFFFFF" />
-                                                                    <GradientStop Offset="0.5" Color="#00FFFFFF" />
-                                                                    <GradientStop Offset="1" Color="#70FFFFFF" />
-                                                                </LinearGradientBrush.GradientStops>
-                                                            </LinearGradientBrush>
-                                                        </Border.Background>
-                                                        <Border Name="InnerBorder"
-                                                                Background="#00FFFFFF"
-                                                                BorderThickness="1,1,1,1"
-                                                                CornerRadius="0,2,0,0">
-                                                            <Border.BorderBrush>
-                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                    <LinearGradientBrush.GradientStops>
-                                                                        <GradientStop Offset="0" Color="#60FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#20FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#00FFFFFF" />
-                                                                        <GradientStop Offset="1" Color="#00FFFFFF" />
-                                                                    </LinearGradientBrush.GradientStops>
-                                                                </LinearGradientBrush>
-                                                            </Border.BorderBrush>
-                                                        </Border>
-                                                    </Border>
+                                                            BorderThickness="{TemplateBinding Border.BorderThickness}"/>
                                                     <StackPanel HorizontalAlignment="Center"
                                                                 VerticalAlignment="Center"
                                                                 Orientation="Horizontal">
@@ -184,35 +104,6 @@
                                                                 </Condition.Value>
                                                             </Condition>
                                                         </MultiTrigger.Conditions>
-                                                        <Setter TargetName="MiddleBorder" Property="Border.BorderBrush">
-                                                            <Setter.Value>
-                                                                <SolidColorBrush>#80FFFFFF</SolidColorBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="MiddleBorder" Property="Panel.Background">
-                                                            <Setter.Value>
-                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                    <LinearGradientBrush.GradientStops>
-                                                                        <GradientStop Offset="0" Color="#A0FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#60FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#00FFFFFF" />
-                                                                        <GradientStop Offset="1" Color="#D0FFFFFF" />
-                                                                    </LinearGradientBrush.GradientStops>
-                                                                </LinearGradientBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                                                            <Setter.Value>
-                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                    <LinearGradientBrush.GradientStops>
-                                                                        <GradientStop Offset="0" Color="#90FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#20FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#00FFFFFF" />
-                                                                        <GradientStop Offset="1" Color="#00FFFFFF" />
-                                                                    </LinearGradientBrush.GradientStops>
-                                                                </LinearGradientBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
                                                     </MultiTrigger>
                                                     <MultiTrigger>
                                                         <MultiTrigger.Conditions>
@@ -227,35 +118,6 @@
                                                                 </Condition.Value>
                                                             </Condition>
                                                         </MultiTrigger.Conditions>
-                                                        <Setter TargetName="MiddleBorder" Property="Border.BorderBrush">
-                                                            <Setter.Value>
-                                                                <SolidColorBrush>#80FFFFFF</SolidColorBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="MiddleBorder" Property="Panel.Background">
-                                                            <Setter.Value>
-                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                    <LinearGradientBrush.GradientStops>
-                                                                        <GradientStop Offset="0" Color="#A0FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#60FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#00FFFFFF" />
-                                                                        <GradientStop Offset="1" Color="#D0FFFFFF" />
-                                                                    </LinearGradientBrush.GradientStops>
-                                                                </LinearGradientBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                                                            <Setter.Value>
-                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                    <LinearGradientBrush.GradientStops>
-                                                                        <GradientStop Offset="0" Color="#90FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#20FFFFFF" />
-                                                                        <GradientStop Offset="0.5" Color="#00FFFFFF" />
-                                                                        <GradientStop Offset="1" Color="#00FFFFFF" />
-                                                                    </LinearGradientBrush.GradientStops>
-                                                                </LinearGradientBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
                                                     </MultiTrigger>
                                                     <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
                                                         <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
@@ -269,36 +131,6 @@
                                                             </Setter.Value>
                                                         </Setter>
                                                         <Setter TargetName="OuterBorder" Property="Border.CornerRadius">
-                                                            <Setter.Value>
-                                                                <CornerRadius>0,0,0,0</CornerRadius>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="MiddleBorder" Property="Border.BorderBrush">
-                                                            <Setter.Value>
-                                                                <SolidColorBrush>#00FFFFFF</SolidColorBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="MiddleBorder" Property="Panel.Background">
-                                                            <Setter.Value>
-                                                                <SolidColorBrush>#00FFFFFF</SolidColorBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="MiddleBorder" Property="Border.CornerRadius">
-                                                            <Setter.Value>
-                                                                <CornerRadius>0,0,0,0</CornerRadius>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                                                            <Setter.Value>
-                                                                <SolidColorBrush>#00FFFFFF</SolidColorBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="InnerBorder" Property="Panel.Background">
-                                                            <Setter.Value>
-                                                                <SolidColorBrush>#00FFFFFF</SolidColorBrush>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter TargetName="InnerBorder" Property="Border.CornerRadius">
                                                             <Setter.Value>
                                                                 <CornerRadius>0,0,0,0</CornerRadius>
                                                             </Setter.Value>

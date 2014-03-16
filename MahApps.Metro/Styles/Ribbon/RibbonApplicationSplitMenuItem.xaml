@@ -3,7 +3,7 @@
                     xmlns:mwt="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
 
-    <Style TargetType="RibbonApplicationSplitMenuItem">
+    <Style x:Key="RibbonApplicationSplitMenuItemStyleKey" TargetType="{x:Type RibbonApplicationSplitMenuItem}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonApplicationSplitMenuItem}">

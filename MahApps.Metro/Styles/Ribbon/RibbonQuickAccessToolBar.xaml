@@ -5,7 +5,7 @@
                     xmlns:s="clr-namespace:System;assembly=mscorlib"
                     xmlns:swcrp="clr-namespace:System.Windows.Controls.Ribbon.Primitives;assembly=System.Windows.Controls.Ribbon">
 
-    <Style TargetType="RibbonQuickAccessToolBar">
+    <Style x:Key="RibbonQuickAccessToolBarStyleKey" TargetType="{x:Type RibbonQuickAccessToolBar}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonQuickAccessToolBar}">
