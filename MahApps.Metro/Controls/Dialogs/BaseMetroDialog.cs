@@ -262,6 +262,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
             ColorScheme = MetroDialogColorScheme.Theme;
             UseAnimations = true;
+            
+            DefaultText = "";
         }
 
         /// <summary>
