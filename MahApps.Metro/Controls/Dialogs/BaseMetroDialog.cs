@@ -143,7 +143,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.IsLoaded) return new Task(() => { });
 
-            if (!DialogSettings.UseAnimations)
+            if (!DialogSettings.AnimateShow)
                 this.Opacity = 1.0; //skip the animation
 
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
@@ -219,7 +219,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
-            if (DialogSettings.UseAnimations)
+            if (DialogSettings.AnimateHide)
             {
                 Storyboard closingStoryboard = this.Resources["DialogCloseStoryboard"] as Storyboard;
 
@@ -282,7 +282,14 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public MetroDialogColorScheme ColorScheme { get; set; }
 
-        public bool UseAnimations { get; set; }
+        public bool UseAnimations
+        {
+            get { return AnimateShow || AnimateHide; }
+            set { AnimateHide = AnimateHide = value; }
+        }
+
+        public bool AnimateShow { get; set; }
+        public bool AnimateHide { get; set; }
         
         /// <summary>
         /// Gets/sets the default text( just the inputdialog needed)

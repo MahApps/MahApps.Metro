@@ -221,11 +221,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static Task HandleOverlayOnHide(MetroDialogSettings settings, MetroWindow window)
         {
-            return (settings == null || settings.UseAnimations ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(() => window.HideOverlay()))));
+            return (settings == null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(() => window.HideOverlay()))));
         }
         private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
         {
-            return (settings == null || settings.UseAnimations ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(() => window.ShowOverlay()))));
+            return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(() => window.ShowOverlay()))));
         }
 
         /// <summary>
