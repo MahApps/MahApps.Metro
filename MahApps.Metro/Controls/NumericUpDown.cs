@@ -712,7 +712,7 @@ namespace MahApps.Metro.Controls
                     _internalIntervalMultiplierForCalculation *= 10;
                 }
 
-                ChangeValueInternal(direction * d);
+                ChangeValueInternal(direction * _internalIntervalMultiplierForCalculation);
             }
             else
             {
