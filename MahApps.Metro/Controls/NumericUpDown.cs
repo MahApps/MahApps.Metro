@@ -702,6 +702,7 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueWithSpeedUp(bool toPositive)
         {
+            double direction = toPositive ? 1 : -1;
             if (Speedup)
             {
                 double d = Interval * _internalLargeChange;
@@ -710,16 +711,25 @@ namespace MahApps.Metro.Controls
                     _internalLargeChange *= 10;
                     _internalIntervalMultiplierForCalculation *= 10;
                 }
-            }
 
-            ChangeValueInternal(toPositive);
+                ChangeValueInternal(direction * d);
+            }
+            else
+            {
+                ChangeValueInternal(direction * Interval);
+            }
         }
 
-        private void ChangeValueInternal(bool toPositive)
+        private void ChangeValueInternal(bool addInterval)
         {
-            NumericUpDownChangedRoutedEventArgs routedEvent = toPositive ?
-                new NumericUpDownChangedRoutedEventArgs(IncrementValueEvent, Interval) :
-                new NumericUpDownChangedRoutedEventArgs(DecrementValueEvent, -Interval);
+            ChangeValueInternal(addInterval ? Interval : -Interval);
+        }
+
+        private void ChangeValueInternal(double interval)
+        {
+            NumericUpDownChangedRoutedEventArgs routedEvent = interval > 0 ?
+                new NumericUpDownChangedRoutedEventArgs(IncrementValueEvent, interval) :
+                new NumericUpDownChangedRoutedEventArgs(DecrementValueEvent, interval);
 
             RaiseEvent(routedEvent);
 
@@ -732,7 +742,8 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueBy(double difference)
         {
-            Value = Math.Max(Minimum, Math.Min(Value.GetValueOrDefault() + difference, Maximum));
+            double newValue = Value.GetValueOrDefault() + difference;
+            Value = (double)CoerceValue(this, newValue);
         }
 
         private void EnableDisableDown()
@@ -818,14 +829,9 @@ namespace MahApps.Metro.Controls
                 double convertedValue;
                 if (ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
-                    Value = Math.Max(Minimum, Math.Min(convertedValue, Maximum));
+                    Value = (double?)CoerceValue(this, convertedValue);
+                    InternalSetText(Value);
                     e.Handled = true;
-
-                    if (Value == Minimum || Value == Maximum)
-                    {
-                        _manualChange = false;
-                        InternalSetText(Value);
-                    }
                 }
             }
         }
