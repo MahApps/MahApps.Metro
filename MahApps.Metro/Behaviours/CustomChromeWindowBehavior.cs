@@ -26,9 +26,7 @@ namespace MahApps.Metro.Behaviours
             windowChrome.CaptionHeight = 0;
             windowChrome.CornerRadius = new CornerRadius(0);
             windowChrome.GlassFrameThickness = new Thickness(0);
-#if NET4_5
             windowChrome.UseAeroCaptionButtons = false;
-#endif
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
 
             // no transparany, because it hase more then one unwanted issues
