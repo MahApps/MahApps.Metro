@@ -9,6 +9,8 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    using System.Collections;
+
     [ContentProperty("ItemsSource")]
     [TemplatePart(Name = "PART_Container", Type = typeof(Grid)),
     TemplatePart(Name = "PART_Button", Type = typeof(Button)),
@@ -37,7 +39,7 @@ namespace MahApps.Metro.Controls
         #region DependencyProperties
 
         public static readonly DependencyProperty ItemsSourceProperty =
-            DependencyProperty.Register("ItemsSource", typeof(ObservableCollection<object>), typeof(DropDownButton));
+            DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(DropDownButton));
 
         public static readonly DependencyProperty ItemTemplateProperty =
             DependencyProperty.Register("ItemTemplate", typeof(DataTemplate), typeof(DropDownButton),
@@ -103,9 +105,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(CommandProperty, value); }
         }
 
-        public ObservableCollection<object> ItemsSource
+        public IEnumerable ItemsSource
         {
-            get { return (ObservableCollection<object>)GetValue(ItemsSourceProperty); }
+            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
             set { SetValue(ItemsSourceProperty, value); }
         }
 
