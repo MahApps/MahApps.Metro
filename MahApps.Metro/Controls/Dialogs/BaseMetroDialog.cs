@@ -261,7 +261,7 @@ namespace MahApps.Metro.Controls.Dialogs
             NegativeButtonText = "Cancel";
 
             ColorScheme = MetroDialogColorScheme.Theme;
-            UseAnimations = true;
+            AnimateShow = AnimateHide = true;
             
             DefaultText = "";
         }
@@ -288,10 +288,11 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Getting "True" - at least AnimateHide or AnimateHide is "True".
         /// Getting "False" - both AnimateHide and AnimateHide are "False".
         /// </summary>
+        [Obsolete("This property is obsolete and will be deleted in next release, use AnimateShow and AnimateHide instead.")]
         public bool UseAnimations
         {
             get { return AnimateShow || AnimateHide; }
-            set { AnimateHide = AnimateHide = value; }
+            set { AnimateShow = AnimateHide = value; }
         }
 
         /// <summary>
@@ -302,7 +303,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public bool AnimateShow { get; set; }
 
         /// <summary>
-        /// Enable/disable dialig hiding animation
+        /// Enable/disable dialog hiding animation
         /// "True" - play hiding animation.
         /// "False" - skip hiding animation.
         /// </summary>
