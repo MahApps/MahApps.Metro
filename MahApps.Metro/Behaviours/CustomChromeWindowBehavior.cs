@@ -6,11 +6,7 @@ using System.Windows.Interactivity;
 using System.Windows.Interop;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Native;
-#if NET_4
 using Microsoft.Windows.Shell;
-#else
-using System.Windows.Shell;
-#endif
 
 namespace MahApps.Metro.Behaviours
 {
@@ -25,14 +21,6 @@ namespace MahApps.Metro.Behaviours
 
         protected override void OnAttached()
         {
-            // no transparany, because it hase more then one unwanted issues
-            AssociatedObject.AllowsTransparency = false;
-            AssociatedObject.WindowStyle = WindowStyle.None;
-            AssociatedObject.Loaded += AssociatedObject_Loaded;
-            AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
-            AssociatedObject.StateChanged += (sender, args) => HandleMaximize();
-            AssociatedObject.Activated += (sender, args) => HandleMaximize();
-
             windowChrome = new WindowChrome();
             windowChrome.ResizeBorderThickness = new Thickness(6);
             windowChrome.CaptionHeight = 0;
@@ -41,8 +29,17 @@ namespace MahApps.Metro.Behaviours
 #if NET4_5
             windowChrome.UseAeroCaptionButtons = false;
 #endif
-
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
+
+            // no transparany, because it hase more then one unwanted issues
+            AssociatedObject.AllowsTransparency = false;
+            AssociatedObject.WindowStyle = WindowStyle.None;
+            savedBorderThickness = AssociatedObject.BorderThickness;
+
+            AssociatedObject.Loaded += AssociatedObject_Loaded;
+            AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
+            AssociatedObject.StateChanged += (sender, args) => HandleMaximize();
+            AssociatedObject.Activated += (sender, args) => HandleMaximize();
 
             // handle size to content (thanks @lynnx)
             var autoSizeToContent = AssociatedObject.SizeToContent == SizeToContent.WidthAndHeight;
@@ -81,6 +78,11 @@ namespace MahApps.Metro.Behaviours
                      * as mentioned by jason.bullard (comment from September 22, 2011) on http://gallery.expression.microsoft.com/ZuneWindowBehavior/ */
                     handled = false;
                     break;
+                case Constants.WM_NCACTIVATE:
+                    /* As per http://msdn.microsoft.com/en-us/library/ms632633(VS.85).aspx , "-1" lParam "does not repaint the nonclient area to reflect the state change." */
+                    returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
+                    handled = true;
+                    break;
             }
 
             return returnval;
@@ -90,12 +92,11 @@ namespace MahApps.Metro.Behaviours
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
+                // remove resize border and window border, so we can move the window from top monitor position
                 windowChrome.ResizeBorderThickness = new Thickness(0);
-                if (savedBorderThickness == null)
-                {
-                    savedBorderThickness = AssociatedObject.BorderThickness;
-                }
                 AssociatedObject.BorderThickness = new Thickness(0);
+                // set the glass frame to 1, so we can have a full screen window that ignores the taskbar
+                windowChrome.GlassFrameThickness = new Thickness(1);
                 
                 IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
                 if (monitor != IntPtr.Zero) {
@@ -112,6 +113,7 @@ namespace MahApps.Metro.Behaviours
             }
             else
             {
+                windowChrome.GlassFrameThickness = new Thickness(0);
                 windowChrome.ResizeBorderThickness = new Thickness(6);
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
             }

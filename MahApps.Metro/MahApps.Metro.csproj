@@ -154,6 +154,8 @@
     <Compile Include="Microsoft.Windows.Shell\Standard\ShellProvider.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\StreamHelper.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\Utilities.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\Utilities.Windows.cs" />
+    <Compile Include="Microsoft.Windows.Shell\Standard\Utilities.Wpf.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\Verify.cs" />
     <Compile Include="Microsoft.Windows.Shell\SystemCommands.cs" />
     <Compile Include="Microsoft.Windows.Shell\SystemParameters2.cs" />
