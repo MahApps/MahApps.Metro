@@ -22,7 +22,7 @@ namespace MahApps.Metro.Behaviours
         protected override void OnAttached()
         {
             windowChrome = new WindowChrome();
-            windowChrome.ResizeBorderThickness = new Thickness(6);
+            windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
             windowChrome.CaptionHeight = 0;
             windowChrome.CornerRadius = new CornerRadius(0);
             windowChrome.GlassFrameThickness = new Thickness(0);
@@ -112,7 +112,7 @@ namespace MahApps.Metro.Behaviours
             else
             {
                 windowChrome.GlassFrameThickness = new Thickness(0);
-                windowChrome.ResizeBorderThickness = new Thickness(6);
+                windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
             }
         }
