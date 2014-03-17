@@ -6,10 +6,10 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Collections;
 
 namespace MahApps.Metro.Controls
 {
-    using System.Collections;
 
     [ContentProperty("ItemsSource")]
     [TemplatePart(Name = "PART_Container", Type = typeof(Grid)),
