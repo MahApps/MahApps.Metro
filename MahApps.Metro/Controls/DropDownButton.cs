@@ -152,10 +152,6 @@ namespace MahApps.Metro.Controls
 
         #endregion
 
-        public DropDownButton()
-        {
-            ItemsSource = new ObservableCollection<Object>();
-        }
         static DropDownButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DropDownButton), new FrameworkPropertyMetadata(typeof(DropDownButton)));
