@@ -4,7 +4,7 @@
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
 
     <Style x:Key="RibbonApplicationMenuStyleKey" TargetType="{x:Type RibbonApplicationMenu}">
-        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource HighlightBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="Template">
             <Setter.Value>

@@ -1,47 +1,51 @@
 ﻿<Controls:MetroWindow x:Class="MetroDemo.ExampleWindows.RibbonDemo"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="RibbonDemo" Height="416.418" Width="474.627">
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      Title="RibbonDemo"
+                      Width="474.627"
+                      Height="416.418"
+                      Style="{DynamicResource CleanWindowStyleKey}">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Ribbon/Styles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Ribbon/Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Ribbon Grid.Row="0" >
+        <Ribbon Grid.Row="0" Loaded="Ribbon_Loaded">
             <RibbonTab Header="Home">
                 <RibbonGroup Header="Theme">
-                    <RibbonButton Label="Dark" Click="DarkTheme" />
-                    <RibbonButton Label="Light" Click="LightTheme" />
-                    <RibbonComboBox SelectionBoxWidth="100" CanUserResizeVertically="True">
+                    <RibbonButton Click="DarkTheme" Label="Dark" />
+                    <RibbonButton Click="LightTheme" Label="Light" />
+                    <RibbonComboBox CanUserResizeVertically="True" SelectionBoxWidth="100">
                         <RibbonGallery x:Name="accentsComboBox" SelectionChanged="Accents_SelectionChanged">
                             <RibbonGalleryCategory x:Name="accents" ItemsSource="{Binding AccentColors, Mode=OneWay}" />
                             <RibbonGallery.GalleryItemTemplate>
                                 <DataTemplate>
                                     <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Ellipse Width="16"
-                                                             Height="16"
-                                                             Fill="{Binding ColorBrush,
-                                                                            Mode=OneWay}" />
-                                    <TextBlock Grid.Column="1"
-                                                               Margin="4,0,0,0"
-                                                               Text="{Binding Name,
-                                                                              Mode=OneWay}" />
-                                </Grid>
-                                    </DataTemplate>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Ellipse Width="16"
+                                                 Height="16"
+                                                 Fill="{Binding ColorBrush,
+                                                                Mode=OneWay}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Margin="4,0,0,0"
+                                                   Text="{Binding Name,
+                                                                  Mode=OneWay}" />
+                                    </Grid>
+                                </DataTemplate>
                             </RibbonGallery.GalleryItemTemplate>
                         </RibbonGallery>
                     </RibbonComboBox>
@@ -53,40 +57,37 @@
                 </RibbonGroup>
                 <RibbonGroup Header="More Buttons">
                     <RibbonSplitButton Label="Split Button">
-                        <RibbonMenuItem Header="Option 1"/>
-                        <RibbonMenuItem Header="Option 2"/>
-                        <RibbonMenuItem Header="Option 3"/>
+                        <RibbonMenuItem Header="Option 1" />
+                        <RibbonMenuItem Header="Option 2" />
+                        <RibbonMenuItem Header="Option 3" />
                     </RibbonSplitButton>
                     <RibbonToggleButton Label="Toggle Button" />
                     <RibbonMenuButton Label="Menu Button">
-                        <RibbonMenuItem Header="Option 1"/>
+                        <RibbonMenuItem Header="Option 1" />
                         <RibbonSplitMenuItem Header="Option 2">
-                            <RibbonMenuItem Header="Option a"/>
-                            <RibbonMenuItem Header="Option b"/>
+                            <RibbonMenuItem Header="Option a" />
+                            <RibbonMenuItem Header="Option b" />
                         </RibbonSplitMenuItem>
-                        <RibbonMenuItem Header="Option 3"/>
+                        <RibbonMenuItem Header="Option 3" />
                     </RibbonMenuButton>
                 </RibbonGroup>
             </RibbonTab>
-            <RibbonTab Header="Tab 2">
-
-            </RibbonTab>
+            <RibbonTab Header="Tab 2" />
         </Ribbon>
         <Grid Grid.Row="1">
             <StackPanel Grid.Column="0">
-                <Label Content="Buttons"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+                <Label Content="Buttons" Style="{DynamicResource DescriptionHeaderStyle}" />
                 <Button Width="100"
-                    Margin="0, 10, 0, 0"
-                    Content="Enabled" />
+                        Margin="0, 10, 0, 0"
+                        Content="Enabled" />
                 <Button Width="100"
-                    Margin="0, 10, 0, 0"
-                    Content="Enabled"
-                    Style="{DynamicResource SquareButtonStyle}" />
+                        Margin="0, 10, 0, 0"
+                        Content="Enabled"
+                        Style="{DynamicResource SquareButtonStyle}" />
                 <Button Width="100"
-                    Margin="0, 10, 0, 0"
-                    Content="Enabled"
-                    Style="{DynamicResource AccentedSquareButtonStyle}" />
+                        Margin="0, 10, 0, 0"
+                        Content="Enabled"
+                        Style="{DynamicResource AccentedSquareButtonStyle}" />
             </StackPanel>
         </Grid>
     </Grid>

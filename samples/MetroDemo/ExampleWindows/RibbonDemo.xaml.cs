@@ -60,5 +60,16 @@ namespace MetroDemo.ExampleWindows
             var accent = ThemeManager.DefaultAccents.First(x => x.Name == accentItem.Name);
             ThemeManager.ChangeTheme(Application.Current, accent, theme.Item1);
         }
+
+        private void Ribbon_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Hides the title bar since this is not a ribbon window.
+            // QAT buttons and contextual tabs will not be shown as a result
+            Grid child = VisualTreeHelper.GetChild((DependencyObject)sender, 0) as Grid;
+            if (child != null)
+            {
+                child.RowDefinitions[0].Height = new GridLength(0);
+            }
+        }
     }
 }
