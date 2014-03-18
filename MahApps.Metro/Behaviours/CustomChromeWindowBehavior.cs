@@ -88,30 +88,38 @@ namespace MahApps.Metro.Behaviours
 
         private void HandleMaximize()
         {
+            var metroWindow = AssociatedObject as MetroWindow;
+            var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
                 // remove resize border and window border, so we can move the window from top monitor position
                 windowChrome.ResizeBorderThickness = new Thickness(0);
                 AssociatedObject.BorderThickness = new Thickness(0);
-                // set the glass frame to 1, so we can have a full screen window that ignores the taskbar
-                windowChrome.GlassFrameThickness = new Thickness(1);
-                
-                IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
-                if (monitor != IntPtr.Zero) {
-                    var monitorInfo = new MONITORINFO();
-                    UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                    var metroWindow = AssociatedObject as MetroWindow;
-                    var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
-                    var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
-                    var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
-                    var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
-                    var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
-                    UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                if (ignoreTaskBar)
+                {
+                    // set the glass frame to 1, so we can have a full screen window that ignores the taskbar
+                    windowChrome.GlassFrameThickness = new Thickness(1);
                 }
+
+                //                IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
+//                if (monitor != IntPtr.Zero) {
+//                    var monitorInfo = new MONITORINFO();
+//                    UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
+//                    var metroWindow = AssociatedObject as MetroWindow;
+//                    var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
+//                    var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
+//                    var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
+//                    var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
+//                    var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
+//                    UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+//                }
             }
             else
             {
-                windowChrome.GlassFrameThickness = new Thickness(0);
+                if (ignoreTaskBar)
+                {
+                    windowChrome.GlassFrameThickness = new Thickness(0);
+                }
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
             }
