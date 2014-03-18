@@ -3,21 +3,21 @@
                                  xmlns:s="clr-namespace:System;assembly=mscorlib">
 
     <Style x:Key="RibbonButtonStyleKey" TargetType="{x:Type RibbonButton}">
-        <Setter Property="MouseOverBackground" Value="{StaticResource AccentColorBrush4}"/>
-        <Setter Property="PressedBackground" Value="{StaticResource AccentColorBrush2}"/>
-        <Setter Property="FocusedBackground" Value="{StaticResource AccentColorBrush4}"/>
+        <Setter Property="MouseOverBackground" Value="{DynamicResource AccentColorBrush4}"/>
+        <Setter Property="PressedBackground" Value="{DynamicResource AccentColorBrush2}"/>
+        <Setter Property="FocusedBackground" Value="{DynamicResource AccentColorBrush4}"/>
         <Setter Property="Padding" Value="8,1,8,1"/>
         
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonButton}">
                     <Border Name="OuterBorder"
-                            Background="{TemplateBinding Panel.Background}"
-                            BorderBrush="{TemplateBinding Border.BorderBrush}"
-                            BorderThickness="{TemplateBinding Border.BorderThickness}"
+                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                            BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
+                            BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}"
                             SnapsToDevicePixels="True">
                         <Border Name="InnerBorder"
-                                Padding="{TemplateBinding Control.Padding}">
+                                Padding="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Padding}">
                             <StackPanel Name="StackPanel">
                                 <Image Name="PART_Image"
                                        Width="32"

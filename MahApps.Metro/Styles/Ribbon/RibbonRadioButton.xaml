@@ -3,11 +3,11 @@
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
 
     <Style x:Key="RibbonRadioButtonStyleKey" TargetType="{x:Type RibbonRadioButton}">
-        <Setter Property="CheckedBackground" Value="{StaticResource AccentColorBrush3}"/>
-        <Setter Property="PressedBackground" Value="{StaticResource AccentColorBrush2}"/>
-        <Setter Property="FocusedBackground" Value="{StaticResource AccentColorBrush4}"/>
-        <Setter Property="MouseOverBackground" Value="{StaticResource AccentColorBrush4}"/>
-        <Setter Property="CheckedBorderBrush" Value="{StaticResource AccentColorBrush2}"/>
+        <Setter Property="CheckedBackground" Value="{DynamicResource AccentColorBrush3}"/>
+        <Setter Property="PressedBackground" Value="{DynamicResource AccentColorBrush2}"/>
+        <Setter Property="FocusedBackground" Value="{DynamicResource AccentColorBrush4}"/>
+        <Setter Property="MouseOverBackground" Value="{DynamicResource AccentColorBrush4}"/>
+        <Setter Property="CheckedBorderBrush" Value="{DynamicResource AccentColorBrush2}"/>
         <Setter Property="RibbonControlService.CornerRadius" Value="0"></Setter>
         <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
         <Setter Property="Template">
@@ -15,19 +15,19 @@
                 <ControlTemplate TargetType="{x:Type RibbonRadioButton}">
                     <Grid SnapsToDevicePixels="True">
                         <Border Name="OuterBorder"
-                                Background="{TemplateBinding Panel.Background}"
-                                BorderBrush="{TemplateBinding Border.BorderBrush}"
-                                BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                                BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
+                                BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}"
                                 CornerRadius="{TemplateBinding RibbonControlService.CornerRadius}" />
                         <Border Name="MiddleBorder"
                                 Background="#00FFFFFF"
                                 BorderBrush="#00FFFFFF"
-                                BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}"
                                 CornerRadius="{TemplateBinding RibbonControlService.CornerRadius}">
                             <Border Name="InnerBorder"
                                     Background="#00FFFFFF"
                                     BorderBrush="#00FFFFFF"
-                                    BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                    BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}"
                                     CornerRadius="{TemplateBinding RibbonControlService.CornerRadius}"
                                     Padding="{TemplateBinding Control.Padding}">
                                 <StackPanel Name="StackPanel" HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}">
