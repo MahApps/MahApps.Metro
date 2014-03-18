@@ -16,6 +16,7 @@ namespace MahApps.Metro.Behaviours
     public class CustomChromeWindowBehavior : Behavior<Window>
     {
         private IntPtr handle;
+        private HwndSource hwndSource;
         private WindowChrome windowChrome;
         private Thickness? savedBorderThickness = null;
 
@@ -35,22 +36,60 @@ namespace MahApps.Metro.Behaviours
             savedBorderThickness = AssociatedObject.BorderThickness;
 
             AssociatedObject.Loaded += AssociatedObject_Loaded;
+            AssociatedObject.Unloaded += AssociatedObject_Unloaded;
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
-            AssociatedObject.StateChanged += (sender, args) => HandleMaximize();
-            AssociatedObject.Activated += (sender, args) => HandleMaximize();
+            AssociatedObject.StateChanged += AssociatedObject_StateChanged;
+            AssociatedObject.Activated += AssociatedObject_Activated;
 
             // handle size to content (thanks @lynnx)
             var autoSizeToContent = AssociatedObject.SizeToContent == SizeToContent.WidthAndHeight;
             AssociatedObject.SizeToContent = SizeToContent.Height;
             AssociatedObject.SizeToContent = autoSizeToContent ? SizeToContent.WidthAndHeight : SizeToContent.Manual;
-            AssociatedObject.IsVisibleChanged += (sender, args) => {
-                                                     if (args.NewValue != args.OldValue && (bool)args.NewValue)
-                                                     {
-                                                         AssociatedObject.SizeToContent = SizeToContent.Manual;
-                                                     }
-                                                 };
+            AssociatedObject.IsVisibleChanged += AssociatedObject_IsVisibleChanged;
 
             base.OnAttached();
+        }
+
+        private bool isCleanedUp;
+
+        private void Cleanup()
+        {
+            if (!isCleanedUp)
+            {
+                isCleanedUp = true;
+
+                // clean up events
+                AssociatedObject.Loaded -= AssociatedObject_Loaded;
+                AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
+                AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
+                AssociatedObject.StateChanged -= AssociatedObject_StateChanged;
+                AssociatedObject.Activated -= AssociatedObject_Activated;
+                AssociatedObject.IsVisibleChanged -= AssociatedObject_IsVisibleChanged;
+                if (hwndSource != null)
+                {
+                    hwndSource.RemoveHook(WindowProc);
+                }
+                windowChrome = null;
+            }
+        }
+
+        protected override void OnDetaching()
+        {
+            Cleanup();
+            base.OnDetaching();
+        }
+
+        private void AssociatedObject_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Cleanup();
+        }
+
+        private void AssociatedObject_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue && (bool)e.NewValue)
+            {
+                AssociatedObject.SizeToContent = SizeToContent.Manual;
+            }
         }
 
         private System.IntPtr WindowProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam, ref bool handled)
@@ -86,6 +125,16 @@ namespace MahApps.Metro.Behaviours
             return returnval;
         }
 
+        private void AssociatedObject_Activated(object sender, EventArgs e)
+        {
+            HandleMaximize();
+        }
+
+        private void AssociatedObject_StateChanged(object sender, EventArgs e)
+        {
+            HandleMaximize();
+        }
+
         private void HandleMaximize()
         {
             var metroWindow = AssociatedObject as MetroWindow;
@@ -101,7 +150,7 @@ namespace MahApps.Metro.Behaviours
                     windowChrome.GlassFrameThickness = new Thickness(1);
                 }
 
-                //                IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
+//                IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
 //                if (monitor != IntPtr.Zero) {
 //                    var monitorInfo = new MONITORINFO();
 //                    UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
@@ -231,7 +280,7 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             handle = new WindowInteropHelper(AssociatedObject).Handle;
-            var hwndSource = HwndSource.FromHwnd(handle);
+            hwndSource = HwndSource.FromHwnd(handle);
             if (hwndSource != null)
             {
                 hwndSource.AddHook(new HwndSourceHook(WindowProc));
