@@ -3,6 +3,11 @@
                                  xmlns:s="clr-namespace:System;assembly=mscorlib">
 
     <Style x:Key="RibbonButtonStyleKey" TargetType="{x:Type RibbonButton}">
+        <Setter Property="MouseOverBackground" Value="{StaticResource AccentColorBrush4}"/>
+        <Setter Property="PressedBackground" Value="{StaticResource AccentColorBrush3}"/>
+        <Setter Property="FocusedBackground" Value="{StaticResource AccentColorBrush4}"/>
+        <Setter Property="Padding" Value="8,1,8,1"/>
+        
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonButton}">
@@ -10,12 +15,8 @@
                             Background="{TemplateBinding Panel.Background}"
                             BorderBrush="{TemplateBinding Border.BorderBrush}"
                             BorderThickness="{TemplateBinding Border.BorderThickness}"
-                            CornerRadius="{TemplateBinding RibbonControlService.CornerRadius}"
                             SnapsToDevicePixels="True">
                         <Border Name="InnerBorder"
-                                BorderBrush="#00FFFFFF"
-                                BorderThickness="{TemplateBinding Border.BorderThickness}"
-                                CornerRadius="{TemplateBinding RibbonControlService.CornerRadius}"
                                 Padding="{TemplateBinding Control.Padding}">
                             <StackPanel Name="StackPanel">
                                 <Image Name="PART_Image"
@@ -132,65 +133,14 @@
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
-                        <Trigger Property="UIElement.IsMouseOver">
-                            <Setter TargetName="OuterBorder" Property="Panel.Background">
-                                <Setter.Value>
-                                    <Binding Path="MouseOverBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
-                                <Setter.Value>
-                                    <Binding Path="MouseOverBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                                <Setter.Value>
-                                    <SolidColorBrush>#80FFFFFF</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Trigger.Value>
-                                <s:Boolean>True</s:Boolean>
-                            </Trigger.Value>
+                        <Trigger Property="UIElement.IsMouseOver" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=MouseOverBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                         </Trigger>
-                        <Trigger Property="UIElement.IsKeyboardFocused">
-                            <Setter TargetName="OuterBorder" Property="Panel.Background">
-                                <Setter.Value>
-                                    <Binding Path="FocusedBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
-                                <Setter.Value>
-                                    <Binding Path="FocusedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                                <Setter.Value>
-                                    <SolidColorBrush>#80FFFFFF</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Trigger.Value>
-                                <s:Boolean>True</s:Boolean>
-                            </Trigger.Value>
+                        <Trigger Property="UIElement.IsKeyboardFocused" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=FocusedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                         </Trigger>
-                        <Trigger Property="ButtonBase.IsPressed">
-                            <Setter TargetName="OuterBorder" Property="Panel.Background">
-                                <Setter.Value>
-                                    <Binding Path="PressedBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
-                                <Setter.Value>
-                                    <Binding Path="PressedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                                <Setter.Value>
-                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Trigger.Value>
-                                <s:Boolean>True</s:Boolean>
-                            </Trigger.Value>
+                        <Trigger Property="ButtonBase.IsPressed" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                         </Trigger>
                         <Trigger Property="RibbonControlService.IsInControlGroup">
                             <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
