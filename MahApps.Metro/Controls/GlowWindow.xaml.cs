@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using MahApps.Metro.Models.Win32;
+using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Controls
 {
@@ -27,6 +28,14 @@ namespace MahApps.Metro.Controls
         public GlowWindow(Window owner, GlowDirection direction)
         {
             InitializeComponent();
+
+            var windowChrome = new WindowChrome();
+            windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
+            windowChrome.CaptionHeight = 0;
+            windowChrome.CornerRadius = new CornerRadius(0);
+            windowChrome.GlassFrameThickness = new Thickness(-1);
+            windowChrome.UseAeroCaptionButtons = false;
+            this.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
 
             this.Owner = owner;
             glow.Visibility = Visibility.Collapsed;

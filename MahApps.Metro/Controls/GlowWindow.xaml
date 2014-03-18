@@ -6,7 +6,7 @@
         Width="300"
         Height="300"
         WindowStyle="None"
-        AllowsTransparency="True"
+        AllowsTransparency="False"
         Background="Transparent"
         ShowActivated="False"
         ResizeMode="NoResize"
