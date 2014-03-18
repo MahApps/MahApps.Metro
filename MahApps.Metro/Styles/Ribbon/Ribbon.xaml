@@ -31,8 +31,8 @@
                                 Grid.Row="1"
                                 Grid.RowSpan="3"
                                 Grid.ColumnSpan="3"
-                                Background="{TemplateBinding Panel.Background}"
-                                BorderBrush="{TemplateBinding Border.BorderBrush}" />
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                                BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}" />
                         <Border Grid.Row="1" Grid.ColumnSpan="3">
                             <Popup Name="PART_ITEMSPRESENTERPOPUP"
                                    AllowsTransparency="True"
@@ -44,7 +44,7 @@
                                                             Focusable="True"
                                                             RenderOptions.ClearTypeHint="Enabled"
                                                             Color="#00FFFFFF">
-                                    <Border Name="CollapsedPopupBackgroundBorder" Background="{TemplateBinding Panel.Background}">
+                                    <Border Name="CollapsedPopupBackgroundBorder" Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}">
                                         <ContentControl Name="popupItemsPresenterHost"
                                                         Margin="0,1,0,0"
                                                         Focusable="False"
@@ -60,21 +60,12 @@
                                         Focusable="False">
                             <Border Name="groupsBorder"
                                     Height="91"
-                                    BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                    Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                                    BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
                                     BorderThickness="0,0,0,1"
                                     SnapsToDevicePixels="True">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                        <LinearGradientBrush.GradientStops>
-                                            <GradientStop Offset="0" Color="#EEFFFFFF" />
-                                            <GradientStop Offset="0.1" Color="#BBFFFFFF" />
-                                            <GradientStop Offset="0.5" Color="#05FFFFFF" />
-                                            <GradientStop Offset="1" Color="#20FFFFFF" />
-                                        </LinearGradientBrush.GradientStops>
-                                    </LinearGradientBrush>
-                                </Border.Background>
                                 <Border Margin="0,0,0,1"
-                                        BorderBrush="#60FFFFFF"
+                                        BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
                                         BorderThickness="0,0,0,1"
                                         SnapsToDevicePixels="True">
                                     <ItemsPresenter Name="ItemsPresenter" />
@@ -84,7 +75,7 @@
                         <Border Name="QatBottomHost"
                                 Grid.Row="3"
                                 Grid.ColumnSpan="3"
-                                BorderBrush="{TemplateBinding Border.BorderBrush}">
+                                BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}">
                             <ContentPresenter Name="QatBottomHostContentPresenter"
                                               HorizontalAlignment="Left"
                                               VerticalAlignment="Center"
@@ -92,20 +83,10 @@
                         </Border>
                         <Border Name="titleBarBackground"
                                 Grid.ColumnSpan="3"
-                                BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                                BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
                                 BorderThickness="0,0,0,1"
-                                Visibility="Collapsed">
-                            <Border.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <LinearGradientBrush.GradientStops>
-                                        <GradientStop Offset="0" Color="#EEFFFFFF" />
-                                        <GradientStop Offset="0.1" Color="#BBFFFFFF" />
-                                        <GradientStop Offset="0.5" Color="#05FFFFFF" />
-                                        <GradientStop Offset="1" Color="#20FFFFFF" />
-                                    </LinearGradientBrush.GradientStops>
-                                </LinearGradientBrush>
-                            </Border.Background>
-                        </Border>
+                                Visibility="Collapsed" />
                         <DockPanel Grid.Column="0"
                                    Grid.ColumnSpan="3"
                                    Height="23"

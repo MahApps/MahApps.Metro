@@ -13,7 +13,7 @@
                 <ControlTemplate TargetType="{x:Type RibbonGroup}">
                     <Border Name="GroupBorder"
                             Margin="1,2,0,0"
-                            Background="{TemplateBinding Panel.Background}">
+                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}">
                         <Grid Name="MainGrid">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -24,21 +24,13 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" MinHeight="16" />
                             </Grid.RowDefinitions>
-                            <Border Name="PART_HotBackground"
-                                    Grid.RowSpan="3"
-                                    Background="{TemplateBinding RibbonControlService.MouseOverBackground}"
-                                    BorderBrush="{TemplateBinding RibbonControlService.MouseOverBorderBrush}"
-                                    BorderThickness="1,1,1,1"
-                                    CornerRadius="2,2,2,2"
-                                    Opacity="0"
-                                    SnapsToDevicePixels="True" />
                             <Border Name="SeparatorBorder"
                                     Grid.RowSpan="3"
                                     Grid.Column="1"
                                     Width="1"
                                     Height="75"
                                     VerticalAlignment="Center"
-                                    Background="{TemplateBinding Border.BorderBrush}"
+                                    Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
                                     SnapsToDevicePixels="True" />
                             <Border Margin="2,1,2,0" Padding="3,0,3,0">
                                 <Grid>
@@ -81,11 +73,6 @@
                             <Setter TargetName="MainGrid" Property="TextElement.Foreground">
                                 <Setter.Value>
                                     <DynamicResource ResourceKey="{x:Static SystemColors.MenuTextBrushKey}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="PART_HotBackground" Property="Panel.Background">
-                                <Setter.Value>
-                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
                                 </Setter.Value>
                             </Setter>
                             <Setter TargetName="SeparatorBorder" Property="UIElement.Visibility">

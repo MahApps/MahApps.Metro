@@ -167,18 +167,18 @@
                             </Trigger.Value>
                         </Trigger>
                         <Trigger Property="ToggleButton.IsChecked" Value="True">
-                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding CheckedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=CheckedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                         </Trigger>
                         <Trigger Property="ButtonBase.IsPressed" Value="True">
-                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="ToggleButton.IsChecked" Value="True"/>
                                 <Condition Property="UIElement.IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding MouseOverBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{Binding CheckedBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=MouseOverBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{Binding Path=CheckedBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
