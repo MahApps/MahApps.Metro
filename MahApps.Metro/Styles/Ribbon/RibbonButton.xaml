@@ -4,7 +4,7 @@
 
     <Style x:Key="RibbonButtonStyleKey" TargetType="{x:Type RibbonButton}">
         <Setter Property="MouseOverBackground" Value="{StaticResource AccentColorBrush4}"/>
-        <Setter Property="PressedBackground" Value="{StaticResource AccentColorBrush3}"/>
+        <Setter Property="PressedBackground" Value="{StaticResource AccentColorBrush2}"/>
         <Setter Property="FocusedBackground" Value="{StaticResource AccentColorBrush4}"/>
         <Setter Property="Padding" Value="8,1,8,1"/>
         
