@@ -122,6 +122,9 @@
                           ToolTip="Shows the toggle button magic"
                           x:Name="MagicToggleButton"
                           IsChecked="{Binding MagicToggleButtonIsChecked}" />
+            <ToggleButton Content="Confirm quit"
+                          ToolTip="Enable quit confirmation dialog on exit"
+                          IsChecked="{Binding QuitConfirmationEnabled}" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
