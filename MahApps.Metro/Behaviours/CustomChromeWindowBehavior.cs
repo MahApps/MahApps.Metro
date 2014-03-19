@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Native;
 using Microsoft.Windows.Shell;
@@ -19,9 +20,15 @@ namespace MahApps.Metro.Behaviours
         private HwndSource hwndSource;
         private WindowChrome windowChrome;
         private Thickness? savedBorderThickness = null;
+        private Brush nonActiveBorderColor;
+        private Brush savedBorderBrush = null;
 
         protected override void OnAttached()
         {
+            // maybe this can change to set via window from a dependency property
+            this.nonActiveBorderColor = new SolidColorBrush(Colors.Gray);
+            this.nonActiveBorderColor.Freeze();
+
             windowChrome = new WindowChrome();
             windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
             windowChrome.CaptionHeight = 0;
@@ -42,6 +49,7 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
             AssociatedObject.StateChanged += AssociatedObject_StateChanged;
             AssociatedObject.Activated += AssociatedObject_Activated;
+            AssociatedObject.Deactivated += AssociatedObject_Deactivated;
 
             // handle size to content (thanks @lynnx)
             var autoSizeToContent = AssociatedObject.SizeToContent == SizeToContent.WidthAndHeight;
@@ -66,6 +74,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
                 AssociatedObject.StateChanged -= AssociatedObject_StateChanged;
                 AssociatedObject.Activated -= AssociatedObject_Activated;
+                AssociatedObject.Deactivated -= AssociatedObject_Deactivated;
                 AssociatedObject.IsVisibleChanged -= AssociatedObject_IsVisibleChanged;
                 if (hwndSource != null)
                 {
@@ -133,7 +142,20 @@ namespace MahApps.Metro.Behaviours
 
         private void AssociatedObject_Activated(object sender, EventArgs e)
         {
+            if (savedBorderBrush != null)
+            {
+                AssociatedObject.BorderBrush = savedBorderBrush;
+            }
             HandleMaximize();
+        }
+
+        private void AssociatedObject_Deactivated(object sender, EventArgs e)
+        {
+            if (AssociatedObject.BorderBrush != null)
+            {
+                savedBorderBrush = AssociatedObject.BorderBrush;
+                AssociatedObject.BorderBrush = this.nonActiveBorderColor;
+            }
         }
 
         private void AssociatedObject_StateChanged(object sender, EventArgs e)
@@ -328,6 +350,12 @@ namespace MahApps.Metro.Behaviours
                 case ResizeMode.CanMinimize:
                     window.ShowMaxRestoreButton = false;
                     break;
+            }
+
+            // non-active border brush
+            if (window.NonActiveBorderBrush != null)
+            {
+                this.nonActiveBorderColor = window.NonActiveBorderBrush;
             }
         }
 
