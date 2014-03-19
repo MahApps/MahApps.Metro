@@ -52,6 +52,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register("NonActiveGlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(153, 153, 153)))); // #999999
         public static readonly DependencyProperty NonActiveBorderBrushProperty = DependencyProperty.Register("NonActiveBorderBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
 
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
@@ -402,6 +403,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (SolidColorBrush)GetValue(GlowBrushProperty); }
             set { SetValue(GlowBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the Window's non-active glow.
+        /// </summary>
+        public SolidColorBrush NonActiveGlowBrush
+        {
+            get { return (SolidColorBrush)GetValue(NonActiveGlowBrushProperty); }
+            set { SetValue(NonActiveGlowBrushProperty, value); }
         }
 
         /// <summary>
