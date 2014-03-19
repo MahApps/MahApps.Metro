@@ -191,8 +191,6 @@ namespace MahApps.Metro.Behaviours
                 RECT rcMonitorArea = monitorInfo.rcMonitor;
                 mmi.ptMaxPosition.X = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
                 mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-//                mmi.ptMaxSize.X = Math.Abs(rcWorkArea.right - rcWorkArea.left);
-//                mmi.ptMaxSize.Y = Math.Abs(rcWorkArea.bottom - rcWorkArea.top);
 
                 var metroWindow = AssociatedObject as MetroWindow;
                 var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
@@ -324,6 +322,28 @@ namespace MahApps.Metro.Behaviours
             {
                 windowButtonCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
             }
+
+            // handle resize mode
+            switch (AssociatedObject.ResizeMode)
+            {
+                case ResizeMode.NoResize:
+                    window.ShowMaxRestoreButton = false;
+                    window.ShowMinButton = false;
+                    break;
+                case ResizeMode.CanMinimize:
+                    window.ShowMaxRestoreButton = false;
+                    break;
+            }
+        }
+
+        [Obsolete("This property is obsolete and will be removed in next release (use Window.ResizeMode instead to handle this).")]
+        public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(CustomChromeWindowBehavior), new PropertyMetadata(true));
+
+        [Obsolete("This property is obsolete and will be removed in next release (use Window.ResizeMode to handle this).")]
+        public bool ResizeWithGrip
+        {
+            get { return (bool)GetValue(ResizeWithGripProperty); }
+            set { SetValue(ResizeWithGripProperty, value); }
         }
     }
 }
