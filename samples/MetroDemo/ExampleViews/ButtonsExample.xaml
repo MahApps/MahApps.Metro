@@ -81,10 +81,10 @@
                           Style="{DynamicResource MetroCircleToggleButtonStyle}">
                 <Rectangle Width="20"
                            Height="20"
-                           Fill="{DynamicResource BlackBrush}">
+                           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
-                                     Visual="{DynamicResource appbar_city}" />
+                                     Visual="{DynamicResource appbar_city}"/>
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
