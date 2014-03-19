@@ -1,129 +1,129 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>{{page.title}}</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<meta name="description" content="" />
-		<meta name="keywords" content="" />
-		{% include resources.html %}
-	</head>
-	<body class="homepage">
+    <head>
+        <title>{{page.title}}</title>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+        {% include resources.html %}
+    </head>
+    <body class="homepage">
     <a href="https://github.com/MahApps/MahApps.Metro">
       <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
     </a>
-		<div id="header-wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="12u">
-						<header id="header">
-							<div id="logo">
-                <h1><a href="{{site.baseurl}}/">mahapps.metro</a></h1>
-								<span>a UI toolkit for WPF</span>
-							</div>
-							<nav id="nav">
-								<ul>
-                  <li><a href="{{site.baseurl}}/guides/">guides</a></li>
-                  <li><a href="{{site.baseurl}}/controls/">controls</a></li>
-                  <li><a href="{{site.baseurl}}/about/">about</a></li>
-								</ul>
-							</nav>
-						</header>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="banner-wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="12u">
-						<div id="banner" class="box">
-              <div class="row">
+    <div id="header-wrapper">
+        <div class="container">
+            <div class="row">
                 <div class="12u">
-                  <h2>let your desktop apps shine</h2>
-                  <div id="home-container">
-                    <div><img alt="before" src="{{site.baseurl}}/images/home-title-light.png" width="1024" height="348" /></div>
-                    <div><img alt="after" src="{{site.baseurl}}/images/home-title-dark.png" width="1024" height="348" /></div>
-                  </div>
-                  <p>1. install it from NuGet
-                  <pre class="nuget-button">Install-Package MahApps.Metro</pre>
-                  <p></p>
-                  <p>2. read through the <a href="{{site.baseurl}}/guides/quick-start.html">quick start</a></p>
-                  <p>3. go forth and be awesome</p>
+                    <header id="header">
+                        <div id="logo">
+            <h1><a href="{{site.baseurl}}/">mahapps.metro</a></h1>
+                            <span>a UI toolkit for WPF</span>
+                        </div>
+                        <nav id="nav">
+                            <ul>
+              <li><a href="{{site.baseurl}}/guides/">guides</a></li>
+              <li><a href="{{site.baseurl}}/controls/">controls</a></li>
+              <li><a href="{{site.baseurl}}/about/">about</a></li>
+                            </ul>
+                        </nav>
+                    </header>
                 </div>
-              </div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="features-wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="4u">
-						<section class="box box-feature">
-              <a href="#" class="image image-full"><img src="{{site.baseurl}}/images/home-standard-controls.png" alt="" /></a>
-							<div class="inner">
-								<header>
-									<h2>enhance the default controls</h2>
-								</header>
-								<p>Mahapps.Metro overrides the style of the default controls and gives them a metro-ish look.</p>
-							</div>
-						</section>
-					</div>
-					<div class="4u">
-						<section class="box box-feature">
-              <a href="#" class="image image-full"><img src="{{site.baseurl}}/images/home-visual-studio.png" alt="" /></a>
-							<div class="inner">
-								<header>
-									<h2>more than just styles</h2>
-								</header>
-								<p>MahApps.Metro also includes some custom controls based on concepts from Windows Phone and Windows 8 Apps</p>
-							</div>
-						</section>
-					</div>
-					
-					<div class="4u">
-						<section class="box box-feature last">
-              <a href="#" class="image image-full"><img src="{{site.baseurl}}/images/home-open-source.png" alt="" /></a>
-							<div class="inner">
-								<header>
-									<h2>it's open source</h2>
-								</header>
-								<p>Something not right? Something could be improved? Or something to add? We're on <a href="https://github.com/MahApps/MahApps.Metro">GitHub</a>, so drop in and help us make it better!</p>
-							</div>
-						</section>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="main-wrapper">
-			<div class="container">
-				<div class="row">
-					<div class="4u">
-						<div id="sidebar">
-							<section class="widget-thumbnails">
-								<h3>quick links</h3>
-								<div class="grid persistent">
-									<div class="row">
-                    <div class="6u"><a href="https://github.com/MahApps/MahApps.Metro/" class="image image-full x"><img src="{{site.baseurl}}/images/github.png" alt="" /></a></div>
-                    <div class="6u"><a href="http://html5up.net/halcyonic/" class="image image-full y"><img src="{{site.baseurl}}/images/pic05.jpg" alt="" /></a></div>
-									</div>
-								</div>
-							</section>
-						</div>
-					</div>
-					<div class="8u">
-						<div id="content">
-							<section class="last">
-								<h2>you've read this far? fantastic!</h2>
-                {% capture words %}{% include words.md %}{% endcapture %}
-                {{ words | markdownify }}
-							</section>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+            </div>
+        </div>
+    </div>
+    <div id="banner-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="12u">
+                    <div id="banner" class="box">
+                      <div class="row">
+                        <div class="12u">
+                          <h2>let your desktop apps shine</h2>
+                          <div id="home-container">
+                            <div><img alt="before" src="{{site.baseurl}}/images/home-title-light.png" width="1024" height="348" /></div>
+                            <div><img alt="after" src="{{site.baseurl}}/images/home-title-dark.png" width="1024" height="348" /></div>
+                          </div>
+                          <p>1. install it from NuGet
+                          <pre class="nuget-button">Install-Package MahApps.Metro</pre>
+                          <p></p>
+                          <p>2. read through the <a href="{{site.baseurl}}/guides/quick-start.html">quick start</a></p>
+                          <p>3. go forth and be awesome</p>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="features-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="4u">
+                    <section class="box box-feature">
+                        <a href="#" class="image image-full"><img src="{{site.baseurl}}/images/home-standard-controls.png" alt="" /></a>
+                        <div class="inner">
+                            <header>
+                                <h2>enhance the default controls</h2>
+                            </header>
+                            <p>Mahapps.Metro overrides the style of the default controls and gives them a metro-ish look.</p>
+                        </div>
+                    </section>
+                </div>
+                <div class="4u">
+                    <section class="box box-feature">
+                        <a href="#" class="image image-full"><img src="{{site.baseurl}}/images/home-visual-studio.png" alt="" /></a>
+                        <div class="inner">
+                            <header>
+                                <h2>more than just styles</h2>
+                            </header>
+                            <p>MahApps.Metro also includes some custom controls based on concepts from Windows Phone and Windows 8 Apps</p>
+                        </div>
+                    </section>
+                </div>
+                
+                <div class="4u">
+                    <section class="box box-feature last">
+                        <a href="#" class="image image-full"><img src="{{site.baseurl}}/images/home-open-source.png" alt="" /></a>
+                        <div class="inner">
+                            <header>
+                                <h2>it's open source</h2>
+                            </header>
+                            <p>Something not right? Something could be improved? Or something to add? We're on <a href="https://github.com/MahApps/MahApps.Metro">GitHub</a>, so drop in and help us make it better!</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="4u">
+                    <div id="sidebar">
+                        <section class="widget-thumbnails">
+                            <h3>quick links</h3>
+                            <div class="grid persistent">
+                                <div class="row">
+                                <div class="6u"><a href="https://github.com/MahApps/MahApps.Metro/" class="image image-full x"><img src="{{site.baseurl}}/images/github.png" alt="" /></a></div>
+                                <div class="6u"><a href="http://html5up.net/halcyonic/" class="image image-full y"><img src="{{site.baseurl}}/images/pic05.jpg" alt="" /></a></div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="8u">
+                    <div id="content">
+                        <section class="last">
+                            <h2>you've read this far? fantastic!</h2>
+                            {% capture words %}{% include words.md %}{% endcapture %}
+                            {{ words | markdownify }}
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript" src="{{site.baseurl}}/js/jquery.beforeafter-1.4.min.js"></script>
     <script type="text/javascript">
     $(function(){
@@ -145,5 +145,5 @@
           s.parentNode.insertBefore(nb, s);
       })();
     </script>
-	</body>
+    </body>
 </html>
