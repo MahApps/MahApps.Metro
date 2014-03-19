@@ -236,7 +236,7 @@
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>
-                    <Behaviours:CustomChromeWindowBehavior />
+                    <Behaviours:BorderlessWindowBehavior />
                     <Behaviours:WindowsSettingBehaviour />
                     <Behaviours:GlowWindowBehavior />
                 </Behaviours:StylizedBehaviorCollection>
