@@ -29,13 +29,14 @@ namespace MahApps.Metro.Controls
         {
             InitializeComponent();
 
-            var windowChrome = new WindowChrome();
-            windowChrome.ResizeBorderThickness = new Thickness(0);
-            windowChrome.CaptionHeight = 0;
-            windowChrome.CornerRadius = new CornerRadius(0);
-            windowChrome.GlassFrameThickness = new Thickness(-1);
-            windowChrome.UseAeroCaptionButtons = false;
-            this.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
+//            var windowChrome = new WindowChrome();
+//            windowChrome.ResizeBorderThickness = new Thickness(0);
+//            windowChrome.CaptionHeight = 0;
+//            windowChrome.CornerRadius = new CornerRadius(0);
+//            windowChrome.GlassFrameThickness = new Thickness(-1);
+//            windowChrome.UseAeroCaptionButtons = false;
+//            this.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
+            this.AllowsTransparency = true;
 
             this.Owner = owner;
             glow.Visibility = Visibility.Collapsed;
