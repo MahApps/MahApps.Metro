@@ -28,6 +28,8 @@ namespace MahApps.Metro.Behaviours
             windowChrome.CornerRadius = new CornerRadius(0);
             windowChrome.GlassFrameThickness = new Thickness(0);
             windowChrome.UseAeroCaptionButtons = false;
+            var metroWindow = AssociatedObject as MetroWindow;
+            windowChrome.IgnoreTaskbarOnMaximize = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
 
             // no transparany, because it hase more then one unwanted issues
@@ -141,18 +143,11 @@ namespace MahApps.Metro.Behaviours
 
         private void HandleMaximize()
         {
-            var metroWindow = AssociatedObject as MetroWindow;
-            var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
                 // remove resize border and window border, so we can move the window from top monitor position
                 windowChrome.ResizeBorderThickness = new Thickness(0);
                 AssociatedObject.BorderThickness = new Thickness(0);
-                if (ignoreTaskBar)
-                {
-                    // set the glass frame to 1, so we can have a full screen window that ignores the taskbar
-                    windowChrome.GlassFrameThickness = new Thickness(1);
-                }
 
 //                IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
 //                if (monitor != IntPtr.Zero) {
@@ -169,10 +164,6 @@ namespace MahApps.Metro.Behaviours
             }
             else
             {
-                if (ignoreTaskBar)
-                {
-                    windowChrome.GlassFrameThickness = new Thickness(0);
-                }
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
             }

@@ -242,6 +242,18 @@ namespace Microsoft.Windows.Shell
             set { SetValue(UseAeroCaptionButtonsProperty, value); }
         }
 
+        public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register(
+            "IgnoreTaskbarOnMaximize",
+            typeof(bool),
+            typeof(WindowChrome),
+            new FrameworkPropertyMetadata(false));
+
+        public bool IgnoreTaskbarOnMaximize
+        {
+            get { return (bool)GetValue(IgnoreTaskbarOnMaximizeProperty); }
+            set { SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
+        }
+
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
             "CornerRadius",
             typeof(CornerRadius),
