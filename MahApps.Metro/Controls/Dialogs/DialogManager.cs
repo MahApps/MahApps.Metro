@@ -35,6 +35,7 @@ namespace MahApps.Metro.Controls.Dialogs
                             InputDialog dialog = new InputDialog(window, settings);
                             dialog.Title = title;
                             dialog.Message = message;
+                            dialog.Input = settings.DefaultText;
 
                             SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;

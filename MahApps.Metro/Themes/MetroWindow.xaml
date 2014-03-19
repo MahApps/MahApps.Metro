@@ -143,7 +143,7 @@
                         <!-- disables the main content when a modal flyout is shown -->
                         <Rectangle Grid.Row="0"
                                    Grid.RowSpan="2"
-                                   Grid.ColumnSpan="4"
+                                   Grid.ColumnSpan="5"
                                    Grid.Column="0"
                                    Name="PART_FlyoutModal"
                                    Fill="{DynamicResource BlackColorBrush}"
