@@ -98,8 +98,12 @@ namespace MahApps.Metro.Behaviours
 
             switch (msg) {
                 case Constants.WM_NCPAINT:
+                    var enableDWMDropShadow = EnableDWMDropShadow;
                     var metroWindow = AssociatedObject as MetroWindow;
-                    var enableDWMDropShadow = metroWindow != null && metroWindow.EnableDWMDropShadow && metroWindow.GlowBrush == null;
+                    if (metroWindow != null)
+                    {
+                        enableDWMDropShadow = metroWindow.GlowBrush == null && (metroWindow.EnableDWMDropShadow || EnableDWMDropShadow);
+                    }
                     if (enableDWMDropShadow)
                     {
                         var val = 2;
@@ -336,6 +340,24 @@ namespace MahApps.Metro.Behaviours
             }
         }
 
+        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(CustomChromeWindowBehavior), new PropertyMetadata(false));
+
+        public bool EnableDWMDropShadow
+        {
+            get { return (bool)GetValue(EnableDWMDropShadowProperty); }
+            set { SetValue(EnableDWMDropShadowProperty, value); }
+        }
+
+        [Obsolete("This property is obsolete and will be removed in next release.")]
+        public static readonly DependencyProperty AllowsTransparencyProperty = DependencyProperty.Register("AllowsTransparency", typeof(bool), typeof(CustomChromeWindowBehavior), new PropertyMetadata(false));
+
+        [Obsolete("This property is obsolete and will be removed in next release.")]
+        public bool AllowsTransparency
+        {
+            get { return (bool)GetValue(AllowsTransparencyProperty); }
+            set { SetValue(AllowsTransparencyProperty, value); }
+        }
+
         [Obsolete("This property is obsolete and will be removed in next release (use Window.ResizeMode instead to handle this).")]
         public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(CustomChromeWindowBehavior), new PropertyMetadata(true));
 
@@ -344,6 +366,16 @@ namespace MahApps.Metro.Behaviours
         {
             get { return (bool)GetValue(ResizeWithGripProperty); }
             set { SetValue(ResizeWithGripProperty, value); }
+        }
+
+        [Obsolete("This property is obsolete and will be removed in next release (use Window.AutoSizeToContent instead to handle this).")]
+        public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(CustomChromeWindowBehavior), new PropertyMetadata(false));
+
+        [Obsolete("This property is obsolete and will be removed in next release (use Window.AutoSizeToContent instead to handle this).")]
+        public bool AutoSizeToContent
+        {
+            get { return (bool)GetValue(AutoSizeToContentProperty); }
+            set { SetValue(AutoSizeToContentProperty, value); }
         }
     }
 }
