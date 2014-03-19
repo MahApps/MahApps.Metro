@@ -305,6 +305,9 @@ namespace MahApps.Metro
         {
             SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { Theme = newTheme, Accent = newAccent });
 
+            // disable for now to test if it's really needed (and fix the hanging part if window is maximized and the user change the theme)
+            return;
+            
             Action apply = () =>
                 {
                     if (SystemColors_InvalidateColors != null)

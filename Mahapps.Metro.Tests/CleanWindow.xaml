@@ -6,11 +6,11 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"
-             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" ResizeMode="CanResizeWithGrip"
              Style="{DynamicResource CleanWindowStyleKey}">
-    <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" AllowsTransparency="False" />
-    </i:Interaction.Behaviors>
+<!--    <i:Interaction.Behaviors>-->
+<!--        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" AllowsTransparency="False" />-->
+<!--    </i:Interaction.Behaviors>-->
     
     <Window.Resources>
         <ResourceDictionary>
