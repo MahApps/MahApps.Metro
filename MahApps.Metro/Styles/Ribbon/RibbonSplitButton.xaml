@@ -1574,7 +1574,7 @@
                                     Value="{Binding MouseOverBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             <Setter TargetName="OuterBorder" Property="BorderBrush"
                                     Value="{Binding MouseOverBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="White" />
+                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -1585,7 +1585,7 @@
                                     Value="{Binding MouseOverBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             <Setter TargetName="OuterBorder" Property="BorderBrush"
                                     Value="{Binding MouseOverBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                            <Setter TargetName="PART_HeaderButton" Property="Background" Value="White" />
+                            <Setter TargetName="PART_HeaderButton" Property="Background" Value="{DynamicResource WhiteBrush}" />
                         </MultiTrigger>
                         <Trigger SourceName="PART_HeaderButton" Property="ButtonBase.IsPressed" Value="True">
                             <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
