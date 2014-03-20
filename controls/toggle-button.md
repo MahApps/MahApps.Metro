@@ -58,7 +58,7 @@ For example:
               Style="{DynamicResource MetroCircleToggleButtonStyle}">
     <Rectangle Width="20"
                Height="20"
-               Fill="Black">
+               Fill="{DynamicResource BlackBrush}">
         <Rectangle.OpacityMask>
             <VisualBrush Stretch="Fill"
                          Visual="{DynamicResource appbar_city}"/>
