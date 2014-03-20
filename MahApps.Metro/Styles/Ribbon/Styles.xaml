@@ -6,10 +6,7 @@
         <ResourceDictionary Source="RibbonApplicationSplitMenuItem.xaml" />
         <ResourceDictionary Source="RibbonButton.xaml" />
         <ResourceDictionary Source="RibbonCheckBox.xaml" />
-        <!--
-            Commented out until we fix the drop down not showing issue
-            <ResourceDictionary Source="RibbonComboBox.xaml" />
-        -->
+        <ResourceDictionary Source="RibbonComboBox.xaml" />
         <ResourceDictionary Source="RibbonContextMenu.xaml" />
         <ResourceDictionary Source="RibbonContextualTabGroup.xaml" />
         <ResourceDictionary Source="RibbonGallery.xaml" />
@@ -35,10 +32,7 @@
     <Style BasedOn="{StaticResource RibbonApplicationSplitMenuItemStyleKey}" TargetType="{x:Type RibbonApplicationSplitMenuItem}" />
     <Style BasedOn="{StaticResource RibbonButtonStyleKey}" TargetType="{x:Type RibbonButton}" />
     <Style BasedOn="{StaticResource RibbonCheckBoxStyleKey}" TargetType="{x:Type RibbonCheckBox}" />
-    <!--
-        Commented out until we fix the drop down not showing issue
-        <Style TargetType="{x:Type RibbonComboBox}" BasedOn="{StaticResource RibbonComboBoxStyleKey}"/>
-    -->
+    <Style TargetType="{x:Type RibbonComboBox}" BasedOn="{StaticResource RibbonComboBoxStyleKey}"/>
     <Style BasedOn="{StaticResource RibbonContextMenuStyleKey}" TargetType="{x:Type RibbonContextMenu}" />
     <Style BasedOn="{StaticResource RibbonContextualTabGroupStyleKey}" TargetType="{x:Type RibbonContextualTabGroup}" />
     <Style BasedOn="{StaticResource RibbonGalleryStyleKey}" TargetType="{x:Type RibbonGallery}" />

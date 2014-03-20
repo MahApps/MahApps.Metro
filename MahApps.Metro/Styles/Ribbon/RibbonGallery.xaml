@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
 
-    <Style x:Key="RibbonGalleryStyleKey" TargetType="{x:Type RibbonGallery}">
+    <Style x:Key="RibbonGalleryStyleKey"
+           TargetType="{x:Type RibbonGallery}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonGallery}">
@@ -11,7 +12,8 @@
                             BorderBrush="{TemplateBinding Border.BorderBrush}"
                             BorderThickness="{TemplateBinding Border.BorderThickness}"
                             SnapsToDevicePixels="True">
-                        <Border Name="InnerBorder" Background="#F0FFFFFF">
+                        <Border Name="InnerBorder"
+                                Background="#F0FFFFFF">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -55,25 +57,34 @@
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger SourceName="PART_ScrollViewer" Property="ScrollViewer.CanContentScroll">
-                            <Setter TargetName="OpaqueRect" Property="Canvas.Top">
+                        <Trigger SourceName="PART_ScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll">
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Top">
                                 <Setter.Value>
-                                    <Binding ElementName="PART_ScrollViewer" Path="VerticalOffset" />
+                                    <Binding ElementName="PART_ScrollViewer"
+                                             Path="VerticalOffset" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="OpaqueRect" Property="Canvas.Left">
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Left">
                                 <Setter.Value>
-                                    <Binding ElementName="PART_ScrollViewer" Path="HorizontalOffset" />
+                                    <Binding ElementName="PART_ScrollViewer"
+                                             Path="HorizontalOffset" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="OverlayRect" Property="Canvas.Top">
+                            <Setter TargetName="OverlayRect"
+                                    Property="Canvas.Top">
                                 <Setter.Value>
-                                    <Binding ElementName="PART_ScrollViewer" Path="VerticalOffset" />
+                                    <Binding ElementName="PART_ScrollViewer"
+                                             Path="VerticalOffset" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="OverlayRect" Property="Canvas.Left">
+                            <Setter TargetName="OverlayRect"
+                                    Property="Canvas.Left">
                                 <Setter.Value>
-                                    <Binding ElementName="PART_ScrollViewer" Path="HorizontalOffset" />
+                                    <Binding ElementName="PART_ScrollViewer"
+                                             Path="HorizontalOffset" />
                                 </Setter.Value>
                             </Setter>
                             <Trigger.Value>
@@ -81,7 +92,8 @@
                             </Trigger.Value>
                         </Trigger>
                         <Trigger Property="UIElement.IsEnabled">
-                            <Setter TargetName="Border" Property="Panel.Background">
+                            <Setter TargetName="Border"
+                                    Property="Panel.Background">
                                 <Setter.Value>
                                     <DynamicResource ResourceKey="{x:Static SystemColors.WindowBrushKey}" />
                                 </Setter.Value>
@@ -91,7 +103,8 @@
                             </Trigger.Value>
                         </Trigger>
                         <Trigger Property="RibbonGallery.CanUserFilter">
-                            <Setter TargetName="FilterHost" Property="UIElement.Visibility">
+                            <Setter TargetName="FilterHost"
+                                    Property="UIElement.Visibility">
                                 <Setter.Value>
                                     <x:Static Member="Visibility.Collapsed" />
                                 </Setter.Value>
@@ -102,37 +115,46 @@
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="RibbonGallery.FilterPaneContent" Value="{x:Null}" />
-                                <Condition Property="RibbonGallery.FilterPaneContentTemplate" Value="{x:Null}" />
+                                <Condition Property="RibbonGallery.FilterPaneContent"
+                                           Value="{x:Null}" />
+                                <Condition Property="RibbonGallery.FilterPaneContentTemplate"
+                                           Value="{x:Null}" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_FilterMenuButton" Property="UIElement.Visibility">
+                            <Setter TargetName="PART_FilterMenuButton"
+                                    Property="UIElement.Visibility">
                                 <Setter.Value>
                                     <x:Static Member="Visibility.Visible" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="PART_FilterContentPane" Property="UIElement.Visibility">
+                            <Setter TargetName="PART_FilterContentPane"
+                                    Property="UIElement.Visibility">
                                 <Setter.Value>
                                     <x:Static Member="Visibility.Collapsed" />
                                 </Setter.Value>
                             </Setter>
                         </MultiTrigger>
-                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
-                            <Setter TargetName="BackgroundCanvas" Property="UIElement.Visibility">
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}"
+                                     Value="True">
+                            <Setter TargetName="BackgroundCanvas"
+                                    Property="UIElement.Visibility">
                                 <Setter.Value>
                                     <x:Static Member="Visibility.Collapsed" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="Border" Property="Panel.Background">
+                            <Setter TargetName="Border"
+                                    Property="Panel.Background">
                                 <Setter.Value>
                                     <SolidColorBrush>#00FFFFFF</SolidColorBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="Border" Property="Border.BorderBrush">
+                            <Setter TargetName="Border"
+                                    Property="Border.BorderBrush">
                                 <Setter.Value>
                                     <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="InnerBorder" Property="Panel.Background">
+                            <Setter TargetName="InnerBorder"
+                                    Property="Panel.Background">
                                 <Setter.Value>
                                     <SolidColorBrush>#00FFFFFF</SolidColorBrush>
                                 </Setter.Value>
