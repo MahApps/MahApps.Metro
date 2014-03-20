@@ -354,7 +354,8 @@ namespace MahApps.Metro.Controls
             var newVisibility = visible && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
             if (this.icon != null)
             {
-                this.icon.Visibility = newVisibility;
+                var iconVisibility = visible && this.ShowTitleBar && this.ShowIconOnTitleBar ? Visibility.Visible : Visibility.Collapsed;
+                this.icon.Visibility = iconVisibility;
             }
             if (this.titleBar != null)
             {
