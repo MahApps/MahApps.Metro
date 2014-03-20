@@ -42,29 +42,29 @@ After installing MahApps.Metro:
 
 You should have something like this (don't copy and paste this):
 ```xml
-  <controls:MetroWindow x:Class="WpfApplication2.MainWindow"
-                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                        Title="MainWindow" 
-                        Height="350" 
-                        Width="525">
-      <!-- your layout here -->
-  </controls:MetroWindow>
+<controls:MetroWindow x:Class="WpfApplication2.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+	Title="MainWindow" 
+	Height="350" 
+	Width="525">
+<!-- your layout here -->
+</controls:MetroWindow>
 ```
 
 You'll need to modify the `MainWindow.xaml.cs` file  so that the base class for `MainWindow` matches the MetroWindow type:
 ```csharp
-  public partial class MainWindow : MetroWindow
-  {
-  }
+public partial class MainWindow : MetroWindow
+{
+}
 ```
 
 But in most cases you can just drop the base class (because this is a `partial` class the XAML should take care of this):
 ```csharp
-  public partial class MainWindow
-  {
-  }
+public partial class MainWindow
+{
+}
 ```
 
  Which will give us this:
@@ -77,17 +77,17 @@ Next we need to add the resources and styles.
 
 In your App.xaml, add the following:
 ```xml
-  <Application.Resources>
-    <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-      </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
-  </Application.Resources>
+<Application.Resources>
+  <ResourceDictionary>
+    <ResourceDictionary.MergedDictionaries>
+      <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+      <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+      <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+      <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+      <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+  </ResourceDictionary>
+</Application.Resources>
 ```
 	
 ![]({{site.baseurl}}/images/03_StyledWindow.png)
@@ -115,25 +115,25 @@ If you don't like the elements that are labelled, fear not, they're all optional
 
 Including this within the `MetroWindow` tag (under the `Window.Resources` section),
 ```xml
-  <Controls:MetroWindow.WindowCommands>
-    <Controls:WindowCommands>
-      <Button Content="settings" />
-      <Button>
-        <StackPanel Orientation="Horizontal">
-          <Rectangle Width="20" Height="20"
-                     Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
-            <Rectangle.OpacityMask>
-              <VisualBrush Stretch="Fill"
-                           Visual="{StaticResource appbar_cupcake}" />
-            </Rectangle.OpacityMask>
-          </Rectangle>
-          <TextBlock Margin="4 0 0 0"
-                     VerticalAlignment="Center"
-                     Text="deploy cupcakes" />
-        </StackPanel>
-      </Button>
-    </Controls:WindowCommands>
-  </Controls:MetroWindow.WindowCommands>
+<Controls:MetroWindow.WindowCommands>
+  <Controls:WindowCommands>
+    <Button Content="settings" />
+    <Button>
+      <StackPanel Orientation="Horizontal">
+        <Rectangle Width="20" Height="20"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+          <Rectangle.OpacityMask>
+            <VisualBrush Stretch="Fill"
+                         Visual="{StaticResource appbar_cupcake}" />
+          </Rectangle.OpacityMask>
+        </Rectangle>
+        <TextBlock Margin="4 0 0 0"
+                   VerticalAlignment="Center"
+                   Text="deploy cupcakes" />
+      </StackPanel>
+    </Button>
+  </Controls:WindowCommands>
+</Controls:MetroWindow.WindowCommands>
 ```
 
 > Make sure to include the [icons](#icons) to get the cupcake
