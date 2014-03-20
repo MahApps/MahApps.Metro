@@ -15,8 +15,8 @@ title: Controls
  - [TabControl]({{site.baseurl}}/controls/tab-control.html)
  - [TextBox]({{site.baseurl}}/controls/textbox.html)
  - [Tile]({{site.baseurl}}/controls/tile.html)
- - [ToggleSwitch]({{site.baseurl}}/controls/toggle-switch.html)
  - [ToggleButton]({{site.baseurl}}/controls/toggle-button.html)
+ - [ToggleSwitch]({{site.baseurl}}/controls/toggle-switch.html)
  - [TransitioningContentControl]({{site.baseurl}}/controls/transitioning-content-control.html)
  
  **Not documented yet**
