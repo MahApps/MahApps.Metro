@@ -3,7 +3,7 @@ layout: no-sidebar
 title: ToggleButton
 ---
 
-## Introduction
+### Introduction
 
 There are two kinds of styles for ToggleButtons available in MahApps.Metro.
 
@@ -67,7 +67,7 @@ For example:
 </ToggleButton>
 ```
 
-## Syncing Checked State of ToggleButton with Foreground
+### Syncing Checked State of ToggleButton with Foreground
 
 By default, any icon you set will retain the same color you set it to even if the ToggleButton is checked. To alter this, you can bind your content's color to the ToggleButton's Foreground property which changes to white by default when it is checked.
 
