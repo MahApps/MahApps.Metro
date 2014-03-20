@@ -5,6 +5,7 @@
 
     <Style x:Key="RibbonApplicationMenuStyleKey" TargetType="{x:Type RibbonApplicationMenu}">
         <Setter Property="Background" Value="{DynamicResource HighlightBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource HighlightBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -15,8 +16,8 @@
                         <RibbonToggleButton Name="PART_ToggleButton"
                                             Width="Auto"
                                             Height="Auto"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                                            BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}"
                                             FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                                             IsChecked="False"
@@ -32,8 +33,8 @@
                                     <Style.Resources>
                                         <ResourceDictionary />
                                     </Style.Resources>
-                                    <Setter Property="BorderBrush" Value="#FF114EAF"/>
-                                    <Setter Property="Background" Value="#FF114EAF"/>
+                                    <Setter Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"/>
+                                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
                                     <Setter Property="BorderThickness" Value="1,1,1,1"/>
                                     <Setter Property="TextElement.Foreground" Value="White"/>
                                     <Setter Property="ButtonBase.ClickMode" Value="Press"/>
@@ -384,12 +385,14 @@
                                                     </Style.Resources>
                                                     <Setter Property="Border.BorderBrush">
                                                         <Setter.Value>
-                                                            <SolidColorBrush>#FF114EAF</SolidColorBrush>
+                                                            <Binding Path="BorderBrush"
+                                                                         RelativeSource="{RelativeSource Mode=TemplatedParent}" />
                                                         </Setter.Value>
                                                     </Setter>
                                                     <Setter Property="Panel.Background">
                                                         <Setter.Value>
-                                                            <SolidColorBrush>#FF114EAF</SolidColorBrush>
+                                                            <Binding Path="Background"
+                                                                         RelativeSource="{RelativeSource Mode=TemplatedParent}" />
                                                         </Setter.Value>
                                                     </Setter>
                                                     <Setter Property="Border.BorderThickness">
