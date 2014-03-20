@@ -1,4 +1,4 @@
-/* skelJS v0.4.4 | (c) n33 | skeljs.org | MIT licensed */
+/* skelJS v0.4.8 | (c) n33 | skeljs.org | MIT licensed */
 
 /*
 
@@ -31,7 +31,7 @@
 	}
 */
 
-/* Container */
+/* Containers */
 
 	body {
 		/* min-width: (containers) */
@@ -65,31 +65,29 @@
 
 /* Grid */
 
-	/* Cells */
-
-		.\31 2u { width: 100% }
-		.\31 1u { width: 91.6666666667% }
-		.\31 0u { width: 83.3333333333% }
-		.\39 u { width: 75% }
-		.\38 u { width: 66.6666666667% }
-		.\37 u { width: 58.3333333333% }
-		.\36 u { width: 50% }
-		.\35 u { width: 41.6666666667% }
-		.\34 u { width: 33.3333333333% }
-		.\33 u { width: 25% }
-		.\32 u { width: 16.6666666667% }
-		.\31 u { width: 8.3333333333% }
-		.\-11u { margin-left: 91.6666666667% }
-		.\-10u { margin-left: 83.3333333333% }
-		.\-9u { margin-left: 75% }
-		.\-8u { margin-left: 66.6666666667% }
-		.\-7u { margin-left: 58.3333333333% }
-		.\-6u { margin-left: 50% }
-		.\-5u { margin-left: 41.6666666667% }
-		.\-4u { margin-left: 33.3333333333% }
-		.\-3u { margin-left: 25% }
-		.\-2u { margin-left: 16.6666666667% }
-		.\-1u { margin-left: 8.3333333333% }
+	.\31 2u { width: 100% }
+	.\31 1u { width: 91.6666666667% }
+	.\31 0u { width: 83.3333333333% }
+	.\39 u { width: 75% }
+	.\38 u { width: 66.6666666667% }
+	.\37 u { width: 58.3333333333% }
+	.\36 u { width: 50% }
+	.\35 u { width: 41.6666666667% }
+	.\34 u { width: 33.3333333333% }
+	.\33 u { width: 25% }
+	.\32 u { width: 16.6666666667% }
+	.\31 u { width: 8.3333333333% }
+	.\-11u { margin-left: 91.6666666667% }
+	.\-10u { margin-left: 83.3333333333% }
+	.\-9u { margin-left: 75% }
+	.\-8u { margin-left: 66.6666666667% }
+	.\-7u { margin-left: 58.3333333333% }
+	.\-6u { margin-left: 50% }
+	.\-5u { margin-left: 41.6666666667% }
+	.\-4u { margin-left: 33.3333333333% }
+	.\-3u { margin-left: 25% }
+	.\-2u { margin-left: 16.6666666667% }
+	.\-1u { margin-left: 8.3333333333% }
 
 	/* Rows */
 
@@ -100,19 +98,6 @@
 			-o-box-sizing: border-box;
 			-ms-box-sizing: border-box;
 			box-sizing: border-box;
-
-			/* padding: (gutters) 0 0 (gutters); */
-			padding: 40px 0 0 40px;
-		}
-
-		.row + .row > * {
-			/* padding-top: (gutters) */
-			padding-top: 40px;
-		}
-
-		.row {
-			/* margin-left: (gutters) */
-			margin-left: -40px;
 		}
 
 		.row:after {
@@ -123,114 +108,127 @@
 		}
 
 		.row:first-child > * {
-			padding-top: 0;
+			padding-top: 0 !important;
 		}
 
-		.row > * {
-			padding-top: 0;
+		/* Flush */
+
+			.row.flush {
+				margin-left: 0;
+			}
+
+			.row.flush > * {
+				padding: 0 !important;
+			}
+			
+		/* Normal */
+
+			.row > * {
+				/* padding-left: (gutters) */
+				padding-left: 40px;
+			}
+
+			.row + .row > * {
+				/* padding: (gutters) 0 0 (gutters) */
+				padding: 40px 0 0 40px;
+			}
+
+			.row {
+				/* margin-left: -(gutters) */
+				margin-left: -40px;
+			}
+
+		/* Quarter */
+
+			.row.quarter > * {
+				/* padding-left: (gutters * 0.25) */
+				padding-left: 10px;
+			}
+
+			.row + .row.quarter > * {
+				/* padding: (gutters * 0.25) 0 0 (gutters * 0.25) */
+				padding: 10px 0 0 10px;
+			}
+
+			.row.quarter {
+				/* margin-left: -(gutters * 0.25) */
+				margin-left: -10px;
+			}
+
+		/* Half */
+
+			.row.half > * {
+				/* padding-left: (gutters * 0.5) */
+				padding-left: 20px;
+			}
+
+			.row + .row.half > * {
+				/* padding: (gutters * 0.5) 0 0 (gutters * 0.5) */
+				padding: 20px 0 0 20px;
+			}
+
+			.row.half {
+				/* margin-left: -(gutters * 0.5) */
+				margin-left: -20px;
+			}
+
+		/* One and (a) Half */
+
+			.row.oneandhalf > * {
+				/* padding-left: (gutters * 1.5) */
+				padding-left: 60px;
+			}
+
+			.row + .row.oneandhalf > * {
+				/* padding: (gutters * 1.5) 0 0 (gutters * 1.5) */
+				padding: 60px 0 0 60px;
+			}
+
+			.row.oneandhalf {
+				/* margin-left: -(gutters * 1.5) */
+				margin-left: -60px;
+			}
+
+		/* Double */
+
+			.row.double > * {
+				/* padding-left: (gutters * 2) */
+				padding-left: 80px;
+			}
+
+			.row + .row.double > * {
+				/* padding: (gutters * 2) 0 0 (gutters * 2) */
+				padding: 80px 0 0 80px;
+			}
+
+			.row.double {
+				/* margin-left: -(gutters * 2) */
+				margin-left: -80px;
+			}
+
+	/* Collapse */
+	/*
+		.row:not(.no-collapse)
+		{
+			margin-left: 0;
 		}
 
-		/* Modifiers */
+		.row:not(.no-collapse) > * {
+			float: none !important;
+			width: 100% !important;
+			margin-left: 0 !important;
+		}
 
-			/* Flush */
+		.row:not(.flush):not(.no-collapse):not(.no-collapse-1):not(.no-collapse-2):not(.no-collapse-3) > * {
+			// padding: (gutters) 0 (gutters) 0 !important //
+			padding: 10px 0 10px 0 !important;
+		}
 
-				.row.flush {
-					margin-left: 0;
-				}
-
-				.row.flush > * {
-					padding: 0 !important;
-				}
-
-			/* Quarter */
-
-				.row.quarter > * {
-					/* padding: (gutters * 0.25) 0 0 (gutters * 0.25) */
-					padding: 10px 0 0 10px;
-				}
-
-				.row.quarter + .row.quarter > * {
-					/* padding-top: (gutters * 0.25) */
-					padding-top: 10px;
-				}
-
-				.row.quarter {
-					/* margin-left: -(gutters * 0.25) */
-					margin-left: -10px;
-				}
-
-			/* Half */
-
-				.row.half > * {
-					/* padding: (gutters * 0.5) 0 0 (gutters * 0.5) */
-					padding: 20px 0 0 20px;
-				}
-
-				.row.half + .row.half > * {
-					/* padding-top: (gutters * 0.5) */
-					padding-top: 20px;
-				}
-
-				.row.half {
-					/* margin-left: -(gutters * 0.5) */
-					margin-left: -20px;
-				}
-
-			/* One and (a) Half */
-
-				.row.oneandhalf > * {
-					/* padding: (gutters * 1.5) 0 0 (gutters * 1.5) */
-					padding: 60px 0 0 60px;
-				}
-
-				.row.oneandhalf + .row.oneandhalf > * {
-					/* padding-top: (gutters * 1.5) */
-					padding-top: 60px;
-				}
-
-				.row.oneandhalf {
-					/* margin-left: -(gutters * 1.5) */
-					margin-left: -60px;
-				}
-
-			/* Double */
-
-				.row.double > * {
-					/* padding: (gutters * 2) 0 0 (gutters * 2) */
-					padding: 80px 0 0 80px;
-				}
-
-				.row.double + .row.double > * {
-					/* padding-top: (gutters * 2) */
-					padding-top: 80px;
-				}
-
-				.row.double {
-					/* margin-left: -(gutters * 2) */
-					margin-left: -80px;
-				}
-
-/* Collapsed */
-/*
-	.row:not(.no-collapse)
-	{
-		margin-left: 0;
-	}
-
-	.row:not(.no-collapse) > * {
-		float: none !important;
-		width: 100% !important;
-		margin-left: 0 !important;
-	}
-
-	.row:not(.no-collapse):not(.flush) > * {
-		padding: 10px 0 10px 0 !important;
-	}
-
-	.container {
-		max-width: none !important;
-		min-width: 0 !important;
-	
-		// width: (containers) //
-		width: 960px !important;
-	}*/
+		.container {
+			max-width: none !important;
+			min-width: 0 !important;
+		
+			// width: (containers) //
+			width: 960px !important;
+		}
+	*/
