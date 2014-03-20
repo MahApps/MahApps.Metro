@@ -1,3 +1,6 @@
+markdown: redcarpet
+pygments: true
+
 baseurl: http://mahapps.com/MahApps.Metro
 
 gems:
