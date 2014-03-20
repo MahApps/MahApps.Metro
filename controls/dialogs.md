@@ -17,7 +17,9 @@ If you really want to use `async/await` with .NET 4.0, you can install [Microsof
 
 Simple message dialogs can be displayed with the `ShowMessageAsync` method. It is an extension method for `MetroWindow`, so call it from your window class.
 
-    await this.ShowMessageAsync("This is the title", "Some message");
+```c#
+await this.ShowMessageAsync("This is the title", "Some message");
+```
     
 There are additional optional paramaters for simple buttons, such as `Ok` and `Cancel` and settings for the color theme and animation options.
 
@@ -25,7 +27,9 @@ There are additional optional paramaters for simple buttons, such as `Ok` and `C
 
 There is a built-in dialog that displays a progress bar at the bottom of the dialog. Call it like this:
 
-    var controller = await this.ShowProgressAsync("Please wait...", "Progress message");
+```c#
+var controller = await this.ShowProgressAsync("Please wait...", "Progress message");
+```
     
 This method returns a `ProgressDialogController` object that exposes the `SetProgress` method, use it to set the current progress.
 
