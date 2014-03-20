@@ -29,7 +29,7 @@ Another style, `MetroCircleToggleButtonStyle` is available by setting the Toggle
 
 ![]({{site.baseurl}}/images/toggle-button-circle.png")
 
-## Using Glyphs Within a Circle Toggle Button
+### Using Glyphs Within a Circle Toggle Button
 
 In order to use glyphs, you will have to add a reference to `Icons.xaml`. 
 
