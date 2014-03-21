@@ -3,6 +3,8 @@ layout: no-sidebar
 title: Controls 
 ---
 
+Currently not all controls are documented. The list of controls with documentation are liste below:
+
  - [Buttons]({{site.baseurl}}/controls/buttons.html)
  - [Dialogs]({{site.baseurl}}/controls/dialogs.html)
  - [FlipView]({{site.baseurl}}/controls/flipview.html)
@@ -19,7 +21,9 @@ title: Controls
  - [ToggleSwitch]({{site.baseurl}}/controls/toggle-switch.html)
  - [TransitioningContentControl]({{site.baseurl}}/controls/transitioning-content-control.html)
  
- **Not documented yet**
+**Not documented yet**
+There a still a few more controls which are being worked on and are undocumented. Listed below are some of the controls.
+
  - ComboBox
  - DataGrid
  - DatePicker and Calendar

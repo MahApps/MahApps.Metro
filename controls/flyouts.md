@@ -9,37 +9,44 @@ A flyout is an overlay for a window that has custom content.
 
 Add the following code to your `MetroWindow`:
 
-    <Controls:MetroWindow.Flyouts>
-        <Controls:FlyoutsControl>
-            
-        </Controls:FlyoutsControl>
-    </Controls:MetroWindow.Flyouts>
-    
+```xml
+<Controls:MetroWindow.Flyouts>
+    <Controls:FlyoutsControl>
+        
+    </Controls:FlyoutsControl>
+</Controls:MetroWindow.Flyouts>
+```
+
 This is the container for the flyouts.
 Inside this container add the following:
 
-    <Controls:Flyout Header="Flyout" Position="Right" Width="200">
-        <!-- Your custom content here -->
-    </Controls:Flyout>
-    
+```xml
+<Controls:Flyout Header="Flyout" Position="Right" Width="200">
+    <!-- Your custom content here -->
+</Controls:Flyout>
+```
+
 This creates a flyout with a header, sliding out from the right side of the window and has a width of 200.
 
 The `Position` property can have the values
 
+```
     Left,
     Right,
     Top,
     Bottom
-
+```
 
 ### Themed flyouts
 As of version 0.12, flyouts can have various themes, assignable through the `Theme` property, those are:
 
+```
     Adapt,
     Inverse,
     Dark,
     Light,
     Accent
+```
 
 - `Adapt` adapts the flyout theme to the host window's theme.  
 - `Inverse` has the inverse theme of the host window's theme.  

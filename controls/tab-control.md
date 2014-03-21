@@ -14,7 +14,9 @@ This shows the three states - selected/active tab, hover and inactive.
 
 ### AnimatedTabControl
 
-`<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />`
+```xml
+<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+```
 
 Functioning just like the regular `TabControl`, except it animates every tab change by wrapping everything in a `MetroContentControl`.
 
@@ -22,7 +24,9 @@ Functioning just like the regular `TabControl`, except it animates every tab cha
 
 ### AnimatedSingleRowTabControl
 
-`<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />`
+```xml
+<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedSingleRowTabControl.xaml" />`
+```
 
 `AnimatedSingleRowTabControl` functions exactly the same as the `AnimatedTabControl` except the tabs will only appear on a single line rather than wrapping. 
 Instead of wrapping, arrows (left/right) are presented.

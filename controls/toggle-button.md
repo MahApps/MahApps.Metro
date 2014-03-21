@@ -5,8 +5,6 @@ title: ToggleButton
 
 ### Introduction
 
-
-
 There are two kinds of styles for ToggleButtons available in MahApps.Metro.
 
 The default style, available just by placing a `ToggleButton` control in XAML looks like the default MahApps.Metro button. 
