@@ -49,6 +49,10 @@ blockquote {
   vertical-align: middle;
 }
 
+.post {
+  margin-bottom: 50px; 
+}
+
 .post-date {
   display: block;
   margin-bottom: 1rem;
