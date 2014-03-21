@@ -13,15 +13,21 @@ The key elements used were the `WindowCommands` (discussed [here]({{site.baseurl
 
 Add some namespace references to the opening `Window` tag:
 
+```
 	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 	xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
+```
 
 Then somewhere within the `Window`, add
 
+```xml
     <i:Interaction.Behaviors>
         <Behaviours:BorderlessWindowBehavior/>
     </i:Interaction.Behaviors>
+```
 
 And you're done! `BorderlessWindowBehavior` has a few options, such as `ResizeWithGrip` and `AutoSizeToContent`:
 
+```xml
 	<Behaviours:BorderlessWindowBehavior ResizeWithGrip="False" />
+```

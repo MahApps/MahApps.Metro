@@ -1,9 +1,9 @@
-----
+---
 layout: no-sidebar
 title: NumericUpDown - MahApps.Metro
-----
+---
 
-> **Note:** This is the documentation for the new `NumericUpDown` control that isn't implemented yet. It will be available in v0.13
+**Note:** This is the documentation for the new `NumericUpDown` control that isn't implemented yet. It will be available in v0.13
 
 The NumericUpDown control is used to increase or decrease a numeric value.
 
@@ -42,7 +42,10 @@ e.g.
 ## Example
 
 Following line will provide a NumericUpDown that allows numers from 0 to 1000. Furthermore by pressing `+` the value gets increased by 5. The value will be shown as currency with two decimal places:
-`<Controls:NumericUpDown Minimum = 0, Maximum = 10000, Interval = 5, StringFormat="C2"/>`
+
+```xml
+<Controls:NumericUpDown Minimum = 0, Maximum = 10000, Interval = 5, StringFormat="C2"/>
+```
 
 
 

@@ -20,6 +20,7 @@ Currently, this consists of [Entypo](http://www.entypo.com/) and [Temparian's Wi
 ## Usage
 The resources are simply `Canvas`'s wrapping one or more `Path`s. To use these sorts of elements, you can just use WPF's `VisualBrush`.
 
+```xml
 	<Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -33,12 +34,15 @@ The resources are simply `Canvas`'s wrapping one or more `Path`s. To use these s
             <VisualBrush Visual="{StaticResource appbar_add}" />
         </Rectangle.Fill>
     </Rectangle>
-    
+```
+
 If you're trying to create "circle" buttons ala Windows Phone 7, the easiest way is to set the `VisualBrush` to be an *`OpacityMask`* on the `Rectangle`. 
 This means you just need to alter the `Rectangle` colours on state change (hover, mouse down, etc)
 
+```xml
 	<Rectangle Fill="Black">
 		<Rectangle.OpacityMask>
 			<VisualBrush Visual="{StaticResource appbar_add}" Stretch="Fill" />
 		</Rectangle.OpacityMask>
 	</Rectangle>
+```

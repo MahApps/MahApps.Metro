@@ -12,11 +12,13 @@ This just replaces the standard button when you drop in the library, nothing fan
 
 "Standard" circle button, designed for icons.  
 Add the following to a button to apply this style: `Style="{DynamicResource MetroCircleButtonStyle}"`  
+
 ![]({{site.baseurl}}/images/07_CircleButtons.png)
 
 ### SquareButton 
 
 Another WP7 styled button, this time just for text. Like all the buttons here, has normal, clicked, and hover states.  
+
 ![]({{site.baseurl}}/images/square-button.png)
 
 Add the following to a button to apply this style: `Style="{DynamicResource SquareButtonStyle}"`

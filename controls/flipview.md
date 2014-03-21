@@ -13,7 +13,7 @@ The ```FlipView``` is syntatically similar to the regular ```TabControl``` contr
 
 The following code was taken from our [MetroDemo](https://github.com/MahApps/MahApps.Metro/tree/master/samples/MetroDemo).
 
-```
+```xml
 <Controls:FlipView Height="200" 
                    IsBannerEnabled="True" 
                    SelectionChanged="FlipView_SelectionChanged"
@@ -52,7 +52,7 @@ The above code produces the following result.
 
 The banner on the bottom of the FlipView can be shown and hidden using the ```IsBannerEnabled``` property. You may change the banner text using the ```BannerText``` property. We use that in code behind to change the banner based on the selected item.
 
-```
+```c#
 private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
 {
     var flipview = ((FlipView)sender);
