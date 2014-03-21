@@ -32,25 +32,25 @@
 		background: url('images/bgshadow.png') top left no-repeat;
 		background-size: 100% 100%;
 	}
-	
+
 	a
 	{
 		color: #0090c5;
 		text-decoration: none;
 	}
-	
+
 		a:hover
 		{
-			text-decoration: underline;	
+			text-decoration: underline;
 		}
-	
+
 	h1, h2, h3, h4, h5, h6
 	{
 		color: #444;
 		font-weight: 800;
 		font-family: "Segoe UI Light","Helvetica Neue",'RobotoLight',"Segoe UI","Segoe WP",sans-serif;
 	}
-	
+
 	h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
 	{
 		color: inherit;
@@ -65,30 +65,30 @@
 	form
 	{
 	}
-	
+
 		form input,
 		form select,
 		form textarea
 		{
 			-webkit-appearance: none;
 		}
-			
+
 	br.clear
 	{
 		clear: both;
 	}
-	
+
 	p, ul, ol, dl, table
 	{
 		margin-bottom: 2em;
 	}
-	
+
 	section,
 	article
 	{
 		margin-bottom: 5em;
 	}
-	
+
 	section > :last-child,
 	article > :last-child
 	{
@@ -106,7 +106,7 @@
 		display: inline-block;
 		outline: 0;
 	}
-	
+
 		.image img
 		{
 			display: block;
@@ -120,13 +120,13 @@
 		width: 100%;
 		margin: 0 0 2.5em 0;
 	}
-	
+
 	.image-left
 	{
 		float: left;
 		margin: 0 2em 2em 0;
 	}
-	
+
 	.image-centered
 	{
 		display: block;
@@ -154,29 +154,29 @@
 		-ms-transition: background-color .25s ease-in-out;
 		transition: background-color .25s ease-in-out;
 	}
-	
+
 		.button:hover
 		{
 			background: #10a0d5;
 		}
-	
+
 		.button:active
 		{
 			background: #20b0e5;
 		}
-	
+
 		.button-icon
 		{
 			position: relative;
 		}
-		
+
 			.button-icon:after
 			{
 				content: '';
 				display: inline-block;
 				width: 54px;
 			}
-		
+
 			.button-icon:before
 			{
 				content: '';
@@ -189,22 +189,22 @@
 				top: 50%;
 				margin-top: -24px;
 			}
-			
+
 			.button-icon-rarrow:before
 			{
 				background-position: 0px 0px;
 			}
-			
+
 			.button-icon-paper:before
 			{
 				background-position: -48px 0px;
 			}
-	
+
 			.button-icon-question:before
 			{
 				background-position: 0px -48px;
 			}
-	
+
 		.button-alt
 		{
 			background: #f1f1f1;
@@ -224,17 +224,23 @@
 	ul.style1
 	{
 	}
-	
+
 	ul.style2
 	{
 	}
-	
+
 		ul.style2 li
 		{
 		}
-			
+
 	ol.style1
 	{
+
+	}
+
+	ol
+	{
+		list-style: decimal;
 	}
 
 	.byline
@@ -246,12 +252,12 @@
 	{
 		margin: 0 0 2em 0;
 	}
-	
+
 		header h2, header h3
 		{
 			margin: 0 0 0.25em 0;
 		}
-		
+
 		header .byline
 		{
 			margin: 0;
@@ -261,7 +267,7 @@
 	{
 		margin: 2.5em 0 0 0;
 	}
-	
+
 	.box
 	{
 		background: #fff;
@@ -290,7 +296,7 @@
 	.widget-contact
 	{
 	}
-	
+
 		.widget-contact ul
 		{
 			overflow: hidden;
@@ -299,7 +305,7 @@
 			top: 4px;
 			margin-bottom: 1.5em;
 		}
-		
+
 			.widget-contact ul li
 			{
 				display: block;
@@ -321,32 +327,32 @@
 					-ms-transition: opacity .25s ease-in-out;
 					transition: opacity .25s ease-in-out;
 				}
-				
+
 					.widget-contact ul li a:hover
 					{
 						opacity: 1.0;
 					}
-				
+
 					.widget-contact ul li a.twitter
 					{
 						background-position: -48px -48px;
 					}
-				
+
 					.widget-contact ul li a.facebook
 					{
 						background-position: -96px -48px;
 					}
-				
+
 					.widget-contact ul li a.dribbble
 					{
 						background-position: -144px -48px;
 					}
-				
+
 					.widget-contact ul li a.googleplus
 					{
 						background-position: -192px -48px;
 					}
-	
+
 /*********************************************************************************/
 /* Wrappers                                                                      */
 /*********************************************************************************/
@@ -354,21 +360,21 @@
 	#header-wrapper
 	{
 	}
-	
+
 	#banner-wrapper
 	{
 	}
-	
+
 	#main-wrapper
 	{
 		background: #fff;
 		box-shadow: 0px 3px 0px 0px rgba(0,0,0,0.05);
 	}
-	
+
 	#footer-wrapper
 	{
 	}
-	
+
 /*********************************************************************************/
 /* Header                                                                        */
 /*********************************************************************************/
@@ -377,7 +383,7 @@
 	{
 		position: relative;
 	}
-	
+
 /*********************************************************************************/
 /* Logo                                                                          */
 /*********************************************************************************/
@@ -397,12 +403,12 @@
 			margin-bottom: 0px;
 			text-transform: lowercase;
 		}
-		
+
 		#logo span
 		{
 			font-weight: 100;
 		}
-	
+
 /*********************************************************************************/
 /* Banner                                                                        */
 /*********************************************************************************/
@@ -411,7 +417,7 @@
 	{
 		position: relative;
 	}
-	
+
 /*********************************************************************************/
 /* Footer                                                                        */
 /*********************************************************************************/
@@ -419,17 +425,17 @@
 	#footer
 	{
 	}
-	
+
 		#footer a
 		{
 			color: inherit;
 		}
-	
+
 	#copyright
 	{
 		color: #aaa;
 	}
-	
+
 		#copyright a
 		{
 			color: inherit;
