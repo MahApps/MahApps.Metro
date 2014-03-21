@@ -51,7 +51,18 @@ blockquote {
 
 .post-date {
   display: block;
-  margin-top: -.5rem;
   margin-bottom: 1rem;
   color: #9a9a9a;
+}
+
+.post .post-title {
+  font-size: 2.2em;
+}
+
+.post h1 {
+  font-size: 1.8em;
+}
+
+.post h2 {
+  font-size: 1.5em;
 }
