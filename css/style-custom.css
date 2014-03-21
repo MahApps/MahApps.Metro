@@ -48,3 +48,25 @@ blockquote {
 #maintainer-list img {
   vertical-align: middle;
 }
+
+.post {
+  margin-bottom: 50px; 
+}
+
+.post-date {
+  display: block;
+  margin-bottom: 1rem;
+  color: #9a9a9a;
+}
+
+.post .post-title {
+  font-size: 2.2em;
+}
+
+.post h1 {
+  font-size: 1.8em;
+}
+
+.post h2 {
+  font-size: 1.5em;
+}
