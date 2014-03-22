@@ -52,7 +52,6 @@ def format_issue(issue, template):
         text_file.write(final_text)
 
 
-
 with open("template.md", "r") as myfile:
     template=myfile.read()
 
@@ -62,7 +61,7 @@ with urllib.request.urlopen('https://api.github.com/repos/MahApps/MahApps.Metro/
 jobject = json.loads(text)
 
 for issue in reversed(jobject):
-    format_issue(issue, template)   
+    format_issue(issue, template)
 
 
 
