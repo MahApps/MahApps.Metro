@@ -57,7 +57,36 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.SizeToContent = autoSizeToContent ? SizeToContent.WidthAndHeight : SizeToContent.Manual;
             AssociatedObject.IsVisibleChanged += AssociatedObject_IsVisibleChanged;
 
+            // handle resize mode after loading the window
+            Window.ResizeModeProperty.AddOwner(AssociatedObject.GetType(), new FrameworkPropertyMetadata(ResizeMode.CanResize, FrameworkPropertyMetadataOptions.AffectsMeasure, this.ResizeModePropertyChangedCallback));
+
             base.OnAttached();
+        }
+
+        private void ResizeModePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var metroWindow = dependencyObject as MetroWindow;
+            if (metroWindow != null && e.NewValue != e.OldValue)
+            {
+                this.HandleResizeMode(metroWindow, (ResizeMode)e.NewValue);
+            }
+        }
+
+        /// <summary>
+        /// handle the resize mode for the window
+        /// </summary>
+        private void HandleResizeMode(MetroWindow window, ResizeMode resizeMode)
+        {
+            switch (resizeMode)
+            {
+                case ResizeMode.NoResize:
+                    window.ShowMaxRestoreButton = false;
+                    window.ShowMinButton = false;
+                    break;
+                case ResizeMode.CanMinimize:
+                    window.ShowMaxRestoreButton = false;
+                    break;
+            }
         }
 
         private bool isCleanedUp;
@@ -343,16 +372,7 @@ namespace MahApps.Metro.Behaviours
             }
 
             // handle resize mode
-            switch (AssociatedObject.ResizeMode)
-            {
-                case ResizeMode.NoResize:
-                    window.ShowMaxRestoreButton = false;
-                    window.ShowMinButton = false;
-                    break;
-                case ResizeMode.CanMinimize:
-                    window.ShowMaxRestoreButton = false;
-                    break;
-            }
+            this.HandleResizeMode(window, window.ResizeMode);
 
             // non-active border brush
             if (window.NonActiveBorderBrush != null)
