@@ -291,12 +291,21 @@
             <Label Content="SplitButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
-            <Controls:SplitButton Name="Splitbutton0"
+            <Controls:SplitButton HorizontalContentAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  VerticalContentAlignment="Center"
+                                  Width="150"
+                                  SelectedIndex="2"
+                                  ItemsSource="{Binding Albums}"
+                                  DisplayMemberPath="Title"
+                                  VerticalAlignment="Center" />
+
+            <Controls:SplitButton Margin="0,10,0,0"
+                                  Name="Splitbutton0"
                                   HorizontalContentAlignment="Center"
                                   HorizontalAlignment="Center"
                                   VerticalContentAlignment="Center"
-                                  Height="30"
-                                  Width="100"
+                                  Width="150"
                                   SelectedIndex="2"
                                   VerticalAlignment="Center">
                 <Int32Collection>
@@ -308,7 +317,7 @@
             </Controls:SplitButton>
 
             <Controls:SplitButton Margin="0,10,0,0"
-                                  Width="100"
+                                  Width="150"
                                   HorizontalAlignment="Center"
                                   HorizontalContentAlignment="Center"
                                   Orientation="Vertical"

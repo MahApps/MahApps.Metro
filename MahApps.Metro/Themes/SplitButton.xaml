@@ -19,8 +19,8 @@
                             Background="{DynamicResource WhiteColorBrush}"
                             BorderBrush="{DynamicResource WhiteColorBrush}">
                         <ContentPresenter Margin="2"
-                                          HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                          VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           RecognizesAccessKey="True" />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -59,8 +59,8 @@
     <ControlTemplate TargetType="{x:Type local:SplitButton}"
                      x:Key="SplitButtonHorizontal">
         <Border Name="PART_Border"
-                BorderThickness="1"
-                BorderBrush="{DynamicResource BlackColorBrush}">
+                BorderThickness="{TemplateBinding BorderThickness}"
+                BorderBrush="{TemplateBinding BorderBrush}">
             <Grid x:Name="PART_Container"
                   Width="{TemplateBinding Width}"
                   Height="{TemplateBinding Height}">
@@ -86,9 +86,10 @@
                                         x:Name="PART_ButtonContent"
                                         HorizontalAlignment="Stretch"
                                         VerticalAlignment="Stretch"
+                                        ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                        ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                         Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                        ContentTemplate="{TemplateBinding ItemTemplate}">
-                        </ContentControl>
+                                        ContentTemplate="{TemplateBinding ItemTemplate}" />
                     </StackPanel>
                 </Button>
                 <Button Grid.Column="1"
@@ -134,10 +135,18 @@
                        MinWidth="{TemplateBinding ActualWidth}"
                        StaysOpen="False">
                     <ListBox x:Name="PART_ListBox"
+                             BorderBrush="{TemplateBinding BorderBrush}"
+                             BorderThickness="{TemplateBinding BorderThickness}"
+                             Style="{DynamicResource VirtualisedMetroListBox}"
                              SelectionMode="Single"
                              SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                             DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
                              ItemTemplate="{TemplateBinding ItemTemplate}"
+                             ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                             ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                             ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                             ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
                              ItemsSource="{TemplateBinding ItemsSource}" />
                 </Popup>
             </Grid>
@@ -169,8 +178,8 @@
     <ControlTemplate TargetType="{x:Type local:SplitButton}"
                      x:Key="SplitButtonVertical">
         <Border Name="PART_Border"
-                BorderThickness="1"
-                BorderBrush="{DynamicResource BlackColorBrush}">
+                BorderThickness="{TemplateBinding BorderThickness}"
+                BorderBrush="{TemplateBinding BorderBrush}">
             <Grid x:Name="PART_Container"
                   Width="{TemplateBinding Width}"
                   Height="{TemplateBinding Height}">
@@ -198,9 +207,10 @@
                                             x:Name="PART_ButtonContent"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
+                                            ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                             Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ContentTemplate="{TemplateBinding ItemTemplate}">
-                            </ContentControl>
+                                            ContentTemplate="{TemplateBinding ItemTemplate}" />
                         </StackPanel>
                     </Button.Content>
                 </Button>
@@ -245,10 +255,17 @@
                        MinWidth="{TemplateBinding ActualWidth}"
                        StaysOpen="False">
                     <ListBox x:Name="PART_ListBox"
+                             BorderBrush="{TemplateBinding BorderBrush}"
+                             BorderThickness="{TemplateBinding BorderThickness}"
                              SelectionMode="Single"
                              SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                             DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
                              ItemTemplate="{TemplateBinding ItemTemplate}"
+                             ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                             ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                             ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                             ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
                              ItemsSource="{TemplateBinding ItemsSource}" />
                 </Popup>
             </Grid>
@@ -278,6 +295,16 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type local:SplitButton}">
+        <Setter Property="MinHeight"
+                Value="26" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Template"
                 Value="{StaticResource SplitButtonHorizontal}" />
         <Style.Triggers>

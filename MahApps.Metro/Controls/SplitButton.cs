@@ -23,7 +23,7 @@ namespace MahApps.Metro.Controls
     TemplatePart(Name = "PART_Popup", Type = typeof(Popup)),
     TemplatePart(Name = "PART_Expander", Type = typeof(Button)),
     TemplatePart(Name = "PART_ListBox", Type = typeof(ListBox))]
-    public class SplitButton : Control
+    public class SplitButton : ItemsControl
     {
 
         #region Events
@@ -52,13 +52,6 @@ namespace MahApps.Metro.Controls
 
 
         #region DependencyProperties
-
-        public static readonly DependencyProperty ItemsSourceProperty =
-            DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(SplitButton));
-
-        public static readonly DependencyProperty ItemTemplateProperty =
-            DependencyProperty.Register("ItemTemplate", typeof(DataTemplate), typeof(SplitButton),
-                new UIPropertyMetadata(null));
 
         public static readonly DependencyProperty IsExpandedProperty =
             DependencyProperty.Register("IsExpanded", typeof(bool), typeof(SplitButton));
@@ -105,18 +98,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
-        }
-
-        public IEnumerable ItemsSource
-        {
-            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
-        }
-
-        public DataTemplate ItemTemplate
-        {
-            get { return (DataTemplate)GetValue(ItemTemplateProperty); }
-            set { SetValue(ItemTemplateProperty, value); }
         }
 
         public Int32 SelectedIndex
