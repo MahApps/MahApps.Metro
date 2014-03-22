@@ -272,11 +272,7 @@
                         <DynamicResource ResourceKey="{x:Static SystemColors.ControlLightBrushKey}" />
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush>Transparent</SolidColorBrush>
-                    </Setter.Value>
-                </Setter>
+
                 <Setter TargetName="OuterBorder" Property="TextElement.Foreground">
                     <Setter.Value>
                         <DynamicResource ResourceKey="{x:Static SystemColors.HighlightTextBrushKey}" />
@@ -298,11 +294,7 @@
                         <DynamicResource ResourceKey="{x:Static SystemColors.ControlLightBrushKey}" />
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush>Transparent</SolidColorBrush>
-                    </Setter.Value>
-                </Setter>
+
                 <Setter TargetName="OuterBorder" Property="TextElement.Foreground">
                     <Setter.Value>
                         <DynamicResource ResourceKey="{x:Static SystemColors.HighlightTextBrushKey}" />
@@ -362,47 +354,42 @@
                     BorderBrush="{TemplateBinding Border.BorderBrush}"
                     BorderThickness="{TemplateBinding Border.BorderThickness}"
                     CornerRadius="{TemplateBinding RibbonControlService.CornerRadius}" />
-            <Border Name="MiddleBorder"
+            <Border Name="InnerBorder"
                     Background="Transparent"
                     BorderBrush="Transparent"
                     BorderThickness="{TemplateBinding Border.BorderThickness}"
-                    CornerRadius="{TemplateBinding RibbonControlService.CornerRadius}">
-                <Border Name="InnerBorder"
-                        Background="Transparent"
-                        BorderBrush="Transparent"
-                        BorderThickness="{TemplateBinding Border.BorderThickness}"
-                        CornerRadius="{TemplateBinding RibbonControlService.CornerRadius}"
-                        Padding="{TemplateBinding Control.Padding}">
-                    <StackPanel Name="StackPanel"
-                                HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}">
-                        <Image Name="PART_Image"
-                               Width="32"
-                               Height="32"
-                               Margin="{DynamicResource {ComponentResourceKey TypeInTargetAssembly=Ribbon,
-                                                                              ResourceId=LargeImageMargin}}"
-                               HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
-                               VerticalAlignment="Center"
-                               RenderOptions.BitmapScalingMode="NearestNeighbor"
-                               Source="{TemplateBinding RibbonControlService.LargeImageSource}" />
-                        <Grid Name="Grid"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center">
-                            <RibbonTwoLineText Name="TwoLineText"
-                                               Margin="1,1,1,0"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Top"
-                                               LineHeight="13"
-                                               LineStackingStrategy="BlockLineHeight"
-                                               PathFill="{TemplateBinding TextElement.Foreground}"
-                                               RibbonTwoLineText.HasTwoLines="{TemplateBinding RibbonTwoLineText.HasTwoLines}"
-                                               RibbonTwoLineText.PathData="{TemplateBinding RibbonTwoLineText.PathData}"
-                                               Text="{TemplateBinding RibbonToggleButton.Label}"
-                                               TextAlignment="Center" />
-                        </Grid>
-                    </StackPanel>
-                </Border>
+                    CornerRadius="{TemplateBinding RibbonControlService.CornerRadius}"
+                    Padding="{TemplateBinding Control.Padding}">
+                <StackPanel Name="StackPanel"
+                            HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding Control.VerticalContentAlignment}">
+                    <Image Name="PART_Image"
+                           Width="32"
+                           Height="32"
+                           Margin="{DynamicResource {ComponentResourceKey TypeInTargetAssembly=Ribbon,
+                                                                          ResourceId=LargeImageMargin}}"
+                           HorizontalAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
+                           VerticalAlignment="Center"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           Source="{TemplateBinding RibbonControlService.LargeImageSource}" />
+                    <Grid Name="Grid"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                        <RibbonTwoLineText Name="TwoLineText"
+                                           Margin="1,1,1,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Top"
+                                           LineHeight="13"
+                                           LineStackingStrategy="BlockLineHeight"
+                                           PathFill="{TemplateBinding TextElement.Foreground}"
+                                           RibbonTwoLineText.HasTwoLines="{TemplateBinding RibbonTwoLineText.HasTwoLines}"
+                                           RibbonTwoLineText.PathData="{TemplateBinding RibbonTwoLineText.PathData}"
+                                           Text="{TemplateBinding RibbonToggleButton.Label}"
+                                           TextAlignment="Center" />
+                    </Grid>
+                </StackPanel>
             </Border>
+
         </Grid>
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding Path=ControlSizeDefinition.ImageSize, RelativeSource={RelativeSource Mode=Self}}" Value="Large">
@@ -510,11 +497,6 @@
                         <Binding Path="MouseOverBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush>#80FFFFFF</SolidColorBrush>
-                    </Setter.Value>
-                </Setter>
                 <Trigger.Value>
                     <s:Boolean>True</s:Boolean>
                 </Trigger.Value>
@@ -528,11 +510,6 @@
                 <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
                     <Setter.Value>
                         <Binding Path="FocusedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush>#80FFFFFF</SolidColorBrush>
                     </Setter.Value>
                 </Setter>
                 <Trigger.Value>
@@ -583,11 +560,6 @@
                 <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
                     <Setter.Value>
                         <Binding Path="PressedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush>Transparent</SolidColorBrush>
                     </Setter.Value>
                 </Setter>
                 <Trigger.Value>
@@ -689,11 +661,6 @@
                     </Setter.Value>
                 </Setter>
                 <Setter TargetName="InnerBorder" Property="Border.BorderBrush">
-                    <Setter.Value>
-                        <SolidColorBrush>Transparent</SolidColorBrush>
-                    </Setter.Value>
-                </Setter>
-                <Setter TargetName="MiddleBorder" Property="Panel.Background">
                     <Setter.Value>
                         <SolidColorBrush>Transparent</SolidColorBrush>
                     </Setter.Value>
@@ -882,11 +849,6 @@
                         <DynamicResource ResourceKey="{x:Static SystemColors.ControlDarkBrushKey}" />
                     </Setter.Value>
                 </Setter>
-                <Setter TargetName="MiddleBorder" Property="Panel.Background">
-                    <Setter.Value>
-                        <SolidColorBrush>Transparent</SolidColorBrush>
-                    </Setter.Value>
-                </Setter>
                 <Setter TargetName="MainGrid" Property="TextElement.Foreground">
                     <Setter.Value>
                         <DynamicResource ResourceKey="{x:Static SystemColors.HighlightTextBrushKey}" />
@@ -1000,11 +962,6 @@
                                         </RibbonButton.Resources>
                                     </RibbonButton>
                                     <Grid>
-                                        <Border x:Name="UnderlayBorder"
-                                                Background="{Binding RelativeSource={RelativeSource TemplatedParent},
-                                                                     Path=MouseOverBackground}"
-                                                Opacity="0.5"
-                                                Visibility="Collapsed" />
                                         <RibbonToggleButton Name="PART_ToggleButton"
                                                             HorizontalContentAlignment="{TemplateBinding Control.HorizontalContentAlignment}"
                                                             VerticalContentAlignment="{TemplateBinding Control.VerticalContentAlignment}"
@@ -1701,11 +1658,7 @@
                                     <Binding Path="Ribbon.BorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="UnderlayBorder" Property="UIElement.Visibility">
-                                <Setter.Value>
-                                    <x:Static Member="Visibility.Visible" />
-                                </Setter.Value>
-                            </Setter>
+
                             <Setter TargetName="PART_ToggleButton" Property="Border.BorderBrush">
                                 <Setter.Value>
                                     <Binding Path="MouseOverBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
@@ -1768,11 +1721,6 @@
                                     <DynamicResource ResourceKey="{x:Static SystemColors.MenuBrushKey}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="UnderlayBorder" Property="UIElement.Opacity">
-                                <Setter.Value>
-                                    <s:Double>0</s:Double>
-                                </Setter.Value>
-                            </Setter>
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -1792,16 +1740,6 @@
                                 <Condition Binding="{Binding Path=IsEnabled, ElementName=PART_HeaderButton}" Value="False" />
                                 <Condition Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True" />
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="UnderlayBorder" Property="UIElement.Opacity">
-                                <Setter.Value>
-                                    <s:Double>1</s:Double>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="UnderlayBorder" Property="Panel.Background">
-                                <Setter.Value>
-                                    <DynamicResource ResourceKey="{x:Static SystemColors.HighlightBrushKey}" />
-                                </Setter.Value>
-                            </Setter>
                         </MultiDataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
