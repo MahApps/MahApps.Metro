@@ -10,7 +10,7 @@ def issue_ref_generator(n):
         yield '{0}'.format(n)
         n += 1
 
-def format_issue(issue, template):
+def format_issue(issue, template, should_parse_issue):
     #Constants
     pattern_for_checkbox = r"((-)( ))(\[.\] )"
     pattern_for_issues = r"((#([0-9]+)))"
@@ -22,37 +22,42 @@ def format_issue(issue, template):
     templated_text = renderer.render(template, issue)
 
     # Strip Checkboxes
-    text_with_no_checkboxes = re.sub(pattern_for_checkbox, r'\1', templated_text)
+    final_text = re.sub(pattern_for_checkbox, r'\1', templated_text)
 
-    #Get links for issues
-    links = []
+    if should_parse_issue:
+        #Get links for issues
+        links = []
 
-    for val,issue_number in enumerate(re.finditer(pattern_for_issues, text_with_no_checkboxes)):
-        links.append(link_format.format(val, issue_number.group(2)))
+        for val,issue_number in enumerate(re.finditer(pattern_for_issues, final_text)):
+            links.append(link_format.format(val, issue_number.group(2)))
 
-    #Replace issues with markdown reference links
-    ref_gen = issue_ref_generator(0)
-    final_text = re.sub(\
-        pattern_for_issues,
-        lambda m: '[{0}][{1}]'.format(m.group(2), next(ref_gen)),
-        text_with_no_checkboxes)
+        #Replace issues with markdown reference links
+        ref_gen = issue_ref_generator(0)
+        final_text = re.sub(\
+            pattern_for_issues,
+            lambda m: '[{0}][{1}]'.format(m.group(2), next(ref_gen)),
+            final_text)
 
-    #Append links to the bottom of the text
-    for link in links:
-        final_text += ('\n' + link)
-
+        #Append links to the bottom of the text
+        for link in links:
+            final_text += ('\n' + link)
+    
     #Get File Name
-    fileName = '_posts/{0}-{1}.md'.format((issue["updated_at"])[0:10], issue["title"])
+    file_name = '_posts/{0}-{1}.md'.format((issue["updated_at"])[0:10], issue["title"])
 
     if not os.path.exists('_posts'):
         os.makedirs('_posts')
 
     #Write to File
-    with open(fileName, 'w') as text_file:
+    with open(file_name, 'w') as text_file:
         text_file.write(final_text)
 
 
-with open("template.md", "r") as myfile:
+#configuration
+template_location = "template.md"
+should_parse_issues = False
+
+with open(template_location, "r") as myfile:
     template=myfile.read()
 
 with urllib.request.urlopen('https://api.github.com/repos/MahApps/MahApps.Metro/issues?labels=Next+Release') as response:
@@ -61,7 +66,7 @@ with urllib.request.urlopen('https://api.github.com/repos/MahApps/MahApps.Metro/
 jobject = json.loads(text)
 
 for issue in reversed(jobject):
-    format_issue(issue, template)
+    format_issue(issue, template, should_parse_issues)   
 
 
 
