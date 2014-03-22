@@ -85,6 +85,13 @@ namespace MahApps.Metro.Behaviours
                     break;
                 case ResizeMode.CanMinimize:
                     window.ShowMaxRestoreButton = false;
+                    window.ShowMinButton = true;
+                    break;
+
+                case ResizeMode.CanResize:
+                case ResizeMode.CanResizeWithGrip:
+                    window.ShowMaxRestoreButton = true;
+                    window.ShowMinButton = true;
                     break;
             }
         }
