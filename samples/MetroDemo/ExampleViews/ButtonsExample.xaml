@@ -84,7 +84,7 @@
                            Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
                         <VisualBrush Stretch="Fill"
-                                     Visual="{DynamicResource appbar_city}"/>
+                                     Visual="{DynamicResource appbar_city}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
@@ -194,12 +194,12 @@
                                    IsChecked="True"
                                    OnLabel="Enabled"
                                    OffLabel="Disabled"
-                                   Margin="0, 5, 0, 0"/>
+                                   Margin="0, 5, 0, 0" />
             <Controls:ToggleSwitch x:Name="visibleSwitch"
                                    IsChecked="False"
                                    OnLabel="Visible"
                                    OffLabel="Collapsed"
-                                   Margin="0, 5, 0, 0"/>
+                                   Margin="0, 5, 0, 0" />
             <Controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}"
                                    Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
         </StackPanel>
@@ -258,30 +258,47 @@
             <Label Content="DropDownButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
-            <Controls:DropDownButton Name="DownButton" Height="30" Width="150" Content="Test">
-                <MenuItem Header="test1" IsChecked="True"></MenuItem>
-                <MenuItem Header="test2"></MenuItem>
-                <MenuItem Header="test3"></MenuItem>
-                <MenuItem Header="test4"></MenuItem>
-                <MenuItem Header="test5"></MenuItem>
-                <Button Width="Auto" Content="test6"></Button>
+            <Controls:DropDownButton Name="DownButton"
+                                     Height="30"
+                                     Width="150"
+                                     Content="Test">
+                <MenuItem Header="test1"
+                          IsChecked="True" />
+                <MenuItem Header="test2" />
+                <MenuItem Header="test3" />
+                <MenuItem Header="test4" />
+                <MenuItem Header="test5" />
+                <Button Width="Auto"
+                        Content="test6" />
             </Controls:DropDownButton>
 
-            <Controls:DropDownButton Name="DownButton1" Orientation="Vertical" Margin="0,10,0,0" Width="150" Content="Test">
-                <MenuItem Header="test1" IsChecked="True"></MenuItem>
-                <MenuItem Header="test2"></MenuItem>
-                <MenuItem Header="test3"></MenuItem>
-                <MenuItem Header="test4"></MenuItem>
-                <MenuItem Header="test5"></MenuItem>
-                <Button Width="Auto" Content="test6"></Button>
+            <Controls:DropDownButton Name="DownButton1"
+                                     Orientation="Vertical"
+                                     Margin="0,10,0,0"
+                                     Width="150"
+                                     Content="Test">
+                <MenuItem Header="test1"
+                          IsChecked="True" />
+                <MenuItem Header="test2" />
+                <MenuItem Header="test3" />
+                <MenuItem Header="test4" />
+                <MenuItem Header="test5" />
+                <Button Width="Auto"
+                        Content="test6" />
             </Controls:DropDownButton>
-            <CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></CheckBox>
-            <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            </CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Label Content="SplitButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
-            
-            <Controls:SplitButton Name="Splitbutton0" HorizontalContentAlignment="Center"  HorizontalAlignment="Center"  VerticalContentAlignment="Center"  Height="30" Width="100" SelectedIndex="2" VerticalAlignment="Center" >
+
+            <Controls:SplitButton Name="Splitbutton0"
+                                  HorizontalContentAlignment="Center"
+                                  HorizontalAlignment="Center"
+                                  VerticalContentAlignment="Center"
+                                  Height="30"
+                                  Width="100"
+                                  SelectedIndex="2"
+                                  VerticalAlignment="Center">
                 <Int32Collection>
                     4654
                     465
@@ -290,10 +307,13 @@
                 </Int32Collection>
             </Controls:SplitButton>
 
-            <Controls:SplitButton Margin="0,120,0,0" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Orientation="Vertical" SelectedIndex="{Binding SelectedIndex, ElementName=Splitbutton0, Mode=TwoWay}" 
-                                  ItemsSource="{Binding ItemsSource, ElementName=Splitbutton0, Mode=TwoWay}">
-
-            </Controls:SplitButton>
+            <Controls:SplitButton Margin="0,10,0,0"
+                                  Width="100"
+                                  HorizontalAlignment="Center"
+                                  HorizontalContentAlignment="Center"
+                                  Orientation="Vertical"
+                                  SelectedIndex="{Binding SelectedIndex, ElementName=Splitbutton0, Mode=TwoWay}"
+                                  ItemsSource="{Binding ItemsSource, ElementName=Splitbutton0, Mode=TwoWay}" />
 
         </StackPanel>
     </Grid>
