@@ -58,7 +58,8 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.IsVisibleChanged += AssociatedObject_IsVisibleChanged;
 
             // handle resize mode after loading the window
-            System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window)). AddValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
+            System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window))
+                  .AddValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
             
             base.OnAttached();
         }
@@ -105,7 +106,8 @@ namespace MahApps.Metro.Behaviours
                 isCleanedUp = true;
 
                 // clean up events
-                System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window)).RemoveValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
+                System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window))
+                      .RemoveValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
                 AssociatedObject.Loaded -= AssociatedObject_Loaded;
                 AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
                 AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
