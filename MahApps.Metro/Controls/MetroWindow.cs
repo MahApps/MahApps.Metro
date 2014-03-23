@@ -586,6 +586,13 @@ namespace MahApps.Metro.Controls
             if (e.Accent != null)
             {
                 var flyouts = this.Flyouts.GetFlyouts().ToList();
+                // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
+                // e.g if the FlyoutsControl is hosted in a UserControl
+                var allChildFlyouts = (this.Content as DependencyObject).FindChildren<FlyoutsControl>(true).ToList();
+                if (allChildFlyouts.Any())
+                {
+                    flyouts.AddRange(allChildFlyouts.SelectMany(flyoutsControl => flyoutsControl.GetFlyouts()));
+                }
 
                 if (!flyouts.Any())
                 {

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
-using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
@@ -18,12 +16,11 @@ namespace MahApps.Metro.Controls
     [DefaultEvent("SelectionChanged"),
     TemplatePart(Name = "PART_Container", Type = typeof(Grid)),
     TemplatePart(Name = "PART_Button", Type = typeof(Button)),
-    TemplatePart(Name = "PART_Image", Type = typeof(Image)),
     TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl)),
     TemplatePart(Name = "PART_Popup", Type = typeof(Popup)),
     TemplatePart(Name = "PART_Expander", Type = typeof(Button)),
     TemplatePart(Name = "PART_ListBox", Type = typeof(ListBox))]
-    public class SplitButton : Control
+    public class SplitButton : ItemsControl
     {
 
         #region Events
@@ -53,13 +50,6 @@ namespace MahApps.Metro.Controls
 
         #region DependencyProperties
 
-        public static readonly DependencyProperty ItemsSourceProperty =
-            DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(SplitButton));
-
-        public static readonly DependencyProperty ItemTemplateProperty =
-            DependencyProperty.Register("ItemTemplate", typeof(DataTemplate), typeof(SplitButton),
-                new UIPropertyMetadata(null));
-
         public static readonly DependencyProperty IsExpandedProperty =
             DependencyProperty.Register("IsExpanded", typeof(bool), typeof(SplitButton));
 
@@ -77,7 +67,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(Orientation.Horizontal));
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(ImageSource), typeof(SplitButton));
+            DependencyProperty.Register("Icon", typeof(Object), typeof(SplitButton));
 
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.Register("Command", typeof(ICommand), typeof(SplitButton));
@@ -105,18 +95,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
-        }
-
-        public IEnumerable ItemsSource
-        {
-            get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
-        }
-
-        public DataTemplate ItemTemplate
-        {
-            get { return (DataTemplate)GetValue(ItemTemplateProperty); }
-            set { SetValue(ItemTemplateProperty, value); }
         }
 
         public Int32 SelectedIndex
@@ -149,9 +127,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(OrientationProperty, value); }
         }
 
-        public ImageSource Icon
+        public Object Icon
         {
-            get { return (ImageSource)GetValue(IconProperty); }
+            get { return GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
         }
 
@@ -163,15 +141,12 @@ namespace MahApps.Metro.Controls
         private Button _clickButton;
         private Button _expander;
         private ListBox _listBox;
-        private bool _mouseLeaved;
+        private Popup _popup;
 
 
         #endregion
 
 
-        public SplitButton()
-        {
-        }
         static SplitButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(SplitButton), new FrameworkPropertyMetadata(typeof(SplitButton)));
@@ -196,21 +171,13 @@ namespace MahApps.Metro.Controls
             IsExpanded = !IsExpanded;
         }
 
-        void SplitButton_LostMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            if (_mouseLeaved)
-            {
-                IsExpanded = false;
-                _mouseLeaved = false;
-            }
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             _clickButton = EnforceInstance<Button>("PART_Button");
             _expander = EnforceInstance<Button>("PART_Expander");
             _listBox = EnforceInstance<ListBox>("PART_ListBox");
+            _popup = EnforceInstance<Popup>("PART_Popup");
             InitializeVisualElementsContainer();
         }
 
@@ -226,14 +193,25 @@ namespace MahApps.Metro.Controls
             _expander.Click += ExpanderClick;
             _clickButton.Click += ButtonClick;
             _listBox.SelectionChanged += ListBoxSelectionChanged;
-            LostMouseCapture += SplitButton_LostMouseCapture;
-            MouseLeave += SplitButton_MouseLeave;
-            
+            _popup.Opened += PopupOpened;
+            _popup.Closed += _popup_Closed;
         }
 
-        void SplitButton_MouseLeave(object sender, MouseEventArgs e)
+        void _popup_Closed(object sender, EventArgs e)
         {
-            _mouseLeaved = true; 
+            this.ReleaseMouseCapture();
+        }
+
+        void PopupOpened(object sender, EventArgs e)
+        {
+            Mouse.Capture(this, CaptureMode.SubTree);
+            Mouse.AddPreviewMouseDownOutsideCapturedElementHandler(this, OutsideCapturedElementHandler);
+        }
+
+        private void OutsideCapturedElementHandler(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            IsExpanded = false;
+            Mouse.RemovePreviewMouseDownOutsideCapturedElementHandler(this, OutsideCapturedElementHandler);
         }
 
     }
