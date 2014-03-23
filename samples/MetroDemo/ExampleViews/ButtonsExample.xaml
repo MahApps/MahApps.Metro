@@ -261,30 +261,18 @@
             <Controls:DropDownButton Name="DownButton"
                                      Height="30"
                                      Width="120"
-                                     Content="Test">
-                <MenuItem Header="test1"
-                          IsChecked="True" />
-                <MenuItem Header="test2" />
-                <MenuItem Header="test3" />
-                <MenuItem Header="test4" />
-                <MenuItem Header="test5" />
-                <Button Width="Auto"
-                        Content="test6" />
+                                     Content="Test"
+                                     DisplayMemberPath="Title"
+                                     ItemsSource="{Binding Albums}">
             </Controls:DropDownButton>
 
             <Controls:DropDownButton Name="DownButton1"
                                      Orientation="Vertical"
                                      Margin="0,10,0,0"
                                      Width="120"
-                                     Content="Test">
-                <MenuItem Header="test1"
-                          IsChecked="True" />
-                <MenuItem Header="test2" />
-                <MenuItem Header="test3" />
-                <MenuItem Header="test4" />
-                <MenuItem Header="test5" />
-                <Button Width="Auto"
-                        Content="test6" />
+                                     Content="Test"
+                                     DisplayMemberPath="Title"
+                                     ItemsSource="{Binding ElementName=DownButton, Mode=TwoWay, Path=ItemsSource}">
             </Controls:DropDownButton>
             <CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

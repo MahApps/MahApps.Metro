@@ -79,24 +79,29 @@
                     <StackPanel Orientation="Horizontal"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch">
-                        <Image x:Name="PART_Image"
-                               Source="{TemplateBinding Icon}"
-                               Stretch="Uniform"></Image>
+                        <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
                         <ContentControl MinWidth="20"
                                         x:Name="PART_ButtonContent"
-                                        HorizontalAlignment="Stretch"
                                         VerticalAlignment="Stretch"
-                                        Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                        ContentTemplate="{TemplateBinding ItemTemplate}">
+                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                            VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                            ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                            Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                            ContentTemplate="{TemplateBinding ItemTemplate}">
                         </ContentControl>
                     </StackPanel>
                     <Button.ContextMenu>
                         <ContextMenu Name="PART_Menu"
-                                     ItemTemplate="{TemplateBinding ItemTemplate}"
-                                     ItemsSource="{TemplateBinding ItemsSource}"
                                      StaysOpen="False"
                                      MinWidth="{TemplateBinding ActualWidth}"
-                                     IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                     IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                     DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                                     ItemTemplate="{TemplateBinding ItemTemplate}"
+                                     ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                     ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                     ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                     ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
+                                     ItemsSource="{TemplateBinding ItemsSource}">
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
@@ -187,13 +192,13 @@
                         <StackPanel Orientation="Vertical"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Stretch">
-                            <Image x:Name="PART_Image"
-                                   Source="{TemplateBinding Icon}"
-                                   Stretch="Uniform"></Image>
+                            <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
                             <ContentControl MinHeight="20"
                                             x:Name="PART_ButtonContent"
-                                            HorizontalAlignment="Stretch"
                                             VerticalAlignment="Stretch"
+                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                            VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                            ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                             Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                             ContentTemplate="{TemplateBinding ItemTemplate}">
                             </ContentControl>
@@ -201,11 +206,16 @@
                     </Button.Content>
                     <Button.ContextMenu>
                         <ContextMenu Name="PART_Menu"
-                                     ItemTemplate="{TemplateBinding ItemTemplate}"
-                                     ItemsSource="{TemplateBinding ItemsSource}"
                                      StaysOpen="False"
                                      MinWidth="{TemplateBinding ActualWidth}"
-                                     IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                     IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                     DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                                     ItemTemplate="{TemplateBinding ItemTemplate}"
+                                     ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                     ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                     ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                     ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
+                                     ItemsSource="{TemplateBinding ItemsSource}">
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
