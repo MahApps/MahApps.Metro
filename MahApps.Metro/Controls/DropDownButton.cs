@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
-using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
@@ -16,7 +14,7 @@ namespace MahApps.Metro.Controls
     TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl)),
     TemplatePart(Name = "PART_Menu", Type = typeof(ContextMenu)),
     TemplatePart(Name = "PART_Expander", Type = typeof(Button))]
-    public class DropDownButton : Control
+    public class DropDownButton : ItemsControl
     {
 
         #region Events
@@ -35,13 +33,6 @@ namespace MahApps.Metro.Controls
 
 
         #region DependencyProperties
-
-        public static readonly DependencyProperty ItemsSourceProperty =
-            DependencyProperty.Register("ItemsSource", typeof(ObservableCollection<object>), typeof(DropDownButton));
-
-        public static readonly DependencyProperty ItemTemplateProperty =
-            DependencyProperty.Register("ItemTemplate", typeof(DataTemplate), typeof(DropDownButton),
-                new UIPropertyMetadata(null));
 
         public static readonly DependencyProperty IsExpandedProperty =
             DependencyProperty.Register("IsExpanded", typeof(bool), typeof(DropDownButton), new FrameworkPropertyMetadata(new PropertyChangedCallback(Target)));
@@ -64,7 +55,7 @@ namespace MahApps.Metro.Controls
                 new FrameworkPropertyMetadata(Orientation.Horizontal));
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(ImageSource), typeof(DropDownButton));
+            DependencyProperty.Register("Icon", typeof(Object), typeof(DropDownButton));
 
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.Register("Command", typeof(ICommand), typeof(DropDownButton));
@@ -103,18 +94,6 @@ namespace MahApps.Metro.Controls
             set { SetValue(CommandProperty, value); }
         }
 
-        public ObservableCollection<object> ItemsSource
-        {
-            get { return (ObservableCollection<object>)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
-        }
-
-        public DataTemplate ItemTemplate
-        {
-            get { return (DataTemplate)GetValue(ItemTemplateProperty); }
-            set { SetValue(ItemTemplateProperty, value); }
-        }
-
         public Boolean IsExpanded
         {
             get { return (bool)GetValue(IsExpandedProperty); }
@@ -133,9 +112,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(OrientationProperty, value); }
         }
 
-        public ImageSource Icon
+        public Object Icon
         {
-            get { return (ImageSource)GetValue(IconProperty); }
+            get { return GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
         }
 
@@ -150,10 +129,6 @@ namespace MahApps.Metro.Controls
 
         #endregion
 
-        public DropDownButton()
-        {
-            ItemsSource = new ObservableCollection<Object>();
-        }
         static DropDownButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DropDownButton), new FrameworkPropertyMetadata(typeof(DropDownButton)));

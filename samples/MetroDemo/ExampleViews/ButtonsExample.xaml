@@ -6,7 +6,7 @@
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
-             d:DesignHeight="600"
+             d:DesignHeight="737.288"
              d:DesignWidth="800"
              d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
 
@@ -259,70 +259,50 @@
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
             <Controls:DropDownButton Name="DownButton"
-                                     Height="30"
-                                     Width="150"
-                                     Content="Test">
-                <MenuItem Header="test1"
-                          IsChecked="True" />
-                <MenuItem Header="test2" />
-                <MenuItem Header="test3" />
-                <MenuItem Header="test4" />
-                <MenuItem Header="test5" />
-                <Button Width="Auto"
-                        Content="test6" />
+                                     VerticalContentAlignment="Center"
+                                     Width="120"
+                                     Content="Test"
+                                     DisplayMemberPath="Title"
+                                     Icon="{DynamicResource appbar_music}"
+                                     ItemsSource="{Binding Albums}">
             </Controls:DropDownButton>
 
             <Controls:DropDownButton Name="DownButton1"
                                      Orientation="Vertical"
+                                     Icon="{DynamicResource appbar_journal}"
+                                     HorizontalContentAlignment="Center"
                                      Margin="0,10,0,0"
-                                     Width="150"
-                                     Content="Test">
-                <MenuItem Header="test1"
-                          IsChecked="True" />
-                <MenuItem Header="test2" />
-                <MenuItem Header="test3" />
-                <MenuItem Header="test4" />
-                <MenuItem Header="test5" />
-                <Button Width="Auto"
-                        Content="test6" />
+                                     Width="120"
+                                     Content="Test"
+                                     DisplayMemberPath="Title"
+                                     ItemsSource="{Binding ElementName=DownButton, Mode=TwoWay, Path=ItemsSource}">
             </Controls:DropDownButton>
             <CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Label Content="SplitButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
-            <Controls:SplitButton HorizontalContentAlignment="Center"
-                                  HorizontalAlignment="Center"
-                                  VerticalContentAlignment="Center"
-                                  Width="150"
-                                  SelectedIndex="2"
-                                  ItemsSource="{Binding Albums}"
-                                  DisplayMemberPath="Title"
-                                  VerticalAlignment="Center" />
+            <Controls:SplitButton Name="SplitButton0" Icon="{DynamicResource appbar_alert}"
+                                HorizontalContentAlignment="Left"
+                                HorizontalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Width="120"
+                                SelectedIndex="2"
+                                ItemsSource="{Binding Albums}"
+                                DisplayMemberPath="Title"
+                                VerticalAlignment="Center"  />
 
-            <Controls:SplitButton Margin="0,10,0,0"
-                                  Name="Splitbutton0"
-                                  HorizontalContentAlignment="Center"
-                                  HorizontalAlignment="Center"
-                                  VerticalContentAlignment="Center"
-                                  Width="150"
-                                  SelectedIndex="2"
-                                  VerticalAlignment="Center">
-                <Int32Collection>
-                    4654
-                    465
-                    8879
-                    99879
-                </Int32Collection>
-            </Controls:SplitButton>
-
-            <Controls:SplitButton Margin="0,10,0,0"
-                                  Width="150"
+            <Controls:SplitButton Margin="20,10,20,0" Name="SplitButton1" Icon="{DynamicResource appbar_book_side}"
+                                  Width="120"
                                   HorizontalAlignment="Center"
                                   HorizontalContentAlignment="Center"
-                                  Orientation="Vertical"
-                                  SelectedIndex="{Binding SelectedIndex, ElementName=Splitbutton0, Mode=TwoWay}"
-                                  ItemsSource="{Binding ItemsSource, ElementName=Splitbutton0, Mode=TwoWay}" />
+                                  VerticalContentAlignment="Center"
+                                  Orientation="Vertical" DisplayMemberPath="{Binding ElementName=SplitButton0, Path=DisplayMemberPath}"
+                                  SelectedIndex="{Binding SelectedIndex, ElementName=SplitButton0, Mode=TwoWay}"
+                                  ItemsSource="{Binding ItemsSource, ElementName=SplitButton0, Mode=TwoWay}" />
+
+            <CheckBox IsChecked="{Binding ElementName=SplitButton0, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox IsChecked="{Binding ElementName=SplitButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         </StackPanel>
     </Grid>

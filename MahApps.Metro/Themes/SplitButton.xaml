@@ -18,10 +18,7 @@
                             BorderThickness="0"
                             Background="{DynamicResource WhiteColorBrush}"
                             BorderBrush="{DynamicResource WhiteColorBrush}">
-                        <ContentPresenter Margin="2"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="True" />
+                        <ContentPresenter RecognizesAccessKey="True" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused"
@@ -36,13 +33,9 @@
                                     Property="Background"
                                     Value="{DynamicResource GrayBrush8}" />
                         </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource BlackColorBrush}" />
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource WhiteColorBrush}" />
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Border" Property="Background"
+                                    Value="{DynamicResource GrayBrush6}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
@@ -77,15 +70,14 @@
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}">
                     <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                        <Image x:Name="PART_Image"
-                               Source="{TemplateBinding Icon}"
-                               Stretch="Uniform"></Image>
+                                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
+                        <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
                         <ContentControl MinWidth="20"
                                         x:Name="PART_ButtonContent"
                                         HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
+                                        VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                        VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
                                         ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                         ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                         Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -129,11 +121,11 @@
                     </Button.Content>
                 </Button>
                 <Popup Name="PART_Popup"
-                       IsOpen="{TemplateBinding IsExpanded}"
+                       IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                        PlacementTarget="{Binding ElementName=PART_Button}"
                        PopupAnimation="Fade"
                        MinWidth="{TemplateBinding ActualWidth}"
-                       StaysOpen="False">
+                       StaysOpen="True">
                     <ListBox x:Name="PART_ListBox"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
@@ -187,7 +179,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0"
+                <Button Grid.Row="0" MinHeight="20"
                         Width="{TemplateBinding Width}"
                         Style="{StaticResource {x:Type Button}}"
                         x:Name="PART_Button"
@@ -196,17 +188,15 @@
                         Command="{TemplateBinding Command}"
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}">
-                    <Button.Content>
+                    <Button.Content >
                         <StackPanel Orientation="Vertical"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch">
-                            <Image x:Name="PART_Image"
-                                   Source="{TemplateBinding Icon}"
-                                   Stretch="Uniform"></Image>
-                            <ContentControl MinHeight="20"
-                                            x:Name="PART_ButtonContent"
-                                            HorizontalAlignment="Stretch"
+                                    HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
+                            <ContentControl x:Name="PART_ButtonContent"
                                             VerticalAlignment="Stretch"
+                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                            VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
                                             ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                             Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -249,11 +239,12 @@
                         </Rectangle>
                     </Button.Content>
                 </Button>
-                <Popup IsOpen="{TemplateBinding IsExpanded}"
-                       PlacementTarget="{Binding ElementName=PART_Expander}"
-                       PopupAnimation="Fade"
-                       MinWidth="{TemplateBinding ActualWidth}"
-                       StaysOpen="False">
+                <Popup Name="PART_Popup"
+                    IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                    PlacementTarget="{Binding ElementName=PART_Expander}"
+                    PopupAnimation="Fade"
+                    MinWidth="{TemplateBinding ActualWidth}"
+                    StaysOpen="True">
                     <ListBox x:Name="PART_ListBox"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
