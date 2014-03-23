@@ -72,6 +72,7 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity">
       <HintPath>..\..\Lib\NET45\System.Windows.Interactivity.dll</HintPath>
@@ -135,6 +136,9 @@
     </Compile>
     <Compile Include="ExampleWindows\InteropDemo.xaml.cs">
       <DependentUpon>InteropDemo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleWindows\RibbonDemo.xaml.cs">
+      <DependentUpon>RibbonDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExampleWindows\VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
@@ -203,6 +207,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ExampleWindows\InteropDemo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleWindows\RibbonDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

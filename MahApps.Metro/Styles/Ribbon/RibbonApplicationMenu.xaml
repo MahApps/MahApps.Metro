@@ -1,0 +1,1166 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mwt="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
+                    xmlns:s="clr-namespace:System;assembly=mscorlib">
+
+    <Style x:Key="RibbonApplicationMenuStyleKey"
+           TargetType="{x:Type RibbonApplicationMenu}">
+        <Setter Property="Background"
+                Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RibbonApplicationMenu}">
+                    <Grid Name="OuterGrid"
+                          Focusable="False"
+                          SnapsToDevicePixels="True">
+                        <RibbonToggleButton Name="PART_ToggleButton"
+                                            Width="Auto"
+                                            Height="Auto"
+                                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                                            BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                                            IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropDownOpen, Mode=TwoWay}"
+                                            SmallImageSource="{TemplateBinding RibbonControlService.SmallImageSource}"
+                                            ToolTipDescription="{TemplateBinding RibbonControlService.ToolTipDescription}"
+                                            ToolTipFooterDescription="{TemplateBinding RibbonControlService.ToolTipFooterDescription}"
+                                            ToolTipFooterImageSource="{TemplateBinding RibbonControlService.ToolTipFooterImageSource}"
+                                            ToolTipFooterTitle="{TemplateBinding RibbonControlService.ToolTipFooterTitle}"
+                                            ToolTipImageSource="{TemplateBinding RibbonControlService.ToolTipImageSource}"
+                                            ToolTipTitle="{TemplateBinding RibbonControlService.ToolTipTitle}">
+                            <RibbonToggleButton.Style>
+                                <Style TargetType="RibbonToggleButton">
+                                    <Style.Resources>
+                                        <ResourceDictionary />
+                                    </Style.Resources>
+                                    <Setter Property="BorderBrush" 
+				            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"/>
+                                    <Setter Property="Background" 
+				            Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
+                                    <Setter Property="BorderThickness"
+                                            Value="1,1,1,1" />
+                                    <Setter Property="TextElement.Foreground"
+                                            Value="White" />
+                                    <Setter Property="ButtonBase.ClickMode"
+                                            Value="Press" />
+                                    <Setter Property="FocusVisualStyle"
+                                            Value="{x:Null}" />
+                                    <Setter Property="FocusManager.IsFocusScope"
+                                            Value="False" />
+                                    <Setter Property="VerticalAlignment"
+                                            Value="Stretch" />
+                                    <Setter Property="ToolTipService.InitialShowDelay"
+                                            Value="900" />
+                                    <Setter Property="ToolTipService.ShowDuration"
+                                            Value="20000" />
+                                    <Setter Property="ToolTipService.BetweenShowDelay"
+                                            Value="0" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="RibbonToggleButton">
+                                                <Grid Width="Auto"
+                                                      Height="Auto"
+                                                      SnapsToDevicePixels="True">
+                                                    <Border Name="OuterBorder"
+                                                            HorizontalAlignment="Stretch"
+                                                            VerticalAlignment="Stretch"
+                                                            Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"
+                                                            BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}"
+                                                            BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}" />
+                                                    <StackPanel HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                Orientation="Horizontal">
+                                                        <Image Width="16"
+                                                               Height="16"
+                                                               Margin="0,-0.5,0,0"
+                                                               HorizontalAlignment="Center"
+                                                               VerticalAlignment="Center"
+                                                               IsHitTestVisible="False"
+                                                               RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                               RenderOptions.EdgeMode="Aliased"
+                                                               Source="{x:Null}" />
+                                                        <Path Name="DownArrow"
+                                                              Margin="3.5,0,0,0"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Center"
+                                                              Data="M0,0L2.25,3 4.5,0z"
+                                                              Fill="{TemplateBinding TextElement.Foreground}"
+                                                              StrokeThickness="0.5">
+                                                            <Path.Stroke>
+                                                                <LinearGradientBrush StartPoint="0,0"
+                                                                                     EndPoint="0,1">
+                                                                    <LinearGradientBrush.GradientStops>
+                                                                        <GradientStop Offset="0"
+                                                                                      Color="#90FFFFFF" />
+                                                                        <GradientStop Offset="0.5"
+                                                                                      Color="#30FFFFFF" />
+                                                                        <GradientStop Offset="0.5"
+                                                                                      Color="#00FFFFFF" />
+                                                                        <GradientStop Offset="1"
+                                                                                      Color="#70FFFFFF" />
+                                                                    </LinearGradientBrush.GradientStops>
+                                                                </LinearGradientBrush>
+                                                            </Path.Stroke>
+                                                            <Path.RenderTransform>
+                                                                <ScaleTransform ScaleX="1.5"
+                                                                                ScaleY="1.5" />
+                                                            </Path.RenderTransform>
+                                                        </Path>
+                                                    </StackPanel>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="UIElement.IsKeyboardFocused"
+                                                                       Value="True" />
+                                                            <Condition Property="ToggleButton.IsChecked"
+                                                                       Value="True" />
+                                                        </MultiTrigger.Conditions>
+                                                    </MultiTrigger>
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="ToggleButton.IsChecked"
+                                                                       Value="True" />
+                                                            <Condition Property="UIElement.IsMouseOver"
+                                                                       Value="True" />
+                                                        </MultiTrigger.Conditions>
+                                                    </MultiTrigger>
+                                                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}"
+                                                                 Value="True">
+                                                        <Setter TargetName="OuterBorder"
+                                                                Property="Border.BorderBrush">
+                                                            <Setter.Value>
+                                                                <DynamicResource ResourceKey="{x:Static SystemColors.ControlLightLightBrushKey}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter TargetName="OuterBorder"
+                                                                Property="Panel.Background">
+                                                            <Setter.Value>
+                                                                <DynamicResource ResourceKey="{x:Static SystemColors.ControlBrushKey}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter TargetName="DownArrow"
+                                                                Property="Shape.Stroke">
+                                                            <Setter.Value>
+                                                                <DynamicResource ResourceKey="{x:Static SystemColors.ControlBrushKey}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                        <Setter TargetName="DownArrow"
+                                                                Property="Shape.Fill">
+                                                            <Setter.Value>
+                                                                <DynamicResource ResourceKey="{x:Static SystemColors.ControlDarkDarkBrushKey}" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </RibbonToggleButton.Style>
+                        </RibbonToggleButton>
+                        <Border Name="CenterBorder"
+                                Height="1"
+                                Margin="-1,-1,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top" />
+                        <Popup Name="PART_Popup"
+                               AllowsTransparency="True"
+                               IsOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropDownOpen}"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
+                               SnapsToDevicePixels="True">
+                            <mwt:SystemDropShadowChrome Name="Shadow"
+                                                        KeyTipService.IsKeyTipScope="True"
+                                                        RenderOptions.ClearTypeHint="Enabled"
+                                                        Color="#00FFFFFF">
+                                <Grid>
+                                    <Border Name="PopupBorder"
+                                            BorderBrush="{Binding RelativeSource={RelativeSource AncestorType={x:Type RibbonMenuButton}}, Path=Ribbon.BorderBrush}"
+                                            Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type RibbonMenuButton}}, Path=Ribbon.Background}"
+                                            BorderThickness="1,1,1,1"
+                                            CornerRadius="0">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="24" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Border Name="HeaderBorder"
+                                                    Background="#00FFFFFF"
+                                                    BorderBrush="{x:Null}"
+                                                    BorderThickness="0,0,0,1"
+                                                    CornerRadius="0" />
+                                            <Border Name="HeaderOverlayBorder"
+                                                    BorderBrush="#80FFFFFF"
+                                                    BorderThickness="0,0,0,1"
+                                                    CornerRadius="0">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0"
+                                                                         EndPoint="0,1">
+                                                        <LinearGradientBrush.GradientStops>
+                                                            <GradientStop Offset="0"
+                                                                          Color="#A0FFFFFF" />
+                                                            <GradientStop Offset="0.5"
+                                                                          Color="#60FFFFFF" />
+                                                            <GradientStop Offset="0.5"
+                                                                          Color="#00FFFFFF" />
+                                                            <GradientStop Offset="1"
+                                                                          Color="#D0FFFFFF" />
+                                                        </LinearGradientBrush.GradientStops>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                            </Border>
+                                            <Grid Grid.Row="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="2" />
+                                                    <ColumnDefinition Width="300" />
+                                                </Grid.ColumnDefinitions>
+                                                <Border Name="MainPaneBorder"
+                                                        Background="#B8FFFFFF">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <ScrollViewer Name="PART_SubMenuScrollViewer"
+                                                                      Grid.Row="1"
+                                                                      CanContentScroll="True"
+                                                                      Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly=FrameworkElement,
+                                                                                                                    ResourceId=MenuScrollViewer}}">
+                                                            <Grid RenderOptions.ClearTypeHint="Enabled">
+                                                                <Canvas Name="BackgroundCanvas"
+                                                                        Width="0"
+                                                                        Height="0"
+                                                                        HorizontalAlignment="Left"
+                                                                        VerticalAlignment="Top">
+                                                                    <Rectangle Name="OpaqueRect"
+                                                                               Width="Auto"
+                                                                               Height="Auto"
+                                                                               Fill="{x:Null}"
+                                                                               RadiusX="2"
+                                                                               RadiusY="2" />
+                                                                    <Rectangle Name="OverlayRect"
+                                                                               Width="Auto"
+                                                                               Height="Auto"
+                                                                               Fill="{x:Null}"
+                                                                               RadiusX="2"
+                                                                               RadiusY="2" />
+                                                                </Canvas>
+                                                                <ItemsPresenter Name="ItemsPresenter"
+                                                                                Grid.IsSharedSizeScope="True" />
+                                                            </Grid>
+                                                        </ScrollViewer>
+                                                        <Border Name="ResizeControl"
+                                                                Grid.Row="2"
+                                                                Background="#FFE5EFF9"
+                                                                BorderBrush="{x:Null}"
+                                                                BorderThickness="0,1,0,0"
+                                                                Visibility="Collapsed">
+                                                            <Thumb Name="PART_ResizeThumb">
+                                                                <Thumb.Style>
+                                                                    <Style TargetType="Thumb">
+                                                                        <Style.Triggers>
+                                                                            <Trigger Property="FrameworkElement.FlowDirection">
+                                                                                <Setter Property="FrameworkElement.Cursor">
+                                                                                    <Setter.Value>
+                                                                                        <Cursor>SizeNESW</Cursor>
+                                                                                    </Setter.Value>
+                                                                                </Setter>
+                                                                                <Trigger.Value>
+                                                                                    <x:Static Member="FlowDirection.RightToLeft" />
+                                                                                </Trigger.Value>
+                                                                            </Trigger>
+                                                                        </Style.Triggers>
+                                                                        <Style.Resources>
+                                                                            <ResourceDictionary />
+                                                                        </Style.Resources>
+                                                                        <Setter Property="FrameworkElement.Width">
+                                                                            <Setter.Value>
+                                                                                <s:Double>11</s:Double>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter Property="FrameworkElement.Height">
+                                                                            <Setter.Value>
+                                                                                <s:Double>11</s:Double>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter Property="FrameworkElement.VerticalAlignment">
+                                                                            <Setter.Value>
+                                                                                <x:Static Member="VerticalAlignment.Bottom" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter Property="FrameworkElement.HorizontalAlignment">
+                                                                            <Setter.Value>
+                                                                                <x:Static Member="HorizontalAlignment.Right" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter Property="FrameworkElement.Cursor">
+                                                                            <Setter.Value>
+                                                                                <Cursor>SizeNWSE</Cursor>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter Property="Control.Template">
+                                                                            <Setter.Value>
+                                                                                <ControlTemplate TargetType="Thumb">
+                                                                                    <Border Background="#00FFFFFF">
+                                                                                        <Path Margin="0,0,2,2"
+                                                                                              Data="M9,0L11,0 11,11 0,11 0,9 3,9 3,6 6,6 6,3 9,3z">
+                                                                                            <Path.Fill>
+                                                                                                <DrawingBrush TileMode="Tile"
+                                                                                                              Viewbox="0,0,3,3"
+                                                                                                              ViewboxUnits="Absolute"
+                                                                                                              Viewport="0,0,3,3"
+                                                                                                              ViewportUnits="Absolute">
+                                                                                                    <DrawingBrush.Drawing>
+                                                                                                        <DrawingGroup>
+                                                                                                            <DrawingGroup.Children>
+                                                                                                                <GeometryDrawing Brush="#FF6C747D"
+                                                                                                                                 Geometry="M0,0L2,0 2,2 0,2z" />
+                                                                                                            </DrawingGroup.Children>
+                                                                                                        </DrawingGroup>
+                                                                                                    </DrawingBrush.Drawing>
+                                                                                                </DrawingBrush>
+                                                                                            </Path.Fill>
+                                                                                        </Path>
+                                                                                    </Border>
+                                                                                </ControlTemplate>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </Style>
+                                                                </Thumb.Style>
+                                                            </Thumb>
+                                                        </Border>
+                                                    </Grid>
+                                                </Border>
+                                                <Border Name="PART_SubmenuPlaceholder"
+                                                        Grid.Column="2"
+                                                        Height="Auto"
+                                                        Background="#80FFFFFF">
+                                                    <ContentPresenter Name="PART_AuxiliaryPaneContentPresenter"
+                                                                      Content="{TemplateBinding RibbonApplicationMenu.AuxiliaryPaneContent}"
+                                                                      ContentSource="AuxiliaryPaneContent"
+                                                                      ContentTemplate="{TemplateBinding RibbonApplicationMenu.AuxiliaryPaneContentTemplate}" />
+                                                </Border>
+                                                <Border Name="VerticalBorder"
+                                                        Grid.Column="1"
+                                                        Width="2"
+                                                        HorizontalAlignment="Left"
+                                                        Background="#FFFFFFFF"
+                                                        BorderBrush="{x:Null}"
+                                                        BorderThickness="1,0,0,0" />
+                                                <Border Name="VerticalOverlayBorder"
+                                                        Grid.Column="1"
+                                                        Width="2"
+                                                        HorizontalAlignment="Left"
+                                                        Background="#00FFFFFF"
+                                                        BorderBrush="#80FFFFFF"
+                                                        BorderThickness="1,0,0,0" />
+                                            </Grid>
+                                            <Border Name="FooterBorder"
+                                                    Grid.Row="2"
+                                                    Background="#00FFFFFF"
+                                                    BorderBrush="{x:Null}"
+                                                    BorderThickness="0,1,0,0"
+                                                    CornerRadius="0">
+                                                <Border Name="FooterBackgroundOverlayBorder"
+                                                        BorderBrush="#00FFFFFF"
+                                                        CornerRadius="0">
+                                                    <Border.Background>
+                                                        <LinearGradientBrush StartPoint="0,0"
+                                                                             EndPoint="0,1">
+                                                            <LinearGradientBrush.GradientStops>
+                                                                <GradientStop Offset="0"
+                                                                              Color="#A0FFFFFF" />
+                                                                <GradientStop Offset="0.2"
+                                                                              Color="#90FFFFFF" />
+                                                                <GradientStop Offset="0.4"
+                                                                              Color="#80FFFFFF" />
+                                                                <GradientStop Offset="0.6"
+                                                                              Color="#50FFFFFF" />
+                                                                <GradientStop Offset="0.8"
+                                                                              Color="#00FFFFFF" />
+                                                                <GradientStop Offset="1"
+                                                                              Color="#30FFFFFF" />
+                                                            </LinearGradientBrush.GradientStops>
+                                                        </LinearGradientBrush>
+                                                    </Border.Background>
+                                                    <ContentPresenter Name="PART_FooterPaneContentPresenter"
+                                                                      MinHeight="12"
+                                                                      Margin="2,2,2,2"
+                                                                      Content="{TemplateBinding RibbonApplicationMenu.FooterPaneContent}"
+                                                                      ContentSource="FooterPaneContent"
+                                                                      ContentTemplate="{TemplateBinding RibbonApplicationMenu.FooterPaneContentTemplate}" />
+                                                </Border>
+                                            </Border>
+                                            <Border Name="FooterOverlayBorder"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Stretch"
+                                                    Background="#00FFFFFF"
+                                                    BorderBrush="#80FFFFFF"
+                                                    BorderThickness="0,1,0,0"
+                                                    CornerRadius="0" />
+                                        </Grid>
+                                    </Border>
+                                    <Canvas>
+                                        <RibbonToggleButton Name="PART_PopupToggleButton"
+                                                            Canvas.Left="3"
+                                                            Canvas.Top="-24"
+                                                            Width="Auto"
+                                                            Height="Auto"
+                                                            AutomationProperties.Name=""
+                                                            Background="{TemplateBinding Panel.Background}"
+                                                            BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                                            BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                                            Focusable="False"
+                                                            IsChecked="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsDropDownOpen, Mode=TwoWay}">
+                                            <RibbonToggleButton.Style>
+                                                <Style TargetType="RibbonToggleButton">
+                                                    <Style.Resources>
+                                                        <ResourceDictionary />
+                                                    </Style.Resources>
+                                                    <Setter Property="Border.BorderBrush">
+                                                        <Setter.Value>
+                                                            <Binding Path="BorderBrush"
+                                                                         RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="Panel.Background">
+                                                        <Setter.Value>
+                                                            <Binding Path="Background"
+                                                                         RelativeSource="{RelativeSource Mode=TemplatedParent}" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="Border.BorderThickness">
+                                                        <Setter.Value>
+                                                            <Thickness>1,1,1,1</Thickness>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="TextElement.Foreground">
+                                                        <Setter.Value>
+                                                            <RadialGradientBrush>
+                                                                <RadialGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0"
+                                                                                  Color="#FFD3D3D3" />
+                                                                    <GradientStop Offset="0.4"
+                                                                                  Color="#FFFFFFFF" />
+                                                                </RadialGradientBrush.GradientStops>
+                                                            </RadialGradientBrush>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="ButtonBase.ClickMode">
+                                                        <Setter.Value>
+                                                            <x:Static Member="ClickMode.Press" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="FrameworkElement.FocusVisualStyle">
+                                                        <Setter.Value>
+                                                            <x:Null />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="FocusManager.IsFocusScope">
+                                                        <Setter.Value>
+                                                            <s:Boolean>False</s:Boolean>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="FrameworkElement.VerticalAlignment">
+                                                        <Setter.Value>
+                                                            <x:Static Member="VerticalAlignment.Bottom" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="ToolTipService.InitialShowDelay">
+                                                        <Setter.Value>
+                                                            <s:Int32>900</s:Int32>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="ToolTipService.ShowDuration">
+                                                        <Setter.Value>
+                                                            <s:Int32>20000</s:Int32>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="ToolTipService.BetweenShowDelay">
+                                                        <Setter.Value>
+                                                            <s:Int32>0</s:Int32>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="Control.Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="RibbonToggleButton">
+                                                                <Grid Width="Auto"
+                                                                      Height="Auto"
+                                                                      SnapsToDevicePixels="True">
+                                                                    <Border Name="OuterBorder"
+                                                                            HorizontalAlignment="Stretch"
+                                                                            VerticalAlignment="Stretch"
+                                                                            Background="{TemplateBinding Panel.Background}"
+                                                                            BorderBrush="{TemplateBinding Border.BorderBrush}"
+                                                                            BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                                                            CornerRadius="0" />
+                                                                    <Border Name="MiddleBorder"
+                                                                            HorizontalAlignment="Stretch"
+                                                                            VerticalAlignment="Stretch"
+                                                                            BorderBrush="#00FFFFFF"
+                                                                            BorderThickness="{TemplateBinding Border.BorderThickness}"
+                                                                            CornerRadius="0">
+                                                                        <Border.Background>
+                                                                            <LinearGradientBrush StartPoint="0,0"
+                                                                                                 EndPoint="0,1">
+                                                                                <LinearGradientBrush.GradientStops>
+                                                                                    <GradientStop Offset="0"
+                                                                                                  Color="#90FFFFFF" />
+                                                                                    <GradientStop Offset="0.5"
+                                                                                                  Color="#30FFFFFF" />
+                                                                                    <GradientStop Offset="0.5"
+                                                                                                  Color="#00FFFFFF" />
+                                                                                    <GradientStop Offset="1"
+                                                                                                  Color="#70FFFFFF" />
+                                                                                </LinearGradientBrush.GradientStops>
+                                                                            </LinearGradientBrush>
+                                                                        </Border.Background>
+                                                                        <Border Name="InnerBorder"
+                                                                                Background="#00FFFFFF"
+                                                                                BorderThickness="1,1,1,1"
+                                                                                CornerRadius="0">
+                                                                            <Border.BorderBrush>
+                                                                                <LinearGradientBrush StartPoint="0,0"
+                                                                                                     EndPoint="0,1">
+                                                                                    <LinearGradientBrush.GradientStops>
+                                                                                        <GradientStop Offset="0"
+                                                                                                      Color="#60FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#20FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#00FFFFFF" />
+                                                                                        <GradientStop Offset="1"
+                                                                                                      Color="#00FFFFFF" />
+                                                                                    </LinearGradientBrush.GradientStops>
+                                                                                </LinearGradientBrush>
+                                                                            </Border.BorderBrush>
+                                                                        </Border>
+                                                                    </Border>
+                                                                    <StackPanel HorizontalAlignment="Center"
+                                                                                VerticalAlignment="Center"
+                                                                                Orientation="Horizontal">
+                                                                        <Image Width="16"
+                                                                               Height="16"
+                                                                               Margin="0,-0.5,0,0"
+                                                                               HorizontalAlignment="Center"
+                                                                               VerticalAlignment="Center"
+                                                                               IsHitTestVisible="False"
+                                                                               RenderOptions.BitmapScalingMode="NearestNeighbor"
+                                                                               RenderOptions.EdgeMode="Aliased"
+                                                                               Source="{x:Null}" />
+                                                                        <Path Name="DownArrow"
+                                                                              Margin="3.5,0,0,0"
+                                                                              HorizontalAlignment="Center"
+                                                                              VerticalAlignment="Center"
+                                                                              Data="M0,0L2.25,3 4.5,0z"
+                                                                              Fill="{TemplateBinding TextElement.Foreground}"
+                                                                              StrokeThickness="0.5">
+                                                                            <Path.Stroke>
+                                                                                <LinearGradientBrush StartPoint="0,0"
+                                                                                                     EndPoint="0,1">
+                                                                                    <LinearGradientBrush.GradientStops>
+                                                                                        <GradientStop Offset="0"
+                                                                                                      Color="#90FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#30FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#00FFFFFF" />
+                                                                                        <GradientStop Offset="1"
+                                                                                                      Color="#70FFFFFF" />
+                                                                                    </LinearGradientBrush.GradientStops>
+                                                                                </LinearGradientBrush>
+                                                                            </Path.Stroke>
+                                                                            <Path.RenderTransform>
+                                                                                <ScaleTransform ScaleX="1.5"
+                                                                                                ScaleY="1.5" />
+                                                                            </Path.RenderTransform>
+                                                                        </Path>
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                                <ControlTemplate.Triggers>
+                                                                    <MultiTrigger>
+                                                                        <MultiTrigger.Conditions>
+                                                                            <Condition Property="UIElement.IsKeyboardFocused">
+                                                                                <Condition.Value>
+                                                                                    <s:Boolean>True</s:Boolean>
+                                                                                </Condition.Value>
+                                                                            </Condition>
+                                                                            <Condition Property="ToggleButton.IsChecked">
+                                                                                <Condition.Value>
+                                                                                    <s:Boolean>False</s:Boolean>
+                                                                                </Condition.Value>
+                                                                            </Condition>
+                                                                        </MultiTrigger.Conditions>
+                                                                        <Setter TargetName="MiddleBorder"
+                                                                                Property="Border.BorderBrush">
+                                                                            <Setter.Value>
+                                                                                <SolidColorBrush>#80FFFFFF</SolidColorBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="MiddleBorder"
+                                                                                Property="Panel.Background">
+                                                                            <Setter.Value>
+                                                                                <LinearGradientBrush StartPoint="0,0"
+                                                                                                     EndPoint="0,1">
+                                                                                    <LinearGradientBrush.GradientStops>
+                                                                                        <GradientStop Offset="0"
+                                                                                                      Color="#A0FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#60FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#00FFFFFF" />
+                                                                                        <GradientStop Offset="1"
+                                                                                                      Color="#D0FFFFFF" />
+                                                                                    </LinearGradientBrush.GradientStops>
+                                                                                </LinearGradientBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="InnerBorder"
+                                                                                Property="Border.BorderBrush">
+                                                                            <Setter.Value>
+                                                                                <LinearGradientBrush StartPoint="0,0"
+                                                                                                     EndPoint="0,1">
+                                                                                    <LinearGradientBrush.GradientStops>
+                                                                                        <GradientStop Offset="0"
+                                                                                                      Color="#90FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#20FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#00FFFFFF" />
+                                                                                        <GradientStop Offset="1"
+                                                                                                      Color="#00FFFFFF" />
+                                                                                    </LinearGradientBrush.GradientStops>
+                                                                                </LinearGradientBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </MultiTrigger>
+                                                                    <MultiTrigger>
+                                                                        <MultiTrigger.Conditions>
+                                                                            <Condition Property="UIElement.IsMouseOver">
+                                                                                <Condition.Value>
+                                                                                    <s:Boolean>True</s:Boolean>
+                                                                                </Condition.Value>
+                                                                            </Condition>
+                                                                            <Condition Property="ToggleButton.IsChecked">
+                                                                                <Condition.Value>
+                                                                                    <s:Boolean>False</s:Boolean>
+                                                                                </Condition.Value>
+                                                                            </Condition>
+                                                                        </MultiTrigger.Conditions>
+                                                                        <Setter TargetName="MiddleBorder"
+                                                                                Property="Border.BorderBrush">
+                                                                            <Setter.Value>
+                                                                                <SolidColorBrush>#80FFFFFF</SolidColorBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="MiddleBorder"
+                                                                                Property="Panel.Background">
+                                                                            <Setter.Value>
+                                                                                <LinearGradientBrush StartPoint="0,0"
+                                                                                                     EndPoint="0,1">
+                                                                                    <LinearGradientBrush.GradientStops>
+                                                                                        <GradientStop Offset="0"
+                                                                                                      Color="#A0FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#60FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#00FFFFFF" />
+                                                                                        <GradientStop Offset="1"
+                                                                                                      Color="#D0FFFFFF" />
+                                                                                    </LinearGradientBrush.GradientStops>
+                                                                                </LinearGradientBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="InnerBorder"
+                                                                                Property="Border.BorderBrush">
+                                                                            <Setter.Value>
+                                                                                <LinearGradientBrush StartPoint="0,0"
+                                                                                                     EndPoint="0,1">
+                                                                                    <LinearGradientBrush.GradientStops>
+                                                                                        <GradientStop Offset="0"
+                                                                                                      Color="#90FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#20FFFFFF" />
+                                                                                        <GradientStop Offset="0.5"
+                                                                                                      Color="#00FFFFFF" />
+                                                                                        <GradientStop Offset="1"
+                                                                                                      Color="#00FFFFFF" />
+                                                                                    </LinearGradientBrush.GradientStops>
+                                                                                </LinearGradientBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </MultiTrigger>
+                                                                    <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}"
+                                                                                 Value="True">
+                                                                        <Setter TargetName="OuterBorder"
+                                                                                Property="Border.BorderBrush">
+                                                                            <Setter.Value>
+                                                                                <DynamicResource ResourceKey="{x:Static SystemColors.ControlLightLightBrushKey}" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="OuterBorder"
+                                                                                Property="Panel.Background">
+                                                                            <Setter.Value>
+                                                                                <DynamicResource ResourceKey="{x:Static SystemColors.ControlBrushKey}" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="MiddleBorder"
+                                                                                Property="Border.BorderBrush">
+                                                                            <Setter.Value>
+                                                                                <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="MiddleBorder"
+                                                                                Property="Panel.Background">
+                                                                            <Setter.Value>
+                                                                                <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="InnerBorder"
+                                                                                Property="Border.BorderBrush">
+                                                                            <Setter.Value>
+                                                                                <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="InnerBorder"
+                                                                                Property="Panel.Background">
+                                                                            <Setter.Value>
+                                                                                <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="DownArrow"
+                                                                                Property="Shape.Stroke">
+                                                                            <Setter.Value>
+                                                                                <DynamicResource ResourceKey="{x:Static SystemColors.ControlBrushKey}" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                        <Setter TargetName="DownArrow"
+                                                                                Property="Shape.Fill">
+                                                                            <Setter.Value>
+                                                                                <DynamicResource ResourceKey="{x:Static SystemColors.ControlDarkDarkBrushKey}" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </DataTrigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </RibbonToggleButton.Style>
+                                        </RibbonToggleButton>
+                                    </Canvas>
+                                </Grid>
+                            </mwt:SystemDropShadowChrome>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="PART_SubMenuScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll">
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Top">
+                                <Setter.Value>
+                                    <Binding ElementName="PART_SubMenuScrollViewer"
+                                             Path="VerticalOffset" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Left">
+                                <Setter.Value>
+                                    <Binding ElementName="PART_SubMenuScrollViewer"
+                                             Path="HorizontalOffset" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="OverlayRect"
+                                    Property="Canvas.Top">
+                                <Setter.Value>
+                                    <Binding ElementName="PART_SubMenuScrollViewer"
+                                             Path="VerticalOffset" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="OverlayRect"
+                                    Property="Canvas.Left">
+                                <Setter.Value>
+                                    <Binding ElementName="PART_SubMenuScrollViewer"
+                                             Path="HorizontalOffset" />
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>False</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <Trigger Property="RibbonMenuButton.HasGallery">
+                            <Setter TargetName="PART_SubMenuScrollViewer"
+                                    Property="ScrollViewer.HorizontalScrollBarVisibility">
+                                <Setter.Value>
+                                    <x:Static Member="ScrollBarVisibility.Disabled" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_SubMenuScrollViewer"
+                                    Property="ScrollViewer.VerticalScrollBarVisibility">
+                                <Setter.Value>
+                                    <x:Static Member="ScrollBarVisibility.Disabled" />
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>True</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="RibbonMenuButton.CanUserResizeHorizontally">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Property="RibbonMenuButton.CanUserResizeVertically">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ResizeControl"
+                                    Property="UIElement.Visibility">
+                                <Setter.Value>
+                                    <x:Static Member="Visibility.Visible" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="RibbonMenuButton.CanUserResizeHorizontally">
+                                    <Condition.Value>
+                                        <s:Boolean>False</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Property="RibbonMenuButton.CanUserResizeVertically">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="ResizeControl"
+                                    Property="UIElement.Visibility">
+                                <Setter.Value>
+                                    <x:Static Member="Visibility.Visible" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_ResizeThumb"
+                                    Property="FrameworkElement.Style">
+                                <Setter.Value>
+                                    <Style TargetType="Thumb">
+                                        <Style.Resources>
+                                            <ResourceDictionary />
+                                        </Style.Resources>
+                                        <Setter Property="FrameworkElement.Height">
+                                            <Setter.Value>
+                                                <s:Double>11</s:Double>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.Cursor">
+                                            <Setter.Value>
+                                                <Cursor>SizeNS</Cursor>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Thumb">
+                                                    <Border Background="#00FFFFFF">
+                                                        <Path Margin="0,0,2,2"
+                                                              HorizontalAlignment="Center"
+                                                              VerticalAlignment="Bottom">
+                                                            <Path.Data>
+                                                                <RectangleGeometry Rect="0,0,11,3" />
+                                                            </Path.Data>
+                                                            <Path.Fill>
+                                                                <DrawingBrush TileMode="Tile"
+                                                                              Viewbox="0,0,3,3"
+                                                                              ViewboxUnits="Absolute"
+                                                                              Viewport="0,0,3,3"
+                                                                              ViewportUnits="Absolute">
+                                                                    <DrawingBrush.Drawing>
+                                                                        <DrawingGroup>
+                                                                            <DrawingGroup.Children>
+                                                                                <GeometryDrawing Brush="#FF6C747D"
+                                                                                                 Geometry="M0,0L2,0 2,2 0,2z" />
+                                                                            </DrawingGroup.Children>
+                                                                        </DrawingGroup>
+                                                                    </DrawingBrush.Drawing>
+                                                                </DrawingBrush>
+                                                            </Path.Fill>
+                                                        </Path>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <Trigger Property="RibbonMenuButton.IsDropDownPositionedAbove">
+                            <Setter TargetName="ResizeControl"
+                                    Property="Grid.Row">
+                                <Setter.Value>
+                                    <s:Int32>0</s:Int32>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ResizeControl"
+                                    Property="Border.BorderThickness">
+                                <Setter.Value>
+                                    <Thickness>0,0,0,1</Thickness>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>True</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="RibbonMenuButton.IsDropDownPositionedAbove">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Property="RibbonMenuButton.CanUserResizeHorizontally">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                                <Condition Property="RibbonMenuButton.CanUserResizeVertically">
+                                    <Condition.Value>
+                                        <s:Boolean>True</s:Boolean>
+                                    </Condition.Value>
+                                </Condition>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ResizeThumb"
+                                    Property="FrameworkElement.Style">
+                                <Setter.Value>
+                                    <Style TargetType="Thumb">
+                                        <Style.Triggers>
+                                            <Trigger Property="FrameworkElement.FlowDirection">
+                                                <Setter Property="FrameworkElement.Cursor">
+                                                    <Setter.Value>
+                                                        <Cursor>SizeNWSE</Cursor>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Trigger.Value>
+                                                    <x:Static Member="FlowDirection.RightToLeft" />
+                                                </Trigger.Value>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                        <Style.Resources>
+                                            <ResourceDictionary />
+                                        </Style.Resources>
+                                        <Setter Property="FrameworkElement.Width">
+                                            <Setter.Value>
+                                                <s:Double>11</s:Double>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.Height">
+                                            <Setter.Value>
+                                                <s:Double>11</s:Double>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.VerticalAlignment">
+                                            <Setter.Value>
+                                                <x:Static Member="VerticalAlignment.Top" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.HorizontalAlignment">
+                                            <Setter.Value>
+                                                <x:Static Member="HorizontalAlignment.Right" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FrameworkElement.Cursor">
+                                            <Setter.Value>
+                                                <Cursor>SizeNESW</Cursor>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="Thumb">
+                                                    <Border Background="#00FFFFFF">
+                                                        <Path Margin="0,2,2,0"
+                                                              Data="M0,0L0,3 3,3 3,6 6,6 6,9 9,9 9,11 11,11 11,0z">
+                                                            <Path.Fill>
+                                                                <DrawingBrush TileMode="Tile"
+                                                                              Viewbox="0,0,3,3"
+                                                                              ViewboxUnits="Absolute"
+                                                                              Viewport="0,0,3,3"
+                                                                              ViewportUnits="Absolute">
+                                                                    <DrawingBrush.Drawing>
+                                                                        <DrawingGroup>
+                                                                            <DrawingGroup.Children>
+                                                                                <GeometryDrawing Brush="#FF6C747D"
+                                                                                                 Geometry="M0,0L2,0 2,2 0,2z" />
+                                                                            </DrawingGroup.Children>
+                                                                        </DrawingGroup>
+                                                                    </DrawingBrush.Drawing>
+                                                                </DrawingBrush>
+                                                            </Path.Fill>
+                                                        </Path>
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <Trigger SourceName="PART_Popup"
+                                 Property="Popup.HasDropShadow">
+                            <Setter TargetName="Shadow"
+                                    Property="FrameworkElement.Margin">
+                                <Setter.Value>
+                                    <Thickness>0,0,5,5</Thickness>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Shadow"
+                                    Property="mwt:SystemDropShadowChrome.Color">
+                                <Setter.Value>
+                                    <Color>#71000000</Color>
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>True</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <Trigger SourceName="PART_Popup"
+                                 Property="Popup.IsOpen">
+                            <Setter TargetName="PART_Popup"
+                                    Property="Popup.PopupAnimation">
+                                <Setter.Value>
+                                    <x:Static Member="PopupAnimation.None" />
+                                </Setter.Value>
+                            </Setter>
+                            <Trigger.Value>
+                                <s:Boolean>False</s:Boolean>
+                            </Trigger.Value>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}"
+                                     Value="True">
+                            <Setter TargetName="BackgroundCanvas"
+                                    Property="UIElement.Visibility">
+                                <Setter.Value>
+                                    <x:Static Member="Visibility.Collapsed" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Popup"
+                                    Property="Popup.PopupAnimation">
+                                <Setter.Value>
+                                    <x:Static Member="PopupAnimation.None" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="Shadow"
+                                    Property="mwt:SystemDropShadowChrome.Color">
+                                <Setter.Value>
+                                    <Color>#00FFFFFF</Color>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="OuterGrid"
+                                    Property="TextElement.Foreground">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PopupBorder"
+                                    Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PopupBorder"
+                                    Property="Panel.Background">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="HeaderBorder"
+                                    Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="HeaderOverlayBorder"
+                                    Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="HeaderOverlayBorder"
+                                    Property="Panel.Background">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="MainPaneBorder"
+                                    Property="Panel.Background">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_SubmenuPlaceholder"
+                                    Property="Panel.Background">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="VerticalBorder"
+                                    Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlLightLightBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="VerticalBorder"
+                                    Property="Panel.Background">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="VerticalOverlayBorder"
+                                    Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="FooterBorder"
+                                    Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="FooterOverlayBorder"
+                                    Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="FooterBackgroundOverlayBorder"
+                                    Property="Panel.Background">
+                                <Setter.Value>
+                                    <SolidColorBrush>#00FFFFFF</SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ResizeControl"
+                                    Property="Border.BorderBrush">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ResizeControl"
+                                    Property="Panel.Background">
+                                <Setter.Value>
+                                    <DynamicResource ResourceKey="{x:Static SystemColors.MenuBrushKey}" />
+                                </Setter.Value>
+                            </Setter>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
