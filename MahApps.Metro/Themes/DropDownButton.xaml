@@ -40,9 +40,7 @@
                                  Value="true">
                             <Setter TargetName="Border"
                                     Property="Background"
-                                    Value="{DynamicResource BlackColorBrush}" />
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource WhiteColorBrush}" />
+                                    Value="{DynamicResource GrayBrush6}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
@@ -77,17 +75,17 @@
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}">
                     <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
+                                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
                         <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
                         <ContentControl MinWidth="20"
                                         x:Name="PART_ButtonContent"
-                                        VerticalAlignment="Stretch"
-                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
-                                            VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                            Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ContentTemplate="{TemplateBinding ItemTemplate}">
+                                        VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                        HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                        VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                        Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ContentTemplate="{TemplateBinding ItemTemplate}">
                         </ContentControl>
                     </StackPanel>
                     <Button.ContextMenu>
@@ -190,8 +188,8 @@
                         CommandTarget="{TemplateBinding CommandTarget}">
                     <Button.Content>
                         <StackPanel Orientation="Vertical"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch">
+                                    HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
                             <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
                             <ContentControl MinHeight="20"
                                             x:Name="PART_ButtonContent"
@@ -281,6 +279,16 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type local:DropDownButton}">
+        <Setter Property="MinHeight"
+                Value="26" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="Template"
                 Value="{StaticResource SplitButtonHorizontal}" />
         <Style.Triggers>
