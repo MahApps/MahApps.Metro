@@ -70,3 +70,8 @@ blockquote {
 .post h2 {
   font-size: 1.5em;
 }
+
+.ad-container {
+  margin-top: 20px;
+  text-align: center;
+}
