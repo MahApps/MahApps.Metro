@@ -48,9 +48,12 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbarOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
-        public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register("NonActiveGlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(153, 153, 153)))); // #999999
+        public static readonly DependencyProperty NonActiveBorderBrushProperty = DependencyProperty.Register("NonActiveBorderBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
 
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
@@ -69,7 +72,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty TextBlockStyleProperty = DependencyProperty.Register("TextBlockStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(default(Style)));
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
-        
+
+        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+
         bool isDragging;
         
         UIElement icon;
@@ -110,6 +115,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (Style)this.GetValue(TextBlockStyleProperty); }
             set { SetValue(TextBlockStyleProperty, value); }
+        }
+
+        public bool EnableDWMDropShadow
+        {
+            get { return (bool)GetValue(EnableDWMDropShadowProperty); }
+            set { SetValue(EnableDWMDropShadowProperty, value); }
         }
 
         /// <summary>
@@ -343,7 +354,8 @@ namespace MahApps.Metro.Controls
             var newVisibility = visible && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
             if (this.icon != null)
             {
-                this.icon.Visibility = newVisibility;
+                var iconVisibility = visible && this.ShowTitleBar && this.ShowIconOnTitleBar ? Visibility.Visible : Visibility.Collapsed;
+                this.icon.Visibility = iconVisibility;
             }
             if (this.titleBar != null)
             {
@@ -392,6 +404,24 @@ namespace MahApps.Metro.Controls
         {
             get { return (SolidColorBrush)GetValue(GlowBrushProperty); }
             set { SetValue(GlowBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the Window's non-active glow.
+        /// </summary>
+        public SolidColorBrush NonActiveGlowBrush
+        {
+            get { return (SolidColorBrush)GetValue(NonActiveGlowBrushProperty); }
+            set { SetValue(NonActiveGlowBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the Window's non-active border.
+        /// </summary>
+        public Brush NonActiveBorderBrush
+        {
+            get { return (Brush)GetValue(NonActiveBorderBrushProperty); }
+            set { SetValue(NonActiveBorderBrushProperty, value); }
         }
 
         /// <summary>
@@ -556,6 +586,13 @@ namespace MahApps.Metro.Controls
             if (e.Accent != null)
             {
                 var flyouts = this.Flyouts.GetFlyouts().ToList();
+                // since we disabled the ThemeManager OnThemeChanged part, we must change all children flyouts too
+                // e.g if the FlyoutsControl is hosted in a UserControl
+                var allChildFlyouts = (this.Content as DependencyObject).FindChildren<FlyoutsControl>(true).ToList();
+                if (allChildFlyouts.Any())
+                {
+                    flyouts.AddRange(allChildFlyouts.SelectMany(flyoutsControl => flyoutsControl.GetFlyouts()));
+                }
 
                 if (!flyouts.Any())
                 {
@@ -662,7 +699,7 @@ namespace MahApps.Metro.Controls
 
         protected override void OnStateChanged(EventArgs e)
         {
-            if (WindowButtonCommands != null)
+            if (WindowButtonCommands != null && !this.UseNoneWindowStyle)
             {
                 WindowButtonCommands.RefreshMaximiseIconState();
             }

@@ -7,13 +7,14 @@
                       xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
                       WindowTransitionsEnabled="False"
                       Title="Interop Demo"
+                      ResizeMode="CanResizeWithGrip"
                       Height="800"
                       Width="800">
 
-    <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True"
-                                             AllowsTransparency="False" />
-    </i:Interaction.Behaviors>
+<!--    <i:Interaction.Behaviors>-->
+<!--        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True"-->
+<!--                                             AllowsTransparency="False" />-->
+<!--    </i:Interaction.Behaviors>-->
 
     <Grid>
         <Border BorderBrush="{DynamicResource AccentColorBrush}"

@@ -30,6 +30,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Tooltip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ToolBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TreeView.xaml" />
+        
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="MetroToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}" />
