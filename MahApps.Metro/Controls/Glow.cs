@@ -7,6 +7,7 @@ namespace MahApps.Metro.Controls
     public class Glow : Control
     {
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(Glow), new UIPropertyMetadata(Brushes.Transparent));
+        public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register("NonActiveGlowBrush", typeof(SolidColorBrush), typeof(Glow), new UIPropertyMetadata(Brushes.Transparent));
         public static readonly DependencyProperty IsGlowProperty = DependencyProperty.Register("IsGlow", typeof(bool), typeof(Glow), new UIPropertyMetadata(true));
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(Glow), new UIPropertyMetadata(Orientation.Vertical));
 
@@ -19,6 +20,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (SolidColorBrush)this.GetValue(GlowBrushProperty); }
             set { this.SetValue(GlowBrushProperty, value); }
+        }
+
+        public SolidColorBrush NonActiveGlowBrush
+        {
+            get { return (SolidColorBrush)this.GetValue(NonActiveGlowBrushProperty); }
+            set { this.SetValue(NonActiveGlowBrushProperty, value); }
         }
 
         public bool IsGlow

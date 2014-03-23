@@ -10,13 +10,14 @@
                       Title="CleanWindowDemo"
                       Height="400"
                       Width="800"
+                      ResizeMode="CanResizeWithGrip"
                       Style="{DynamicResource CleanWindowStyleKey}">
 
-    <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True"
-                                             AllowsTransparency="False" />
-        <behaviours:GlowWindowBehavior />
-    </i:Interaction.Behaviors>
+<!--    <i:Interaction.Behaviors>-->
+<!--        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True"-->
+<!--                                             AllowsTransparency="False" />-->
+<!--        <behaviours:GlowWindowBehavior />-->
+<!--    </i:Interaction.Behaviors>-->
 
     <Window.Resources>
         <ResourceDictionary>

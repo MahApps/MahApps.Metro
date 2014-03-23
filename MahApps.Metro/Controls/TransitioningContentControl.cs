@@ -4,14 +4,12 @@
 // All other rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
@@ -236,7 +234,7 @@ namespace MahApps.Metro.Controls
                 if (ContentTemplateSelector != null)
                     CurrentContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(Content, this);
                 else
-                    CurrentContentPresentationSite.ContentTemplate = null;
+                    CurrentContentPresentationSite.ContentTemplate = ContentTemplate;
 
                 CurrentContentPresentationSite.Content = Content;
             }
@@ -278,15 +276,9 @@ namespace MahApps.Metro.Controls
                     PreviousContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(oldContent, this);
                     CurrentContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(newContent, this);
                 }
-                else
-                {
-                    PreviousContentPresentationSite.ContentTemplate = null;
-                    CurrentContentPresentationSite.ContentTemplate = null;
-                }
 
                 CurrentContentPresentationSite.Content = newContent;
                 PreviousContentPresentationSite.Content = oldContent;
-
 
                 // and start a new transition
                 if (!IsTransitioning || RestartTransitionOnContentChange)
