@@ -20,12 +20,14 @@ namespace Mahapps.Metro.Tests
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            Accent expectedAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Teal");
-            ThemeManager.ChangeTheme(Application.Current, expectedAccent, Theme.Dark);
+            Accent expectedAccent = ThemeManager.Accents.First(x => x.Name == "Teal");
+            AppTheme expectedTheme = ThemeManager.GetAppTheme("BaseDark");
+            ThemeManager.ChangeTheme(Application.Current, expectedAccent, expectedTheme);
 
-            var theme = ThemeManager.DetectTheme(window);
+            var theme = ThemeManager.DetectAppTheme(window);
 
-            Assert.Equal(Theme.Dark, theme.Item1);
+            Assert.Equal(Theme.Dark, theme.Item1.Theme);
+            Assert.Equal(expectedTheme, theme.Item1);
             Assert.Equal(expectedAccent, theme.Item2);
         }
     }
