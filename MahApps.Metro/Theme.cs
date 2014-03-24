@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace MahApps.Metro
 {
@@ -11,6 +12,7 @@ namespace MahApps.Metro
         Dark
     }
 
+    [DebuggerDisplay("apptheme={Name}, theme={Theme}, res={Resources.Source}")]
     public class AppTheme : Accent
     {
         public AppTheme(string name, Uri resourceAddress)
