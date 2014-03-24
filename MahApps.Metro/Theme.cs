@@ -11,9 +11,9 @@ namespace MahApps.Metro
         Dark
     }
 
-    public class MetroTheme : Accent
+    public class AppTheme : Accent
     {
-        public MetroTheme(string name, Uri resourceAddress)
+        public AppTheme(string name, Uri resourceAddress)
             : base(name, resourceAddress)
         {
         }

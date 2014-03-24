@@ -25,17 +25,17 @@ namespace MetroDemo
 
         private void ThemeLight(object sender, RoutedEventArgs e)
         {
-            var theme = ThemeManager.DetectMetroTheme(Application.Current);
+            var theme = ThemeManager.DetectAppTheme(Application.Current);
             var currentThemeName = theme.Item1.Name.ToLower().Replace("light", "").Replace("dark", "");
-            var newTheme = ((List<MetroTheme>)ThemeManager.DefaultMetroThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Theme.Light);
+            var newTheme = ((List<AppTheme>)ThemeManager.DefaultAppThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Theme.Light);
             ThemeManager.ChangeTheme(Application.Current, theme.Item2, newTheme);
         }
 
         private void ThemeDark(object sender, RoutedEventArgs e)
         {
-            var theme = ThemeManager.DetectMetroTheme(Application.Current);
+            var theme = ThemeManager.DetectAppTheme(Application.Current);
             var currentThemeName = theme.Item1.Name.ToLower().Replace("light", "").Replace("dark", "");
-            var newTheme = ((List<MetroTheme>)ThemeManager.DefaultMetroThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Theme.Dark);
+            var newTheme = ((List<AppTheme>)ThemeManager.DefaultAppThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Theme.Dark);
             ThemeManager.ChangeTheme(Application.Current, theme.Item2, newTheme);
         }
 

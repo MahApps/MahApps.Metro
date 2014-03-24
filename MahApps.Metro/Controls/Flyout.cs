@@ -37,7 +37,7 @@ namespace MahApps.Metro.Controls
         /// Gets the actual theme (dark/light) of this flyout.
         /// Used to handle the WindowCommands overlay in the MetroWindow.
         /// </summary>
-        internal MetroTheme ActualTheme { get; private set; }
+        internal AppTheme ActualTheme { get; private set; }
 
         /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
@@ -150,7 +150,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal void ChangeFlyoutTheme(Accent windowAccent, MetroTheme windowTheme)
+        internal void ChangeFlyoutTheme(Accent windowAccent, AppTheme windowTheme)
         {
             // Beware: Über-dumb code ahead!
             switch (this.Theme)
@@ -184,7 +184,7 @@ namespace MahApps.Metro.Controls
                     {
                         case Metro.Theme.Dark: {
                             var currentThemeName = windowTheme.Name.ToLower().Replace("light", "").Replace("dark", "");
-                            var newTheme = ((List<MetroTheme>)ThemeManager.DefaultMetroThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Metro.Theme.Light);
+                            var newTheme = ((List<AppTheme>)ThemeManager.DefaultAppThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Metro.Theme.Light);
                             ThemeManager.ChangeTheme(this.Resources, windowAccent, newTheme);
                             this.Background = (Brush)windowTheme.Resources["FlyoutLightBrush"];
                             this.Foreground = (Brush)windowTheme.Resources["WhiteColorBrush"];
@@ -194,7 +194,7 @@ namespace MahApps.Metro.Controls
 
                         case Metro.Theme.Light: {
                             var currentThemeName = windowTheme.Name.ToLower().Replace("light", "").Replace("dark", "");
-                            var newTheme = ((List<MetroTheme>)ThemeManager.DefaultMetroThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Metro.Theme.Dark);
+                            var newTheme = ((List<AppTheme>)ThemeManager.DefaultAppThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Metro.Theme.Dark);
                             ThemeManager.ChangeTheme(this.Resources, windowAccent, newTheme);
                             this.Background = (Brush)windowTheme.Resources["FlyoutDarkBrush"];
                             this.Foreground = (Brush)windowTheme.Resources["WhiteColorBrush"];
@@ -206,7 +206,7 @@ namespace MahApps.Metro.Controls
                 
                 case FlyoutTheme.Dark: {
                     var currentThemeName = windowTheme.Name.ToLower().Replace("light", "").Replace("dark", "");
-                    var newTheme = ((List<MetroTheme>)ThemeManager.DefaultMetroThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Metro.Theme.Dark);
+                    var newTheme = ((List<AppTheme>)ThemeManager.DefaultAppThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Metro.Theme.Dark);
                     ThemeManager.ChangeTheme(this.Resources, windowAccent, newTheme);
                     this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
                     this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
@@ -216,7 +216,7 @@ namespace MahApps.Metro.Controls
 
                 case FlyoutTheme.Light: {
                     var currentThemeName = windowTheme.Name.ToLower().Replace("light", "").Replace("dark", "");
-                    var newTheme = ((List<MetroTheme>)ThemeManager.DefaultMetroThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Metro.Theme.Light);
+                    var newTheme = ((List<AppTheme>)ThemeManager.DefaultAppThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Metro.Theme.Light);
                     ThemeManager.ChangeTheme(this.Resources, windowAccent, newTheme);
                     this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
                     this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
@@ -226,26 +226,26 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static Tuple<MetroTheme, Accent> DetectTheme(Flyout flyout)
+        private static Tuple<AppTheme, Accent> DetectTheme(Flyout flyout)
         {
             if (flyout == null)
                 return null;
 
             // first look for owner
             var window = flyout.TryFindParent<MetroWindow>();
-            var theme = window != null ? ThemeManager.DetectMetroTheme(window) : null;
+            var theme = window != null ? ThemeManager.DetectAppTheme(window) : null;
             if (theme != null && theme.Item2 != null)
                 return theme;
 
             // second try, look for main window
             if (Application.Current != null) {
                 var mainWindow = Application.Current.MainWindow as MetroWindow;
-                theme = mainWindow != null ? ThemeManager.DetectMetroTheme(mainWindow) : null;
+                theme = mainWindow != null ? ThemeManager.DetectAppTheme(mainWindow) : null;
                 if (theme != null && theme.Item2 != null)
                     return theme;
 
                 // oh no, now look at application resource
-                theme = ThemeManager.DetectMetroTheme(Application.Current);
+                theme = ThemeManager.DetectAppTheme(Application.Current);
                 if (theme != null && theme.Item2 != null)
                     return theme;
             }

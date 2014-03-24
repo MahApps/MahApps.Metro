@@ -26,19 +26,19 @@ namespace MetroDemo
 
         protected virtual void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectMetroTheme(Application.Current);
+            var theme = ThemeManager.DetectAppTheme(Application.Current);
             var accent = ThemeManager.DefaultAccents.First(x => x.Name == this.Name);
             ThemeManager.ChangeTheme(Application.Current, accent, theme.Item1);
         }
     }
 
-    public class MetroThemeMenuData : AccentColorMenuData
+    public class AppThemeMenuData : AccentColorMenuData
     {
         protected override void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectMetroTheme(Application.Current);
-            var metroTheme = ThemeManager.DefaultMetroThemes.First(x => x.Name == this.Name);
-            ThemeManager.ChangeTheme(Application.Current, theme.Item2, metroTheme);
+            var theme = ThemeManager.DetectAppTheme(Application.Current);
+            var appTheme = ThemeManager.DefaultAppThemes.First(x => x.Name == this.Name);
+            ThemeManager.ChangeTheme(Application.Current, theme.Item2, appTheme);
         }
     }
 
@@ -56,8 +56,8 @@ namespace MetroDemo
                                             .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
                                             .ToList();
             // create metro theme color menu items for the demo
-            this.MetroThemes = ThemeManager.DefaultMetroThemes
-                                           .Select(a => new MetroThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
+            this.AppThemes = ThemeManager.DefaultAppThemes
+                                           .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
                                            .ToList();
             
             Albums = SampleData.Albums;
@@ -71,7 +71,7 @@ namespace MetroDemo
         public List<Album> Albums { get; set; }
         public List<Artist> Artists { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
-        public List<MetroThemeMenuData> MetroThemes { get; set; }
+        public List<AppThemeMenuData> AppThemes { get; set; }
 
         public int? IntegerGreater10Property
         {

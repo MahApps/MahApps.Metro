@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using System.Security;
-using System.Windows.Documents;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections;
@@ -17,13 +16,13 @@ namespace MahApps.Metro
     /// </summary>
     public static class ThemeManager
     {
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         internal static readonly ResourceDictionary LightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         internal static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
 
         private static IList<Accent> _accents;
-        private static IList<MetroTheme> _metroThemes;
+        private static IList<AppTheme> _appThemes;
 
         /// <summary>
         /// Cached method info's for use in OnThemeChanged
@@ -74,25 +73,25 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets a list of all of default metro themes.
         /// </summary>
-        public static IList<MetroTheme> DefaultMetroThemes
+        public static IList<AppTheme> DefaultAppThemes
         {
             get
             {
-                if (_metroThemes != null)
-                    return _metroThemes;
+                if (_appThemes != null)
+                    return _appThemes;
 
                 var themes = new[] { "BaseLight", "BaseDark" };
 
-                _metroThemes = new List<MetroTheme>(themes.Length);
+                _appThemes = new List<AppTheme>(themes.Length);
 
                 foreach (string color in themes)
                 {
-                    var metroTheme = new MetroTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)));
-                    metroTheme.Theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
-                    _metroThemes.Add(metroTheme);
+                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)));
+                    appTheme.Theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
+                    _appThemes.Add(appTheme);
                 }
 
-                return _metroThemes;
+                return _appThemes;
             }
         }
 
@@ -102,14 +101,14 @@ namespace MahApps.Metro
         /// <param name="app"></param>
         /// <param name="themeName"></param>
         [SecurityCritical]
-        public static void ChangeMetroTheme(Application app, string themeName)
+        public static void ChangeAppTheme(Application app, string themeName)
         {
             if (app == null) throw new ArgumentNullException("app");
             if (themeName == null) throw new ArgumentNullException("themeName");
 
-            var oldTheme = DetectMetroTheme(app);
-            MetroTheme matched;
-            if ((matched = ((List<MetroTheme>)DefaultMetroThemes).Find(x => x.Name == themeName)) != null)
+            var oldTheme = DetectAppTheme(app);
+            AppTheme matched;
+            if ((matched = ((List<AppTheme>)DefaultAppThemes).Find(x => x.Name == themeName)) != null)
             {
                 ChangeTheme(app.Resources, oldTheme, oldTheme.Item2, matched);
             }
@@ -121,14 +120,14 @@ namespace MahApps.Metro
         /// <param name="window"></param>
         /// <param name="themeName"></param>
         [SecurityCritical]
-        public static void ChangeMetroTheme(Window window, string themeName)
+        public static void ChangeAppTheme(Window window, string themeName)
         {
             if (window == null) throw new ArgumentNullException("window");
             if (themeName == null) throw new ArgumentNullException("themeName");
 
-            var oldTheme = DetectMetroTheme(window);
-            MetroTheme matched;
-            if ((matched = ((List<MetroTheme>)DefaultMetroThemes).Find(x => x.Name == themeName)) != null)
+            var oldTheme = DetectAppTheme(window);
+            AppTheme matched;
+            if ((matched = ((List<AppTheme>)DefaultAppThemes).Find(x => x.Name == themeName)) != null)
             {
                 ChangeTheme(window.Resources, oldTheme, oldTheme.Item2, matched);
             }
@@ -141,15 +140,15 @@ namespace MahApps.Metro
         /// <param name="newAccent">The accent to apply.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeTheme(Application app, Accent newAccent, MetroTheme newTheme)
+        public static void ChangeTheme(Application app, Accent newAccent, AppTheme newTheme)
         {
             if (app == null) throw new ArgumentNullException("app");
 
-            var oldTheme = DetectMetroTheme(app);
+            var oldTheme = DetectAppTheme(app);
             ChangeTheme(app.Resources, oldTheme, newAccent, newTheme);
         }
         [SecurityCritical]
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         public static void ChangeTheme(Application app, Accent newAccent, Theme newTheme)
         {
             if (app == null) throw new ArgumentNullException("app");
@@ -165,15 +164,15 @@ namespace MahApps.Metro
         /// <param name="newAccent">The accent to apply.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeTheme(Window window, Accent newAccent, MetroTheme newTheme)
+        public static void ChangeTheme(Window window, Accent newAccent, AppTheme newTheme)
         {
             if (window == null) throw new ArgumentNullException("window");
 
-            var oldTheme = DetectMetroTheme(window);
+            var oldTheme = DetectAppTheme(window);
             ChangeTheme(window.Resources, oldTheme, newAccent, newTheme);
         }
         [SecurityCritical]
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         public static void ChangeTheme(Window window, Accent newAccent, Theme newTheme)
         {
             if (window == null) throw new ArgumentNullException("window");
@@ -183,7 +182,7 @@ namespace MahApps.Metro
         }
 
         [SecurityCritical]
-        private static void ChangeTheme(ResourceDictionary resources, Tuple<MetroTheme, Accent> oldThemeInfo, Accent newAccent, MetroTheme newTheme)
+        private static void ChangeTheme(ResourceDictionary resources, Tuple<AppTheme, Accent> oldThemeInfo, Accent newAccent, AppTheme newTheme)
         {
             var themeChanged = false;
             if (oldThemeInfo != null)
@@ -227,7 +226,7 @@ namespace MahApps.Metro
             }
         }
         [SecurityCritical]
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         private static void ChangeTheme(ResourceDictionary resources, Tuple<Theme, Accent> oldThemeInfo, Accent newAccent, Theme newTheme)
         {
             var themeChanged = false;
@@ -281,7 +280,7 @@ namespace MahApps.Metro
         /// <param name="newAccent">The accent to apply to the ResourceDictionary.</param>
         /// <param name="newTheme">The theme to apply to the ResourceDictionary.</param>
         [SecurityCritical]
-        public static void ChangeTheme(ResourceDictionary resources, Accent newAccent, MetroTheme newTheme)
+        public static void ChangeTheme(ResourceDictionary resources, Accent newAccent, AppTheme newTheme)
         {
             if (resources == null) throw new ArgumentNullException("resources");
 
@@ -289,7 +288,7 @@ namespace MahApps.Metro
             ApplyResourceDictionary(newTheme.Resources, resources);
         }
         [SecurityCritical]
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         public static void ChangeTheme(ResourceDictionary resources, Accent newAccent, Theme newTheme)
         {
             if (resources == null) throw new ArgumentNullException("resources");
@@ -317,18 +316,18 @@ namespace MahApps.Metro
         /// <summary>
         /// Scans the window resources and returns it's accent and theme.
         /// </summary>
-        public static Tuple<MetroTheme, Accent> DetectMetroTheme()
+        public static Tuple<AppTheme, Accent> DetectAppTheme()
         {
             try
             {
-                return DetectMetroTheme(Application.Current.MainWindow);
+                return DetectAppTheme(Application.Current.MainWindow);
             }
             catch (Exception)
             {
-                return DetectMetroTheme(Application.Current);
+                return DetectAppTheme(Application.Current);
             }
         }
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         public static Tuple<Theme, Accent> DetectTheme()
         {
             try
@@ -345,13 +344,13 @@ namespace MahApps.Metro
         /// Scans the window resources and returns it's accent and theme.
         /// </summary>
         /// <param name="window">The Window to scan.</param>
-        public static Tuple<MetroTheme, Accent> DetectMetroTheme(Window window)
+        public static Tuple<AppTheme, Accent> DetectAppTheme(Window window)
         {
             if (window == null) throw new ArgumentNullException("window");
 
-            return DetectMetroTheme(window.Resources);
+            return DetectAppTheme(window.Resources);
         }
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         public static Tuple<Theme, Accent> DetectTheme(Window window)
         {
             if (window == null) throw new ArgumentNullException("window");
@@ -363,13 +362,13 @@ namespace MahApps.Metro
         /// Scans the application resources and returns it's accent and theme.
         /// </summary>
         /// <param name="app">The Application instance to scan.</param>
-        public static Tuple<MetroTheme, Accent> DetectMetroTheme(Application app)
+        public static Tuple<AppTheme, Accent> DetectAppTheme(Application app)
         {
             if (app == null) throw new ArgumentNullException("app");
 
-            return DetectMetroTheme(app.Resources);
+            return DetectAppTheme(app.Resources);
         }
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         public static Tuple<Theme, Accent> DetectTheme(Application app)
         {
             if (app == null) throw new ArgumentNullException("app");
@@ -381,23 +380,23 @@ namespace MahApps.Metro
         /// Scans a resources and returns it's accent and theme.
         /// </summary>
         /// <param name="resources">The ResourceDictionary to check.</param>
-        private static Tuple<MetroTheme, Accent> DetectMetroTheme(ResourceDictionary resources)
+        private static Tuple<AppTheme, Accent> DetectAppTheme(ResourceDictionary resources)
         {
             if (resources == null) throw new ArgumentNullException("resources");
 
-            MetroTheme currentTheme = null;
-            Tuple<MetroTheme, Accent> detectedAccentTheme = null;
+            AppTheme currentTheme = null;
+            Tuple<AppTheme, Accent> detectedAccentTheme = null;
 
 
             if (DetectThemeFromResources(ref currentTheme, resources))
             {
                 if (GetThemeFromResources(currentTheme, resources, ref detectedAccentTheme))
-                    return new Tuple<MetroTheme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
+                    return new Tuple<AppTheme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
             }
 
             return null;
         }
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         private static Tuple<Theme, Accent> DetectTheme(ResourceDictionary resources)
         {
             if (resources == null) throw new ArgumentNullException("resources");
@@ -416,13 +415,13 @@ namespace MahApps.Metro
             return null;
         }
 
-        internal static bool DetectThemeFromAppResources(out MetroTheme detectedTheme)
+        internal static bool DetectThemeFromAppResources(out AppTheme detectedTheme)
         {
             detectedTheme = null;
 
             return DetectThemeFromResources(ref detectedTheme, Application.Current.Resources);
         }
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         internal static bool DetectThemeFromAppResources(out Theme detectedTheme, out ResourceDictionary themeRd)
         {
             detectedTheme = Theme.Light;
@@ -431,15 +430,15 @@ namespace MahApps.Metro
             return DetectThemeFromResources(ref detectedTheme, ref themeRd, Application.Current.Resources);
         }
 
-        private static bool DetectThemeFromResources(ref MetroTheme detectedTheme, ResourceDictionary dict)
+        private static bool DetectThemeFromResources(ref AppTheme detectedTheme, ResourceDictionary dict)
         {
             var enumerator = dict.MergedDictionaries.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 var currentRd = enumerator.Current;
 
-                MetroTheme matched = null;
-                if ((matched = ((List<MetroTheme>)DefaultMetroThemes).Find(x => x.Resources.Source == currentRd.Source)) != null)
+                AppTheme matched = null;
+                if ((matched = ((List<AppTheme>)DefaultAppThemes).Find(x => x.Resources.Source == currentRd.Source)) != null)
                 {
                     detectedTheme = matched;
                     enumerator.Dispose();
@@ -455,7 +454,7 @@ namespace MahApps.Metro
             enumerator.Dispose();
             return false;
         }
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         private static bool DetectThemeFromResources(ref Theme detectedTheme, ref ResourceDictionary themeRd, ResourceDictionary dict)
         {
             var enumerator = dict.MergedDictionaries.GetEnumerator();
@@ -482,14 +481,14 @@ namespace MahApps.Metro
             return false;
         }
 
-        internal static bool GetThemeFromResources(MetroTheme presetTheme, ResourceDictionary dict, ref Tuple<MetroTheme, Accent> detectedAccentTheme)
+        internal static bool GetThemeFromResources(AppTheme presetTheme, ResourceDictionary dict, ref Tuple<AppTheme, Accent> detectedAccentTheme)
         {
-            MetroTheme currentTheme = presetTheme;
+            AppTheme currentTheme = presetTheme;
 
             Accent matched = null;
             if ((matched = ((List<Accent>)DefaultAccents).Find(x => x.Resources.Source == dict.Source)) != null)
             {
-                detectedAccentTheme = Tuple.Create<MetroTheme, Accent>(currentTheme, matched);
+                detectedAccentTheme = Tuple.Create<AppTheme, Accent>(currentTheme, matched);
                 return true;
             }
 
@@ -501,7 +500,7 @@ namespace MahApps.Metro
 
             return false;
         }
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         internal static bool GetThemeFromResources(Theme presetTheme, ResourceDictionary dict, ref Tuple<Theme, Accent> detectedAccentTheme)
         {
             Theme currentTheme = presetTheme;
@@ -535,16 +534,16 @@ namespace MahApps.Metro
         /// Sometimes the ContextMenu is not changing the colors, so this will fix it.
         /// </summary>
         [SecurityCritical]
-        private static void OnThemeChanged(Accent newAccent, MetroTheme newTheme)
+        private static void OnThemeChanged(Accent newAccent, AppTheme newTheme)
         {
-            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { MetroTheme = newTheme, Accent = newAccent });
+            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { AppTheme = newTheme, Accent = newAccent });
         }
         [SecurityCritical]
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         private static void OnThemeChanged(Accent newAccent, Theme newTheme)
         {
             var onThemeChangedEventArgs = new OnThemeChangedEventArgs() { Theme = newTheme, Accent = newAccent };
-            onThemeChangedEventArgs.MetroTheme = new MetroTheme(
+            onThemeChangedEventArgs.AppTheme = new AppTheme(
                 newTheme == Theme.Light ? "BaseLight" : "BaseDark",
                 newTheme == Theme.Light ? ThemeManager.LightResource.Source : ThemeManager.DarkResource.Source);
             SafeRaise.Raise(IsThemeChanged, Application.Current, onThemeChangedEventArgs);
@@ -592,8 +591,8 @@ namespace MahApps.Metro
 
     public class OnThemeChangedEventArgs : EventArgs
     {
-        public MetroTheme MetroTheme { get; set; }
-        [Obsolete("ThemeManager provides now MetroTheme, the old enumeration will be delete in next release!")]
+        public AppTheme AppTheme { get; set; }
+        [Obsolete("ThemeManager provides now AppTheme, the old enumeration will be delete in next release!")]
         public Theme Theme { get; set; }
         public Accent Accent { get; set; }
     }

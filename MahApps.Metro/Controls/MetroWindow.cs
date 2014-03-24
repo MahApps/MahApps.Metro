@@ -603,7 +603,7 @@ namespace MahApps.Metro.Controls
 
                 foreach (var flyout in flyouts)
                 {
-                    flyout.ChangeFlyoutTheme(e.Accent, e.MetroTheme);
+                    flyout.ChangeFlyoutTheme(e.Accent, e.AppTheme);
                 }
                 this.HandleWindowCommandsForFlyouts(flyouts);
             }

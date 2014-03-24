@@ -1,13 +1,12 @@
 ﻿using System.Linq;
 using System.Windows;
-using System.Windows.Media;
 using MahApps.Metro;
 
 namespace AccentColorRepro
 {
     public partial class MainWindow
     {
-        private MetroTheme currentTheme = ThemeManager.DefaultMetroThemes.First(x => x.Name == "BaseLight");
+        private AppTheme currentTheme = ThemeManager.DefaultAppThemes.First(x => x.Name == "BaseLight");
         private Accent currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Blue");
 
         public MainWindow()
@@ -18,13 +17,13 @@ namespace AccentColorRepro
 
         private void DarkButtonClick(object sender, RoutedEventArgs e)
         {
-            currentTheme = ThemeManager.DefaultMetroThemes.First(x => x.Name == "BaseDark");
+            currentTheme = ThemeManager.DefaultAppThemes.First(x => x.Name == "BaseDark");
             ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
         }
 
         private void LightButtonClick(object sender, RoutedEventArgs e)
         {
-            currentTheme = ThemeManager.DefaultMetroThemes.First(x => x.Name == "BaseLight");
+            currentTheme = ThemeManager.DefaultAppThemes.First(x => x.Name == "BaseLight");
             ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
         }
 
