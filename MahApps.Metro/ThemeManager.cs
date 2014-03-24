@@ -16,11 +16,6 @@ namespace MahApps.Metro
     /// </summary>
     public static class ThemeManager
     {
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        internal static readonly ResourceDictionary LightResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml") };
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        internal static readonly ResourceDictionary DarkResource = new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml") };
-
         private static IList<Accent> _accents;
         private static IList<AppTheme> _appThemes;
 
@@ -96,6 +91,16 @@ namespace MahApps.Metro
         }
 
         /// <summary>
+        /// Gets app theme with the given name.
+        /// </summary>
+        /// <param name="appThemeName"></param>
+        /// <returns>AppTheme</returns>
+        public static AppTheme GetAppTheme(string appThemeName)
+        {
+            return DefaultAppThemes.FirstOrDefault(x => x.Name == appThemeName);
+        }
+
+        /// <summary>
         /// Change theme for the whole application.
         /// </summary>
         /// <param name="app"></param>
@@ -147,15 +152,6 @@ namespace MahApps.Metro
             var oldTheme = DetectAppTheme(app);
             ChangeTheme(app.Resources, oldTheme, newAccent, newTheme);
         }
-        [SecurityCritical]
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        public static void ChangeTheme(Application app, Accent newAccent, Theme newTheme)
-        {
-            if (app == null) throw new ArgumentNullException("app");
-
-            var oldTheme = DetectTheme(app);
-            ChangeTheme(app.Resources, oldTheme, newAccent, newTheme);
-        }
 
         /// <summary>
         /// Change accent and theme for the given window.
@@ -169,15 +165,6 @@ namespace MahApps.Metro
             if (window == null) throw new ArgumentNullException("window");
 
             var oldTheme = DetectAppTheme(window);
-            ChangeTheme(window.Resources, oldTheme, newAccent, newTheme);
-        }
-        [SecurityCritical]
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        public static void ChangeTheme(Window window, Accent newAccent, Theme newTheme)
-        {
-            if (window == null) throw new ArgumentNullException("window");
-
-            var oldTheme = DetectTheme(window);
             ChangeTheme(window.Resources, oldTheme, newAccent, newTheme);
         }
 
@@ -208,53 +195,6 @@ namespace MahApps.Metro
                     {
                         resources.MergedDictionaries.Add(newTheme.Resources);
                         var ok = resources.MergedDictionaries.Remove(oldThemeResource);
-
-                        themeChanged = true;
-                    }
-                }
-            }
-            else
-            {
-                ChangeTheme(resources, newAccent, newTheme);
-
-                themeChanged = true;
-            }
-
-            if (themeChanged)
-            {
-                OnThemeChanged(newAccent, newTheme);
-            }
-        }
-        [SecurityCritical]
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        private static void ChangeTheme(ResourceDictionary resources, Tuple<Theme, Accent> oldThemeInfo, Accent newAccent, Theme newTheme)
-        {
-            var themeChanged = false;
-            if (oldThemeInfo != null)
-            {
-                var oldAccent = oldThemeInfo.Item2;
-                if (oldAccent != null && oldAccent.Name != newAccent.Name)
-                {
-                    var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
-                    if (oldAccentResource != null)
-                    {
-                        resources.MergedDictionaries.Add(newAccent.Resources);
-                        var ok = resources.MergedDictionaries.Remove(oldAccentResource);
-
-                        themeChanged = true;
-                    }
-                }
-
-                var oldTheme = oldThemeInfo.Item1;
-                if (oldTheme != null && oldTheme != newTheme)
-                {
-                    var oldThemeResource = (oldTheme == Theme.Light) ? LightResource : DarkResource;
-                    var md = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldThemeResource.Source);
-                    if (md != null)
-                    {
-                        var newThemeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
-                        resources.MergedDictionaries.Add(newThemeResource);
-                        var ok = resources.MergedDictionaries.Remove(md);
 
                         themeChanged = true;
                     }
@@ -327,18 +267,6 @@ namespace MahApps.Metro
                 return DetectAppTheme(Application.Current);
             }
         }
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        public static Tuple<Theme, Accent> DetectTheme()
-        {
-            try
-            {
-                return DetectTheme(Application.Current.MainWindow);
-            }
-            catch (Exception)
-            {
-                return DetectTheme(Application.Current);
-            }
-        }
 
         /// <summary>
         /// Scans the window resources and returns it's accent and theme.
@@ -350,13 +278,6 @@ namespace MahApps.Metro
 
             return DetectAppTheme(window.Resources);
         }
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        public static Tuple<Theme, Accent> DetectTheme(Window window)
-        {
-            if (window == null) throw new ArgumentNullException("window");
-
-            return DetectTheme(window.Resources);
-        }
 
         /// <summary>
         /// Scans the application resources and returns it's accent and theme.
@@ -367,13 +288,6 @@ namespace MahApps.Metro
             if (app == null) throw new ArgumentNullException("app");
 
             return DetectAppTheme(app.Resources);
-        }
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        public static Tuple<Theme, Accent> DetectTheme(Application app)
-        {
-            if (app == null) throw new ArgumentNullException("app");
-
-            return DetectTheme(app.Resources);
         }
 
         /// <summary>
@@ -396,38 +310,12 @@ namespace MahApps.Metro
 
             return null;
         }
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        private static Tuple<Theme, Accent> DetectTheme(ResourceDictionary resources)
-        {
-            if (resources == null) throw new ArgumentNullException("resources");
-
-            Theme currentTheme = Theme.Light;
-            ResourceDictionary themeDictionary = null;
-            Tuple<Theme, Accent> detectedAccentTheme = null;
-
-
-            if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, resources))
-            {
-                if (GetThemeFromResources(currentTheme, resources, ref detectedAccentTheme))
-                    return new Tuple<Theme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
-            }
-
-            return null;
-        }
 
         internal static bool DetectThemeFromAppResources(out AppTheme detectedTheme)
         {
             detectedTheme = null;
 
             return DetectThemeFromResources(ref detectedTheme, Application.Current.Resources);
-        }
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        internal static bool DetectThemeFromAppResources(out Theme detectedTheme, out ResourceDictionary themeRd)
-        {
-            detectedTheme = Theme.Light;
-            themeRd = null;
-
-            return DetectThemeFromResources(ref detectedTheme, ref themeRd, Application.Current.Resources);
         }
 
         private static bool DetectThemeFromResources(ref AppTheme detectedTheme, ResourceDictionary dict)
@@ -446,32 +334,6 @@ namespace MahApps.Metro
                 }
 
                 if (DetectThemeFromResources(ref detectedTheme, currentRd))
-                {
-                    return true;
-                }
-            }
-
-            enumerator.Dispose();
-            return false;
-        }
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        private static bool DetectThemeFromResources(ref Theme detectedTheme, ref ResourceDictionary themeRd, ResourceDictionary dict)
-        {
-            var enumerator = dict.MergedDictionaries.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                var currentRd = enumerator.Current;
-
-                if (currentRd.Source == LightResource.Source || currentRd.Source == DarkResource.Source)
-                {
-                    detectedTheme = currentRd.Source == LightResource.Source ? Theme.Light : Theme.Dark;
-                    themeRd = currentRd;
-
-                    enumerator.Dispose();
-                    return true;
-                }
-
-                if (DetectThemeFromResources(ref detectedTheme, ref themeRd, currentRd))
                 {
                     return true;
                 }
@@ -500,6 +362,213 @@ namespace MahApps.Metro
 
             return false;
         }
+
+        /// <summary>
+        /// This event fires if accent color and theme was changed
+        /// this should be using the weak event pattern, but for now it's enough
+        /// </summary>
+        public static event EventHandler<OnThemeChangedEventArgs> IsThemeChanged;
+
+        /// <summary>
+        /// Invalidates global colors and resources.
+        /// Sometimes the ContextMenu is not changing the colors, so this will fix it.
+        /// </summary>
+        [SecurityCritical]
+        private static void OnThemeChanged(Accent newAccent, AppTheme newTheme)
+        {
+            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { AppTheme = newTheme, Accent = newAccent });
+        }
+
+        #region obsoletes
+
+        internal static ResourceDictionary _lightResource;
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        internal static ResourceDictionary LightResource
+        {
+            get
+            {
+                if (null == _lightResource)
+                {
+                    var appTheme = GetAppTheme("BaseLight");
+                    if (appTheme != null)
+                    {
+                        _lightResource = appTheme.Resources;
+                    }
+                }
+                return _lightResource;
+            }
+        }
+
+        internal static ResourceDictionary _darkResource;
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        internal static ResourceDictionary DarkResource
+        {
+            get
+            {
+                if (null == _darkResource)
+                {
+                    var appTheme = GetAppTheme("BaseDark");
+                    if (appTheme != null)
+                    {
+                        _darkResource = appTheme.Resources;
+                    }
+                }
+                return _darkResource;
+            }
+        }
+
+        [SecurityCritical]
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        public static void ChangeTheme(Application app, Accent newAccent, Theme newTheme)
+        {
+            if (app == null) throw new ArgumentNullException("app");
+
+            var oldTheme = DetectTheme(app);
+            ChangeTheme(app.Resources, oldTheme, newAccent, newTheme);
+        }
+
+        [SecurityCritical]
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        public static void ChangeTheme(Window window, Accent newAccent, Theme newTheme)
+        {
+            if (window == null) throw new ArgumentNullException("window");
+
+            var oldTheme = DetectTheme(window);
+            ChangeTheme(window.Resources, oldTheme, newAccent, newTheme);
+        }
+
+        [SecurityCritical]
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        private static void ChangeTheme(ResourceDictionary resources, Tuple<Theme, Accent> oldThemeInfo, Accent newAccent, Theme newTheme)
+        {
+            var themeChanged = false;
+            if (oldThemeInfo != null)
+            {
+                var oldAccent = oldThemeInfo.Item2;
+                if (oldAccent != null && oldAccent.Name != newAccent.Name)
+                {
+                    var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
+                    if (oldAccentResource != null)
+                    {
+                        resources.MergedDictionaries.Add(newAccent.Resources);
+                        var ok = resources.MergedDictionaries.Remove(oldAccentResource);
+
+                        themeChanged = true;
+                    }
+                }
+
+                var oldTheme = oldThemeInfo.Item1;
+                if (oldTheme != null && oldTheme != newTheme)
+                {
+                    var oldThemeResource = (oldTheme == Theme.Light) ? LightResource : DarkResource;
+                    var md = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldThemeResource.Source);
+                    if (md != null)
+                    {
+                        var newThemeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
+                        resources.MergedDictionaries.Add(newThemeResource);
+                        var ok = resources.MergedDictionaries.Remove(md);
+
+                        themeChanged = true;
+                    }
+                }
+            }
+            else
+            {
+                ChangeTheme(resources, newAccent, newTheme);
+
+                themeChanged = true;
+            }
+
+            if (themeChanged)
+            {
+                OnThemeChanged(newAccent, newTheme);
+            }
+        }
+
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        public static Tuple<Theme, Accent> DetectTheme()
+        {
+            try
+            {
+                return DetectTheme(Application.Current.MainWindow);
+            }
+            catch (Exception)
+            {
+                return DetectTheme(Application.Current);
+            }
+        }
+
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        public static Tuple<Theme, Accent> DetectTheme(Window window)
+        {
+            if (window == null) throw new ArgumentNullException("window");
+
+            return DetectTheme(window.Resources);
+        }
+
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        public static Tuple<Theme, Accent> DetectTheme(Application app)
+        {
+            if (app == null) throw new ArgumentNullException("app");
+
+            return DetectTheme(app.Resources);
+        }
+
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        private static Tuple<Theme, Accent> DetectTheme(ResourceDictionary resources)
+        {
+            if (resources == null) throw new ArgumentNullException("resources");
+
+            Theme currentTheme = Theme.Light;
+            ResourceDictionary themeDictionary = null;
+            Tuple<Theme, Accent> detectedAccentTheme = null;
+
+
+            if (DetectThemeFromResources(ref currentTheme, ref themeDictionary, resources))
+            {
+                if (GetThemeFromResources(currentTheme, resources, ref detectedAccentTheme))
+                    return new Tuple<Theme, Accent>(detectedAccentTheme.Item1, detectedAccentTheme.Item2);
+            }
+
+            return null;
+        }
+
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        internal static bool DetectThemeFromAppResources(out Theme detectedTheme, out ResourceDictionary themeRd)
+        {
+            detectedTheme = Theme.Light;
+            themeRd = null;
+
+            return DetectThemeFromResources(ref detectedTheme, ref themeRd, Application.Current.Resources);
+        }
+
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        private static bool DetectThemeFromResources(ref Theme detectedTheme, ref ResourceDictionary themeRd, ResourceDictionary dict)
+        {
+            var enumerator = dict.MergedDictionaries.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                var currentRd = enumerator.Current;
+
+                if (currentRd.Source == LightResource.Source || currentRd.Source == DarkResource.Source)
+                {
+                    detectedTheme = currentRd.Source == LightResource.Source ? Theme.Light : Theme.Dark;
+                    themeRd = currentRd;
+
+                    enumerator.Dispose();
+                    return true;
+                }
+
+                if (DetectThemeFromResources(ref detectedTheme, ref themeRd, currentRd))
+                {
+                    return true;
+                }
+            }
+
+            enumerator.Dispose();
+            return false;
+        }
+
         [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
         internal static bool GetThemeFromResources(Theme presetTheme, ResourceDictionary dict, ref Tuple<Theme, Accent> detectedAccentTheme)
         {
@@ -523,21 +592,6 @@ namespace MahApps.Metro
             return false;
         }
 
-        /// <summary>
-        /// This event fires if accent color and theme was changed
-        /// this should be using the weak event pattern, but for now it's enough
-        /// </summary>
-        public static event EventHandler<OnThemeChangedEventArgs> IsThemeChanged;
-
-        /// <summary>
-        /// Invalidates global colors and resources.
-        /// Sometimes the ContextMenu is not changing the colors, so this will fix it.
-        /// </summary>
-        [SecurityCritical]
-        private static void OnThemeChanged(Accent newAccent, AppTheme newTheme)
-        {
-            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { AppTheme = newTheme, Accent = newAccent });
-        }
         [SecurityCritical]
         [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
         private static void OnThemeChanged(Accent newAccent, Theme newTheme)
@@ -550,9 +604,8 @@ namespace MahApps.Metro
 
             // disable for now to test if it's really needed (and fix the hanging part if window is maximized and the user change the theme)
             return;
-            
-            Action apply = () =>
-                {
+
+            Action apply = () => {
                     if (SystemColors_InvalidateColors != null)
                     {
                         SystemColors_InvalidateColors.Invoke(null, null);
@@ -586,7 +639,10 @@ namespace MahApps.Metro
             }
         }
 
+        [Obsolete("This will be deleted in next release.")]
         public static bool InvalidateSystemResourcesOnBackgroundThread { get; set; }
+
+        #endregion
     }
 
     public class OnThemeChangedEventArgs : EventArgs
