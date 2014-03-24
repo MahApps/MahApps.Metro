@@ -68,6 +68,49 @@ namespace MahApps.Metro
         }
 
         /// <summary>
+        /// Adds an accent with the given name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="resourceAddress"></param>
+        /// <returns>true if the accent does not exists and can be added.</returns>
+        public static bool AddAccent(string name, Uri resourceAddress)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+            if (resourceAddress == null) throw new ArgumentNullException("resourceAddress");
+
+            var accentExists = GetAccent(name) != null;
+            if (accentExists)
+            {
+                return false;
+            }
+
+            _accents.Add(new Accent(name, resourceAddress));
+            return true;
+        }
+
+        /// <summary>
+        /// Adds an app thene with the given name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="resourceAddress"></param>
+        /// <param name="theme"></param>
+        /// <returns>true if the app theme does not exists and can be added.</returns>
+        public static bool AddAppTheme(string name, Uri resourceAddress, Theme theme)
+        {
+            if (name == null) throw new ArgumentNullException("name");
+            if (resourceAddress == null) throw new ArgumentNullException("resourceAddress");
+
+            var appThemeExists = GetAppTheme(name) != null;
+            if (appThemeExists)
+            {
+                return false;
+            }
+
+            _appThemes.Add(new AppTheme(name, resourceAddress) {Theme = theme});
+            return true;
+        }
+
+        /// <summary>
         /// Gets app theme with the given name.
         /// </summary>
         /// <param name="appThemeName"></param>
