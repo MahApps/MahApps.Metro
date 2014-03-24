@@ -13,7 +13,7 @@
     <Color x:Key="GrayNormal">#FF7D7D7D</Color>
     <Color x:Key="GrayHover">#FFAAAAAA</Color>
 
-    <Color x:Key="FlyoutDarkColor">#2B2B2B</Color>
+    <Color x:Key="FlyoutDarkColor">#FF2B2B2B</Color>
     <Color x:Key="FlyoutLightColor">#FFFFFFFF</Color>
 
     <!-- re-set brushes too -->
@@ -43,7 +43,7 @@
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="GrayBrush1" Color="{StaticResource Gray1}" />
-    <SolidColorBrush x:Key="GrayBrush2" Color="{DynamicResource Gray2}"/>
+    <SolidColorBrush x:Key="GrayBrush2" Color="{StaticResource Gray2}"/>
     <SolidColorBrush x:Key="GrayBrush7" Color="{StaticResource Gray7}" />
     <SolidColorBrush x:Key="GrayBrush8" Color="{StaticResource Gray8}" />
     <SolidColorBrush x:Key="GrayBrush10" Color="{StaticResource Gray10}" />
