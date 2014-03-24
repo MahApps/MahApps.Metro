@@ -19,19 +19,21 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets a list of all of default themes.
         /// </summary>
-        public static IList<Accent> DefaultAccents
+        public static IEnumerable<Accent> Accents
         {
             get
             {
                 if (_accents != null)
                     return _accents;
 
-                var colors = new[]{"Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt", 
-                    "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"};
+                var colors = new[] {
+                                       "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt",
+                                       "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"
+                                   };
 
                 _accents = new List<Accent>(colors.Length);
 
-                foreach (string color in colors)
+                foreach (var color in colors)
                 {
                     _accents.Add(new Accent(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color))));
                 }
@@ -43,7 +45,7 @@ namespace MahApps.Metro
         /// <summary>
         /// Gets a list of all of default metro themes.
         /// </summary>
-        public static IList<AppTheme> DefaultAppThemes
+        public static IEnumerable<AppTheme> AppThemes
         {
             get
             {
@@ -54,7 +56,7 @@ namespace MahApps.Metro
 
                 _appThemes = new List<AppTheme>(themes.Length);
 
-                foreach (string color in themes)
+                foreach (var color in themes)
                 {
                     var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)));
                     appTheme.Theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
@@ -74,11 +76,11 @@ namespace MahApps.Metro
         {
             if (appThemeName == null) throw new ArgumentNullException("appThemeName");
 
-            return DefaultAppThemes.FirstOrDefault(x => x.Name == appThemeName);
+            return AppThemes.FirstOrDefault(x => x.Name == appThemeName);
         }
 
         /// <summary>
-        /// Gets app theme with the given name.
+        /// Gets app theme with the given resource dictionary.
         /// </summary>
         /// <param name="resources"></param>
         /// <returns>AppTheme</returns>
@@ -86,7 +88,7 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException("resources");
             
-            return DefaultAppThemes.FirstOrDefault(x => x.Resources.Source == resources.Source);
+            return AppThemes.FirstOrDefault(x => x.Resources.Source == resources.Source);
         }
 
         /// <summary>
@@ -100,7 +102,7 @@ namespace MahApps.Metro
             if (appThemeName == null) throw new ArgumentNullException("appThemeName");
 
             appThemeName = appThemeName.ToLower().Replace("light", "").Replace("dark", "");
-            return DefaultAppThemes.FirstOrDefault(x => x.Name.ToLower().Contains(appThemeName) && x.Theme == theme);
+            return AppThemes.FirstOrDefault(x => x.Name.ToLower().Contains(appThemeName) && x.Theme == theme);
         }
 
         /// <summary>
@@ -112,6 +114,30 @@ namespace MahApps.Metro
         public static AppTheme GetAppTheme(AppTheme currentAppTheme, Theme theme)
         {
             return GetAppTheme(currentAppTheme.Name, theme);
+        }
+
+        /// <summary>
+        /// Gets accent with the given name.
+        /// </summary>
+        /// <param name="accentName"></param>
+        /// <returns>AppTheme</returns>
+        public static Accent GetAccent(string accentName)
+        {
+            if (accentName == null) throw new ArgumentNullException("accentName");
+
+            return Accents.FirstOrDefault(x => x.Name == accentName);
+        }
+
+        /// <summary>
+        /// Gets accent with the given resource dictionary.
+        /// </summary>
+        /// <param name="resources"></param>
+        /// <returns>Accent</returns>
+        public static Accent GetAccent(ResourceDictionary resources)
+        {
+            if (resources == null) throw new ArgumentNullException("resources");
+
+            return Accents.FirstOrDefault(x => x.Resources.Source == resources.Source);
         }
 
         /// <summary>
@@ -353,7 +379,7 @@ namespace MahApps.Metro
             AppTheme currentTheme = presetTheme;
 
             Accent matched = null;
-            if ((matched = ((List<Accent>)DefaultAccents).Find(x => x.Resources.Source == dict.Source)) != null)
+            if ((matched = GetAccent(dict)) != null)
             {
                 detectedAccentTheme = Tuple.Create<AppTheme, Accent>(currentTheme, matched);
                 return true;
@@ -385,6 +411,53 @@ namespace MahApps.Metro
         }
 
         #region obsoletes
+
+        [Obsolete("This will be deleted in next release.")]
+        public static IList<Accent> DefaultAccents
+        {
+            get
+            {
+                if (_accents != null)
+                    return _accents;
+
+                var colors = new[] {
+                                       "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt",
+                                       "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"
+                                   };
+
+                _accents = new List<Accent>(colors.Length);
+
+                foreach (var color in colors)
+                {
+                    _accents.Add(new Accent(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color))));
+                }
+
+                return _accents;
+            }
+        }
+
+        [Obsolete("This will be deleted in next release.")]
+        public static IList<AppTheme> DefaultAppThemes
+        {
+            get
+            {
+                if (_appThemes != null)
+                    return _appThemes;
+
+                var themes = new[] { "BaseLight", "BaseDark" };
+
+                _appThemes = new List<AppTheme>(themes.Length);
+
+                foreach (var color in themes)
+                {
+                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)));
+                    appTheme.Theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
+                    _appThemes.Add(appTheme);
+                }
+
+                return _appThemes;
+            }
+        }
 
         internal static ResourceDictionary _lightResource;
         [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
@@ -591,7 +664,7 @@ namespace MahApps.Metro
             Accent currentAccent = null;
 
             Accent matched = null;
-            if ((matched = ((List<Accent>)DefaultAccents).Find(x => x.Resources.Source == dict.Source)) != null)
+            if ((matched = GetAccent(dict)) != null)
             {
                 currentAccent = matched;
                 detectedAccentTheme = Tuple.Create<Theme, Accent>(currentTheme, currentAccent);
