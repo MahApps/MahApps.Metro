@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Security;
+﻿using System.Security;
 using MahApps.Metro.Controls;
 using System;
 using System.Collections;
@@ -9,8 +8,6 @@ using System.Windows;
 
 namespace MahApps.Metro
 {
-    using System.Threading.Tasks;
-
     /// <summary>
     /// A class that allows for the detection and alteration of a MetroWindow's theme and accent.
     /// </summary>
@@ -18,28 +15,6 @@ namespace MahApps.Metro
     {
         private static IList<Accent> _accents;
         private static IList<AppTheme> _appThemes;
-
-        /// <summary>
-        /// Cached method info's for use in OnThemeChanged
-        /// </summary>
-        private static readonly MethodInfo SystemColors_InvalidateColors;
-        private static readonly MethodInfo SystemResources_OnThemeChanged;
-        private static readonly MethodInfo SystemResources_InvalidateResources;
-
-        static ThemeManager()
-        {
-            SystemColors_InvalidateColors = typeof(SystemColors).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic);
-            var assembly = Assembly.GetAssembly(typeof(Window));
-            if (assembly != null)
-            {
-                var systemResources = assembly.GetType("System.Windows.SystemResources");
-                if (systemResources != null)
-                {
-                    SystemResources_OnThemeChanged = systemResources.GetMethod("OnThemeChanged", BindingFlags.Static | BindingFlags.NonPublic);
-                    SystemResources_InvalidateResources = systemResources.GetMethod("InvalidateResources", BindingFlags.Static | BindingFlags.NonPublic);
-                }
-            }
-        }
 
         /// <summary>
         /// Gets a list of all of default themes.
@@ -228,15 +203,6 @@ namespace MahApps.Metro
             ApplyResourceDictionary(newTheme.Resources, resources);
         }
         [SecurityCritical]
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
-        public static void ChangeTheme(ResourceDictionary resources, Accent newAccent, Theme newTheme)
-        {
-            if (resources == null) throw new ArgumentNullException("resources");
-
-            var themeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
-            ApplyResourceDictionary(newAccent.Resources, resources);
-            ApplyResourceDictionary(themeResource, resources);
-        }
 
         private static void ApplyResourceDictionary(ResourceDictionary newRd, ResourceDictionary oldRd)
         {
@@ -486,6 +452,16 @@ namespace MahApps.Metro
         }
 
         [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        public static void ChangeTheme(ResourceDictionary resources, Accent newAccent, Theme newTheme)
+        {
+            if (resources == null) throw new ArgumentNullException("resources");
+
+            var themeResource = (newTheme == Theme.Light) ? LightResource : DarkResource;
+            ApplyResourceDictionary(newAccent.Resources, resources);
+            ApplyResourceDictionary(themeResource, resources);
+        }
+
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
         public static Tuple<Theme, Accent> DetectTheme()
         {
             try
@@ -601,42 +577,6 @@ namespace MahApps.Metro
                 newTheme == Theme.Light ? "BaseLight" : "BaseDark",
                 newTheme == Theme.Light ? ThemeManager.LightResource.Source : ThemeManager.DarkResource.Source);
             SafeRaise.Raise(IsThemeChanged, Application.Current, onThemeChangedEventArgs);
-
-            // disable for now to test if it's really needed (and fix the hanging part if window is maximized and the user change the theme)
-            return;
-
-            Action apply = () => {
-                    if (SystemColors_InvalidateColors != null)
-                    {
-                        SystemColors_InvalidateColors.Invoke(null, null);
-                    }
-
-                    // See: https://github.com/MahApps/MahApps.Metro/issues/923
-                    //var invalidateParameters = typeof(SystemParameters).GetMethod("InvalidateCache", BindingFlags.Static | BindingFlags.NonPublic, null, Type.EmptyTypes, null);
-                    //if (invalidateParameters != null)
-                    //{
-                    //    invalidateParameters.Invoke(null, null);
-                    //}
-
-                    if (SystemResources_OnThemeChanged != null)
-                    {
-                        SystemResources_OnThemeChanged.Invoke(null, null);
-                    }
-
-                    if (SystemResources_InvalidateResources != null)
-                    {
-                        SystemResources_InvalidateResources.Invoke(null, new object[] { false });
-                    }
-                };
-
-            if (InvalidateSystemResourcesOnBackgroundThread)
-            {
-                Task.Factory.StartNew(apply);
-            }
-            else
-            {
-                apply();
-            }
         }
 
         [Obsolete("This will be deleted in next release.")]
