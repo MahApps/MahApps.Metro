@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-using System.Windows.Threading;
-using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using System.Collections.Generic;
-using System.Windows.Data;
 using MetroDemo.ExampleWindows;
 
 namespace MetroDemo
@@ -21,22 +13,6 @@ namespace MetroDemo
         {
             DataContext = new MainWindowViewModel();
             InitializeComponent();
-        }
-
-        private void ThemeLight(object sender, RoutedEventArgs e)
-        {
-            var theme = ThemeManager.DetectAppTheme(Application.Current);
-            var currentThemeName = theme.Item1.Name.ToLower().Replace("light", "").Replace("dark", "");
-            var newTheme = ((List<AppTheme>)ThemeManager.DefaultAppThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Theme.Light);
-            ThemeManager.ChangeTheme(Application.Current, theme.Item2, newTheme);
-        }
-
-        private void ThemeDark(object sender, RoutedEventArgs e)
-        {
-            var theme = ThemeManager.DetectAppTheme(Application.Current);
-            var currentThemeName = theme.Item1.Name.ToLower().Replace("light", "").Replace("dark", "");
-            var newTheme = ((List<AppTheme>)ThemeManager.DefaultAppThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Theme.Dark);
-            ThemeManager.ChangeTheme(Application.Current, theme.Item2, newTheme);
         }
 
         private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)

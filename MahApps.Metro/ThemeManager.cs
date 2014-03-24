@@ -72,7 +72,46 @@ namespace MahApps.Metro
         /// <returns>AppTheme</returns>
         public static AppTheme GetAppTheme(string appThemeName)
         {
+            if (appThemeName == null) throw new ArgumentNullException("appThemeName");
+
             return DefaultAppThemes.FirstOrDefault(x => x.Name == appThemeName);
+        }
+
+        /// <summary>
+        /// Gets app theme with the given name.
+        /// </summary>
+        /// <param name="resources"></param>
+        /// <returns>AppTheme</returns>
+        public static AppTheme GetAppTheme(ResourceDictionary resources)
+        {
+            if (resources == null) throw new ArgumentNullException("resources");
+            
+            return DefaultAppThemes.FirstOrDefault(x => x.Resources.Source == resources.Source);
+        }
+
+        /// <summary>
+        /// Gets app theme with the given name and theme type (light or dark).
+        /// </summary>
+        /// <param name="appThemeName"></param>
+        /// <param name="theme"></param>
+        /// <returns>AppTheme</returns>
+        public static AppTheme GetAppTheme(string appThemeName, Theme theme)
+        {
+            if (appThemeName == null) throw new ArgumentNullException("appThemeName");
+
+            appThemeName = appThemeName.ToLower().Replace("light", "").Replace("dark", "");
+            return DefaultAppThemes.FirstOrDefault(x => x.Name.ToLower().Contains(appThemeName) && x.Theme == theme);
+        }
+
+        /// <summary>
+        /// Gets app theme with the given app theme and theme type (light or dark).
+        /// </summary>
+        /// <param name="currentAppTheme"></param>
+        /// <param name="theme"></param>
+        /// <returns>AppTheme</returns>
+        public static AppTheme GetAppTheme(AppTheme currentAppTheme, Theme theme)
+        {
+            return GetAppTheme(currentAppTheme.Name, theme);
         }
 
         /// <summary>
@@ -88,7 +127,7 @@ namespace MahApps.Metro
 
             var oldTheme = DetectAppTheme(app);
             AppTheme matched;
-            if ((matched = ((List<AppTheme>)DefaultAppThemes).Find(x => x.Name == themeName)) != null)
+            if ((matched = GetAppTheme(themeName)) != null)
             {
                 ChangeTheme(app.Resources, oldTheme, oldTheme.Item2, matched);
             }
@@ -107,7 +146,7 @@ namespace MahApps.Metro
 
             var oldTheme = DetectAppTheme(window);
             AppTheme matched;
-            if ((matched = ((List<AppTheme>)DefaultAppThemes).Find(x => x.Name == themeName)) != null)
+            if ((matched = GetAppTheme(themeName)) != null)
             {
                 ChangeTheme(window.Resources, oldTheme, oldTheme.Item2, matched);
             }
@@ -292,7 +331,7 @@ namespace MahApps.Metro
                 var currentRd = enumerator.Current;
 
                 AppTheme matched = null;
-                if ((matched = ((List<AppTheme>)DefaultAppThemes).Find(x => x.Resources.Source == currentRd.Source)) != null)
+                if ((matched = GetAppTheme(currentRd)) != null)
                 {
                     detectedTheme = matched;
                     enumerator.Dispose();

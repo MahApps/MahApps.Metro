@@ -37,7 +37,7 @@ namespace MetroDemo
         protected override void DoChangeTheme(object sender)
         {
             var theme = ThemeManager.DetectAppTheme(Application.Current);
-            var appTheme = ThemeManager.DefaultAppThemes.First(x => x.Name == this.Name);
+            var appTheme = ThemeManager.GetAppTheme(this.Name);
             ThemeManager.ChangeTheme(Application.Current, theme.Item2, appTheme);
         }
     }
