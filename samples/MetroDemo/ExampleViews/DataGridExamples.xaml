@@ -30,6 +30,9 @@
                   Grid.Row="0"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
+                <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Header="IsSelected"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
                 <DataGridTextColumn Header="Title"
                                     Binding="{Binding Title}" />
                 <DataGridTextColumn Header="Artist"
