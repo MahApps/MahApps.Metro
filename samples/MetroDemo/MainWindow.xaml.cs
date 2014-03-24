@@ -25,14 +25,18 @@ namespace MetroDemo
 
         private void ThemeLight(object sender, RoutedEventArgs e)
         {
-            var theme = ThemeManager.DetectTheme(Application.Current);
-            ThemeManager.ChangeTheme(Application.Current, theme.Item2, Theme.Light);
+            var theme = ThemeManager.DetectMetroTheme(Application.Current);
+            var currentThemeName = theme.Item1.Name.ToLower().Replace("light", "").Replace("dark", "");
+            var newTheme = ((List<MetroTheme>)ThemeManager.DefaultMetroThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Theme.Light);
+            ThemeManager.ChangeTheme(Application.Current, theme.Item2, newTheme);
         }
 
         private void ThemeDark(object sender, RoutedEventArgs e)
         {
-            var theme = ThemeManager.DetectTheme(Application.Current);
-            ThemeManager.ChangeTheme(Application.Current, theme.Item2, Theme.Dark);
+            var theme = ThemeManager.DetectMetroTheme(Application.Current);
+            var currentThemeName = theme.Item1.Name.ToLower().Replace("light", "").Replace("dark", "");
+            var newTheme = ((List<MetroTheme>)ThemeManager.DefaultMetroThemes).Find(x => x.Name.ToLower().Contains(currentThemeName) && x.Theme == Theme.Dark);
+            ThemeManager.ChangeTheme(Application.Current, theme.Item2, newTheme);
         }
 
         private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)

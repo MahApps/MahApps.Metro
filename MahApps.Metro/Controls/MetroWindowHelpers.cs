@@ -83,13 +83,16 @@ namespace MahApps.Metro.Controls
             {
                 brush = (Brush)flyout.FindResource("IdealForegroundColorBrush");
             }
-            else if (flyout.ActualTheme == Theme.Light)
+            else if (flyout.ActualTheme != null)
             {
-                brush = (Brush)ThemeManager.LightResource["BlackBrush"];
-            }
-            else if (flyout.ActualTheme == Theme.Dark)
-            {
-                brush = (Brush)ThemeManager.DarkResource["BlackBrush"];
+                if (flyout.ActualTheme.Theme == Theme.Light)
+                {
+                    brush = (Brush)flyout.ActualTheme.Resources["BlackBrush"];
+                }
+                else if (flyout.ActualTheme.Theme == Theme.Dark)
+                {
+                    brush = (Brush)flyout.ActualTheme.Resources["BlackBrush"];
+                }
             }
 
             window.ChangeAllWindowCommandsBrush(brush, flyout.Position);

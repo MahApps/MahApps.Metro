@@ -14,20 +14,31 @@ namespace MetroDemo
     public class AccentColorMenuData
     {
         public string Name { get; set; }
+        public Brush BorderColorBrush { get; set; }
         public Brush ColorBrush { get; set; }
 
         private ICommand changeAccentCommand;
 
         public ICommand ChangeAccentCommand
         {
-            get { return this.changeAccentCommand ?? (changeAccentCommand = new SimpleCommand { CanExecuteDelegate = x => true, ExecuteDelegate = x => ChangeAccent(x) }); }
+            get { return this.changeAccentCommand ?? (changeAccentCommand = new SimpleCommand { CanExecuteDelegate = x => true, ExecuteDelegate = x => this.DoChangeTheme(x) }); }
         }
 
-        private void ChangeAccent(object sender)
+        protected virtual void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectTheme(Application.Current);
+            var theme = ThemeManager.DetectMetroTheme(Application.Current);
             var accent = ThemeManager.DefaultAccents.First(x => x.Name == this.Name);
             ThemeManager.ChangeTheme(Application.Current, accent, theme.Item1);
+        }
+    }
+
+    public class MetroThemeMenuData : AccentColorMenuData
+    {
+        protected override void DoChangeTheme(object sender)
+        {
+            var theme = ThemeManager.DetectMetroTheme(Application.Current);
+            var metroTheme = ThemeManager.DefaultMetroThemes.First(x => x.Name == this.Name);
+            ThemeManager.ChangeTheme(Application.Current, theme.Item2, metroTheme);
         }
     }
 
@@ -44,6 +55,10 @@ namespace MetroDemo
             this.AccentColors = ThemeManager.DefaultAccents
                                             .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
                                             .ToList();
+            // create metro theme color menu items for the demo
+            this.MetroThemes = ThemeManager.DefaultMetroThemes
+                                           .Select(a => new MetroThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
+                                           .ToList();
             
             Albums = SampleData.Albums;
             Artists = SampleData.Artists;
@@ -56,6 +71,7 @@ namespace MetroDemo
         public List<Album> Albums { get; set; }
         public List<Artist> Artists { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
+        public List<MetroThemeMenuData> MetroThemes { get; set; }
 
         public int? IntegerGreater10Property
         {

@@ -7,7 +7,7 @@ namespace AccentColorRepro
 {
     public partial class MainWindow
     {
-        private Theme currentTheme = Theme.Light;
+        private MetroTheme currentTheme = ThemeManager.DefaultMetroThemes.First(x => x.Name == "BaseLight");
         private Accent currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Blue");
 
         public MainWindow()
@@ -18,13 +18,13 @@ namespace AccentColorRepro
 
         private void DarkButtonClick(object sender, RoutedEventArgs e)
         {
-            currentTheme = Theme.Dark;
+            currentTheme = ThemeManager.DefaultMetroThemes.First(x => x.Name == "BaseDark");
             ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
         }
 
         private void LightButtonClick(object sender, RoutedEventArgs e)
         {
-            currentTheme = Theme.Light;
+            currentTheme = ThemeManager.DefaultMetroThemes.First(x => x.Name == "BaseLight");
             ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
         }
 

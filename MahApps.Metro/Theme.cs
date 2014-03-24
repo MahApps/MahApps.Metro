@@ -1,3 +1,5 @@
+using System;
+
 namespace MahApps.Metro
 {
     /// <summary>
@@ -7,5 +9,15 @@ namespace MahApps.Metro
     {
         Light,
         Dark
+    }
+
+    public class MetroTheme : Accent
+    {
+        public MetroTheme(string name, Uri resourceAddress)
+            : base(name, resourceAddress)
+        {
+        }
+
+        public Theme Theme { get; set; }
     }
 }
