@@ -81,7 +81,7 @@ namespace MahApps.Metro.Controls
 
         public Object CommandParameter
         {
-            get { return (Object)GetValue(CommandParameterProperty); }
+            get { return GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
         }
 
@@ -97,9 +97,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(CommandProperty, value); }
         }
 
-        public Int32 SelectedIndex
+        public int SelectedIndex
         {
-            get { return (Int32)GetValue(SelectedIndexProperty); }
+            get { return (int)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
         }
 
@@ -199,7 +199,7 @@ namespace MahApps.Metro.Controls
 
         void _popup_Closed(object sender, EventArgs e)
         {
-            this.ReleaseMouseCapture();
+            ReleaseMouseCapture();
         }
 
         void PopupOpened(object sender, EventArgs e)

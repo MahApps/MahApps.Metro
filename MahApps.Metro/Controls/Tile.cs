@@ -40,7 +40,7 @@ namespace MahApps.Metro.Controls
 
         public int TiltFactor
         {
-            get { return (Int32)GetValue(TiltFactorProperty); }
+            get { return (int)GetValue(TiltFactorProperty); }
             set { SetValue(TiltFactorProperty, value); }
         }
 
