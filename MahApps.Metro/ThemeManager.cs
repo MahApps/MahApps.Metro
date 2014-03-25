@@ -90,7 +90,7 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Adds an app thene with the given name.
+        /// Adds an app theme with the given name.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="resourceAddress"></param>
