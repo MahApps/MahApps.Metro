@@ -58,24 +58,22 @@
                                 <ColumnDefinition Width="20" />
                             </Grid.ColumnDefinitions>
 
-                            <ScrollViewer Grid.Column="0"
-                                          VerticalScrollBarVisibility="Hidden"
-                                          IsTabStop="False">
-                                <TextBox x:Name="PART_TextBox"
-                                         MinWidth="20"
-                                         HorizontalAlignment="Stretch"
-                                         HorizontalContentAlignment="Right"
-                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                         BorderThickness="0"
-                                         Background="{x:Null}"
-                                         Focusable="True"
-                                         IsReadOnly="{TemplateBinding IsReadOnly}"
-                                         FontFamily="{TemplateBinding FontFamily}"
-                                         FontSize="{TemplateBinding FontSize}"
-                                         Controls:TextboxHelper.ClearTextButton="{TemplateBinding Controls:TextboxHelper.ClearTextButton}"
-                                         Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}" />
-                            </ScrollViewer>
+                            <TextBox x:Name="PART_TextBox"
+                                        MinWidth="20"
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Right"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        BorderThickness="0"
+                                        Background="{x:Null}"
+                                        Focusable="True"
+                                        HorizontalScrollBarVisibility="Auto"
+                                        VerticalScrollBarVisibility="Auto"
+                                        IsReadOnly="{TemplateBinding IsReadOnly}"
+                                        FontFamily="{TemplateBinding FontFamily}"
+                                        FontSize="{TemplateBinding FontSize}"
+                                        Controls:TextboxHelper.ClearTextButton="{TemplateBinding Controls:TextboxHelper.ClearTextButton}"
+                                        Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}" />
                             <RepeatButton x:Name="PART_NumericUp"
                                           Grid.Column="1"
                                           Margin="2,2,0,2"
