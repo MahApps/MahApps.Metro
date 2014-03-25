@@ -149,7 +149,7 @@ namespace Mahapps.Metro.Tests
 
             flyout.IsOpen = true;
 
-            Color expectedColor = ((SolidColorBrush)ThemeManager.DarkResource["BlackBrush"]).Color;
+            Color expectedColor = ((SolidColorBrush)ThemeManager.GetAppTheme("BaseDark").Resources["BlackBrush"]).Color;
 
             window.AssertWindowCommandsColor(expectedColor);
         }

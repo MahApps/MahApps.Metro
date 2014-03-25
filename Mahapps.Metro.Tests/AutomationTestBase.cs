@@ -25,7 +25,7 @@ namespace Mahapps.Metro.Tests
 
             var accent = ThemeManager.Accents.First(x => x.Name == "Blue");
             var theme = ThemeManager.GetAppTheme("BaseLight");
-            ThemeManager.ChangeTheme(Application.Current, accent, theme);
+            ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
         }
     }
 }

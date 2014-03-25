@@ -26,9 +26,9 @@ namespace MetroDemo
 
         protected virtual void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectAppTheme(Application.Current);
+            var theme = ThemeManager.DetectAppStyle(Application.Current);
             var accent = ThemeManager.GetAccent(this.Name);
-            ThemeManager.ChangeTheme(Application.Current, accent, theme.Item1);
+            ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
         }
     }
 
@@ -36,9 +36,9 @@ namespace MetroDemo
     {
         protected override void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectAppTheme(Application.Current);
+            var theme = ThemeManager.DetectAppStyle(Application.Current);
             var appTheme = ThemeManager.GetAppTheme(this.Name);
-            ThemeManager.ChangeTheme(Application.Current, theme.Item2, appTheme);
+            ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, appTheme);
         }
     }
 

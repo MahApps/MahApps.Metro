@@ -156,14 +156,14 @@ namespace MahApps.Metro.Controls
             switch (this.Theme)
             {
                 case FlyoutTheme.Accent:
-                    ThemeManager.ChangeTheme(this.Resources, windowAccent, windowTheme);
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
                     this.SetResourceReference(BackgroundProperty, "HighlightBrush");
                     this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
                     this.ActualTheme = windowTheme;
                 break;
 
                 case FlyoutTheme.Adapt:
-                    ThemeManager.ChangeTheme(this.Resources, windowAccent, windowTheme);
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
                     switch (windowTheme.Theme)
                     {
                         case Metro.Theme.Dark:
@@ -184,7 +184,7 @@ namespace MahApps.Metro.Controls
                     {
                         case Metro.Theme.Dark: {
                             var newTheme = ThemeManager.GetAppTheme(windowTheme, Metro.Theme.Light);
-                            ThemeManager.ChangeTheme(this.Resources, windowAccent, newTheme);
+                            ThemeManager.ChangeAppStyle(this.Resources, windowAccent, newTheme);
                             this.Background = (Brush)windowTheme.Resources["FlyoutLightBrush"];
                             this.Foreground = (Brush)windowTheme.Resources["WhiteColorBrush"];
                             this.ActualTheme = newTheme;
@@ -193,7 +193,7 @@ namespace MahApps.Metro.Controls
 
                         case Metro.Theme.Light: {
                             var newTheme = ThemeManager.GetAppTheme(windowTheme, Metro.Theme.Dark);
-                            ThemeManager.ChangeTheme(this.Resources, windowAccent, newTheme);
+                            ThemeManager.ChangeAppStyle(this.Resources, windowAccent, newTheme);
                             this.Background = (Brush)windowTheme.Resources["FlyoutDarkBrush"];
                             this.Foreground = (Brush)windowTheme.Resources["WhiteColorBrush"];
                             this.ActualTheme = newTheme;
@@ -204,7 +204,7 @@ namespace MahApps.Metro.Controls
                 
                 case FlyoutTheme.Dark: {
                     var newTheme = ThemeManager.GetAppTheme(windowTheme, Metro.Theme.Dark);
-                    ThemeManager.ChangeTheme(this.Resources, windowAccent, newTheme);
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, newTheme);
                     this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
                     this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                     this.ActualTheme = newTheme;
@@ -213,7 +213,7 @@ namespace MahApps.Metro.Controls
 
                 case FlyoutTheme.Light: {
                     var newTheme = ThemeManager.GetAppTheme(windowTheme, Metro.Theme.Light);
-                    ThemeManager.ChangeTheme(this.Resources, windowAccent, newTheme);
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, newTheme);
                     this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
                     this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                     this.ActualTheme = newTheme;
@@ -229,19 +229,19 @@ namespace MahApps.Metro.Controls
 
             // first look for owner
             var window = flyout.TryFindParent<MetroWindow>();
-            var theme = window != null ? ThemeManager.DetectAppTheme(window) : null;
+            var theme = window != null ? ThemeManager.DetectAppStyle(window) : null;
             if (theme != null && theme.Item2 != null)
                 return theme;
 
             // second try, look for main window
             if (Application.Current != null) {
                 var mainWindow = Application.Current.MainWindow as MetroWindow;
-                theme = mainWindow != null ? ThemeManager.DetectAppTheme(mainWindow) : null;
+                theme = mainWindow != null ? ThemeManager.DetectAppStyle(mainWindow) : null;
                 if (theme != null && theme.Item2 != null)
                     return theme;
 
                 // oh no, now look at application resource
-                theme = ThemeManager.DetectAppTheme(Application.Current);
+                theme = ThemeManager.DetectAppStyle(Application.Current);
                 if (theme != null && theme.Item2 != null)
                     return theme;
             }
