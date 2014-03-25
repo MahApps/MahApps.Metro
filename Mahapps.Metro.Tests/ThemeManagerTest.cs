@@ -30,5 +30,21 @@ namespace Mahapps.Metro.Tests
             Assert.Equal(expectedTheme, theme.Item1);
             Assert.Equal(expectedAccent, theme.Item2);
         }
+
+        [Fact]
+        public async Task CanAddAccentBeforeGetterIsCalled()
+        {
+            await TestHost.SwitchToAppThread();
+
+            ThemeManager.AddAccent("TestAccent", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"));
+        }
+
+        [Fact]
+        public async Task CanAddAppThemeBeforeGetterIsCalled()
+        {
+            await TestHost.SwitchToAppThread();
+
+            ThemeManager.AddAppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"), Theme.Dark);
+        }
     }
 }
