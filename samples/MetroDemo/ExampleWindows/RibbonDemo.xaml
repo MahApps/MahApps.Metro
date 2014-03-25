@@ -32,6 +32,66 @@
         </Grid.RowDefinitions>
         <Ribbon Grid.Row="0"
                 Loaded="Ribbon_Loaded">
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu KeyTip="F">
+                    <RibbonApplicationMenuItem Header="Open"
+                                          Command="Open"
+                                          KeyTip="O" />
+                    <RibbonApplicationMenuItem Header="Save"
+                                          Command="Save"
+                                          KeyTip="S" />
+                    <RibbonApplicationSplitMenuItem Header="Save As"
+                                               Command="SaveAs" 
+                                               KeyTip="V" >
+                        <RibbonApplicationMenuItem Header="Rich Text document"
+                                              Command="SaveAs" CommandParameter="rtf"
+                                              KeyTip="R" />
+                        <RibbonApplicationMenuItem Header="Plain Text document"
+                                              Command="SaveAs" CommandParameter="txt"
+                                              KeyTip="P" />
+                        <RibbonApplicationMenuItem Header="Other format"
+                                              Command="SaveAs"
+                                              KeyTip="O" />
+                    </RibbonApplicationSplitMenuItem>
+                    <RibbonSeparator />
+                    <RibbonApplicationSplitMenuItem Header="Print"
+                                               KeyTip="R">
+                        <RibbonApplicationMenuItem Header="Print"
+                                              KeyTip="P" />
+                        <RibbonApplicationMenuItem Header="Quick Print"
+                                              KeyTip="Q" />
+                        <RibbonApplicationMenuItem Header="Print Preview"
+                                              KeyTip="V" />
+                    </RibbonApplicationSplitMenuItem>
+                    <RibbonApplicationMenuItem Header="Page Setup"
+                                          KeyTip="G" />
+                    <RibbonApplicationMenu.FooterPaneContent>
+                        <DockPanel LastChildFill="False">
+                            <RibbonButton Command="ApplicationCommands.Close"
+                                     Label="Exit"
+                                     ToolTipTitle="Exit" 
+                                     KeyTip="X"
+                                     DockPanel.Dock="Right"
+                                     Margin="2"
+                                     BorderBrush="#B8114EAF" />
+                        </DockPanel>
+                    </RibbonApplicationMenu.FooterPaneContent>
+                    <RibbonApplicationMenu.AuxiliaryPaneContent>
+                        <RibbonGallery CanUserFilter="False"
+                                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <RibbonGalleryCategory Header="Recent Documents"
+                                              Background="Transparent" >
+                                <RibbonGalleryCategory.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" IsItemsHost="True"/>
+                                    </ItemsPanelTemplate>
+                                </RibbonGalleryCategory.ItemsPanel>
+                                <RibbonGalleryItem ></RibbonGalleryItem>
+                            </RibbonGalleryCategory>
+                        </RibbonGallery>
+                    </RibbonApplicationMenu.AuxiliaryPaneContent>
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
             <RibbonTab Header="Home">
                 <RibbonGroup Header="Theme">
                     <RibbonButton Click="DarkTheme"
