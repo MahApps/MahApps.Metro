@@ -22,9 +22,9 @@ namespace Mahapps.Metro.Tests
 
             Accent expectedAccent = ThemeManager.Accents.First(x => x.Name == "Teal");
             AppTheme expectedTheme = ThemeManager.GetAppTheme("BaseDark");
-            ThemeManager.ChangeTheme(Application.Current, expectedAccent, expectedTheme);
+            ThemeManager.ChangeAppStyle(Application.Current, expectedAccent, expectedTheme);
 
-            var theme = ThemeManager.DetectAppTheme(window);
+            var theme = ThemeManager.DetectAppStyle(window);
 
             Assert.Equal(Theme.Dark, theme.Item1.Theme);
             Assert.Equal(expectedTheme, theme.Item1);

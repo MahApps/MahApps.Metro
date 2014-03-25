@@ -12,37 +12,37 @@ namespace AccentColorRepro
         public MainWindow()
         {
             InitializeComponent();
-            ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
+            ThemeManager.ChangeAppStyle(Application.Current, currentAccent, currentTheme);
         }
 
         private void DarkButtonClick(object sender, RoutedEventArgs e)
         {
             currentTheme = ThemeManager.DefaultAppThemes.First(x => x.Name == "BaseDark");
-            ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
+            ThemeManager.ChangeAppStyle(Application.Current, currentAccent, currentTheme);
         }
 
         private void LightButtonClick(object sender, RoutedEventArgs e)
         {
             currentTheme = ThemeManager.DefaultAppThemes.First(x => x.Name == "BaseLight");
-            ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
+            ThemeManager.ChangeAppStyle(Application.Current, currentAccent, currentTheme);
         }
 
         private void BlueButtonClick(object sender, RoutedEventArgs e)
         {
             currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Blue");
-            ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
+            ThemeManager.ChangeAppStyle(Application.Current, currentAccent, currentTheme);
         }
 
         private void RedButtonClick(object sender, RoutedEventArgs e)
         {
             currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Red");
-            ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
+            ThemeManager.ChangeAppStyle(Application.Current, currentAccent, currentTheme);
         }
 
         private void GreenButtonClick(object sender, RoutedEventArgs e)
         {
             currentAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Green");
-            ThemeManager.ChangeTheme(Application.Current, currentAccent, currentTheme);
+            ThemeManager.ChangeAppStyle(Application.Current, currentAccent, currentTheme);
         }
     }
 }

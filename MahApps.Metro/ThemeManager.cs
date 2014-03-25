@@ -161,10 +161,10 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Gets accent with the given name.
+        /// Gets the <see cref="Accent"/> with the given name.
         /// </summary>
         /// <param name="accentName"></param>
-        /// <returns>AppTheme</returns>
+        /// <returns>The <see cref="Accent"/> or <c>null</c>, if the app theme wasn't found</returns>
         public static Accent GetAccent(string accentName)
         {
             if (accentName == null) throw new ArgumentNullException("accentName");
@@ -173,10 +173,10 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Gets accent with the given resource dictionary.
+        /// Gets the <see cref="Accent"/> with the given resource dictionary.
         /// </summary>
         /// <param name="resources"></param>
-        /// <returns>Accent</returns>
+        /// <returns>The <see cref="Accent"/> or <c>null</c>, if the accent wasn't found.</returns>
         public static Accent GetAccent(ResourceDictionary resources)
         {
             if (resources == null) throw new ArgumentNullException("resources");
@@ -185,7 +185,7 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Change theme for the whole application.
+        /// Change the theme for the whole application.
         /// </summary>
         /// <param name="app"></param>
         /// <param name="themeName"></param>
@@ -195,11 +195,11 @@ namespace MahApps.Metro
             if (app == null) throw new ArgumentNullException("app");
             if (themeName == null) throw new ArgumentNullException("themeName");
 
-            var oldTheme = DetectAppTheme(app);
+            var oldTheme = DetectAppStyle(app);
             AppTheme matched;
             if ((matched = GetAppTheme(themeName)) != null)
             {
-                ChangeTheme(app.Resources, oldTheme, oldTheme.Item2, matched);
+                ChangeAppStyle(app.Resources, oldTheme, oldTheme.Item2, matched);
             }
         }
 
@@ -214,11 +214,11 @@ namespace MahApps.Metro
             if (window == null) throw new ArgumentNullException("window");
             if (themeName == null) throw new ArgumentNullException("themeName");
 
-            var oldTheme = DetectAppTheme(window);
+            var oldTheme = DetectAppStyle(window);
             AppTheme matched;
             if ((matched = GetAppTheme(themeName)) != null)
             {
-                ChangeTheme(window.Resources, oldTheme, oldTheme.Item2, matched);
+                ChangeAppStyle(window.Resources, oldTheme, oldTheme.Item2, matched);
             }
         }
 
@@ -229,12 +229,12 @@ namespace MahApps.Metro
         /// <param name="newAccent">The accent to apply.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeTheme(Application app, Accent newAccent, AppTheme newTheme)
+        public static void ChangeAppStyle(Application app, Accent newAccent, AppTheme newTheme)
         {
             if (app == null) throw new ArgumentNullException("app");
 
-            var oldTheme = DetectAppTheme(app);
-            ChangeTheme(app.Resources, oldTheme, newAccent, newTheme);
+            var oldTheme = DetectAppStyle(app);
+            ChangeAppStyle(app.Resources, oldTheme, newAccent, newTheme);
         }
 
         /// <summary>
@@ -244,16 +244,16 @@ namespace MahApps.Metro
         /// <param name="newAccent">The accent to apply.</param>
         /// <param name="newTheme">The theme to apply.</param>
         [SecurityCritical]
-        public static void ChangeTheme(Window window, Accent newAccent, AppTheme newTheme)
+        public static void ChangeAppStyle(Window window, Accent newAccent, AppTheme newTheme)
         {
             if (window == null) throw new ArgumentNullException("window");
 
-            var oldTheme = DetectAppTheme(window);
-            ChangeTheme(window.Resources, oldTheme, newAccent, newTheme);
+            var oldTheme = DetectAppStyle(window);
+            ChangeAppStyle(window.Resources, oldTheme, newAccent, newTheme);
         }
 
         [SecurityCritical]
-        private static void ChangeTheme(ResourceDictionary resources, Tuple<AppTheme, Accent> oldThemeInfo, Accent newAccent, AppTheme newTheme)
+        private static void ChangeAppStyle(ResourceDictionary resources, Tuple<AppTheme, Accent> oldThemeInfo, Accent newAccent, AppTheme newTheme)
         {
             var themeChanged = false;
             if (oldThemeInfo != null)
@@ -286,7 +286,7 @@ namespace MahApps.Metro
             }
             else
             {
-                ChangeTheme(resources, newAccent, newTheme);
+                ChangeAppStyle(resources, newAccent, newTheme);
 
                 themeChanged = true;
             }
@@ -298,13 +298,13 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Changes the theme of a ResourceDictionary directly.
+        /// Changes the accent and theme of a ResourceDictionary directly.
         /// </summary>
         /// <param name="resources">The ResourceDictionary to modify.</param>
         /// <param name="newAccent">The accent to apply to the ResourceDictionary.</param>
         /// <param name="newTheme">The theme to apply to the ResourceDictionary.</param>
         [SecurityCritical]
-        public static void ChangeTheme(ResourceDictionary resources, Accent newAccent, AppTheme newTheme)
+        public static void ChangeAppStyle(ResourceDictionary resources, Accent newAccent, AppTheme newTheme)
         {
             if (resources == null) throw new ArgumentNullException("resources");
 
@@ -331,15 +331,15 @@ namespace MahApps.Metro
         /// <summary>
         /// Scans the window resources and returns it's accent and theme.
         /// </summary>
-        public static Tuple<AppTheme, Accent> DetectAppTheme()
+        public static Tuple<AppTheme, Accent> DetectAppStyle()
         {
             try
             {
-                return DetectAppTheme(Application.Current.MainWindow);
+                return DetectAppStyle(Application.Current.MainWindow);
             }
             catch (Exception)
             {
-                return DetectAppTheme(Application.Current);
+                return DetectAppStyle(Application.Current);
             }
         }
 
@@ -347,29 +347,29 @@ namespace MahApps.Metro
         /// Scans the window resources and returns it's accent and theme.
         /// </summary>
         /// <param name="window">The Window to scan.</param>
-        public static Tuple<AppTheme, Accent> DetectAppTheme(Window window)
+        public static Tuple<AppTheme, Accent> DetectAppStyle(Window window)
         {
             if (window == null) throw new ArgumentNullException("window");
 
-            return DetectAppTheme(window.Resources);
+            return DetectAppStyle(window.Resources);
         }
 
         /// <summary>
         /// Scans the application resources and returns it's accent and theme.
         /// </summary>
         /// <param name="app">The Application instance to scan.</param>
-        public static Tuple<AppTheme, Accent> DetectAppTheme(Application app)
+        public static Tuple<AppTheme, Accent> DetectAppStyle(Application app)
         {
             if (app == null) throw new ArgumentNullException("app");
 
-            return DetectAppTheme(app.Resources);
+            return DetectAppStyle(app.Resources);
         }
 
         /// <summary>
         /// Scans a resources and returns it's accent and theme.
         /// </summary>
         /// <param name="resources">The ResourceDictionary to check.</param>
-        private static Tuple<AppTheme, Accent> DetectAppTheme(ResourceDictionary resources)
+        private static Tuple<AppTheme, Accent> DetectAppStyle(ResourceDictionary resources)
         {
             if (resources == null) throw new ArgumentNullException("resources");
 
@@ -513,7 +513,7 @@ namespace MahApps.Metro
             AppTheme oldAppTheme = AppThemes.First(x => x.Theme == oldTheme.Item1);
             AppTheme newAppTheme = AppThemes.First(x => x.Theme == newTheme);
 
-            ChangeTheme(app.Resources, Tuple.Create(oldAppTheme, oldTheme.Item2), newAccent, newAppTheme);
+            ChangeAppStyle(app.Resources, Tuple.Create(oldAppTheme, oldTheme.Item2), newAccent, newAppTheme);
         }
 
         [SecurityCritical]
@@ -526,7 +526,7 @@ namespace MahApps.Metro
             AppTheme oldAppTheme = AppThemes.First(x => x.Theme == oldTheme.Item1);
             AppTheme newAppTheme = AppThemes.First(x => x.Theme == newTheme);
 
-            ChangeTheme(window.Resources, Tuple.Create(oldAppTheme, oldTheme.Item2), newAccent, newAppTheme);
+            ChangeAppStyle(window.Resources, Tuple.Create(oldAppTheme, oldTheme.Item2), newAccent, newAppTheme);
         }
 
         [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
@@ -536,7 +536,7 @@ namespace MahApps.Metro
 
             AppTheme appTheme = AppThemes.First(x => x.Theme == newTheme);
 
-            ChangeTheme(resources, newAccent, appTheme);
+            ChangeAppStyle(resources, newAccent, appTheme);
         }
 
         [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
@@ -557,9 +557,9 @@ namespace MahApps.Metro
         {
             if (window == null) throw new ArgumentNullException("window");
 
-            var lookAndFeel = DetectAppTheme(window);
+            var AppStyle = DetectAppStyle(window);
 
-            return Tuple.Create(lookAndFeel.Item1.Theme, lookAndFeel.Item2);
+            return Tuple.Create(AppStyle.Item1.Theme, AppStyle.Item2);
         }
 
         [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
@@ -567,9 +567,9 @@ namespace MahApps.Metro
         {
             if (app == null) throw new ArgumentNullException("app");
 
-            var lookAndFeel = DetectAppTheme(app);
+            var AppStyle = DetectAppStyle(app);
 
-            return Tuple.Create(lookAndFeel.Item1.Theme, lookAndFeel.Item2);
+            return Tuple.Create(AppStyle.Item1.Theme, AppStyle.Item2);
         }
 
 
