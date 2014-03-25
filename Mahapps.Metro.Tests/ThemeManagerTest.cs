@@ -20,13 +20,31 @@ namespace Mahapps.Metro.Tests
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
-            Accent expectedAccent = ThemeManager.DefaultAccents.First(x => x.Name == "Teal");
-            ThemeManager.ChangeTheme(Application.Current, expectedAccent, Theme.Dark);
+            Accent expectedAccent = ThemeManager.Accents.First(x => x.Name == "Teal");
+            AppTheme expectedTheme = ThemeManager.GetAppTheme("BaseDark");
+            ThemeManager.ChangeAppStyle(Application.Current, expectedAccent, expectedTheme);
 
-            var theme = ThemeManager.DetectTheme(window);
+            var theme = ThemeManager.DetectAppStyle(window);
 
-            Assert.Equal(Theme.Dark, theme.Item1);
+            Assert.Equal(Theme.Dark, theme.Item1.Theme);
+            Assert.Equal(expectedTheme, theme.Item1);
             Assert.Equal(expectedAccent, theme.Item2);
+        }
+
+        [Fact]
+        public async Task CanAddAccentBeforeGetterIsCalled()
+        {
+            await TestHost.SwitchToAppThread();
+
+            ThemeManager.AddAccent("TestAccent", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"));
+        }
+
+        [Fact]
+        public async Task CanAddAppThemeBeforeGetterIsCalled()
+        {
+            await TestHost.SwitchToAppThread();
+
+            ThemeManager.AddAppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"), Theme.Dark);
         }
     }
 }

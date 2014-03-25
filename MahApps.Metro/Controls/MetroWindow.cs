@@ -581,6 +581,38 @@ namespace MahApps.Metro.Controls
             this.Unloaded += (o, args) => ThemeManager.IsThemeChanged -= ThemeManagerOnIsThemeChanged;
         }
 
+        private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
+        {
+            // this all works only for CleanWindow style
+            
+            var titleBarGrid = titleBar as Grid;
+            var titleBarLabel = titleBarGrid.Children[0] as Label;
+            var titleControl = titleBarLabel.Content as ContentControl;
+            var iconContentControl = icon as ContentControl;
+
+            // Half of this MetroWindow
+            var halfDistance = this.Width / 2;
+            // Distance between center and left/right
+            var distanceToCenter = titleControl.ActualWidth / 2;
+            // Distance between right edge from LeftWindowCommands to left window side
+            var distanceFromLeft = iconContentControl.ActualWidth + LeftWindowCommands.ActualWidth;
+            // Distance between left edge from RightWindowCommands to right window side
+            var distanceFromRight = WindowButtonCommands.ActualWidth + RightWindowCommands.ActualWidth;
+            // Margin
+            const double horizontalMargin = 5.0;
+
+            if ((distanceFromLeft + distanceToCenter + horizontalMargin < halfDistance) && (distanceFromRight + distanceToCenter + horizontalMargin < halfDistance))
+            {
+                Grid.SetColumn(titleBarGrid, 0);
+                Grid.SetColumnSpan(titleBarGrid, 5);
+            }
+            else
+            {
+                Grid.SetColumn(titleBarGrid, 2);
+                Grid.SetColumnSpan(titleBarGrid, 1);
+            }
+        }
+
         private void ThemeManagerOnIsThemeChanged(object sender, OnThemeChangedEventArgs e)
         {
             if (e.Accent != null)
@@ -603,7 +635,7 @@ namespace MahApps.Metro.Controls
 
                 foreach (var flyout in flyouts)
                 {
-                    flyout.ChangeFlyoutTheme(e.Accent, e.Theme);
+                    flyout.ChangeFlyoutTheme(e.Accent, e.AppTheme);
                 }
                 this.HandleWindowCommandsForFlyouts(flyouts);
             }
@@ -688,6 +720,11 @@ namespace MahApps.Metro.Controls
                 titleBar.MouseDown += TitleBarMouseDown;
                 titleBar.MouseUp += TitleBarMouseUp;
                 titleBar.MouseMove += TitleBarMouseMove;
+
+                if (titleBar.GetType() == typeof(Grid))
+                {
+                    SizeChanged += this.MetroWindow_SizeChanged;
+                }
             }
             else
             {

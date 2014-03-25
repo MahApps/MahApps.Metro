@@ -40,7 +40,7 @@ namespace Mahapps.Metro.Tests
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            Assert.Equal(Theme.Dark, window.DefaultFlyout.ActualTheme);
+            Assert.Equal(Theme.Dark, window.DefaultFlyout.ActualTheme.Theme);
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace Mahapps.Metro.Tests
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
             window.DefaultFlyout.Theme = FlyoutTheme.Inverse;
 
-            Assert.Equal(Theme.Dark, window.DefaultFlyout.ActualTheme);
+            Assert.Equal(Theme.Dark, window.DefaultFlyout.ActualTheme.Theme);
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace Mahapps.Metro.Tests
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
             window.DefaultFlyout.Theme = FlyoutTheme.Light;
 
-            Assert.Equal(Theme.Light, window.DefaultFlyout.ActualTheme);
+            Assert.Equal(Theme.Light, window.DefaultFlyout.ActualTheme.Theme);
         }
 
         [Fact]
@@ -123,14 +123,14 @@ namespace Mahapps.Metro.Tests
 
             var expectedBrushColor = default(Color);
 
-            switch (window.RightFlyout.ActualTheme)
+            switch (window.RightFlyout.ActualTheme.Theme)
             {
                 case Theme.Dark:
-                    expectedBrushColor = ((SolidColorBrush)ThemeManager.DarkResource["BlackBrush"]).Color;
+                    expectedBrushColor = ((SolidColorBrush)window.RightFlyout.ActualTheme.Resources["BlackBrush"]).Color;
                     break;
 
                 case Theme.Light:
-                    expectedBrushColor = ((SolidColorBrush)ThemeManager.LightResource["BlackBrush"]).Color;
+                    expectedBrushColor = ((SolidColorBrush)window.RightFlyout.ActualTheme.Resources["BlackBrush"]).Color;
                     break;
             }
             
@@ -149,7 +149,7 @@ namespace Mahapps.Metro.Tests
 
             flyout.IsOpen = true;
 
-            Color expectedColor = ((SolidColorBrush)ThemeManager.DarkResource["BlackBrush"]).Color;
+            Color expectedColor = ((SolidColorBrush)ThemeManager.GetAppTheme("BaseDark").Resources["BlackBrush"]).Color;
 
             window.AssertWindowCommandsColor(expectedColor);
         }

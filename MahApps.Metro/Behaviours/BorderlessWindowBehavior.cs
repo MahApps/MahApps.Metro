@@ -40,7 +40,18 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
 
             // no transparany, because it hase more then one unwanted issues
-            AssociatedObject.AllowsTransparency = false;
+            var windowHandle = new WindowInteropHelper(AssociatedObject).Handle;
+            if (!AssociatedObject.IsLoaded && windowHandle == IntPtr.Zero)
+            {
+                try
+                {
+                    AssociatedObject.AllowsTransparency = false;
+                }
+                catch (Exception)
+                {
+                    //For some reason, we can't determine if the window has loaded or not, so we swallow the exception.
+                }
+            }
             AssociatedObject.WindowStyle = WindowStyle.None;
             savedBorderThickness = AssociatedObject.BorderThickness;
 
