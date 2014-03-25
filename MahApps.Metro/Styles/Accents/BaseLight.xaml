@@ -59,8 +59,14 @@
     <SolidColorBrush x:Key="SliderTrackHover" Color="#FFD0D0D0" />
     <SolidColorBrush x:Key="SliderTrackNormal" Color="#FFC6C6C6" />
 
-    <SolidColorBrush x:Key="FlyoutDarkBrush" Color="{StaticResource FlyoutDarkColor}" />
-    <SolidColorBrush x:Key="FlyoutLightBrush" Color="{StaticResource FlyoutLightColor}" />
+    <SolidColorBrush x:Key="FlyoutDarkForegroundBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="FlyoutDarkBackgroundBrush" Color="{StaticResource FlyoutDarkColor}" />
+    <SolidColorBrush x:Key="FlyoutLightForegroundBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="FlyoutLightBackgroundBrush" Color="{StaticResource FlyoutLightColor}" />
+    <SolidColorBrush x:Key="FlyoutAdaptiveBackgroundBrush" Color="{StaticResource FlyoutLightColor}" />
+    <SolidColorBrush x:Key="FlyoutAdaptiveForegroundBrush" Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="FlyoutInverseBackgroundBrush" Color="{StaticResource FlyoutDarkColor}" />
+    <SolidColorBrush x:Key="FlyoutInverseForegroundBrush" Color="{StaticResource WhiteColor}" />
 
     <SolidColorBrush x:Key="FlatButtonPressedBackgroundBrush" Color="#222222"/>
 
