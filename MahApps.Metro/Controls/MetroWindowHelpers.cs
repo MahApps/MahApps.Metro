@@ -77,23 +77,7 @@ namespace MahApps.Metro.Controls
 
         public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
         {
-            Brush brush = null;
-
-            if (flyout.Theme == FlyoutTheme.Accent)
-            {
-                brush = (Brush)flyout.FindResource("IdealForegroundColorBrush");
-            }
-            else if (flyout.ActualTheme != null)
-            {
-                if (flyout.ActualTheme.Theme == Theme.Light)
-                {
-                    brush = (Brush)flyout.ActualTheme.Resources["BlackBrush"];
-                }
-                else if (flyout.ActualTheme.Theme == Theme.Dark)
-                {
-                    brush = (Brush)flyout.ActualTheme.Resources["BlackBrush"];
-                }
-            }
+            Brush brush = flyout.Foreground;
 
             window.ChangeAllWindowCommandsBrush(brush, flyout.Position);
         }
