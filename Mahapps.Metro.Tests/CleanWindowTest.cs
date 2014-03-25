@@ -14,7 +14,7 @@ namespace Mahapps.Metro.Tests
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<CleanWindow>();
 
-            var blackBrushColor = ((SolidColorBrush)ThemeManager.LightResource["BlackBrush"]).Color;
+            var blackBrushColor = ((SolidColorBrush)ThemeManager.GetAppTheme("BaseLight").Resources["BlackBrush"]).Color;
 
             window.AssertWindowCommandsColor(blackBrushColor);
         }
