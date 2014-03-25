@@ -456,7 +456,7 @@ namespace MahApps.Metro
 
         #region obsoletes
 
-        [Obsolete("This will be deleted in next release.")]
+        [Obsolete("This property is obsolete. Use Accents instead.")]
         public static IList<Accent> DefaultAccents
         {
             get
@@ -480,31 +480,8 @@ namespace MahApps.Metro
             }
         }
 
-        [Obsolete("This will be deleted in next release.")]
-        public static IList<AppTheme> DefaultAppThemes
-        {
-            get
-            {
-                if (_appThemes != null)
-                    return _appThemes;
-
-                var themes = new[] { "BaseLight", "BaseDark" };
-
-                _appThemes = new List<AppTheme>(themes.Length);
-
-                foreach (var color in themes)
-                {
-                    Theme theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
-                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)), theme);
-                    _appThemes.Add(appTheme);
-                }
-
-                return _appThemes;
-            }
-        }
-
         [SecurityCritical]
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        [Obsolete("This method is obsolete. Use ChangeAppStyle instead.")]
         public static void ChangeTheme(Application app, Accent newAccent, Theme newTheme)
         {
             if (app == null) throw new ArgumentNullException("app");
@@ -517,7 +494,7 @@ namespace MahApps.Metro
         }
 
         [SecurityCritical]
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        [Obsolete("This method is obsolete. Use ChangeAppStyle instead.")]
         public static void ChangeTheme(Window window, Accent newAccent, Theme newTheme)
         {
             if (window == null) throw new ArgumentNullException("window");
@@ -529,7 +506,7 @@ namespace MahApps.Metro
             ChangeAppStyle(window.Resources, Tuple.Create(oldAppTheme, oldTheme.Item2), newAccent, newAppTheme);
         }
 
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        [Obsolete("This method is obsolete. Use ChangeAppStyle instead.")]
         public static void ChangeTheme(ResourceDictionary resources, Accent newAccent, Theme newTheme)
         {
             if (resources == null) throw new ArgumentNullException("resources");
@@ -539,7 +516,7 @@ namespace MahApps.Metro
             ChangeAppStyle(resources, newAccent, appTheme);
         }
 
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        [Obsolete("This method is obsolete. Use DetectAppStyle instead.")]
         public static Tuple<Theme, Accent> DetectTheme()
         {
             try
@@ -552,7 +529,7 @@ namespace MahApps.Metro
             }
         }
 
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        [Obsolete("This method is obsolete. Use DetectAppStyle instead.")]
         public static Tuple<Theme, Accent> DetectTheme(Window window)
         {
             if (window == null) throw new ArgumentNullException("window");
@@ -562,7 +539,7 @@ namespace MahApps.Metro
             return Tuple.Create(AppStyle.Item1.Theme, AppStyle.Item2);
         }
 
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        [Obsolete("This method is obsolete. Use DetectAppStyle instead.")]
         public static Tuple<Theme, Accent> DetectTheme(Application app)
         {
             if (app == null) throw new ArgumentNullException("app");
@@ -573,7 +550,7 @@ namespace MahApps.Metro
         }
 
 
-        [Obsolete("This will be deleted in next release.")]
+        [Obsolete("This property is obsolete and doesn't have a use anymore.")]
         public static bool InvalidateSystemResourcesOnBackgroundThread { get; set; }
 
         #endregion
@@ -582,7 +559,7 @@ namespace MahApps.Metro
     public class OnThemeChangedEventArgs : EventArgs
     {
         public AppTheme AppTheme { get; set; }
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        [Obsolete("This property is obsolete. Use AppTheme.Theme instead.")]
         public Theme Theme { get; set; }
         public Accent Accent { get; set; }
     }
