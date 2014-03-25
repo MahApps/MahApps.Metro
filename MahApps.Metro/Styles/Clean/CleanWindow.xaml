@@ -61,14 +61,25 @@
                           Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                           Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
 
-                        <!-- the clean window style use always this label over all 5 columns -->
-                        <Label x:Name="TitleLabel"
-                               HorizontalAlignment="Stretch"
-                               HorizontalContentAlignment="Center"
-                               VerticalAlignment="Center"
-                               Content="{TemplateBinding Title}"
-                               FontSize="{DynamicResource WindowTitleFontSize}"
-                               Width="Auto" />
+                        <!--This (empty) element is used so everything still responds to drag-->
+                        <Label VerticalContentAlignment="Center"
+                               HorizontalContentAlignment="Center">
+                            <ContentControl x:Name="TitleControl"
+                                            Content="{TemplateBinding Title}"
+                                            ContentTemplate="{TemplateBinding TitleTemplate}"
+                                            HorizontalAlignment="Center">
+                                <ContentControl.Foreground>
+                                    <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                        <Binding ElementName="PART_WindowTitleBackground"
+                                                 Path="Fill"
+                                                 Mode="OneWay" />
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                 Path="TitleForeground"
+                                                 Mode="OneWay" />
+                                    </MultiBinding>
+                                </ContentControl.Foreground>
+                            </ContentControl>
+                        </Label>
 
                     </Grid>
 
@@ -205,7 +216,7 @@
             </MultiTrigger>
             <Trigger Property="TitleCaps"
                      Value="True">
-                <Setter TargetName="TitleLabel"
+                <Setter TargetName="TitleControl"
                         Property="Content"
                         Value="{Binding Path=Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
