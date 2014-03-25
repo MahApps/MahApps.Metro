@@ -534,9 +534,9 @@ namespace MahApps.Metro
         {
             if (window == null) throw new ArgumentNullException("window");
 
-            var AppStyle = DetectAppStyle(window);
+            var appStyle = DetectAppStyle(window);
 
-            return Tuple.Create(AppStyle.Item1.Theme, AppStyle.Item2);
+            return Tuple.Create(appStyle.Item1.Theme, appStyle.Item2);
         }
 
         [Obsolete("This method is obsolete. Use DetectAppStyle instead.")]
@@ -544,9 +544,9 @@ namespace MahApps.Metro
         {
             if (app == null) throw new ArgumentNullException("app");
 
-            var AppStyle = DetectAppStyle(app);
+            var appStyle = DetectAppStyle(app);
 
-            return Tuple.Create(AppStyle.Item1.Theme, AppStyle.Item2);
+            return Tuple.Create(appStyle.Item1.Theme, appStyle.Item2);
         }
 
 
