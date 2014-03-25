@@ -4,10 +4,12 @@ namespace MahApps.Metro.Controls
     using System.ComponentModel;
     using System.Globalization;
     using System.Linq;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
+    using System.Windows.Media;
 
     /// <summary>
     ///     Represents a Windows spin box (also known as an up-down control) that displays numeric values.
@@ -103,6 +105,7 @@ namespace MahApps.Metro.Controls
         private const StringComparison StrComp = StringComparison.InvariantCultureIgnoreCase;
 
         private Tuple<string, string> _removeFromText = new Tuple<string, string>(string.Empty, string.Empty);
+        private Lazy<PropertyInfo> _handlesMouseWheelScrolling = new Lazy<PropertyInfo>();
         private double _internalIntervalMultiplierForCalculation = DefaultInterval;
         private double _internalLargeChange = DefaultInterval * 100;
         private double _intervalValueSinceReset;
@@ -110,6 +113,7 @@ namespace MahApps.Metro.Controls
         private RepeatButton _repeatDown;
         private RepeatButton _repeatUp;
         private TextBox _valueTextBox;
+        private ScrollViewer _scrollViewer;
 
         static NumericUpDown()
         {
@@ -317,6 +321,7 @@ namespace MahApps.Metro.Controls
             get { return Language.GetSpecificCulture(); }
         }
 
+
         /// <summary>
         ///     When overridden in a derived class, is invoked whenever application code or internal processes call
         ///     <see cref="M:System.Windows.FrameworkElement.ApplyTemplate" />.
@@ -350,8 +355,9 @@ namespace MahApps.Metro.Controls
             _repeatUp.PreviewMouseUp += (o, e) => ResetInternal();
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
             OnValueChanged(Value, Value);
+            InitializeScrollViewerIfExisting();
         }
-
+ 
         public void SelectAll()
         {
             if (_valueTextBox != null)
@@ -433,8 +439,24 @@ namespace MahApps.Metro.Controls
                 _manualChange = false;
                 ChangeValueInternal(increment);
             }
-        }
 
+            if (_scrollViewer != null && _handlesMouseWheelScrolling.Value != null)
+            {
+                if (TrackMouseWheelWhenMouseOver)
+                {
+                    _handlesMouseWheelScrolling.Value.SetValue(_scrollViewer, true);
+                }
+                else if (InterceptMouseWheel)
+                {
+                    _handlesMouseWheelScrolling.Value.SetValue(_scrollViewer, _valueTextBox.IsFocused);
+                }
+                else
+                {
+                    _handlesMouseWheelScrolling.Value.SetValue(_scrollViewer, true);
+                }
+            }
+        }
+        
         protected void OnPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = true;
@@ -709,6 +731,24 @@ namespace MahApps.Metro.Controls
             if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
             {
                 SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
+            }
+        }
+
+        private void InitializeScrollViewerIfExisting()
+        {
+            DependencyObject _do = _valueTextBox.Parent;
+            ScrollViewer c = null;
+            while (c == null && _do != null && _do.GetType() != typeof(NumericUpDown))
+            {
+                c = _do as ScrollViewer;
+                if (c != null)
+                {
+                    _scrollViewer = c;
+                    _handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => _scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
+                }
+
+                _do = VisualTreeHelper.GetParent(_do);
+
             }
         }
 
