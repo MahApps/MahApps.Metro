@@ -58,8 +58,9 @@ namespace MahApps.Metro
 
                 foreach (var color in themes)
                 {
-                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)));
-                    appTheme.Theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
+                    Theme theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
+                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)), theme);
+
                     _appThemes.Add(appTheme);
                 }
 
@@ -106,7 +107,7 @@ namespace MahApps.Metro
                 return false;
             }
 
-            _appThemes.Add(new AppTheme(name, resourceAddress) {Theme = theme});
+            _appThemes.Add(new AppTheme(name, resourceAddress, theme));
             return true;
         }
 
@@ -493,8 +494,8 @@ namespace MahApps.Metro
 
                 foreach (var color in themes)
                 {
-                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)));
-                    appTheme.Theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
+                    Theme theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
+                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)), theme);
                     _appThemes.Add(appTheme);
                 }
 
@@ -730,7 +731,7 @@ namespace MahApps.Metro
             var onThemeChangedEventArgs = new OnThemeChangedEventArgs() { Theme = newTheme, Accent = newAccent };
             onThemeChangedEventArgs.AppTheme = new AppTheme(
                 newTheme == Theme.Light ? "BaseLight" : "BaseDark",
-                newTheme == Theme.Light ? ThemeManager.LightResource.Source : ThemeManager.DarkResource.Source);
+                newTheme == Theme.Light ? ThemeManager.LightResource.Source : ThemeManager.DarkResource.Source, newTheme);
             SafeRaise.Raise(IsThemeChanged, Application.Current, onThemeChangedEventArgs);
         }
 
