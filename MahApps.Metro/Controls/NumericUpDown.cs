@@ -419,6 +419,7 @@ namespace MahApps.Metro.Controls
             if (InterceptMouseWheel && (_valueTextBox.IsFocused || TrackMouseWheelWhenMouseOver))
             {
                 bool increment = e.Delta > 0;
+                _manualChange = false;
                 ChangeValueInternal(increment);
             }
         }
@@ -830,7 +831,6 @@ namespace MahApps.Metro.Controls
                 if (ValidateText(((TextBox)sender).Text, out convertedValue))
                 {
                     Value = (double?)CoerceValue(this, convertedValue);
-                    InternalSetText(Value);
                     e.Handled = true;
                 }
             }
