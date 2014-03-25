@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls
             where T : DependencyObject
         {
             //get parent item
-            DependencyObject parentObject = GetParentObject(child);
+            var parentObject = GetParentObject(child);
 
             //we've reached the end of the tree
             if (parentObject == null) return null;
@@ -87,7 +87,7 @@ namespace MahApps.Metro.Controls
                 foreach (DependencyObject child in childs)
                 {
                     //analyze if children match the requested type
-                    if (child != null && child is T)
+                    if (child is T)
                     {
                         yield return (T)child;
                     }
@@ -126,7 +126,7 @@ namespace MahApps.Metro.Controls
             else
             {
                 //use the visual tree per default
-                int count = VisualTreeHelper.GetChildrenCount(parent);
+                var count = VisualTreeHelper.GetChildrenCount(parent);
                 for (int i = 0; i < count; i++)
                 {
                     yield return VisualTreeHelper.GetChild(parent, i);

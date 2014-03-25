@@ -1,10 +1,10 @@
-﻿using System.Security;
-using MahApps.Metro.Controls;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Windows;
+using MahApps.Metro.Controls;
 
 namespace MahApps.Metro
 {
@@ -17,7 +17,7 @@ namespace MahApps.Metro
         private static IList<AppTheme> _appThemes;
 
         /// <summary>
-        /// Gets a list of all of default themes.
+        /// Gets a list of all of the accents.
         /// </summary>
         public static IEnumerable<Accent> Accents
         {
@@ -43,7 +43,7 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Gets a list of all of default metro themes.
+        /// Gets a list of all of metro themes.
         /// </summary>
         public static IEnumerable<AppTheme> AppThemes
         {
@@ -89,7 +89,7 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Adds an app thene with the given name.
+        /// Adds an app theme with the given name.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="resourceAddress"></param>
@@ -106,7 +106,7 @@ namespace MahApps.Metro
                 return false;
             }
 
-            _appThemes.Add(new AppTheme(name, resourceAddress) {Theme = theme});
+            _appThemes.Add(new AppTheme(name, resourceAddress) { Theme = theme });
             return true;
         }
 
@@ -264,7 +264,7 @@ namespace MahApps.Metro
                     if (oldAccentResource != null)
                     {
                         resources.MergedDictionaries.Add(newAccent.Resources);
-                        var ok = resources.MergedDictionaries.Remove(oldAccentResource);
+                        resources.MergedDictionaries.Remove(oldAccentResource);
 
                         themeChanged = true;
                     }
@@ -399,7 +399,7 @@ namespace MahApps.Metro
             {
                 var currentRd = enumerator.Current;
 
-                AppTheme matched = null;
+                AppTheme matched;
                 if ((matched = GetAppTheme(currentRd)) != null)
                 {
                     detectedTheme = matched;
@@ -743,7 +743,7 @@ namespace MahApps.Metro
     public class OnThemeChangedEventArgs : EventArgs
     {
         public AppTheme AppTheme { get; set; }
-        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custome app themes!")]
+        [Obsolete("This will be deleted in next release. ThemeManager provides now a class called AppTheme to handle custom app themes!")]
         public Theme Theme { get; set; }
         public Accent Accent { get; set; }
     }

@@ -23,9 +23,7 @@ namespace MahApps.Metro.Controls
             get { return (ImageSource)GetValue(ImageProperty); }
             set { SetValue(ImageProperty, value); }
         }
-
         
-
         public RevealImage()
         {
             InitializeComponent();
@@ -64,7 +62,6 @@ namespace MahApps.Metro.Controls
 
         private void GridMouseEnter(object sender, MouseEventArgs e)
         {
-
             TypewriteTextblock(Text.ToUpper(), textBlock, TimeSpan.FromSeconds(.25));
         }
     }

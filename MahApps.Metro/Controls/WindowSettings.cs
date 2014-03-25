@@ -80,7 +80,7 @@ namespace MahApps.Metro.Controls
 
                 wp.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
                 wp.flags = 0;
-                wp.showCmd = (wp.showCmd == Constants.SW_SHOWMINIMIZED ? Constants.SW_SHOWNORMAL : wp.showCmd);
+                wp.showCmd = wp.showCmd == Constants.SW_SHOWMINIMIZED ? Constants.SW_SHOWNORMAL : wp.showCmd;
                 var hwnd = new WindowInteropHelper(_window).Handle;
                 UnsafeNativeMethods.SetWindowPlacement(hwnd, ref wp);
             }

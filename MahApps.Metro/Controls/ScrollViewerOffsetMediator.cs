@@ -23,7 +23,7 @@ namespace MahApps.Metro.Controls
         private static void OnScrollViewerChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var mediator = (ScrollViewerOffsetMediator)o;
-            var scrollViewer = (ScrollViewer)(e.NewValue);
+            var scrollViewer = (ScrollViewer)e.NewValue;
             if (scrollViewer != null)
                 scrollViewer.ScrollToHorizontalOffset(mediator.HorizontalOffset);
         }
@@ -32,7 +32,7 @@ namespace MahApps.Metro.Controls
         {
             var mediator = (ScrollViewerOffsetMediator)o;
             if (mediator.ScrollViewer != null)
-                mediator.ScrollViewer.ScrollToHorizontalOffset((double)(e.NewValue));
+                mediator.ScrollViewer.ScrollToHorizontalOffset((double)e.NewValue);
         }
     }
 }

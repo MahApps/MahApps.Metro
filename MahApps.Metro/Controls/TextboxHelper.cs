@@ -488,20 +488,18 @@ namespace MahApps.Metro.Controls
                 command.Execute(commandParameter ?? parent);
             }
 
-            if (GetClearTextButton(parent))
-            { 
-                if (parent is TextBox)
-                {
-                    ((TextBox)parent).Clear();
-                }
-                else if (parent is PasswordBox)
-                {
-                    ((PasswordBox)parent).Clear();
-                }
-                else if (parent is ComboBox)
-                {
-                    ((ComboBox)parent).SelectedItem = null;
-                }
+            if (!GetClearTextButton(parent)) return;
+            if (parent is TextBox)
+            {
+                ((TextBox)parent).Clear();
+            }
+            else if (parent is PasswordBox)
+            {
+                ((PasswordBox)parent).Clear();
+            }
+            else if (parent is ComboBox)
+            {
+                ((ComboBox)parent).SelectedItem = null;
             }
         }
     }

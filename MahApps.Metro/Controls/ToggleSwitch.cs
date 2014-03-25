@@ -119,15 +119,13 @@ namespace MahApps.Metro.Controls
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var toggleSwitch = (ToggleSwitch)d;
-            if (toggleSwitch._toggleButton != null)
-            {
-                var oldValue = (bool?)e.OldValue;
-                var newValue = (bool?)e.NewValue;
+            if (toggleSwitch._toggleButton == null) return;
+            var oldValue = (bool?)e.OldValue;
+            var newValue = (bool?)e.NewValue;
 
-                if (oldValue != newValue && toggleSwitch.IsCheckedChanged != null)
-                {
-                    toggleSwitch.IsCheckedChanged(toggleSwitch, EventArgs.Empty);
-                }
+            if (oldValue != newValue && toggleSwitch.IsCheckedChanged != null)
+            {
+                toggleSwitch.IsCheckedChanged(toggleSwitch, EventArgs.Empty);
             }
         }
 
@@ -146,7 +144,7 @@ namespace MahApps.Metro.Controls
 
         private void SetDefaultContent()
         {
-            Binding binding = new Binding("IsChecked") { Source = this, Converter = new OffOnConverter(), ConverterParameter = this };
+            var binding = new Binding("IsChecked") { Source = this, Converter = new OffOnConverter(), ConverterParameter = this };
             SetBinding(ContentProperty, binding);
         }
 
@@ -226,8 +224,7 @@ namespace MahApps.Metro.Controls
                 CultureInfo.InvariantCulture,
                 "{{ToggleSwitch IsChecked={0}, Content={1}}}",
                 IsChecked,
-                Content
-            );
+                Content);
         }
     }
 }

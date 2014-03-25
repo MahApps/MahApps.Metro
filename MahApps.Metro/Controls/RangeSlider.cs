@@ -244,9 +244,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets value how fast thumbs will move when user press on left/right/central with left mouse button (IsMoveToPoint must be set to FALSE)
         /// </summary>
         [Bindable(true), Category("Behavior")]
-        public Int32 Interval
+        public int Interval
         {
-            get { return (Int32)GetValue(IntervalProperty); }
+            get { return (int)GetValue(IntervalProperty); }
             set { SetValue(IntervalProperty, value); }
         }
 
@@ -254,9 +254,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets precision of the value, which displaying inside AutotToolTip
         /// </summary>
         [Bindable(true), Category("Appearance")]
-        public Int32 AutoToolTipPrecision
+        public int AutoToolTipPrecision
         {
-            get { return (Int32)GetValue(AutoToolTipPrecisionProperty); }
+            get { return (int)GetValue(AutoToolTipPrecisionProperty); }
             set { SetValue(AutoToolTipPrecisionProperty, value); }
         }
 
@@ -284,9 +284,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets IsMoveToPoint feature which will enable/disable moving to exact point inside control when user clicked on it
         /// </summary>
         [Bindable(true), Category("Common")]
-        public Boolean IsMoveToPointEnabled
+        public bool IsMoveToPointEnabled
         {
-            get { return (Boolean)GetValue(IsMoveToPointEnabledProperty); }
+            get { return (bool)GetValue(IsMoveToPointEnabledProperty); }
             set { SetValue(IsMoveToPointEnabledProperty, value); }
         }
 
@@ -294,9 +294,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets tickFrequency
         /// </summary>
         [Bindable(true), Category("Common")]
-        public Double TickFrequency
+        public double TickFrequency
         {
-            get { return (Double)GetValue(TickFrequencyProperty); }
+            get { return (double)GetValue(TickFrequencyProperty); }
             set { SetValue(TickFrequencyProperty, value); }
         }
 
@@ -314,9 +314,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
         /// </summary>
         [Bindable(true), Category("Appearance")]
-        public Boolean IsSnapToTickEnabled
+        public bool IsSnapToTickEnabled
         {
-            get { return (Boolean)GetValue(IsSnapToTickEnabledProperty); }
+            get { return (bool)GetValue(IsSnapToTickEnabledProperty); }
             set { SetValue(IsSnapToTickEnabledProperty, value); }
         }
 
@@ -324,9 +324,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets whether possibility to make manipulations inside range with left/right mouse buttons + cotrol button
         /// </summary>
         [Bindable(true), Category("Behavior")]
-        public Boolean ExtendedMode
+        public bool ExtendedMode
         {
-            get { return (Boolean)GetValue(ExtendedModeProperty); }
+            get { return (bool)GetValue(ExtendedModeProperty); }
             set { SetValue(ExtendedModeProperty, value); }
         }
 
@@ -334,9 +334,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets whether whole range will be moved when press on right/left/central part of control
         /// </summary>
         [Bindable(true), Category("Behavior")]
-        public Boolean MoveWholeRange
+        public bool MoveWholeRange
         {
-            get { return (Boolean)GetValue(MoveWholeRangeProperty); }
+            get { return (bool)GetValue(MoveWholeRangeProperty); }
             set { SetValue(MoveWholeRangeProperty, value); }
         }
 
@@ -344,9 +344,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets the minimal distance between two thumbs.
         /// </summary>
         [Bindable(true), Category("Common")]
-        public Double MinRangeWidth
+        public double MinRangeWidth
         {
-            get { return (Double)GetValue(MinRangeWidthProperty); }
+            get { return (double)GetValue(MinRangeWidthProperty); }
             set { SetValue(MinRangeWidthProperty, value); }
         }
 
@@ -355,9 +355,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets the beginning of the range selection.
         /// </summary>
         [Bindable(true), Category("Common")]
-        public Double LowerValue
+        public double LowerValue
         {
-            get { return (Double) GetValue(LowerValueProperty); }
+            get { return (double)GetValue(LowerValueProperty); }
             set { SetValue(LowerValueProperty, value); }
         }
 
@@ -365,9 +365,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets the end of the range selection.
         /// </summary>
         [Bindable(true), Category("Common")]
-        public Double UpperValue
+        public double UpperValue
         {
-            get { return (Double) GetValue(UpperValueProperty); }
+            get { return (double)GetValue(UpperValueProperty); }
             set { SetValue(UpperValueProperty, value); }
         }
 
@@ -375,9 +375,9 @@ namespace MahApps.Metro.Controls
         /// Get/sets the minimum range that can be selected.
         /// </summary>
         [Bindable(true), Category("Common")]
-        public Double MinRange
+        public double MinRange
         {
-            get { return (Double) GetValue(MinRangeProperty); }
+            get { return (double)GetValue(MinRangeProperty); }
             set { SetValue(MinRangeProperty, value); }
         }
 
@@ -387,7 +387,7 @@ namespace MahApps.Metro.Controls
         #region Variables
         private const double Epsilon = 0.00000153;
 
-        private Boolean _internalUpdate;
+        private bool _internalUpdate;
         private Thumb _centerThumb;
         private Thumb _leftThumb;
         private Thumb _rightThumb;
@@ -395,24 +395,27 @@ namespace MahApps.Metro.Controls
         private RepeatButton _rightButton;
         private StackPanel _visualElementsContainer;
         private StackPanel _container;
-        private Double _movableWidth;
+        private double _movableWidth;
         private readonly DispatcherTimer _timer;
 
-        private uint _tickCount = 0;
-        private Double _currentpoint;
-        private Boolean _isInsideRange;
-        private Boolean _centerThumbBlocked;
+        private uint _tickCount;
+        private double _currentpoint;
+        private bool _isInsideRange;
+        private bool _centerThumbBlocked;
         private Direction _direction;
         private ButtonType _bType;
         private Point _position;
         private Point _basePoint;
-        private Double _currenValue;
-        private Double _density;
+        private double _currenValue;
+        private double _density;
         private ToolTip _autoToolTip;
-        Double _oldLower = 0, _oldUpper = 0;
-        private Boolean _isMoved;
-        private Boolean _roundToPrecision;
-        private Int32 _precision;
+        double _oldLower;
+
+        double _oldUpper;
+
+        private bool _isMoved;
+        private bool _roundToPrecision;
+        private int _precision;
 
         #endregion
 
@@ -443,8 +446,8 @@ namespace MahApps.Metro.Controls
         static RangeSlider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
-            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MinPropertyChangedCallback, CoerceMinimum));
-            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)100.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MaxPropertyChangedCallback, CoerceMaximum));
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MinPropertyChangedCallback, CoerceMinimum));
+            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(100.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MaxPropertyChangedCallback, CoerceMaximum));
         }
 
 
@@ -490,10 +493,10 @@ namespace MahApps.Metro.Controls
         private static void MoveThumb(FrameworkElement x, FrameworkElement y, double horizonalChange,
             Orientation orientation)
         {
-            double change = 0;
+            double change;
             if (orientation == Orientation.Horizontal)
             {
-                if (!Double.IsNaN(x.Width) && !Double.IsNaN(y.Width))
+                if (!double.IsNaN(x.Width) && !double.IsNaN(y.Width))
                 {
                     if (horizonalChange < 0) //slider went left
                     {
@@ -504,7 +507,7 @@ namespace MahApps.Metro.Controls
                             {
                                 if (x.Width + change < x.MinWidth)
                                 {
-                                    double dif = x.Width - x.MinWidth;
+                                    var dif = x.Width - x.MinWidth;
                                     x.Width = x.MinWidth;
                                     y.Width += dif;
                                 }
@@ -530,7 +533,7 @@ namespace MahApps.Metro.Controls
                             {
                                 if (y.Width - change < y.MinWidth)
                                 {
-                                    double dif = y.Width - y.MinWidth;
+                                    var dif = y.Width - y.MinWidth;
                                     y.Width = y.MinWidth;
                                     x.Width += dif;
                                 }
@@ -552,27 +555,18 @@ namespace MahApps.Metro.Controls
             else if (orientation == Orientation.Vertical)
             {
                 //Debug.WriteLine("horizonalChange = " + horizonalChange);
-                if (!Double.IsNaN(x.Height) && !Double.IsNaN(y.Height))
+                if (double.IsNaN(x.Height) || double.IsNaN(y.Height)) return;
+                if (horizonalChange < 0) //slider went up
                 {
-                    if (horizonalChange < 0) //slider went up
+                    change = -GetChangeKeepPositive(y.Height, horizonalChange);//get positive number
+                    if (y.Name == "PART_MiddleThumb")
                     {
-                        change = -GetChangeKeepPositive(y.Height, horizonalChange);//get positive number
-                        if (y.Name == "PART_MiddleThumb")
+                        if (!(y.Height > y.MinHeight)) return;
+                        if (y.Height - change < y.MinHeight)
                         {
-                            if (y.Height > y.MinHeight)
-                            {
-                                if (y.Height - change < y.MinHeight)
-                                {
-                                    double dif = y.Height - y.MinHeight;
-                                    y.Height = y.MinHeight;
-                                    x.Height += dif;
-                                }
-                                else
-                                {
-                                    x.Height += change;
-                                    y.Height -= change;
-                                }
-                            }
+                            var dif = y.Height - y.MinHeight;
+                            y.Height = y.MinHeight;
+                            x.Height += dif;
                         }
                         else
                         {
@@ -580,104 +574,104 @@ namespace MahApps.Metro.Controls
                             y.Height -= change;
                         }
                     }
-                    else if (horizonalChange > 0) //slider went down if(horizontal change == 0 do nothing)
+                    else
                     {
-                        change = GetChangeKeepPositive(x.Height, -horizonalChange);//get negative number
-                        if (x.Name == "PART_MiddleThumb")
+                        x.Height += change;
+                        y.Height -= change;
+                    }
+                }
+                else if (horizonalChange > 0) //slider went down if(horizontal change == 0 do nothing)
+                {
+                    change = GetChangeKeepPositive(x.Height, -horizonalChange);//get negative number
+                    if (x.Name == "PART_MiddleThumb")
+                    {
+                        if (!(x.Height > y.MinHeight)) return;
+                        if (x.Height + change < x.MinHeight)
                         {
-                            if (x.Height > y.MinHeight)
-                            {
-                                if (x.Height + change < x.MinHeight)
-                                {
-                                    double dif = x.Height - x.MinHeight;
-                                    x.Height = x.MinHeight;
-                                    y.Height += dif;
-                                }
-                                else
-                                {
-                                    x.Height += change;
-                                    y.Height -= change;
-                                }
-                            }
+                            var dif = x.Height - x.MinHeight;
+                            x.Height = x.MinHeight;
+                            y.Height += dif;
                         }
                         else
                         {
                             x.Height += change;
                             y.Height -= change;
                         }
+                    }
+                    else
+                    {
+                        x.Height += change;
+                        y.Height -= change;
                     }
                 }
             }
         }
-
         
         //Recalculation of Control Height or Width
         private void ReCalculateSize()
         {
-            if (_leftButton != null && _rightButton != null && _centerThumb != null)
+            if (_leftButton == null || _rightButton == null || _centerThumb == null) return;
+            if (Orientation == Orientation.Horizontal)
             {
-                if (Orientation == Orientation.Horizontal)
+                _movableWidth =
+                    Math.Max(
+                        ActualWidth - _rightThumb.ActualWidth - _leftThumb.ActualWidth - MinRangeWidth, 1);
+                if (MovableRange <= 0)
                 {
-                    _movableWidth =
-                        Math.Max(
-                            ActualWidth - _rightThumb.ActualWidth - _leftThumb.ActualWidth - MinRangeWidth, 1);
-                    if (MovableRange <= 0)
-                    {
-                        _leftButton.Width = Double.NaN;
-                        _rightButton.Width = Double.NaN;
-                    }
-                    else
-                    {
-                        _leftButton.Width = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
-                        _rightButton.Width = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
-                    }
-                    
-                    if (IsValidDouble(_rightButton.Width) && IsValidDouble(_leftButton.Width))
-                    {
-                        _centerThumb.Width =
-                            Math.Max(
-                                ActualWidth - (_leftButton.Width + _rightButton.Width + _rightThumb.ActualWidth +
-                                               _leftThumb.ActualWidth), 0);
-                    }
-                    else
-                    {
-                        _centerThumb.Width =
-                            Math.Max(
-                                ActualWidth - (_rightThumb.ActualWidth + _leftThumb.ActualWidth), 0);
-                    }
+                    _leftButton.Width = double.NaN;
+                    _rightButton.Width = double.NaN;
                 }
-                else if (Orientation == Orientation.Vertical)
+                else
                 {
-                    _movableWidth =
-                        Math.Max(
-                            ActualHeight - _rightThumb.ActualHeight - _leftThumb.ActualHeight - MinRangeWidth, 1);
-                    if (MovableRange <= 0)
-                    {
-                        _leftButton.Height = Double.NaN;
-                        _rightButton.Height = Double.NaN;
-                    }
-                    else
-                    {
-                        _leftButton.Height = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
-                        _rightButton.Height = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
-                    }
-                    
-                    if (IsValidDouble(_rightButton.Height) && IsValidDouble(_leftButton.Height))
-                    {
-                        _centerThumb.Height =
-                            Math.Max(
-                                ActualHeight - (_leftButton.Height + _rightButton.Height + _rightThumb.ActualHeight +
-                                _leftThumb.ActualHeight), 0);
-                    }
-                    else
-                    {
-                        _centerThumb.Height =
-                            Math.Max(
-                                ActualHeight - (_rightThumb.ActualHeight + _leftThumb.ActualHeight), 0);
-                    }
+                    _leftButton.Width = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
+                    _rightButton.Width = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
                 }
-                _density = _movableWidth / MovableRange;
+                    
+                if (IsValidDouble(_rightButton.Width) && IsValidDouble(_leftButton.Width))
+                {
+                    _centerThumb.Width =
+                        Math.Max(
+                            ActualWidth - (_leftButton.Width + _rightButton.Width + _rightThumb.ActualWidth +
+                                           _leftThumb.ActualWidth), 0);
+                }
+                else
+                {
+                    _centerThumb.Width =
+                        Math.Max(
+                            ActualWidth - (_rightThumb.ActualWidth + _leftThumb.ActualWidth), 0);
+                }
             }
+            else if (Orientation == Orientation.Vertical)
+            {
+                _movableWidth =
+                    Math.Max(
+                        ActualHeight - _rightThumb.ActualHeight - _leftThumb.ActualHeight - MinRangeWidth, 1);
+                if (MovableRange <= 0)
+                {
+                    _leftButton.Height = double.NaN;
+                    _rightButton.Height = double.NaN;
+                }
+                else
+                {
+                    _leftButton.Height = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
+                    _rightButton.Height = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
+                }
+                    
+                if (IsValidDouble(_rightButton.Height) && IsValidDouble(_leftButton.Height))
+                {
+                    _centerThumb.Height =
+                        Math.Max(
+                            ActualHeight - (_leftButton.Height + _rightButton.Height + _rightThumb.ActualHeight +
+                                            _leftThumb.ActualHeight), 0);
+                }
+                else
+                {
+                    _centerThumb.Height =
+                        Math.Max(
+                            ActualHeight - (_rightThumb.ActualHeight + _leftThumb.ActualHeight), 0);
+                }
+            }
+            _density = _movableWidth / MovableRange;
         }
 
         //Method calculates new values when IsSnapToTickEnabled = FALSE
@@ -687,14 +681,14 @@ namespace MahApps.Metro.Controls
             if (reCalculateLowerValue)
             {
                 _oldLower = LowerValue;
-                double width = Orientation == Orientation.Horizontal ? _leftButton.Width : _leftButton.Height;
+                var width = Orientation == Orientation.Horizontal ? _leftButton.Width : _leftButton.Height;
                 //Check first if button width is not Double.NaN
                 if (IsValidDouble(width))
                 {
                     // Make sure to get exactly rangestart if thumb is at the start
-                    double lower = Equals(width, 0.0)
-                        ? Minimum
-                        : Math.Max(Minimum, (Minimum + MovableRange*width/_movableWidth));
+                    var lower = Equals(width, 0.0)
+                                    ? Minimum
+                                    : Math.Max(Minimum, (Minimum + MovableRange) * width / _movableWidth);
                     if (!_isMoved)
                     {
                         LowerValue = _roundToPrecision ? Math.Round(lower, _precision) : lower;
@@ -709,14 +703,14 @@ namespace MahApps.Metro.Controls
             if (reCalculateUpperValue)
             {
                 _oldUpper = UpperValue;
-                double width = Orientation == Orientation.Horizontal ? _rightButton.Width : _rightButton.Height;
+                var width = Orientation == Orientation.Horizontal ? _rightButton.Width : _rightButton.Height;
                 //Check first if button width is not Double.NaN
                 if (IsValidDouble(width))
                 {
                     // Make sure to get exactly rangestop if thumb is at the end
-                    double upper = Equals(width, 0.0)
-                        ? Maximum
-                        : Math.Min(Maximum, (Maximum - MovableRange*width/_movableWidth));
+                    var upper = Equals(width, 0.0)
+                                    ? Maximum
+                                    : Math.Min(Maximum, (Maximum - MovableRange) * width / _movableWidth);
                     if (!_isMoved)
                     {
                         UpperValue = _roundToPrecision
@@ -779,7 +773,7 @@ namespace MahApps.Metro.Controls
                     TickFrequency.ToString(CultureInfo.InvariantCulture).Contains("."))
                 {
                     //decimal part is for cutting value exactly on that number of digits, which has TickFrequency to have correct values
-                    String[] decimalPart = TickFrequency.ToString(CultureInfo.InvariantCulture).Split('.');
+                    var decimalPart = TickFrequency.ToString(CultureInfo.InvariantCulture).Split('.');
                     LowerValue = Math.Round(lower, decimalPart[1].Length, MidpointRounding.AwayFromZero);
                 }
                 else
@@ -806,7 +800,7 @@ namespace MahApps.Metro.Controls
                 if (!TickFrequency.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e+") && 
                     TickFrequency.ToString(CultureInfo.InvariantCulture).Contains("."))
                 {
-                    String[] decimalPart = TickFrequency.ToString(CultureInfo.InvariantCulture).Split('.');
+                    string[] decimalPart = TickFrequency.ToString(CultureInfo.InvariantCulture).Split('.');
                     UpperValue = Math.Round(upper, decimalPart[1].Length, MidpointRounding.AwayFromZero);
                 }
                 else
@@ -844,28 +838,29 @@ namespace MahApps.Metro.Controls
         //Method used for cheking and setting correct values when IsSnapToTickEnable = TRUE (When thumb moving together)
         private void ReCalculateRangeSelected(double newLower, double newUpper, Direction direction)
         {
-            double lower = 0, upper = 0;
             _internalUpdate = true; //set flag to signal that the properties are being set by the object itself
-                _oldLower = LowerValue;
-                _oldUpper = UpperValue;
+            _oldLower = LowerValue;
+            _oldUpper = UpperValue;
                 
             if (IsSnapToTickEnabled)
             {
+                double lower;
+                double upper;
                 if (direction == Direction.Increase)
                 {
-                    lower = Math.Min(newLower, Maximum-(UpperValue - LowerValue));
+                    lower = Math.Min(newLower, Maximum - (UpperValue - LowerValue));
                     upper = Math.Min(newUpper, Maximum);
                 }
                 else
                 {
                     lower = Math.Max(newLower, Minimum);
-                    upper = Math.Max(Minimum+(UpperValue - LowerValue), newUpper);
+                    upper = Math.Max(Minimum + (UpperValue - LowerValue), newUpper);
                 }
                 if (!TickFrequency.ToString().ToLower().Contains("e+") &&
                     TickFrequency.ToString(CultureInfo.InvariantCulture).Contains("."))
                 {
                     //decimal part is for cutting value exactly on that number of digits, which has TickFrequency to have correct values
-                    String[] decimalPart = TickFrequency.ToString(CultureInfo.InvariantCulture).Split('.');
+                    var decimalPart = TickFrequency.ToString(CultureInfo.InvariantCulture).Split('.');
                     //used when whole range decreasing to have correct updated values (lower first, upper - second)
                     if (direction == Direction.Decrease)
                     {
@@ -926,7 +921,7 @@ namespace MahApps.Metro.Controls
 
         public void MoveSelection(bool isLeft)
         {
-            double widthChange = SmallChange * (UpperValue - LowerValue)
+            var widthChange = SmallChange * (UpperValue - LowerValue)
                 * _movableWidth / MovableRange;
 
             widthChange = isLeft ? -widthChange : widthChange;
@@ -936,7 +931,7 @@ namespace MahApps.Metro.Controls
 
         public void ResetSelection(bool isStart)
         {
-            double widthChange = Maximum - Minimum;
+            var widthChange = Maximum - Minimum;
             widthChange = isStart ? -widthChange : widthChange;
 
             MoveThumb(_leftButton, _rightButton, widthChange, Orientation);
@@ -994,9 +989,9 @@ namespace MahApps.Metro.Controls
         }
 
         //Handler for preview mouse button down for the whole StackPanel container
-        void VisualElementsContainerPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void VisualElementsContainerPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Point position = Mouse.GetPosition(_visualElementsContainer);
+            var position = Mouse.GetPosition(_visualElementsContainer);
             if (Orientation == Orientation.Horizontal)
             {
                 if (position.X < _leftButton.ActualWidth)
@@ -1032,7 +1027,7 @@ namespace MahApps.Metro.Controls
         }
 
 
-        void VisualElementsContainerMouseDown(object sender, MouseButtonEventArgs e)
+        private void VisualElementsContainerMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.MiddleButton == MouseButtonState.Pressed)
             {
@@ -1058,63 +1053,105 @@ namespace MahApps.Metro.Controls
 
         private void LeftButtonMouseDown()
         {
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            if (Mouse.LeftButton != MouseButtonState.Pressed) return;
+            var p = Mouse.GetPosition(_visualElementsContainer);
+            var change = Orientation == Orientation.Horizontal
+                                ? _leftButton.ActualWidth - p.X + (_leftThumb.ActualWidth / 2)
+                                : -(_leftButton.ActualHeight - (ActualHeight - (p.Y + (_leftThumb.ActualHeight / 2))));
+            if (!IsSnapToTickEnabled)
             {
-                Point p = Mouse.GetPosition(_visualElementsContainer);
-                double change = Orientation == Orientation.Horizontal
-                    ? _leftButton.ActualWidth - p.X + (_leftThumb.ActualWidth / 2)
-                    : -(_leftButton.ActualHeight - (ActualHeight - (p.Y + (_leftThumb.ActualHeight / 2))));
-                if (!IsSnapToTickEnabled)
+                if (IsMoveToPointEnabled && !MoveWholeRange)
                 {
-                    if (IsMoveToPointEnabled && !MoveWholeRange)
-                    {
-                        MoveThumb(_leftButton, _centerThumb, -change, Orientation);
-                        ReCalculateRangeSelected(true, false);
-                    }
-                    else if (IsMoveToPointEnabled && MoveWholeRange)
-                    {
-                        MoveThumb(_leftButton, _rightButton, -change, Orientation);
-                        ReCalculateRangeSelected(true, true);
-                    }
+                    MoveThumb(_leftButton, _centerThumb, -change, Orientation);
+                    ReCalculateRangeSelected(true, false);
                 }
-                else
+                else if (IsMoveToPointEnabled && MoveWholeRange)
                 {
-                    if (IsMoveToPointEnabled && !MoveWholeRange)
-                    {
-                        JumpToNextTick(Direction.Decrease, ButtonType.BottomLeft, -change, LowerValue, true);
-                    }
-                    else if (IsMoveToPointEnabled && MoveWholeRange)
-                    {
-                        JumpToNextTick(Direction.Decrease, ButtonType.Both, -change, LowerValue, true);
-                    }
-                }
-                if (!IsMoveToPointEnabled)
-                {
-                    _position = Mouse.GetPosition(_visualElementsContainer);
-                    _bType = MoveWholeRange ? ButtonType.Both : ButtonType.BottomLeft;
-                    _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
-                    _currenValue = LowerValue;
-                    _isInsideRange = false;
-                    _direction = Direction.Decrease;
-                    _timer.Start();
+                    MoveThumb(_leftButton, _rightButton, -change, Orientation);
+                    ReCalculateRangeSelected(true, true);
                 }
             }
+            else
+            {
+                if (IsMoveToPointEnabled && !MoveWholeRange)
+                {
+                    JumpToNextTick(Direction.Decrease, ButtonType.BottomLeft, -change, LowerValue, true);
+                }
+                else if (IsMoveToPointEnabled && MoveWholeRange)
+                {
+                    JumpToNextTick(Direction.Decrease, ButtonType.Both, -change, LowerValue, true);
+                }
+            }
+
+            if (IsMoveToPointEnabled) return;
+            _position = Mouse.GetPosition(_visualElementsContainer);
+            _bType = MoveWholeRange ? ButtonType.Both : ButtonType.BottomLeft;
+            _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
+            _currenValue = LowerValue;
+            _isInsideRange = false;
+            _direction = Direction.Decrease;
+            _timer.Start();
         }
 
         private void RightButtonMouseDown()
         {
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            if (Mouse.LeftButton != MouseButtonState.Pressed) return;
+            var p = Mouse.GetPosition(_visualElementsContainer);
+            var change = Orientation == Orientation.Horizontal
+                                ? _rightButton.ActualWidth - (ActualWidth - (p.X + (_rightThumb.ActualWidth / 2)))
+                                : -(_rightButton.ActualHeight - (p.Y - (_rightThumb.ActualHeight / 2)));
+            if (!IsSnapToTickEnabled)
             {
-                Point p = Mouse.GetPosition(_visualElementsContainer);
-                double change = Orientation == Orientation.Horizontal
-                    ? _rightButton.ActualWidth - (ActualWidth - (p.X + (_rightThumb.ActualWidth / 2)))
-                    : -(_rightButton.ActualHeight - (p.Y - (_rightThumb.ActualHeight / 2)));
+                if (IsMoveToPointEnabled && !MoveWholeRange)
+                {
+                    MoveThumb(_centerThumb, _rightButton, change, Orientation);
+                    ReCalculateRangeSelected(false, true);
+                }
+                else if (IsMoveToPointEnabled && MoveWholeRange)
+                {
+                    MoveThumb(_leftButton, _rightButton, change, Orientation);
+                    ReCalculateRangeSelected(true, true);
+                }
+            }
+            else
+            {
+                if (IsMoveToPointEnabled && !MoveWholeRange)
+                {
+                    JumpToNextTick(Direction.Increase, ButtonType.TopRight, change, UpperValue, true);
+                }
+                else if (IsMoveToPointEnabled && MoveWholeRange)
+                {
+                    JumpToNextTick(Direction.Increase, ButtonType.Both, change, UpperValue, true);
+                }
+            }
+
+            if (IsMoveToPointEnabled) return;
+            _position = Mouse.GetPosition(_visualElementsContainer);
+            _bType = MoveWholeRange ? ButtonType.Both : ButtonType.TopRight;
+            _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
+            _currenValue = UpperValue;
+            _direction = Direction.Increase;
+            _isInsideRange = false;
+            _timer.Start();
+        }
+
+        private void CentralThumbMouseDown()
+        {
+            if (!ExtendedMode) return;
+            if (Mouse.LeftButton == MouseButtonState.Pressed &&
+                (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+            {
+                _centerThumbBlocked = true;
+                var p = Mouse.GetPosition(_visualElementsContainer);
+                var change = Orientation == Orientation.Horizontal
+                                    ? (p.X + (_leftThumb.ActualWidth / 2) - (_leftButton.ActualWidth + _leftThumb.ActualWidth))
+                                    : -(ActualHeight - ((p.Y + (_leftThumb.ActualHeight / 2)) + _leftButton.ActualHeight));
                 if (!IsSnapToTickEnabled)
                 {
                     if (IsMoveToPointEnabled && !MoveWholeRange)
                     {
-                        MoveThumb(_centerThumb, _rightButton, change, Orientation);
-                        ReCalculateRangeSelected(false, true);
+                        MoveThumb(_leftButton, _centerThumb, change, Orientation);
+                        ReCalculateRangeSelected(true, false);
                     }
                     else if (IsMoveToPointEnabled && MoveWholeRange)
                     {
@@ -1126,116 +1163,65 @@ namespace MahApps.Metro.Controls
                 {
                     if (IsMoveToPointEnabled && !MoveWholeRange)
                     {
-                        JumpToNextTick(Direction.Increase, ButtonType.TopRight, change, UpperValue, true);
+                        JumpToNextTick(Direction.Increase, ButtonType.BottomLeft, change, LowerValue, true);
                     }
                     else if (IsMoveToPointEnabled && MoveWholeRange)
                     {
-                        JumpToNextTick(Direction.Increase, ButtonType.Both, change, UpperValue, true);
+                        JumpToNextTick(Direction.Increase, ButtonType.Both, change, LowerValue, true);
                     }
                 }
                 if (!IsMoveToPointEnabled)
                 {
                     _position = Mouse.GetPosition(_visualElementsContainer);
-                    _bType = MoveWholeRange ? ButtonType.Both : ButtonType.TopRight;
+                    _bType = MoveWholeRange ? ButtonType.Both : ButtonType.BottomLeft;
                     _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
-                    _currenValue = UpperValue;
+                    _currenValue = LowerValue;
                     _direction = Direction.Increase;
-                    _isInsideRange = false;
+                    _isInsideRange = true;
                     _timer.Start();
                 }
             }
-        }
-
-        private void CentralThumbMouseDown()
-        {
-            if (ExtendedMode)
+            else if (Mouse.RightButton == MouseButtonState.Pressed &&
+                     (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
             {
-                if (Mouse.LeftButton == MouseButtonState.Pressed &&
-                    (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+                _centerThumbBlocked = true;
+                var p = Mouse.GetPosition(_visualElementsContainer);
+                var change = Orientation == Orientation.Horizontal
+                                    ? ActualWidth - (p.X + (_rightThumb.ActualWidth / 2) + _rightButton.ActualWidth)
+                                    : -(p.Y + (_rightThumb.ActualHeight / 2) - (_rightButton.ActualHeight + _rightThumb.ActualHeight));
+                if (!IsSnapToTickEnabled)
                 {
-                    _centerThumbBlocked = true;
-                    Point p = Mouse.GetPosition(_visualElementsContainer);
-                    double change = Orientation == Orientation.Horizontal
-                        ? (p.X + (_leftThumb.ActualWidth / 2) - (_leftButton.ActualWidth + _leftThumb.ActualWidth))
-                        : -(ActualHeight - ((p.Y + (_leftThumb.ActualHeight / 2)) + _leftButton.ActualHeight));
-                    if (!IsSnapToTickEnabled)
+                    if (IsMoveToPointEnabled && !MoveWholeRange)
                     {
-                        if (IsMoveToPointEnabled && !MoveWholeRange)
-                        {
-                            MoveThumb(_leftButton, _centerThumb, change, Orientation);
-                            ReCalculateRangeSelected(true, false);
-                        }
-                        else if (IsMoveToPointEnabled && MoveWholeRange)
-                        {
-                            MoveThumb(_leftButton, _rightButton, change, Orientation);
-                            ReCalculateRangeSelected(true, true);
-                        }
+                        MoveThumb(_centerThumb, _rightButton, -change, Orientation);
+                        ReCalculateRangeSelected(false, true);
                     }
-                    else
+                    else if (IsMoveToPointEnabled && MoveWholeRange)
                     {
-                        if (IsMoveToPointEnabled && !MoveWholeRange)
-                        {
-                            JumpToNextTick(Direction.Increase, ButtonType.BottomLeft, change, LowerValue, true);
-                        }
-                        else if (IsMoveToPointEnabled && MoveWholeRange)
-                        {
-                            JumpToNextTick(Direction.Increase, ButtonType.Both, change, LowerValue, true);
-                        }
-                    }
-                    if (!IsMoveToPointEnabled)
-                    {
-                        _position = Mouse.GetPosition(_visualElementsContainer);
-                        _bType = MoveWholeRange ? ButtonType.Both : ButtonType.BottomLeft;
-                        _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
-                        _currenValue = LowerValue;
-                        _direction = Direction.Increase;
-                        _isInsideRange = true;
-                        _timer.Start();
+                        MoveThumb(_leftButton, _rightButton, -change, Orientation);
+                        ReCalculateRangeSelected(true, true);
                     }
                 }
-                else if (Mouse.RightButton == MouseButtonState.Pressed &&
-                         (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
+                else
                 {
-                    _centerThumbBlocked = true;
-                    Point p = Mouse.GetPosition(_visualElementsContainer);
-                    double change = Orientation == Orientation.Horizontal
-                        ? ActualWidth - (p.X + (_rightThumb.ActualWidth / 2) + _rightButton.ActualWidth)
-                        : -(p.Y + (_rightThumb.ActualHeight / 2) - (_rightButton.ActualHeight + _rightThumb.ActualHeight));
-                    if (!IsSnapToTickEnabled)
+                    if (IsMoveToPointEnabled && !MoveWholeRange)
                     {
-                        if (IsMoveToPointEnabled && !MoveWholeRange)
-                        {
-                            MoveThumb(_centerThumb, _rightButton, -change, Orientation);
-                            ReCalculateRangeSelected(false, true);
-                        }
-                        else if (IsMoveToPointEnabled && MoveWholeRange)
-                        {
-                            MoveThumb(_leftButton, _rightButton, -change, Orientation);
-                            ReCalculateRangeSelected(true, true);
-                        }
+                        JumpToNextTick(Direction.Decrease, ButtonType.TopRight, -change, UpperValue, true);
                     }
-                    else
+                    else if (IsMoveToPointEnabled && MoveWholeRange)
                     {
-                        if (IsMoveToPointEnabled && !MoveWholeRange)
-                        {
-                            JumpToNextTick(Direction.Decrease, ButtonType.TopRight, -change, UpperValue, true);
-                        }
-                        else if (IsMoveToPointEnabled && MoveWholeRange)
-                        {
-                            JumpToNextTick(Direction.Decrease, ButtonType.Both, -change, UpperValue, true);
-                        }
-                    }
-                    if (!IsMoveToPointEnabled)
-                    {
-                        _position = Mouse.GetPosition(_visualElementsContainer);
-                        _bType = MoveWholeRange ? ButtonType.Both : ButtonType.TopRight;
-                        _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
-                        _currenValue = UpperValue;
-                        _direction = Direction.Decrease;
-                        _isInsideRange = true;
-                        _timer.Start();
+                        JumpToNextTick(Direction.Decrease, ButtonType.Both, -change, UpperValue, true);
                     }
                 }
+
+                if (IsMoveToPointEnabled) return;
+                _position = Mouse.GetPosition(_visualElementsContainer);
+                _bType = MoveWholeRange ? ButtonType.Both : ButtonType.TopRight;
+                _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
+                _currenValue = UpperValue;
+                _direction = Direction.Decrease;
+                _isInsideRange = true;
+                _timer.Start();
             }
         }
 
@@ -1267,7 +1253,7 @@ namespace MahApps.Metro.Controls
 
         private void LeftThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            double change = Orientation == Orientation.Horizontal
+            var change = Orientation == Orientation.Horizontal
                 ? e.HorizontalChange
                 : e.VerticalChange;
             if (!IsSnapToTickEnabled)
@@ -1309,7 +1295,6 @@ namespace MahApps.Metro.Controls
             e.RoutedEvent = LowerThumbDragDeltaEvent;
             RaiseEvent(e);
         }
-
         
         private void LeftThumbDragComplete(object sender, DragCompletedEventArgs e)
         {
@@ -1321,8 +1306,7 @@ namespace MahApps.Metro.Controls
             e.RoutedEvent = LowerThumbDragCompletedEvent;
             RaiseEvent(e);
         }
-
-
+        
         private void RightThumbDragStart(object sender, DragStartedEventArgs e)
         {
             _isMoved = true;
@@ -1342,11 +1326,10 @@ namespace MahApps.Metro.Controls
             e.RoutedEvent = UpperThumbDragStartedEvent;
             RaiseEvent(e);
         }
-
-
+        
         private void RightThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
-            double change = Orientation == Orientation.Horizontal
+            var change = Orientation == Orientation.Horizontal
                 ? e.HorizontalChange
                 : e.VerticalChange;
             if (!IsSnapToTickEnabled)
@@ -1357,7 +1340,7 @@ namespace MahApps.Metro.Controls
             else
             {
                 Direction localDirection;
-                Point currentPoint = Mouse.GetPosition(_container);
+                var currentPoint = Mouse.GetPosition(_container);
                 if (Orientation == Orientation.Horizontal)
                 {
                     if (currentPoint.X < _container.ActualWidth &&
@@ -1387,8 +1370,7 @@ namespace MahApps.Metro.Controls
             e.RoutedEvent = UpperThumbDragDeltaEvent;
             RaiseEvent(e);
         }
-
-
+        
         private void RightThumbDragComplete(object sender, DragCompletedEventArgs e)
         {
             if (_autoToolTip != null)
@@ -1426,7 +1408,7 @@ namespace MahApps.Metro.Controls
         {
             if (!_centerThumbBlocked)
             {
-                double change = Orientation == Orientation.Horizontal
+                var change = Orientation == Orientation.Horizontal
                     ? e.HorizontalChange
                     : e.VerticalChange;
                 if (!IsSnapToTickEnabled)
@@ -1437,7 +1419,7 @@ namespace MahApps.Metro.Controls
                 else
                 {
                     Direction localDirection;
-                    Point currentPoint = Mouse.GetPosition(_container);
+                    var currentPoint = Mouse.GetPosition(_container);
                     if (Orientation == Orientation.Horizontal)
                     {
                         if (currentPoint.X >= 0 &&
@@ -1500,79 +1482,77 @@ namespace MahApps.Metro.Controls
             //if we increase value 
             if (dir == Direction.Increase)
             {
-                if (type == ButtonType.BottomLeft)
+                switch (type)
                 {
-                    d = Orientation == Orientation.Horizontal
-                ? _leftButton.ActualWidth + _leftThumb.ActualWidth
-                : ActualHeight -(_leftButton.ActualHeight + _leftThumb.ActualHeight);
-                }
-                else if (type == ButtonType.TopRight)
-                {
-                    d = Orientation == Orientation.Horizontal
-                ? ActualWidth - _rightButton.ActualWidth
-                : _rightButton.ActualHeight;
-                }
-                else if (type == ButtonType.Both)
-                {
-                    if (!_isInsideRange)
-                    {
+                    case ButtonType.BottomLeft:
                         d = Orientation == Orientation.Horizontal
-                            ? ActualWidth - _rightButton.ActualWidth
-                            : _rightButton.ActualHeight;
-                    }
-                    else
-                    {
+                                ? _leftButton.ActualWidth + _leftThumb.ActualWidth
+                                : ActualHeight - (_leftButton.ActualHeight + _leftThumb.ActualHeight);
+                        break;
+                    case ButtonType.TopRight:
                         d = Orientation == Orientation.Horizontal
-                            ? _leftButton.ActualWidth + _leftThumb.ActualWidth
-                            : ActualHeight - (_leftButton.ActualHeight + _leftThumb.ActualHeight);
-                    }
+                                ? ActualWidth - _rightButton.ActualWidth
+                                : _rightButton.ActualHeight;
+                        break;
+                    case ButtonType.Both:
+                        if (!_isInsideRange)
+                        {
+                            d = Orientation == Orientation.Horizontal
+                                    ? ActualWidth - _rightButton.ActualWidth
+                                    : _rightButton.ActualHeight;
+                        }
+                        else
+                        {
+                            d = Orientation == Orientation.Horizontal
+                                    ? _leftButton.ActualWidth + _leftThumb.ActualWidth
+                                    : ActualHeight - (_leftButton.ActualHeight + _leftThumb.ActualHeight);
+                        }
+                        break;
                 }
             }
             else if (dir == Direction.Decrease)
             {
-                if (type == ButtonType.BottomLeft)
+                switch (type)
                 {
-                    d = Orientation == Orientation.Horizontal
-                ? _leftButton.ActualWidth
-                : ActualHeight - _leftButton.ActualHeight;
-                }
-                if (type == ButtonType.TopRight)
-                {
-                    d = Orientation == Orientation.Horizontal
-                ? ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth
-                : _rightButton.ActualHeight+ _rightThumb.ActualHeight;
-                }
-                else if (type == ButtonType.Both)
-                {
-                    if (!_isInsideRange)
-                    {
+                    case ButtonType.BottomLeft:
                         d = Orientation == Orientation.Horizontal
-                            ? _leftButton.ActualWidth
-                            : ActualHeight - _leftButton.ActualHeight;
-                    }
-                    else
-                    {
+                                ? _leftButton.ActualWidth
+                                : ActualHeight - _leftButton.ActualHeight;
+                        break;
+                    case ButtonType.TopRight:
                         d = Orientation == Orientation.Horizontal
-                            ? ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth
-                            : _rightButton.ActualHeight + _rightThumb.ActualHeight;
-                    }
+                                ? ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth
+                                : _rightButton.ActualHeight+ _rightThumb.ActualHeight;
+                        break;
+                    case ButtonType.Both:
+                        if (!_isInsideRange)
+                        {
+                            d = Orientation == Orientation.Horizontal
+                                    ? _leftButton.ActualWidth
+                                    : ActualHeight - _leftButton.ActualHeight;
+                        }
+                        else
+                        {
+                            d = Orientation == Orientation.Horizontal
+                                    ? ActualWidth - _rightButton.ActualWidth - _rightThumb.ActualWidth
+                                    : _rightButton.ActualHeight + _rightThumb.ActualHeight;
+                        }
+                        break;
                 }
             }
             return d;
         }
 
-        private Boolean GetResult(Double currentPoint, Double endPoint, Direction direction)
+        private bool GetResult(double currentPoint, double endPoint, Direction direction)
         {
             if (direction == Direction.Increase)
             {
                 return Orientation == Orientation.Horizontal && currentPoint > endPoint ||
                                   Orientation == Orientation.Vertical && currentPoint < endPoint;
             }
-            else
-            {
-                return Orientation == Orientation.Horizontal && currentPoint < endPoint ||
-                                  Orientation == Orientation.Vertical && currentPoint > endPoint;
-            }
+
+            return Orientation == Orientation.Horizontal && currentPoint < endPoint ||
+                   Orientation == Orientation.Vertical && currentPoint > endPoint;
         }
 
         //This is timer event, which starts when IsMoveToPoint = false
@@ -1582,9 +1562,9 @@ namespace MahApps.Metro.Controls
             //Get updated position of cursor
             _position = Mouse.GetPosition(_visualElementsContainer);
             _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
-            double endpoint = UpdateEndPoint(_bType, _direction);
-            bool result = GetResult(_currentpoint, endpoint, _direction);
-            double widthChange = 0;
+            var endpoint = UpdateEndPoint(_bType, _direction);
+            var result = GetResult(_currentpoint, endpoint, _direction);
+            double widthChange;
             if (!IsSnapToTickEnabled)
             {
                 widthChange = SmallChange;
@@ -1596,7 +1576,7 @@ namespace MahApps.Metro.Controls
                 if (!widthChange.ToString().ToLower().Contains("e") &&
                     widthChange.ToString(CultureInfo.InvariantCulture).Contains("."))
                 {
-                    string[] array =
+                    var array =
                         widthChange.ToString(CultureInfo.InvariantCulture).Split('.');
                     _precision = array[1].Length;
                 }
@@ -1613,15 +1593,15 @@ namespace MahApps.Metro.Controls
                     switch (_bType)
                     {
                         case ButtonType.BottomLeft:
-                            MoveThumb(_leftButton, _centerThumb, widthChange*_density, Orientation);
+                            MoveThumb(_leftButton, _centerThumb, widthChange * _density, Orientation);
                             ReCalculateRangeSelected(true, false);
                             break;
                         case ButtonType.TopRight:
-                            MoveThumb(_centerThumb, _rightButton, widthChange*_density, Orientation);
+                            MoveThumb(_centerThumb, _rightButton, widthChange * _density, Orientation);
                             ReCalculateRangeSelected(false, true);
                             break;
                         case ButtonType.Both:
-                            MoveThumb(_leftButton, _rightButton, widthChange*_density, Orientation);
+                            MoveThumb(_leftButton, _rightButton, widthChange * _density, Orientation);
                             ReCalculateRangeSelected(true, true);
                             break;
                     }
@@ -1631,7 +1611,7 @@ namespace MahApps.Metro.Controls
             {
                 //Get the difference between current and next value
                 widthChange = CalculateNextTick(_direction, _currenValue, 0, true);
-                Double value = widthChange;
+                var value = widthChange;
                 //Change value sign according to Horizontal or Vertical orientation
                 widthChange = Orientation == Orientation.Horizontal ? widthChange : -widthChange;
                 if (_direction == Direction.Increase)
@@ -1641,17 +1621,16 @@ namespace MahApps.Metro.Controls
                         switch (_bType)
                         {
                             case ButtonType.BottomLeft:
-                                MoveThumb(_leftButton, _centerThumb, widthChange*_density, Orientation);
+                                MoveThumb(_leftButton, _centerThumb, widthChange * _density, Orientation);
                                 ReCalculateRangeSelected(true, false, LowerValue + value, _direction);
                                 break;
                             case ButtonType.TopRight:
-                                MoveThumb(_centerThumb, _rightButton, widthChange*_density, Orientation);
+                                MoveThumb(_centerThumb, _rightButton, widthChange * _density, Orientation);
                                 ReCalculateRangeSelected(false, true, UpperValue + value, _direction);
                                 break;
                             case ButtonType.Both:
-                                MoveThumb(_leftButton, _rightButton, widthChange*_density, Orientation);
-                                ReCalculateRangeSelected(LowerValue + value, UpperValue + value,
-                                    _direction);
+                                MoveThumb(_leftButton, _rightButton, widthChange * _density, Orientation);
+                                ReCalculateRangeSelected(LowerValue + value, UpperValue + value, _direction);
                                 break;
                         }
                     }
@@ -1663,17 +1642,16 @@ namespace MahApps.Metro.Controls
                         switch (_bType)
                         {
                             case ButtonType.BottomLeft:
-                                MoveThumb(_leftButton, _centerThumb, -widthChange*_density, Orientation);
+                                MoveThumb(_leftButton, _centerThumb, -widthChange * _density, Orientation);
                                 ReCalculateRangeSelected(true, false, LowerValue - value, _direction);
                                 break;
                             case ButtonType.TopRight:
-                                MoveThumb(_centerThumb, _rightButton, -widthChange*_density, Orientation);
+                                MoveThumb(_centerThumb, _rightButton, -widthChange * _density, Orientation);
                                 ReCalculateRangeSelected(false, true, UpperValue - value, _direction);
                                 break;
                             case ButtonType.Both:
-                                MoveThumb(_leftButton, _rightButton, -widthChange*_density, Orientation);
-                                ReCalculateRangeSelected(LowerValue - value, UpperValue - value,
-                                    _direction);
+                                MoveThumb(_leftButton, _rightButton, -widthChange * _density, Orientation);
+                                ReCalculateRangeSelected(LowerValue - value, UpperValue - value, _direction);
                                 break;
                         }
                     }
@@ -1683,9 +1661,9 @@ namespace MahApps.Metro.Controls
         }
 
         //Helper method to handle snapToTick scenario and decrease amount of code
-        private void SnapToTickHandle(ButtonType type, Direction mDirection, Double difference)
+        private void SnapToTickHandle(ButtonType type, Direction mDirection, double difference)
         {
-            Double value = difference;
+            var value = difference;
             //change sign of "difference" variable because Horizontal and Vertical orientations has are different directions
             difference = Orientation == Orientation.Horizontal ? difference : -difference;
             if (mDirection == Direction.Increase)
@@ -1695,21 +1673,21 @@ namespace MahApps.Metro.Controls
                     case ButtonType.TopRight:
                         if (UpperValue < Maximum)
                         {
-                            MoveThumb(_centerThumb, _rightButton, difference*_density, Orientation);
+                            MoveThumb(_centerThumb, _rightButton, difference * _density, Orientation);
                             ReCalculateRangeSelected(false, true, UpperValue + value, mDirection);
                         }
                         break;
                     case ButtonType.BottomLeft:
                         if (LowerValue < UpperValue - MinRange)
                         {
-                            MoveThumb(_leftButton, _centerThumb, difference*_density, Orientation);
+                            MoveThumb(_leftButton, _centerThumb, difference * _density, Orientation);
                             ReCalculateRangeSelected(true, false, LowerValue + value, mDirection);
                         }
                         break;
                     case ButtonType.Both:
                         if (UpperValue < Maximum)
                         {
-                            MoveThumb(_leftButton, _rightButton, difference*_density, Orientation);
+                            MoveThumb(_leftButton, _rightButton, difference * _density, Orientation);
                             ReCalculateRangeSelected(LowerValue + value, UpperValue + value, mDirection);
                         }
                         break;
@@ -1722,21 +1700,21 @@ namespace MahApps.Metro.Controls
                     case ButtonType.TopRight:
                         if (UpperValue > LowerValue + MinRange)
                         {
-                            MoveThumb(_centerThumb, _rightButton, -difference*_density, Orientation);
+                            MoveThumb(_centerThumb, _rightButton, -difference * _density, Orientation);
                             ReCalculateRangeSelected(false, true, UpperValue - value, mDirection);
                         }
                         break;
                     case ButtonType.BottomLeft:
                         if (LowerValue > Minimum)
                         {
-                            MoveThumb(_leftButton, _centerThumb, -difference*_density, Orientation);
+                            MoveThumb(_leftButton, _centerThumb, -difference * _density, Orientation);
                             ReCalculateRangeSelected(true, false, LowerValue - value, mDirection);
                         }
                         break;
                     case ButtonType.Both:
                         if (LowerValue > Minimum)
                         {
-                            MoveThumb(_leftButton, _rightButton, -difference*_density, Orientation);
+                            MoveThumb(_leftButton, _rightButton, -difference * _density, Orientation);
                             ReCalculateRangeSelected(LowerValue - value, UpperValue - value, mDirection);
                         }
                         break;
@@ -1745,20 +1723,20 @@ namespace MahApps.Metro.Controls
         }
 
         //Calculating next value for Tick
-        private Double CalculateNextTick(Direction dir, double chekingValue, double distance, bool moveDirectlyToNextTick)
+        private double CalculateNextTick(Direction dir, double chekingValue, double distance, bool moveDirectlyToNextTick)
         {
             if (!IsMoveToPointEnabled)
             {
                 //Check if current value is exactly Tick value or it situated between Ticks
                 if (!IsDoubleCloseToInt((chekingValue - Minimum) / TickFrequency))
                 {
-                    double x = (chekingValue - Minimum) / TickFrequency;
+                    var x = (chekingValue - Minimum) / TickFrequency;
                     distance = TickFrequency * (int)x;
                     if (dir == Direction.Increase)
                     {
                         distance += TickFrequency;
                     }
-                    distance = (distance - Math.Abs(chekingValue - Minimum));
+                    distance = distance - Math.Abs(chekingValue - Minimum);
                     _currenValue = 0;
                     return Math.Abs(distance);
                 }
@@ -1773,22 +1751,22 @@ namespace MahApps.Metro.Controls
             else
             {
                 //current value in units (exactly in the place under cursor)
-                double currentValue = chekingValue - Minimum + (distance / _density); 
-                double x = currentValue / TickFrequency;
+                var currentValue = chekingValue - Minimum + (distance / _density); 
+                var x = currentValue / TickFrequency;
                 if (dir == Direction.Increase)
                 {
-                    double nextvalue = x.ToString().ToLower().Contains("e+")
+                    var nextvalue = x.ToString().ToLower().Contains("e+")
                         ? (x * TickFrequency) + TickFrequency
                         : ((int)x * TickFrequency) + TickFrequency;
 
-                    distance = (nextvalue - Math.Abs(chekingValue - Minimum));
+                    distance = nextvalue - Math.Abs(chekingValue - Minimum);
                 }
                 else
                 {
-                    double previousValue = x.ToString().ToLower().Contains("e+")
+                    var previousValue = x.ToString().ToLower().Contains("e+")
                         ? x * TickFrequency
                         : (int)x * TickFrequency;
-                    distance = (Math.Abs(chekingValue - Minimum) - previousValue);
+                    distance = Math.Abs(chekingValue - Minimum) - previousValue;
                 }
             }
             //return absolute value without sign not to depend on it if value is negative 
@@ -1801,14 +1779,14 @@ namespace MahApps.Metro.Controls
             bool jumpDirectlyToTick)
         {
             //find the difference between current value and next value
-            double difference = CalculateNextTick(mDirection, chekingValue, distance, false);
-            double dif = Orientation == Orientation.Horizontal ? difference : -difference;
-            Point p = Mouse.GetPosition(_visualElementsContainer);
-            double pos = Orientation == Orientation.Horizontal ? p.X : p.Y;
-            double widthHeight = Orientation == Orientation.Horizontal ? ActualWidth : ActualHeight;
-            double tickIntervalInPixels = mDirection == Direction.Increase
-                ? TickFrequency*_density
-                : -TickFrequency*_density;
+            var difference = CalculateNextTick(mDirection, chekingValue, distance, false);
+            var dif = Orientation == Orientation.Horizontal ? difference : -difference;
+            var p = Mouse.GetPosition(_visualElementsContainer);
+            var pos = Orientation == Orientation.Horizontal ? p.X : p.Y;
+            var widthHeight = Orientation == Orientation.Horizontal ? ActualWidth : ActualHeight;
+            var tickIntervalInPixels = mDirection == Direction.Increase
+                                           ? TickFrequency * _density
+                                           : -TickFrequency * _density;
             if (jumpDirectlyToTick)
             {
                 SnapToTickHandle(type, mDirection, difference);
@@ -1817,16 +1795,18 @@ namespace MahApps.Metro.Controls
             {
                 if (mDirection == Direction.Increase)
                 {
-                    if (!IsDoubleCloseToInt(chekingValue/TickFrequency))
+                    if (!IsDoubleCloseToInt(chekingValue / TickFrequency))
                     {
-                        if (distance > (difference*_density)/2 || (distance >= (widthHeight - pos) || distance >= pos))
+                        if (distance > (difference * _density) / 2
+                            || (distance >= (widthHeight - pos) || distance >= pos))
                         {
                             SnapToTickHandle(type, mDirection, difference);
                         }
                     }
                     else
                     {
-                        if ((distance > tickIntervalInPixels/2) || (distance >= (widthHeight - pos) || distance >= pos))
+                        if ((distance > tickIntervalInPixels / 2)
+                            || (distance >= (widthHeight - pos) || distance >= pos))
                         {
                             SnapToTickHandle(type, mDirection, difference);
                         }
@@ -1834,16 +1814,16 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    if (!IsDoubleCloseToInt(chekingValue/TickFrequency))
+                    if (!IsDoubleCloseToInt(chekingValue / TickFrequency))
                     {
-                        if ((distance <= -(difference*_density)/2) || (UpperValue - LowerValue) < difference)
+                        if ((distance <= -(difference * _density) / 2) || (UpperValue - LowerValue) < difference)
                         {
                             SnapToTickHandle(type, mDirection, difference);
                         }
                     }
                     else
                     {
-                        if (distance < tickIntervalInPixels/2 || (UpperValue - LowerValue) < difference)
+                        if (distance < tickIntervalInPixels / 2 || (UpperValue - LowerValue) < difference)
                         {
                             SnapToTickHandle(type, mDirection, difference);
                         }
@@ -1861,13 +1841,9 @@ namespace MahApps.Metro.Controls
             _autoToolTip.HorizontalOffset = offset;
         }
 
-        private Boolean IsValidDouble(Double d)
+        private bool IsValidDouble(double d)
         {
-            if (!Double.IsNaN(d) && !Double.IsInfinity(d))
-            {
-                return true;
-            }
-            return false;
+            return !double.IsNaN(d) && !double.IsInfinity(d);
         }
 
         //CHeck if two doubles approximately equals
@@ -1876,23 +1852,23 @@ namespace MahApps.Metro.Controls
             return Math.Abs(value1 - value2) <= Epsilon;
         }
 
-        private Boolean IsDoubleCloseToInt(double val)
+        private bool IsDoubleCloseToInt(double val)
         {
             return ApproximatelyEquals(Math.Abs(val - Math.Round(val)), 0);
         }
 
         //Get lower value for autotooltip
-        private String GetLowerToolTipNumber()
+        private string GetLowerToolTipNumber()
         {
-            NumberFormatInfo format = (NumberFormatInfo) (NumberFormatInfo.CurrentInfo.Clone());
+            var format = (NumberFormatInfo)NumberFormatInfo.CurrentInfo.Clone();
             format.NumberDecimalDigits = AutoToolTipPrecision;
             return LowerValue.ToString("N", format);
         }
 
         //Get upper value for autotooltip
-        private String GetUpperToolTipNumber()
+        private string GetUpperToolTipNumber()
         {
-            NumberFormatInfo format = (NumberFormatInfo) (NumberFormatInfo.CurrentInfo.Clone());
+            var format = (NumberFormatInfo)NumberFormatInfo.CurrentInfo.Clone();
             format.NumberDecimalDigits = AutoToolTipPrecision;
             return UpperValue.ToString("N", format);
         }
@@ -1906,20 +1882,20 @@ namespace MahApps.Metro.Controls
                     if (Orientation == Orientation.Horizontal)
                     {
                         // Place popup at top of thumb
-                        return new CustomPopupPlacement[]
+                        return new[]
                         {
                             new CustomPopupPlacement(
-                                new Point((targetSize.Width - popupSize.Width)*0.5, -popupSize.Height),
+                                new Point((targetSize.Width - popupSize.Width) * 0.5, -popupSize.Height),
                                 PopupPrimaryAxis.Horizontal)
                         };
                     }
                     else
                     {
                         // Place popup at left of thumb 
-                        return new CustomPopupPlacement[]
+                        return new[]
                         {
                             new CustomPopupPlacement(
-                                new Point(-popupSize.Width, (targetSize.Height - popupSize.Height)*0.5),
+                                new Point(-popupSize.Width, (targetSize.Height - popupSize.Height) * 0.5),
                                 PopupPrimaryAxis.Vertical)
                         };
                     }
@@ -1928,10 +1904,10 @@ namespace MahApps.Metro.Controls
                     if (Orientation == Orientation.Horizontal)
                     {
                         // Place popup at bottom of thumb 
-                        return new CustomPopupPlacement[]
+                        return new[]
                         {
                             new CustomPopupPlacement(
-                                new Point((targetSize.Width - popupSize.Width)*0.5, targetSize.Height),
+                                new Point((targetSize.Width - popupSize.Width) * 0.5, targetSize.Height),
                                 PopupPrimaryAxis.Horizontal)
                         };
 
@@ -1939,16 +1915,16 @@ namespace MahApps.Metro.Controls
                     else
                     {
                         // Place popup at right of thumb 
-                        return new CustomPopupPlacement[]
+                        return new[]
                         {
                             new CustomPopupPlacement(
-                                new Point(targetSize.Width, (targetSize.Height - popupSize.Height)*0.5),
+                                new Point(targetSize.Width, (targetSize.Height - popupSize.Height) * 0.5),
                                 PopupPrimaryAxis.Vertical)
                         };
                     }
 
                 default:
-                    return new CustomPopupPlacement[] {};
+                    return new CustomPopupPlacement[] { };
             }
         }
 
@@ -1959,64 +1935,47 @@ namespace MahApps.Metro.Controls
 
         private static bool IsValidPrecision(object value)
         {
-            return ((Int32) value >= 0);
+            return (int)value >= 0;
         }
 
         private static bool IsValidMinRange(object value)
         {
-            double d = (double)value;
-            if (d < 0.0 || Double.IsInfinity(d) || Double.IsNaN(d))
-            {
-                return false;
-            }
-            return true;
+            var d = (double)value;
+            return !(d < 0.0) && !double.IsInfinity(d) && !double.IsNaN(d);
         }
 
         private static bool IsValidTickFrequency(object value)
         {
-            double d = (double) value;
-            if (d <= 0.0 || Double.IsInfinity(d) || Double.IsNaN(d))
-            {
-                return false;
-            }
-            return true;
+            var d = (double)value;
+            return !(d <= 0.0) && !double.IsInfinity(d) && !double.IsNaN(d);
         }
 
         #endregion
-
         
         #region Coerce callbacks
 
         private static object CoerceMinimum(DependencyObject d, object basevalue)
         {
-            RangeSlider rs = (RangeSlider)d;
-            double value = (double)basevalue;
-            if (value > rs.Maximum)
-                return rs.Maximum;
-
-            return value;
+            var rs = (RangeSlider)d;
+            var value = (double)basevalue;
+            return value > rs.Maximum ? rs.Maximum : value;
         }
 
         private static object CoerceMaximum(DependencyObject d, object basevalue)
         {
-            RangeSlider rs = (RangeSlider)d;
-            double value = (double)basevalue;
-
-            if (value < rs.Minimum)
-                return rs.Minimum;
-
-            return value;
+            var rs = (RangeSlider)d;
+            var value = (double)basevalue;
+            return value < rs.Minimum ? rs.Minimum : value;
         }
 
         private static object CoerceLowerValue(DependencyObject d, object basevalue)
         {
-            RangeSlider rs = (RangeSlider)d;
-            double value = (double)basevalue;
+            var rs = (RangeSlider)d;
+            var value = (double)basevalue;
             if (value < rs.Minimum)
                 return rs.Minimum;
 
-            if (rs.UpperValue - rs.MinRange<rs.Minimum)
-                return rs.Minimum;
+            if (rs.UpperValue - rs.MinRange < rs.Minimum) return rs.Minimum;
 
             if (value > rs.UpperValue - rs.MinRange)
                 return rs.UpperValue - rs.MinRange;
@@ -2026,9 +1985,9 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceUpperValue(DependencyObject d, object basevalue)
         {
-            RangeSlider rs = (RangeSlider)d;
+            var rs = (RangeSlider)d;
 
-            double value = (double)basevalue;
+            var value = (double)basevalue;
             if (value > rs.Maximum)
                 return rs.Maximum;
 
@@ -2043,22 +2002,19 @@ namespace MahApps.Metro.Controls
 
         private static object CoerceMinRangeWidth(DependencyObject d, object basevalue)
         {
-            RangeSlider rs = (RangeSlider) d;
-            double width = 0;
+            var rs = (RangeSlider) d;
 
-            if (rs._leftThumb != null && rs._rightThumb != null)
+            if (rs._leftThumb == null || rs._rightThumb == null) return basevalue;
+            double width;
+            if (rs.Orientation == Orientation.Horizontal)
             {
-                if (rs.Orientation == Orientation.Horizontal)
-                {
-                    width = rs.ActualWidth - rs._leftThumb.ActualWidth - rs._rightThumb.ActualWidth;
-                }
-                else
-                {
-                    width = rs.ActualHeight - rs._leftThumb.ActualHeight - rs._rightThumb.ActualHeight;
-                }
-                return (Double)basevalue > width / 2 ? width / 2 : (Double)basevalue;
+                width = rs.ActualWidth - rs._leftThumb.ActualWidth - rs._rightThumb.ActualWidth;
             }
-            return basevalue;
+            else
+            {
+                width = rs.ActualHeight - rs._leftThumb.ActualHeight - rs._rightThumb.ActualHeight;
+            }
+            return (double)basevalue > width / 2 ? width / 2 : (double)basevalue;
         }
 
 
@@ -2100,7 +2056,7 @@ namespace MahApps.Metro.Controls
 
         private static void MinRangeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            Double value = (Double)e.NewValue;
+            var value = (double)e.NewValue;
             if (value < 0)
                 value = 0;
 
@@ -2131,8 +2087,8 @@ namespace MahApps.Metro.Controls
 
         private static void IntervalChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            RangeSlider rs = (RangeSlider)dependencyObject;
-            rs._timer.Interval = TimeSpan.FromMilliseconds((Int32)e.NewValue);
+            var rs = (RangeSlider)dependencyObject;
+            rs._timer.Interval = TimeSpan.FromMilliseconds((int)e.NewValue);
         }
 
         //Raises all value changes events
