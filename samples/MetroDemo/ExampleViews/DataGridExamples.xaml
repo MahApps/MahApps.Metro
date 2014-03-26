@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -39,8 +40,10 @@
                                     Binding="{Binding Artist.Name}" />
                 <DataGridTextColumn Header="Genre"
                                     Binding="{Binding Genre.Name}" />
-                <DataGridTextColumn Header="Price"
-                                    Binding="{Binding Price,StringFormat=c}" />
+                <controls:DataGridNumericUpDownColumn Header="Price" 
+                                                      Binding="{Binding Price}" 
+                                                      StringFormat="C" 
+                                                      Minimum="0" />
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid ItemsSource="{Binding Path=Albums}"
@@ -55,8 +58,10 @@
                                     Binding="{Binding Artist.Name}" />
                 <DataGridTextColumn Header="Genre"
                                     Binding="{Binding Genre.Name}" />
-                <DataGridTextColumn Header="Price"
-                                    Binding="{Binding Price,StringFormat=c}" />
+                <controls:DataGridNumericUpDownColumn Header="Price" 
+                                                      Binding="{Binding Price}" 
+                                                      StringFormat="C" 
+                                                      Minimum="0" />
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid ItemsSource="{Binding Path=Albums}"
@@ -71,8 +76,10 @@
                                     Binding="{Binding Artist.Name}" />
                 <DataGridTextColumn Header="Genre"
                                     Binding="{Binding Genre.Name}" />
-                <DataGridTextColumn Header="Price"
-                                    Binding="{Binding Price,StringFormat=c}" />
+                <controls:DataGridNumericUpDownColumn Header="Price" 
+                                                      Binding="{Binding Price}" 
+                                                      StringFormat="C" 
+                                                      Minimum="0" />
             </DataGrid.Columns>
         </DataGrid>
         <DataGrid ItemsSource="{Binding Path=Albums}"
@@ -88,8 +95,10 @@
                                     Binding="{Binding Artist.Name}" />
                 <DataGridTextColumn Header="Genre"
                                     Binding="{Binding Genre.Name}" />
-                <DataGridTextColumn Header="Price"
-                                    Binding="{Binding Price,StringFormat=c}" />
+                <controls:DataGridNumericUpDownColumn Header="Price" 
+                                                      Binding="{Binding Price}" 
+                                                      StringFormat="C" 
+                                                      Minimum="0" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
