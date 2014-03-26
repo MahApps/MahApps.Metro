@@ -15,6 +15,7 @@ namespace MahApps.Metro.Controls
         private double _maximum = (double)NumericUpDown.MaximumProperty.DefaultMetadata.DefaultValue;
         private double _interval = (double)NumericUpDown.IntervalProperty.DefaultMetadata.DefaultValue;
         private string _stringFormat = (string)NumericUpDown.StringFormatProperty.DefaultMetadata.DefaultValue;
+        private bool _hideUpDownButtons = (bool)NumericUpDown.HideUpDownButtonsProperty.DefaultMetadata.DefaultValue;
 
         #endregion
 
@@ -136,6 +137,7 @@ namespace MahApps.Metro.Controls
             numericUpDown.InterceptArrowKeys = true;
             numericUpDown.InterceptMouseWheel = true;
             numericUpDown.Speedup = true;
+            numericUpDown.HideUpDownButtons = true;
 
             return numericUpDown;
         }
@@ -173,7 +175,14 @@ namespace MahApps.Metro.Controls
         {
             get { return _stringFormat; }
             set { _stringFormat = value; }
+        } 
+        
+        public bool HideUpDownButtons
+        {
+            get { return _hideUpDownButtons; }
+            set { _hideUpDownButtons = value; }
         }
+
 
         #endregion
     }
