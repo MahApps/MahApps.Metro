@@ -26,7 +26,6 @@ namespace Mahapps.Metro.Tests
 
             var theme = ThemeManager.DetectAppStyle(window);
 
-            Assert.Equal(Theme.Dark, theme.Item1.Theme);
             Assert.Equal(expectedTheme, theme.Item1);
             Assert.Equal(expectedAccent, theme.Item2);
         }
@@ -44,7 +43,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            ThemeManager.AddAppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"), Theme.Dark);
+            ThemeManager.AddAppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"));
         }
     }
 }
