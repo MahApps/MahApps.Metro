@@ -3,6 +3,7 @@ namespace MahApps.Metro.Controls
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
+    using Standard;
 
     public class DataGridNumericUpDownColumn : DataGridBoundColumn
     {
@@ -10,6 +11,10 @@ namespace MahApps.Metro.Controls
 
         private static Style _defaultEditingElementStyle;
         private static Style _defaultElementStyle;
+        private double _minimum = (double)NumericUpDown.MinimumProperty.DefaultMetadata.DefaultValue;
+        private double _maximum = (double)NumericUpDown.MaximumProperty.DefaultMetadata.DefaultValue;
+        private double _interval = (double)NumericUpDown.IntervalProperty.DefaultMetadata.DefaultValue;
+        private string _stringFormat = (string)NumericUpDown.StringFormatProperty.DefaultMetadata.DefaultValue;
 
         #endregion
 
@@ -32,8 +37,6 @@ namespace MahApps.Metro.Controls
                 if (_defaultEditingElementStyle == null)
                 {
                     Style style = new Style(typeof(NumericUpDown));
-
-                    style.Setters.Add(new Setter(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Center));
                     style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
 
                     style.Seal();
@@ -52,11 +55,11 @@ namespace MahApps.Metro.Controls
                 {
                     Style style = new Style(typeof(NumericUpDown));
 
+                    style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
                     style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
                     style.Setters.Add(new Setter(UIElement.FocusableProperty, false));
-                    style.Setters.Add(new Setter(FrameworkElement.HorizontalAlignmentProperty, HorizontalAlignment.Center));
-                    style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
                     style.Setters.Add(new Setter(NumericUpDown.HideUpDownButtonsProperty, true));
+                    style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0d)));
 
                     style.Seal();
                     _defaultElementStyle = style;
@@ -82,6 +85,19 @@ namespace MahApps.Metro.Controls
                 BindingOperations.ClearBinding(target, property);
             }
         }
+
+        private static void ApplyBinding(BindingBase binding, DependencyObject target, DependencyProperty property)
+        {
+            if (binding != null)
+            {
+                BindingOperations.SetBinding(target, property, binding);
+            }
+            else
+            {
+                BindingOperations.ClearBinding(target, property);
+            }
+        }
+
 
         internal void ApplyStyle(bool isEditing, bool defaultToElementStyle, FrameworkElement element)
         {
@@ -113,6 +129,14 @@ namespace MahApps.Metro.Controls
             ApplyStyle(isEditing, true, numericUpDown);
             ApplyBinding(numericUpDown, NumericUpDown.ValueProperty);
 
+            numericUpDown.Minimum = Minimum;
+            numericUpDown.Maximum = Maximum;
+            numericUpDown.StringFormat = StringFormat;
+            numericUpDown.Interval = Interval;
+            numericUpDown.InterceptArrowKeys = true;
+            numericUpDown.InterceptMouseWheel = true;
+            numericUpDown.Speedup = true;
+
             return numericUpDown;
         }
 
@@ -125,6 +149,30 @@ namespace MahApps.Metro.Controls
             }
 
             return style;
+        }
+
+        public double Minimum
+        {
+            get { return _minimum; }
+            set { _minimum = value; }
+        }
+
+        public double Maximum
+        {
+            get { return _maximum; }
+            set { _maximum = value; }
+        }
+
+        public double Interval
+        {
+            get { return _interval; }
+            set { _interval = value; }
+        }
+
+        public string StringFormat
+        {
+            get { return _stringFormat; }
+            set { _stringFormat = value; }
         }
 
         #endregion
