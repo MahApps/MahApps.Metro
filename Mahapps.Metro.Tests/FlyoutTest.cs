@@ -161,11 +161,8 @@ namespace Mahapps.Metro.Tests
 
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
-            // find the root grid in the visual tree
-            var rootGrid = window.DefaultFlyout.FindChildren<Grid>(true).FirstOrDefault();
-            Assert.NotNull(rootGrid);
             // root grid should be hidden
-            Assert.Equal(Visibility.Hidden, rootGrid.Visibility);
+            Assert.Equal(Visibility.Hidden, window.DefaultFlyout.Visibility);
         }
     }
 }

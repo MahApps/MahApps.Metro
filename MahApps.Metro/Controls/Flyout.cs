@@ -40,6 +40,11 @@ namespace MahApps.Metro.Controls
         internal AppTheme ActualTheme { get; private set; }
 
         /// <summary>
+        /// Animation to set the flyout visibility to hidden after 500 ms
+        /// </summary>
+        private ObjectAnimationUsingKeyFrames visibilityHiddenAnimation;
+
+        /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
         /// </summary>
         public ICommand CloseCommand
@@ -131,6 +136,14 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
+            visibilityHiddenAnimation = new ObjectAnimationUsingKeyFrames
+                                        {
+                                            FillBehavior = FillBehavior.Stop,
+                                            AutoReverse = false,
+                                            BeginTime = new TimeSpan(0, 0, 0, 0, 500)
+                                        };
+            visibilityHiddenAnimation.KeyFrames.Add(new DiscreteObjectKeyFrame(Visibility.Hidden));
+
             this.Loaded += (sender, args) => UpdateFlyoutTheme();
         }
 
@@ -254,10 +267,24 @@ namespace MahApps.Metro.Controls
 
             if ((bool)e.NewValue)
             {
+                flyout.Visibility = Visibility.Visible;
                 flyout.ApplyAnimation(flyout.Position);
+            }
+            else
+            {
+                if (flyout.visibilityHiddenAnimation != null)
+                {
+                    flyout.BeginAnimation(VisibilityProperty, flyout.visibilityHiddenAnimation);
+                }
+                else
+                {
+                    // flyout.visibilityHiddenAnimation == null should not happen
+                    flyout.Visibility = Visibility.Hidden;
+                }
             }
 
             VisualStateManager.GoToState(flyout, (bool) e.NewValue == false ? "Hide" : "Show", true);
+            
             if (flyout.IsOpenChanged != null)
             {
                 flyout.IsOpenChanged(flyout, EventArgs.Empty);

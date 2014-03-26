@@ -109,7 +109,6 @@
                      TargetType="{x:Type Controls:Flyout}">
         <Grid x:Name="root"
               Margin="{TemplateBinding Margin}"
-              Visibility="Hidden"
               Background="{TemplateBinding Background}">
             <Grid.RenderTransform>
                 <TranslateTransform />
@@ -147,21 +146,10 @@
                                              Duration="00:00:00.400"
                                              Storyboard.TargetProperty="(UIElement.Opacity)"
                                              Storyboard.TargetName="root" />
-                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00.500"
-                                                           Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                           Storyboard.TargetName="root">
-                                <DiscreteObjectKeyFrame KeyTime="0"
-                                                        Value="{x:Static Visibility.Hidden}" />
-                            </ObjectAnimationUsingKeyFrames>
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Show">
                         <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                           Storyboard.TargetName="root">
-                                <DiscreteObjectKeyFrame KeyTime="0"
-                                                        Value="{x:Static Visibility.Visible}" />
-                            </ObjectAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
@@ -227,6 +215,8 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Flyout}">
+        <Setter Property="Visibility"
+                Value="Hidden" />
         <Setter Property="KeyboardNavigation.TabNavigation"
                 Value="Cycle" />
         <Setter Property="VerticalAlignment"
