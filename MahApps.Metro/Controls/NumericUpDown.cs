@@ -95,6 +95,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HideUpDownButtonsProperty = DependencyProperty.Register(
                                                         "HideUpDownButtons", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(default(bool)));
 
+        public static readonly DependencyProperty InterceptManualEnterProperty = DependencyProperty.Register(
+                                                        "InterceptManualEnter", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(true));
+
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -188,7 +191,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether the user can use the arrow keys to change values.
+        ///     Gets or sets a value indicating whether the user can use the arrow keys <see cref="Key.Up"/> and <see cref="Key.Down"/> to change values. 
         /// </summary>
         [Bindable(true)]
         [Category("Behavior")]
@@ -224,6 +227,34 @@ namespace MahApps.Metro.Controls
             set { SetValue(TrackMouseWheelWhenMouseOverProperty, value); }
         }
 
+        /// <summary>
+        ///     Gets or sets a value indicating whether the user can enter text in the control.
+        /// </summary>
+        [Category("Common")]
+        [DefaultValue(true)]
+        public bool InterceptManualEnter
+        {
+            get { return (bool)GetValue(InterceptManualEnterProperty); }
+            set { SetValue(InterceptManualEnterProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether the +/- button of the control is visible.
+        /// </summary>
+        /// <remarks>
+        ///     If the value is false then the <see cref="Value" /> of the control can be changed only if one of the following cases is satisfied:
+        ///     <list type="bullet">
+        ///         <item>
+        ///             <description><see cref="InterceptArrowKeys" /> is true.</description>
+        ///         </item>
+        ///         <item>
+        ///             <description><see cref="InterceptMouseWheel" /> is true.</description>
+        ///         </item>
+        ///         <item>
+        ///             <description><see cref="InterceptManualEnter" /> is true.</description>
+        ///         </item>
+        ///     </list>
+        /// </remarks>
         [Category("Common")]
         [DefaultValue(false)]
         public bool HideUpDownButtons
@@ -341,6 +372,7 @@ namespace MahApps.Metro.Controls
             }
 
             _valueTextBox.LostFocus += OnTextBoxLostFocus;
+            _valueTextBox.GotFocus += OnTextBoxGotFocus;
             _valueTextBox.PreviewTextInput += OnPreviewTextInput;
             _valueTextBox.IsReadOnly = IsReadOnly;
             _valueTextBox.PreviewKeyDown += OnTextBoxKeyDown;
@@ -355,7 +387,15 @@ namespace MahApps.Metro.Controls
             OnValueChanged(Value, Value);
             _scrollViewer = TryFindScrollViewer();
         }
- 
+
+        private void OnTextBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (!InterceptManualEnter)
+            {
+                Focus();
+            }
+        }
+
         public void SelectAll()
         {
             if (_valueTextBox != null)
@@ -431,7 +471,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnPreviewMouseWheel(e);
 
-            if (InterceptMouseWheel && (_valueTextBox.IsFocused || TrackMouseWheelWhenMouseOver))
+            if (InterceptMouseWheel && (IsFocused || _valueTextBox.IsFocused || TrackMouseWheelWhenMouseOver))
             {
                 bool increment = e.Delta > 0;
                 _manualChange = false;
@@ -820,6 +860,11 @@ namespace MahApps.Metro.Controls
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
+            if (!InterceptManualEnter)
+            {
+                return;
+            }
+
             TextBox tb = (TextBox)sender;
             _manualChange = false;
 
