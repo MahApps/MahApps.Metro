@@ -48,7 +48,7 @@
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
-                                 Stroke="{TemplateBinding Foreground}"
+                                 Stroke="#ADADAD"
                                  StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
                         <ContentPresenter x:Name="content"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -98,7 +98,7 @@
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter Property="Foreground"
-                                    Value="#ADADAD" />
+                                    Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -618,7 +618,7 @@
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="Foreground"
-                Value="Black" />
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="Padding"
@@ -671,7 +671,7 @@
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                             <Setter Property="Foreground"
-                                    Value="White" />
+                                    Value="{DynamicResource IdealForegroundColorBrush}" />
                             <Setter TargetName="ellipse"
                                     Property="Stroke"
                                     Value="{DynamicResource AccentColorBrush}" />
@@ -691,7 +691,7 @@
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter Property="Foreground"
-                                    Value="{DynamicResource GrayBrush6}" />
+                                    Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
