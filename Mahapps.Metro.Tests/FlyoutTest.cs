@@ -32,16 +32,6 @@ namespace Mahapps.Metro.Tests
 
             Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
         }
-        
-        [Fact]
-        public async Task DefaultActualThemeIsDark()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-
-            Assert.Equal(Theme.Dark, window.DefaultFlyout.ActualTheme.Theme);
-        }
 
         [Fact]
         public async Task WindowButtonCommandsAreOverFlyout()
@@ -71,28 +61,6 @@ namespace Mahapps.Metro.Tests
         }
 
         [Fact]
-        public async Task InverseFlyoutHasInverseWindowTheme()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.DefaultFlyout.Theme = FlyoutTheme.Inverse;
-
-            Assert.Equal(Theme.Dark, window.DefaultFlyout.ActualTheme.Theme);
-        }
-
-        [Fact]
-        public async Task FlyoutRespondsToFlyoutThemeChange()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.DefaultFlyout.Theme = FlyoutTheme.Light;
-
-            Assert.Equal(Theme.Light, window.DefaultFlyout.ActualTheme.Theme);
-        }
-
-        [Fact]
         public async Task FlyoutIsClosedByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -100,41 +68,6 @@ namespace Mahapps.Metro.Tests
             var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             Assert.False(window.DefaultFlyout.IsOpen);
-        }
-
-        [Theory]
-        [InlineData(FlyoutTheme.Dark, FlyoutTheme.Dark)]
-        [InlineData(FlyoutTheme.Dark, FlyoutTheme.Light)]
-        [InlineData(FlyoutTheme.Light, FlyoutTheme.Dark)]
-        [InlineData(FlyoutTheme.Light, FlyoutTheme.Light)]
-        public async Task ClosingFlyoutWithOtherFlyoutBelowHasCorrectWindowCommandsColor(
-            FlyoutTheme underLyingFlyoutTheme, FlyoutTheme upperFlyoutTheme)
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.RightFlyout.Theme = underLyingFlyoutTheme;
-            window.RightFlyout2.Theme = upperFlyoutTheme;
-
-            window.RightFlyout.IsOpen = true;
-            window.RightFlyout2.IsOpen = true;
-
-            window.RightFlyout2.IsOpen = false;
-
-            var expectedBrushColor = default(Color);
-
-            switch (window.RightFlyout.ActualTheme.Theme)
-            {
-                case Theme.Dark:
-                    expectedBrushColor = ((SolidColorBrush)window.RightFlyout.ActualTheme.Resources["BlackBrush"]).Color;
-                    break;
-
-                case Theme.Light:
-                    expectedBrushColor = ((SolidColorBrush)window.RightFlyout.ActualTheme.Resources["BlackBrush"]).Color;
-                    break;
-            }
-            
-            window.AssertWindowCommandsColor(expectedBrushColor);
         }
 
         [Fact]
