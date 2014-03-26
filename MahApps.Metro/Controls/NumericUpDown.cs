@@ -482,15 +482,15 @@ namespace MahApps.Metro.Controls
             {
                 if (TrackMouseWheelWhenMouseOver)
                 {
-                    _handlesMouseWheelScrolling.Value.SetValue(_scrollViewer, true);
+                    _handlesMouseWheelScrolling.Value.SetValue(_scrollViewer, true, null);
                 }
                 else if (InterceptMouseWheel)
                 {
-                    _handlesMouseWheelScrolling.Value.SetValue(_scrollViewer, _valueTextBox.IsFocused);
+                    _handlesMouseWheelScrolling.Value.SetValue(_scrollViewer, _valueTextBox.IsFocused, null);
                 }
                 else
                 {
-                    _handlesMouseWheelScrolling.Value.SetValue(_scrollViewer, true);
+                    _handlesMouseWheelScrolling.Value.SetValue(_scrollViewer, true, null);
                 }
             }
         }
