@@ -205,7 +205,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Gets or sets a value indicating whether the user can use the mouse wheel to change values.
         /// </summary>
-        [Category("Common")]
+        [Category("Behavior")]
         [DefaultValue(true)]
         public bool InterceptMouseWheel
         {
@@ -219,7 +219,7 @@ namespace MahApps.Metro.Controls
         ///     If the value is false then the value changes when the mouse wheel is over the control. If the value is true then the value changes only if the control has the focus.
         /// </remarks>
         /// </summary>
-        [Category("Common")]
+        [Category("Behavior")]
         [DefaultValue(false)]
         public bool TrackMouseWheelWhenMouseOver
         {
@@ -230,7 +230,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Gets or sets a value indicating whether the user can enter text in the control.
         /// </summary>
-        [Category("Common")]
+        [Category("Behavior")]
         [DefaultValue(true)]
         public bool InterceptManualEnter
         {
@@ -255,7 +255,8 @@ namespace MahApps.Metro.Controls
         ///         </item>
         ///     </list>
         /// </remarks>
-        [Category("Common")]
+        [Bindable(true)]
+        [Category("Appearance")]
         [DefaultValue(false)]
         public bool HideUpDownButtons
         {
@@ -275,6 +276,10 @@ namespace MahApps.Metro.Controls
         /// <summary>
         ///     Gets or sets a value indicating whether the text can be changed by the use of the up or down buttons only.
         /// </summary>
+
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue(false)]
         public bool IsReadOnly
         {
             get { return (bool)GetValue(IsReadOnlyProperty); }
@@ -282,7 +287,7 @@ namespace MahApps.Metro.Controls
         }
 
         [Bindable(true)]
-        [Category("Behavior")]
+        [Category("Common")]
         [DefaultValue(double.MaxValue)]
         public double Maximum
         {
@@ -291,7 +296,7 @@ namespace MahApps.Metro.Controls
         }
 
         [Bindable(true)]
-        [Category("Behavior")]
+        [Category("Common")]
         [DefaultValue(double.MinValue)]
         public double Minimum
         {
