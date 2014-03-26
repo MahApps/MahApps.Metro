@@ -7,7 +7,7 @@ namespace MahApps.Metro
     /// <summary>
     /// An enum that represents the two Metro styles: Light and Dark.
     /// </summary>
-    [Obsolete("This class is obsolete")]
+    [Obsolete("This class is obsolete and no longer used")]
     public enum Theme
     {
         Light,
