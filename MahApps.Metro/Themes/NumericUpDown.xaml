@@ -54,8 +54,8 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
-                                <ColumnDefinition Width="20" />
-                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition x:Name="PART_NumericUpColumn" Width="20" />
+                                <ColumnDefinition x:Name="PART_NumericDownColumn" Width="20" />
                             </Grid.ColumnDefinitions>
 
                             <TextBox x:Name="PART_TextBox"
@@ -171,10 +171,14 @@
                                     Property="Stroke"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
                         </Trigger>
+                      
                         <Trigger Property="HideUpDownButtons" Value="True">
                             <Setter TargetName="PART_NumericUp" Property="Visibility" Value="Collapsed"></Setter>
                             <Setter TargetName="PART_NumericDown" Property="Visibility" Value="Collapsed"></Setter>
+                            <Setter TargetName="PART_NumericUpColumn" Property="Width" Value="0"></Setter>
+                            <Setter TargetName="PART_NumericDownColumn" Property="Width" Value="0"></Setter>
                         </Trigger>
+                       
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
