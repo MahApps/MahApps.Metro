@@ -355,7 +355,7 @@ namespace MahApps.Metro.Controls
             _repeatUp.PreviewMouseUp += (o, e) => ResetInternal();
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
             OnValueChanged(Value, Value);
-            InitializeScrollViewerIfExisting();
+            _scrollViewer = TryFindScrollViewer();
         }
  
         public void SelectAll()
@@ -734,22 +734,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void InitializeScrollViewerIfExisting()
+        private ScrollViewer TryFindScrollViewer()
         {
-            DependencyObject _do = _valueTextBox.Parent;
-            ScrollViewer c = null;
-            while (c == null && _do != null && _do.GetType() != typeof(NumericUpDown))
+            _valueTextBox.ApplyTemplate();
+            var style = _valueTextBox.Template.FindName("PART_ContentHost", _valueTextBox) as ScrollViewer;
+
+            if (style != null)
             {
-                c = _do as ScrollViewer;
-                if (c != null)
-                {
-                    _scrollViewer = c;
-                    _handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => _scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
-                }
-
-                _do = VisualTreeHelper.GetParent(_do);
-
+                _handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => _scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
             }
+
+            return style;
         }
 
         private void ChangeValueWithSpeedUp(bool toPositive)
