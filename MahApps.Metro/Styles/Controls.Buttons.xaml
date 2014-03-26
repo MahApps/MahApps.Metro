@@ -232,7 +232,7 @@
     <!-- obsolete, will be deleted in 0.14 -->
     <Style x:Key="IronicallyNamedChromelessButtonStyle"
            TargetType="{x:Type Button}"
-           BasedOn="{StaticResource MetroBaseWindowButtonStyle}"/>
+           BasedOn="{StaticResource MetroBaseWindowButtonStyle}" />
 
     <!-- style for default button -->
     <Style TargetType="{x:Type Button}"
@@ -483,7 +483,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="AccentedSquareButtonStyle"
            BasedOn="{StaticResource SquareButtonStyle}"
            TargetType="{x:Type Button}">
@@ -606,7 +606,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="MetroCircleToggleButtonStyle"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="FocusVisualStyle"
@@ -617,7 +617,8 @@
                 Value="2" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground"
+                Value="Black" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="Padding"
@@ -671,7 +672,9 @@
                             </Trigger.ExitActions>
                             <Setter Property="Foreground"
                                     Value="White" />
-                            <Setter TargetName="ellipse" Property="Stroke" Value="{DynamicResource AccentColorBrush}"/>
+                            <Setter TargetName="ellipse"
+                                    Property="Stroke"
+                                    Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
@@ -685,8 +688,10 @@
                                     Property="Opacity"
                                     Value=".5" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush6}"></Setter>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource GrayBrush6}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
