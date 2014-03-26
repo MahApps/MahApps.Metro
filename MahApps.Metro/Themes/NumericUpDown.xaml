@@ -173,6 +173,10 @@
                                     Property="Stroke"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
                         </Trigger>
+                        <Trigger Property="HideUpDownButtons" Value="True">
+                            <Setter TargetName="PART_NumericUp" Property="Visibility" Value="Collapsed"></Setter>
+                            <Setter TargetName="PART_NumericDown" Property="Visibility" Value="Collapsed"></Setter>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

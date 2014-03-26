@@ -91,6 +91,9 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown), 
             new FrameworkPropertyMetadata(default(bool)));
 
+        public static readonly DependencyProperty HideUpDownButtonsProperty = DependencyProperty.Register(
+                                                        "HideUpDownButtons", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(default(bool)));
+
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -216,6 +219,14 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(TrackMouseWheelWhenMouseOverProperty); }
             set { SetValue(TrackMouseWheelWhenMouseOverProperty, value); }
+        }
+
+        [Category("Common")]
+        [DefaultValue(false)]
+        public bool HideUpDownButtons
+        {
+            get { return (bool)GetValue(HideUpDownButtonsProperty); }
+            set { SetValue(HideUpDownButtonsProperty, value); }
         }
 
         [Bindable(true)]
