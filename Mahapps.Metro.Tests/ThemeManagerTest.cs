@@ -45,5 +45,37 @@ namespace Mahapps.Metro.Tests
 
             ThemeManager.AddAppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"));
         }
+
+        [Fact]
+        public async Task GetInverseAppThemeReturnsLightTheme()
+        {
+            await TestHost.SwitchToAppThread();
+
+            AppTheme theme = ThemeManager.GetInverseAppTheme(ThemeManager.GetAppTheme("BaseDark"));
+
+            Assert.Equal("BaseLight", theme.Name);
+        }
+
+        [Fact]
+        public async Task GetInverseAppThemeReturnsDarkTheme()
+        {
+            await TestHost.SwitchToAppThread();
+
+            AppTheme theme = ThemeManager.GetInverseAppTheme(ThemeManager.GetAppTheme("BaseLight"));
+
+            Assert.Equal("BaseDark", theme.Name);
+        }
+
+        [Fact]
+        public async Task GetInverseAppThemeReturnsNullForMissingTheme()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var appTheme = new AppTheme("TestTheme", new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml"));
+
+            AppTheme theme = ThemeManager.GetInverseAppTheme(appTheme);
+
+            Assert.Null(theme);
+        }
     }
 }
