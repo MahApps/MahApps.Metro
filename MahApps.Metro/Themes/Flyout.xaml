@@ -229,5 +229,9 @@
                 Value="{StaticResource FlyoutTemplate}" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
+        <Setter Property="Foreground" 
+                Value="{DynamicResource FlyoutForegroundBrush}" />
+        <Setter Property="Background" 
+                Value="{DynamicResource FlyoutBackgroundBrush}" />
     </Style>
 </ResourceDictionary>

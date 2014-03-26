@@ -34,12 +34,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
 
         /// <summary>
-        /// Gets the actual theme (dark/light) of this flyout.
-        /// Used to handle the WindowCommands overlay in the MetroWindow.
-        /// </summary>
-        internal AppTheme ActualTheme { get; private set; }
-
-        /// <summary>
         /// Animation to set the flyout visibility to hidden after 500 ms
         /// </summary>
         private ObjectAnimationUsingKeyFrames visibilityHiddenAnimation;
@@ -172,64 +166,29 @@ namespace MahApps.Metro.Controls
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
                     this.SetResourceReference(BackgroundProperty, "HighlightBrush");
                     this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
-                    this.ActualTheme = windowTheme;
                 break;
 
                 case FlyoutTheme.Adapt:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
-                    switch (windowTheme.Theme)
-                    {
-                        case Metro.Theme.Dark:
-                            this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                            this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
-                            break;
-
-                        case Metro.Theme.Light:
-                            this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                            this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
-                            break;
-                    }
-                    this.ActualTheme = windowTheme;
                     break;
 
                 case FlyoutTheme.Inverse:
-                    switch (windowTheme.Theme)
-                    {
-                        case Metro.Theme.Dark: {
-                            var newTheme = ThemeManager.GetAppTheme(windowTheme, Metro.Theme.Light);
-                            ThemeManager.ChangeAppStyle(this.Resources, windowAccent, newTheme);
-                            this.Background = (Brush)windowTheme.Resources["FlyoutLightBrush"];
-                            this.Foreground = (Brush)windowTheme.Resources["WhiteColorBrush"];
-                            this.ActualTheme = newTheme;
-                            break;
-                        }
+                        AppTheme inverseTheme = ThemeManager.GetInverseAppTheme(windowTheme);
 
-                        case Metro.Theme.Light: {
-                            var newTheme = ThemeManager.GetAppTheme(windowTheme, Metro.Theme.Dark);
-                            ThemeManager.ChangeAppStyle(this.Resources, windowAccent, newTheme);
-                            this.Background = (Brush)windowTheme.Resources["FlyoutDarkBrush"];
-                            this.Foreground = (Brush)windowTheme.Resources["WhiteColorBrush"];
-                            this.ActualTheme = newTheme;
-                            break;
-                        }
-                    }
+                    if(inverseTheme == null)
+                        throw new InvalidOperationException("The inverse flyout theme only works if the window theme abides the naming convention. " +
+                                                            "See ThemeManager.GetInverseAppTheme for more infos");
+
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
                     break;
                 
                 case FlyoutTheme.Dark: {
-                    var newTheme = ThemeManager.GetAppTheme(windowTheme, Metro.Theme.Dark);
-                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, newTheme);
-                    this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
-                    this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                    this.ActualTheme = newTheme;
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
                     break;
                 }
 
                 case FlyoutTheme.Light: {
-                    var newTheme = ThemeManager.GetAppTheme(windowTheme, Metro.Theme.Light);
-                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, newTheme);
-                    this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
-                    this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                    this.ActualTheme = newTheme;
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
                     break;
                 }
             }

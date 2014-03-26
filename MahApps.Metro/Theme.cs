@@ -7,6 +7,7 @@ namespace MahApps.Metro
     /// <summary>
     /// An enum that represents the two Metro styles: Light and Dark.
     /// </summary>
+    [Obsolete("This class is obsolete and no longer used")]
     public enum Theme
     {
         Light,
@@ -29,7 +30,7 @@ namespace MahApps.Metro
         /// </summary>
         public string Name { get; private set; }
 
-        public AppTheme(string name, Uri resourceAddress, Theme theme)
+        public AppTheme(string name, Uri resourceAddress)
         {
             if(name == null)
                 throw new ArgumentException("name");
@@ -39,12 +40,6 @@ namespace MahApps.Metro
 
             this.Name = name;
             this.Resources = new ResourceDictionary {Source = resourceAddress};
-            this.Theme = theme;
         }
-
-        /// <summary>
-        /// Gets an enum that defines whether this application theme is light or dark.
-        /// </summary>
-        public Theme Theme { get; private set; }
     }
 }
