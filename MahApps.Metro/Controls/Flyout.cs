@@ -169,24 +169,32 @@ namespace MahApps.Metro.Controls
                 break;
 
                 case FlyoutTheme.Adapt:
-                    this.Background = (Brush)windowTheme.Resources["FlyoutAdaptiveBackgroundBrush"];
-                    this.Foreground = (Brush)windowTheme.Resources["FlyoutAdaptiveForegroundBrush"];
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
                     break;
 
                 case FlyoutTheme.Inverse:
-                    this.Background = (Brush)windowTheme.Resources["FlyoutInverseBackgroundBrush"];
-                    this.Foreground = (Brush)windowTheme.Resources["FlyoutInverseForegroundBrush"];
+                    switch (windowTheme.Name)
+                    {
+                        case "BaseDark":
+                            ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
+                            break;
+
+                        case "BaseLight":
+                            ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
+                            break;
+
+                        default:
+                            throw new InvalidOperationException("The inverse flyout theme only works if the window theme is a default theme.");
+                    }
                     break;
                 
                 case FlyoutTheme.Dark: {
-                    this.Background = (Brush)windowTheme.Resources["FlyoutDarkBackgroundBrush"];
-                    this.Foreground = (Brush)windowTheme.Resources["FlyoutDarkForegroundBrush"];
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
                     break;
                 }
 
                 case FlyoutTheme.Light: {
-                    this.Background = (Brush)windowTheme.Resources["FlyoutLightBackgroundBrush"];
-                    this.Foreground = (Brush)windowTheme.Resources["FlyoutLightForegroundBrush"];
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
                     break;
                 }
             }

@@ -13,6 +13,7 @@ namespace MahApps.Metro.Controls
         Adapt,
         /// <summary>
         /// Adapts the Flyout's theme to the theme of its host window, but inverted.
+        /// This theme can only be applied if the host window's theme is one of the default themes.
         /// </summary>
         Inverse,
         /// <summary>

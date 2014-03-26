@@ -149,16 +149,6 @@ namespace MahApps.Metro
         }
 
         /// <summary>
-        /// Gets app theme with the given app theme and theme type (light or dark).
-        /// </summary>
-        /// <param name="currentAppTheme"></param>
-        /// <returns>AppTheme</returns>
-        public static AppTheme GetAppTheme(AppTheme currentAppTheme)
-        {
-            return GetAppTheme(currentAppTheme.Name);
-        }
-
-        /// <summary>
         /// Gets the <see cref="Accent"/> with the given name.
         /// </summary>
         /// <param name="accentName"></param>
