@@ -173,19 +173,13 @@ namespace MahApps.Metro.Controls
                     break;
 
                 case FlyoutTheme.Inverse:
-                    switch (windowTheme.Name)
-                    {
-                        case "BaseDark":
-                            ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
-                            break;
+                        AppTheme inverseTheme = ThemeManager.GetInverseAppTheme(windowTheme);
 
-                        case "BaseLight":
-                            ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
-                            break;
+                    if(inverseTheme == null)
+                        throw new InvalidOperationException("The inverse flyout theme only works if the window theme abides the naming convention. " +
+                                                            "See ThemeManager.GetInverseAppTheme for more infos");
 
-                        default:
-                            throw new InvalidOperationException("The inverse flyout theme only works if the window theme is a default theme.");
-                    }
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
                     break;
                 
                 case FlyoutTheme.Dark: {

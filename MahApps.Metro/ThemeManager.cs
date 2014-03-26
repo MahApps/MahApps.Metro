@@ -149,6 +149,34 @@ namespace MahApps.Metro
         }
 
         /// <summary>
+        /// Gets the inverse <see cref="AppTheme" /> of the given <see cref="AppTheme"/>.
+        /// This method relies on the "Dark" or "Light" affix to be present.
+        /// </summary>
+        /// <param name="appTheme">The app theme.</param>
+        /// <returns>The inverse <see cref="AppTheme"/> or <c>null</c> if it couldn't be found.</returns>
+        /// <remarks>
+        /// Returns BaseLight, if BaseDark is given or vice versa.
+        /// Custom Themes must end with "Dark" or "Light" for this to work, for example "CustomDark" and "CustomLight".
+        /// </remarks>
+        public static AppTheme GetInverseAppTheme(AppTheme appTheme)
+        {
+            if(appTheme == null)
+                throw new ArgumentNullException("appTheme");
+
+            if(appTheme.Name.EndsWith("dark", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return GetAppTheme(appTheme.Name.ToLower().Replace("dark", String.Empty) + "light");
+            }
+
+            if (appTheme.Name.EndsWith("light", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return GetAppTheme(appTheme.Name.ToLower().Replace("light", String.Empty) + "dark");
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets the <see cref="Accent"/> with the given name.
         /// </summary>
         /// <param name="accentName"></param>
