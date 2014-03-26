@@ -9,7 +9,6 @@ namespace MahApps.Metro.Controls
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
-    using System.Windows.Media;
 
     /// <summary>
     ///     Represents a Windows spin box (also known as an up-down control) that displays numeric values.
@@ -320,7 +319,6 @@ namespace MahApps.Metro.Controls
         {
             get { return Language.GetSpecificCulture(); }
         }
-
 
         /// <summary>
         ///     When overridden in a derived class, is invoked whenever application code or internal processes call
