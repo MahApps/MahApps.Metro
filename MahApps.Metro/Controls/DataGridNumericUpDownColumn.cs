@@ -139,7 +139,7 @@ namespace MahApps.Metro.Controls
             numericUpDown.InterceptArrowKeys = true;
             numericUpDown.InterceptMouseWheel = true;
             numericUpDown.Speedup = true;
-            numericUpDown.HideUpDownButtons = false;
+            numericUpDown.HideUpDownButtons = HideUpDownButtons;
 
             return numericUpDown;
         }
