@@ -899,13 +899,13 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Padding" Value="2,0,2,0" />
         <Setter Property="CheckedBackground" Value="{DynamicResource AccentColorBrush3}" />
+        <Setter Property="CheckedBorderBrush" Value="{DynamicResource AccentColorBrush3}" />
         <Setter Property="PressedBackground" Value="{DynamicResource AccentColorBrush2}" />
         <Setter Property="PressedBorderBrush" Value="{DynamicResource AccentColorBrush2}" />
-        <Setter Property="FocusedBackground" Value="{DynamicResource AccentColorBrush4}" />
+        <Setter Property="FocusedBackground" Value="{DynamicResource AccentColorBrush2}" />
         <Setter Property="FocusedBorderBrush" Value="{DynamicResource AccentColorBrush2}" />
         <Setter Property="MouseOverBackground" Value="{DynamicResource AccentColorBrush4}" />
-        <Setter Property="MouseOverBorderBrush" Value="{DynamicResource AccentColorBrush2}" />
-        <Setter Property="CheckedBorderBrush" Value="{DynamicResource AccentColorBrush2}" />
+        <Setter Property="MouseOverBorderBrush" Value="{DynamicResource AccentColorBrush4}" />
         <Setter Property="RibbonControlService.CornerRadius" Value="0" />
         <Setter Property="Template">
             <Setter.Value>
@@ -1024,7 +1024,7 @@
                                         BorderThickness="{TemplateBinding Border.BorderThickness}"
                                         CornerRadius="0">
                                     <Border Name="SubMenuInnerBorder"
-                                            Background="#F0FFFFFF"
+                                            Background="Transparent"
                                             BorderThickness="0,0,0,0"
                                             CornerRadius="0">
                                         <Grid>
@@ -1357,46 +1357,33 @@
                         <Trigger SourceName="PART_HeaderButton" Property="ButtonBase.IsPressed" Value="True">
                             <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{Binding PressedBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
-                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                         </Trigger>
                         <Trigger SourceName="PART_ToggleButton" Property="ButtonBase.IsPressed" Value="True">
                             <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{Binding PressedBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             <Setter TargetName="PART_HeaderButton" Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            <Setter TargetName="PART_ToggleButton" Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                         </Trigger>
                         <Trigger SourceName="PART_ToggleButton" Property="UIElement.IsKeyboardFocused" Value="True">
                             <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=FocusedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             <Setter TargetName="PART_HeaderButton" Property="Border.BorderBrush" Value="{Binding FocusedBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                         </Trigger>
-                        <Trigger Property="RibbonSplitButton.IsChecked">
-                            <Setter TargetName="OuterBorder" Property="Panel.Background">
-                                <Setter.Value>
-                                    <Binding Path="CheckedBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="PART_ToggleButton" Property="Border.BorderBrush">
-                                <Setter.Value>
-                                    <Binding Path="CheckedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Trigger.Value>
-                                <s:Boolean>True</s:Boolean>
-                            </Trigger.Value>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition SourceName="PART_ToggleButton" Property="ToggleButton.IsChecked" Value="True" />
+                                <Condition SourceName="PART_ToggleButton" Property="ButtonBase.IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_HeaderButton" Property="Background" Value="{Binding PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                        </MultiTrigger>
+                        <Trigger Property="RibbonSplitButton.IsChecked" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding CheckedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            <Setter TargetName="PART_HeaderButton" Property="Background" Value="{Binding CheckedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            <Setter TargetName="PART_ToggleButton" Property="Border.BorderBrush" Value="{Binding CheckedBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                         </Trigger>
-                        <Trigger SourceName="PART_ToggleButton" Property="ToggleButton.IsChecked">
-                            <Setter TargetName="OuterBorder" Property="Panel.Background">
-                                <Setter.Value>
-                                    <Binding Path="CheckedBackground" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="PART_HeaderButton" Property="Border.BorderBrush">
-                                <Setter.Value>
-                                    <Binding Path="CheckedBorderBrush" RelativeSource="{RelativeSource Mode=TemplatedParent}" />
-                                </Setter.Value>
-                            </Setter>
-                            <Trigger.Value>
-                                <s:Boolean>True</s:Boolean>
-                            </Trigger.Value>
+                        <Trigger SourceName="PART_ToggleButton" Property="ToggleButton.IsChecked" Value="True">
+                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding CheckedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            <Setter TargetName="PART_HeaderButton" Property="Background" Value="{Binding CheckedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            <Setter TargetName="PART_HeaderButton" Property="Border.BorderBrush" Value="{Binding CheckedBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                         </Trigger>
                         <Trigger Property="RibbonControlService.IsInControlGroup">
                             <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
