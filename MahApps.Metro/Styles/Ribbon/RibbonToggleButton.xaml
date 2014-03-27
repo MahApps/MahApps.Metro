@@ -195,6 +195,14 @@
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="ToggleButton.IsChecked" Value="True" />
+                                <Condition Property="ButtonBase.IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{Binding Path=PressedBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ToggleButton.IsChecked" Value="True" />
                                 <Condition Property="UIElement.IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=MouseOverBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
