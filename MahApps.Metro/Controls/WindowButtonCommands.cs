@@ -136,7 +136,7 @@ namespace MahApps.Metro.Controls
 
         private void RefreshMaximiseIconState(Window parentWindow)
         {
-            if (parentWindow == null)
+            if (parentWindow == null || max == null)
                 return;
 
             if (parentWindow.WindowState == WindowState.Normal)

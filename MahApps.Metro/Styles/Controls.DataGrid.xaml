@@ -2,7 +2,29 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
+
+    <Style x:Key="MetroDataGridCheckBox"
+           TargetType="CheckBox"
+           BasedOn="{StaticResource MetroCheckBox}">
+        <Setter Property="Margin"
+                Value="0" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsReadOnly, RelativeSource={RelativeSource AncestorType=DataGridCell}}"
+                         Value="True">
+                <Setter Property="IsEnabled"
+                        Value="False" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 
     <Style x:Key="{ComponentResourceKey ResourceId=MetroDataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}"
            TargetType="{x:Type Button}">
@@ -383,6 +405,10 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderThickness"
                 Value="0,0,0,0" />
+        <Setter Property="HorizontalGridLinesBrush"
+                Value="{DynamicResource GrayBrush7}" />
+        <Setter Property="VerticalGridLinesBrush"
+                Value="{DynamicResource GrayBrush7}" />
         <Setter Property="ColumnHeaderStyle"
                 Value="{StaticResource MetroDataGridColumnHeader}" />
         <Setter Property="RowHeaderStyle"
@@ -584,8 +610,10 @@
     <Style x:Key="AzureDataGridRow"
            TargetType="{x:Type DataGridRow}"
            BasedOn="{StaticResource MetroDataGridRow}">
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
+    </Style>
+    <Style x:Key="AzureDataGridRowWithMargin"
+           TargetType="{x:Type DataGridRow}"
+           BasedOn="{StaticResource AzureDataGridRow}">
         <Setter Property="Margin"
                 Value="0,0,0,1" />
     </Style>
@@ -601,6 +629,12 @@
                 Value="{StaticResource AzureDataGridRow}" />
         <Setter Property="RowHeaderStyle"
                 Value="{StaticResource AzureDataGridRowHeader}" />
+        <Style.Triggers>
+            <Trigger Property="GridLinesVisibility" Value="None">
+                <Setter Property="RowStyle"
+                        Value="{StaticResource AzureDataGridRowWithMargin}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>

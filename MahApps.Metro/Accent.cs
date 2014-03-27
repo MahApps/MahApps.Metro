@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Windows;
 
 namespace MahApps.Metro
@@ -6,6 +7,7 @@ namespace MahApps.Metro
     /// <summary>
     /// An object that represents the foreground color for a Metro <see cref="Theme"/>.
     /// </summary>
+    [DebuggerDisplay("accent={Name}, res={Resources.Source}")]
     public class Accent
     {
         /// <summary>

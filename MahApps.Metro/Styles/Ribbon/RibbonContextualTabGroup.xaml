@@ -1,7 +1,9 @@
 ﻿<!--Note: This may not be needed unless a way is found to utilize a ribbon window-->
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style TargetType="RibbonContextualTabGroup">
+    <Style x:Key="RibbonContextualTabGroupStyleKey"
+           TargetType="{x:Type RibbonContextualTabGroup}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonContextualTabGroup}">
@@ -9,25 +11,30 @@
                         <DataTemplate xmlns:s="clr-namespace:System;assembly=mscorlib"
                                       x:Key="{DataTemplateKey DataType={x:Type s:String}}"
                                       DataType="{x:Type s:String}">
-                            <TextBlock Text="{TemplateBinding ContentControl.Content}" TextTrimming="CharacterEllipsis" />
+                            <TextBlock Text="{TemplateBinding ContentControl.Content}"
+                                       TextTrimming="CharacterEllipsis" />
                         </DataTemplate>
                     </ControlTemplate.Resources>
                     <Border Name="OuterBorder"
                             Background="{TemplateBinding Panel.Background}"
                             BorderBrush="{TemplateBinding Border.BorderBrush}"
                             BorderThickness="{TemplateBinding Border.BorderThickness}"
-                            CornerRadius="2,2,0,0"
+                            CornerRadius="0"
                             Padding="{TemplateBinding Control.Padding}"
                             RenderOptions.ClearTypeHint="Enabled">
                         <Border Name="InnerBorder"
                                 BorderBrush="{TemplateBinding Panel.Background}"
                                 BorderThickness="1,1,1,2"
-                                CornerRadius="2,2,0,0">
+                                CornerRadius="0">
                             <Border.Background>
-                                <RadialGradientBrush Center="0.5,1" GradientOrigin="0.5,1" RadiusY="1">
+                                <RadialGradientBrush Center="0.5,1"
+                                                     GradientOrigin="0.5,1"
+                                                     RadiusY="1">
                                     <RadialGradientBrush.GradientStops>
-                                        <GradientStop Offset="0" Color="#FFFFFFFF" />
-                                        <GradientStop Offset="1" Color="#77FFFFFF" />
+                                        <GradientStop Offset="0"
+                                                      Color="#FFFFFFFF" />
+                                        <GradientStop Offset="1"
+                                                      Color="#77FFFFFF" />
                                     </RadialGradientBrush.GradientStops>
                                 </RadialGradientBrush>
                             </Border.Background>
@@ -40,35 +47,30 @@
                         </Border>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
-                            <Setter TargetName="InnerBorder" Property="Border.BorderThickness">
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}"
+                                     Value="True">
+                            <Setter TargetName="InnerBorder"
+                                    Property="Border.BorderThickness">
                                 <Setter.Value>
                                     <Thickness>2,2,2,3</Thickness>
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="InnerBorder" Property="Panel.Background">
+                            <Setter TargetName="InnerBorder"
+                                    Property="Panel.Background">
                                 <Setter.Value>
                                     <SolidColorBrush>#00FFFFFF</SolidColorBrush>
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="InnerBorder" Property="Border.CornerRadius">
-                                <Setter.Value>
-                                    <CornerRadius>0,0,0,0</CornerRadius>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="OuterBorder" Property="Panel.Background">
+                            <Setter TargetName="OuterBorder"
+                                    Property="Panel.Background">
                                 <Setter.Value>
                                     <DynamicResource ResourceKey="{x:Static SystemColors.ActiveCaptionBrushKey}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
+                            <Setter TargetName="OuterBorder"
+                                    Property="Border.BorderBrush">
                                 <Setter.Value>
                                     <SolidColorBrush>#00FFFFFF</SolidColorBrush>
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="OuterBorder" Property="Border.CornerRadius">
-                                <Setter.Value>
-                                    <CornerRadius>0,0,0,0</CornerRadius>
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="TextElement.Foreground">
