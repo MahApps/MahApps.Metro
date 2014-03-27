@@ -1,14 +1,14 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.ButtonsExample"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             mc:Ignorable="d"
+             xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
              d:DesignHeight="737.288"
              d:DesignWidth="800"
-             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+             mc:Ignorable="d">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -31,8 +31,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel Grid.Column="0">
-            <Label Content="Default button"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="Default button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Button Width="100"
                     Margin="0, 10, 0, 0"
                     Content="Enabled" />
@@ -41,10 +40,8 @@
                     Content="Disabled"
                     IsEnabled="False" />
         </StackPanel>
-        <StackPanel Grid.Row="0"
-                    Grid.Column="1">
-            <Label Content="Square button"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <Label Content="Square button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Button Width="100"
                     Margin="0, 10, 0, 0"
                     Content="Enabled"
@@ -64,10 +61,8 @@
                     IsEnabled="False"
                     Style="{DynamicResource AccentedSquareButtonStyle}" />
         </StackPanel>
-        <StackPanel Grid.Row="0"
-                    Grid.Column="2">
-            <Label Content="Toggle button"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+        <StackPanel Grid.Row="0" Grid.Column="2">
+            <Label Content="Toggle button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <ToggleButton Width="100"
                           Margin="0, 10, 0, 0"
                           Content="Enabled" />
@@ -81,10 +76,11 @@
                           Style="{DynamicResource MetroCircleToggleButtonStyle}">
                 <Rectangle Width="20"
                            Height="20"
-                           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                           Fill="{Binding Path=Foreground,
+                                          RelativeSource={RelativeSource FindAncestor,
+                                                                         AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                                     Visual="{DynamicResource appbar_city}" />
+                        <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_city}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
@@ -95,25 +91,20 @@
                           Style="{DynamicResource MetroCircleToggleButtonStyle}">
                 <Rectangle Width="20"
                            Height="20"
-                           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ToggleButton}}}">
+                           Fill="{Binding Path=Foreground,
+                                          RelativeSource={RelativeSource FindAncestor,
+                                                                         AncestorType={x:Type ToggleButton}}}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                                     Visual="{DynamicResource appbar_city}" />
+                        <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_city}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </ToggleButton>
         </StackPanel>
-        <StackPanel Grid.Row="0"
-                    Grid.Column="3">
+        <StackPanel Grid.Row="0" Grid.Column="3">
             <StackPanel.Resources>
-                <ResourceDictionary>
-                    <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
+                <Style BasedOn="{StaticResource MetroFlatButton}" TargetType="{x:Type Button}" />
             </StackPanel.Resources>
-            <Label Content="Flat button"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="Flat button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Button Width="100"
                     Margin="0, 10, 0, 0"
                     Content="Enabled" />
@@ -122,20 +113,19 @@
                     Content="Disabled"
                     IsEnabled="False" />
         </StackPanel>
-        <StackPanel Grid.Row="0"
-                    Grid.Column="4">
-            <Label Content="Circle button"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+        <StackPanel Grid.Row="0" Grid.Column="4">
+            <Label Content="Circle button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Button Width="50"
                     Height="50"
                     Margin="0, 10, 0, 0"
                     Style="{DynamicResource MetroCircleButtonStyle}">
                 <Rectangle Width="20"
                            Height="20"
-                           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                           Fill="{Binding Path=Foreground,
+                                          RelativeSource={RelativeSource FindAncestor,
+                                                                         AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                                     Visual="{DynamicResource appbar_city}" />
+                        <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_city}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
@@ -146,10 +136,11 @@
                     Style="{DynamicResource MetroCircleButtonStyle}">
                 <Rectangle Width="20"
                            Height="20"
-                           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                           Fill="{Binding Path=Foreground,
+                                          RelativeSource={RelativeSource FindAncestor,
+                                                                         AncestorType={x:Type Button}}}">
                     <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill"
-                                     Visual="{DynamicResource appbar_city}" />
+                        <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_city}" />
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
@@ -159,28 +150,22 @@
                     HorizontalAlignment="Center">
             <StackPanel.Resources>
                 <Style x:Key="CustomMetroToggleSwitch"
-                       TargetType="{x:Type Controls:ToggleSwitch}"
-                       BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}">
-                    <Setter Property="SwitchForeground"
-                            Value="Red" />
-                    <Setter Property="OnLabel"
-                            Value="True" />
-                    <Setter Property="OffLabel"
-                            Value="False" />
+                       BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}"
+                       TargetType="{x:Type Controls:ToggleSwitch}">
+                    <Setter Property="SwitchForeground" Value="Red" />
+                    <Setter Property="OnLabel" Value="True" />
+                    <Setter Property="OffLabel" Value="False" />
                 </Style>
             </StackPanel.Resources>
-            <Label Content="Toggle switch"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
-            <Controls:ToggleSwitch IsChecked="True"
-                                   Header="ToggleSwitch Header" />
-            <Controls:ToggleSwitch Style="{DynamicResource CustomMetroToggleSwitch}"
+            <Label Content="Toggle switch" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Controls:ToggleSwitch Header="ToggleSwitch Header" IsChecked="True" />
+            <Controls:ToggleSwitch Margin="0, 5, 0, 0"
                                    IsChecked="True"
-                                   Margin="0, 5, 0, 0" />
-            <Controls:ToggleSwitch IsChecked="True"
-                                   IsEnabled="False"
-                                   Margin="0, 5, 0, 0" />
-            <Controls:ToggleSwitch IsEnabled="False"
-                                   Margin="0, 5, 0, 0" />
+                                   Style="{DynamicResource CustomMetroToggleSwitch}" />
+            <Controls:ToggleSwitch Margin="0, 5, 0, 0"
+                                   IsChecked="True"
+                                   IsEnabled="False" />
+            <Controls:ToggleSwitch Margin="0, 5, 0, 0" IsEnabled="False" />
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="1"
@@ -188,28 +173,24 @@
             <StackPanel.Resources>
                 <BooleanToVisibilityConverter x:Key="btv" />
             </StackPanel.Resources>
-            <Label Content="Toggle switch enable/visible demo"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="Toggle switch enable/visible demo" Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:ToggleSwitch x:Name="enabledSwitch"
+                                   Margin="0, 5, 0, 0"
                                    IsChecked="True"
-                                   OnLabel="Enabled"
                                    OffLabel="Disabled"
-                                   Margin="0, 5, 0, 0" />
+                                   OnLabel="Enabled" />
             <Controls:ToggleSwitch x:Name="visibleSwitch"
+                                   Margin="0, 5, 0, 0"
                                    IsChecked="False"
-                                   OnLabel="Visible"
                                    OffLabel="Collapsed"
-                                   Margin="0, 5, 0, 0" />
-            <Controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}"
-                                   Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
+                                   OnLabel="Visible" />
+            <Controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}" Visibility="{Binding ElementName=visibleSwitch, Path=IsChecked, Converter={StaticResource btv}}" />
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="2"
                     HorizontalAlignment="Center">
-            <Label Content="Checkbox"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
-            <CheckBox Margin="0, 10, 0, 0"
-                      Content="Enabled" />
+            <Label Content="Checkbox" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <CheckBox Margin="0, 10, 0, 0" Content="Enabled" />
             <CheckBox Margin="0, 10, 0, 0"
                       Content="Enabled"
                       IsChecked="True" />
@@ -226,15 +207,14 @@
                       IsEnabled="False" />
             <CheckBox Margin="0, 10, 0, 0"
                       Content="Disabled"
-                      IsEnabled="False"
                       IsChecked="{x:Null}"
+                      IsEnabled="False"
                       IsThreeState="True" />
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="3"
                     HorizontalAlignment="Center">
-            <Label Content="Radio button"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="Radio button" Style="{DynamicResource DescriptionHeaderStyle}" />
             <RadioButton Margin="0, 10, 0, 0"
                          Content="Enabled"
                          GroupName="1" />
@@ -255,51 +235,58 @@
         <StackPanel Grid.Row="1"
                     Grid.Column="4"
                     HorizontalAlignment="Stretch">
-            <Label Content="DropDownButton"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="DropDownButton" Style="{DynamicResource DescriptionHeaderStyle}" />
 
             <Controls:DropDownButton Name="DownButton"
-                                     VerticalContentAlignment="Center"
                                      Width="120"
+                                     VerticalContentAlignment="Center"
                                      Content="Test"
                                      DisplayMemberPath="Title"
                                      Icon="{DynamicResource appbar_music}"
-                                     ItemsSource="{Binding Albums}">
-            </Controls:DropDownButton>
+                                     ItemsSource="{Binding Albums}" />
 
             <Controls:DropDownButton Name="DownButton1"
-                                     Orientation="Vertical"
-                                     Icon="{DynamicResource appbar_journal}"
-                                     HorizontalContentAlignment="Center"
-                                     Margin="0,10,0,0"
                                      Width="120"
+                                     Margin="0,10,0,0"
+                                     HorizontalContentAlignment="Center"
                                      Content="Test"
                                      DisplayMemberPath="Title"
-                                     ItemsSource="{Binding ElementName=DownButton, Mode=TwoWay, Path=ItemsSource}">
-            </Controls:DropDownButton>
+                                     Icon="{DynamicResource appbar_journal}"
+                                     ItemsSource="{Binding ElementName=DownButton,
+                                                           Mode=TwoWay,
+                                                           Path=ItemsSource}"
+                                     Orientation="Vertical" />
             <CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Content="SplitButton"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Content="SplitButton" Style="{DynamicResource DescriptionHeaderStyle}" />
 
-            <Controls:SplitButton Name="SplitButton0" Icon="{DynamicResource appbar_alert}"
-                                HorizontalContentAlignment="Left"
-                                HorizontalAlignment="Center"
-                                VerticalContentAlignment="Center"
-                                Width="120"
-                                SelectedIndex="2"
-                                ItemsSource="{Binding Albums}"
-                                DisplayMemberPath="Title"
-                                VerticalAlignment="Center"  />
-
-            <Controls:SplitButton Margin="20,10,20,0" Name="SplitButton1" Icon="{DynamicResource appbar_book_side}"
+            <Controls:SplitButton Name="SplitButton0"
                                   Width="120"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  HorizontalContentAlignment="Left"
+                                  VerticalContentAlignment="Center"
+                                  DisplayMemberPath="Title"
+                                  Icon="{DynamicResource appbar_alert}"
+                                  ItemsSource="{Binding Albums}"
+                                  SelectedIndex="2" />
+
+            <Controls:SplitButton Name="SplitButton1"
+                                  Width="120"
+                                  Margin="20,10,20,0"
                                   HorizontalAlignment="Center"
                                   HorizontalContentAlignment="Center"
                                   VerticalContentAlignment="Center"
-                                  Orientation="Vertical" DisplayMemberPath="{Binding ElementName=SplitButton0, Path=DisplayMemberPath}"
-                                  SelectedIndex="{Binding SelectedIndex, ElementName=SplitButton0, Mode=TwoWay}"
-                                  ItemsSource="{Binding ItemsSource, ElementName=SplitButton0, Mode=TwoWay}" />
+                                  DisplayMemberPath="{Binding ElementName=SplitButton0,
+                                                              Path=DisplayMemberPath}"
+                                  Icon="{DynamicResource appbar_book_side}"
+                                  ItemsSource="{Binding ItemsSource,
+                                                        ElementName=SplitButton0,
+                                                        Mode=TwoWay}"
+                                  Orientation="Vertical"
+                                  SelectedIndex="{Binding SelectedIndex,
+                                                          ElementName=SplitButton0,
+                                                          Mode=TwoWay}" />
 
             <CheckBox IsChecked="{Binding ElementName=SplitButton0, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <CheckBox IsChecked="{Binding ElementName=SplitButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
