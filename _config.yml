@@ -1,7 +1,7 @@
 markdown: redcarpet
 pygments: true
 
-baseurl: http://mahapps.com/MahApps.Metro
+baseurl: http://mahapps.com
 
 gems:
   - jekyll-mentions
