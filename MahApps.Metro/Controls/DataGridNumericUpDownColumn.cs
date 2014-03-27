@@ -116,7 +116,9 @@ namespace MahApps.Metro.Controls
 
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
-            return GenerateNumericUpDown(false, cell);
+            NumericUpDown generateNumericUpDown = GenerateNumericUpDown(false, cell);
+            generateNumericUpDown.HideUpDownButtons = true;
+            return generateNumericUpDown;
         }
 
         private NumericUpDown GenerateNumericUpDown(bool isEditing, DataGridCell cell)
@@ -137,7 +139,7 @@ namespace MahApps.Metro.Controls
             numericUpDown.InterceptArrowKeys = true;
             numericUpDown.InterceptMouseWheel = true;
             numericUpDown.Speedup = true;
-            numericUpDown.HideUpDownButtons = true;
+            numericUpDown.HideUpDownButtons = HideUpDownButtons;
 
             return numericUpDown;
         }
