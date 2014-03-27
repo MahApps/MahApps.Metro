@@ -230,9 +230,10 @@ namespace MahApps.Metro.Controls.Dialogs
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible.
+        /// <para>Note that this method returns as soon as the dialog is loaded and won't wait on a call of <see cref="HideMetroDialogAsync"/>.</para>
+        /// <para>You can still close the resulting dialog with <see cref="HideMetroDialogAsync"/>.</para>
         /// </summary>
         /// <param name="window">The owning window of the dialog.</param>
-        /// <param name="title">The title to be set in the dialog.</param>
         /// <param name="dialog">The dialog instance itself.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
