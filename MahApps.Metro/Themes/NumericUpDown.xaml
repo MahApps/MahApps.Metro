@@ -110,8 +110,6 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
-                            <Setter Property="HideUpDownButtons"
-                                    Value="True" />
                             <Setter Property="InterceptArrowKeys"
                                     Value="False" />
                             <Setter Property="InterceptMouseWheel"
