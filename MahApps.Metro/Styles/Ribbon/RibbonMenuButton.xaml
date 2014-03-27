@@ -197,6 +197,18 @@
                     <s:Boolean>False</s:Boolean>
                 </Trigger.Value>
             </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="ToggleButton.IsChecked" Value="True" />
+                    <Condition Property="ToggleButton.IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{Binding Path=PressedBackground, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                <Setter TargetName="OuterBorder" Property="BorderBrush" Value="{Binding Path=PressedBorderBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+            </MultiTrigger>
+            <Trigger Property="ToggleButton.IsPressed" Value="True">
+                <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{DynamicResource AppAccentBrush2}" />
+                <Setter TargetName="OuterBorder" Property="Border.BorderBrush" Value="{DynamicResource AppAccentBrush2}" />
+            </Trigger>
             <Trigger Property="ToggleButton.IsChecked">
                 <Setter TargetName="OuterBorder" Property="Panel.Background">
                     <Setter.Value>
@@ -212,41 +224,6 @@
                     <s:Boolean>True</s:Boolean>
                 </Trigger.Value>
             </Trigger>
-            <Trigger Property="ButtonBase.IsPressed">
-                <Setter TargetName="OuterBorder" Property="Panel.Background" Value="{DynamicResource AccentBrush2}" />
-                <Setter TargetName="OuterBorder" Property="Border.BorderBrush" Value="{DynamicResource AccentBrush2}" />
-                <Trigger.Value>
-                    <s:Boolean>True</s:Boolean>
-                </Trigger.Value>
-            </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="ToggleButton.IsChecked">
-                        <Condition.Value>
-                            <s:Boolean>True</s:Boolean>
-                        </Condition.Value>
-                    </Condition>
-                    <Condition Property="UIElement.IsMouseOver">
-                        <Condition.Value>
-                            <s:Boolean>True</s:Boolean>
-                        </Condition.Value>
-                    </Condition>
-                </MultiTrigger.Conditions>
-            </MultiTrigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="ToggleButton.IsChecked">
-                        <Condition.Value>
-                            <s:Boolean>True</s:Boolean>
-                        </Condition.Value>
-                    </Condition>
-                    <Condition Property="UIElement.IsKeyboardFocused">
-                        <Condition.Value>
-                            <s:Boolean>True</s:Boolean>
-                        </Condition.Value>
-                    </Condition>
-                </MultiTrigger.Conditions>
-            </MultiTrigger>
             <Trigger Property="RibbonControlService.IsInControlGroup">
                 <Setter TargetName="OuterBorder" Property="Border.BorderBrush">
                     <Setter.Value>
@@ -555,8 +532,8 @@
                                             Background="{TemplateBinding Control.Background}"
                                             BorderBrush="{TemplateBinding Control.BorderBrush}"
                                             BorderThickness="{TemplateBinding Control.BorderThickness}"
-                                            CheckedBackground="{TemplateBinding RibbonMenuButton.PressedBackground}"
-                                            CheckedBorderBrush="{TemplateBinding RibbonMenuButton.PressedBorderBrush}"
+                                            CheckedBackground="{TemplateBinding FocusedBackground}"
+                                            CheckedBorderBrush="{TemplateBinding FocusedBorderBrush}"
                                             ClickMode="Press"
                                             ControlSizeDefinition="{TemplateBinding RibbonMenuButton.ControlSizeDefinition}"
                                             CornerRadius="0"
