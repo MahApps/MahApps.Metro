@@ -31,6 +31,16 @@ namespace Mahapps.Metro.Tests
         }
 
         [Fact]
+        public async Task CanChangeLegacyTheme()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+
+            ThemeManager.ChangeTheme(window, ThemeManager.DefaultAccents.First(accent => accent.Name == "Blue"), Theme.Dark);
+        }
+
+        [Fact]
         public async Task CanAddAccentBeforeGetterIsCalled()
         {
             await TestHost.SwitchToAppThread();
