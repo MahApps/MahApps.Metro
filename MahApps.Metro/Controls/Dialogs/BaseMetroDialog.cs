@@ -143,7 +143,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.IsLoaded) return new Task(() => { });
 
-            if (!DialogSettings.UseAnimations)
+            if (!DialogSettings.AnimateShow)
                 this.Opacity = 1.0; //skip the animation
 
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
@@ -219,7 +219,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
-            if (DialogSettings.UseAnimations)
+            if (DialogSettings.AnimateHide)
             {
                 Storyboard closingStoryboard = this.Resources["DialogCloseStoryboard"] as Storyboard;
 
@@ -261,7 +261,7 @@ namespace MahApps.Metro.Controls.Dialogs
             NegativeButtonText = "Cancel";
 
             ColorScheme = MetroDialogColorScheme.Theme;
-            UseAnimations = true;
+            AnimateShow = AnimateHide = true;
             
             DefaultText = "";
         }
@@ -282,7 +282,32 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public MetroDialogColorScheme ColorScheme { get; set; }
 
-        public bool UseAnimations { get; set; }
+        /// <summary>
+        /// Enable/disable dialog showing/hiding animations.
+        /// Setting this value will also set both AnimateShow and AnimateHide properties to the same value.
+        /// Getting "True" - at least AnimateHide or AnimateHide is "True".
+        /// Getting "False" - both AnimateHide and AnimateHide are "False".
+        /// </summary>
+        [Obsolete("This property is obsolete and will be deleted in next release, use AnimateShow and AnimateHide instead.")]
+        public bool UseAnimations
+        {
+            get { return AnimateShow || AnimateHide; }
+            set { AnimateShow = AnimateHide = value; }
+        }
+
+        /// <summary>
+        /// Enable/disable dialog showing animation.
+        /// "True" - play showing animation.
+        /// "False" - skip showing animation.
+        /// </summary>
+        public bool AnimateShow { get; set; }
+
+        /// <summary>
+        /// Enable/disable dialog hiding animation
+        /// "True" - play hiding animation.
+        /// "False" - skip hiding animation.
+        /// </summary>
+        public bool AnimateHide { get; set; }
         
         /// <summary>
         /// Gets/sets the default text( just the inputdialog needed)

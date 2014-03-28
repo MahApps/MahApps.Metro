@@ -9,9 +9,13 @@ namespace MetroDemo
 {
     public partial class MainWindow
     {
+        private bool _shutdown;
+        private readonly MainWindowViewModel _viewModel;
+
         public MainWindow()
         {
-            DataContext = new MainWindowViewModel();
+            _viewModel = new MainWindowViewModel();
+            DataContext = _viewModel;
             InitializeComponent();
         }
 
@@ -176,6 +180,29 @@ namespace MetroDemo
 
             navWin.Show();
             navWin.Navigate(new Navigation.HomePage());
+        }
+
+        private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
+            if (_shutdown) return;
+
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Quit",
+                NegativeButtonText = "Cancel",
+                AnimateShow = true,
+                AnimateHide = false
+            };
+
+            var result = await this.ShowMessageAsync("Quit application?",
+                "Sure you want to quit application?",
+                MessageDialogStyle.AffirmativeAndNegative, mySettings);
+
+            _shutdown = result == MessageDialogResult.Affirmative;
+
+            if (_shutdown)
+                Application.Current.Shutdown();
         }
     }
 }
