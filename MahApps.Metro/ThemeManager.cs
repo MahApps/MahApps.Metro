@@ -367,7 +367,11 @@ namespace MahApps.Metro
         {
             if (window == null) throw new ArgumentNullException("window");
 
-            return DetectAppStyle(window.Resources);
+            var detectedStyle = DetectAppStyle(window.Resources);
+            if (detectedStyle == null)
+                detectedStyle = DetectAppStyle(Application.Current.Resources);
+
+            return detectedStyle;
         }
 
         /// <summary>
