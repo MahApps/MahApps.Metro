@@ -12,6 +12,14 @@ namespace MahApps.Metro.Controls.Dialogs
     [ContentProperty("DialogBody")]
     public class SimpleDialog: BaseMetroDialog
     {
+        public SimpleDialog()
+        {
+            this.Loaded += SimpleDialog_Loaded;
+        }
 
+        void SimpleDialog_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+           
+        }
     }
 }

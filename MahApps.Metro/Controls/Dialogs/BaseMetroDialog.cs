@@ -28,6 +28,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
                 if (e.NewValue != null)
                 {
+                    if (e.NewValue is FrameworkElement)
+                        ((FrameworkElement)e.NewValue).DataContext = dialog.DataContext;
                     dialog.AddLogicalChild(e.NewValue);
                 }
             }
@@ -114,23 +116,42 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void Initialize()
         {
+            ThemeManager.IsThemeChanged += ThemeManager_IsThemeChanged;
+            this.Unloaded += BaseMetroDialog_Unloaded;
+
+            HandleTheme();
+
+            this.Resources.MergedDictionaries.Add(new System.Windows.ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
+
+        }
+
+        void BaseMetroDialog_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.IsThemeChanged -= ThemeManager_IsThemeChanged;
+            this.Unloaded -= BaseMetroDialog_Unloaded;
+        }
+
+        void ThemeManager_IsThemeChanged(object sender, OnThemeChangedEventArgs e)
+        {
+            HandleTheme();
+        }
+
+        private void HandleTheme()
+        {
             if (DialogSettings != null)
             {
                 switch (DialogSettings.ColorScheme)
                 {
                     case MetroDialogColorScheme.Theme:
-                        this.SetResourceReference(BackgroundProperty, "WhiteColorBrush");
-                        this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
+                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
+                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "BlackBrush"));
                         break;
                     case MetroDialogColorScheme.Accented:
-                        this.SetResourceReference(BackgroundProperty, "HighlightBrush");
-                        this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
+                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "HighlightBrush"));
+                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "IdealForegroundColorBrush"));
                         break;
                 }
             }
-
-            this.Resources.MergedDictionaries.Add(new System.Windows.ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
-
         }
 
         /// <summary>
@@ -262,7 +283,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             ColorScheme = MetroDialogColorScheme.Theme;
             AnimateShow = AnimateHide = true;
-            
+
             DefaultText = "";
         }
 
@@ -308,7 +329,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// "False" - skip hiding animation.
         /// </summary>
         public bool AnimateHide { get; set; }
-        
+
         /// <summary>
         /// Gets/sets the default text( just the inputdialog needed)
         /// </summary>

@@ -79,7 +79,7 @@
             <Dialog:SimpleDialog x:Key="SimpleDialogTest"
                                  Title="This dialog allows arbitrary content. It will close in 5 seconds."
                                  x:Name="SimpleTestDialog">
-                <Button Content="Hello" />
+                <TextBlock Text="Test" />
             </Dialog:SimpleDialog>
 
         </ResourceDictionary>
