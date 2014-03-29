@@ -14,7 +14,7 @@ namespace MahApps.Metro.Controls.Dialogs
     public abstract class BaseMetroDialog : Control
     {
         private const string PART_DialogBody_ContentPresenter = "PART_DialogBody_ContentPresenter";
-        private ContentPresenter DialogBody_ContentPresenter = null;
+        protected ContentPresenter DialogBody_ContentPresenter = null;
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null, (o, e) =>
@@ -28,8 +28,6 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
                 if (e.NewValue != null)
                 {
-                    if (e.NewValue is FrameworkElement)
-                        ((FrameworkElement)e.NewValue).DataContext = dialog.DataContext;
                     dialog.AddLogicalChild(e.NewValue);
                 }
             }

@@ -67,7 +67,8 @@
                                    Foreground="{TemplateBinding Foreground}" />
                             <ContentPresenter Grid.Row="1"
                                    x:Name="PART_DialogBody_ContentPresenter"
-                                   Content="{TemplateBinding DialogBody}"/>
+                                   DataContext="{TemplateBinding DataContext}"
+                                   Content="{TemplateBinding DialogBody}" />
                         </Grid>
                     </Grid>
 

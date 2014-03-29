@@ -79,7 +79,7 @@
             <Dialog:SimpleDialog x:Key="SimpleDialogTest"
                                  Title="This dialog allows arbitrary content. It will close in 5 seconds."
                                  x:Name="SimpleTestDialog">
-                <TextBlock Text="Test" />
+                <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentBrush}" />
             </Dialog:SimpleDialog>
 
         </ResourceDictionary>
