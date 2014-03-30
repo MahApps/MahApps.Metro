@@ -79,6 +79,7 @@
                                 VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
                         <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
                         <ContentControl MinWidth="20"
+                                        Margin="2"
                                         x:Name="PART_ButtonContent"
                                         VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
                                         HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
@@ -192,6 +193,7 @@
                                     VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
                             <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
                             <ContentControl MinHeight="20"
+                                            Margin="2"
                                             x:Name="PART_ButtonContent"
                                             VerticalAlignment="Stretch"
                                             HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
