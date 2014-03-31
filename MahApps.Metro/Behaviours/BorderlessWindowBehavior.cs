@@ -190,6 +190,11 @@ namespace MahApps.Metro.Behaviours
             return returnval;
         }
 
+        private bool IsGreaterOrEqualWin8()
+        {
+            return Environment.OSVersion.Version >= new Version(6, 0);
+        }
+
         private void AssociatedObject_Activated(object sender, EventArgs e)
         {
             if (savedBorderBrush != null)
@@ -197,6 +202,28 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.BorderBrush = savedBorderBrush;
             }
             HandleMaximize();
+            
+            HandleTaskbarItem();
+        }
+
+        private void HandleTaskbarItem()
+        {
+            if (IsGreaterOrEqualWin8())
+            {
+                // nasty hack for >= win 8
+                // the taskbar item disappears after this steps
+                // - Set IgnoreTaskbarOnMaximize="True"
+                // - Maximize the application
+                // - Minimize and focus another application OR click somewhere on a second monitor
+                // - Focus the original application again
+                // - The taskbar item disappeared
+                var showInTaskbar = AssociatedObject.ShowInTaskbar;
+                if (showInTaskbar && AssociatedObject.WindowState == WindowState.Minimized)
+                {
+                    AssociatedObject.ShowInTaskbar = false;
+                    AssociatedObject.ShowInTaskbar = showInTaskbar;
+                }
+            }
         }
 
         private void AssociatedObject_Deactivated(object sender, EventArgs e)
@@ -206,6 +233,8 @@ namespace MahApps.Metro.Behaviours
                 savedBorderBrush = AssociatedObject.BorderBrush;
                 AssociatedObject.BorderBrush = this.nonActiveBorderColor;
             }
+
+            HandleTaskbarItem();
         }
 
         private void AssociatedObject_StateChanged(object sender, EventArgs e)
