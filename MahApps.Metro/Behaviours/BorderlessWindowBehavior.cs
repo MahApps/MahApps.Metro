@@ -192,7 +192,7 @@ namespace MahApps.Metro.Behaviours
 
         private bool IsGreaterOrEqualWin8()
         {
-            return Environment.OSVersion.Version >= new Version(6, 0);
+            return Environment.OSVersion.Version.CompareTo(new Version(6, 2)) > 0;
         }
 
         private void AssociatedObject_Activated(object sender, EventArgs e)
