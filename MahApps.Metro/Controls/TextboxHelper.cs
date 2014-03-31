@@ -142,21 +142,35 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets the brush used to draw the focus border.
+        /// Sets the brush used to draw the focus border.
         /// </summary>
-        public Brush FocusBorderBrush
+        public static void SetFocusBorderBrush(DependencyObject obj, Brush value)
         {
-            get { return (Brush)GetValue(FocusBorderBrushProperty); }
-            set { SetValue(FocusBorderBrushProperty, value); }
+          obj.SetValue(FocusBorderBrushProperty, value);
         }
 
         /// <summary>
-        /// Gets/sets the brush used to draw the mouse over brush.
+        /// Gets the brush used to draw the focus border.
         /// </summary>
-        public Brush MouseOverBorderBrush
+        public static Brush GetFocusBorderBrush(DependencyObject obj)
         {
-            get { return (Brush)GetValue(MouseOverBorderBrushProperty); }
-            set { SetValue(MouseOverBorderBrushProperty, value); }
+          return (Brush)obj.GetValue(FocusBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush used to draw the mouse over brush.
+        /// </summary>
+        public static void SetMouseOverBorderBrush(DependencyObject obj, Brush value)
+        {
+          obj.SetValue(MouseOverBorderBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets the brush used to draw the mouse over brush.
+        /// </summary>
+        public static Brush GetMouseOverBorderBrush(DependencyObject obj)
+        {
+          return (Brush)obj.GetValue(MouseOverBorderBrushProperty);
         }
 
         public static void SetIsWaitingForData(DependencyObject obj, bool value)
