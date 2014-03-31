@@ -104,6 +104,7 @@
                             <TextBlock x:Name="Message"
                                        Grid.Column="0"
                                        Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                       Padding="{TemplateBinding Padding}"
                                        Visibility="Collapsed"
                                        Foreground="{TemplateBinding Foreground}"
                                        IsHitTestVisible="False"
