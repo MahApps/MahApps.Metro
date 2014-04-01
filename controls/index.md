@@ -7,6 +7,7 @@ Currently not all controls are documented. The list of controls with documentati
 
  - [Buttons]({{site.baseurl}}/controls/buttons.html)
  - [Dialogs]({{site.baseurl}}/controls/dialogs.html)
+ - [DataGrid]({{site.baseurl}}/controls/datagrid.html)
  - [FlipView]({{site.baseurl}}/controls/flipview.html)
  - [Flyouts]({{site.baseurl}}/controls/flyouts.html)
  - [MetroWindow]({{site.baseurl}}/controls/metro-window.html)
