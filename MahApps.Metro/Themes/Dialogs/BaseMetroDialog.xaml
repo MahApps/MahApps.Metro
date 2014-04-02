@@ -5,6 +5,7 @@
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -66,7 +67,8 @@
                                    Foreground="{TemplateBinding Foreground}" />
                             <ContentPresenter Grid.Row="1"
                                    x:Name="PART_DialogBody_ContentPresenter"
-                                   Content="{TemplateBinding DialogBody}"/>
+                                   DataContext="{TemplateBinding DataContext}"
+                                   Content="{TemplateBinding DialogBody}" />
                         </Grid>
                     </Grid>
 
@@ -94,7 +96,7 @@
         <Setter Property="Background"
                 Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="Foreground"
-                Value="{DynamicResource BlackColorBrush}" />
+                Value="{DynamicResource BlackBrush}" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="KeyboardNavigation.TabNavigation"

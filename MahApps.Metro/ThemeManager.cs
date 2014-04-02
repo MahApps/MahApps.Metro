@@ -17,7 +17,7 @@ namespace MahApps.Metro
         private static IList<AppTheme> _appThemes;
 
         // We use this mapping to lookup the corresponding (obsolete) theme for the default themes
-        private static readonly Dictionary<string, Theme> compatibilityThemeMapping = 
+        private static readonly Dictionary<string, Theme> compatibilityThemeMapping =
             new Dictionary<string, Theme>
             {
                 {"BaseDark", Theme.Dark},
@@ -29,7 +29,7 @@ namespace MahApps.Metro
             {
                 {Theme.Dark, "BaseDark"},
                 {Theme.Light, "BaseLight"}
-            }; 
+            };
 
         /// <summary>
         /// Gets a list of all of default themes.
@@ -132,7 +132,7 @@ namespace MahApps.Metro
         public static AppTheme GetAppTheme(ResourceDictionary resources)
         {
             if (resources == null) throw new ArgumentNullException("resources");
-            
+
             return AppThemes.FirstOrDefault(x => x.Resources.Source == resources.Source);
         }
 
@@ -160,10 +160,10 @@ namespace MahApps.Metro
         /// </remarks>
         public static AppTheme GetInverseAppTheme(AppTheme appTheme)
         {
-            if(appTheme == null)
+            if (appTheme == null)
                 throw new ArgumentNullException("appTheme");
 
-            if(appTheme.Name.EndsWith("dark", StringComparison.InvariantCultureIgnoreCase))
+            if (appTheme.Name.EndsWith("dark", StringComparison.InvariantCultureIgnoreCase))
             {
                 return GetAppTheme(appTheme.Name.ToLower().Replace("dark", String.Empty) + "light");
             }
@@ -198,6 +198,27 @@ namespace MahApps.Metro
             if (resources == null) throw new ArgumentNullException("resources");
 
             return Accents.FirstOrDefault(x => x.Resources.Source == resources.Source);
+        }
+        /// <summary>
+        /// Gets a resource from the detected AppStyle.
+        /// </summary>
+        /// <param name="window">The window to check. If this is null, the Application's sources will be checked.</param>
+        /// <param name="key">The key to check against.</param>
+        /// <returns>The resource object or null, if the resource wasn't found.</returns>
+        public static object GetResourceFromAppStyle(Window window, string key)
+        {
+            var appStyle = window != null ? DetectAppStyle(window) : DetectAppStyle(Application.Current);
+            if (appStyle == null && window != null)
+                appStyle = DetectAppStyle(Application.Current); //no resources in the window's resources.
+
+            object resource = appStyle.Item1.Resources[key]; //check the theme first
+
+            //next check the accent
+            var accentResource = appStyle.Item2.Resources[key];
+            if (accentResource != null)
+                return accentResource;
+
+            return resource;
         }
 
         /// <summary>

@@ -118,7 +118,7 @@ namespace MetroDemo
         {
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
-            var controller = await this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
+            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");
 
             await TaskEx.Delay(5000);
 

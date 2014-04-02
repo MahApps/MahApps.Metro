@@ -34,7 +34,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 try
                 {
-                    ProgressBarForeground = parentWindow.FindResource("AccentColorBrush") as Brush;
+                    ProgressBarForeground = ThemeManager.GetResourceFromAppStyle(parentWindow, "AccentColorBrush") as Brush;
                 }
                 catch (Exception) { }
             }
