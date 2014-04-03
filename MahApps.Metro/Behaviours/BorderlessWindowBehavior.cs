@@ -240,6 +240,16 @@ namespace MahApps.Metro.Behaviours
             {
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
+                
+                // fix nasty TopMost bug
+                // - set TopMost="True"
+                // - start mahapps demo
+                // - TopMost works
+                // - maximize window and back to normal
+                // - TopMost is gone
+                var topMost = AssociatedObject.Topmost;
+                AssociatedObject.Topmost = false;
+                AssociatedObject.Topmost = topMost;
             }
         }
 
