@@ -288,7 +288,6 @@ namespace MahApps.Metro.Controls
             if (e.NewValue != e.OldValue)
             {
                 window.ToggleVisibiltyForAllTitleElements((bool)e.NewValue);
-                window.SetWindowEvents();
             }
         }
 
@@ -387,6 +386,8 @@ namespace MahApps.Metro.Controls
             {
                 this.WindowButtonCommands.Visibility = newVisibility;
             }
+
+            SetWindowEvents();
         }
 
         /// <summary>
@@ -710,8 +711,6 @@ namespace MahApps.Metro.Controls
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
 
             this.ToggleVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
-
-            SetWindowEvents();
         }
 
         private void SetWindowEvents()
