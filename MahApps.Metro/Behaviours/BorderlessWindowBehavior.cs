@@ -35,8 +35,15 @@ namespace MahApps.Metro.Behaviours
             windowChrome.CornerRadius = new CornerRadius(0);
             windowChrome.GlassFrameThickness = new Thickness(0);
             windowChrome.UseAeroCaptionButtons = false;
+            
             var metroWindow = AssociatedObject as MetroWindow;
-            windowChrome.IgnoreTaskbarOnMaximize = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
+            if (metroWindow != null)
+            {
+                windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
+                      .AddValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+            }
+
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
 
             // no transparany, because it hase more then one unwanted issues
@@ -84,6 +91,15 @@ namespace MahApps.Metro.Behaviours
             }
         }
 
+        private void IgnoreTaskbarOnMaximizePropertyChangedCallback(object sender, EventArgs e)
+        {
+            var metroWindow = sender as MetroWindow;
+            if (metroWindow != null && windowChrome != null)
+            {
+                windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+            }
+        }
+
         /// <summary>
         /// handle the resize mode for the window
         /// </summary>
@@ -117,6 +133,11 @@ namespace MahApps.Metro.Behaviours
                 isCleanedUp = true;
 
                 // clean up events
+                if (AssociatedObject is MetroWindow)
+                {
+                    System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
+                          .RemoveValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                }
                 System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window))
                       .RemoveValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
                 AssociatedObject.Loaded -= AssociatedObject_Loaded;
@@ -399,6 +420,11 @@ namespace MahApps.Metro.Behaviours
             if (window == null)
             {
                 return;
+            }
+
+            if (windowChrome != null)
+            {
+                windowChrome.IgnoreTaskbarOnMaximize = window.IgnoreTaskbarOnMaximize;
             }
 
             var icon = window.GetPart<UIElement>("PART_Icon");
