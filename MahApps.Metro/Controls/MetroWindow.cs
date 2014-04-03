@@ -38,7 +38,7 @@ namespace MahApps.Metro.Controls
         private const string PART_FlyoutModal = "PART_FlyoutModal";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, null, OnShowTitleBarCoerceValueCallback));
+        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -280,6 +280,16 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(ShowTitleBarProperty); }
             set { SetValue(ShowTitleBarProperty, value); }
+        }
+
+        private static void OnShowTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (MetroWindow)d;
+            if (e.NewValue != e.OldValue)
+            {
+                window.ToggleVisibiltyForAllTitleElements((bool)e.NewValue);
+                window.SetWindowEvents();
+            }
         }
 
         private static object OnShowTitleBarCoerceValueCallback(DependencyObject d, object value)
@@ -701,6 +711,39 @@ namespace MahApps.Metro.Controls
 
             this.ToggleVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
 
+            SetWindowEvents();
+        }
+
+        private void SetWindowEvents()
+        {
+            // clear all event handlers first:
+
+            if (titleBarBackground != null)
+            {
+                titleBarBackground.MouseDown -= TitleBarMouseDown;
+                titleBarBackground.MouseUp -= TitleBarMouseUp;
+                titleBarBackground.MouseMove -= TitleBarMouseMove;
+            }
+
+            if (titleBar != null)
+            {
+                titleBar.MouseDown -= TitleBarMouseDown;
+                titleBar.MouseUp -= TitleBarMouseUp;
+                titleBar.MouseMove -= TitleBarMouseMove;
+            }
+
+            if (icon != null)
+            {
+                icon.MouseDown -= IconMouseDown;
+                icon.MouseUp -= IconMouseUp;
+            }
+
+            MouseDown -= TitleBarMouseDown;
+            MouseUp -= TitleBarMouseUp;
+            MouseMove -= TitleBarMouseMove;
+
+            SizeChanged -= MetroWindow_SizeChanged;
+
             if (icon != null && icon.Visibility == Visibility.Visible)
             {
                 icon.MouseDown += IconMouseDown;
@@ -723,7 +766,7 @@ namespace MahApps.Metro.Controls
 
                 if (titleBar.GetType() == typeof(Grid))
                 {
-                    SizeChanged += this.MetroWindow_SizeChanged;
+                    SizeChanged += MetroWindow_SizeChanged;
                 }
             }
             else
