@@ -96,9 +96,9 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             DialogSettings = settings == null ? owningWindow.MetroDialogOptions : settings;
 
-            Initialize();
-
             OwningWindow = owningWindow;
+            
+            Initialize();
         }
 
 
