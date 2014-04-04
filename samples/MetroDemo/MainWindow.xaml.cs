@@ -24,6 +24,11 @@ namespace MetroDemo
             System.Diagnostics.Process.Start("https://github.com/MahApps/MahApps.Metro");
         }
 
+        private void LaunchSizeToContentDemo(object sender, RoutedEventArgs e)
+        {
+            new SizeToContentDemo() { Owner = this }.Show();
+        }
+
         private void LaunchVisualStudioDemo(object sender, RoutedEventArgs e)
         {
             new VSDemo().Show();
