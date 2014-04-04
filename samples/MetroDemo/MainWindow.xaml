@@ -103,6 +103,9 @@
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
+            <Button Click="LaunchSizeToContentDemo"
+                    ToolTip="SizeToContent demo"
+                    Content="STC" />
             <Button Click="LaunchVisualStudioDemo"
                     ToolTip="Visual Studio style demo"
                     Content="VS" />

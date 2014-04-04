@@ -69,12 +69,6 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.Activated += AssociatedObject_Activated;
             AssociatedObject.Deactivated += AssociatedObject_Deactivated;
 
-            // handle size to content (thanks @lynnx)
-            var autoSizeToContent = AssociatedObject.SizeToContent == SizeToContent.WidthAndHeight;
-            AssociatedObject.SizeToContent = SizeToContent.Height;
-            AssociatedObject.SizeToContent = autoSizeToContent ? SizeToContent.WidthAndHeight : SizeToContent.Manual;
-            AssociatedObject.IsVisibleChanged += AssociatedObject_IsVisibleChanged;
-
             // handle resize mode after loading the window
             System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window))
                   .AddValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
@@ -146,7 +140,6 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.StateChanged -= AssociatedObject_StateChanged;
                 AssociatedObject.Activated -= AssociatedObject_Activated;
                 AssociatedObject.Deactivated -= AssociatedObject_Deactivated;
-                AssociatedObject.IsVisibleChanged -= AssociatedObject_IsVisibleChanged;
                 if (hwndSource != null)
                 {
                     hwndSource.RemoveHook(WindowProc);
@@ -164,14 +157,6 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_Unloaded(object sender, RoutedEventArgs e)
         {
             Cleanup();
-        }
-
-        private void AssociatedObject_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue != e.OldValue && (bool)e.NewValue)
-            {
-                AssociatedObject.SizeToContent = SizeToContent.Manual;
-            }
         }
 
         private System.IntPtr WindowProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam, ref bool handled)
@@ -412,6 +397,12 @@ namespace MahApps.Metro.Behaviours
             {
                 hwndSource.AddHook(new HwndSourceHook(WindowProc));
             }
+
+            // handle size to content (thanks @lynnx)
+            var sizeToContent = AssociatedObject.SizeToContent;
+            AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
+            AssociatedObject.SizeToContent = sizeToContent;
+            AssociatedObject.SizeToContent = SizeToContent.Manual;
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)
