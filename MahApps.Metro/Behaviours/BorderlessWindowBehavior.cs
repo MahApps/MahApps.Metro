@@ -402,7 +402,6 @@ namespace MahApps.Metro.Behaviours
             var sizeToContent = AssociatedObject.SizeToContent;
             AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
             AssociatedObject.SizeToContent = sizeToContent;
-            AssociatedObject.SizeToContent = SizeToContent.Manual;
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)
