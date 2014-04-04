@@ -427,35 +427,11 @@ namespace MahApps.Metro.Behaviours
                 windowChrome.IgnoreTaskbarOnMaximize = window.IgnoreTaskbarOnMaximize;
             }
 
-            var icon = window.GetPart<UIElement>("PART_Icon");
-            if (icon != null)
-            {
-                icon.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
-            
-            var titleBar = window.GetPart<UIElement>("PART_TitleBar");
-            if (titleBar != null)
-            {
-                titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
-            
-            var leftWindowCommands = window.GetPart<ContentPresenter>("PART_LeftWindowCommands");
-            if (leftWindowCommands != null)
-            {
-                leftWindowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
-            
-            var windowCommands = window.GetPart<ContentPresenter>("PART_RightWindowCommands");
-            if (windowCommands != null)
-            {
-                windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
-            
-            var windowButtonCommands = window.GetPart<ContentControl>("PART_WindowButtonCommands");
-            if (windowButtonCommands != null)
-            {
-                windowButtonCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
+            window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
+            window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_TitleBar");
+            window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_LeftWindowCommands");
+            window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_RightWindowCommands");
+            window.SetIsHitTestVisibleInChromeProperty<ContentControl>("PART_WindowButtonCommands");
 
             // handle resize mode
             this.HandleResizeMode(window, window.ResizeMode);

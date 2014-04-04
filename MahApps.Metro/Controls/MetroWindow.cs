@@ -857,7 +857,7 @@ namespace MahApps.Metro.Controls
 
         internal T GetPart<T>(string name) where T : DependencyObject
         {
-            return (T)GetTemplateChild(name);
+            return GetTemplateChild(name) as T;
         }
 
         private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
