@@ -1,0 +1,82 @@
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+# User-specific files
+*.suo
+*.user
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+
+*.o
+*.lo
+*.la
+*.al 
+*.so
+*.so.[0-9]*
+*.a
+*.pyc
+*.pyo
+*.rej
+*~
+#*#
+.#*
+.*.swp
+
+#Visual Studio files
+*.aps
+*_i.c
+*_p.c
+*.bak
+*.[Cc]ache
+*.ilk
+*.libs
+*.log
+*.meta
+*.ncb
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.pidb
+*.rsp
+*.sbr
+*.scc
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*.unsuccessfulbuild
+*.vspscc
+*.vssscc
+.builds
+
+ipch/
+Ankh.NoLoad
+
+#Tooling
+_ReSharper*/
+*.resharper
+[Tt]est[Rr]esult*
+*.sass-cache
+!*.csproj.DotSettings
+
+#Ignore private folder
+/Private/
+
+#Subversion files
+.svn
+
+# RubyMine
+.idea/*
+.ide*
