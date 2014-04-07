@@ -95,7 +95,7 @@ namespace MetroDemo
                 AffirmativeButtonText = "Hi",
                 NegativeButtonText = "Go away!",
                 FirstAuxiliaryButtonText = "Cancel",
-				ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme
+                ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme
             };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro! ",
