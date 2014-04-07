@@ -8,6 +8,7 @@
     <ProjectType>CSharp</ProjectType>
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
     <SortOrder>1000</SortOrder>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
     <TemplateID>09c4560f-f56e-4cfa-adbb-de711b7c8fba</TemplateID>
     <CreateNewFolder>true</CreateNewFolder>
     <DefaultName>MetroApplication</DefaultName>

@@ -7,7 +7,7 @@
     <ProjectType>VisualBasic</ProjectType>
     <TemplateID>d20e2ec0-682f-4da4-ad71-69c399f6a4c7</TemplateID>
     <SortOrder>1000</SortOrder>
-    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
     <CreateNewFolder>true</CreateNewFolder>
     <DefaultName>MetroApplication</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>

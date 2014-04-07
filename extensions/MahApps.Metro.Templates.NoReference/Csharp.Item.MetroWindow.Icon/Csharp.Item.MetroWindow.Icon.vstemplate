@@ -7,7 +7,7 @@
     <TemplateID>c22e1c00-0b62-49aa-85ab-5d4816594648</TemplateID>
     <ProjectType>CSharp</ProjectType>
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
-    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
     <DefaultName>MetroWindow.xaml</DefaultName>
   </TemplateData>
   <TemplateContent>

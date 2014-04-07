@@ -9,7 +9,7 @@
     <DefaultName>MetroWindow.xaml</DefaultName>
     <ProjectType>VisualBasic</ProjectType>
     <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
-    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
   </TemplateData>
   <TemplateContent>
     <References>
