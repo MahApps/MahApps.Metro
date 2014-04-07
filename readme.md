@@ -75,3 +75,7 @@ If you've improved MahApps.Metro and think that other people would enjoy it, sub
 ### Chatroom
 
 Drop in on the Gitter room - https://gitter.im/MahApps/MahApps.Metro - if you want to ask a question or discuss something with the team.
+
+### Missing a control?
+If you're looking for a control that we don't have, we have some friends who have made MA.M compatible controls. Check them out:
+- Loading indicators by [@100GPing100](https://github.com/100GPing100) - https://github.com/100GPing100/LoadingIndicators.WPF
