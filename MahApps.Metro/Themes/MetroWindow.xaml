@@ -141,7 +141,7 @@
                                     VerticalAlignment="Stretch" />
 
                     <!-- Used to create that overlay effect. Can be used for anything. -->
-                    <Grid Grid.Row="0"
+                    <Grid Grid.Row="1"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
                           Grid.RowSpan="2"
