@@ -178,7 +178,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageBox.Show(String.Format("Username: {0}\nPassword: {1}", result.username, result.password));
+                MessageBox.Show(String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
             }
         }
 
