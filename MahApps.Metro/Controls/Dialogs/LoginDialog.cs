@@ -12,12 +12,17 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         private const string DEFAULT_USERNAME_WATERMARK = "Username...";
         private const string DEFAULT_PASSWORD_WATERMARK = "Password...";
-        private string _usernameWatermark, _passwordWatermark;
+        private const Visibility DEFAULT_NEGATIVE_BUTTON_VISIBILITY = Visibility.Collapsed;
+        private string _usernameWatermark = null, _passwordWatermark = null;
         public string InitialUsername { get; set; }
+        private Visibility? _negativeButtonButtonVisibility;
         public LoginDialogSettings() : base()
         {
-            _usernameWatermark = DEFAULT_USERNAME_WATERMARK;
-            _passwordWatermark = DEFAULT_PASSWORD_WATERMARK;
+            UsernameWatermark = UsernameWatermark != null ? UsernameWatermark : DEFAULT_USERNAME_WATERMARK;
+            PasswordWatermark = PasswordWatermark != null ? PasswordWatermark : DEFAULT_PASSWORD_WATERMARK;
+            AffirmativeButtonText = "Login";
+            FirstAuxiliaryButtonText = "";
+            SecondAuxiliaryButtonText = "";
         }
         public string UsernameWatermark
         {
@@ -28,6 +33,11 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return _passwordWatermark; }
             set { _passwordWatermark = value; }
+        }
+        public Visibility NegativeButtonVisibility
+        {
+            get { return _negativeButtonButtonVisibility.GetValueOrDefault(DEFAULT_NEGATIVE_BUTTON_VISIBILITY); }
+            set { _negativeButtonButtonVisibility = value; }
         }
     }
     public class LoginDialogData
@@ -169,6 +179,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty PasswordWatermarkProperty = DependencyProperty.Register("PasswordWatermark", typeof(string), typeof(LoginDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register("AffirmativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("OK"));
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("Cancel"));
+        public static readonly DependencyProperty NegativeButtonButtonVisibilityProperty = DependencyProperty.Register("NegativeButtonButtonVisibility", typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Collapsed));
 
         public string Message
         {
@@ -204,6 +215,11 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (string)GetValue(NegativeButtonTextProperty); }
             set { SetValue(NegativeButtonTextProperty, value); }
+        }
+        public Visibility NegativeButtonButtonVisibility
+        {
+            get { return (Visibility)GetValue(NegativeButtonButtonVisibilityProperty); }
+            set { SetValue(NegativeButtonButtonVisibilityProperty, value); }
         }
     }
 }

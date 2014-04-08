@@ -46,6 +46,7 @@
                 <Button x:Name="PART_NegativeButton"
                                     Height="35"
                                     MinWidth="80"
+                                    Visibility="{Binding NegativeButtonButtonVisibility, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                                     Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                                     Margin="5 0 5 0" />
             </StackPanel>
