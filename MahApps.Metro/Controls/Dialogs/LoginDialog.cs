@@ -41,8 +41,8 @@ namespace MahApps.Metro.Controls.Dialogs
     }
     public class LoginDialogData
     {
-        public string username { get; set; }
-        public string password { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
     public partial class LoginDialog : BaseMetroDialog
     {
@@ -117,7 +117,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 if (e.Key == Key.Enter)
                 {
                     cleanUpHandlers();
-                    tcs.TrySetResult(new LoginDialogData { username = Username, password = PART_TextBox2.Password });
+                    tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password });
                 }
             });
 
@@ -136,7 +136,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 cleanUpHandlers();
 
-                tcs.TrySetResult(new LoginDialogData { username = Username, password = PART_TextBox2.Password });
+                tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password });
 
                 e.Handled = true;
             });
