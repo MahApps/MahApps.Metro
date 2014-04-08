@@ -21,8 +21,6 @@ namespace MahApps.Metro.Controls.Dialogs
             UsernameWatermark = UsernameWatermark != null ? UsernameWatermark : DEFAULT_USERNAME_WATERMARK;
             PasswordWatermark = PasswordWatermark != null ? PasswordWatermark : DEFAULT_PASSWORD_WATERMARK;
             AffirmativeButtonText = "Login";
-            FirstAuxiliaryButtonText = "";
-            SecondAuxiliaryButtonText = "";
         }
         public string UsernameWatermark
         {
