@@ -15,11 +15,12 @@ namespace MahApps.Metro.Controls.Dialogs
         private const Visibility DEFAULT_NEGATIVE_BUTTON_VISIBILITY = Visibility.Collapsed;
         private string _usernameWatermark = null, _passwordWatermark = null;
         public string InitialUsername { get; set; }
-        private Visibility? _negativeButtonButtonVisibility;
+        private Visibility _negativeButtonButtonVisibility;
         public LoginDialogSettings() : base()
         {
-            UsernameWatermark = UsernameWatermark != null ? UsernameWatermark : DEFAULT_USERNAME_WATERMARK;
-            PasswordWatermark = PasswordWatermark != null ? PasswordWatermark : DEFAULT_PASSWORD_WATERMARK;
+            UsernameWatermark = DEFAULT_USERNAME_WATERMARK;
+            PasswordWatermark = DEFAULT_PASSWORD_WATERMARK;
+            NegativeButtonVisibility = DEFAULT_NEGATIVE_BUTTON_VISIBILITY;
             AffirmativeButtonText = "Login";
         }
         public string UsernameWatermark
@@ -34,7 +35,7 @@ namespace MahApps.Metro.Controls.Dialogs
         }
         public Visibility NegativeButtonVisibility
         {
-            get { return _negativeButtonButtonVisibility.GetValueOrDefault(DEFAULT_NEGATIVE_BUTTON_VISIBILITY); }
+            get { return _negativeButtonButtonVisibility; }
             set { _negativeButtonButtonVisibility = value; }
         }
     }
@@ -56,6 +57,7 @@ namespace MahApps.Metro.Controls.Dialogs
             Username = settings.InitialUsername;
             UsernameWatermark = settings.UsernameWatermark;
             PasswordWatermark = settings.PasswordWatermark;
+            NegativeButtonButtonVisibility = settings.NegativeButtonVisibility;
         }
 
         internal Task<LoginDialogData> WaitForButtonPressAsync()
