@@ -168,6 +168,20 @@ namespace MetroDemo
             await this.ShowMessageAsync("Hello", "Hello " + result + "!");
         }
 
+        private async void ShowLoginDialog(object sender, RoutedEventArgs e)
+        {
+            this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme });
+            if (result == null)
+            {
+                //User pressed cancel
+            }
+            else
+            {
+                MessageBox.Show(String.Format("Username: {0}\nPassword: {1}", result.username, result.password));
+            }
+        }
+
         private void InteropDemo(object sender, RoutedEventArgs e)
         {
             new InteropDemo().Show();
