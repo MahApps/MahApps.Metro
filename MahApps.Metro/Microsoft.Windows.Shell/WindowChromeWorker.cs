@@ -816,7 +816,8 @@ namespace Microsoft.Windows.Shell
             {
                 _lastMenuState = state;
 
-                bool modified = _ModifyStyle(WS.VISIBLE, 0);
+                // disable this, because we get a nasty issue under windows 8 with this
+                //bool modified = _ModifyStyle(WS.VISIBLE, 0);
                 IntPtr hmenu = NativeMethods.GetSystemMenu(_hwnd, false);
                 if (IntPtr.Zero != hmenu)
                 {
@@ -852,10 +853,10 @@ namespace Microsoft.Windows.Shell
                     }
                 }
 
-                if (modified)
+                /*if (modified)
                 {
                     _ModifyStyle(0, WS.VISIBLE);
-                }
+                }*/
             }
         }
 

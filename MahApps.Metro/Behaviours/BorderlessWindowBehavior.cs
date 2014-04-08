@@ -208,57 +208,6 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.BorderBrush = savedBorderBrush;
             }
             HandleMaximize();
-            
-            HandleTaskbarItem();
-        }
-
-        private void HandleTaskbarItem()
-        {
-            if (IsGreaterOrEqualWin8())
-            {
-                // nasty hack for >= win 8
-                // the taskbar item disappears after this steps
-                // - Set IgnoreTaskbarOnMaximize="True"
-                // - Maximize the application
-                // - Minimize and focus another application OR click somewhere on a second monitor
-                // - Focus the original application again
-                // - The taskbar item disappeared
-                var showInTaskbar = AssociatedObject.ShowInTaskbar;
-                if (showInTaskbar && AssociatedObject.WindowState == WindowState.Minimized)
-                {
-                    //AssociatedObject.ShowInTaskbar = false;
-                    //AssociatedObject.ShowInTaskbar = showInTaskbar;
-                    ShowTaskBarButton(showInTaskbar);
-                }
-            }
-        }
-
-        private void ShowTaskBarButton(bool bVisible)
-        {
-            //NativeMethods.ShowWindow(handle, SW.HIDE);
-            if (bVisible)
-                ModifyExStyle(0, Standard.WS_EX.APPWINDOW);
-            else
-                ModifyExStyle(Standard.WS_EX.APPWINDOW, 0);
-            //NativeMethods.ShowWindow(handle, SW.SHOW);
-        }
-
-        /// <summary>Add and remove a native WindowStyle from the HWND.</summary>
-        /// <param name="removeStyle">The styles to be removed.  These can be bitwise combined.</param>
-        /// <param name="addStyle">The styles to be added.  These can be bitwise combined.</param>
-        /// <returns>Whether the styles of the HWND were modified as a result of this call.</returns>
-        private bool ModifyExStyle(Standard.WS_EX removeStyle, Standard.WS_EX addStyle)
-        {
-            Standard.Assert.IsNotDefault(handle);
-            var dwStyle = (Standard.WS_EX)Standard.NativeMethods.GetWindowLongPtr(handle, Standard.GWL.EXSTYLE).ToInt32();
-            var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
-            if (dwStyle == dwNewStyle)
-            {
-                return false;
-            }
-
-            Standard.NativeMethods.SetWindowLongPtr(handle, Standard.GWL.EXSTYLE, new IntPtr((int)dwNewStyle));
-            return true;
         }
 
         private void AssociatedObject_Deactivated(object sender, EventArgs e)
@@ -268,8 +217,6 @@ namespace MahApps.Metro.Behaviours
                 savedBorderBrush = AssociatedObject.BorderBrush;
                 AssociatedObject.BorderBrush = this.nonActiveBorderColor;
             }
-
-            HandleTaskbarItem();
         }
 
         private void AssociatedObject_StateChanged(object sender, EventArgs e)
