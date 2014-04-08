@@ -191,6 +191,9 @@ namespace MahApps.Metro.Behaviours
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
                     handled = true;
                     break;
+                case Constants.WM_MOVE:
+                    this.HandleMaximize(true);
+                    break;
             }
 
             return returnval;
@@ -224,7 +227,7 @@ namespace MahApps.Metro.Behaviours
             HandleMaximize();
         }
 
-        private void HandleMaximize()
+        private void HandleMaximize(bool handleOnlyMaximized = false)
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
@@ -247,7 +250,7 @@ namespace MahApps.Metro.Behaviours
                     UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                 }
             }
-            else
+            else if (!handleOnlyMaximized)
             {
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
