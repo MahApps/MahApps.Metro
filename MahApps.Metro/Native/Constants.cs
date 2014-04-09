@@ -50,6 +50,8 @@
         public const uint SWP_NOOWNERZORDER = 0x0200; /* Don’t do owner Z ordering */
         public const uint SWP_NOSENDCHANGING = 0x0400; /* Don’t send WM_WINDOWPOSCHANGING */
 
+        public const int WM_MOVE = 0x0003;
+
         public const uint TOPMOST_FLAGS = SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOSIZE | SWP_NOMOVE | SWP_NOREDRAW | SWP_NOSENDCHANGING;
     }
 }

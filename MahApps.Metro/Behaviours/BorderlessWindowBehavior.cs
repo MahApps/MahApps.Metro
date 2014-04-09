@@ -191,14 +191,12 @@ namespace MahApps.Metro.Behaviours
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
                     handled = true;
                     break;
+                /*case Constants.WM_MOVE:
+                    this.HandleMaximize(true);
+                    break;*/
             }
 
             return returnval;
-        }
-
-        private bool IsGreaterOrEqualWin8()
-        {
-            return Environment.OSVersion.Version.CompareTo(new Version(6, 2)) > 0;
         }
 
         private void AssociatedObject_Activated(object sender, EventArgs e)
@@ -208,28 +206,6 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.BorderBrush = savedBorderBrush;
             }
             HandleMaximize();
-            
-            HandleTaskbarItem();
-        }
-
-        private void HandleTaskbarItem()
-        {
-            if (IsGreaterOrEqualWin8())
-            {
-                // nasty hack for >= win 8
-                // the taskbar item disappears after this steps
-                // - Set IgnoreTaskbarOnMaximize="True"
-                // - Maximize the application
-                // - Minimize and focus another application OR click somewhere on a second monitor
-                // - Focus the original application again
-                // - The taskbar item disappeared
-                var showInTaskbar = AssociatedObject.ShowInTaskbar;
-                if (showInTaskbar && AssociatedObject.WindowState == WindowState.Minimized)
-                {
-                    AssociatedObject.ShowInTaskbar = false;
-                    AssociatedObject.ShowInTaskbar = showInTaskbar;
-                }
-            }
         }
 
         private void AssociatedObject_Deactivated(object sender, EventArgs e)
@@ -239,8 +215,6 @@ namespace MahApps.Metro.Behaviours
                 savedBorderBrush = AssociatedObject.BorderBrush;
                 AssociatedObject.BorderBrush = this.nonActiveBorderColor;
             }
-
-            HandleTaskbarItem();
         }
 
         private void AssociatedObject_StateChanged(object sender, EventArgs e)
@@ -248,7 +222,7 @@ namespace MahApps.Metro.Behaviours
             HandleMaximize();
         }
 
-        private void HandleMaximize()
+        private void HandleMaximize(bool handleOnlyMaximized = false)
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
@@ -271,7 +245,7 @@ namespace MahApps.Metro.Behaviours
                     UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                 }
             }
-            else
+            else if (!handleOnlyMaximized)
             {
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
