@@ -191,9 +191,9 @@ namespace MahApps.Metro.Behaviours
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
                     handled = true;
                     break;
-                case Constants.WM_MOVE:
+                /*case Constants.WM_MOVE:
                     this.HandleMaximize(true);
-                    break;
+                    break;*/
             }
 
             return returnval;
