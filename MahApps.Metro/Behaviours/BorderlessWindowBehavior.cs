@@ -199,11 +199,6 @@ namespace MahApps.Metro.Behaviours
             return returnval;
         }
 
-        private bool IsGreaterOrEqualWin8()
-        {
-            return Environment.OSVersion.Version.CompareTo(new Version(6, 2)) > 0;
-        }
-
         private void AssociatedObject_Activated(object sender, EventArgs e)
         {
             if (savedBorderBrush != null)
