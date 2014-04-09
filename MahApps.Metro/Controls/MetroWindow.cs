@@ -10,6 +10,7 @@ using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;
 using System.Windows.Shapes;
 using System.Collections.Generic;
+using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Controls
 {
@@ -835,7 +836,14 @@ namespace MahApps.Metro.Controls
                         (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize) &&
                         mPoint.Y <= TitlebarHeight && TitlebarHeight > 0)
                     {
-                        WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+                        if (WindowState == WindowState.Maximized)
+                        {
+                            Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
+                        }
+                        else
+                        {
+                            Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
+                        }
                     }
                 }
             }
