@@ -13,6 +13,7 @@ You can help keep the documentation up to date by submitting a pull request on t
 ### Icons
 
 MahApps.Metro has also an icon package used from [WindowsIcons](https://github.com/Templarian/WindowsIcons) by [Templarian](https://github.com/Templarian)
+
 You can download the Nuget package [here](https://www.nuget.org/packages/MahApps.Metro.Resources)
 
 ### Ran into an bug?
