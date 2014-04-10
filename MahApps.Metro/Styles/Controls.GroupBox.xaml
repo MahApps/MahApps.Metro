@@ -19,6 +19,8 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize"
                 Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Controls:ControlsHelper.GroupBoxHeaderForeground"
+                Value="{x:Null}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
