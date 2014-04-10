@@ -35,13 +35,13 @@
                                          Height="19"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Stroke="{DynamicResource WhiteColorBrush}" />
+                                         Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
-                                      Stroke="{DynamicResource WhiteColorBrush}"
+                                      Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
                                       StrokeThickness="2" />
                             </Grid>
                             <ContentPresenter Grid.Row="1"
@@ -63,10 +63,10 @@
                                  Value="true">
                             <Setter TargetName="Circle"
                                     Property="Stroke"
-                                    Value="{DynamicResource GrayBrush8}" />
+                                    Value="{DynamicResource GrayBrush2}" />
                             <Setter TargetName="Arrow"
                                     Property="Stroke"
-                                    Value="{DynamicResource GrayBrush8}" />
+                                    Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
@@ -116,13 +116,13 @@
                                          Height="19"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Stroke="{DynamicResource WhiteColorBrush}" />
+                                         Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
-                                      Stroke="{DynamicResource WhiteColorBrush}"
+                                      Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
                                       StrokeThickness="2" />
                             </Grid>
                             <ContentPresenter Grid.Column="1"
@@ -144,10 +144,10 @@
                                  Value="true">
                             <Setter TargetName="Circle"
                                     Property="Stroke"
-                                    Value="{DynamicResource GrayBrush8}" />
+                                    Value="{DynamicResource GrayBrush2}" />
                             <Setter TargetName="Arrow"
                                     Property="Stroke"
-                                    Value="{DynamicResource GrayBrush8}" />
+                                    Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
@@ -197,13 +197,13 @@
                                          Height="19"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Stroke="{DynamicResource WhiteColorBrush}" />
+                                         Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
-                                      Stroke="{DynamicResource WhiteColorBrush}"
+                                      Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
                                       StrokeThickness="2" />
                             </Grid>
                             <ContentPresenter Grid.Row="1"
@@ -225,10 +225,10 @@
                                  Value="true">
                             <Setter TargetName="Circle"
                                     Property="Stroke"
-                                    Value="{DynamicResource GrayBrush8}" />
+                                    Value="{DynamicResource GrayBrush2}" />
                             <Setter TargetName="Arrow"
                                     Property="Stroke"
-                                    Value="{DynamicResource GrayBrush8}" />
+                                    Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
@@ -268,13 +268,13 @@
                                      Height="19"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
-                                     Stroke="{DynamicResource WhiteColorBrush}" />
+                                     Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                             <Path x:Name="Arrow"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                   SnapsToDevicePixels="false"
-                                  Stroke="{DynamicResource WhiteColorBrush}"
+                                  Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
                                   StrokeThickness="2" />
                             <ContentPresenter Grid.Column="1"
                                               Margin="4,0,0,0"
@@ -295,10 +295,10 @@
                                  Value="true">
                             <Setter TargetName="Circle"
                                     Property="Stroke"
-                                    Value="{DynamicResource GrayBrush8}" />
+                                    Value="{DynamicResource GrayBrush2}" />
                             <Setter TargetName="Arrow"
                                     Property="Stroke"
-                                    Value="{DynamicResource GrayBrush8}" />
+                                    Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
                                  Value="true">
@@ -332,6 +332,8 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize"
                 Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Controls:ControlsHelper.GroupBoxHeaderForeground"
+                Value="{x:Null}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
