@@ -1,8 +1,6 @@
 ﻿<Dialogs:BaseMetroDialog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
-                    xmlns:conv="clr-namespace:MahApps.Metro.Converters"
                     x:Class="MahApps.Metro.Controls.Dialogs.InputDialog"
                     Loaded="Dialog_Loaded">
     <Dialogs:BaseMetroDialog.DialogBody>
@@ -24,7 +22,7 @@
                        x:Name="PART_TextBox"
                        Text="{Binding Input, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        TextWrapping="Wrap" 
-                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+                       Foreground="{DynamicResource Foreground}" />
 
             <StackPanel Grid.Row="2"
                                     Orientation="Horizontal"
