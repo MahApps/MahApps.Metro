@@ -110,10 +110,6 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value); }
         }
 
-
-        public static readonly DependencyProperty MetroDialogOptionsProperty = DependencyProperty.Register(
-                                                        "MetroDialogOptions", typeof(MetroDialogSettings), typeof(MetroWindow), new PropertyMetadata(new MetroDialogSettings()));
-
         public MetroDialogSettings MetroDialogOptions
         {
             get { return (MetroDialogSettings)GetValue(MetroDialogOptionsProperty); }
