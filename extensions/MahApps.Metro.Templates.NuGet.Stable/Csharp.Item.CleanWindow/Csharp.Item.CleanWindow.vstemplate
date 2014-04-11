@@ -25,7 +25,7 @@
   </WizardExtension>
   <WizardData>
     <packages repository="extension" repositoryId="MahApps.Metro.Templates.NuGet.Stable..d68f5ff1-d89a-433f-827b-eee6150935c7">
-      <package id="MahApps.Metro" version="0.12.1.0" />
+      <package id="MahApps.Metro" version="0.13.0.0" />
     </packages>
   </WizardData>
 </VSTemplate>
