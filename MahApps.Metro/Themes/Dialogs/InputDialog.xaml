@@ -1,6 +1,5 @@
 ﻿<Dialogs:BaseMetroDialog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters"
                     x:Class="MahApps.Metro.Controls.Dialogs.InputDialog"
