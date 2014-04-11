@@ -77,10 +77,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="packages\MahApps.Metro.0.13.0.0.nupkg">
+    <Content Include="packages\MahApps.Metro.0.13.1.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="packages\MahApps.Metro.Resources.0.2.0.0.nupkg">
+    <Content Include="packages\MahApps.Metro.Resources.0.2.1.0.nupkg">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="source.extension.vsixmanifest">
