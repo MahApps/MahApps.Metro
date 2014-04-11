@@ -5,75 +5,69 @@
                     xmlns:conv="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type Button}"
-                       BasedOn="{StaticResource SquareButtonStyle}">
-        <Setter Property="FocusVisualStyle"
-                            Value="{x:Null}" />
+    <Style BasedOn="{StaticResource SquareButtonStyle}" TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
-    <Style TargetType="{x:Type Button}"
-                       BasedOn="{StaticResource AccentedSquareButtonStyle}"
-                       x:Key="AccentedDialogSquareButton">
-        <Setter Property="FocusVisualStyle"
-                            Value="{x:Null}" />
+    <Style x:Key="AccentedDialogSquareButton"
+           BasedOn="{StaticResource AccentedSquareButtonStyle}"
+           TargetType="{x:Type Button}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
-
 
     <Storyboard x:Key="DialogShownStoryboard">
-        <DoubleAnimation To="1" BeginTime="0:0:0" Duration="0:0:0.2" AccelerationRatio=".9" Storyboard.TargetProperty="Opacity" />
+        <DoubleAnimation AccelerationRatio=".9"
+                         BeginTime="0:0:0"
+                         Duration="0:0:0.2"
+                         Storyboard.TargetProperty="Opacity"
+                         To="1" />
     </Storyboard>
+    
     <Storyboard x:Key="DialogCloseStoryboard">
-        <DoubleAnimation To="0" BeginTime="0:0:0" Duration="0:0:0.2" AccelerationRatio=".9" Storyboard.TargetProperty="Opacity" />
+        <DoubleAnimation AccelerationRatio=".9"
+                         BeginTime="0:0:0"
+                         Duration="0:0:0.2"
+                         Storyboard.TargetProperty="Opacity"
+                         To="0" />
     </Storyboard>
 
-    <ControlTemplate TargetType="{x:Type Dialogs:BaseMetroDialog}"
-                     x:Key="MetroDialogTemplate">
-
+    <ControlTemplate x:Key="MetroDialogTemplate" TargetType="{x:Type Dialogs:BaseMetroDialog}">
         <Grid Background="{TemplateBinding Background}">
-            <Border Focusable="False"
-                    FocusVisualStyle="{x:Null}">
+            <Border FocusVisualStyle="{x:Null}" Focusable="False">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-
-                    <ContentPresenter Grid.Row="0"
-                                   Content="{TemplateBinding DialogTop}"/>
-
+                    <ContentPresenter Grid.Row="0" Content="{TemplateBinding DialogTop}" />
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="25*" />
                             <ColumnDefinition Width="50*" />
                             <ColumnDefinition Width="25*" />
                         </Grid.ColumnDefinitions>
-
-                        <!--Content area-->
-                        <Grid Grid.Column="1"
-                          Margin="0 10 0 0">
+                        <!--  Content area  -->
+                        <Grid Grid.Column="1" Margin="0 10 0 0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
-                                   FontSize="26"
-                                   Text="{TemplateBinding Title}"
-                                   TextWrapping="Wrap"
-                                   Foreground="{TemplateBinding Foreground}" />
-                            <ContentPresenter Grid.Row="1"
-                                   x:Name="PART_DialogBody_ContentPresenter"
-                                   DataContext="{TemplateBinding DataContext}"
-                                   Content="{TemplateBinding DialogBody}" />
+                                       FontSize="26"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       Text="{TemplateBinding Title}"
+                                       TextWrapping="Wrap" />
+                            <ContentPresenter x:Name="PART_DialogBody_ContentPresenter"
+                                              Grid.Row="1"
+                                              Content="{TemplateBinding DialogBody}"
+                                              DataContext="{TemplateBinding DataContext}" />
                         </Grid>
                     </Grid>
-
-                    <ContentPresenter Grid.Row="2"
-                                   Content="{TemplateBinding DialogBottom}"/>
+                    <ContentPresenter Grid.Row="2" Content="{TemplateBinding DialogBottom}" />
                 </Grid>
             </Border>
         </Grid>
@@ -87,23 +81,14 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Dialogs:BaseMetroDialog}">
-        <Setter Property="Template"
-                Value="{StaticResource MetroDialogTemplate}" />
-        <Setter Property="VerticalAlignment"
-                Value="Center" />
-        <Setter Property="HorizontalAlignment"
-                Value="Stretch" />
-        <Setter Property="Background"
-                Value="{DynamicResource WhiteColorBrush}" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
-        <Setter Property="FocusVisualStyle"
-                Value="{x:Null}" />
-        <Setter Property="KeyboardNavigation.TabNavigation"
-                Value="Cycle" />
-        <Setter Property="KeyboardNavigation.DirectionalNavigation"
-                Value="Cycle" />
-        <Setter Property="Opacity" 
-                Value="0" />
+        <Setter Property="Template" Value="{StaticResource MetroDialogTemplate}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Background" Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Cycle" />
+        <Setter Property="Opacity" Value="0" />
     </Style>
 </ResourceDictionary>
