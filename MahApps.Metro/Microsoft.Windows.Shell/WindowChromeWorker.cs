@@ -81,8 +81,7 @@ namespace Microsoft.Windows.Shell
                 new HANDLE_MESSAGE(WM.NCRBUTTONUP,           _HandleNCRButtonUp),
                 new HANDLE_MESSAGE(WM.SIZE,                  _HandleSize),
                 new HANDLE_MESSAGE(WM.WINDOWPOSCHANGED,      _HandleWindowPosChanged),
-                new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged), 
-                new HANDLE_MESSAGE(WM.SYSCOMMAND,            _HandleSyscommand)
+                new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged)
             };
 
             if (_IsPresentationFrameworkVersionLessThan4)
@@ -263,6 +262,7 @@ namespace Microsoft.Windows.Shell
             _FixupTemplateIssues();
 
             // Force this the first time.
+            _ModifyStyle(0, WS.CAPTION);
             _UpdateSystemMenu(_window.WindowState);
             _UpdateFrameState(true);
 
@@ -676,30 +676,6 @@ namespace Microsoft.Windows.Shell
             _UpdateFrameState(false);
             
             handled = false;
-            return IntPtr.Zero;
-        }
-
-        private IntPtr _HandleSyscommand(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
-        {
-            handled = false;
-            switch ((SC)wParam.ToInt32())
-            {
-                case SC.RESTORE:
-                    {
-                        _window.WindowState = WindowState.Normal;
-                        _window.WindowStyle = WindowStyle.None;
-                        handled = true;
-                    }
-                    break;
-                case SC.MINIMIZE:
-                    {
-                        _window.WindowStyle = WindowStyle.SingleBorderWindow;
-                        _window.WindowState = WindowState.Minimized;
-                        handled = true;
-                    }
-                    break;
-            }
-
             return IntPtr.Zero;
         }
 
