@@ -193,8 +193,19 @@ namespace MahApps.Metro.Controls
             _expander.Click += ExpanderClick;
             _clickButton.Click += ButtonClick;
             _listBox.SelectionChanged += ListBoxSelectionChanged;
+            _listBox.PreviewMouseLeftButtonDown += ListBoxPreviewMouseLeftButtonDown;
             _popup.Opened += PopupOpened;
             _popup.Closed += _popup_Closed;
+        }
+
+        //Make popup close even if no selectionchanged event fired (case when user select the save item as before)
+        void ListBoxPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var item = ContainerFromElement(_listBox, e.OriginalSource as DependencyObject) as ListBoxItem;
+            if (item != null)
+            {
+                IsExpanded = false;
+            }
         }
 
         void _popup_Closed(object sender, EventArgs e)
