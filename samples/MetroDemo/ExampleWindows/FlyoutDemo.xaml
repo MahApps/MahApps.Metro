@@ -92,7 +92,7 @@
                     <ScrollViewer Grid.Row="1"
                                   VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical">
-                            <TextBox Controls:TextboxHelper.Watermark="TextBox 01" />
+                            <TextBox x:Name="firstTB" Controls:TextboxHelper.Watermark="TextBox 01" />
                             <TextBox Margin="0,5,0,0"
                                      Controls:TextboxHelper.Watermark="TextBox 02" />
                             <TextBox Margin="0,5,0,0"

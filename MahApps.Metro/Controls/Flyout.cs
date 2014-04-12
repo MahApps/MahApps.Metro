@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -33,10 +34,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
 
         /// <summary>
-        /// Gets the actual theme (dark/light) of this flyout.
-        /// Used to handle the WindowCommands overlay in the MetroWindow.
+        /// Animation to set the flyout visibility to hidden after 500 ms
         /// </summary>
-        internal Theme ActualTheme { get; private set; }
+        private ObjectAnimationUsingKeyFrames visibilityHiddenAnimation;
 
         /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
@@ -130,6 +130,14 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
+            visibilityHiddenAnimation = new ObjectAnimationUsingKeyFrames
+                                        {
+                                            FillBehavior = FillBehavior.Stop,
+                                            AutoReverse = false,
+                                            BeginTime = new TimeSpan(0, 0, 0, 0, 500)
+                                        };
+            visibilityHiddenAnimation.KeyFrames.Add(new DiscreteObjectKeyFrame(Visibility.Hidden));
+
             this.Loaded += (sender, args) => UpdateFlyoutTheme();
         }
 
@@ -149,90 +157,63 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal void ChangeFlyoutTheme(Accent windowAccent, Theme windowTheme)
+        internal void ChangeFlyoutTheme(Accent windowAccent, AppTheme windowTheme)
         {
             // Beware: Über-dumb code ahead!
             switch (this.Theme)
             {
                 case FlyoutTheme.Accent:
-                    ThemeManager.ChangeTheme(this.Resources, windowAccent, windowTheme);
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
                     this.SetResourceReference(BackgroundProperty, "HighlightBrush");
                     this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
-                    this.ActualTheme = windowTheme;
                 break;
 
                 case FlyoutTheme.Adapt:
-                    ThemeManager.ChangeTheme(this.Resources, windowAccent, windowTheme);
-                    switch (windowTheme)
-                    {
-                        case Metro.Theme.Dark:
-                            this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                            this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
-                            break;
-
-                        case Metro.Theme.Light:
-                            this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                            this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
-                            break;
-                    }
-                    this.ActualTheme = windowTheme;
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
                     break;
 
                 case FlyoutTheme.Inverse:
-                    switch (windowTheme)
-                    {
-                        case Metro.Theme.Dark:
-                            ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Light);
-                            this.Background = (Brush) ThemeManager.DarkResource["FlyoutLightBrush"];
-                            this.Foreground = (Brush) ThemeManager.DarkResource["WhiteColorBrush"];
-                            this.ActualTheme = Metro.Theme.Light;
-                            break;
+                        AppTheme inverseTheme = ThemeManager.GetInverseAppTheme(windowTheme);
 
-                        case Metro.Theme.Light:
-                            ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Dark);
-                            this.Background = (Brush) ThemeManager.LightResource["FlyoutDarkBrush"];
-                            this.Foreground = (Brush)ThemeManager.LightResource["WhiteColorBrush"];
-                            this.ActualTheme = Metro.Theme.Dark;
-                            break;
-                    }
+                    if(inverseTheme == null)
+                        throw new InvalidOperationException("The inverse flyout theme only works if the window theme abides the naming convention. " +
+                                                            "See ThemeManager.GetInverseAppTheme for more infos");
+
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
                     break;
                 
-                case FlyoutTheme.Dark:
-                    ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Dark);
-                    this.SetResourceReference(BackgroundProperty, "FlyoutDarkBrush");
-                    this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                    this.ActualTheme = Metro.Theme.Dark;
+                case FlyoutTheme.Dark: {
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
                     break;
+                }
 
-                case FlyoutTheme.Light:
-                    ThemeManager.ChangeTheme(this.Resources, windowAccent, Metro.Theme.Light);
-                    this.SetResourceReference(BackgroundProperty, "FlyoutLightBrush");
-                    this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                    this.ActualTheme = Metro.Theme.Light;
+                case FlyoutTheme.Light: {
+                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
                     break;
+                }
             }
         }
 
-        private static Tuple<Theme, Accent> DetectTheme(Flyout flyout)
+        private static Tuple<AppTheme, Accent> DetectTheme(Flyout flyout)
         {
             if (flyout == null)
                 return null;
 
             // first look for owner
             var window = flyout.TryFindParent<MetroWindow>();
-            var theme = window != null ? ThemeManager.DetectTheme(window) : null;
+            var theme = window != null ? ThemeManager.DetectAppStyle(window) : null;
             if (theme != null && theme.Item2 != null)
                 return theme;
 
             // second try, look for main window
             if (Application.Current != null) {
                 var mainWindow = Application.Current.MainWindow as MetroWindow;
-                theme = mainWindow != null ? ThemeManager.DetectTheme(mainWindow) : null;
+                theme = mainWindow != null ? ThemeManager.DetectAppStyle(mainWindow) : null;
                 if (theme != null && theme.Item2 != null)
                     return theme;
 
                 // oh no, now look at application resource
-                theme = ThemeManager.DetectTheme(Application.Current);
+                theme = ThemeManager.DetectAppStyle(Application.Current);
                 if (theme != null && theme.Item2 != null)
                     return theme;
             }
@@ -245,10 +226,24 @@ namespace MahApps.Metro.Controls
 
             if ((bool)e.NewValue)
             {
+                flyout.Visibility = Visibility.Visible;
                 flyout.ApplyAnimation(flyout.Position);
+            }
+            else
+            {
+                if (flyout.visibilityHiddenAnimation != null)
+                {
+                    flyout.BeginAnimation(VisibilityProperty, flyout.visibilityHiddenAnimation);
+                }
+                else
+                {
+                    // flyout.visibilityHiddenAnimation == null should not happen
+                    flyout.Visibility = Visibility.Hidden;
+                }
             }
 
             VisualStateManager.GoToState(flyout, (bool) e.NewValue == false ? "Hide" : "Show", true);
+            
             if (flyout.IsOpenChanged != null)
             {
                 flyout.IsOpenChanged(flyout, EventArgs.Empty);

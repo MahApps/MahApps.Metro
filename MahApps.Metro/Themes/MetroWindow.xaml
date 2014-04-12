@@ -15,176 +15,154 @@
     <ControlTemplate x:Key="WindowTemplateKey"
                      TargetType="{x:Type Controls:MetroWindow}">
         <Grid>
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup x:Name="LayoutStates">
-                    <VisualState x:Name="AfterLoaded">
-                        <Storyboard>
-                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                                           Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                           Storyboard.TargetName="PART_Border">
-                                <SplineDoubleKeyFrame KeyTime="00:00:00"
-                                                      Value="0" />
-                                <EasingDoubleKeyFrame KeyTime="00:00:00.600"
-                                                      Value="1">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <CubicEase EasingMode="EaseIn" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
-                            </DoubleAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualState>
-                    <VisualState x:Name="BeforeLoaded" />
-                    <VisualState x:Name="BeforeUnloaded" />
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
-            
             <AdornerDecorator>
-                <Controls:MetroContentControl IsTabStop="False"
-                                              FocusVisualStyle="{x:Null}"
-                                              OnlyLoadTransition="True"
-                                              TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
-                    <Grid Background="{TemplateBinding Background}">
-                        <Grid.ColumnDefinitions>
-                            <!-- icon -->
-                            <ColumnDefinition Width="Auto" />
-                            <!-- left window commands -->
-                            <ColumnDefinition Width="Auto" />
-                            <!-- title -->
-                            <ColumnDefinition Width="*" />
-                            <!-- right window commands -->
-                            <ColumnDefinition Width="Auto" />
-                            <!-- min,max,close buttons -->
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                        </Grid.RowDefinitions>
-
-                        <Rectangle x:Name="PART_WindowTitleBackground"
-                                   Fill="{DynamicResource WindowTitleColorBrush}"
-                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                   Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                   Grid.Column="0"
-                                   Grid.ColumnSpan="5"
-                                   StrokeThickness="0" />
-
+                <Grid Background="{TemplateBinding Background}">
+                    <Grid.ColumnDefinitions>
                         <!-- icon -->
-                        <ContentControl x:Name="PART_Icon"
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        Panel.ZIndex="1"
-                                        Content="{TemplateBinding Icon}"
-                                        ContentTemplate="{TemplateBinding IconTemplate}"
-                                        HorizontalContentAlignment="Stretch"
-                                        VerticalContentAlignment="Stretch"
-                                        MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                        Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <ColumnDefinition Width="Auto" />
+                        <!-- left window commands -->
+                        <ColumnDefinition Width="Auto" />
+                        <!-- title -->
+                        <ColumnDefinition Width="*" />
+                        <!-- right window commands -->
+                        <ColumnDefinition Width="Auto" />
+                        <!-- min,max,close buttons -->
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                        <!-- the left window commands -->
-                        <ContentPresenter x:Name="PART_LeftWindowCommands"
-                                          Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          Panel.ZIndex="1"
-                                          Grid.Row="0"
-                                          Grid.Column="1"
-                                          Grid.RowSpan="2"
-                                          VerticalAlignment="Top"
-                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <Rectangle x:Name="PART_WindowTitleBackground"
+                               Fill="{DynamicResource WindowTitleColorBrush}"
+                               Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                               Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="5"
+                               StrokeThickness="0" />
 
-                        <!-- the title bar -->
-                        <ContentControl x:Name="PART_TitleBar"
-                                        Grid.Row="0"
-                                        Grid.Column="2"
-                                        Content="{TemplateBinding Title}"
-                                        ContentTemplate="{TemplateBinding TitleTemplate}"
-                                        HorizontalContentAlignment="Stretch"
-                                        VerticalContentAlignment="Stretch"
-                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                        Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <ContentControl.Foreground>
-                                <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                    <Binding ElementName="PART_WindowTitleBackground"
-                                             Path="Fill"
-                                             Mode="OneWay" />
-                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
-                                             Path="TitleForeground"
-                                             Mode="OneWay" />
-                                </MultiBinding>
-                            </ContentControl.Foreground>
-                        </ContentControl>
+                    <!-- icon -->
+                    <ContentControl x:Name="PART_Icon"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Panel.ZIndex="1"
+                                    Content="{TemplateBinding Icon}"
+                                    ContentTemplate="{TemplateBinding IconTemplate}"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch"
+                                    MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                        <!-- the right window commands -->
-                        <ContentPresenter x:Name="PART_RightWindowCommands"
-                                          Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          Panel.ZIndex="1"
-                                          Grid.Row="0"
-                                          Grid.Column="3"
-                                          Grid.RowSpan="2"
-                                          VerticalAlignment="Top"
-                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                          Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    <!-- the left window commands -->
+                    <ContentPresenter x:Name="PART_LeftWindowCommands"
+                                      Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Panel.ZIndex="1"
+                                      Grid.Row="0"
+                                      Grid.Column="1"
+                                      Grid.RowSpan="2"
+                                      VerticalAlignment="Top"
+                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                        <!-- the window button commands -->
-                        <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
-                                                       Panel.ZIndex="1"
-                                                       Grid.Row="0"
-                                                       Grid.Column="4"
-                                                       Grid.RowSpan="2"
-                                                       VerticalAlignment="Top"
-                                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                    <!-- the title bar -->
+                    <ContentControl x:Name="PART_TitleBar"
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    Content="{TemplateBinding Title}"
+                                    ContentTemplate="{TemplateBinding TitleTemplate}"
+                                    HorizontalContentAlignment="Stretch"
+                                    VerticalContentAlignment="Stretch"
+                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ContentControl.Foreground>
+                            <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                <Binding ElementName="PART_WindowTitleBackground"
+                                         Path="Fill"
+                                         Mode="OneWay" />
+                                <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                         Path="TitleForeground"
+                                         Mode="OneWay" />
+                            </MultiBinding>
+                        </ContentControl.Foreground>
+                    </ContentControl>
 
-                        <!-- the main window content -->
-                        <ContentPresenter Grid.Row="1"
-                                          Grid.Column="0"
-                                          Grid.ColumnSpan="5" />
+                    <!-- the right window commands -->
+                    <ContentPresenter x:Name="PART_RightWindowCommands"
+                                      Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Panel.ZIndex="1"
+                                      Grid.Row="0"
+                                      Grid.Column="3"
+                                      Grid.RowSpan="2"
+                                      VerticalAlignment="Top"
+                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                        <!-- disables the main content when a modal flyout is shown -->
-                        <Rectangle Grid.Row="0"
-                                   Grid.RowSpan="2"
-                                   Grid.ColumnSpan="4"
-                                   Grid.Column="0"
-                                   Name="PART_FlyoutModal"
-                                   Fill="{DynamicResource BlackColorBrush}"
-                                   Opacity="0.5"
-                                   Visibility="Hidden" />
+                    <!-- the window button commands -->
+                    <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
+                                                   Panel.ZIndex="1"
+                                                   Grid.Row="0"
+                                                   Grid.Column="4"
+                                                   Grid.RowSpan="2"
+                                                   VerticalAlignment="Top"
+                                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
-                        <!-- flyouts -->
-                        <ContentControl Grid.Row="0"
-                                        Grid.Column="0"
-                                        Grid.ColumnSpan="5"
-                                        Grid.RowSpan="2"
-                                        Panel.ZIndex="2"
-                                        Focusable="False"
-                                        KeyboardNavigation.TabNavigation="None"
-                                        Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                        VerticalAlignment="Stretch" />
+                    <!-- the main window content -->
+                    <Controls:MetroContentControl Grid.Row="1"
+                                                  Grid.Column="0"
+                                                  Grid.ColumnSpan="5"
+                                                  IsTabStop="False"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  OnlyLoadTransition="True"
+                                                  TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
+                        <ContentPresenter />
+                    </Controls:MetroContentControl>
 
-                        <!-- Used to create that overlay effect. Can be used for anything. -->
-                        <Grid Grid.Row="0"
-                              Grid.Column="0"
-                              Grid.ColumnSpan="5"
-                              Grid.RowSpan="2"
-                              Panel.ZIndex="3"
-                              FocusVisualStyle="{x:Null}"
-                              x:Name="PART_OverlayBox"
-                              Background="{DynamicResource BlackColorBrush}"
-                              Opacity="0"
-                              Visibility="Hidden" />
+                    <!-- disables the main content when a modal flyout is shown -->
+                    <Rectangle Grid.Row="0"
+                               Grid.RowSpan="2"
+                               Grid.ColumnSpan="5"
+                               Grid.Column="0"
+                               Name="PART_FlyoutModal"
+                               Fill="{DynamicResource BlackColorBrush}"
+                               Opacity="0.5"
+                               Visibility="Hidden" />
 
-                        <Grid Grid.Row="0"
-                              Grid.Column="0"
-                              Grid.ColumnSpan="5"
-                              Grid.RowSpan="2"
-                              Panel.ZIndex="4"
-                              FocusVisualStyle="{x:Null}"
-                              x:Name="PART_MetroDialogContainer" />
-                    </Grid>
-                </Controls:MetroContentControl>
+                    <!-- flyouts -->
+                    <ContentControl Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="5"
+                                    Grid.RowSpan="2"
+                                    Panel.ZIndex="2"
+                                    Focusable="False"
+                                    KeyboardNavigation.TabNavigation="None"
+                                    Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    VerticalAlignment="Stretch" />
+
+                    <!-- Used to create that overlay effect. Can be used for anything. -->
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="5"
+                          Grid.RowSpan="2"
+                          Panel.ZIndex="3"
+                          FocusVisualStyle="{x:Null}"
+                          x:Name="PART_OverlayBox"
+                          Background="{DynamicResource BlackColorBrush}"
+                          Opacity="0"
+                          Visibility="Hidden" />
+
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="5"
+                          Grid.RowSpan="2"
+                          Panel.ZIndex="4"
+                          FocusVisualStyle="{x:Null}"
+                          x:Name="PART_MetroDialogContainer" />
+                </Grid>
             </AdornerDecorator>
+
             <Border x:Name="PART_Border"
-                    Opacity="0"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     HorizontalAlignment="Stretch"
@@ -195,7 +173,7 @@
                         Visibility="Collapsed"
                         VerticalAlignment="Bottom" />
         </Grid>
-        
+
         <ControlTemplate.Resources>
             <Storyboard x:Key="OverlayFastSemiFadeIn"
                         BeginTime="0:0:0"

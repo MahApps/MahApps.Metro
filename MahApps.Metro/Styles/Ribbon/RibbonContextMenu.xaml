@@ -3,7 +3,8 @@
                     xmlns:mwt="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic"
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
 
-    <Style TargetType="RibbonContextMenu">
+    <Style x:Key="RibbonContextMenuStyleKey"
+           TargetType="{x:Type RibbonContextMenu}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RibbonContextMenu}">
@@ -12,14 +13,14 @@
                                                 SnapsToDevicePixels="True"
                                                 Color="#00FFFFFF">
                         <Border Name="PART_ResizeBorder"
-                                Background="{x:Null}"
-                                BorderBrush="{x:Null}"
+                                BorderBrush="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlacementTarget.(RibbonControlService.Ribbon).BorderBrush}"
+                                Background="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PlacementTarget.(RibbonControlService.Ribbon).Background}"
                                 BorderThickness="{TemplateBinding Border.BorderThickness}"
-                                CornerRadius="2,2,2,2">
+                                CornerRadius="0">
                             <Border Name="SubMenuInnerBorder"
                                     Background="#F0FFFFFF"
                                     BorderThickness="0,0,0,0"
-                                    CornerRadius="2,2,2,2">
+                                    CornerRadius="0">
                                 <ScrollViewer Name="SubMenuScrollViewer"
                                               Margin="1,1,1,1"
                                               Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly=FrameworkElement,
@@ -53,25 +54,34 @@
                         </Border>
                     </mwt:SystemDropShadowChrome>
                     <ControlTemplate.Triggers>
-                        <Trigger SourceName="SubMenuScrollViewer" Property="ScrollViewer.CanContentScroll">
-                            <Setter TargetName="OpaqueRect" Property="Canvas.Top">
+                        <Trigger SourceName="SubMenuScrollViewer"
+                                 Property="ScrollViewer.CanContentScroll">
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Top">
                                 <Setter.Value>
-                                    <Binding ElementName="SubMenuScrollViewer" Path="VerticalOffset" />
+                                    <Binding ElementName="SubMenuScrollViewer"
+                                             Path="VerticalOffset" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="OpaqueRect" Property="Canvas.Left">
+                            <Setter TargetName="OpaqueRect"
+                                    Property="Canvas.Left">
                                 <Setter.Value>
-                                    <Binding ElementName="SubMenuScrollViewer" Path="HorizontalOffset" />
+                                    <Binding ElementName="SubMenuScrollViewer"
+                                             Path="HorizontalOffset" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="OverlayRect" Property="Canvas.Top">
+                            <Setter TargetName="OverlayRect"
+                                    Property="Canvas.Top">
                                 <Setter.Value>
-                                    <Binding ElementName="SubMenuScrollViewer" Path="VerticalOffset" />
+                                    <Binding ElementName="SubMenuScrollViewer"
+                                             Path="VerticalOffset" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="OverlayRect" Property="Canvas.Left">
+                            <Setter TargetName="OverlayRect"
+                                    Property="Canvas.Left">
                                 <Setter.Value>
-                                    <Binding ElementName="SubMenuScrollViewer" Path="HorizontalOffset" />
+                                    <Binding ElementName="SubMenuScrollViewer"
+                                             Path="HorizontalOffset" />
                                 </Setter.Value>
                             </Setter>
                             <Trigger.Value>
@@ -79,12 +89,14 @@
                             </Trigger.Value>
                         </Trigger>
                         <Trigger Property="RibbonMenuButton.HasGallery">
-                            <Setter TargetName="SubMenuScrollViewer" Property="ScrollViewer.HorizontalScrollBarVisibility">
+                            <Setter TargetName="SubMenuScrollViewer"
+                                    Property="ScrollViewer.HorizontalScrollBarVisibility">
                                 <Setter.Value>
                                     <x:Static Member="ScrollBarVisibility.Disabled" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="SubMenuScrollViewer" Property="ScrollViewer.VerticalScrollBarVisibility">
+                            <Setter TargetName="SubMenuScrollViewer"
+                                    Property="ScrollViewer.VerticalScrollBarVisibility">
                                 <Setter.Value>
                                     <x:Static Member="ScrollBarVisibility.Disabled" />
                                 </Setter.Value>
@@ -94,12 +106,14 @@
                             </Trigger.Value>
                         </Trigger>
                         <Trigger Property="ContextMenuService.HasDropShadow">
-                            <Setter TargetName="Shadow" Property="FrameworkElement.Margin">
+                            <Setter TargetName="Shadow"
+                                    Property="FrameworkElement.Margin">
                                 <Setter.Value>
                                     <Thickness>0,0,5,5</Thickness>
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="Shadow" Property="mwt:SystemDropShadowChrome.Color">
+                            <Setter TargetName="Shadow"
+                                    Property="mwt:SystemDropShadowChrome.Color">
                                 <Setter.Value>
                                     <Color>#71000000</Color>
                                 </Setter.Value>
@@ -108,33 +122,40 @@
                                 <s:Boolean>True</s:Boolean>
                             </Trigger.Value>
                         </Trigger>
-                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}" Value="True">
-                            <Setter TargetName="BackgroundCanvas" Property="UIElement.Visibility">
+                        <DataTrigger Binding="{Binding Path=(SystemParameters.HighContrast)}"
+                                     Value="True">
+                            <Setter TargetName="BackgroundCanvas"
+                                    Property="UIElement.Visibility">
                                 <Setter.Value>
                                     <x:Static Member="Visibility.Collapsed" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="Shadow" Property="mwt:SystemDropShadowChrome.Color">
+                            <Setter TargetName="Shadow"
+                                    Property="mwt:SystemDropShadowChrome.Color">
                                 <Setter.Value>
                                     <Color>#00FFFFFF</Color>
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="SubMenuScrollViewer" Property="TextElement.Foreground">
+                            <Setter TargetName="SubMenuScrollViewer"
+                                    Property="TextElement.Foreground">
                                 <Setter.Value>
                                     <DynamicResource ResourceKey="{x:Static SystemColors.HighlightTextBrushKey}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="PART_ResizeBorder" Property="Border.BorderBrush">
+                            <Setter TargetName="PART_ResizeBorder"
+                                    Property="Border.BorderBrush">
                                 <Setter.Value>
                                     <DynamicResource ResourceKey="{x:Static SystemColors.ControlTextBrushKey}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="PART_ResizeBorder" Property="Panel.Background">
+                            <Setter TargetName="PART_ResizeBorder"
+                                    Property="Panel.Background">
                                 <Setter.Value>
                                     <DynamicResource ResourceKey="{x:Static SystemColors.MenuBrushKey}" />
                                 </Setter.Value>
                             </Setter>
-                            <Setter TargetName="SubMenuInnerBorder" Property="Panel.Background">
+                            <Setter TargetName="SubMenuInnerBorder"
+                                    Property="Panel.Background">
                                 <Setter.Value>
                                     <SolidColorBrush>#00FFFFFF</SolidColorBrush>
                                 </Setter.Value>

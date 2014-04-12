@@ -14,7 +14,7 @@ namespace MahApps.Metro.Controls.Dialogs
     public abstract class BaseMetroDialog : Control
     {
         private const string PART_DialogBody_ContentPresenter = "PART_DialogBody_ContentPresenter";
-        private ContentPresenter DialogBody_ContentPresenter = null;
+        protected ContentPresenter DialogBody_ContentPresenter = null;
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null, (o, e) =>
@@ -96,9 +96,9 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             DialogSettings = settings == null ? owningWindow.MetroDialogOptions : settings;
 
-            Initialize();
-
             OwningWindow = owningWindow;
+            
+            Initialize();
         }
 
 
@@ -114,23 +114,42 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void Initialize()
         {
+            ThemeManager.IsThemeChanged += ThemeManager_IsThemeChanged;
+            this.Unloaded += BaseMetroDialog_Unloaded;
+
+            HandleTheme();
+
+            this.Resources.MergedDictionaries.Add(new System.Windows.ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
+
+        }
+
+        void BaseMetroDialog_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.IsThemeChanged -= ThemeManager_IsThemeChanged;
+            this.Unloaded -= BaseMetroDialog_Unloaded;
+        }
+
+        void ThemeManager_IsThemeChanged(object sender, OnThemeChangedEventArgs e)
+        {
+            HandleTheme();
+        }
+
+        private void HandleTheme()
+        {
             if (DialogSettings != null)
             {
                 switch (DialogSettings.ColorScheme)
                 {
                     case MetroDialogColorScheme.Theme:
-                        this.SetResourceReference(BackgroundProperty, "WhiteColorBrush");
-                        this.SetResourceReference(ForegroundProperty, "BlackColorBrush");
+                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
+                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "BlackBrush"));
                         break;
                     case MetroDialogColorScheme.Accented:
-                        this.SetResourceReference(BackgroundProperty, "HighlightBrush");
-                        this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
+                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "HighlightBrush"));
+                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "IdealForegroundColorBrush"));
                         break;
                 }
             }
-
-            this.Resources.MergedDictionaries.Add(new System.Windows.ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
-
         }
 
         /// <summary>
@@ -143,7 +162,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             if (this.IsLoaded) return new Task(() => { });
 
-            if (!DialogSettings.UseAnimations)
+            if (!DialogSettings.AnimateShow)
                 this.Opacity = 1.0; //skip the animation
 
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
@@ -219,7 +238,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
-            if (DialogSettings.UseAnimations)
+            if (DialogSettings.AnimateHide)
             {
                 Storyboard closingStoryboard = this.Resources["DialogCloseStoryboard"] as Storyboard;
 
@@ -261,7 +280,9 @@ namespace MahApps.Metro.Controls.Dialogs
             NegativeButtonText = "Cancel";
 
             ColorScheme = MetroDialogColorScheme.Theme;
-            UseAnimations = true;
+            AnimateShow = AnimateHide = true;
+
+            DefaultText = "";
         }
 
         /// <summary>
@@ -280,7 +301,37 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public MetroDialogColorScheme ColorScheme { get; set; }
 
-        public bool UseAnimations { get; set; }
+        /// <summary>
+        /// Enable/disable dialog showing/hiding animations.
+        /// Setting this value will also set both AnimateShow and AnimateHide properties to the same value.
+        /// Getting "True" - at least AnimateHide or AnimateHide is "True".
+        /// Getting "False" - both AnimateHide and AnimateHide are "False".
+        /// </summary>
+        [Obsolete("This property is obsolete and will be deleted in next release, use AnimateShow and AnimateHide instead.")]
+        public bool UseAnimations
+        {
+            get { return AnimateShow || AnimateHide; }
+            set { AnimateShow = AnimateHide = value; }
+        }
+
+        /// <summary>
+        /// Enable/disable dialog showing animation.
+        /// "True" - play showing animation.
+        /// "False" - skip showing animation.
+        /// </summary>
+        public bool AnimateShow { get; set; }
+
+        /// <summary>
+        /// Enable/disable dialog hiding animation
+        /// "True" - play hiding animation.
+        /// "False" - skip hiding animation.
+        /// </summary>
+        public bool AnimateHide { get; set; }
+
+        /// <summary>
+        /// Gets/sets the default text( just the inputdialog needed)
+        /// </summary>
+        public string DefaultText { get; set; }
     }
 
     /// <summary>

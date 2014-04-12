@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Controls
 {
@@ -12,6 +14,24 @@ namespace MahApps.Metro.Controls
     /// </summary>
     internal static class MetroWindowHelpers
     {
+        /// <summary>
+        /// Sets the IsHitTestVisibleInChromeProperty to a MetroWindow template child
+        /// </summary>
+        /// <param name="window">The MetroWindow</param>
+        /// <param name="name">The name of the template child</param>
+        public static void SetIsHitTestVisibleInChromeProperty<T>(this MetroWindow window, string name) where T : DependencyObject
+        {
+            if (window == null)
+            {
+                return;
+            }
+            var elementPart = window.GetPart<T>(name);
+            if (elementPart != null)
+            {
+                elementPart.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+            }
+        }
+
         /// <summary>
         /// Adapts the WindowCommands to the theme of the first opened, topmost && && (top || right || left) flyout
         /// </summary>
@@ -77,20 +97,7 @@ namespace MahApps.Metro.Controls
 
         public static void UpdateWindowCommandsForFlyout(this MetroWindow window, Flyout flyout)
         {
-            Brush brush = null;
-
-            if (flyout.Theme == FlyoutTheme.Accent)
-            {
-                brush = (Brush)flyout.FindResource("IdealForegroundColorBrush");
-            }
-            else if (flyout.ActualTheme == Theme.Light)
-            {
-                brush = (Brush)ThemeManager.LightResource["BlackBrush"];
-            }
-            else if (flyout.ActualTheme == Theme.Dark)
-            {
-                brush = (Brush)ThemeManager.DarkResource["BlackBrush"];
-            }
+            Brush brush = flyout.Foreground;
 
             window.ChangeAllWindowCommandsBrush(brush, flyout.Position);
         }

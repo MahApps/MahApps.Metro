@@ -1,7 +1,3 @@
-/**************************************************************************\
-    Copyright Microsoft Corporation. All Rights Reserved.
-\**************************************************************************/
-
 // Conditional to use more aggressive fail-fast behaviors when debugging.
 #define DEV_DEBUG
 
@@ -20,13 +16,19 @@ namespace Standard
     /// <summary>A static class for verifying assumptions.</summary>
     internal static class Assert
     {
+        // Blend and VS don't like Debugger.Break being called on their design surfaces.  Badness will happen.
+        //private static readonly bool _isNotAtRuntime = (bool)System.ComponentModel.DesignerProperties.IsInDesignModeProperty.GetMetadata(typeof(System.Windows.DependencyObject)).DefaultValue;
+
         private static void _Break()
         {
+            //if (!_isNotAtRuntime)
+            {
 #if DEV_DEBUG
-            Debugger.Break();
+                Debugger.Break();
 #else
-            Debug.Assert(false);
+                Debug.Assert(false);
 #endif
+            }
         }
 
         /// <summary>A function signature for Assert.Evaluate.</summary>
@@ -70,6 +72,29 @@ namespace Standard
         [Conditional("DEBUG")]
         public static void AreEqual<T>(T expected, T actual)
         {
+            if (null == expected)
+            {
+                // Two nulls are considered equal, regardless of type semantics.
+                if (null != actual && !actual.Equals(expected))
+                {
+                    _Break();
+                }
+            }
+            else if (!expected.Equals(actual))
+            {
+                _Break();
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void LazyAreEqual<T>(Func<T> expectedResult, Func<T> actualResult)
+        {
+            Assert.IsNotNull(expectedResult);
+            Assert.IsNotNull(actualResult);
+
+            T actual = actualResult();
+            T expected = expectedResult();
+
             if (null == expected)
             {
                 // Two nulls are considered equal, regardless of type semantics.
@@ -248,6 +273,15 @@ namespace Standard
             }
         }
 
+        [Conditional("DEBUG")]
+        public static void IsTrue<T>(Predicate<T> predicate, T arg)
+        {
+            if (!predicate(arg))
+            {
+                _Break();
+            }
+        }
+
         /// <summary>
         /// Verifies that the specified condition is true.  The assertion fails if it is not.
         /// </summary>
@@ -356,15 +390,6 @@ namespace Standard
         public static void NullableIsNull<T>(T? value) where T : struct
         {
             if (null != value)
-            {
-                _Break();
-            }
-        }
-
-        [Conditional("DEBUG")]
-        public static void IsNotOnMainThread()
-        {
-            if (System.Windows.Application.Current.Dispatcher.CheckAccess())
             {
                 _Break();
             }

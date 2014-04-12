@@ -116,7 +116,7 @@ namespace MahApps.Metro.Controls
         {
             var parentWindow = GetParentWindow();
             if (parentWindow != null)
-                parentWindow.WindowState = WindowState.Minimized;
+                Microsoft.Windows.Shell.SystemCommands.MinimizeWindow(parentWindow);
         }
 
         private void MaximiseClick(object sender, RoutedEventArgs e)
@@ -125,7 +125,15 @@ namespace MahApps.Metro.Controls
             if (parentWindow == null)
                 return;
 
-            parentWindow.WindowState = parentWindow.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+            if (parentWindow.WindowState == WindowState.Maximized)
+            {
+                Microsoft.Windows.Shell.SystemCommands.RestoreWindow(parentWindow);
+            }
+            else
+            {
+                Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(parentWindow);
+            }
+            
             RefreshMaximiseIconState(parentWindow);
         }
 
@@ -136,7 +144,7 @@ namespace MahApps.Metro.Controls
 
         private void RefreshMaximiseIconState(Window parentWindow)
         {
-            if (parentWindow == null)
+            if (parentWindow == null || max == null)
                 return;
 
             if (parentWindow.WindowState == WindowState.Normal)

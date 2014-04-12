@@ -4,6 +4,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
 
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/DropDownButton.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Glow.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/FlipView.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Flyout.xaml" />
@@ -15,6 +16,7 @@
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/Pivot.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/ProgressRing.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/RangeSlider.xaml" />
+        <ResourceDictionary Source="/MahApps.Metro;component/Themes/SplitButton.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroAnimatedTabControl.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroAnimatedSingleRowTabControl.xaml" />
         <ResourceDictionary Source="/MahApps.Metro;component/Themes/MetroTabControl.xaml" />
