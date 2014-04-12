@@ -139,6 +139,8 @@
     </Compile>
     <Compile Include="ExampleWindows\RibbonDemo.xaml.cs">
       <DependentUpon>RibbonDemo.xaml</DependentUpon>
+    <Compile Include="ExampleWindows\SizeToContentDemo.xaml.cs">
+      <DependentUpon>SizeToContentDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExampleWindows\VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
@@ -211,6 +213,7 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ExampleWindows\RibbonDemo.xaml">
+    <Page Include="ExampleWindows\SizeToContentDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

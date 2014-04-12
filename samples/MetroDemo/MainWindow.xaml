@@ -18,7 +18,8 @@
                       mc:Ignorable="d"
                       d:DesignHeight="600"
                       d:DesignWidth="800"
-                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
+                      Closing="MetroWindow_Closing">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -78,7 +79,7 @@
             <Dialog:SimpleDialog x:Key="SimpleDialogTest"
                                  Title="This dialog allows arbitrary content. It will close in 5 seconds."
                                  x:Name="SimpleTestDialog">
-                <Button Content="Hello" />
+                <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentBrush}" />
             </Dialog:SimpleDialog>
 
         </ResourceDictionary>
@@ -102,6 +103,9 @@
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
+            <Button Click="LaunchSizeToContentDemo"
+                    ToolTip="SizeToContent demo"
+                    Content="STC" />
             <Button Click="LaunchVisualStudioDemo"
                     ToolTip="Visual Studio style demo"
                     Content="VS" />
@@ -127,6 +131,9 @@
                           ToolTip="Shows the toggle button magic"
                           x:Name="MagicToggleButton"
                           IsChecked="{Binding MagicToggleButtonIsChecked}" />
+            <ToggleButton Content="Confirm quit"
+                          ToolTip="Enable quit confirmation dialog on exit"
+                          IsChecked="{Binding QuitConfirmationEnabled}" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 

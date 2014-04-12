@@ -816,7 +816,6 @@ namespace Microsoft.Windows.Shell
             {
                 _lastMenuState = state;
 
-                bool modified = _ModifyStyle(WS.VISIBLE, 0);
                 IntPtr hmenu = NativeMethods.GetSystemMenu(_hwnd, false);
                 if (IntPtr.Zero != hmenu)
                 {
@@ -850,11 +849,6 @@ namespace Microsoft.Windows.Shell
                             NativeMethods.EnableMenuItem(hmenu, SC.MAXIMIZE, canMaximize ? mfEnabled : mfDisabled);
                             break;
                     }
-                }
-
-                if (modified)
-                {
-                    _ModifyStyle(0, WS.VISIBLE);
                 }
             }
         }

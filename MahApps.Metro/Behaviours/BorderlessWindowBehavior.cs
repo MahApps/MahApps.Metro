@@ -35,8 +35,15 @@ namespace MahApps.Metro.Behaviours
             windowChrome.CornerRadius = new CornerRadius(0);
             windowChrome.GlassFrameThickness = new Thickness(0);
             windowChrome.UseAeroCaptionButtons = false;
+            
             var metroWindow = AssociatedObject as MetroWindow;
-            windowChrome.IgnoreTaskbarOnMaximize = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
+            if (metroWindow != null)
+            {
+                windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
+                      .AddValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+            }
+
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
 
             // no transparany, because it hase more then one unwanted issues
@@ -62,12 +69,6 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.Activated += AssociatedObject_Activated;
             AssociatedObject.Deactivated += AssociatedObject_Deactivated;
 
-            // handle size to content (thanks @lynnx)
-            var autoSizeToContent = AssociatedObject.SizeToContent == SizeToContent.WidthAndHeight;
-            AssociatedObject.SizeToContent = SizeToContent.Height;
-            AssociatedObject.SizeToContent = autoSizeToContent ? SizeToContent.WidthAndHeight : SizeToContent.Manual;
-            AssociatedObject.IsVisibleChanged += AssociatedObject_IsVisibleChanged;
-
             // handle resize mode after loading the window
             System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window))
                   .AddValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
@@ -81,6 +82,15 @@ namespace MahApps.Metro.Behaviours
             if (metroWindow != null)
             {
                 this.HandleResizeMode(metroWindow, metroWindow.ResizeMode);
+            }
+        }
+
+        private void IgnoreTaskbarOnMaximizePropertyChangedCallback(object sender, EventArgs e)
+        {
+            var metroWindow = sender as MetroWindow;
+            if (metroWindow != null && windowChrome != null)
+            {
+                windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
             }
         }
 
@@ -117,6 +127,11 @@ namespace MahApps.Metro.Behaviours
                 isCleanedUp = true;
 
                 // clean up events
+                if (AssociatedObject is MetroWindow)
+                {
+                    System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
+                          .RemoveValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                }
                 System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window))
                       .RemoveValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
                 AssociatedObject.Loaded -= AssociatedObject_Loaded;
@@ -125,7 +140,6 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.StateChanged -= AssociatedObject_StateChanged;
                 AssociatedObject.Activated -= AssociatedObject_Activated;
                 AssociatedObject.Deactivated -= AssociatedObject_Deactivated;
-                AssociatedObject.IsVisibleChanged -= AssociatedObject_IsVisibleChanged;
                 if (hwndSource != null)
                 {
                     hwndSource.RemoveHook(WindowProc);
@@ -143,14 +157,6 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_Unloaded(object sender, RoutedEventArgs e)
         {
             Cleanup();
-        }
-
-        private void AssociatedObject_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue != e.OldValue && (bool)e.NewValue)
-            {
-                AssociatedObject.SizeToContent = SizeToContent.Manual;
-            }
         }
 
         private System.IntPtr WindowProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam, ref bool handled)
@@ -185,6 +191,9 @@ namespace MahApps.Metro.Behaviours
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
                     handled = true;
                     break;
+                /*case Constants.WM_MOVE:
+                    this.HandleMaximize(true);
+                    break;*/
             }
 
             return returnval;
@@ -213,7 +222,7 @@ namespace MahApps.Metro.Behaviours
             HandleMaximize();
         }
 
-        private void HandleMaximize()
+        private void HandleMaximize(bool handleOnlyMaximized = false)
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
@@ -236,10 +245,20 @@ namespace MahApps.Metro.Behaviours
                     UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                 }
             }
-            else
+            else if (!handleOnlyMaximized)
             {
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
+                
+                // fix nasty TopMost bug
+                // - set TopMost="True"
+                // - start mahapps demo
+                // - TopMost works
+                // - maximize window and back to normal
+                // - TopMost is gone
+                var topMost = AssociatedObject.Topmost;
+                AssociatedObject.Topmost = false;
+                AssociatedObject.Topmost = topMost;
             }
         }
 
@@ -352,6 +371,14 @@ namespace MahApps.Metro.Behaviours
             {
                 hwndSource.AddHook(new HwndSourceHook(WindowProc));
             }
+
+            // handle size to content (thanks @lynnx)
+            var sizeToContent = AssociatedObject.SizeToContent;
+            var snapsToDevicePixels = AssociatedObject.SnapsToDevicePixels;
+            AssociatedObject.SnapsToDevicePixels = true;
+            AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
+            AssociatedObject.SizeToContent = sizeToContent;
+            AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)
@@ -362,35 +389,16 @@ namespace MahApps.Metro.Behaviours
                 return;
             }
 
-            var icon = window.GetPart<UIElement>("PART_Icon");
-            if (icon != null)
+            if (windowChrome != null)
             {
-                icon.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+                windowChrome.IgnoreTaskbarOnMaximize = window.IgnoreTaskbarOnMaximize;
             }
-            
-            var titleBar = window.GetPart<UIElement>("PART_TitleBar");
-            if (titleBar != null)
-            {
-                titleBar.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
-            
-            var leftWindowCommands = window.GetPart<ContentPresenter>("PART_LeftWindowCommands");
-            if (leftWindowCommands != null)
-            {
-                leftWindowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
-            
-            var windowCommands = window.GetPart<ContentPresenter>("PART_RightWindowCommands");
-            if (windowCommands != null)
-            {
-                windowCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
-            
-            var windowButtonCommands = window.GetPart<ContentControl>("PART_WindowButtonCommands");
-            if (windowButtonCommands != null)
-            {
-                windowButtonCommands.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
-            }
+
+            window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
+            window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_TitleBar");
+            window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_LeftWindowCommands");
+            window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_RightWindowCommands");
+            window.SetIsHitTestVisibleInChromeProperty<ContentControl>("PART_WindowButtonCommands");
 
             // handle resize mode
             this.HandleResizeMode(window, window.ResizeMode);

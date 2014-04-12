@@ -120,6 +120,18 @@ namespace MetroDemo
             }
         }
 
+        private bool _quitConfirmationEnabled;
+        public bool QuitConfirmationEnabled
+        {
+            get { return _quitConfirmationEnabled; }
+            set
+            {
+                if (value.Equals(_quitConfirmationEnabled)) return;
+                _quitConfirmationEnabled = value;
+                RaisePropertyChanged("QuitConfirmationEnabled");
+            }
+        }
+
         private ICommand textBoxButtonCmd;
 
         public ICommand TextBoxButtonCmd

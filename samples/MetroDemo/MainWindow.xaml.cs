@@ -9,15 +9,24 @@ namespace MetroDemo
 {
     public partial class MainWindow
     {
+        private bool _shutdown;
+        private readonly MainWindowViewModel _viewModel;
+
         public MainWindow()
         {
-            DataContext = new MainWindowViewModel();
+            _viewModel = new MainWindowViewModel();
+            DataContext = _viewModel;
             InitializeComponent();
         }
 
         private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/MahApps/MahApps.Metro");
+        }
+
+        private void LaunchSizeToContentDemo(object sender, RoutedEventArgs e)
+        {
+            new SizeToContentDemo() { Owner = this }.Show();
         }
 
         private void LaunchVisualStudioDemo(object sender, RoutedEventArgs e)
@@ -81,13 +90,14 @@ namespace MetroDemo
         {
             // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support
             // The package is only used by the demo and not a dependency of the library!
-            this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+            MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
             var mySettings = new MetroDialogSettings()
             {
                 AffirmativeButtonText = "Hi",
                 NegativeButtonText = "Go away!",
-                FirstAuxiliaryButtonText = "Cancel"
+                FirstAuxiliaryButtonText = "Cancel",
+                ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme
             };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro! ",
@@ -114,7 +124,7 @@ namespace MetroDemo
         {
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
-            var controller = await this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
+            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");
 
             await TaskEx.Delay(5000);
 
@@ -176,6 +186,29 @@ namespace MetroDemo
 
             navWin.Show();
             navWin.Navigate(new Navigation.HomePage());
+        }
+
+        private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
+            if (_shutdown) return;
+
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Quit",
+                NegativeButtonText = "Cancel",
+                AnimateShow = true,
+                AnimateHide = false
+            };
+
+            var result = await this.ShowMessageAsync("Quit application?",
+                "Sure you want to quit application?",
+                MessageDialogStyle.AffirmativeAndNegative, mySettings);
+
+            _shutdown = result == MessageDialogResult.Affirmative;
+
+            if (_shutdown)
+                Application.Current.Shutdown();
         }
     }
 }

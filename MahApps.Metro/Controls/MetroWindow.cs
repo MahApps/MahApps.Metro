@@ -10,6 +10,7 @@ using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;
 using System.Windows.Shapes;
 using System.Collections.Generic;
+using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Controls
 {
@@ -38,7 +39,7 @@ namespace MahApps.Metro.Controls
         private const string PART_FlyoutModal = "PART_FlyoutModal";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, null, OnShowTitleBarCoerceValueCallback));
+        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -50,6 +51,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IgnoreTaskbarOnMaximizeProperty = DependencyProperty.Register("IgnoreTaskbarOnMaximize", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty FlyoutsProperty = DependencyProperty.Register("Flyouts", typeof(FlyoutsControl), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowTransitionsEnabledProperty = DependencyProperty.Register("WindowTransitionsEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty MetroDialogOptionsProperty = DependencyProperty.Register("MetroDialogOptions", typeof(MetroDialogSettings), typeof(MetroWindow), new PropertyMetadata(new MetroDialogSettings()));
 
         public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register("NonActiveGlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(153, 153, 153)))); // #999999
@@ -108,7 +110,12 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(OverrideDefaultWindowCommandsBrushProperty, value); }
         }
 
-        public MetroDialogSettings MetroDialogOptions { get; private set; }
+        public MetroDialogSettings MetroDialogOptions
+        {
+            get { return (MetroDialogSettings)GetValue(MetroDialogOptionsProperty); }
+            set { SetValue(MetroDialogOptionsProperty, value); }
+        }
+
 
         [Obsolete("This propery isn't needed anymore, it will be deleted in next release...")]
         public Style TextBlockStyle
@@ -282,6 +289,15 @@ namespace MahApps.Metro.Controls
             set { SetValue(ShowTitleBarProperty, value); }
         }
 
+        private static void OnShowTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (MetroWindow)d;
+            if (e.NewValue != e.OldValue)
+            {
+                window.ToggleVisibiltyForAllTitleElements((bool)e.NewValue);
+            }
+        }
+
         private static object OnShowTitleBarCoerceValueCallback(DependencyObject d, object value)
         {
             // if UseNoneWindowStyle = true no title bar should be shown
@@ -377,6 +393,8 @@ namespace MahApps.Metro.Controls
             {
                 this.WindowButtonCommands.Visibility = newVisibility;
             }
+
+            SetWindowEvents();
         }
 
         /// <summary>
@@ -534,9 +552,6 @@ namespace MahApps.Metro.Controls
         public MetroWindow()
         {
             Loaded += this.MetroWindow_Loaded;
-
-            if (MetroDialogOptions == null)
-                MetroDialogOptions = new MetroDialogSettings();
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
@@ -544,14 +559,6 @@ namespace MahApps.Metro.Controls
             if (this.WindowTransitionsEnabled)
             {
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
-            }
-
-            if (!ShowTitleBar && (icon == null || icon.Visibility != Visibility.Visible))
-            {
-                //Disables the system menu for reasons other than clicking an invisible titlebar.
-                IntPtr handle = new WindowInteropHelper(this).Handle;
-                UnsafeNativeMethods.SetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE, 
-                    UnsafeNativeMethods.GetWindowLong(handle, UnsafeNativeMethods.GWL_STYLE) & ~UnsafeNativeMethods.WS_SYSMENU);
             }
 
             // if UseNoneWindowStyle = true no title bar, window commands or min, max, close buttons should be shown
@@ -700,6 +707,37 @@ namespace MahApps.Metro.Controls
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
 
             this.ToggleVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
+        }
+
+        private void SetWindowEvents()
+        {
+            // clear all event handlers first:
+
+            if (titleBarBackground != null)
+            {
+                titleBarBackground.MouseDown -= TitleBarMouseDown;
+                titleBarBackground.MouseUp -= TitleBarMouseUp;
+                titleBarBackground.MouseMove -= TitleBarMouseMove;
+            }
+
+            if (titleBar != null)
+            {
+                titleBar.MouseDown -= TitleBarMouseDown;
+                titleBar.MouseUp -= TitleBarMouseUp;
+                titleBar.MouseMove -= TitleBarMouseMove;
+            }
+
+            if (icon != null)
+            {
+                icon.MouseDown -= IconMouseDown;
+                icon.MouseUp -= IconMouseUp;
+            }
+
+            MouseDown -= TitleBarMouseDown;
+            MouseUp -= TitleBarMouseUp;
+            MouseMove -= TitleBarMouseMove;
+
+            SizeChanged -= MetroWindow_SizeChanged;
 
             if (icon != null && icon.Visibility == Visibility.Visible)
             {
@@ -723,7 +761,7 @@ namespace MahApps.Metro.Controls
 
                 if (titleBar.GetType() == typeof(Grid))
                 {
-                    SizeChanged += this.MetroWindow_SizeChanged;
+                    SizeChanged += MetroWindow_SizeChanged;
                 }
             }
             else
@@ -801,7 +839,14 @@ namespace MahApps.Metro.Controls
                         (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize) &&
                         mPoint.Y <= TitlebarHeight && TitlebarHeight > 0)
                     {
-                        WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+                        if (WindowState == WindowState.Maximized)
+                        {
+                            Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
+                        }
+                        else
+                        {
+                            Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
+                        }
                     }
                 }
             }
@@ -857,7 +902,7 @@ namespace MahApps.Metro.Controls
 
         internal T GetPart<T>(string name) where T : DependencyObject
         {
-            return (T)GetTemplateChild(name);
+            return GetTemplateChild(name) as T;
         }
 
         private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)

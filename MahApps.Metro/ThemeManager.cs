@@ -16,6 +16,21 @@ namespace MahApps.Metro
         private static IList<Accent> _accents;
         private static IList<AppTheme> _appThemes;
 
+        // We use this mapping to lookup the corresponding (obsolete) theme for the default themes
+        private static readonly Dictionary<string, Theme> compatibilityThemeMapping =
+            new Dictionary<string, Theme>
+            {
+                {"BaseDark", Theme.Dark},
+                {"BaseLight", Theme.Light}
+            };
+
+        private static readonly Dictionary<Theme, string> reverseCompatibilityThemeMapping =
+            new Dictionary<Theme, string>
+            {
+                {Theme.Dark, "BaseDark"},
+                {Theme.Light, "BaseLight"}
+            };
+
         /// <summary>
         /// Gets a list of all of default themes.
         /// </summary>
@@ -58,8 +73,7 @@ namespace MahApps.Metro
 
                 foreach (var color in themes)
                 {
-                    Theme theme = color.ToLower().Contains("light") ? Theme.Light : Theme.Dark;
-                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)), theme);
+                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)));
 
                     _appThemes.Add(appTheme);
                 }
@@ -94,9 +108,8 @@ namespace MahApps.Metro
         /// </summary>
         /// <param name="name"></param>
         /// <param name="resourceAddress"></param>
-        /// <param name="theme"></param>
         /// <returns>true if the app theme does not exists and can be added.</returns>
-        public static bool AddAppTheme(string name, Uri resourceAddress, Theme theme)
+        public static bool AddAppTheme(string name, Uri resourceAddress)
         {
             if (name == null) throw new ArgumentNullException("name");
             if (resourceAddress == null) throw new ArgumentNullException("resourceAddress");
@@ -107,20 +120,8 @@ namespace MahApps.Metro
                 return false;
             }
 
-            _appThemes.Add(new AppTheme(name, resourceAddress, theme));
+            _appThemes.Add(new AppTheme(name, resourceAddress));
             return true;
-        }
-
-        /// <summary>
-        /// Gets app theme with the given name.
-        /// </summary>
-        /// <param name="appThemeName"></param>
-        /// <returns>AppTheme</returns>
-        public static AppTheme GetAppTheme(string appThemeName)
-        {
-            if (appThemeName == null) throw new ArgumentNullException("appThemeName");
-
-            return AppThemes.FirstOrDefault(x => x.Name == appThemeName);
         }
 
         /// <summary>
@@ -131,7 +132,7 @@ namespace MahApps.Metro
         public static AppTheme GetAppTheme(ResourceDictionary resources)
         {
             if (resources == null) throw new ArgumentNullException("resources");
-            
+
             return AppThemes.FirstOrDefault(x => x.Resources.Source == resources.Source);
         }
 
@@ -139,25 +140,40 @@ namespace MahApps.Metro
         /// Gets app theme with the given name and theme type (light or dark).
         /// </summary>
         /// <param name="appThemeName"></param>
-        /// <param name="theme"></param>
         /// <returns>AppTheme</returns>
-        public static AppTheme GetAppTheme(string appThemeName, Theme theme)
+        public static AppTheme GetAppTheme(string appThemeName)
         {
             if (appThemeName == null) throw new ArgumentNullException("appThemeName");
 
-            appThemeName = appThemeName.ToLower().Replace("light", "").Replace("dark", "");
-            return AppThemes.FirstOrDefault(x => x.Name.ToLower().Contains(appThemeName) && x.Theme == theme);
+            return AppThemes.FirstOrDefault(x => x.Name.Equals(appThemeName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
-        /// Gets app theme with the given app theme and theme type (light or dark).
+        /// Gets the inverse <see cref="AppTheme" /> of the given <see cref="AppTheme"/>.
+        /// This method relies on the "Dark" or "Light" affix to be present.
         /// </summary>
-        /// <param name="currentAppTheme"></param>
-        /// <param name="theme"></param>
-        /// <returns>AppTheme</returns>
-        public static AppTheme GetAppTheme(AppTheme currentAppTheme, Theme theme)
+        /// <param name="appTheme">The app theme.</param>
+        /// <returns>The inverse <see cref="AppTheme"/> or <c>null</c> if it couldn't be found.</returns>
+        /// <remarks>
+        /// Returns BaseLight, if BaseDark is given or vice versa.
+        /// Custom Themes must end with "Dark" or "Light" for this to work, for example "CustomDark" and "CustomLight".
+        /// </remarks>
+        public static AppTheme GetInverseAppTheme(AppTheme appTheme)
         {
-            return GetAppTheme(currentAppTheme.Name, theme);
+            if (appTheme == null)
+                throw new ArgumentNullException("appTheme");
+
+            if (appTheme.Name.EndsWith("dark", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return GetAppTheme(appTheme.Name.ToLower().Replace("dark", String.Empty) + "light");
+            }
+
+            if (appTheme.Name.EndsWith("light", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return GetAppTheme(appTheme.Name.ToLower().Replace("light", String.Empty) + "dark");
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -182,6 +198,27 @@ namespace MahApps.Metro
             if (resources == null) throw new ArgumentNullException("resources");
 
             return Accents.FirstOrDefault(x => x.Resources.Source == resources.Source);
+        }
+        /// <summary>
+        /// Gets a resource from the detected AppStyle.
+        /// </summary>
+        /// <param name="window">The window to check. If this is null, the Application's sources will be checked.</param>
+        /// <param name="key">The key to check against.</param>
+        /// <returns>The resource object or null, if the resource wasn't found.</returns>
+        public static object GetResourceFromAppStyle(Window window, string key)
+        {
+            var appStyle = window != null ? DetectAppStyle(window) : DetectAppStyle(Application.Current);
+            if (appStyle == null && window != null)
+                appStyle = DetectAppStyle(Application.Current); //no resources in the window's resources.
+
+            object resource = appStyle.Item1.Resources[key]; //check the theme first
+
+            //next check the accent
+            var accentResource = appStyle.Item2.Resources[key];
+            if (accentResource != null)
+                return accentResource;
+
+            return resource;
         }
 
         /// <summary>
@@ -351,7 +388,11 @@ namespace MahApps.Metro
         {
             if (window == null) throw new ArgumentNullException("window");
 
-            return DetectAppStyle(window.Resources);
+            var detectedStyle = DetectAppStyle(window.Resources);
+            if (detectedStyle == null)
+                detectedStyle = DetectAppStyle(Application.Current.Resources);
+
+            return detectedStyle;
         }
 
         /// <summary>
@@ -487,8 +528,8 @@ namespace MahApps.Metro
             if (app == null) throw new ArgumentNullException("app");
 
             var oldTheme = DetectTheme(app);
-            AppTheme oldAppTheme = AppThemes.First(x => x.Theme == oldTheme.Item1);
-            AppTheme newAppTheme = AppThemes.First(x => x.Theme == newTheme);
+            AppTheme oldAppTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[oldTheme.Item1]);
+            AppTheme newAppTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[newTheme]);
 
             ChangeAppStyle(app.Resources, Tuple.Create(oldAppTheme, oldTheme.Item2), newAccent, newAppTheme);
         }
@@ -500,8 +541,8 @@ namespace MahApps.Metro
             if (window == null) throw new ArgumentNullException("window");
 
             var oldTheme = DetectTheme(window);
-            AppTheme oldAppTheme = AppThemes.First(x => x.Theme == oldTheme.Item1);
-            AppTheme newAppTheme = AppThemes.First(x => x.Theme == newTheme);
+            AppTheme oldAppTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[oldTheme.Item1]);
+            AppTheme newAppTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[newTheme]);
 
             ChangeAppStyle(window.Resources, Tuple.Create(oldAppTheme, oldTheme.Item2), newAccent, newAppTheme);
         }
@@ -511,7 +552,7 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException("resources");
 
-            AppTheme appTheme = AppThemes.First(x => x.Theme == newTheme);
+            AppTheme appTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[newTheme]);
 
             ChangeAppStyle(resources, newAccent, appTheme);
         }
@@ -536,7 +577,7 @@ namespace MahApps.Metro
 
             var appStyle = DetectAppStyle(window);
 
-            return Tuple.Create(appStyle.Item1.Theme, appStyle.Item2);
+            return Tuple.Create(compatibilityThemeMapping[appStyle.Item1.Name], appStyle.Item2);
         }
 
         [Obsolete("This method is obsolete. Use DetectAppStyle instead.")]
@@ -546,7 +587,7 @@ namespace MahApps.Metro
 
             var appStyle = DetectAppStyle(app);
 
-            return Tuple.Create(appStyle.Item1.Theme, appStyle.Item2);
+            return Tuple.Create(compatibilityThemeMapping[appStyle.Item1.Name], appStyle.Item2);
         }
 
 
