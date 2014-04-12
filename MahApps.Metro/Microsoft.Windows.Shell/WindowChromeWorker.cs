@@ -81,7 +81,7 @@ namespace Microsoft.Windows.Shell
                 new HANDLE_MESSAGE(WM.NCRBUTTONUP,           _HandleNCRButtonUp),
                 new HANDLE_MESSAGE(WM.SIZE,                  _HandleSize),
                 new HANDLE_MESSAGE(WM.WINDOWPOSCHANGED,      _HandleWindowPosChanged),
-                new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged), 
+                new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged)
             };
 
             if (_IsPresentationFrameworkVersionLessThan4)
@@ -262,6 +262,7 @@ namespace Microsoft.Windows.Shell
             _FixupTemplateIssues();
 
             // Force this the first time.
+            _ModifyStyle(0, WS.CAPTION);
             _UpdateSystemMenu(_window.WindowState);
             _UpdateFrameState(true);
 
