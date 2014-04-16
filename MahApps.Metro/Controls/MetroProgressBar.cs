@@ -20,7 +20,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty EllipseOffsetProperty =
             DependencyProperty.Register("EllipseOffset", typeof(double), typeof(MetroProgressBar),
                                         new PropertyMetadata(default(double)));
-
+        
         static MetroProgressBar()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroProgressBar), new FrameworkPropertyMetadata(typeof(MetroProgressBar)));
@@ -30,6 +30,16 @@ namespace MahApps.Metro.Controls
         public MetroProgressBar()
         {
             SizeChanged += SizeChangedHandler;
+            IsVisibleChanged += VisibleChangedHandler;
+        }
+
+        void VisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            //reset Storyboard if Visibility is set to Visible #1300
+            if (e.NewValue is bool && (bool)e.NewValue)
+            {
+                ResetStoryboard(ActualWidth);
+            }
         }
 
         private static void OnIsIndeterminateChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -76,7 +86,9 @@ namespace MahApps.Metro.Controls
             double actualWidth = ActualWidth;
             MetroProgressBar bar = this;
             if (this.Visibility == System.Windows.Visibility.Visible)
+            {
                 bar.ResetStoryboard(actualWidth);
+            }
         }
 
         private void ResetStoryboard(double width)
