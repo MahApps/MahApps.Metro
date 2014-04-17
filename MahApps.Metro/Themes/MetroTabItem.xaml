@@ -9,8 +9,6 @@
                 Value="{x:Null}" />
         <Setter Property="IsTabStop"
                 Value="False" />
-        <Setter Property="BorderThickness"
-                Value="1" />
         <Setter Property="Padding"
                 Value="6,2,6,2" />
         <Setter Property="HorizontalContentAlignment"
