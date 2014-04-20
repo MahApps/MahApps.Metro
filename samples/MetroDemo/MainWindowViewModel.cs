@@ -69,6 +69,8 @@ namespace MetroDemo
 
             FrameworkElementFactory spFactory = new FrameworkElementFactory(typeof(Image));
             spFactory.SetBinding(Image.SourceProperty, new System.Windows.Data.Binding("."));
+            spFactory.SetValue(Image.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
+            spFactory.SetValue(Image.StretchProperty, Stretch.Fill);
             FlipViewTemplateSelector.TemplateOne = new DataTemplate()
             {
                 VisualTree = spFactory

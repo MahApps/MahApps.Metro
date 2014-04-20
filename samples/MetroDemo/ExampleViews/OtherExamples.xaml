@@ -183,7 +183,7 @@
                 </Controls:FlipView.Items>
             </Controls:FlipView>
 
-            <Controls:FlipView Height="200" 
+            <Controls:FlipView Height="400"
                                IsBannerEnabled="True"
                                BannerText="Databound Items"
                                ItemTemplateSelector="{Binding FlipViewTemplateSelector, UpdateSourceTrigger=PropertyChanged}"
