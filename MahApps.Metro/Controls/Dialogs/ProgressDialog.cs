@@ -200,6 +200,22 @@ namespace MahApps.Metro.Controls.Dialogs
         }
 
         /// <summary>
+        /// Sets the dialog's title.
+        /// </summary>
+        /// <param name="title">The title to be set.</param>
+        public void SetTitle(string title)
+        {
+            if (WrappedDialog.Dispatcher.CheckAccess())
+            {
+                WrappedDialog.Title = title;
+            }
+            else
+            {
+                WrappedDialog.Dispatcher.Invoke(new Action(() => { WrappedDialog.Title = title; }));
+            }
+        }
+
+        /// <summary>
         /// Gets if the Cancel button has been pressed.
         /// </summary>
         public bool IsCanceled { get; private set; }
