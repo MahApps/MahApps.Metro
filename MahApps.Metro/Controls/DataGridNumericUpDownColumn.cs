@@ -3,7 +3,6 @@ namespace MahApps.Metro.Controls
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
-    using Standard;
 
     public class DataGridNumericUpDownColumn : DataGridBoundColumn
     {

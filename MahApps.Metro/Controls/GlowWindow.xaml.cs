@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using MahApps.Metro.Models.Win32;
-using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Controls
 {
