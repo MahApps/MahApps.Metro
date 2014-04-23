@@ -97,6 +97,7 @@
     <Compile Include="Controls\Dialogs\DialogStateChangedEventArgs.cs" />
     <Compile Include="Controls\Dialogs\InputDialog.cs" />
     <Compile Include="Controls\Dialogs\ProgressDialog.cs" />
+    <Compile Include="Controls\Dialogs\ProgressDialogController.cs" />
     <Compile Include="Controls\Dialogs\SimpleDialog.cs" />
     <Compile Include="Controls\DropDownButton.cs" />
     <Compile Include="Controls\FlipView.cs" />
