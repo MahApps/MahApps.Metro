@@ -35,7 +35,7 @@
                     </Grid.RowDefinitions>
 
                     <Rectangle x:Name="PART_WindowTitleBackground"
-                               Fill="{DynamicResource WindowTitleColorBrush}"
+                               Fill="{TemplateBinding WindowTitleBrush}"
                                Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                Grid.Column="0"
@@ -222,6 +222,8 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
+        <Setter Property="WindowTitleBrush"
+                Value="{DynamicResource WindowTitleColorBrush}" />
         <Setter Property="TextElement.FontSize"
                 Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Background"
