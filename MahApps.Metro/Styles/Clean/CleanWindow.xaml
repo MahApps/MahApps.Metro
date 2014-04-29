@@ -70,8 +70,8 @@
                                             HorizontalAlignment="Center">
                                 <ContentControl.Foreground>
                                     <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                        <Binding ElementName="PART_WindowTitleBackground"
-                                                 Path="Fill"
+                                        <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                                 Path="Background"
                                                  Mode="OneWay" />
                                         <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                                  Path="TitleForeground"
