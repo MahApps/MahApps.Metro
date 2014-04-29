@@ -192,6 +192,16 @@
             </Storyboard>
         </ControlTemplate.Resources>
         <ControlTemplate.Triggers>
+            <!-- handle active/inactive state -->
+            <Trigger Property="IsActive"
+                     Value="False">
+                <Setter TargetName="PART_WindowTitleBackground"
+                        Property="Fill"
+                        Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                <Setter TargetName="PART_Border"
+                        Property="BorderBrush"
+                        Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+            </Trigger>
             <!-- no icon and no icon content template -> collapse the icon content control -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>

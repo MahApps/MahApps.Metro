@@ -93,8 +93,6 @@ namespace MahApps.Metro.Controls
         private Storyboard overlayStoryboard;
         Rectangle flyoutModal;
 
-        private Brush savedTitleBarBrush = null;
-
         public static readonly RoutedEvent FlyoutsStatusChangedEvent = EventManager.RegisterRoutedEvent(
             "FlyoutsStatusChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
 
@@ -574,22 +572,6 @@ namespace MahApps.Metro.Controls
         public MetroWindow()
         {
             Loaded += this.MetroWindow_Loaded;
-            Activated += MetroWindow_Activated;
-            Deactivated += MetroWindow_Deactivated;
-        }
-
-        private void MetroWindow_Activated(object sender, EventArgs e)
-        {
-            if (savedTitleBarBrush != null)
-            {
-                WindowTitleBrush = savedTitleBarBrush;
-            }
-        }
-
-        private void MetroWindow_Deactivated(object sender, EventArgs e)
-        {
-            savedTitleBarBrush = WindowTitleBrush;
-            WindowTitleBrush = NonActiveWindowTitleBrush;
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
