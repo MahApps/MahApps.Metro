@@ -403,8 +403,8 @@
                                                   IsChecked="{Binding IsExpanded,
                                                                   Mode=TwoWay,
                                                                   RelativeSource={RelativeSource TemplatedParent}}"
-                                                  Style="{StaticResource ExpanderDownHeaderStyle}" >
-                                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                  Style="{StaticResource ExpanderDownHeaderStyle}" />
+                                    <ContentPresenter Margin="{TemplateBinding Padding}"
                                                       Content="{TemplateBinding Header}"
                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
@@ -412,7 +412,6 @@
                                                       TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                                       TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                                       TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}" />
-                                    </ToggleButton>
                                 </DockPanel>
                             </Border>
                             <Border x:Name="ExpandSite"
