@@ -1,4 +1,6 @@
-﻿namespace MahApps.Metro.Controls
+﻿using System.Windows;
+
+namespace MahApps.Metro.Controls
 {
     /// <summary>
     /// A MetroTabControl (Pivot) that uses a TransitioningContentControl to animate the contents of a TabItem/MetroTabItem.

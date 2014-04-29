@@ -10,6 +10,7 @@ using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;
 using System.Windows.Shapes;
 using System.Collections.Generic;
+using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Controls
 {

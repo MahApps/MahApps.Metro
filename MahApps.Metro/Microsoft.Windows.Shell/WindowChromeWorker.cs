@@ -8,6 +8,7 @@ namespace Microsoft.Windows.Shell
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Interop;
     using System.Windows.Media;
