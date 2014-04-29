@@ -159,7 +159,6 @@
                 </Grid>
             </AdornerDecorator>
             <Border x:Name="PART_Border"
-                    Opacity="0"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     HorizontalAlignment="Stretch"
@@ -188,6 +187,13 @@
             </Storyboard>
         </ControlTemplate.Resources>
         <ControlTemplate.Triggers>
+            <!-- handle active/inactive state -->
+            <Trigger Property="IsActive"
+                     Value="False">
+                <Setter TargetName="PART_Border"
+                        Property="BorderBrush"
+                        Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+            </Trigger>
             <!-- no icon and no icon content template -> collapse the icon content control -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
