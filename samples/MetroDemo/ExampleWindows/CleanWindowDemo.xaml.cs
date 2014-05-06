@@ -1,7 +1,8 @@
-using MahApps.Metro.Controls.Dialogs;
 using System.Windows;
 using System.Windows.Controls;
-namespace MetroDemo
+using MahApps.Metro.Controls.Dialogs;
+
+namespace MetroDemo.ExampleWindows
 {
     /// <summary>
     /// Interaction logic for CleanWindowDemo.xaml
@@ -16,7 +17,7 @@ namespace MetroDemo
             selector.FirstTemplate = this.Resources["Temp1"] as DataTemplate;
             selector.SecondTemplate = this.Resources["Temp2"] as DataTemplate;
             selector.NullTemplate = this.Resources["Temp0"] as DataTemplate;
-            tc.ContentTemplateSelector = selector;
+            this.tc.ContentTemplateSelector = selector;
         }
 
         internal class SuperDataTemplateSelector : System.Windows.Controls.DataTemplateSelector
@@ -28,21 +29,21 @@ namespace MetroDemo
             public override System.Windows.DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container)
             {
                 if (item == null)
-                    return NullTemplate;
+                    return this.NullTemplate;
                 else
                 {
                     var text = (string)((ListBoxItem)item).Content;
                     if (text == "Item 1")
-                        return FirstTemplate;
+                        return this.FirstTemplate;
                     else
-                        return SecondTemplate;
+                        return this.SecondTemplate;
                 }
             }
         }
 
         private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            settingsFlyout.IsOpen = !settingsFlyout.IsOpen;
+            this.settingsFlyout.IsOpen = !this.settingsFlyout.IsOpen;
         }
 
         private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)

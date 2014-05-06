@@ -6,6 +6,8 @@ using System.Text;
 
 namespace MahApps.Metro.Native
 {
+    using System.Windows;
+
     /// <devdoc>http://msdn.microsoft.com/en-us/library/ms182161.aspx</devdoc>
     [SuppressUnmanagedCodeSecurity]
     internal static class UnsafeNativeMethods
@@ -131,25 +133,34 @@ namespace MahApps.Metro.Native
             public readonly Int32 Y;
         };
 
-        internal static int GET_X_LPARAM(IntPtr lParam)
+        // See: http://stackoverflow.com/questions/7913325/win-api-in-c-get-hi-and-low-word-from-intptr/7913393#7913393
+        internal static Point GetPoint(IntPtr ptr)
         {
-            return LOWORD(lParam.ToInt32());
+            uint xy = unchecked(IntPtr.Size == 8 ? (uint)ptr.ToInt64() : (uint)ptr.ToInt32());
+            int x = unchecked((short)xy);
+            int y = unchecked((short)(xy >> 16));
+            return new Point(x, y);
         }
 
-        internal static int GET_Y_LPARAM(IntPtr lParam)
-        {
-            return HIWORD(lParam.ToInt32());
-        }
+        //internal static int GET_X_LPARAM(IntPtr lParam)
+        //{
+        //    return LOWORD(lParam.ToInt32());
+        //}
 
-        private static int HIWORD(int i)
-        {
-            return (short)(i >> 16);
-        }
+        //internal static int GET_Y_LPARAM(IntPtr lParam)
+        //{
+        //    return HIWORD(lParam.ToInt32());
+        //}
 
-        private static int LOWORD(int i)
-        {
-            return (short)(i & 0xFFFF);
-        }
+        //private static int HIWORD(long i)
+        //{
+        //    return (short)(i >> 16);
+        //}
+
+        //private static int LOWORD(long i)
+        //{
+        //    return (short)(i & 0xFFFF);
+        //}
 
         internal const int GWL_STYLE = -16;
         internal const int WS_SYSMENU = 0x80000;

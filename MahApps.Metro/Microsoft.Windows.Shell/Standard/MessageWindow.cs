@@ -1,15 +1,11 @@
-﻿/**************************************************************************\
-    Copyright Microsoft Corporation. All Rights Reserved.
-\**************************************************************************/
-
-namespace Standard
+﻿namespace Standard
 {
     using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using System.Windows;
     using System.Windows.Threading;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
 
     internal sealed class MessageWindow : DispatcherObject, IDisposable
     {
@@ -23,6 +19,7 @@ namespace Standard
 
         public IntPtr Handle { get; private set; }
 
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public MessageWindow(CS classStyle, WS style, WS_EX exStyle, Rect location, string name, WndProc callback)
         {
@@ -81,7 +78,7 @@ namespace Standard
         }
 
         // This isn't right if the Dispatcher has already started shutting down.
-        // It will wind up leaking the class ATOM...
+        // The HWND itself will get cleaned up on thread completion, but it will wind up leaking the class ATOM...
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "disposing")]
         private void _Dispose(bool disposing, bool isHwndBeingDestroyed)
         {

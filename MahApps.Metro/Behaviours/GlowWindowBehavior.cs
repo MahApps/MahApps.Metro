@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Interactivity;
 using MahApps.Metro.Controls;
 
@@ -12,6 +13,11 @@ namespace MahApps.Metro.Behaviours
         {
             base.OnAttached();
 
+            this.AssociatedObject.Loaded += AssociatedObjectOnLoaded;
+        }
+
+        private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
             // now glow effect if UseNoneWindowStyle is true or GlowBrush not set
             var metroWindow = this.AssociatedObject as MetroWindow;
             if (metroWindow != null && (metroWindow.UseNoneWindowStyle || metroWindow.GlowBrush == null))
@@ -19,41 +25,37 @@ namespace MahApps.Metro.Behaviours
                 return;
             }
 
-            this.AssociatedObject.Loaded += (sender, e) =>
+            this.left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);
+            this.right = new GlowWindow(this.AssociatedObject, GlowDirection.Right);
+            this.top = new GlowWindow(this.AssociatedObject, GlowDirection.Top);
+            this.bottom = new GlowWindow(this.AssociatedObject, GlowDirection.Bottom);
+
+            this.Show();
+            this.Update();
+
+            var windowTransitionsEnabled = metroWindow != null && metroWindow.WindowTransitionsEnabled;
+            if (!windowTransitionsEnabled)
             {
-                this.left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);
-                this.right = new GlowWindow(this.AssociatedObject, GlowDirection.Right);
-                this.top = new GlowWindow(this.AssociatedObject, GlowDirection.Top);
-                this.bottom = new GlowWindow(this.AssociatedObject, GlowDirection.Bottom);
-
-                this.Show();
-                this.Update();
-
-                var windowTransitionsEnabled = metroWindow != null && metroWindow.WindowTransitionsEnabled;
-                if (!windowTransitionsEnabled)
-                {
-                    // no storyboard so set opacity to 1
-                    this.SetOpacityTo(1);
-                }
-                else
-                {
-                    // start the opacity storyboard 0->1
-                    this.StartOpacityStoryboard();
-                    // hide the glows if window get invisible state
-                    this.AssociatedObject.IsVisibleChanged += this.AssociatedObject_IsVisibleChanged;
-                    // closing always handled
-                    this.AssociatedObject.Closing += (o, args) =>
-                    {
-                        if (!args.Cancel)
-                        {
-                            this.AssociatedObject.IsVisibleChanged -= this.AssociatedObject_IsVisibleChanged;
-                        }
-                    };
-                }
-            };
+                // no storyboard so set opacity to 1
+                this.SetOpacityTo(1);
+            }
+            else
+            {
+                // start the opacity storyboard 0->1
+                this.StartOpacityStoryboard();
+                // hide the glows if window get invisible state
+                this.AssociatedObject.IsVisibleChanged += this.AssociatedObjectIsVisibleChanged;
+                // closing always handled
+                this.AssociatedObject.Closing += (o, args) => {
+                                                     if (!args.Cancel)
+                                                     {
+                                                         this.AssociatedObject.IsVisibleChanged -= this.AssociatedObjectIsVisibleChanged;
+                                                     }
+                                                 };
+            }
         }
 
-        private void AssociatedObject_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void AssociatedObjectIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             this.Update();
 

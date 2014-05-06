@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
 
-namespace MetroDemo
+namespace MetroDemo.ExampleWindows
 {
     /// <summary>
     /// Interaction logic for IconsWindow.xaml
@@ -16,7 +16,7 @@ namespace MetroDemo
         public IconsWindow()
         {
             InitializeComponent();
-            Loaded += OnLoaded;
+            this.Loaded += this.OnLoaded;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -28,15 +28,15 @@ namespace MetroDemo
                 .Select(de => new MetroIcon((string)de.Key, (Canvas)de.Value))
                 .OrderBy(mi => mi.Name)
                 .ToList();
-            IconsListBox.ItemsSource = foundIcons;
+            this.IconsListBox.ItemsSource = foundIcons;
         }
 
         public sealed class MetroIcon
         {
             public MetroIcon(string name, Visual visual)
             {
-                Name = name;
-                Visual = visual;
+                this.Name = name;
+                this.Visual = visual;
             }
 
             public string Name { get; private set; }

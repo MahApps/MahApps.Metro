@@ -68,9 +68,6 @@
                             <Setter Property="Height"
                                     TargetName="RowDefinition1"
                                     Value="Auto" />
-                            <Setter Property="Margin"
-                                    TargetName="HeaderPanel"
-                                    Value="2,0,2,2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement"
                                  Value="Left">
@@ -100,9 +97,6 @@
                             <Setter Property="Height"
                                     TargetName="RowDefinition1"
                                     Value="0" />
-                            <Setter Property="Margin"
-                                    TargetName="HeaderPanel"
-                                    Value="2,2,0,2" />
                         </Trigger>
                         <Trigger Property="TabStripPlacement"
                                  Value="Right">
@@ -130,9 +124,6 @@
                             <Setter Property="Height"
                                     TargetName="RowDefinition1"
                                     Value="0" />
-                            <Setter Property="Margin"
-                                    TargetName="HeaderPanel"
-                                    Value="0,2,2,2" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">

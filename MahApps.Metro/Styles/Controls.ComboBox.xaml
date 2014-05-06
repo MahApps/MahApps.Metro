@@ -286,7 +286,10 @@
                                    Fill="{DynamicResource DisabledWhiteBrush}"
                                    IsHitTestVisible="false"
                                    Opacity="0" />
+                        <!-- AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme -->
                         <Popup x:Name="PART_Popup"
+                               AllowsTransparency="true"
+                               Focusable="False"
                                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
                                MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
@@ -332,9 +335,10 @@
                             <Setter TargetName="PART_DropDownToggle"
                                     Property="Focusable"
                                     Value="False" />
+                            <!-- #1037 : don't know why we set this to transparent ???
                             <Setter TargetName="PART_DropDownToggle"
                                     Property="Background"
-                                    Value="Transparent" />
+                                    Value="Transparent" /> -->
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

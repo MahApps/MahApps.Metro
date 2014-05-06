@@ -24,7 +24,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
-            return window.ShowOverlayAsync().ContinueWith(z =>
+            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
                     return (Task<string>)window.Dispatcher.Invoke(new Func<Task<string>>(() =>
                         {
@@ -35,6 +35,7 @@ namespace MahApps.Metro.Controls.Dialogs
                             InputDialog dialog = new InputDialog(window, settings);
                             dialog.Title = title;
                             dialog.Message = message;
+                            dialog.Input = settings.DefaultText;
 
                             SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
@@ -70,7 +71,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                                                 window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
-                                                return window.HideOverlayAsync();
+                                                return HandleOverlayOnHide(settings, window);
                                                 //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
 
                                             }))).ContinueWith(y3 => y).Unwrap();
@@ -91,7 +92,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
-            return window.ShowOverlayAsync().ContinueWith(z =>
+            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
                 {
                     return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
                         {
@@ -138,7 +139,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                                                 window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
-                                                return window.HideOverlayAsync();
+                                                return HandleOverlayOnHide(settings, window);
                                                 //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
 
                                             }))).ContinueWith(y3 => y).Unwrap();
@@ -148,6 +149,7 @@ namespace MahApps.Metro.Controls.Dialogs
                         }));
                 }).Unwrap();
         }
+
         /// <summary>
         /// Creates a ProgressDialog inside of the current window.
         /// </summary>
@@ -160,7 +162,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             window.Dispatcher.VerifyAccess();
 
-            return window.ShowOverlayAsync().ContinueWith(z =>
+            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
                 return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                     {
@@ -207,7 +209,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                                         window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
-                                        return window.HideOverlayAsync();
+                                        return HandleOverlayOnHide(settings, window);
                                         //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
                                     }));
                                 }).Unwrap();
@@ -217,11 +219,21 @@ namespace MahApps.Metro.Controls.Dialogs
             }).Unwrap();
         }
 
+        private static Task HandleOverlayOnHide(MetroDialogSettings settings, MetroWindow window)
+        {
+            return (settings == null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(() => window.HideOverlay()))));
+        }
+        private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
+        {
+            return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(() => window.ShowOverlay()))));
+        }
+
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible.
+        /// <para>Note that this method returns as soon as the dialog is loaded and won't wait on a call of <see cref="HideMetroDialogAsync"/>.</para>
+        /// <para>You can still close the resulting dialog with <see cref="HideMetroDialogAsync"/>.</para>
         /// </summary>
         /// <param name="window">The owning window of the dialog.</param>
-        /// <param name="title">The title to be set in the dialog.</param>
         /// <param name="dialog">The dialog instance itself.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
@@ -311,10 +323,6 @@ namespace MahApps.Metro.Controls.Dialogs
 
             dialog.OnShown();
 
-            if (window.TextBlockStyle != null && !dialog.Resources.Contains(typeof(TextBlock)))
-            {
-                dialog.Resources.Add(typeof(TextBlock), window.TextBlockStyle);
-            }
             return sizeHandler;
         }
         #endregion
@@ -370,6 +378,15 @@ namespace MahApps.Metro.Controls.Dialogs
             dialog.ParentDialogWindow = win; //THIS IS ONLY, I REPEAT, ONLY SET FOR EXTERNAL DIALOGS!
 
             win.Content = dialog;
+
+            EventHandler closedHandler = null;
+            closedHandler = (sender, args) => 
+            {
+                win.Closed -= closedHandler;
+                dialog.ParentDialogWindow = null;
+                win.Content = null;
+            };
+            win.Closed += closedHandler;
 
             return win;
         }

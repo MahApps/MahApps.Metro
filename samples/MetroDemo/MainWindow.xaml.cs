@@ -1,46 +1,32 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Threading;
-using MahApps.Metro;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using System.Collections.Generic;
-using System.Windows.Data;
+using MetroDemo.ExampleWindows;
 
 namespace MetroDemo
 {
     public partial class MainWindow
     {
+        private bool _shutdown;
+        private readonly MainWindowViewModel _viewModel;
+
         public MainWindow()
         {
-            DataContext = new MainWindowViewModel();
+            _viewModel = new MainWindowViewModel();
+            DataContext = _viewModel;
             InitializeComponent();
-            var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
-
-            CollectionViewSource.GetDefaultView(groupingComboBox.ItemsSource).GroupDescriptions.Add(new PropertyGroupDescription("Artist"));
         }
 
-        void Tick(object sender, EventArgs e)
+        private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)
         {
-            var dateTime = DateTime.Now;
-            transitioning.Content = new TextBlock { Text = "Transitioning Content! " + dateTime, SnapsToDevicePixels = true };
-            customTransitioning.Content = new TextBlock { Text = "Custom transistion! " + dateTime, SnapsToDevicePixels = true };
+            System.Diagnostics.Process.Start("https://github.com/MahApps/MahApps.Metro");
         }
 
-        private void ThemeLight(object sender, RoutedEventArgs e)
+        private void LaunchSizeToContentDemo(object sender, RoutedEventArgs e)
         {
-            var theme = ThemeManager.DetectTheme(Application.Current);
-            ThemeManager.ChangeTheme(Application.Current, theme.Item2, Theme.Light);
-        }
-
-        private void ThemeDark(object sender, RoutedEventArgs e)
-        {
-            var theme = ThemeManager.DetectTheme(Application.Current);
-            ThemeManager.ChangeTheme(Application.Current, theme.Item2, Theme.Dark);
+            new SizeToContentDemo() { Owner = this }.Show();
         }
 
         private void LaunchVisualStudioDemo(object sender, RoutedEventArgs e)
@@ -104,13 +90,14 @@ namespace MetroDemo
         {
             // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support
             // The package is only used by the demo and not a dependency of the library!
-            this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+            MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
             var mySettings = new MetroDialogSettings()
             {
                 AffirmativeButtonText = "Hi",
                 NegativeButtonText = "Go away!",
-                FirstAuxiliaryButtonText = "Cancel"
+                FirstAuxiliaryButtonText = "Cancel",
+                ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme
             };
 
             MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro! ",
@@ -137,7 +124,7 @@ namespace MetroDemo
         {
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
-            var controller = await this.ShowProgressAsync("Please wait...", "We are cooking up some cupcakes!");
+            var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");
 
             await TaskEx.Delay(5000);
 
@@ -182,29 +169,6 @@ namespace MetroDemo
             await this.ShowMessageAsync("Hello", "Hello " + result + "!");
         }
 
-        private void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var flipview = ((FlipView)sender);
-            switch (flipview.SelectedIndex)
-            {
-                case 0:
-                    flipview.BannerText = "Cupcakes!";
-                    break;
-                case 1:
-                    flipview.BannerText = "Xbox!";
-                    break;
-                case 2:
-                    flipview.BannerText = "Chess!";
-                    break;
-            }
-        }
-
-        private void MetroTabControl_TabItemClosingEvent(object sender, BaseMetroTabControl.TabItemClosingEventArgs e)
-        {
-            if (e.ClosingTabItem.Header.ToString().StartsWith("sizes"))
-                e.Cancel = true;
-        }
-
         private void InteropDemo(object sender, RoutedEventArgs e)
         {
             new InteropDemo().Show();
@@ -222,6 +186,29 @@ namespace MetroDemo
 
             navWin.Show();
             navWin.Navigate(new Navigation.HomePage());
+        }
+
+        private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !_shutdown && _viewModel.QuitConfirmationEnabled;
+            if (_shutdown) return;
+
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Quit",
+                NegativeButtonText = "Cancel",
+                AnimateShow = true,
+                AnimateHide = false
+            };
+
+            var result = await this.ShowMessageAsync("Quit application?",
+                "Sure you want to quit application?",
+                MessageDialogStyle.AffirmativeAndNegative, mySettings);
+
+            _shutdown = result == MessageDialogResult.Affirmative;
+
+            if (_shutdown)
+                Application.Current.Shutdown();
         }
     }
 }

@@ -22,6 +22,8 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Presenter", Type = typeof(TransitioningContentControl))]
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_ForwardButton", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_UpButton", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_DownButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_BannerGrid", Type = typeof(Grid))]
     [TemplatePart(Name = "PART_BannerLabel", Type = typeof(Label))]
     public class FlipView : Selector
@@ -29,12 +31,16 @@ namespace MahApps.Metro.Controls
         private const string PART_Presenter = "PART_Presenter";
         private const string PART_BackButton = "PART_BackButton";
         private const string PART_ForwardButton = "PART_ForwardButton";
+        private const string PART_UpButton = "PART_UpButton";
+        private const string PART_DownButton = "PART_DownButton";
         private const string PART_BannerGrid = "PART_BannerGrid";
         private const string PART_BannerLabel = "PART_BannerLabel";
 
         private TransitioningContentControl presenter = null;
         private Button backButton = null;
         private Button forwardButton = null;
+        private Button upButton = null;
+        private Button downButton = null;
         private Grid bannerGrid = null;
         private Label bannerLabel = null;
 
@@ -59,6 +65,12 @@ namespace MahApps.Metro.Controls
         {
             this.Unloaded += FlipView_Unloaded;
             this.Loaded += FlipView_Loaded;
+            this.MouseLeftButtonDown += FlipView_MouseLeftButtonDown;
+        }
+
+        void FlipView_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.Focus();
         }
         ~FlipView()
         {
@@ -69,6 +81,24 @@ namespace MahApps.Metro.Controls
         }
 
         private delegate void EmptyDelegate();
+
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            return item is FlipViewItem;
+        }
+
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new FlipViewItem() { HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch };
+        }
+
+        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        {
+            if (element != item)
+                element.SetCurrentValue(DataContextProperty, item); //dont want to set the datacontext to itself. taken from MetroTabControl.cs
+
+            base.PrepareContainerForItemOverride(element, item);
+        }
 
         void FlipView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -81,39 +111,51 @@ namespace MahApps.Metro.Controls
 
             if (backButton == null || forwardButton == null) return;
 
+            backButton.Visibility = System.Windows.Visibility.Hidden;
+            forwardButton.Visibility = System.Windows.Visibility.Hidden;
+            upButton.Visibility = System.Windows.Visibility.Hidden;
+            downButton.Visibility = System.Windows.Visibility.Hidden;
+
             if (Items.Count > 0)
             {
-                backButton.Visibility = SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
-                forwardButton.Visibility = SelectedIndex == (Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
+                if (Orientation == System.Windows.Controls.Orientation.Horizontal)
+                {
+                    backButton.Visibility = SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
+                    forwardButton.Visibility = SelectedIndex == (Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
+                }
+                else
+                {
+                    upButton.Visibility = SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
+                    downButton.Visibility = SelectedIndex == (Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
+                }
             }
             else
             {
-                backButton.Visibility = Visibility.Hidden;
-                forwardButton.Visibility = Visibility.Hidden;
+                backButton.Visibility = System.Windows.Visibility.Hidden;
+                forwardButton.Visibility = System.Windows.Visibility.Hidden;
+                upButton.Visibility = System.Windows.Visibility.Hidden;
+                downButton.Visibility = System.Windows.Visibility.Hidden;
             }
         }
+
         void FlipView_Loaded(object sender, RoutedEventArgs e)
         {
             /* Loaded event fires twice if its a child of a TabControl.
              * Once because the TabControl seems to initiali(z|s)e everything.
              * And a second time when the Tab (housing the FlipView) is switched to. */
 
-            if (backButton == null) //OnApplyTemplate hasn't been called yet.
+            if (backButton == null || forwardButton == null) //OnApplyTemplate hasn't been called yet.
                 ApplyTemplate();
 
             if (loaded) return; //Counteracts the double 'Loaded' event issue.
 
             backButton.Click += backButton_Click;
             forwardButton.Click += forwardButton_Click;
+            upButton.Click += upButton_Click;
+            downButton.Click += downButton_Click;
 
             this.SelectionChanged += FlipView_SelectionChanged;
             this.PreviewKeyDown += FlipView_PreviewKeyDown;
-
-            ShowBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
-            HideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
-
-            ShowControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
-            HideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
 
             SelectedIndex = 0;
 
@@ -123,14 +165,18 @@ namespace MahApps.Metro.Controls
 
             loaded = true;
         }
+
         void FlipView_Unloaded(object sender, RoutedEventArgs e)
         {
             this.Unloaded -= FlipView_Unloaded;
+            this.MouseLeftButtonDown -= FlipView_MouseLeftButtonDown;
             this.SelectionChanged -= FlipView_SelectionChanged;
 
             this.PreviewKeyDown -= FlipView_PreviewKeyDown;
             backButton.Click -= backButton_Click;
             forwardButton.Click -= forwardButton_Click;
+            upButton.Click -= upButton_Click;
+            downButton.Click -= downButton_Click;
 
             if (HideControlStoryboard_CompletedHandler != null)
                 HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
@@ -160,9 +206,17 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
+            ShowBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
+            HideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
+
+            ShowControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
+            HideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
+
             presenter = GetTemplateChild(PART_Presenter) as TransitioningContentControl;
             backButton = GetTemplateChild(PART_BackButton) as Button;
             forwardButton = GetTemplateChild(PART_ForwardButton) as Button;
+            upButton = GetTemplateChild(PART_UpButton) as Button;
+            downButton = GetTemplateChild(PART_DownButton) as Button;
             bannerGrid = GetTemplateChild(PART_BannerGrid) as Grid;
             bannerLabel = GetTemplateChild(PART_BannerLabel) as Label;
 
@@ -193,6 +247,16 @@ namespace MahApps.Metro.Controls
             GoBack();
         }
 
+        void downButton_Click(object sender, RoutedEventArgs e)
+        {
+            GoForward();
+        }
+
+        void upButton_Click(object sender, RoutedEventArgs e)
+        {
+            GoBack();
+        }
+
         /// <summary>
         /// Changes the current slide to the previous item.
         /// </summary>
@@ -200,7 +264,7 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex > 0)
             {
-                presenter.Transition = TransitionType.RightReplace;
+                presenter.Transition = Orientation == System.Windows.Controls.Orientation.Horizontal ? RightTransition : UpTransition;
                 SelectedIndex--;
             }
         }
@@ -212,7 +276,7 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex < Items.Count - 1)
             {
-                presenter.Transition = TransitionType.LeftReplace;
+                presenter.Transition = Orientation == System.Windows.Controls.Orientation.Horizontal ? LeftTransition : DownTransition;
                 SelectedIndex++;
             }
         }
@@ -243,6 +307,32 @@ namespace MahApps.Metro.Controls
                 });
         }
 
+        public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register("UpTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
+        public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register("DownTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
+        public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register("LeftTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
+        public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register("RightTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
+
+        public TransitionType UpTransition
+        {
+            get { return (TransitionType)GetValue(UpTransitionProperty); }
+            set { SetValue(UpTransitionProperty, value); }
+        }
+        public TransitionType DownTransition
+        {
+            get { return (TransitionType)GetValue(DownTransitionProperty); }
+            set { SetValue(DownTransitionProperty, value); }
+        }
+        public TransitionType LeftTransition
+        {
+            get { return (TransitionType)GetValue(LeftTransitionProperty); }
+            set { SetValue(LeftTransitionProperty, value); }
+        }
+        public TransitionType RightTransition
+        {
+            get { return (TransitionType)GetValue(RightTransitionProperty); }
+            set { SetValue(RightTransitionProperty, value); }
+        }
+
         private void ShowBanner()
         {
             if (IsBannerEnabled)
@@ -251,7 +341,7 @@ namespace MahApps.Metro.Controls
 
         private void HideBanner()
         {
-            if (this.Height > 0.0)
+            if (this.ActualHeight > 0.0)
             {
                 bannerLabel.BeginStoryboard(HideControlStoryboard);
                 bannerGrid.BeginStoryboard(HideBannerStoryboard);
@@ -308,6 +398,14 @@ namespace MahApps.Metro.Controls
                 {
                     bannerLabel.Content = value ?? BannerText;
                 });
+        }
+
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
+
+        public Orientation Orientation
+        {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
         }
 
         public static readonly DependencyProperty IsBannerEnabledProperty =
@@ -371,5 +469,9 @@ namespace MahApps.Metro.Controls
                 flipview.Loaded += handler;
             }
         }
+    }
+
+    public class FlipViewItem : ContentControl
+    {
     }
 }

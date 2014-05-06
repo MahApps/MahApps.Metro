@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -19,9 +22,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextboxHelper), new UIPropertyMetadata(string.Empty));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextboxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
+        
         public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextboxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty ButtonCommandParameterProperty = DependencyProperty.RegisterAttached("ButtonCommandParameter", typeof(object), typeof(TextboxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextboxHelper), new FrameworkPropertyMetadata("r"));
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextboxHelper), new FrameworkPropertyMetadata(null));
+        public static readonly DependencyProperty ButtonFontFamilyProperty = DependencyProperty.RegisterAttached("ButtonFontFamily", typeof(FontFamily), typeof(TextboxHelper), new FrameworkPropertyMetadata((new FontFamilyConverter()).ConvertFromString("Marlett")));
+        
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty IsWaitingForDataProperty = DependencyProperty.RegisterAttached("IsWaitingForData", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false));
 
@@ -30,22 +37,140 @@ namespace MahApps.Metro.Controls
 
         private static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
 
+        private static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
+
         /// <summary>
-        /// Gets/sets the brush used to draw the focus border.
+        /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
         /// </summary>
-        public Brush FocusBorderBrush
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        public static bool GetIsSpellCheckContextMenuEnabled(UIElement element)
         {
-            get { return (Brush)GetValue(FocusBorderBrushProperty); }
-            set { SetValue(FocusBorderBrushProperty, value); }
+            return (bool)element.GetValue(IsSpellCheckContextMenuEnabledProperty);
+        }
+
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        public static void SetIsSpellCheckContextMenuEnabled(UIElement element, bool value)
+        {
+            element.SetValue(IsSpellCheckContextMenuEnabledProperty, value);
+        }
+
+        private static void UseSpellCheckContextMenuChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tb = d as TextBoxBase;
+            if (null == tb)
+            {
+                throw new InvalidOperationException("The property 'IsSpellCheckContextMenuEnabled' may only be set on TextBoxBase elements.");
+            }
+
+            if ((bool)e.NewValue) {
+                // set the spell check to true
+                tb.SetValue(SpellCheck.IsEnabledProperty, true);
+                // override pre defined context menu
+                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+                tb.ContextMenuOpening += TextBoxBaseContextMenuOpening;
+            }
+            else
+            {
+                tb.SetValue(SpellCheck.IsEnabledProperty, false);
+                tb.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+                tb.ContextMenuOpening -= TextBoxBaseContextMenuOpening;
+            }
+        }
+
+        private static void TextBoxBaseContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            var tbBase = (TextBoxBase)sender;
+            var textBox = tbBase as TextBox;
+            var richTextBox = tbBase as RichTextBox;
+
+            tbBase.ContextMenu = GetDefaultTextBoxBaseContextMenu();
+
+            var cmdIndex = 0;
+            var spellingError = textBox != null
+                ? textBox.GetSpellingError(textBox.CaretIndex)
+                : (richTextBox != null
+                    ? richTextBox.GetSpellingError(richTextBox.CaretPosition)
+                    : null);
+            if (spellingError != null) {
+                var suggestions = spellingError.Suggestions;
+                if (suggestions.Any()) {
+                    foreach (var suggestion in suggestions) {
+                        var mi = new MenuItem();
+                        mi.Header = suggestion;
+                        mi.FontWeight = FontWeights.Bold;
+                        mi.Command = EditingCommands.CorrectSpellingError;
+                        mi.CommandParameter = suggestion;
+                        mi.CommandTarget = tbBase;
+                        mi.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                        tbBase.ContextMenu.Items.Insert(cmdIndex, mi);
+                        cmdIndex++;
+                    }
+                    // add a separator
+                    tbBase.ContextMenu.Items.Insert(cmdIndex, new Separator());
+                    cmdIndex++;
+                }
+                var ignoreAllMI = new MenuItem();
+                ignoreAllMI.Header = "Ignore All";
+                ignoreAllMI.Command = EditingCommands.IgnoreSpellingError;
+                ignoreAllMI.CommandTarget = tbBase;
+                ignoreAllMI.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+                tbBase.ContextMenu.Items.Insert(cmdIndex, ignoreAllMI);
+                cmdIndex++;
+                // add another separator
+                var separatorMenuItem2 = new Separator();
+                tbBase.ContextMenu.Items.Insert(cmdIndex, separatorMenuItem2);
+            }
+        }
+
+        // Gets a fresh context menu. 
+        private static ContextMenu GetDefaultTextBoxBaseContextMenu()
+        {
+            var defaultMenu = new ContextMenu();
+
+            var m1 = new MenuItem { Command = ApplicationCommands.Cut };
+            m1.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            var m2 = new MenuItem { Command = ApplicationCommands.Copy };
+            m2.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+            var m3 = new MenuItem { Command = ApplicationCommands.Paste };
+            m3.SetResourceReference(FrameworkElement.StyleProperty, "MetroMenuItem");
+
+            defaultMenu.Items.Add(m1);
+            defaultMenu.Items.Add(m2);
+            defaultMenu.Items.Add(m3);
+
+            return defaultMenu;
         }
 
         /// <summary>
-        /// Gets/sets the brush used to draw the mouse over brush.
+        /// Sets the brush used to draw the focus border.
         /// </summary>
-        public Brush MouseOverBorderBrush
+        public static void SetFocusBorderBrush(DependencyObject obj, Brush value)
         {
-            get { return (Brush)GetValue(MouseOverBorderBrushProperty); }
-            set { SetValue(MouseOverBorderBrushProperty, value); }
+          obj.SetValue(FocusBorderBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets the brush used to draw the focus border.
+        /// </summary>
+        public static Brush GetFocusBorderBrush(DependencyObject obj)
+        {
+          return (Brush)obj.GetValue(FocusBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush used to draw the mouse over brush.
+        /// </summary>
+        public static void SetMouseOverBorderBrush(DependencyObject obj, Brush value)
+        {
+          obj.SetValue(MouseOverBorderBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets the brush used to draw the mouse over brush.
+        /// </summary>
+        public static Brush GetMouseOverBorderBrush(DependencyObject obj)
+        {
+          return (Brush)obj.GetValue(MouseOverBorderBrushProperty);
         }
 
         public static void SetIsWaitingForData(DependencyObject obj, bool value)
@@ -213,6 +338,16 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonCommandProperty, value);
         }
 
+        public static object GetButtonCommandParameter(DependencyObject d)
+        {
+            return (object)d.GetValue(ButtonCommandParameterProperty);
+        }
+
+        public static void SetButtonCommandParameter(DependencyObject obj, object value)
+        {
+            obj.SetValue(ButtonCommandParameterProperty, value);
+        }
+
         public static object GetButtonContent(DependencyObject d)
         {
             return (object)d.GetValue(ButtonContentProperty);
@@ -231,6 +366,16 @@ namespace MahApps.Metro.Controls
         public static void SetButtonTemplate(DependencyObject obj, ControlTemplate value)
         {
             obj.SetValue(ButtonTemplateProperty, value);
+        }
+
+        public static FontFamily GetButtonFontFamily(DependencyObject d)
+        {
+            return (FontFamily)d.GetValue(ButtonFontFamilyProperty);
+        }
+
+        public static void SetButtonFontFamily(DependencyObject obj, FontFamily value)
+        {
+            obj.SetValue(ButtonFontFamilyProperty, value);
         }
 
         private static void ButtonCommandOrClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -352,7 +497,9 @@ namespace MahApps.Metro.Controls
             var command = GetButtonCommand(parent);
             if (command != null && command.CanExecute(parent))
             {
-                command.Execute(parent);
+                var commandParameter = GetButtonCommandParameter(parent);
+               
+                command.Execute(commandParameter ?? parent);
             }
 
             if (GetClearTextButton(parent))

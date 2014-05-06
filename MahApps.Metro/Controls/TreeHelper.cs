@@ -77,12 +77,13 @@ namespace MahApps.Metro.Controls
         /// <typeparam name="T">The type of the queried items.</typeparam>
         /// <param name="source">The root element that marks the source of the search. If the
         /// source is already of the requested type, it will not be included in the result.</param>
+        /// <param name="forceUsingTheVisualTreeHelper">Sometimes it's better to search in the VisualTree (e.g. in tests)</param>
         /// <returns>All descendants of <paramref name="source"/> that match the requested type.</returns>
-        public static IEnumerable<T> FindChildren<T>(this DependencyObject source) where T : DependencyObject
+        public static IEnumerable<T> FindChildren<T>(this DependencyObject source, bool forceUsingTheVisualTreeHelper = false) where T : DependencyObject
         {
             if (source != null)
             {
-                var childs = GetChildObjects(source);
+                var childs = GetChildObjects(source, forceUsingTheVisualTreeHelper);
                 foreach (DependencyObject child in childs)
                 {
                     //analyze if children match the requested type
@@ -107,12 +108,13 @@ namespace MahApps.Metro.Controls
         /// this method falls back to the logical tree of the element.
         /// </summary>
         /// <param name="parent">The item to be processed.</param>
+        /// <param name="forceUsingTheVisualTreeHelper">Sometimes it's better to search in the VisualTree (e.g. in tests)</param>
         /// <returns>The submitted item's child elements, if available.</returns>
-        public static IEnumerable<DependencyObject> GetChildObjects(this DependencyObject parent)
+        public static IEnumerable<DependencyObject> GetChildObjects(this DependencyObject parent, bool forceUsingTheVisualTreeHelper = false)
         {
             if (parent == null) yield break;
 
-            if (parent is ContentElement || parent is FrameworkElement)
+            if (!forceUsingTheVisualTreeHelper && (parent is ContentElement || parent is FrameworkElement))
             {
                 //use the logical tree for content / framework elements
                 foreach (object obj in LogicalTreeHelper.GetChildren(parent))

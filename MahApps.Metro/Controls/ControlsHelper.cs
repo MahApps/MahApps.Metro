@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using MahApps.Metro.Native;
@@ -23,6 +24,11 @@ namespace MahApps.Metro.Controls
         {
             this.Loaded += this.CustomValidationPopup_Loaded;
             this.Opened += this.CustomValidationPopup_Opened;
+        }
+
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            this.IsOpen = false;
         }
 
         private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)
@@ -312,6 +318,40 @@ namespace MahApps.Metro.Controls
         public static void SetTransition(DependencyObject obj, TransitionType value)
         {
             obj.SetValue(TransitionProperty, value);
+        }
+
+        /// <summary>
+        /// This property can be used to handle the style for CheckBox and RadioButton
+        /// LeftToRight means content left and button right and RightToLeft vise versa
+        /// </summary>
+        public static readonly DependencyProperty ContentDirectionProperty =
+            DependencyProperty.RegisterAttached("ContentDirection", typeof(FlowDirection), typeof(ControlsHelper),
+                                                new FrameworkPropertyMetadata(FlowDirection.LeftToRight,
+                                                                              //FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits,
+                                                                              ContentDirectionPropertyChanged));
+
+        /// <summary>
+        /// This property can be used to handle the style for CheckBox and RadioButton
+        /// LeftToRight means content left and button right and RightToLeft vise versa
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static FlowDirection GetContentDirection(UIElement element)
+        {
+            return (FlowDirection)element.GetValue(ContentDirectionProperty);
+        }
+
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static void SetContentDirection(UIElement element, FlowDirection value)
+        {
+            element.SetValue(ContentDirectionProperty, value);
+        }
+
+        private static void ContentDirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var tb = d as ToggleButton;
+            if (null == tb) {
+                throw new InvalidOperationException("The property 'ContentDirection' may only be set on ToggleButton elements.");
+            }
         }
     }
 }

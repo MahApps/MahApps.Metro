@@ -142,6 +142,28 @@
                                                 PlacementTarget="{Binding ElementName=PopupTargetElement}"
                                                 IsOpen="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}">
                     <Grid x:Name="Root" Margin="4">
+                        <Grid.Resources>
+                            <Style TargetType="Border">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver, Mode=OneWay}" Value="True">
+                                        <DataTrigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.15" Duration="0:0:0.1" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Resources>
                         <Border Background="{DynamicResource ValidationBrush1}"
                                 CornerRadius="5"
                                 Margin="4,4,-4,-4" />

@@ -1,59 +1,61 @@
 ﻿using System.Windows;
+using MahApps.Metro.Controls;
 
-namespace MetroDemo
+namespace MetroDemo.ExampleWindows
 {
-    using MahApps.Metro.Controls;
-
     public partial class FlyoutDemo
     {
-        public FlyoutDemo() {
+        public FlyoutDemo()
+        {
+            this.DataContext = new MainWindowViewModel();
             this.InitializeComponent();
+            settingsFlyout.IsOpenChanged += (sender, args) => firstTB.Focus();
         }
 
         private void ShowFirst(object sender, RoutedEventArgs e)
         {
-            ToggleFlyout(0);
+            this.ToggleFlyout(0);
         }
 
         private void ShowSecond(object sender, RoutedEventArgs e) {
-            ToggleFlyout(1);
+            this.ToggleFlyout(1);
         }
 
         private void ShowThird(object sender, RoutedEventArgs e) {
-            ToggleFlyout(2);
+            this.ToggleFlyout(2);
         }
 
         private void ShowAccent(object sender, RoutedEventArgs e) {
-            ToggleFlyout(3);
+            this.ToggleFlyout(3);
         }
 
         private void ShowInverse(object sender, RoutedEventArgs e) {
-            ToggleFlyout(4);
+            this.ToggleFlyout(4);
         }
 
         private void ShowAdapt(object sender, RoutedEventArgs e)  {
-            ToggleFlyout(5);
+            this.ToggleFlyout(5);
         }
 
         private void ShowSettings(object sender, RoutedEventArgs e) {
-            ToggleFlyout(6);
+            this.ToggleFlyout(6);
         }
 
         private void ShowLeft(object sender, RoutedEventArgs e) {
-            ToggleFlyout(7);
+            this.ToggleFlyout(7);
         }
 
         private void ShowTop(object sender, RoutedEventArgs e) {
-            ToggleFlyout(8);
+            this.ToggleFlyout(8);
         }
 
         private void ShowBottom(object sender, RoutedEventArgs e) {
-            ToggleFlyout(9);
+            this.ToggleFlyout(9);
         }
 
         private void ShowModal(object sender, RoutedEventArgs e)
         {
-            ToggleFlyout(10);
+            this.ToggleFlyout(10);
         }
 
         private void CloseMe(object sender, RoutedEventArgs e)
@@ -70,6 +72,18 @@ namespace MetroDemo
             }
 
             flyout.IsOpen = !flyout.IsOpen;
+        }
+
+        private void ShowSettingsLeft(object sender, RoutedEventArgs e)
+        {
+            var flyout = (Flyout)this.Flyouts.Items[6];
+            flyout.Position = Position.Left;
+        }
+
+        private void ShowSettingsRight(object sender, RoutedEventArgs e)
+        {
+            var flyout = (Flyout)this.Flyouts.Items[6];
+            flyout.Position = Position.Right;
         }
     }
 }
