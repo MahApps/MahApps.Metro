@@ -3,6 +3,7 @@ namespace MahApps.Metro.Controls
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Data;
+    using System.Windows.Media;
     using Standard;
 
     public class DataGridNumericUpDownColumn : DataGridBoundColumn
@@ -39,7 +40,6 @@ namespace MahApps.Metro.Controls
                 {
                     Style style = new Style(typeof(NumericUpDown));
                     style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
-
                     style.Seal();
                     _defaultEditingElementStyle = style;
                 }
@@ -61,6 +61,7 @@ namespace MahApps.Metro.Controls
                     style.Setters.Add(new Setter(UIElement.FocusableProperty, false));
                     style.Setters.Add(new Setter(NumericUpDown.HideUpDownButtonsProperty, true));
                     style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0d)));
+                    style.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.Transparent));
 
                     style.Seal();
                     _defaultElementStyle = style;
@@ -120,7 +121,7 @@ namespace MahApps.Metro.Controls
             generateNumericUpDown.HideUpDownButtons = true;
             return generateNumericUpDown;
         }
-
+        
         private NumericUpDown GenerateNumericUpDown(bool isEditing, DataGridCell cell)
         {
             NumericUpDown numericUpDown = (cell != null) ? (cell.Content as NumericUpDown) : null;
