@@ -40,7 +40,7 @@
         <Grid Background="{TemplateBinding Background}">
             <Border FocusVisualStyle="{x:Null}"
                     Focusable="False">
-                <Grid>
+                <Grid MaxWidth="1024" VerticalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
