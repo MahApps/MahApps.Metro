@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -193,7 +194,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty MinRangeProperty =
             DependencyProperty.Register("MinRange", typeof (Double), typeof (RangeSlider),
-                new FrameworkPropertyMetadata((Double)0, MinRangeChanged), IsValidMinRange);
+                new FrameworkPropertyMetadata((Double)0, MinRangeChanged, CoerceMinRange), IsValidMinRange);
 
         public static readonly DependencyProperty MinRangeWidthProperty =
             DependencyProperty.Register("MinRangeWidth", typeof(Double), typeof(RangeSlider),
@@ -551,7 +552,6 @@ namespace MahApps.Metro.Controls
             }
             else if (orientation == Orientation.Vertical)
             {
-                //Debug.WriteLine("horizonalChange = " + horizonalChange);
                 if (!Double.IsNaN(x.Height) && !Double.IsNaN(y.Height))
                 {
                     if (horizonalChange < 0) //slider went up
@@ -629,6 +629,16 @@ namespace MahApps.Metro.Controls
                     else
                     {
                         _leftButton.Width = Math.Max(_movableWidth * (LowerValue - Minimum) / MovableRange, 0);
+                        Debug.WriteLine("-------------------------------------------------------");
+                        Debug.WriteLine("MinRangeWidth " + MinRangeWidth);
+                        Debug.WriteLine("_movableWidth " + _movableWidth);
+                        Debug.WriteLine("LowerValue " + LowerValue);
+                        Debug.WriteLine("Minimum " + Minimum);
+                        Debug.WriteLine("Maximum " + Maximum);
+                        Debug.WriteLine("MinRange " + MinRange);
+                        Debug.WriteLine("LowerValue - Minimum " + (LowerValue - Minimum));
+                        Debug.WriteLine("MovableRange " + MovableRange);
+                        Debug.WriteLine("!Вычисленная ширина _leftButton.Width = " + _leftButton.Width);
                         _rightButton.Width = Math.Max(_movableWidth * (Maximum - UpperValue) / MovableRange, 0);
                     }
                     
@@ -677,7 +687,13 @@ namespace MahApps.Metro.Controls
                     }
                 }
                 _density = _movableWidth / MovableRange;
+                Debug.WriteLine("Width = " + Width);
+                Debug.WriteLine("ActualWidth = " + ActualWidth);
+                Debug.WriteLine("_leftButton.Width = " + _leftButton.Width);
+                Debug.WriteLine("_rightButton.Width= " + _rightButton.Width);
+                Debug.WriteLine("_centerThumb.Width= " + _centerThumb.Width);
             }
+            
         }
 
         //Method calculates new values when IsSnapToTickEnabled = FALSE
@@ -2041,6 +2057,18 @@ namespace MahApps.Metro.Controls
             return value;
         }
 
+        private static object CoerceMinRange(DependencyObject d, object basevalue)
+        {
+            RangeSlider rs = (RangeSlider)d;
+            double value = (double)basevalue;
+
+            if (rs.LowerValue + value + (rs.Maximum - rs.UpperValue) > rs.Maximum)
+            {
+                return rs.Maximum - rs.LowerValue;
+            }
+            return basevalue;
+        }
+
         private static object CoerceMinRangeWidth(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider) d;
@@ -2098,22 +2126,22 @@ namespace MahApps.Metro.Controls
             slider.ReCalculateSize();
         }
 
-        private static void MinRangeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void MinRangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             Double value = (Double)e.NewValue;
             if (value < 0)
                 value = 0;
 
-            var slider = (RangeSlider)sender;
-
-            slider._internalUpdate = true;
+            var slider = (RangeSlider)dependencyObject;
+            dependencyObject.CoerceValue(MinRangeProperty);
+            //slider._internalUpdate = true;
             slider.UpperValue = Math.Max(slider.UpperValue, slider.LowerValue + value);
             slider.UpperValue = Math.Min(slider.UpperValue, slider.Maximum);
-            slider._internalUpdate = false;
+            //slider._internalUpdate = false;
 
             slider.CoerceValue(UpperValueProperty);
 
-            RaiseValueChangedEvents(sender);
+            RaiseValueChangedEvents(dependencyObject);
             
             slider._oldLower = slider.LowerValue;
             slider._oldUpper = slider.UpperValue;
