@@ -28,6 +28,8 @@
                 Value="Transparent" />
         <Setter Property="BorderThickness"
                 Value="2" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource GrayBrush3}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
@@ -48,7 +50,7 @@
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
-                                 Stroke="#ADADAD"
+                                 Stroke="{TemplateBinding BorderBrush}"
                                  StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
                         <ContentPresenter x:Name="content"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -93,12 +95,15 @@
                                  Value="False">
                             <Setter TargetName="ellipse"
                                     Property="Opacity"
-                                    Value=".5" />
+                                    Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="ellipse"
+                                    Property="Opacity"
+                                    Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
