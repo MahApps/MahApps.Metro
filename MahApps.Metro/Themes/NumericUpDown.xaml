@@ -42,6 +42,7 @@
                     <Grid Height="{TemplateBinding Height}"
                           MinHeight="{TemplateBinding MinHeight}"
                           MaxHeight="{TemplateBinding MaxHeight}"
+                          Margin="{TemplateBinding Padding}"
                           VerticalAlignment="{TemplateBinding VerticalAlignment}"
                           Background="{TemplateBinding Background}">
                         <Rectangle x:Name="Base"
