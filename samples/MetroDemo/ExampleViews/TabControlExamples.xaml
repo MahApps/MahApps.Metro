@@ -305,6 +305,12 @@
                             <TextBlock FontSize="30"
                                        Text="This is not content (it is). This one won't close." />
                         </Controls:MetroTabItem>
+                        <Controls:MetroTabItem Header="close button"
+                                               Controls:ControlsHelper.HeaderFontSize="36"
+                                               CloseButtonEnabled="True">
+                            <TextBlock FontSize="24"
+                                       Text="The size of close button will be changed proportionately considering its header size." />
+                        </Controls:MetroTabItem>
                     </Controls:MetroTabControl>
                 </StackPanel>
             </GroupBox>
