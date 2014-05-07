@@ -4,9 +4,8 @@
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <Converters:MetroTabItemCloseButtonFontSizeConverter x:Key="MetroTabItemCloseButtonFontSizeConverter"/>
-    <Converters:MetroTabItemCloseButtonWidthConverter x:Key="MetroTabItemCloseButtonWidthConverter"/>
-    
+    <Converters:MetroTabItemCloseButtonWidthConverter x:Key="MetroTabItemCloseButtonWidthConverter" />
+
     <Style TargetType="{x:Type Controls:MetroTabItem}">
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
@@ -57,17 +56,20 @@
                                               RecognizesAccessKey="True" />
                             <Button x:Name="PART_CloseButton"
                                     Style="{DynamicResource ChromelessButtonStyle}"
-                                    Foreground="{DynamicResource BlackBrush}"
-                                    Width="{TemplateBinding Controls:ControlsHelper.HeaderFontSize,Converter={StaticResource MetroTabItemCloseButtonWidthConverter}}"
+                                    Background="{DynamicResource GrayNormalBrush}"
+                                    Width="{TemplateBinding Controls:ControlsHelper.HeaderFontSize, Converter={StaticResource MetroTabItemCloseButtonWidthConverter}}"
+                                    Height="{Binding RelativeSource={RelativeSource Self}, Path=Width, Mode=OneWay}"
                                     HorizontalAlignment="Right"
-                                    FontFamily="Marlett"
-                                    Content="r"
-                                    FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize, Converter={StaticResource MetroTabItemCloseButtonFontSizeConverter}}"
+                                    VerticalAlignment="Top"
                                     Margin="0 0 2 0"
                                     IsTabStop="False"
-                                    VerticalAlignment="Top"
                                     Command="{TemplateBinding CloseTabCommand}"
-                                    CommandParameter="{TemplateBinding CloseTabCommandParameter}" />
+                                    CommandParameter="{TemplateBinding CloseTabCommandParameter}">
+                                <Button.OpacityMask>
+                                    <VisualBrush Stretch="Uniform"
+                                                 Visual="{DynamicResource appbar_close}" />
+                                </Button.OpacityMask>
+                            </Button>
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -89,12 +91,15 @@
                             <Setter Property="TextElement.Foreground"
                                     TargetName="ContentSite"
                                     Value="{DynamicResource GrayHoverBrush}" />
+                            <Setter TargetName="PART_CloseButton"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
                         <Trigger SourceName="PART_CloseButton"
                                  Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="PART_CloseButton"
-                                    Property="Foreground"
+                                    Property="Background"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
