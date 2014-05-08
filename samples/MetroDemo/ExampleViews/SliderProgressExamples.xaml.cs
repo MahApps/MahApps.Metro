@@ -43,6 +43,14 @@ namespace MetroDemo.ExampleViews
 
         private void RangeSlider_OnLowerThumbDragCompleted(object sender, DragCompletedEventArgs e)
         {
+            try
+            {
+                //RangeSlider1.MinRange = RangeSlider1.LowerValue;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message + exception.StackTrace + exception.TargetSite);
+            }
             //TestBlock.Text = "lower thumb drag completed";
         }
 
@@ -63,6 +71,7 @@ namespace MetroDemo.ExampleViews
 
         private void RangeSlider_OnCentralThumbDragCompleted(object sender, DragCompletedEventArgs e)
         {
+            
             //TestBlock.Text = "central thumb drag completed";
         }
 

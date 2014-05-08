@@ -193,23 +193,23 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty MinRangeProperty =
             DependencyProperty.Register("MinRange", typeof (Double), typeof (RangeSlider),
-                new FrameworkPropertyMetadata((Double)0, MinRangeChanged), IsValidMinRange);
+                new FrameworkPropertyMetadata((Double)0, MinRangeChanged, CoerceMinRange), IsValidMinRange);
 
         public static readonly DependencyProperty MinRangeWidthProperty =
             DependencyProperty.Register("MinRangeWidth", typeof(Double), typeof(RangeSlider),
-                new FrameworkPropertyMetadata((Double)30.0, MinRangeWidthChanged, CoerceMinRangeWidth), IsValidMinRange);
+                new FrameworkPropertyMetadata(30.0, MinRangeWidthChanged, CoerceMinRangeWidth), IsValidMinRange);
 
         public static readonly DependencyProperty MoveWholeRangeProperty =
             DependencyProperty.Register("MoveWholeRange", typeof(Boolean), typeof(RangeSlider),
-                new PropertyMetadata((Boolean)false));
+                new PropertyMetadata(false));
 
         public static readonly DependencyProperty ExtendedModeProperty =
             DependencyProperty.Register("ExtendedMode", typeof(Boolean), typeof(RangeSlider),
-                new PropertyMetadata((Boolean)false));
+                new PropertyMetadata(false));
 
         public static readonly DependencyProperty IsSnapToTickEnabledProperty =
             DependencyProperty.Register("IsSnapToTickEnabled", typeof(Boolean), typeof(RangeSlider),
-                new PropertyMetadata((Boolean)false));
+                new PropertyMetadata(false));
 
         public static readonly DependencyProperty OrientationProperty =
             DependencyProperty.Register("Orientation", typeof(Orientation), typeof(RangeSlider),
@@ -217,11 +217,11 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty TickFrequencyProperty =
             DependencyProperty.Register("TickFrequency", typeof(Double), typeof(RangeSlider),
-                new FrameworkPropertyMetadata((Double)1.0), IsValidTickFrequency);
+                new FrameworkPropertyMetadata(1.0), IsValidTickFrequency);
 
         public static readonly DependencyProperty IsMoveToPointEnabledProperty =
             DependencyProperty.Register("IsMoveToPointEnabled", typeof(Boolean), typeof(RangeSlider),
-                new PropertyMetadata((Boolean)false));
+                new PropertyMetadata(false));
 
         public static readonly DependencyProperty TickPlacementProperty =
             DependencyProperty.Register("TickPlacement", typeof(TickPlacement), typeof(RangeSlider),
@@ -398,7 +398,7 @@ namespace MahApps.Metro.Controls
         private Double _movableWidth;
         private readonly DispatcherTimer _timer;
 
-        private uint _tickCount = 0;
+        private uint _tickCount;
         private Double _currentpoint;
         private Boolean _isInsideRange;
         private Boolean _centerThumbBlocked;
@@ -409,7 +409,8 @@ namespace MahApps.Metro.Controls
         private Double _currenValue;
         private Double _density;
         private ToolTip _autoToolTip;
-        Double _oldLower = 0, _oldUpper = 0;
+        Double _oldLower;
+        Double _oldUpper;
         private Boolean _isMoved;
         private Boolean _roundToPrecision;
         private Int32 _precision;
@@ -443,8 +444,8 @@ namespace MahApps.Metro.Controls
         static RangeSlider()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(typeof(RangeSlider)));
-            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MinPropertyChangedCallback, CoerceMinimum));
-            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata((Double)100.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MaxPropertyChangedCallback, CoerceMaximum));
+            MinimumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MinPropertyChangedCallback, CoerceMinimum));
+            MaximumProperty.OverrideMetadata(typeof(RangeSlider), new FrameworkPropertyMetadata(100.0, FrameworkPropertyMetadataOptions.AffectsMeasure, MaxPropertyChangedCallback, CoerceMaximum));
         }
 
 
@@ -490,7 +491,7 @@ namespace MahApps.Metro.Controls
         private static void MoveThumb(FrameworkElement x, FrameworkElement y, double horizonalChange,
             Orientation orientation)
         {
-            double change = 0;
+            double change;
             if (orientation == Orientation.Horizontal)
             {
                 if (!Double.IsNaN(x.Width) && !Double.IsNaN(y.Width))
@@ -551,7 +552,6 @@ namespace MahApps.Metro.Controls
             }
             else if (orientation == Orientation.Vertical)
             {
-                //Debug.WriteLine("horizonalChange = " + horizonalChange);
                 if (!Double.IsNaN(x.Height) && !Double.IsNaN(y.Height))
                 {
                     if (horizonalChange < 0) //slider went up
@@ -678,6 +678,7 @@ namespace MahApps.Metro.Controls
                 }
                 _density = _movableWidth / MovableRange;
             }
+            
         }
 
         //Method calculates new values when IsSnapToTickEnabled = FALSE
@@ -861,7 +862,7 @@ namespace MahApps.Metro.Controls
                     lower = Math.Max(newLower, Minimum);
                     upper = Math.Max(Minimum+(UpperValue - LowerValue), newUpper);
                 }
-                if (!TickFrequency.ToString().ToLower().Contains("e+") &&
+                if (!TickFrequency.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e+") &&
                     TickFrequency.ToString(CultureInfo.InvariantCulture).Contains("."))
                 {
                     //decimal part is for cutting value exactly on that number of digits, which has TickFrequency to have correct values
@@ -1568,11 +1569,8 @@ namespace MahApps.Metro.Controls
                 return Orientation == Orientation.Horizontal && currentPoint > endPoint ||
                                   Orientation == Orientation.Vertical && currentPoint < endPoint;
             }
-            else
-            {
-                return Orientation == Orientation.Horizontal && currentPoint < endPoint ||
-                                  Orientation == Orientation.Vertical && currentPoint > endPoint;
-            }
+            return Orientation == Orientation.Horizontal && currentPoint < endPoint ||
+                   Orientation == Orientation.Vertical && currentPoint > endPoint;
         }
 
         //This is timer event, which starts when IsMoveToPoint = false
@@ -1584,7 +1582,7 @@ namespace MahApps.Metro.Controls
             _currentpoint = Orientation == Orientation.Horizontal ? _position.X : _position.Y;
             double endpoint = UpdateEndPoint(_bType, _direction);
             bool result = GetResult(_currentpoint, endpoint, _direction);
-            double widthChange = 0;
+            double widthChange;
             if (!IsSnapToTickEnabled)
             {
                 widthChange = SmallChange;
@@ -1593,7 +1591,7 @@ namespace MahApps.Metro.Controls
                     widthChange = LargeChange;
                 }
                 _roundToPrecision = true;
-                if (!widthChange.ToString().ToLower().Contains("e") &&
+                if (!widthChange.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e") &&
                     widthChange.ToString(CultureInfo.InvariantCulture).Contains("."))
                 {
                     string[] array =
@@ -1777,7 +1775,7 @@ namespace MahApps.Metro.Controls
                 double x = currentValue / TickFrequency;
                 if (dir == Direction.Increase)
                 {
-                    double nextvalue = x.ToString().ToLower().Contains("e+")
+                    double nextvalue = x.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e+")
                         ? (x * TickFrequency) + TickFrequency
                         : ((int)x * TickFrequency) + TickFrequency;
 
@@ -1785,7 +1783,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    double previousValue = x.ToString().ToLower().Contains("e+")
+                    double previousValue = x.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e+")
                         ? x * TickFrequency
                         : (int)x * TickFrequency;
                     distance = (Math.Abs(chekingValue - Minimum) - previousValue);
@@ -1802,7 +1800,6 @@ namespace MahApps.Metro.Controls
         {
             //find the difference between current value and next value
             double difference = CalculateNextTick(mDirection, chekingValue, distance, false);
-            double dif = Orientation == Orientation.Horizontal ? difference : -difference;
             Point p = Mouse.GetPosition(_visualElementsContainer);
             double pos = Orientation == Orientation.Horizontal ? p.X : p.Y;
             double widthHeight = Orientation == Orientation.Horizontal ? ActualWidth : ActualHeight;
@@ -1913,16 +1910,13 @@ namespace MahApps.Metro.Controls
                                 PopupPrimaryAxis.Horizontal)
                         };
                     }
-                    else
+                    // Place popup at left of thumb 
+                    return new CustomPopupPlacement[]
                     {
-                        // Place popup at left of thumb 
-                        return new CustomPopupPlacement[]
-                        {
-                            new CustomPopupPlacement(
-                                new Point(-popupSize.Width, (targetSize.Height - popupSize.Height)*0.5),
-                                PopupPrimaryAxis.Vertical)
-                        };
-                    }
+                        new CustomPopupPlacement(
+                            new Point(-popupSize.Width, (targetSize.Height - popupSize.Height)*0.5),
+                            PopupPrimaryAxis.Vertical)
+                    };
 
                 case AutoToolTipPlacement.BottomRight:
                     if (Orientation == Orientation.Horizontal)
@@ -1936,16 +1930,13 @@ namespace MahApps.Metro.Controls
                         };
 
                     }
-                    else
+                    // Place popup at right of thumb 
+                    return new CustomPopupPlacement[]
                     {
-                        // Place popup at right of thumb 
-                        return new CustomPopupPlacement[]
-                        {
-                            new CustomPopupPlacement(
-                                new Point(targetSize.Width, (targetSize.Height - popupSize.Height)*0.5),
-                                PopupPrimaryAxis.Vertical)
-                        };
-                    }
+                        new CustomPopupPlacement(
+                            new Point(targetSize.Width, (targetSize.Height - popupSize.Height)*0.5),
+                            PopupPrimaryAxis.Vertical)
+                    };
 
                 default:
                     return new CustomPopupPlacement[] {};
@@ -2041,13 +2032,24 @@ namespace MahApps.Metro.Controls
             return value;
         }
 
+        private static object CoerceMinRange(DependencyObject d, object basevalue)
+        {
+            RangeSlider rs = (RangeSlider)d;
+            double value = (double)basevalue;
+            if (rs.LowerValue + value > rs.Maximum)
+            {
+                return rs.Maximum - rs.LowerValue;
+            }
+            return basevalue;
+        }
+
         private static object CoerceMinRangeWidth(DependencyObject d, object basevalue)
         {
             RangeSlider rs = (RangeSlider) d;
-            double width = 0;
 
             if (rs._leftThumb != null && rs._rightThumb != null)
             {
+                double width;
                 if (rs.Orientation == Orientation.Horizontal)
                 {
                     width = rs.ActualWidth - rs._leftThumb.ActualWidth - rs._rightThumb.ActualWidth;
@@ -2098,22 +2100,22 @@ namespace MahApps.Metro.Controls
             slider.ReCalculateSize();
         }
 
-        private static void MinRangeChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        private static void MinRangeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             Double value = (Double)e.NewValue;
             if (value < 0)
                 value = 0;
 
-            var slider = (RangeSlider)sender;
-
-            slider._internalUpdate = true;
+            var slider = (RangeSlider)dependencyObject;
+            dependencyObject.CoerceValue(MinRangeProperty);
+            //slider._internalUpdate = true;
             slider.UpperValue = Math.Max(slider.UpperValue, slider.LowerValue + value);
             slider.UpperValue = Math.Min(slider.UpperValue, slider.Maximum);
-            slider._internalUpdate = false;
+            //slider._internalUpdate = false;
 
             slider.CoerceValue(UpperValueProperty);
 
-            RaiseValueChangedEvents(sender);
+            RaiseValueChangedEvents(dependencyObject);
             
             slider._oldLower = slider.LowerValue;
             slider._oldUpper = slider.UpperValue;

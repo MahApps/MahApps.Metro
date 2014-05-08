@@ -277,8 +277,8 @@
                                      DisplayMemberPath="Title"
                                      ItemsSource="{Binding ElementName=DownButton, Mode=TwoWay, Path=ItemsSource}">
             </Controls:DropDownButton>
-            <CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <!--<CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
             <Label Content="SplitButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
@@ -301,8 +301,8 @@
                                   SelectedIndex="{Binding SelectedIndex, ElementName=SplitButton0, Mode=TwoWay}"
                                   ItemsSource="{Binding ItemsSource, ElementName=SplitButton0, Mode=TwoWay}" />
 
-            <CheckBox IsChecked="{Binding ElementName=SplitButton0, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox IsChecked="{Binding ElementName=SplitButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <!--<CheckBox IsChecked="{Binding ElementName=SplitButton0, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <CheckBox IsChecked="{Binding ElementName=SplitButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
 
         </StackPanel>
     </Grid>
