@@ -295,7 +295,7 @@
                             <Image Width="{TemplateBinding Width}"
                                    Height="{TemplateBinding Height}"
                                    Source="{TemplateBinding Content}"
-                                   RenderOptions.EdgeMode="Aliased"
+                                   RenderOptions.EdgeMode="{Binding IconEdgeMode, RelativeSource={RelativeSource TemplatedParent}}"
                                    RenderOptions.BitmapScalingMode="HighQuality" />
                         </DataTemplate>
                     </Setter.Value>
