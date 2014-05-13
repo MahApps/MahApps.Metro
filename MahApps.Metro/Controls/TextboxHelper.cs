@@ -247,6 +247,11 @@ namespace MahApps.Metro.Controls
                 {
                     passBox.PasswordChanged += PasswordChanged;
                     passBox.GotFocus += PasswordGotFocus;
+
+                    // issue 1343: the watermark exists if the password was set in xaml (binding etc)
+                    var pw = passBox.Password;
+                    passBox.Clear();
+                    passBox.Password = pw;
                 }
                 else
                 {
