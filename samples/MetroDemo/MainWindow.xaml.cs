@@ -178,7 +178,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageBox.Show(String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
             }
         }
 
