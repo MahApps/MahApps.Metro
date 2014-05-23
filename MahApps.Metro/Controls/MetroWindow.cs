@@ -40,6 +40,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IconEdgeModeProperty = DependencyProperty.Register("IconEdgeMode", typeof(EdgeMode), typeof(MetroWindow), new PropertyMetadata(EdgeMode.Aliased));
+        public static readonly DependencyProperty IconBitmapScalingModeProperty = DependencyProperty.Register("IconBitmapScalingMode", typeof(BitmapScalingMode), typeof(MetroWindow), new PropertyMetadata(BitmapScalingMode.HighQuality));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
         public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -290,6 +291,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (EdgeMode)this.GetValue(IconEdgeModeProperty); }
             set { SetValue(IconEdgeModeProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets bitmap scaling mode of the titlebar icon.
+        /// </summary>
+        public BitmapScalingMode IconBitmapScalingMode
+        {
+            get { return (BitmapScalingMode)this.GetValue(IconBitmapScalingModeProperty); }
+            set { SetValue(IconBitmapScalingModeProperty, value); }
         }
 
         /// <summary>
