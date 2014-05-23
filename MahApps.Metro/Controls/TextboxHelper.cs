@@ -519,6 +519,10 @@ namespace MahApps.Metro.Controls
                 }
                 else if (parent is ComboBox)
                 {
+                    if (((ComboBox)parent).IsEditable)
+                    {
+                        ((ComboBox)parent).Text = string.Empty;
+                    }
                     ((ComboBox)parent).SelectedItem = null;
                 }
             }
