@@ -255,6 +255,7 @@
                                 <TextBox x:Name="PART_EditableTextBox"
                                          HorizontalAlignment="Stretch"
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                          BorderThickness="0"
                                          Background="{x:Null}"
@@ -417,6 +418,7 @@
                         <ContentControl Foreground="{TemplateBinding Foreground}">
                             <ContentPresenter x:Name="contentPresenter"
                                               Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </ContentControl>
                         <Rectangle x:Name="FocusVisualElement"
