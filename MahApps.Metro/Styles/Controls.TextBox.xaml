@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -118,7 +117,7 @@
                                     Foreground="{TemplateBinding Foreground}"
                                     FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonFontFamily), Mode=OneWay}"
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonContent), Mode=OneWay}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     IsTabStop="False" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"

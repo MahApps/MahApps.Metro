@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls
     /// <remarks>
     /// Password watermarking code from: http://prabu-guru.blogspot.com/2010/06/how-to-add-watermark-text-to-textbox.html
     /// </remarks>
-    public class TextboxHelper : DependencyObject
+    public class TextboxHelper
     {
         public static readonly DependencyProperty IsMonitoringProperty = DependencyProperty.RegisterAttached("IsMonitoring", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false, OnIsMonitoringChanged));
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.RegisterAttached("Watermark", typeof(string), typeof(TextboxHelper), new UIPropertyMetadata(string.Empty));
@@ -217,9 +217,14 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets if the attached TextBox has text.
         /// </summary>
-        public bool HasText
+        public static bool GetHasText(DependencyObject obj)
         {
-            get { return (bool)GetValue(HasTextProperty); }
+            return (bool)obj.GetValue(HasTextProperty);
+        }
+
+        public static void SetHasText(DependencyObject obj, bool value)
+        {
+            obj.SetValue(HasTextProperty, value);
         }
 
         static void OnIsMonitoringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -431,6 +436,7 @@ namespace MahApps.Metro.Controls
                 // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
                 button.Click -= ButtonClicked;
                 button.Click += ButtonClicked;
+                comboBox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(comboBox.Text) || comboBox.SelectedItem != null);
             }
             else
             {
@@ -457,6 +463,7 @@ namespace MahApps.Metro.Controls
                 // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
                 button.Click -= ButtonClicked;
                 button.Click += ButtonClicked;
+                passbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(passbox.Password));
             }
             else
             {
@@ -483,10 +490,12 @@ namespace MahApps.Metro.Controls
                 // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
                 button.Click -= ButtonClicked;
                 button.Click += ButtonClicked;
+                textbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(textbox.Text));
             }
             else
             {
                 button.Click -= ButtonClicked;
+                textbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(textbox.Text));
             }
         }
 
