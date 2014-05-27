@@ -492,8 +492,18 @@
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMinButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 Foreground="{TemplateBinding Foreground}"
-                                ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
-                                Visibility="{Binding ShowMinButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
+                            <Button.Visibility>
+                                <MultiBinding Converter="{x:Static conv:ResizeModeMinMaxButtonVisibilityConverter.Instance}"
+                                              ConverterParameter="MIN">
+                                    <Binding Path="ShowMinButton"
+                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
+                                             Mode="OneWay" />
+                                    <Binding Path="ResizeMode"
+                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
+                                             Mode="OneWay" />
+                                </MultiBinding>
+                            </Button.Visibility>
                             <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
                                   SnapsToDevicePixels="True"
                                   Fill="{TemplateBinding Foreground}" />
@@ -503,8 +513,18 @@
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMaxButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 Foreground="{TemplateBinding Foreground}"
-                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
-                                Visibility="{Binding ShowMaxRestoreButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
+                            <Button.Visibility>
+                                <MultiBinding Converter="{x:Static conv:ResizeModeMinMaxButtonVisibilityConverter.Instance}"
+                                              ConverterParameter="MAX">
+                                    <Binding Path="ShowMaxRestoreButton"
+                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
+                                             Mode="OneWay" />
+                                    <Binding Path="ResizeMode"
+                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
+                                             Mode="OneWay" />
+                                </MultiBinding>
+                            </Button.Visibility>
                             <Grid>
                                 <Path x:Name="MaximisePath"
                                       SnapsToDevicePixels="True"
