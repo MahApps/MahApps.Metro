@@ -124,6 +124,10 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                this.Visibility = Visibility.Visible;
+            }
             this.Loaded += (sender, args) => UpdateFlyoutTheme();
         }
 

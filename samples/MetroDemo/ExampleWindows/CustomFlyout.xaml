@@ -5,10 +5,12 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  mc:Ignorable="d"
-                 d:DesignHeight="300"
+                 d:DesignHeight="600"
                  d:DesignWidth="300"
                  Width="250"
                  x:Name="customFlyout"
+                 Header="Custom Flyout"
+                 Position="Right"
                  CloseCommand="{Binding ElementName=customFlyout, Path=CloseCmd}">
 
     <controls:Flyout.Resources>
