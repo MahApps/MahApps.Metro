@@ -42,9 +42,11 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IconEdgeModeProperty = DependencyProperty.Register("IconEdgeMode", typeof(EdgeMode), typeof(MetroWindow), new PropertyMetadata(EdgeMode.Aliased));
         public static readonly DependencyProperty IconBitmapScalingModeProperty = DependencyProperty.Register("IconBitmapScalingMode", typeof(BitmapScalingMode), typeof(MetroWindow), new PropertyMetadata(BitmapScalingMode.HighQuality));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
-        public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        
+        public static readonly DependencyProperty ShowMinButtonProperty = DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowMinButtonPropertyChanged));
+        public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowMaxRestoreButtonPropertyChanged));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
@@ -360,6 +362,37 @@ namespace MahApps.Metro.Controls
             set { SetValue(ShowMinButtonProperty, value); }
         }
 
+        internal bool? SavedShowMinButton { get; set; }
+
+        private static void OnShowMinButtonPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var window = dependencyObject as MetroWindow;
+            if (window != null && e.NewValue != e.OldValue)
+            {
+                window.SavedShowMinButton = null;
+            }
+        }
+
+        /// <summary>
+        /// Gets/sets if the Maximize/Restore button is visible.
+        /// </summary>
+        public bool ShowMaxRestoreButton
+        {
+            get { return (bool)GetValue(ShowMaxRestoreButtonProperty); }
+            set { SetValue(ShowMaxRestoreButtonProperty, value); }
+        }
+
+        internal bool? SavedShowMaxRestoreButton { get; set; }
+
+        private static void OnShowMaxRestoreButtonPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var window = dependencyObject as MetroWindow;
+            if (window != null && e.NewValue != e.OldValue)
+            {
+                window.SavedShowMaxRestoreButton = null;
+            }
+        }
+
         /// <summary>
         /// Gets/sets if the close button is visible.
         /// </summary>
@@ -417,15 +450,6 @@ namespace MahApps.Metro.Controls
             }
 
             SetWindowEvents();
-        }
-
-        /// <summary>
-        /// Gets/sets if the Maximize/Restore button is visible.
-        /// </summary>
-        public bool ShowMaxRestoreButton
-        {
-            get { return (bool)GetValue(ShowMaxRestoreButtonProperty); }
-            set { SetValue(ShowMaxRestoreButtonProperty, value); }
         }
 
         /// <summary>

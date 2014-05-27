@@ -92,6 +92,14 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void HandleResizeMode(MetroWindow window, ResizeMode resizeMode)
         {
+            if (!window.SavedShowMaxRestoreButton.HasValue)
+            {
+                window.SavedShowMaxRestoreButton = window.ShowMaxRestoreButton;
+            }
+            if (!window.SavedShowMinButton.HasValue)
+            {
+                window.SavedShowMinButton = window.ShowMinButton;
+            }
             switch (resizeMode)
             {
                 case ResizeMode.NoResize:
@@ -100,13 +108,12 @@ namespace MahApps.Metro.Behaviours
                     break;
                 case ResizeMode.CanMinimize:
                     window.ShowMaxRestoreButton = false;
-                    window.ShowMinButton = true;
+                    window.ShowMinButton = window.SavedShowMinButton.GetValueOrDefault(true);
                     break;
-
                 case ResizeMode.CanResize:
                 case ResizeMode.CanResizeWithGrip:
-                    window.ShowMaxRestoreButton = true;
-                    window.ShowMinButton = true;
+                    window.ShowMaxRestoreButton = window.SavedShowMaxRestoreButton.GetValueOrDefault(true);
+                    window.ShowMinButton = window.SavedShowMinButton.GetValueOrDefault(true);
                     break;
             }
         }
