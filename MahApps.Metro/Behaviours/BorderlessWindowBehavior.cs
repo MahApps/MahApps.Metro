@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
-using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Native;
 using Microsoft.Windows.Shell;
@@ -62,20 +61,7 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.StateChanged += AssociatedObject_StateChanged;
             AssociatedObject.Activated += AssociatedObject_Activated;
 
-            // handle resize mode after loading the window
-            System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window))
-                  .AddValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
-            
             base.OnAttached();
-        }
-
-        private void ResizeModePropertyChangedCallback(object sender, EventArgs e)
-        {
-            var metroWindow = sender as MetroWindow;
-            if (metroWindow != null)
-            {
-                this.HandleResizeMode(metroWindow, metroWindow.ResizeMode);
-            }
         }
 
         private void IgnoreTaskbarOnMaximizePropertyChangedCallback(object sender, EventArgs e)
@@ -84,37 +70,6 @@ namespace MahApps.Metro.Behaviours
             if (metroWindow != null && windowChrome != null)
             {
                 windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
-            }
-        }
-
-        /// <summary>
-        /// handle the resize mode for the window
-        /// </summary>
-        private void HandleResizeMode(MetroWindow window, ResizeMode resizeMode)
-        {
-            if (!window.SavedShowMaxRestoreButton.HasValue)
-            {
-                window.SavedShowMaxRestoreButton = window.ShowMaxRestoreButton;
-            }
-            if (!window.SavedShowMinButton.HasValue)
-            {
-                window.SavedShowMinButton = window.ShowMinButton;
-            }
-            switch (resizeMode)
-            {
-                case ResizeMode.NoResize:
-                    window.ShowMaxRestoreButton = false;
-                    window.ShowMinButton = false;
-                    break;
-                case ResizeMode.CanMinimize:
-                    window.ShowMaxRestoreButton = false;
-                    window.ShowMinButton = window.SavedShowMinButton.GetValueOrDefault(true);
-                    break;
-                case ResizeMode.CanResize:
-                case ResizeMode.CanResizeWithGrip:
-                    window.ShowMaxRestoreButton = window.SavedShowMaxRestoreButton.GetValueOrDefault(true);
-                    window.ShowMinButton = window.SavedShowMinButton.GetValueOrDefault(true);
-                    break;
             }
         }
 
@@ -132,8 +87,6 @@ namespace MahApps.Metro.Behaviours
                     System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
                           .RemoveValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
                 }
-                System.ComponentModel.DependencyPropertyDescriptor.FromProperty(Window.ResizeModeProperty, typeof(Window))
-                      .RemoveValueChanged(AssociatedObject, ResizeModePropertyChangedCallback);
                 AssociatedObject.Loaded -= AssociatedObject_Loaded;
                 AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
                 AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
@@ -385,9 +338,6 @@ namespace MahApps.Metro.Behaviours
             window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_LeftWindowCommands");
             window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_RightWindowCommands");
             window.SetIsHitTestVisibleInChromeProperty<ContentControl>("PART_WindowButtonCommands");
-
-            // handle resize mode
-            this.HandleResizeMode(window, window.ResizeMode);
         }
 
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));

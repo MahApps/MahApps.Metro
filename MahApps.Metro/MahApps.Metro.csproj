@@ -146,6 +146,7 @@
     <Compile Include="Controls\TransitioningContentControl.cs" />
     <Compile Include="Controls\TreeHelper.cs" />
     <Compile Include="Controls\VisualStates.cs" />
+    <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converters\TreeViewMarginConverter.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
