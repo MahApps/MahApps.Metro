@@ -292,6 +292,7 @@
         </Setter>
     </Style>
 
+    <!--____________________ Metro CellStyle ____________________-->
     <Style x:Key="MetroDataGridCell"
            TargetType="{x:Type DataGridCell}">
         <Setter Property="Foreground"
@@ -313,7 +314,10 @@
                             BorderThickness="{TemplateBinding BorderThickness}"
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                     </Border>
@@ -344,12 +348,12 @@
         </Style.Triggers>
     </Style>
 
+    <!--____________________ Metro RowStyle ____________________-->
+    <!-- Don't set the MinHeight or Height property, use the MinRowHeight or RowHeight property on DataGrid style! -->
     <Style x:Key="MetroDataGridRow"
            TargetType="{x:Type DataGridRow}">
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
-        <Setter Property="MinHeight"
-                Value="25" />
         <Setter Property="Margin"
                 Value="0,0,0,0" />
         <Style.Triggers>
@@ -397,6 +401,8 @@
 
     <Style x:Key="MetroDataGrid"
            TargetType="{x:Type DataGrid}">
+        <Setter Property="RowHeight"
+                Value="25" />
         <Setter Property="GridLinesVisibility"
                 Value="None" />
         <Setter Property="Background"
@@ -530,26 +536,12 @@
                 Value="0,0,0,0" />
     </Style>
 
+    <!--____________________ Azure CellStyle ____________________-->
     <Style x:Key="AzureDataGridCell"
-           TargetType="{x:Type DataGridCell}">
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Setter Property="BorderBrush"
-                Value="Transparent" />
-        <Setter Property="HorizontalContentAlignment"
-                Value="Stretch" />
-        <Setter Property="VerticalContentAlignment"
-                Value="Center" />
-        <Setter Property="TextBlock.VerticalAlignment"
-                Value="Center" />
+           TargetType="{x:Type DataGridCell}"
+           BasedOn="{StaticResource MetroDataGridCell}">
         <Setter Property="BorderThickness"
                 Value="0" />
-        <Setter Property="SnapsToDevicePixels"
-                Value="True" />
-        <Setter Property="MinHeight"
-                Value="25" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridCell}">
@@ -563,7 +555,7 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="2" />
+                                          Margin="1" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -607,6 +599,7 @@
         </Style.Triggers>
     </Style>
 
+    <!--____________________ Azure RowStyle ____________________-->
     <Style x:Key="AzureDataGridRow"
            TargetType="{x:Type DataGridRow}"
            BasedOn="{StaticResource MetroDataGridRow}">

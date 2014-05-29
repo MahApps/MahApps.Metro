@@ -4,7 +4,6 @@ namespace MahApps.Metro.Controls
     using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Media;
-    using Standard;
 
     public class DataGridNumericUpDownColumn : DataGridBoundColumn
     {
@@ -17,6 +16,7 @@ namespace MahApps.Metro.Controls
         private double _interval = (double)NumericUpDown.IntervalProperty.DefaultMetadata.DefaultValue;
         private string _stringFormat = (string)NumericUpDown.StringFormatProperty.DefaultMetadata.DefaultValue;
         private bool _hideUpDownButtons = (bool)NumericUpDown.HideUpDownButtonsProperty.DefaultMetadata.DefaultValue;
+        private Binding _foregroundBinding;
 
         #endregion
 
@@ -40,6 +40,11 @@ namespace MahApps.Metro.Controls
                 {
                     Style style = new Style(typeof(NumericUpDown));
                     style.Setters.Add(new Setter(FrameworkElement.VerticalAlignmentProperty, VerticalAlignment.Top));
+                    style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
+                    style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
+                    style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0d)));
+                    style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
+                    style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
                     style.Seal();
                     _defaultEditingElementStyle = style;
                 }
@@ -62,6 +67,10 @@ namespace MahApps.Metro.Controls
                     style.Setters.Add(new Setter(NumericUpDown.HideUpDownButtonsProperty, true));
                     style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0d)));
                     style.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.Transparent));
+                    style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
+                    style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
+                    style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
+                    style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
 
                     style.Seal();
                     _defaultElementStyle = style;
@@ -100,7 +109,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-
         internal void ApplyStyle(bool isEditing, bool defaultToElementStyle, FrameworkElement element)
         {
             Style style = PickStyle(isEditing, defaultToElementStyle);
@@ -128,10 +136,23 @@ namespace MahApps.Metro.Controls
             if (numericUpDown == null)
             {
                 numericUpDown = new NumericUpDown();
+                // create binding to cell foreground to get changed brush from selection
+                _foregroundBinding = new Binding("Foreground") { Source = cell, Mode = BindingMode.OneWay };
             }
 
             ApplyStyle(isEditing, true, numericUpDown);
             ApplyBinding(numericUpDown, NumericUpDown.ValueProperty);
+
+            if (!isEditing)
+            {
+                // bind to cell foreground to get changed brush from selection
+                ApplyBinding(_foregroundBinding, numericUpDown, Control.ForegroundProperty);
+            }
+            else
+            {
+                // no foreground change for editing
+                BindingOperations.ClearBinding(numericUpDown, Control.ForegroundProperty);
+            }
 
             numericUpDown.Minimum = Minimum;
             numericUpDown.Maximum = Maximum;
