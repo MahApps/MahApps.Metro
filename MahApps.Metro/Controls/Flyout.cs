@@ -124,15 +124,16 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
-            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
-            {
-                this.Visibility = Visibility.Visible;
-            }
             this.Loaded += (sender, args) => UpdateFlyoutTheme();
         }
 
         private void UpdateFlyoutTheme()
         {
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                this.Visibility = this.TryFindParent<FlyoutsControl>() != null ? Visibility.Collapsed : Visibility.Visible;
+            }
+
             var window = this.TryFindParent<MetroWindow>();
             if (window != null)
             {
