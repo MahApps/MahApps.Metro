@@ -23,7 +23,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Clean.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="Temp0">
