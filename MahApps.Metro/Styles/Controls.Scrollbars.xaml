@@ -554,14 +554,14 @@
                 <Setter Property="Width"
                         Value="Auto" />
                 <Setter Property="Height"
-                        Value="14" />
+                        Value="{DynamicResource DefaultScrollBarHeight}" />
                 <Setter Property="Template"
                         Value="{DynamicResource HorizontalScrollBar}" />
             </Trigger>
             <Trigger Property="Orientation"
                      Value="Vertical">
                 <Setter Property="Width"
-                        Value="14" />
+                        Value="{DynamicResource DefaultScrollBarWidth}" />
                 <Setter Property="Height"
                         Value="Auto" />
                 <Setter Property="Template"
