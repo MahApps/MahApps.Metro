@@ -17,7 +17,7 @@ namespace MetroDemo.ExampleWindows
             selector.FirstTemplate = this.Resources["Temp1"] as DataTemplate;
             selector.SecondTemplate = this.Resources["Temp2"] as DataTemplate;
             selector.NullTemplate = this.Resources["Temp0"] as DataTemplate;
-            this.tc.ContentTemplateSelector = selector;
+            //this.tc.ContentTemplateSelector = selector;
         }
 
         internal class SuperDataTemplateSelector : System.Windows.Controls.DataTemplateSelector
