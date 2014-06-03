@@ -10,8 +10,6 @@ namespace MahApps.Metro.Controls.Dialogs
         private const string DEFAULT_USERNAME_WATERMARK = "Username...";
         private const string DEFAULT_PASSWORD_WATERMARK = "Password...";
         private const Visibility DEFAULT_NEGATIVE_BUTTON_VISIBILITY = Visibility.Collapsed;
-        private string _usernameWatermark = null, _passwordWatermark = null;
-        private Visibility _negativeButtonButtonVisibility;
 
         public LoginDialogSettings()
             : base()
@@ -24,21 +22,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string InitialUsername { get; set; }
 
-        public string UsernameWatermark
-        {
-            get { return _usernameWatermark; }
-            set { _usernameWatermark = value; }
-        }
-        public string PasswordWatermark
-        {
-            get { return _passwordWatermark; }
-            set { _passwordWatermark = value; }
-        }
-        public Visibility NegativeButtonVisibility
-        {
-            get { return _negativeButtonButtonVisibility; }
-            set { _negativeButtonButtonVisibility = value; }
-        }
+        public string UsernameWatermark { get; set; }
+
+        public string PasswordWatermark { get; set; }
+
+        public Visibility NegativeButtonVisibility { get; set; }
     }
 
     public class LoginDialogData
@@ -68,7 +56,14 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             Dispatcher.BeginInvoke(new Action(() => {
                 this.Focus();
-                PART_TextBox.Focus();
+                if (string.IsNullOrEmpty(PART_TextBox.Text))
+                {
+                    PART_TextBox.Focus();
+                }
+                else
+                {
+                    PART_TextBox2.Focus();
+                }
             }));
 
             TaskCompletionSource<LoginDialogData> tcs = new TaskCompletionSource<LoginDialogData>();
@@ -119,7 +114,6 @@ namespace MahApps.Metro.Controls.Dialogs
                     tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password });
                 }
             });
-
 
             negativeHandler = new RoutedEventHandler((sender, e) => {
                 cleanUpHandlers();

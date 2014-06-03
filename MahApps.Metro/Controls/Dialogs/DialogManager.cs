@@ -34,7 +34,6 @@ namespace MahApps.Metro.Controls.Dialogs
                     LoginDialog dialog = new LoginDialog(window, settings);
                     dialog.Title = title;
                     dialog.Message = message;
-                    dialog.Username = settings.InitialUsername;
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
@@ -43,9 +42,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         if (DialogOpened != null)
                         {
-                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs()
-                            {
-                            })));
+                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs() { })));
                         }
 
                         return dialog.WaitForButtonPressAsync().ContinueWith(y =>
@@ -56,9 +53,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                             if (DialogClosed != null)
                             {
-                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs()
-                                {
-                                })));
+                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs() { })));
                             }
 
                             Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
