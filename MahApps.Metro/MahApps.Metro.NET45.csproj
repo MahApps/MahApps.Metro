@@ -93,6 +93,7 @@
     <Compile Include="Controls\Dialogs\DialogManager.cs" />
     <Compile Include="Controls\Dialogs\DialogStateChangedEventArgs.cs" />
     <Compile Include="Controls\Dialogs\InputDialog.cs" />
+    <Compile Include="Controls\Dialogs\LoginDialog.cs" />
     <Compile Include="Controls\Dialogs\MessageDialog.cs" />
     <Compile Include="Controls\Dialogs\ProgressDialog.cs" />
     <Compile Include="Controls\Dialogs\ProgressDialogController.cs" />
@@ -444,6 +445,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Dialogs\InputDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Dialogs\LoginDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
