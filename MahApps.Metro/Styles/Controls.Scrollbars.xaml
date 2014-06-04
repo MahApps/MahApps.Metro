@@ -322,7 +322,7 @@
                               Height="6"
                               Stretch="Uniform"
                               Width="10"
-                              Margin="1,0,0,0"
+                              Margin="0.5,0,0.5,0"
                               Fill="{DynamicResource GrayBrush1}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
@@ -331,7 +331,7 @@
                               Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0"
+                              Margin="0.5,0,0.5,0"
                               Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
@@ -340,7 +340,7 @@
                               Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0"
+                              Margin="0.5,0,0.5,0"
                               Fill="{DynamicResource BlackBrush}">
                             <Path.Effect>
                                 <BlurEffect />
@@ -409,7 +409,7 @@
                               Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0"
+                              Margin="0,0,2,0"
                               Fill="{DynamicResource BlackBrush}">
                             <Path.Effect>
                                 <BlurEffect />
