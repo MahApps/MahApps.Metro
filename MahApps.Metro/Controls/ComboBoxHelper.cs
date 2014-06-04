@@ -20,6 +20,7 @@ namespace MahApps.Metro.Controls
 #if NET4_5
                 comboBox.SetValue(VirtualizingStackPanel.IsVirtualizingProperty, e.NewValue);
                 comboBox.SetValue(VirtualizingPanel.IsVirtualizingWhenGroupingProperty, e.NewValue);
+                comboBox.SetValue(ScrollViewer.CanContentScrollProperty, e.NewValue);
 #endif
             }
         }
