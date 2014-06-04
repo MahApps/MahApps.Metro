@@ -347,6 +347,23 @@
         </Setter>
     </Style>
 
+    <Style x:Key="VirtualisedMetroComboBox"
+           TargetType="{x:Type ComboBox}"
+           BasedOn="{StaticResource MetroComboBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsItemsHost="True"
+                                            KeyboardNavigation.DirectionalNavigation="Contained"
+                                            IsVirtualizing="True"
+                                            VirtualizationMode="Recycling" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ScrollViewer.CanContentScroll"
+                Value="True" />
+    </Style>
+
     <Style TargetType="ComboBoxItem"
            x:Key="MetroComboBoxItem">
         <Setter Property="Foreground"
