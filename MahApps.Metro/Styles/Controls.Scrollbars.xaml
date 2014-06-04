@@ -223,7 +223,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
             <Grid x:Name="HorizontalRoot"
-                  Height="13">
+                  Height="{TemplateBinding Height}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="0.00001*" />
@@ -260,7 +260,7 @@
                 </Track>
                 <RepeatButton x:Name="HorizontalSmallIncrease"
                               Command="ScrollBar.LineRightCommand"
-                              Width="16"
+                              Width="{DynamicResource HorizontalScrollBarRepeatButtonWidth}"
                               IsTabStop="False"
                               Interval="50"
                               Margin="1"
@@ -491,7 +491,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
             <Grid x:Name="VerticalRoot"
-                  Width="13">
+                  Width="{TemplateBinding Width}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="0.00001*" />
@@ -531,7 +531,7 @@
                 </Track>
                 <RepeatButton x:Name="VerticalSmallIncrease"
                               Command="ScrollBar.LineDownCommand"
-                              Height="16"
+                              Height="{DynamicResource VerticalScrollBarRepeatButtonHeight}"
                               IsTabStop="False"
                               Interval="50"
                               Margin="1"
@@ -554,14 +554,14 @@
                 <Setter Property="Width"
                         Value="Auto" />
                 <Setter Property="Height"
-                        Value="14" />
+                        Value="{DynamicResource MetroScrollBarHeight}" />
                 <Setter Property="Template"
                         Value="{DynamicResource HorizontalScrollBar}" />
             </Trigger>
             <Trigger Property="Orientation"
                      Value="Vertical">
                 <Setter Property="Width"
-                        Value="14" />
+                        Value="{DynamicResource MetroScrollBarWidth}" />
                 <Setter Property="Height"
                         Value="Auto" />
                 <Setter Property="Template"
