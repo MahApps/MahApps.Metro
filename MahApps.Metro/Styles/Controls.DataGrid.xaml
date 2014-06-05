@@ -404,7 +404,7 @@
 
     <Style x:Key="MetroDataGrid"
            TargetType="{x:Type DataGrid}">
-        <Setter Property="RowHeight"
+        <Setter Property="MinRowHeight"
                 Value="25" />
         <Setter Property="GridLinesVisibility"
                 Value="None" />
