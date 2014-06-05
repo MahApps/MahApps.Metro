@@ -197,61 +197,7 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException("resources");
 
-            var builtInAccent = Accents.FirstOrDefault(x => x.Resources.Source == resources.Source);
-            if (builtInAccent != null)
-            {
-                return builtInAccent;
-            }
-
-            // support dynamically created runtime resource dictionaries
-            if (IsAccentDictionary(resources))
-            {
-                return new Accent
-                {
-                    Name = "Runtime accent",
-                    Resources = resources
-                };
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Determines whether the specified resource dictionary represents an <see cref="Accent"/>.
-        /// <para />
-        /// This might include runtime accents which do not have a resource uri.
-        /// </summary>
-        /// <param name="resources">The resources.</param>
-        /// <returns><c>true</c> if the resource dictionary is an <see cref="Accent"/>; otherwise, <c>false</c>.</returns>
-        /// <exception cref="System.ArgumentNullException">resources</exception>
-        public static bool IsAccentDictionary(ResourceDictionary resources)
-        {
-            if (resources == null) throw new ArgumentNullException("resources");
-
-            // Note: add more checks if these keys aren't sufficient
-            var styleKeys = new List<string>(new []
-            {
-                "HighlightColor",
-                "AccentColor",
-                "AccentColor2",
-                "AccentColor3",
-                "AccentColor4",
-                "HighlightBrush",
-                "AccentColorBrush",
-                "AccentColorBrush2",
-                "AccentColorBrush3",
-                "AccentColorBrush4",
-            });
-
-            foreach (var styleKey in styleKeys)
-            {
-                if (!resources.Contains(styleKey))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return Accents.FirstOrDefault(x => x.Resources.Source == resources.Source);
         }
 
         /// <summary>
@@ -264,7 +210,15 @@ namespace MahApps.Metro
         {
             var appStyle = window != null ? DetectAppStyle(window) : DetectAppStyle(Application.Current);
             if (appStyle == null && window != null)
+            {
                 appStyle = DetectAppStyle(Application.Current); //no resources in the window's resources.
+            }
+
+            if (appStyle == null)
+            {
+                // nothing to do here, we can't found an app style (make sure all custom themes are added!)
+                return null;
+            }
 
             object resource = appStyle.Item1.Resources[key]; //check the theme first
 
