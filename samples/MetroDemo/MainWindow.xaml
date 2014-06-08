@@ -173,7 +173,7 @@
                 </MenuItem>
             </Menu>
 
-            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
+            <Controls:MetroAnimatedSingleRowTabControl x:Name="TabControl" Grid.Row="1">
                 <TabItem Header="buttons">
                     <exampleViews:ButtonsExample DataContext="{Binding}" />
                 </TabItem>

@@ -121,6 +121,9 @@
     <Compile Include="ExampleViews\TextExamples.xaml.cs">
       <DependentUpon>TextExamples.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExampleViews\ValidationErrors.xaml.cs">
+      <DependentUpon>ValidationErrors.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleWindows\CleanWindowDemo.xaml.cs">
       <DependentUpon>CleanWindowDemo.xaml</DependentUpon>
     </Compile>
@@ -153,6 +156,7 @@
     <Compile Include="Navigation\InterestingPage.xaml.cs">
       <DependentUpon>InterestingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ValidationErrorsViewModel.cs" />
     <Page Include="ExampleViews\ButtonsExample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -188,6 +192,10 @@
     <Page Include="ExampleViews\TextExamples.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\ValidationErrors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ExampleWindows\CleanWindowDemo.xaml">
       <Generator>MSBuild:Compile</Generator>
