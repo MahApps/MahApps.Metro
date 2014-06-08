@@ -120,6 +120,7 @@ namespace MetroDemo
 
             await this.HideMetroDialogAsync(dialog);
         }
+
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
