@@ -82,8 +82,6 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
 
-        bool isDragging;
-        
         UIElement icon;
         UIElement titleBar;
         UIElement titleBarBackground;
@@ -757,22 +755,18 @@ namespace MahApps.Metro.Controls
             {
                 titleBarBackground.MouseDown -= TitleBarMouseDown;
                 titleBarBackground.MouseUp -= TitleBarMouseUp;
-                titleBarBackground.MouseMove -= TitleBarMouseMove;
             }
             if (titleBar != null)
             {
                 titleBar.MouseDown -= TitleBarMouseDown;
                 titleBar.MouseUp -= TitleBarMouseUp;
-                titleBar.MouseMove -= TitleBarMouseMove;
             }
             if (icon != null)
             {
                 icon.MouseDown -= IconMouseDown;
-                icon.MouseUp -= IconMouseUp;
             }
             MouseDown -= TitleBarMouseDown;
             MouseUp -= TitleBarMouseUp;
-            MouseMove -= TitleBarMouseMove;
             SizeChanged -= MetroWindow_SizeChanged;
         }
 
@@ -785,7 +779,6 @@ namespace MahApps.Metro.Controls
             if (icon != null && icon.Visibility == Visibility.Visible)
             {
                 icon.MouseDown += IconMouseDown;
-                icon.MouseUp += IconMouseUp;
             }
 
             // handle mouse events for PART_WindowTitleBackground -> MetroWindow
@@ -793,7 +786,6 @@ namespace MahApps.Metro.Controls
             {
                 titleBarBackground.MouseDown += TitleBarMouseDown;
                 titleBarBackground.MouseUp += TitleBarMouseUp;
-                titleBarBackground.MouseMove += TitleBarMouseMove;
             }
 
             // handle mouse events for PART_TitleBar -> MetroWindow and CleanWindow
@@ -801,7 +793,6 @@ namespace MahApps.Metro.Controls
             {
                 titleBar.MouseDown += TitleBarMouseDown;
                 titleBar.MouseUp += TitleBarMouseUp;
-                titleBar.MouseMove += TitleBarMouseMove;
 
                 // special title resizing for CleanWindow title
                 if (titleBar.GetType() == typeof(Grid))
@@ -814,7 +805,6 @@ namespace MahApps.Metro.Controls
                 // handle mouse events for windows without PART_WindowTitleBackground or PART_TitleBar
                 MouseDown += TitleBarMouseDown;
                 MouseUp += TitleBarMouseUp;
-                MouseMove += TitleBarMouseMove;
             }
         }
 
@@ -841,11 +831,6 @@ namespace MahApps.Metro.Controls
                     ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitlebarHeight)));
                 }
             }
-        }
-
-        private void IconMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            isDragging = false;
         }
 
         protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
@@ -906,43 +891,6 @@ namespace MahApps.Metro.Controls
             if (e.ChangedButton == MouseButton.Right && !isIconClick && TitlebarHeight > 0)
             {
                 ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePosition));
-            }
-            isDragging = false;
-        }
-
-        private void TitleBarMouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.LeftButton != MouseButtonState.Pressed)
-            {
-                isDragging = false;
-            }
-
-            if (isDragging
-                && WindowState == WindowState.Maximized
-                && ResizeMode != ResizeMode.NoResize)
-            {
-                // Calculating correct left coordinate for multi-screen system.
-                Point mouseAbsolute = PointToScreen(Mouse.GetPosition(this));
-                double width = RestoreBounds.Width;
-                double left = mouseAbsolute.X - width / 2;
-
-                // Check if the mouse is at the top of the screen if TitleBar is not visible
-                if (titleBar.Visibility != Visibility.Visible && mouseAbsolute.Y > TitlebarHeight)
-                    return;
-
-                // Aligning window's position to fit the screen.
-                double virtualScreenWidth = SystemParameters.VirtualScreenWidth;
-                left = left + width > virtualScreenWidth ? virtualScreenWidth - width : left;
-
-                var mousePosition = e.MouseDevice.GetPosition(this);
-
-                // When dragging the window down at the very top of the border,
-                // move the window a bit upwards to avoid showing the resize handle as soon as the mouse button is released
-                Top = mousePosition.Y < 5 ? -5 : mouseAbsolute.Y - mousePosition.Y;
-                Left = left;
-
-                // Restore window to normal state.
-                WindowState = WindowState.Normal;
             }
         }
 
