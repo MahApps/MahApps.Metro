@@ -750,43 +750,45 @@ namespace MahApps.Metro.Controls
             this.ToggleVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
         }
 
-        private void SetWindowEvents()
+        private void ClearWindowEvents()
         {
             // clear all event handlers first:
-
             if (titleBarBackground != null)
             {
                 titleBarBackground.MouseDown -= TitleBarMouseDown;
                 titleBarBackground.MouseUp -= TitleBarMouseUp;
                 titleBarBackground.MouseMove -= TitleBarMouseMove;
             }
-
             if (titleBar != null)
             {
                 titleBar.MouseDown -= TitleBarMouseDown;
                 titleBar.MouseUp -= TitleBarMouseUp;
                 titleBar.MouseMove -= TitleBarMouseMove;
             }
-
             if (icon != null)
             {
                 icon.MouseDown -= IconMouseDown;
                 icon.MouseUp -= IconMouseUp;
             }
-
             MouseDown -= TitleBarMouseDown;
             MouseUp -= TitleBarMouseUp;
             MouseMove -= TitleBarMouseMove;
-
             SizeChanged -= MetroWindow_SizeChanged;
+        }
 
+        private void SetWindowEvents()
+        {
+            // clear all event handlers first
+            this.ClearWindowEvents();
+
+            // set mouse down/up for icon
             if (icon != null && icon.Visibility == Visibility.Visible)
             {
                 icon.MouseDown += IconMouseDown;
                 icon.MouseUp += IconMouseUp;
             }
 
-            // handle mouse events if title template use HorizontalAlignment != Center
+            // handle mouse events for PART_WindowTitleBackground -> MetroWindow
             if (titleBarBackground != null && titleBarBackground.Visibility == Visibility.Visible)
             {
                 titleBarBackground.MouseDown += TitleBarMouseDown;
@@ -794,12 +796,14 @@ namespace MahApps.Metro.Controls
                 titleBarBackground.MouseMove += TitleBarMouseMove;
             }
 
+            // handle mouse events for PART_TitleBar -> MetroWindow and CleanWindow
             if (titleBar != null && titleBar.Visibility == Visibility.Visible)
             {
                 titleBar.MouseDown += TitleBarMouseDown;
                 titleBar.MouseUp += TitleBarMouseUp;
                 titleBar.MouseMove += TitleBarMouseMove;
 
+                // special title resizing for CleanWindow title
                 if (titleBar.GetType() == typeof(Grid))
                 {
                     SizeChanged += MetroWindow_SizeChanged;
@@ -807,6 +811,7 @@ namespace MahApps.Metro.Controls
             }
             else
             {
+                // handle mouse events for windows without PART_WindowTitleBackground or PART_TitleBar
                 MouseDown += TitleBarMouseDown;
                 MouseUp += TitleBarMouseUp;
                 MouseMove += TitleBarMouseMove;
@@ -823,7 +828,7 @@ namespace MahApps.Metro.Controls
             base.OnStateChanged(e);
         }
 
-        protected void IconMouseDown(object sender, MouseButtonEventArgs e)
+        private void IconMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -838,7 +843,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected void IconMouseUp(object sender, MouseButtonEventArgs e)
+        private void IconMouseUp(object sender, MouseButtonEventArgs e)
         {
             isDragging = false;
         }
