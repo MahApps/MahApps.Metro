@@ -886,9 +886,7 @@ namespace MahApps.Metro.Controls
         protected void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
         {
             var mousePosition = e.GetPosition(this);
-            // icon == null means e.g. the clean window style
-            var isIconClick = icon == null && ShowIconOnTitleBar && mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight;
-            if (e.ChangedButton == MouseButton.Right && !isIconClick && TitlebarHeight > 0)
+            if (e.ChangedButton == MouseButton.Right && (UseNoneWindowStyle || mousePosition.Y <= TitlebarHeight))
             {
                 ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePosition));
             }
