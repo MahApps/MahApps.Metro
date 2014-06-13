@@ -114,9 +114,9 @@ namespace MahApps.Metro.Controls
 
             PageContent = PART_Frame.Content;
 
-            PART_BackButton.Visibility = CanGoBack ? Visibility.Visible : System.Windows.Visibility.Hidden;
+            PART_BackButton.IsEnabled = CanGoBack;
 
-            PART_ForwardButton.Visibility = CanGoForward ? Visibility.Visible : Visibility.Collapsed;
+            PART_ForwardButton.IsEnabled = CanGoForward;
 
             if (Navigated != null)
                 Navigated(this, e);
