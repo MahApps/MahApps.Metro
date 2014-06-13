@@ -160,6 +160,7 @@ namespace MahApps.Metro.Controls
             owner.LocationChanged += (sender, e) => Update();
             owner.SizeChanged += (sender, e) => Update();
             owner.StateChanged += (sender, e) => Update();
+            owner.IsVisibleChanged += (sender, e) => Update();
             owner.Closed += (sender, e) =>
             {
                 closing = true;

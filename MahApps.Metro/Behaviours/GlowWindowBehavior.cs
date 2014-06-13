@@ -57,8 +57,6 @@ namespace MahApps.Metro.Behaviours
 
         private void AssociatedObjectIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            this.Update();
-
             if (!this.AssociatedObject.IsVisible)
             {
                 // the associated owner got invisible so set opacity to 0 to start the storyboard by 0 for the next visible state
