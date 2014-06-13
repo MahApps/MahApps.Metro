@@ -469,6 +469,14 @@ namespace MahApps.Metro.Controls
                 flipview.Loaded += handler;
             }
         }
+
+        public static readonly DependencyProperty MouseOverGlowEnabledProperty = DependencyProperty.Register("MouseOverGlowEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
+
+        public bool MouseOverGlowEnabled
+        {
+            get { return (bool)GetValue(MouseOverGlowEnabledProperty); }
+            set { SetValue(MouseOverGlowEnabledProperty, value); }
+        }
     }
 
     public class FlipViewItem : ContentControl
