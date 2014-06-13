@@ -225,8 +225,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid x:Name="grid"
-                          Background="{TemplateBinding Background}">
+                    <Grid Background="{TemplateBinding Background}">
                         <ContentPresenter x:Name="contentPresenter"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
@@ -241,9 +240,6 @@
                             <Setter TargetName="contentPresenter"
                                     Property="Opacity"
                                     Value="1" />
-                            <Setter TargetName="grid"
-                                    Property="Background"
-                                    Value="{DynamicResource SemiTransparentWhiteBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="False">
@@ -251,21 +247,27 @@
                                     Property="Opacity"
                                     Value=".5" />
                         </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="True">
-                            <Setter TargetName="grid"
-                                    Property="Background"
-                                    Value="{DynamicResource HighlightBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter Property="Foreground"
-                                    Value="#ADADAD" />
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource SemiTransparentWhiteBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource HighlightBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="false">
+                <Setter Property="Foreground"
+                        Value="#ADADAD" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- default button style for min, max and close window buttons -->
