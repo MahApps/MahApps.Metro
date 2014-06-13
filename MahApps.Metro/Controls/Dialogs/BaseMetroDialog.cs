@@ -10,6 +10,12 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
+    /// <summary>
+    /// The base class for dialogs.
+    ///
+    /// You probably don't want to use this class, if you want to add arbitrary content to your dialog, 
+    /// use the <see cref="SimpleDialog"/> class.
+    /// </summary>
     [System.Windows.Markup.ContentProperty("DialogBody")]
     public abstract class BaseMetroDialog : Control
     {
