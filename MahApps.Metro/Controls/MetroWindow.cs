@@ -846,49 +846,29 @@ namespace MahApps.Metro.Controls
 
         protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var mousePosition = e.GetPosition(this);
-            // icon == null means e.g. the clean window style
-            var isIconClick = icon == null && ShowIconOnTitleBar && mousePosition.X <= TitlebarHeight && mousePosition.Y <= TitlebarHeight;
-
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
             {
-                if (isIconClick && TitlebarHeight > 0)
+                // if UseNoneWindowStyle = true no movement, no maximize please
+                IntPtr windowHandle = new WindowInteropHelper(this).Handle;
+                UnsafeNativeMethods.ReleaseCapture();
+
+                var mPoint = Mouse.GetPosition(this);
+
+                var wpfPoint = this.PointToScreen(mPoint);
+                var x = Convert.ToInt16(wpfPoint.X);
+                var y = Convert.ToInt16(wpfPoint.Y);
+                var lParam = x | (y << 16);
+                UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
+
+                if (e.ClickCount == 2 && (this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize) && mPoint.Y <= this.TitlebarHeight && this.TitlebarHeight > 0)
                 {
-                    if (e.ClickCount == 2)
+                    if (this.WindowState == WindowState.Maximized)
                     {
-                        Close();
+                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
                     }
                     else
                     {
-                        ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitlebarHeight)));
-                    }
-                }
-                else if (!UseNoneWindowStyle)
-                {
-                    // if UseNoneWindowStyle = true no movement, no maximize please
-                    IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-                    UnsafeNativeMethods.ReleaseCapture();
-
-                    var mPoint = Mouse.GetPosition(this);
-
-                    var wpfPoint = PointToScreen(mPoint);
-                    var x = Convert.ToInt16(wpfPoint.X);
-                    var y = Convert.ToInt16(wpfPoint.Y);
-                    var lParam = x | (y << 16);
-                    UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
-
-                    if (e.ClickCount == 2 &&
-                        (ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize) &&
-                        mPoint.Y <= TitlebarHeight && TitlebarHeight > 0)
-                    {
-                        if (WindowState == WindowState.Maximized)
-                        {
-                            Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
-                        }
-                        else
-                        {
-                            Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
-                        }
+                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
                     }
                 }
             }
