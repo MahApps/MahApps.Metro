@@ -171,7 +171,7 @@
                                  Value="False">
                             <Setter TargetName="DisabledVisualElement"
                                     Property="Opacity"
-                                    Value="1" />
+                                    Value="0.6"/>
                         </Trigger>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
@@ -395,7 +395,7 @@
                                  Value="False">
                             <Setter TargetName="DisabledVisualElement"
                                     Property="Opacity"
-                                    Value="1" />
+                                    Value="0.6" />
                         </Trigger>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
@@ -479,11 +479,6 @@
                             <Setter TargetName="contentPresenter"
                                     Property="Opacity"
                                     Value=".5" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Foreground"
-                                    Value="#ADADAD" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -574,6 +569,7 @@
                                    Stroke="{DynamicResource ControlsDisabledBrush}"
                                    StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
+                                   Opacity="0.6"
                                    IsHitTestVisible="False"
                                    Visibility="Collapsed" />
                     </Grid>
