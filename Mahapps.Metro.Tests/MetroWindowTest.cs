@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
+using Mahapps.Metro.Tests.TestHelpers;
 using Xunit;
 
 namespace Mahapps.Metro.Tests
@@ -13,7 +14,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
         }
 
         [Fact]
@@ -42,7 +43,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");
@@ -60,7 +61,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");
@@ -83,7 +84,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");
@@ -106,7 +107,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");
@@ -167,7 +168,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<HiddenMinMaxCloseButtonsWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<HiddenMinMaxCloseButtonsWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");

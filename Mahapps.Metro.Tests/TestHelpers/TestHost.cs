@@ -1,10 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Windows;
 
-namespace Mahapps.Metro.Tests
+namespace Mahapps.Metro.Tests.TestHelpers
 {
     /// <summary>
     /// This class is the ultimate hack to work around that we can't 

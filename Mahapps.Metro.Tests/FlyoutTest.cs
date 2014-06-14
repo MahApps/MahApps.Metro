@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Mahapps.Metro.Tests.TestHelpers;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using Xunit;
@@ -15,7 +16,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             Assert.False(window.DefaultFlyout.IsOpen);
         }
@@ -25,7 +26,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             // root grid should be hidden
             Assert.Equal(Visibility.Hidden, window.DefaultFlyout.Visibility);
@@ -38,7 +39,7 @@ namespace Mahapps.Metro.Tests
             {
                 await TestHost.SwitchToAppThread();
 
-                var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
                 Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
             }
@@ -51,7 +52,7 @@ namespace Mahapps.Metro.Tests
             {
                 await TestHost.SwitchToAppThread();
 
-                var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
                 window.LeftWindowCommandsBehavior = WindowCommandsBehavior.Never;
                 window.LeftFlyout.IsOpen = true;
 
@@ -66,7 +67,7 @@ namespace Mahapps.Metro.Tests
             {
                 await TestHost.SwitchToAppThread();
 
-                var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
                 window.RightWindowCommandsBehavior = WindowCommandsBehavior.Never;
                 window.RightFlyout.IsOpen = true;
 
@@ -81,7 +82,7 @@ namespace Mahapps.Metro.Tests
             {
                 await TestHost.SwitchToAppThread();
 
-                var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
                 window.RightFlyout.IsOpen = true;
                 window.ShowWindowCommandsOnTop = false;
 
@@ -96,7 +97,7 @@ namespace Mahapps.Metro.Tests
             {
                 await TestHost.SwitchToAppThread();
 
-                var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
                 window.DefaultFlyout.IsOpen = true;
 
                 int windowCommandsZIndex = Panel.GetZIndex(window.LeftWindowCommands);
@@ -110,7 +111,7 @@ namespace Mahapps.Metro.Tests
             {
                 await TestHost.SwitchToAppThread();
 
-                var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
                 window.RightFlyout.IsOpen = true;
 
                 int windowCommandsZIndex = Panel.GetZIndex(window.RightWindowCommands);
@@ -124,7 +125,7 @@ namespace Mahapps.Metro.Tests
             {
                 await TestHost.SwitchToAppThread();
 
-                var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
                 window.RightFlyout.IsOpen = true;
 
                 int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands);
@@ -141,7 +142,7 @@ namespace Mahapps.Metro.Tests
             {
                 await TestHost.SwitchToAppThread();
 
-                var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
                 var flyout = new Flyout { Theme = FlyoutTheme.Dark };
                 window.Flyouts.Items.Add(flyout);
@@ -158,7 +159,7 @@ namespace Mahapps.Metro.Tests
             {
                 await TestHost.SwitchToAppThread();
 
-                var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
                 Assert.Equal(Position.Left, window.DefaultFlyout.Position);
             }
