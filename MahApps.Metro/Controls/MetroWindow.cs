@@ -46,6 +46,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
+        public static readonly DependencyProperty ShowWindowButtonCommandsOnHiddenTitleBarProperty = DependencyProperty.Register("ShowWindowButtonCommandsOnHiddenTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
@@ -380,6 +382,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets/sets whether the Window Button Commands will show if the TitleBar is hidden.
+        /// </summary>
+        public bool ShowWindowButtonCommandsOnHiddenTitleBar
+        {
+            get { return (bool)GetValue(ShowWindowButtonCommandsOnHiddenTitleBarProperty); }
+            set { SetValue(ShowWindowButtonCommandsOnHiddenTitleBarProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets if the the system menu should popup on right click.
         /// </summary>
         public bool ShowSystemMenuOnRightClick
@@ -432,7 +443,8 @@ namespace MahApps.Metro.Controls
             }
             if (this.WindowButtonCommands != null)
             {
-                this.WindowButtonCommands.Visibility = newVisibility;
+                var windowCommandsVisibility = ShowWindowButtonCommandsOnHiddenTitleBar ? Visibility.Visible : newVisibility;
+                this.WindowButtonCommands.Visibility = windowCommandsVisibility;
             }
 
             SetWindowEvents();
