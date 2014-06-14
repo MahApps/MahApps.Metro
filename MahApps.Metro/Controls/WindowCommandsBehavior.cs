@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MahApps.Metro
+namespace MahApps.Metro.Controls
 {
     [Flags]
     public enum WindowCommandsBehavior
