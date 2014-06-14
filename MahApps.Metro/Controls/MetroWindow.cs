@@ -348,7 +348,7 @@ namespace MahApps.Metro.Controls
             var window = (MetroWindow)d;
             if (e.NewValue != e.OldValue)
             {
-                window.ToggleVisibiltyForAllTitleElements((bool)e.NewValue);
+                window.SetVisibiltyForAllTitleElements((bool)e.NewValue);
             }
         }
 
@@ -433,16 +433,17 @@ namespace MahApps.Metro.Controls
             var window = (MetroWindow)dependencyObject;
             if (e.NewValue != e.OldValue)
             {
-                window.ToggleVisibiltyForAllTitleElements((int)e.NewValue > 0);
+                window.SetVisibiltyForAllTitleElements((int)e.NewValue > 0);
             }
         }
 
-        private void ToggleVisibiltyForAllTitleElements(bool visible)
+        private void SetVisibiltyForAllTitleElements(bool visible)
         {
             var newVisibility = visible && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
             if (this.icon != null)
             {
-                var iconVisibility = visible && this.ShowTitleBar && this.ShowIconOnTitleBar ? Visibility.Visible : Visibility.Collapsed;
+                var iconVisibility = this.IconBehavior.HasFlag(WindowCommandsBehavior.OverlayHiddenTitleBar) && this.ShowIconOnTitleBar ?
+                    Visibility.Visible : Visibility.Collapsed;
                 this.icon.Visibility = iconVisibility;
             }
             if (this.titleBar != null)
@@ -455,16 +456,18 @@ namespace MahApps.Metro.Controls
             }
             if (this.LeftWindowCommandsPresenter != null)
             {
-                this.LeftWindowCommandsPresenter.Visibility = newVisibility;
+                this.LeftWindowCommandsPresenter.Visibility = this.LeftWindowCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayHiddenTitleBar) ?
+                    Visibility.Visible : newVisibility;
             }
             if (this.RightWindowCommandsPresenter != null)
             {
-                this.RightWindowCommandsPresenter.Visibility = newVisibility;
+                this.RightWindowCommandsPresenter.Visibility = this.RightWindowCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayHiddenTitleBar) ?
+                    Visibility.Visible : newVisibility;
             }
             if (this.WindowButtonCommands != null)
             {
-                var windowCommandsVisibility = this.WindowButtonCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayHiddenTitleBar) ? Visibility.Visible : newVisibility;
-                this.WindowButtonCommands.Visibility = windowCommandsVisibility;
+                this.WindowButtonCommands.Visibility = this.WindowButtonCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayHiddenTitleBar) ? 
+                    Visibility.Visible : newVisibility;
             }
 
             SetWindowEvents();
@@ -788,7 +791,7 @@ namespace MahApps.Metro.Controls
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
 
-            this.ToggleVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
+            this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
         }
 
         private void ClearWindowEvents()
