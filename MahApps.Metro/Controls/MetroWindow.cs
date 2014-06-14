@@ -73,7 +73,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register("RightWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
         [Obsolete("This property is obsolete and will be delete in next release, use RightWindowCommands instead.")]
         public static readonly DependencyProperty WindowCommandsProperty = DependencyProperty.Register("WindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, WindowCommandsPropertyChangedCallback));
+        [Obsolete("This property is obsolete. Use the WindowCommandsBehaviorProperty flags instead.")]
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        public static readonly DependencyProperty LeftWindowCommandsBehaviorProperty = DependencyProperty.Register("LeftWindowCommandsBehavior", typeof(WindowCommandsBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsBehavior.Always));
+        public static readonly DependencyProperty RightWindowCommandsBehaviorProperty = DependencyProperty.Register("RightWindowCommandsBehavior", typeof(WindowCommandsBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsBehavior.Always));
+        public static readonly DependencyProperty WindowButtonCommandsBehaviorProperty = DependencyProperty.Register("WindowButtonCommandsBehavior", typeof(WindowCommandsBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsBehavior.Always));
+        public static readonly DependencyProperty IconBehaviorProperty = DependencyProperty.Register("IconBehavior", typeof(WindowCommandsBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsBehavior.Always));
 
         public static readonly DependencyProperty WindowMinButtonStyleProperty = DependencyProperty.Register("WindowMinButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowMaxButtonStyleProperty = DependencyProperty.Register("WindowMaxButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
@@ -140,10 +146,35 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets whether the Window Commands will show on top of a Flyout with it's position set to Top or Right.
         /// </summary>
+        [Obsolete("This property is obsolete. Use the WindowCommandBehavior flags instead.")]
         public bool ShowWindowCommandsOnTop
         {
             get { return (bool)this.GetValue(ShowWindowCommandsOnTopProperty); }
             set { SetValue(ShowWindowCommandsOnTopProperty, value); }
+        }
+
+        public WindowCommandsBehavior LeftWindowCommandsBehavior
+        {
+            get { return (WindowCommandsBehavior)this.GetValue(LeftWindowCommandsBehaviorProperty); }
+            set { SetValue(LeftWindowCommandsBehaviorProperty, value); }
+        }
+
+        public WindowCommandsBehavior RightWindowCommandsBehavior
+        {
+            get { return (WindowCommandsBehavior)this.GetValue(RightWindowCommandsBehaviorProperty); }
+            set { SetValue(RightWindowCommandsBehaviorProperty, value); }
+        }
+
+        public WindowCommandsBehavior WindowButtonCommandsBehavior
+        {
+            get { return (WindowCommandsBehavior)this.GetValue(WindowButtonCommandsBehaviorProperty); }
+            set { SetValue(WindowButtonCommandsBehaviorProperty, value); }
+        }
+
+        public WindowCommandsBehavior IconBehavior
+        {
+            get { return (WindowCommandsBehavior)this.GetValue(IconBehaviorProperty); }
+            set { SetValue(IconBehaviorProperty, value); }
         }
 
         /// <summary>
@@ -930,19 +961,23 @@ namespace MahApps.Metro.Controls
                 //if ShowWindowCommandsOnTop is true, set the window commands' and icon zindex to a number that is higher than the flyout's. 
                 if (icon != null)
                 {
-                    icon.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : 1);
+                    icon.SetValue(Panel.ZIndexProperty, 
+                        (this.IconBehavior & WindowCommandsBehavior.OverlayFlyout) == WindowCommandsBehavior.OverlayFlyout ? zIndex : 1);
                 }
                 if (LeftWindowCommandsPresenter != null)
                 {
-                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : 1);
+                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 
+                        (this.LeftWindowCommandsBehavior & WindowCommandsBehavior.OverlayFlyout) == WindowCommandsBehavior.OverlayFlyout ? zIndex : 1);
                 }
                 if (RightWindowCommandsPresenter != null)
                 {
-                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : 1);
+                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty,
+                        (this.RightWindowCommandsBehavior & WindowCommandsBehavior.OverlayFlyout) == WindowCommandsBehavior.OverlayFlyout ? zIndex : 1);
                 }
                 if (WindowButtonCommands != null)
                 {
-                    WindowButtonCommands.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : 1);
+                    WindowButtonCommands.SetValue(Panel.ZIndexProperty,
+                        (this.WindowButtonCommandsBehavior & WindowCommandsBehavior.OverlayFlyout) == WindowCommandsBehavior.OverlayFlyout ? zIndex : 1);
                 }
 
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
