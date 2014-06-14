@@ -77,7 +77,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty LeftWindowCommandsBehaviorProperty = DependencyProperty.Register("LeftWindowCommandsBehavior", typeof(WindowCommandsBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsBehavior.Always));
         public static readonly DependencyProperty RightWindowCommandsBehaviorProperty = DependencyProperty.Register("RightWindowCommandsBehavior", typeof(WindowCommandsBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsBehavior.Always));
         public static readonly DependencyProperty WindowButtonCommandsBehaviorProperty = DependencyProperty.Register("WindowButtonCommandsBehavior", typeof(WindowCommandsBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsBehavior.Always));
-        public static readonly DependencyProperty IconBehaviorProperty = DependencyProperty.Register("IconBehavior", typeof(WindowCommandsBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsBehavior.Always));
+        public static readonly DependencyProperty IconBehaviorProperty = DependencyProperty.Register("IconBehavior", typeof(WindowCommandsBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsBehavior.Never));
 
         public static readonly DependencyProperty WindowMinButtonStyleProperty = DependencyProperty.Register("WindowMinButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowMaxButtonStyleProperty = DependencyProperty.Register("WindowMaxButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
