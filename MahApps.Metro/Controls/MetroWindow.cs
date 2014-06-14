@@ -950,23 +950,19 @@ namespace MahApps.Metro.Controls
                 //if ShowWindowCommandsOnTop is true, set the window commands' and icon zindex to a number that is higher than the flyout's. 
                 if (icon != null)
                 {
-                    icon.SetValue(Panel.ZIndexProperty, 
-                        (this.IconBehavior & WindowCommandsBehavior.OverlayFlyout) == WindowCommandsBehavior.OverlayFlyout ? zIndex : 1);
+                    icon.SetValue(Panel.ZIndexProperty, this.IconBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) ? zIndex : 1);
                 }
                 if (LeftWindowCommandsPresenter != null)
                 {
-                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 
-                        (this.LeftWindowCommandsBehavior & WindowCommandsBehavior.OverlayFlyout) == WindowCommandsBehavior.OverlayFlyout ? zIndex : 1);
+                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.LeftWindowCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) ? zIndex : 1);
                 }
                 if (RightWindowCommandsPresenter != null)
                 {
-                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty,
-                        (this.RightWindowCommandsBehavior & WindowCommandsBehavior.OverlayFlyout) == WindowCommandsBehavior.OverlayFlyout ? zIndex : 1);
+                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.RightWindowCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) ? zIndex : 1);
                 }
                 if (WindowButtonCommands != null)
                 {
-                    WindowButtonCommands.SetValue(Panel.ZIndexProperty,
-                        (this.WindowButtonCommandsBehavior & WindowCommandsBehavior.OverlayFlyout) == WindowCommandsBehavior.OverlayFlyout ? zIndex : 1);
+                    WindowButtonCommands.SetValue(Panel.ZIndexProperty, this.WindowButtonCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) ? zIndex : 1);
                 }
 
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
