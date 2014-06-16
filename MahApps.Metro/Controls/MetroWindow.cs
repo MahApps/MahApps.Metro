@@ -720,22 +720,19 @@ namespace MahApps.Metro.Controls
             
             if (Flyouts.OverrideExternalCloseButton == null)
             {
-                foreach (Flyout flyout in Flyouts.GetFlyouts())
+                foreach (Flyout flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
-                    if (flyout.ExternalCloseButton == e.ChangedButton && (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true))
-                    {
-                        flyout.IsOpen = false;
-                    }
+                    flyout.IsOpen = false;
+                    e.Handled = true;
                 }
             }
+
             else if (Flyouts.OverrideExternalCloseButton == e.ChangedButton)
             {
-                foreach (Flyout flyout in Flyouts.GetFlyouts())
+                foreach (Flyout flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
-                    if (flyout.IsPinned == false || Flyouts.OverrideIsPinned == true)
-                    {
-                        flyout.IsOpen = false;
-                    }
+                    flyout.IsOpen = false;
+                    e.Handled = true;
                 }
             }
         }
