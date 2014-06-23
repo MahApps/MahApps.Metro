@@ -28,6 +28,10 @@
                 Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Controls:TextboxHelper.IsMonitoring"
                 Value="True" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+                Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+                Value="Auto" />
         <Setter Property="MinHeight"
                 Value="26" />
         <Setter Property="MinWidth"
@@ -42,6 +46,7 @@
                     <Grid Height="{TemplateBinding Height}"
                           MinHeight="{TemplateBinding MinHeight}"
                           MaxHeight="{TemplateBinding MaxHeight}"
+                          Margin="{TemplateBinding Padding}"
                           VerticalAlignment="{TemplateBinding VerticalAlignment}"
                           Background="{TemplateBinding Background}">
                         <Rectangle x:Name="Base"
@@ -62,6 +67,8 @@
 
                             <TextBox x:Name="PART_TextBox"
                                      MinWidth="20"
+                                     MinHeight="{TemplateBinding MinHeight}"
+                                     Foreground="{TemplateBinding Foreground}"
                                      HorizontalAlignment="Stretch"
                                      HorizontalContentAlignment="Right"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -69,8 +76,8 @@
                                      BorderThickness="0"
                                      Background="{x:Null}"
                                      Focusable="True"
-                                     HorizontalScrollBarVisibility="Auto"
-                                     VerticalScrollBarVisibility="Auto"
+                                     HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                     VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      FontFamily="{TemplateBinding FontFamily}"
                                      FontSize="{TemplateBinding FontSize}"

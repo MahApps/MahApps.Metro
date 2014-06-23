@@ -19,7 +19,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\NET40\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <IntermediateOutputPath>obj\NET40\Debug\</IntermediateOutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
@@ -28,7 +28,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <OutputPath>bin\NET40\Release\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <IntermediateOutputPath>obj\NET40\Release\</IntermediateOutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
@@ -40,13 +40,16 @@
   <ItemGroup>
     <Reference Include="Caliburn.Micro, Version=1.5.1.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Caliburn.Micro.1.5.1\lib\net40\Caliburn.Micro.dll</HintPath>
+      <HintPath>..\..\packages\Caliburn.Micro.Core.2.0.0\lib\net40\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Platform">
+      <HintPath>..\..\packages\Caliburn.Micro.2.0.0\lib\net40\Caliburn.Micro.Platform.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Caliburn.Micro.1.5.1\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\..\packages\Caliburn.Micro.2.0.0\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,6 +92,7 @@
     <Compile Include="Controls\IThemeManager.cs" />
     <Compile Include="Services\IServiceLocator.cs" />
     <Compile Include="Services\MefServiceLocator.cs" />
+    <Compile Include="ShellViewModel.cs" />
     <Compile Include="ViewModels\FlyoutBaseViewModel.cs" />
     <Compile Include="ViewModels\Flyouts\Flyout1ViewModel.cs" />
     <Compile Include="ViewModels\Flyouts\Flyout2ViewModel.cs" />
@@ -116,6 +120,10 @@
     <Page Include="Resources\Theme1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ShellView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Flyouts\Flyout1View.xaml">
       <SubType>Designer</SubType>

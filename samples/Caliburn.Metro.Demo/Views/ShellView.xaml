@@ -1,7 +1,7 @@
 <Controls:MetroWindow x:Class="Caliburn.Metro.Demo.Views.ShellView"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+                      xmlns:cal="http://www.caliburnproject.org"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"

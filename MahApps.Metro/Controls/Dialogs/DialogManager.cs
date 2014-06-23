@@ -15,6 +15,67 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         #region In-Window Extension Methods
         /// <summary>
+        /// Creates a LoginDialog inside of the current window.
+        /// </summary>
+        /// <param name="title">The title of the LoginDialog.</param>
+        /// <param name="message">The message contained within the LoginDialog.</param>
+        /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
+        /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
+        public static Task<LoginDialogData> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings settings = null)
+        {
+            window.Dispatcher.VerifyAccess();
+            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
+            {
+                return (Task<LoginDialogData>)window.Dispatcher.Invoke(new Func<Task<LoginDialogData>>(() =>
+                {
+                    if (settings == null) { settings = new LoginDialogSettings(); }
+
+                    //create the dialog control
+                    LoginDialog dialog = new LoginDialog(window, settings);
+                    dialog.Title = title;
+                    dialog.Message = message;
+
+                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                    dialog.SizeChangedHandler = sizeHandler;
+
+                    return dialog.WaitForLoadAsync().ContinueWith(x =>
+                    {
+                        if (DialogOpened != null)
+                        {
+                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs() { })));
+                        }
+
+                        return dialog.WaitForButtonPressAsync().ContinueWith(y =>
+                        {
+                            //once a button as been clicked, begin removing the dialog.
+
+                            dialog.OnClose();
+
+                            if (DialogClosed != null)
+                            {
+                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs() { })));
+                            }
+
+                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+                            return closingTask.ContinueWith<Task<LoginDialogData>>(a =>
+                            {
+                                return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                {
+                                    window.SizeChanged -= sizeHandler;
+
+                                    window.metroDialogContainer.Children.Remove(dialog); //remove the dialog from the container
+
+                                    return HandleOverlayOnHide(settings, window);
+                                    //window.overlayBox.Visibility = System.Windows.Visibility.Hidden; //deactive the overlay effect
+
+                                }))).ContinueWith(y3 => y).Unwrap();
+                            });
+                        }).Unwrap();
+                    }).Unwrap().Unwrap();
+                }));
+            }).Unwrap();
+        }
+        /// <summary>
         /// Creates a InputDialog inside of the current window.
         /// </summary>
         /// <param name="title">The title of the MessageDialog.</param>

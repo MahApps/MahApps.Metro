@@ -199,6 +199,7 @@ namespace MahApps.Metro
 
             return Accents.FirstOrDefault(x => x.Resources.Source == resources.Source);
         }
+
         /// <summary>
         /// Gets a resource from the detected AppStyle.
         /// </summary>
@@ -209,7 +210,15 @@ namespace MahApps.Metro
         {
             var appStyle = window != null ? DetectAppStyle(window) : DetectAppStyle(Application.Current);
             if (appStyle == null && window != null)
+            {
                 appStyle = DetectAppStyle(Application.Current); //no resources in the window's resources.
+            }
+
+            if (appStyle == null)
+            {
+                // nothing to do here, we can't found an app style (make sure all custom themes are added!)
+                return null;
+            }
 
             object resource = appStyle.Item1.Resources[key]; //check the theme first
 

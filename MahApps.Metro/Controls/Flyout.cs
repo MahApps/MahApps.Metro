@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -32,11 +31,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
-
-        /// <summary>
-        /// Animation to set the flyout visibility to hidden after 500 ms
-        /// </summary>
-        private ObjectAnimationUsingKeyFrames visibilityHiddenAnimation;
 
         /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
@@ -130,19 +124,16 @@ namespace MahApps.Metro.Controls
 
         public Flyout()
         {
-            visibilityHiddenAnimation = new ObjectAnimationUsingKeyFrames
-                                        {
-                                            FillBehavior = FillBehavior.Stop,
-                                            AutoReverse = false,
-                                            BeginTime = new TimeSpan(0, 0, 0, 0, 500)
-                                        };
-            visibilityHiddenAnimation.KeyFrames.Add(new DiscreteObjectKeyFrame(Visibility.Hidden));
-
             this.Loaded += (sender, args) => UpdateFlyoutTheme();
         }
 
         private void UpdateFlyoutTheme()
         {
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                this.Visibility = this.TryFindParent<FlyoutsControl>() != null ? Visibility.Collapsed : Visibility.Visible;
+            }
+
             var window = this.TryFindParent<MetroWindow>();
             if (window != null)
             {
@@ -224,30 +215,41 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            if ((bool)e.NewValue)
+            if (e.NewValue != e.OldValue)
             {
-                flyout.Visibility = Visibility.Visible;
-                flyout.ApplyAnimation(flyout.Position);
-            }
-            else
-            {
-                if (flyout.visibilityHiddenAnimation != null)
+                if ((bool)e.NewValue)
                 {
-                    flyout.BeginAnimation(VisibilityProperty, flyout.visibilityHiddenAnimation);
+                    if (flyout.hideStoryboard != null)
+                    {
+                        // don't set visibility to hidden on show :-)
+                        flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
+                    }
+                    flyout.Visibility = Visibility.Visible;
+                    flyout.ApplyAnimation(flyout.Position);
                 }
                 else
                 {
-                    // flyout.visibilityHiddenAnimation == null should not happen
-                    flyout.Visibility = Visibility.Hidden;
+                    if (flyout.hideStoryboard != null)
+                    {
+                        // after finished hide story board set the visibility to hidden
+                        flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
+                    }
                 }
+
+                VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
             }
 
-            VisualStateManager.GoToState(flyout, (bool) e.NewValue == false ? "Hide" : "Show", true);
-            
-            if (flyout.IsOpenChanged != null)
+            var eh = flyout.IsOpenChanged;
+            if (eh != null)
             {
-                flyout.IsOpenChanged(flyout, EventArgs.Empty);
+                eh(flyout, EventArgs.Empty);
             }
+        }
+
+        private void HideStoryboard_Completed(object sender, EventArgs e)
+        {
+            // hide the flyout, we should get better performance and prevent showing the flyout on any resizing events
+            this.Visibility = Visibility.Hidden;
         }
 
         private static void ThemeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -283,10 +285,12 @@ namespace MahApps.Metro.Controls
         }
 
         Grid root;
+        Storyboard hideStoryboard;
         EasingDoubleKeyFrame hideFrame;
         EasingDoubleKeyFrame hideFrameY;
         EasingDoubleKeyFrame showFrame;
         EasingDoubleKeyFrame showFrameY;
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -295,6 +299,7 @@ namespace MahApps.Metro.Controls
             if (root == null)
                 return;
 
+            hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
             hideFrame = (EasingDoubleKeyFrame)GetTemplateChild("hideFrame");
             hideFrameY = (EasingDoubleKeyFrame)GetTemplateChild("hideFrameY");
             showFrame = (EasingDoubleKeyFrame)GetTemplateChild("showFrame");

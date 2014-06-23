@@ -223,7 +223,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
             <Grid x:Name="HorizontalRoot"
-                  Height="13">
+                  Height="{TemplateBinding Height}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="0.00001*" />
@@ -260,7 +260,7 @@
                 </Track>
                 <RepeatButton x:Name="HorizontalSmallIncrease"
                               Command="ScrollBar.LineRightCommand"
-                              Width="16"
+                              Width="{DynamicResource HorizontalScrollBarRepeatButtonWidth}"
                               IsTabStop="False"
                               Interval="50"
                               Margin="1"
@@ -322,7 +322,7 @@
                               Height="6"
                               Stretch="Uniform"
                               Width="10"
-                              Margin="1,0,0,0"
+                              Margin="0.5,0,0.5,0"
                               Fill="{DynamicResource GrayBrush1}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
@@ -331,7 +331,7 @@
                               Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0"
+                              Margin="0.5,0,0.5,0"
                               Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
@@ -340,7 +340,7 @@
                               Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0"
+                              Margin="0.5,0,0.5,0"
                               Fill="{DynamicResource BlackBrush}">
                             <Path.Effect>
                                 <BlurEffect />
@@ -409,7 +409,7 @@
                               Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0"
+                              Margin="0,0,2,0"
                               Fill="{DynamicResource BlackBrush}">
                             <Path.Effect>
                                 <BlurEffect />
@@ -491,7 +491,7 @@
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
             <Grid x:Name="VerticalRoot"
-                  Width="13">
+                  Width="{TemplateBinding Width}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="0.00001*" />
@@ -531,7 +531,7 @@
                 </Track>
                 <RepeatButton x:Name="VerticalSmallIncrease"
                               Command="ScrollBar.LineDownCommand"
-                              Height="16"
+                              Height="{DynamicResource VerticalScrollBarRepeatButtonHeight}"
                               IsTabStop="False"
                               Interval="50"
                               Margin="1"
@@ -554,14 +554,14 @@
                 <Setter Property="Width"
                         Value="Auto" />
                 <Setter Property="Height"
-                        Value="14" />
+                        Value="{DynamicResource MetroScrollBarHeight}" />
                 <Setter Property="Template"
                         Value="{DynamicResource HorizontalScrollBar}" />
             </Trigger>
             <Trigger Property="Orientation"
                      Value="Vertical">
                 <Setter Property="Width"
-                        Value="14" />
+                        Value="{DynamicResource MetroScrollBarWidth}" />
                 <Setter Property="Height"
                         Value="Auto" />
                 <Setter Property="Template"

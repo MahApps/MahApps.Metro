@@ -5,6 +5,56 @@
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
     <Converters:ToLowerConverter x:Key="ToLowerConverter" />
 
+    <Style x:Key="MetroFlatButton"
+           TargetType="{x:Type Button}">
+        <Setter Property="Background"
+                Value="{DynamicResource FlatButtonBackgroundBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource FlatButtonForegroundBrush}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource FlatButtonFontSize}" />
+        <Setter Property="Padding"
+                Value="10,5,10,5" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Border"
+                            Margin="0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource FlatButtonPressedBackgroundBrush}"
+                                    TargetName="Border" />
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource FlatButtonPressedForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource GrayBrush2}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="DarkGray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="MetroCircleButtonFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -28,6 +78,8 @@
                 Value="Transparent" />
         <Setter Property="BorderThickness"
                 Value="2" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource GrayBrush3}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
@@ -48,7 +100,7 @@
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
-                                 Stroke="#ADADAD"
+                                 Stroke="{TemplateBinding BorderBrush}"
                                  StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
                         <ContentPresenter x:Name="content"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -93,12 +145,15 @@
                                  Value="False">
                             <Setter TargetName="ellipse"
                                     Property="Opacity"
-                                    Value=".5" />
+                                    Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="ellipse"
+                                    Property="Opacity"
+                                    Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -170,8 +225,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Grid x:Name="grid"
-                          Background="{TemplateBinding Background}">
+                    <Grid Background="{TemplateBinding Background}">
                         <ContentPresenter x:Name="contentPresenter"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
@@ -186,9 +240,6 @@
                             <Setter TargetName="contentPresenter"
                                     Property="Opacity"
                                     Value="1" />
-                            <Setter TargetName="grid"
-                                    Property="Background"
-                                    Value="{DynamicResource SemiTransparentWhiteBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="False">
@@ -196,21 +247,27 @@
                                     Property="Opacity"
                                     Value=".5" />
                         </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="True">
-                            <Setter TargetName="grid"
-                                    Property="Background"
-                                    Value="{DynamicResource HighlightBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter Property="Foreground"
-                                    Value="#ADADAD" />
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource SemiTransparentWhiteBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource HighlightBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="false">
+                <Setter Property="Foreground"
+                        Value="#ADADAD" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- default button style for min, max and close window buttons -->
@@ -259,60 +316,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="MouseOverBorder">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="PressedBorder">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
-                                                                       Storyboard.TargetName="DisabledVisualElement">
-                                            <SplineDoubleKeyFrame KeyTime="0"
-                                                                  Value="0.7" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="contentPresenter">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0.3" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="FocusRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="FocusInnerRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Unfocused" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                         <Border x:Name="Background"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -324,28 +327,6 @@
                                    Opacity="0"
                                    RadiusY="3"
                                    RadiusX="3" />
-                        <Border x:Name="MouseOverBorder"
-                                Background="{DynamicResource GrayBrush8}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3.5"
-                                Opacity="0" />
-                        <Border x:Name="PressedBorder"
-                                Background="{DynamicResource GrayBrush7}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3.5"
-                                Opacity="0" />
-                        <Rectangle x:Name="FocusRectangle"
-                                   Stroke="{DynamicResource ButtonMouseOverInnerBorderBrush}"
-                                   RadiusY="4"
-                                   RadiusX="4"
-                                   Margin="-1"
-                                   Opacity="0" />
-                        <Rectangle x:Name="FocusInnerRectangle"
-                                   StrokeThickness="{TemplateBinding BorderThickness}"
-                                   Stroke="{DynamicResource ButtonMouseOverBorderBrush}"
-                                   RadiusX="3"
-                                   RadiusY="3"
-                                   Opacity="0" />
                         <ContentPresenter x:Name="contentPresenter"
                                           RecognizesAccessKey="True"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -354,6 +335,38 @@
                                           Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Background"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush8}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="Background"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush7}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin"
+                                 Value="True">
+                            <Setter TargetName="Background"
+                                    Property="BorderThickness"
+                                    Value="2" />
+                            <Setter TargetName="Background"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource ButtonMouseOverBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="DisabledVisualElement"
+                                    Property="Opacity"
+                                    Value="0.7" />
+                            <Setter TargetName="contentPresenter"
+                                    Property="Opacity"
+                                    Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -723,77 +736,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="MouseOverBorder">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="PressedBorder">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
-                                                                       Storyboard.TargetName="DisabledVisualElement">
-                                            <SplineDoubleKeyFrame KeyTime="0"
-                                                                  Value=".55" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="contentPresenter">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0.5" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="CheckStates">
-                                <VisualState x:Name="Checked">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="CheckedRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="CheckedInnerRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Unchecked" />
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="FocusRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="FocusInnerRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Unfocused" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                         <Border x:Name="Background"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -805,46 +747,6 @@
                                    Opacity="0"
                                    RadiusY="3"
                                    RadiusX="3" />
-                        <Border x:Name="MouseOverBorder"
-                                Background="{DynamicResource GrayBrush8}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3.5"
-                                Opacity="0" />
-                        <Border x:Name="PressedBorder"
-                                Background="{DynamicResource GrayBrush7}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3.5"
-                                Opacity="0" />
-                        <Border x:Name="CheckedBorder"
-                                Background="{DynamicResource GrayBrush7}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3.5"
-                                Opacity="0" />
-                        <Rectangle x:Name="FocusRectangle"
-                                   Stroke="{DynamicResource ButtonMouseOverInnerBorderBrush}"
-                                   RadiusY="4"
-                                   RadiusX="4"
-                                   Margin="-1"
-                                   Opacity="0" />
-                        <Rectangle x:Name="FocusInnerRectangle"
-                                   StrokeThickness="{TemplateBinding BorderThickness}"
-                                   Stroke="{DynamicResource ButtonMouseOverBorderBrush}"
-                                   RadiusX="3"
-                                   RadiusY="3"
-                                   Opacity="0" />
-                        <Rectangle x:Name="CheckedRectangle"
-                                   Stroke="{DynamicResource GrayBrush6}"
-                                   RadiusY="4"
-                                   RadiusX="4"
-                                   Margin="-1"
-                                   Opacity="0" />
-                        <Rectangle x:Name="CheckedInnerRectangle"
-                                   Fill="{DynamicResource GrayBrush2}"
-                                   StrokeThickness="{TemplateBinding BorderThickness}"
-                                   Stroke="{DynamicResource GrayBrush2}"
-                                   RadiusX="3"
-                                   RadiusY="3"
-                                   Opacity="0" />
                         <ContentPresenter x:Name="contentPresenter"
                                           RecognizesAccessKey="True"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -853,6 +755,66 @@
                                           Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="True">
+                            <Setter TargetName="Background"
+                                    Property="BorderThickness"
+                                    Value="2" />
+                            <Setter TargetName="Background"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Background"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource GrayBrush5}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver"
+                                           Value="True" />
+                                <Condition Property="IsChecked"
+                                           Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush8}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver"
+                                           Value="True" />
+                                <Condition Property="IsChecked"
+                                           Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush3}" />
+                        </MultiTrigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="Background"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush7}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin"
+                                 Value="True">
+                            <Setter TargetName="Background"
+                                    Property="BorderThickness"
+                                    Value="2" />
+                            <Setter TargetName="Background"
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource ButtonMouseOverBorderBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="DisabledVisualElement"
+                                    Property="Opacity"
+                                    Value="0.7" />
+                            <Setter TargetName="contentPresenter"
+                                    Property="Opacity"
+                                    Value="0.3" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

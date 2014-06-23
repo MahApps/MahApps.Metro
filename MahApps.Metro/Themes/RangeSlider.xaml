@@ -38,8 +38,8 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Rectangle Height="3"
-                                                   Margin="0,0,0,0"
+                                        <Rectangle Height="5"
+                                                   Margin="0,1,0,0"
                                                    Fill="{DynamicResource AccentColorBrush}" />
                                     </ControlTemplate>
                                 </Setter.Value>
@@ -127,7 +127,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Rectangle Width="3"
+                                        <Rectangle Width="5"
                                                    Margin="0,0,0,0"
                                                    Fill="{DynamicResource AccentColorBrush}" />
                                     </ControlTemplate>

@@ -214,6 +214,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay}"
+                               TextWrapping="Wrap"
                                FontWeight="Normal"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"

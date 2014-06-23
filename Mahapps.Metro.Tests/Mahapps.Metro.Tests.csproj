@@ -88,6 +88,9 @@
     <Compile Include="CleanWindow.xaml.cs">
       <DependentUpon>CleanWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="HiddenMinMaxCloseButtonsWindow.xaml.cs">
+      <DependentUpon>HiddenMinMaxCloseButtonsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutWindow.xaml.cs">
       <DependentUpon>FlyoutWindow.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CleanWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HiddenMinMaxCloseButtonsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

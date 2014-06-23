@@ -135,8 +135,7 @@
                     <Button Content="cancel" />
                 </StackPanel>
             </Controls:Flyout>
-            <exampleWindows:CustomFlyout Header="Third"
-                                         Position="Right" />
+            <exampleWindows:CustomFlyout />
 
             <Controls:Flyout Header="Accented"
                              Position="Right"
