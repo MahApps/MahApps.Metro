@@ -197,7 +197,67 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException("resources");
 
-            return Accents.FirstOrDefault(x => x.Resources.Source == resources.Source);
+            var builtInAccent = Accents.FirstOrDefault(x => x.Resources.Source == resources.Source);
+            if (builtInAccent != null)
+            {
+                return builtInAccent;
+            }
+
+            // support dynamically created runtime resource dictionaries
+            if (resources.Source == null)
+            {
+                if (IsAccentDictionary(resources))
+                {
+                    return new Accent
+                    {
+                        Name = "Runtime accent",
+                        Resources = resources,
+                    };
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Determines whether the specified resource dictionary represents an <see cref="Accent"/>.
+        /// <para />
+        /// This might include runtime accents which do not have a resource uri.
+        /// </summary>
+        /// <param name="resources">The resources.</param>
+        /// <returns><c>true</c> if the resource dictionary is an <see cref="Accent"/>; otherwise, <c>false</c>.</returns>
+        /// <exception cref="System.ArgumentNullException">resources</exception>
+        public static bool IsAccentDictionary(ResourceDictionary resources)
+        {
+            if (resources == null) throw new ArgumentNullException("resources");
+
+            // Note: add more checks if these keys aren't sufficient
+            var styleKeys = new List<string>(new[]
+            {
+                "HighlightColor",
+                "AccentColor",
+                "AccentColor2",
+                "AccentColor3",
+                "AccentColor4",
+                "HighlightBrush",
+                "AccentColorBrush",
+                "AccentColorBrush2",
+                "AccentColorBrush3",
+                "AccentColorBrush4",
+            });
+
+            foreach (var styleKey in styleKeys)
+            {
+                // Note: do not use contains, because that will look in all merged dictionaries as well. We need to check
+                // out the actual keys of the current resource dictionary
+                if (!(from object resourceKey in resources.Keys 
+                     select resourceKey as string).Any(keyAsString => string.Equals(keyAsString, styleKey)))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -425,7 +485,6 @@ namespace MahApps.Metro
 
             AppTheme currentTheme = null;
             Tuple<AppTheme, Accent> detectedAccentTheme = null;
-
 
             if (DetectThemeFromResources(ref currentTheme, resources))
             {
