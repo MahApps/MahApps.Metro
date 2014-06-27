@@ -375,6 +375,8 @@
     <!-- Don't set the MinHeight or Height property, use the MinRowHeight or RowHeight property on DataGrid style! -->
     <Style x:Key="MetroDataGridRow"
            TargetType="{x:Type DataGridRow}">
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Margin"
