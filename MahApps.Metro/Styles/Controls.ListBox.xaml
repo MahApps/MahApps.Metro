@@ -11,7 +11,7 @@
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="SnapsToDevicePixels"
-                Value="true" />
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
@@ -25,13 +25,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled"
-                                 Value="false">
+                                 Value="False">
                             <Setter TargetName="Border"
-                                    Property="BorderBrush">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray9}" />
-                                </Setter.Value>
-                            </Setter>
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource GrayBrush9}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
