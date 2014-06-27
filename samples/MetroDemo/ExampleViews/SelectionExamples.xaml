@@ -18,7 +18,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Margin="1">
+    <Grid Margin="1"
+          RenderOptions.ClearTypeHint="Enabled"
+          TextOptions.TextFormattingMode="Display">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
