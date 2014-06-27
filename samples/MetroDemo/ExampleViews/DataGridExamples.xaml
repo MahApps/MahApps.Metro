@@ -26,6 +26,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <DataGrid ItemsSource="{Binding Path=Albums}"
                   Grid.Row="0"
@@ -99,6 +100,24 @@
                 <controls:DataGridNumericUpDownColumn Header="Price" 
                                                       Binding="{Binding Price}" 
                                                       StringFormat="C" 
+                                                      Minimum="0" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid ItemsSource="{Binding Path=Albums}"
+                  Grid.Row="2"
+                  AutoGenerateColumns="False"
+                  SelectionUnit="Cell"
+                  RowHeaderWidth="5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Title"
+                                    Binding="{Binding Title}" />
+                <DataGridTextColumn Header="Artist"
+                                    Binding="{Binding Artist.Name}" />
+                <DataGridTextColumn Header="Genre"
+                                    Binding="{Binding Genre.Name}" />
+                <controls:DataGridNumericUpDownColumn Header="Price"
+                                                      Binding="{Binding Price}"
+                                                      StringFormat="C"
                                                       Minimum="0" />
             </DataGrid.Columns>
         </DataGrid>
