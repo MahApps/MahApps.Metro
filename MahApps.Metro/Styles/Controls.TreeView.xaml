@@ -17,17 +17,17 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
-                    <Border Background="Transparent"
-                            Height="16"
-                            Padding="0"
-                            Width="16">
+                    <Grid Background="Transparent"
+                          Height="16"
+                          Width="16">
                         <Path x:Name="ExpandPath"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               Data="M 4 0 L 8 4 L 4 8 Z"
                               Fill="Transparent"
+                              StrokeThickness="1"
                               Stroke="{DynamicResource BlackBrush}" />
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked"
                                  Value="True">
@@ -50,7 +50,7 @@
                                  Value="False">
                             <Setter Property="Stroke"
                                     TargetName="ExpandPath"
-                                    Value="{DynamicResource GrayBrush7}" />
+                                    Value="{DynamicResource GrayBrush5}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -61,7 +61,10 @@
                             </MultiTrigger.Conditions>
                             <Setter Property="Fill"
                                     TargetName="ExpandPath"
-                                    Value="{DynamicResource GrayBrush7}" />
+                                    Value="{DynamicResource GrayBrush5}" />
+                            <Setter Property="Stroke"
+                                    TargetName="ExpandPath"
+                                    Value="{DynamicResource GrayBrush5}" />
                         </MultiTrigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
@@ -175,7 +178,7 @@
                                     Property="Background"
                                     Value="{DynamicResource AccentColorBrush}" />
                             <Setter Property="Foreground"
-                                    Value="White" />
+                                    Value="{DynamicResource AccentSelectedColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
@@ -194,7 +197,7 @@
                                         Property="Background"
                                         Value="{DynamicResource GrayBrush7}" />
                                 <Setter Property="Foreground"
-                                        Value="{DynamicResource WhiteBrush}" />
+                                        Value="{DynamicResource AccentSelectedColorBrush}" />
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                         <MultiTrigger>
@@ -224,7 +227,7 @@
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="SnapsToDevicePixels"
-                Value="true" />
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeView}">
@@ -238,13 +241,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled"
-                                 Value="false">
+                                 Value="False">
                             <Setter TargetName="Border"
-                                    Property="BorderBrush">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{DynamicResource Gray9}" />
-                                </Setter.Value>
-                            </Setter>
+                                    Property="BorderBrush"
+                                    Value="{DynamicResource GrayBrush9}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
