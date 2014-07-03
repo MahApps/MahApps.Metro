@@ -8,12 +8,10 @@ using System.Windows.Markup;
 namespace MahApps.Metro.Controls
 {
     [ContentProperty("ItemsSource")]
-    [TemplatePart(Name = "PART_Container", Type = typeof(Grid)),
-    TemplatePart(Name = "PART_Button", Type = typeof(Button)),
+    [TemplatePart(Name = "PART_Button", Type = typeof(Button)),
     TemplatePart(Name = "PART_Image", Type = typeof(Image)),
     TemplatePart(Name = "PART_ButtonContent", Type = typeof(ContentControl)),
-    TemplatePart(Name = "PART_Menu", Type = typeof(ContextMenu)),
-    TemplatePart(Name = "PART_Expander", Type = typeof(Button))]
+    TemplatePart(Name = "PART_Menu", Type = typeof(ContextMenu))]
     public class DropDownButton : ItemsControl
     {
 
@@ -40,10 +38,10 @@ namespace MahApps.Metro.Controls
         private static void Target(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             DropDownButton button = (DropDownButton) dependencyObject;
-            if (button._clickButton != null && button._expander != null)
+            if (button._clickButton != null)
             {
                 button._menu.Placement = PlacementMode.Bottom;
-                button._menu.PlacementTarget = button.Orientation == Orientation.Horizontal ? button._clickButton : button._expander;
+                button._menu.PlacementTarget = button._clickButton;
             }
         }
 
@@ -124,7 +122,6 @@ namespace MahApps.Metro.Controls
         #region Variables
 
         private Button _clickButton;
-        private Button _expander;
         private ContextMenu _menu;
 
         #endregion
@@ -143,8 +140,7 @@ namespace MahApps.Metro.Controls
         private void ExpanderClick(object sender, RoutedEventArgs e)
         {
             _menu.Placement = PlacementMode.Bottom;
-            //change PlacementTarget depending from Control Orientation
-            _menu.PlacementTarget = Orientation == Orientation.Horizontal ? _clickButton : _expander;
+            _menu.PlacementTarget = _clickButton;
             IsExpanded = true;
         }
 
@@ -152,7 +148,6 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
             _clickButton = EnforceInstance<Button>("PART_Button");
-            _expander = EnforceInstance<Button>("PART_Expander");
             _menu = EnforceInstance<ContextMenu>("PART_Menu");
             InitializeVisualElementsContainer();
         }
@@ -167,7 +162,7 @@ namespace MahApps.Metro.Controls
         private void InitializeVisualElementsContainer()
         {
             MouseRightButtonUp += DropDownButton_MouseRightButtonUp;
-            _expander.Click += ExpanderClick;
+            _clickButton.Click += ExpanderClick;
             _clickButton.Click += ButtonClick;
         }
 
