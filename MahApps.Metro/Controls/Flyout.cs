@@ -286,10 +286,10 @@ namespace MahApps.Metro.Controls
 
         Grid root;
         Storyboard hideStoryboard;
-        EasingDoubleKeyFrame hideFrame;
-        EasingDoubleKeyFrame hideFrameY;
-        EasingDoubleKeyFrame showFrame;
-        EasingDoubleKeyFrame showFrameY;
+        SplineDoubleKeyFrame hideFrame;
+        SplineDoubleKeyFrame hideFrameY;
+        SplineDoubleKeyFrame showFrame;
+        SplineDoubleKeyFrame showFrameY;
 
         public override void OnApplyTemplate()
         {
@@ -300,10 +300,10 @@ namespace MahApps.Metro.Controls
                 return;
 
             hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
-            hideFrame = (EasingDoubleKeyFrame)GetTemplateChild("hideFrame");
-            hideFrameY = (EasingDoubleKeyFrame)GetTemplateChild("hideFrameY");
-            showFrame = (EasingDoubleKeyFrame)GetTemplateChild("showFrame");
-            showFrameY = (EasingDoubleKeyFrame)GetTemplateChild("showFrameY");
+            hideFrame = (SplineDoubleKeyFrame)GetTemplateChild("hideFrame");
+            hideFrameY = (SplineDoubleKeyFrame)GetTemplateChild("hideFrameY");
+            showFrame = (SplineDoubleKeyFrame)GetTemplateChild("showFrame");
+            showFrameY = (SplineDoubleKeyFrame)GetTemplateChild("showFrameY");
 
             if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
                 return;
