@@ -121,31 +121,21 @@
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
-                                <EasingDoubleKeyFrame KeyTime="00:00:00.400"
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.750"
+                                                      KeySpline="0.25,1,0.05,1"
                                                       Value="0"
                                                       x:Name="hideFrame">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <CubicEase EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
+                                </SplineDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
                                                            Storyboard.TargetName="root">
-                                <EasingDoubleKeyFrame KeyTime="00:00:00.500"
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.750"
+                                                      KeySpline="0.25,1,0.05,1"
                                                       Value="0"
                                                       x:Name="hideFrameY">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <CubicEase EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
+                                </SplineDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
-                            <DoubleAnimation From="1"
-                                             To="0"
-                                             BeginTime="00:00:00"
-                                             Duration="00:00:00.400"
-                                             Storyboard.TargetProperty="(UIElement.Opacity)"
-                                             Storyboard.TargetName="root" />
                         </Storyboard>
                     </VisualState>
                     <VisualState x:Name="Show">
@@ -153,31 +143,21 @@
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
                                                            Storyboard.TargetName="root">
-                                <EasingDoubleKeyFrame KeyTime="00:00:00.400"
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.750"
+                                                      KeySpline="0.25,1,0.05,1"
                                                       Value="0"
                                                       x:Name="showFrame">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <CubicEase EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
+                                </SplineDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
                             <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
                                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)"
                                                            Storyboard.TargetName="root">
-                                <EasingDoubleKeyFrame KeyTime="00:00:00.600"
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.750"
+                                                      KeySpline="0.25,1,0.05,1"
                                                       Value="0"
                                                       x:Name="showFrameY">
-                                    <EasingDoubleKeyFrame.EasingFunction>
-                                        <CubicEase EasingMode="EaseOut" />
-                                    </EasingDoubleKeyFrame.EasingFunction>
-                                </EasingDoubleKeyFrame>
+                                </SplineDoubleKeyFrame>
                             </DoubleAnimationUsingKeyFrames>
-                            <DoubleAnimation From="0"
-                                             To="1"
-                                             BeginTime="00:00:00"
-                                             Duration="00:00:00.400"
-                                             Storyboard.TargetProperty="(UIElement.Opacity)"
-                                             Storyboard.TargetName="root" />
                         </Storyboard>
                     </VisualState>
                 </VisualStateGroup>
