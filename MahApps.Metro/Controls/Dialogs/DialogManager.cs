@@ -150,7 +150,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="style">The type of buttons to use.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
+        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null, MessageDialogResult defaultButton = MessageDialogResult.Affirmative)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -165,6 +165,7 @@ namespace MahApps.Metro.Controls.Dialogs
                             dialog.Message = message;
                             dialog.Title = title;
                             dialog.ButtonStyle = style;
+                            dialog.DefaultButton = defaultButton;
 
                             SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
