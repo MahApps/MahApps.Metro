@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -20,12 +20,13 @@ namespace MahApps.Metro.Controls
         /// An event that is raised when IsOpen changes.
         /// </summary>
         public event EventHandler IsOpenChanged;
-        
+
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Flyout), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register("IsPinned", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
         public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register("AnimateOnPositionChange", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
+        public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register("AnimateOpacity", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false, AnimateOpacityChanged));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
@@ -69,6 +70,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets/sets whether this flyout animates the opacity of the flyout when opening/closing.
+        /// </summary>
+        public bool AnimateOpacity
+        {
+            get { return (bool)GetValue(AnimateOpacityProperty); }
+            set { SetValue(AnimateOpacityProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets whether this flyout stays open when the user clicks outside of it.
         /// </summary>
         public bool IsPinned
@@ -76,13 +86,13 @@ namespace MahApps.Metro.Controls
             get { return (bool)GetValue(IsPinnedProperty); }
             set { SetValue(IsPinnedProperty, value); }
         }
-        
+
         /// <summary>
         /// Gets/sets the mouse button that closes the flyout on an external mouse click.
         /// </summary>
         public MouseButton ExternalCloseButton
         {
-            get { return (MouseButton) GetValue(ExternalCloseButtonProperty); }
+            get { return (MouseButton)GetValue(ExternalCloseButtonProperty); }
             set { SetValue(ExternalCloseButtonProperty, value); }
         }
 
@@ -157,31 +167,33 @@ namespace MahApps.Metro.Controls
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
                     this.SetResourceReference(BackgroundProperty, "HighlightBrush");
                     this.SetResourceReference(ForegroundProperty, "IdealForegroundColorBrush");
-                break;
+                    break;
 
                 case FlyoutTheme.Adapt:
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, windowTheme);
                     break;
 
                 case FlyoutTheme.Inverse:
-                        AppTheme inverseTheme = ThemeManager.GetInverseAppTheme(windowTheme);
+                    AppTheme inverseTheme = ThemeManager.GetInverseAppTheme(windowTheme);
 
-                    if(inverseTheme == null)
+                    if (inverseTheme == null)
                         throw new InvalidOperationException("The inverse flyout theme only works if the window theme abides the naming convention. " +
                                                             "See ThemeManager.GetInverseAppTheme for more infos");
 
                     ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
                     break;
-                
-                case FlyoutTheme.Dark: {
-                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
-                    break;
-                }
 
-                case FlyoutTheme.Light: {
-                    ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
-                    break;
-                }
+                case FlyoutTheme.Dark:
+                    {
+                        ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseDark"));
+                        break;
+                    }
+
+                case FlyoutTheme.Light:
+                    {
+                        ThemeManager.ChangeAppStyle(this.Resources, windowAccent, ThemeManager.GetAppTheme("BaseLight"));
+                        break;
+                    }
             }
         }
 
@@ -197,7 +209,8 @@ namespace MahApps.Metro.Controls
                 return theme;
 
             // second try, look for main window
-            if (Application.Current != null) {
+            if (Application.Current != null)
+            {
                 var mainWindow = Application.Current.MainWindow as MetroWindow;
                 theme = mainWindow != null ? ThemeManager.DetectAppStyle(mainWindow) : null;
                 if (theme != null && theme.Item2 != null)
@@ -209,6 +222,21 @@ namespace MahApps.Metro.Controls
                     return theme;
             }
             return null;
+        }
+
+        private void UpdateOpacityChange()
+        {
+            if (root == null || fadeOutFrame == null || System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)) return;
+            if (!AnimateOpacity)
+            {
+                fadeOutFrame.Value = 1;
+                root.Opacity = 1;
+            }
+            else
+            {
+                fadeOutFrame.Value = 0;
+                if (!IsOpen) root.Opacity = 0;
+            }
         }
 
         private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -225,7 +253,7 @@ namespace MahApps.Metro.Controls
                         flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
                     }
                     flyout.Visibility = Visibility.Visible;
-                    flyout.ApplyAnimation(flyout.Position);
+                    flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
                 }
                 else
                 {
@@ -254,27 +282,33 @@ namespace MahApps.Metro.Controls
 
         private static void ThemeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var flyout = (Flyout) dependencyObject;
+            var flyout = (Flyout)dependencyObject;
             flyout.UpdateFlyoutTheme();
+        }
+
+        private static void AnimateOpacityChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var flyout = (Flyout)dependencyObject;
+            flyout.UpdateOpacityChange();
         }
 
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var flyout = (Flyout) dependencyObject;
+            var flyout = (Flyout)dependencyObject;
             var wasOpen = flyout.IsOpen;
             if (wasOpen && flyout.AnimateOnPositionChange)
             {
-                flyout.ApplyAnimation((Position)e.NewValue);
+                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity);
                 VisualStateManager.GoToState(flyout, "Hide", true);
             }
             else
             {
-                flyout.ApplyAnimation((Position)e.NewValue, false);
+                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity, false);
             }
 
             if (wasOpen && flyout.AnimateOnPositionChange)
             {
-                flyout.ApplyAnimation((Position)e.NewValue);
+                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity);
                 VisualStateManager.GoToState(flyout, "Show", true);
             }
         }
@@ -290,11 +324,12 @@ namespace MahApps.Metro.Controls
         SplineDoubleKeyFrame hideFrameY;
         SplineDoubleKeyFrame showFrame;
         SplineDoubleKeyFrame showFrameY;
+        SplineDoubleKeyFrame fadeOutFrame;
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            
+
             root = (Grid)GetTemplateChild("root");
             if (root == null)
                 return;
@@ -304,16 +339,17 @@ namespace MahApps.Metro.Controls
             hideFrameY = (SplineDoubleKeyFrame)GetTemplateChild("hideFrameY");
             showFrame = (SplineDoubleKeyFrame)GetTemplateChild("showFrame");
             showFrameY = (SplineDoubleKeyFrame)GetTemplateChild("showFrameY");
+            fadeOutFrame = (SplineDoubleKeyFrame)GetTemplateChild("fadeOutFrame");
 
-            if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
+            if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null || fadeOutFrame == null)
                 return;
-            
-            ApplyAnimation(Position);
+
+            ApplyAnimation(Position, AnimateOpacity);
         }
 
-        internal void ApplyAnimation(Position position, bool resetShowFrame = true)
+        internal void ApplyAnimation(Position position, bool animateOpacity, bool resetShowFrame = true)
         {
-            if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
+            if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null || fadeOutFrame == null)
                 return;
 
             if (Position == Position.Left || Position == Position.Right)
@@ -323,6 +359,17 @@ namespace MahApps.Metro.Controls
 
             // I mean, we don't need this anymore, because we use ActualWidth and ActualHeight of the root
             //root.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+
+            if (!animateOpacity)
+            {
+                fadeOutFrame.Value = 1;
+                root.Opacity = 1;
+            }
+            else
+            {
+                fadeOutFrame.Value = 0;
+                if (!IsOpen) root.Opacity = 0;
+            }
 
             switch (position)
             {
@@ -368,7 +415,7 @@ namespace MahApps.Metro.Controls
 
             if (Position == Position.Left || Position == Position.Right)
                 showFrame.Value = 0;
-            if (Position == Position.Top || Position == Position.Bottom) 
+            if (Position == Position.Top || Position == Position.Bottom)
                 showFrameY.Value = 0;
 
             switch (Position)
