@@ -79,16 +79,20 @@
                              Margin="100 0 0 0"
                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth}"
                              Header="Settings"
-                             Position="Right">
+                             Position="Right"
+                             AnimateOpacity="True">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"
+                    <StackPanel>
+                        <TextBlock Grid.Row="0"
                                Text="Something above the ScrollPanel" />
-
+                        <TextBlock Grid.Row="0"
+                               Text="This Flyout animates its opacity when opening and closing."/>
+                    </StackPanel>
                     <ScrollViewer Grid.Row="1"
                                   VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical">
