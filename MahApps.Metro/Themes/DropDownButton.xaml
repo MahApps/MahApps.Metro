@@ -54,19 +54,14 @@
         </Setter>
     </Style>
 
+    
+    
     <ControlTemplate TargetType="{x:Type local:DropDownButton}"
                      x:Key="SplitButtonHorizontal">
         <Border Name="PART_Border"
                 BorderThickness="1"
                 BorderBrush="{DynamicResource BlackColorBrush}">
-            <Grid x:Name="PART_Container"
-                  Width="{TemplateBinding Width}"
-                  Height="{TemplateBinding Height}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Column="0"
+                <Button 
                         x:Name="PART_Button"
                         VerticalAlignment="Stretch"
                         HorizontalAlignment="Stretch"
@@ -79,7 +74,7 @@
                                 VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
                         <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
                         <ContentControl MinWidth="20"
-                                        Margin="2"
+                                        Margin="3"
                                         x:Name="PART_ButtonContent"
                                         VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
                                         HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
@@ -88,6 +83,32 @@
                                         Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                         ContentTemplate="{TemplateBinding ItemTemplate}">
                         </ContentControl>
+                        <Rectangle Name="PART_Rectangle"
+                                   Height="6"
+                                   Width="10"
+                                   Margin="0,0,3,0"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Fill="{DynamicResource BlackColorBrush}">
+                            <Rectangle.OpacityMask>
+                                <VisualBrush Stretch="Fill">
+                                    <VisualBrush.Visual>
+                                        <Canvas Width="18"
+                                                Height="18"
+                                                Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                                                UseLayoutRounding="False">
+                                            <Path Width="18"
+                                                  Height="16"
+                                                  Canvas.Left="14.9063"
+                                                  Canvas.Top="15.75"
+                                                  Stretch="Fill"
+                                                  Fill="{DynamicResource BlackColorBrush}"
+                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                        </Canvas>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Rectangle.OpacityMask>
+                        </Rectangle>
                     </StackPanel>
                     <Button.ContextMenu>
                         <ContextMenu Name="PART_Menu"
@@ -104,21 +125,61 @@
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
-                <Button Grid.Column="1"
-                        x:Name="PART_Expander"
-                        VerticalAlignment="Stretch"
-                        Width="25"
-                        HorizontalAlignment="Stretch"
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsFocused"
+                     Value="True"
+                     SourceName="PART_Button">
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource AccentColorBrush}"
+                        TargetName="PART_Border" />
+            </Trigger>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter TargetName="PART_Rectangle"
+                        Property="Fill"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    
+    
+    <ControlTemplate TargetType="{x:Type local:DropDownButton}"
+                     x:Key="SplitButtonVertical">
+        <Border Name="PART_Border"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource BlackColorBrush}">
+                <Button Width="{TemplateBinding Width}"
                         Style="{StaticResource {x:Type Button}}"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center">
+                        x:Name="PART_Button"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Command="{TemplateBinding Command}"
+                        CommandParameter="{TemplateBinding CommandParameter}"
+                        CommandTarget="{TemplateBinding CommandTarget}">
                     <Button.Content>
-                        <Rectangle Name="PART_Rectangle"
-                                   Height="6"
-                                   Width="10"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Fill="{DynamicResource BlackColorBrush}">
+                        <StackPanel Orientation="Vertical"
+                                    HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
+                            <ContentControl MinHeight="20"
+                                            Margin="3"
+                                            x:Name="PART_ButtonContent"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                            VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                            ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                            Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                            ContentTemplate="{TemplateBinding ItemTemplate}">
+                            </ContentControl>
+                        <Rectangle Margin="0,0,0,3"
+                                    Name="PART_Rectangle"
+                                    Height="6"
+                                    Width="10"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Fill="{DynamicResource BlackColorBrush}">
                             <Rectangle.OpacityMask>
                                 <VisualBrush Stretch="Fill">
                                     <VisualBrush.Visual>
@@ -138,71 +199,7 @@
                                 </VisualBrush>
                             </Rectangle.OpacityMask>
                         </Rectangle>
-                    </Button.Content>
-                </Button>
-            </Grid>
-        </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsFocused"
-                     Value="True"
-                     SourceName="PART_Button">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}"
-                        TargetName="PART_Border" />
-            </Trigger>
-            <Trigger Property="IsFocused"
-                     Value="True"
-                     SourceName="PART_Expander">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}"
-                        TargetName="PART_Border" />
-            </Trigger>
-            <Trigger Property="IsMouseOver"
-                     Value="True">
-                <Setter TargetName="PART_Rectangle"
-                        Property="Fill"
-                        Value="{DynamicResource AccentColorBrush}" />
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    <ControlTemplate TargetType="{x:Type local:DropDownButton}"
-                     x:Key="SplitButtonVertical">
-        <Border Name="PART_Border"
-                BorderThickness="1"
-                BorderBrush="{DynamicResource BlackColorBrush}">
-            <Grid x:Name="PART_Container"
-                  Width="{TemplateBinding Width}"
-                  Height="{TemplateBinding Height}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Button Grid.Row="0"
-                        Width="{TemplateBinding Width}"
-                        Style="{StaticResource {x:Type Button}}"
-                        x:Name="PART_Button"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        Command="{TemplateBinding Command}"
-                        CommandParameter="{TemplateBinding CommandParameter}"
-                        CommandTarget="{TemplateBinding CommandTarget}">
-                    <Button.Content>
-                        <StackPanel Orientation="Vertical"
-                                    HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
-                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
-                            <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
-                            <ContentControl MinHeight="20"
-                                            Margin="2"
-                                            x:Name="PART_ButtonContent"
-                                            VerticalAlignment="Stretch"
-                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
-                                            VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                            Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ContentTemplate="{TemplateBinding ItemTemplate}">
-                            </ContentControl>
-                        </StackPanel>
+                    </StackPanel>
                     </Button.Content>
                     <Button.ContextMenu>
                         <ContextMenu Name="PART_Menu"
@@ -219,54 +216,11 @@
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
-                <Button x:Name="PART_Expander"
-                        Grid.Row="1"
-                        Height="20"
-                        Style="{StaticResource {x:Type Button}}"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center">
-                    <Button.Content>
-                        <Rectangle Name="PART_Rectangle"
-                                   Height="6"
-                                   Width="10"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Fill="{DynamicResource BlackColorBrush}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <Canvas Width="18"
-                                                Height="18"
-                                                Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                                UseLayoutRounding="False">
-                                            <Path Width="18"
-                                                  Height="16"
-                                                  Canvas.Left="14.9063"
-                                                  Canvas.Top="15.75"
-                                                  Stretch="Fill"
-                                                  Fill="{DynamicResource BlackColorBrush}"
-                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
-                                        </Canvas>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                    </Button.Content>
-                </Button>
-            </Grid>
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsFocused"
                      Value="True"
                      SourceName="PART_Button">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}"
-                        TargetName="PART_Border" />
-            </Trigger>
-            <Trigger Property="IsFocused"
-                     Value="True"
-                     SourceName="PART_Expander">
                 <Setter Property="BorderBrush"
                         Value="{DynamicResource AccentColorBrush}"
                         TargetName="PART_Border" />
@@ -280,6 +234,8 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    
+    
     <Style TargetType="{x:Type local:DropDownButton}">
         <Setter Property="MinHeight"
                 Value="26" />
