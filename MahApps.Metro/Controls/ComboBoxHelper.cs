@@ -4,8 +4,6 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
-    using System.Windows.Input;
-
     /// <summary>
     /// A helper class that provides various attached properties for the ComboBox control.
     /// <see cref="ComboBox"/>
@@ -36,8 +34,5 @@ namespace MahApps.Metro.Controls
         {
             return (bool)obj.GetValue(EnableVirtualizationWithGroupingProperty);
         }
-
-
-        
     }
 }
