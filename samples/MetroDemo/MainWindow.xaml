@@ -162,6 +162,8 @@
                               Header="Show InputDialog" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
+                    <MenuItem Click="ShowLimitedMessageDialog"
+                              Header="Show MessageDialog (Limited Size)" />
                     <MenuItem Click="ShowProgressDialog"
                               Header="Show ProgressDialog" />
                     <MenuItem Click="ShowSimpleDialog"
