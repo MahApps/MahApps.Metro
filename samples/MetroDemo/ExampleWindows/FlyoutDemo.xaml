@@ -12,8 +12,6 @@
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
                       BorderThickness="1"
-                      RightWindowCommandsBehavior="Never"
-                      LeftWindowCommandsBehavior="Always"
                       BorderBrush="{DynamicResource AccentColorBrush}"
                       mc:Ignorable="d"
                       d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}"
