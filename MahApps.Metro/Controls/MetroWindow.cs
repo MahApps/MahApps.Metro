@@ -950,22 +950,30 @@ namespace MahApps.Metro.Controls
                 //get it's zindex
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
 
-                //if ShowWindowCommandsOnTop is true, set the window commands' and icon zindex to a number that is higher than the flyout's. 
+                // Note: ShowWindowCommandsOnTop is here for backwards compatibility reasons
+                //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the flyout's. 
                 if (icon != null)
                 {
-                    icon.SetValue(Panel.ZIndexProperty, this.IconBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) ? zIndex : 1);
+                    icon.SetValue(Panel.ZIndexProperty, 
+                        this.IconBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) && this.ShowWindowCommandsOnTop ? zIndex : 1);
                 }
+
                 if (LeftWindowCommandsPresenter != null)
                 {
-                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.LeftWindowCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) ? zIndex : 1);
+                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 
+                        this.LeftWindowCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) && this.ShowWindowCommandsOnTop ? zIndex : 1);
                 }
+
                 if (RightWindowCommandsPresenter != null)
                 {
-                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.RightWindowCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) ? zIndex : 1);
+                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, 
+                        this.RightWindowCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) && this.ShowWindowCommandsOnTop ? zIndex : 1);
                 }
+
                 if (WindowButtonCommands != null)
                 {
-                    WindowButtonCommands.SetValue(Panel.ZIndexProperty, this.WindowButtonCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) ? zIndex : 1);
+                    WindowButtonCommands.SetValue(Panel.ZIndexProperty, 
+                        this.WindowButtonCommandsBehavior.HasFlag(WindowCommandsBehavior.OverlayFlyout) && this.ShowWindowCommandsOnTop ? zIndex : 1);
                 }
 
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
