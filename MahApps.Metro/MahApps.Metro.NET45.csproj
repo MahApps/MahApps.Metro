@@ -126,6 +126,7 @@
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
+    <Compile Include="Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="Converters\FontSizeOffsetConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />
@@ -201,7 +202,6 @@
     <Compile Include="Theme.cs" />
     <Compile Include="ThemeManager.cs" />
     <AppDesigner Include="Properties\" />
-    <Compile Include="Controls\WindowCommandsBehavior.cs" />
     <Page Include="Controls\GlowWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -133,7 +133,7 @@
     <Compile Include="Controls\WindowCommands.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\WindowCommandsBehavior.cs" />
+    <Compile Include="Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\FontSizeOffsetConverter.cs" />

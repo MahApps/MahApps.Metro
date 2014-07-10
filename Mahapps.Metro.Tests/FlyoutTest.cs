@@ -66,7 +66,7 @@ namespace Mahapps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.LeftWindowCommandsBehavior = WindowCommandsBehavior.Never;
+            window.LeftWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
             window.LeftFlyout.IsOpen = true;
 
             var exposedWindow = Exposed.From(window);
@@ -82,7 +82,7 @@ namespace Mahapps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.LeftWindowCommandsBehavior = WindowCommandsBehavior.Never;
+            window.LeftWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
             window.LeftFlyout.IsOpen = true;
 
             var exposedWindow = Exposed.From(window);
@@ -98,7 +98,7 @@ namespace Mahapps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.RightWindowCommandsBehavior = WindowCommandsBehavior.Never;
+            window.RightWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
             window.RightFlyout.IsOpen = true;
 
             var exposedWindow = Exposed.From(window);
