@@ -653,11 +653,11 @@ namespace MahApps.Metro.Controls
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
         {
             // this all works only for CleanWindow style
-            
-            var titleBarGrid = titleBar as Grid;
-            var titleBarLabel = titleBarGrid.Children[0] as Label;
-            var titleControl = titleBarLabel.Content as ContentControl;
-            var iconContentControl = icon as ContentControl;
+
+            var titleBarGrid = (Grid)titleBar;
+            var titleBarLabel = (Label)titleBarGrid.Children[0];
+            var titleControl = (ContentControl)titleBarLabel.Content;
+            var iconContentControl = (ContentControl)icon;
 
             // Half of this MetroWindow
             var halfDistance = this.Width / 2;
@@ -757,7 +757,7 @@ namespace MahApps.Metro.Controls
 
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroDialogContainer = GetTemplateChild(PART_MetroDialogContainer) as Grid;
-            flyoutModal = GetTemplateChild(PART_FlyoutModal) as Rectangle;
+            flyoutModal = (Rectangle) GetTemplateChild(PART_FlyoutModal);
             flyoutModal.PreviewMouseDown += FlyoutsPreviewMouseDown;
             this.PreviewMouseDown += FlyoutsPreviewMouseDown;
 
