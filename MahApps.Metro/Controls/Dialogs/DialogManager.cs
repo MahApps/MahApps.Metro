@@ -362,6 +362,26 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
+        
+        //Get the current dialog of a MetroWindow (using Reflection, can be used outside this assembly) TESTED AND WORKS GREAT
+        public static async Task<TDialog> GetDialogAsync<TDialog>(MetroWindow owner) where TDialog : BaseMetroDialog
+        {
+            TDialog dialog = null;
+            await owner.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                try
+                {
+                    BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.NonPublic;
+                    MethodInfo minfo = typeof(MetroWindow).GetMethod("GetPart", bindingFlags);
+                    MethodInfo toInvoke = minfo.MakeGenericMethod(typeof(Grid));
+                    Grid dialogContainer = (Grid)toInvoke.Invoke(App._appWindow, new object[] { "PART_MetroDialogContainer" });
+                    if (dialogContainer.Children.Count != 0)
+                        dialog = dialogContainer.Children[0] as TDialog;
+                }
+                catch { dialog = null; }
+            }));
+            return dialog;
+        }
 
         private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog)
         {
