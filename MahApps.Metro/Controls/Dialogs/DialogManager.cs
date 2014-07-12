@@ -362,6 +362,20 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
+        
+        //Get the current dialog of a MetroWindow
+        public static Task<TDialog> GetCurrentDialogAsync<TDialog>(this MetroWindow window) where TDialog : BaseMetroDialog
+        {
+            var t = new TaskCompletionSource<TDialog>();
+            window.Dispatcher.Invoke((Action)(() =>
+            {
+                TDialog dialog = null;
+                if (window.metroDialogContainer.Children.Count != 0)
+                    dialog = window.metroDialogContainer.Children[0] as TDialog;
+                t.TrySetResult(dialog);
+            }));
+            return t.Task;
+        }
 
         private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog)
         {
