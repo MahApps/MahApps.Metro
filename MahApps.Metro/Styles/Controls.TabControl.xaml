@@ -161,22 +161,32 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
-                    <Border x:Name="Border"
-                            Margin="{TemplateBinding Padding}"
+                    <Border x:Name="Border" HorizontalAlignment="Stretch"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ContentPresenter x:Name="ContentSite"
-                                          Margin="2,1,2,1"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                          TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                          TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                          TextElement.Foreground="{TemplateBinding Foreground}"
-                                          ContentSource="Header"
-                                          RecognizesAccessKey="True" />
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                            <StackPanel.Resources>
+                                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                            </StackPanel.Resources>
+                            <ContentPresenter x:Name="ContentSite"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                              TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                              TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              ContentSource="Header"
+                                              RecognizesAccessKey="True" />
+                            <Rectangle x:Name="Underline" 
+                                       Margin="0, 1, 0, 0" 
+                                       Height="2" 
+                                       HorizontalAlignment="Stretch" 
+                                       Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, 
+                                           Path=(Controls:ControlsHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected"
@@ -184,11 +194,17 @@
                             <Setter Property="TextElement.Foreground"
                                     TargetName="ContentSite"
                                     Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
+                                    Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="false">
                             <Setter Property="TextElement.Foreground"
                                     TargetName="ContentSite"
+                                    Value="{DynamicResource GrayNormalBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
                                     Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         <Trigger SourceName="ContentSite"
@@ -196,6 +212,9 @@
                                  Value="True">
                             <Setter Property="TextElement.Foreground"
                                     TargetName="ContentSite"
+                                    Value="{DynamicResource GrayHoverBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
                                     Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
