@@ -167,6 +167,9 @@
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                            <StackPanel.Resources>
+                                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                            </StackPanel.Resources>
                             <ContentPresenter x:Name="ContentSite"
                                               Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -181,7 +184,8 @@
                                        Margin="0, 1, 0, 0" 
                                        Height="2" 
                                        HorizontalAlignment="Stretch" 
-                                       Visibility="Collapsed" />
+                                       Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, 
+                                           Path=(Controls:ControlsHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
