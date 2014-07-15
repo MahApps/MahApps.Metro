@@ -185,18 +185,21 @@ namespace MahApps.Metro.Controls
             element.SetValue(GroupBoxHeaderForegroundProperty, value);
         }
 
+        /// <summary>
+        /// Defines whether the underline below the <see cref="TabControl"/> is shown or not.
+        /// </summary>
         public static readonly DependencyProperty IsUnderlinedProperty =
             DependencyProperty.RegisterAttached("IsUnderlined", typeof(bool), typeof(ControlsHelper), new PropertyMetadata(false));
+
+        public static bool GetIsUnderlined(UIElement element)
+        {
+            return (bool)element.GetValue(IsUnderlinedProperty);
+        }
 
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
         public static void SetIsUnderlined(UIElement element, bool value)
         {
             element.SetValue(IsUnderlinedProperty, value);
-        }
-
-        public static bool GetIsUnderlined(UIElement element)
-        {
-            return (bool)element.GetValue(IsUnderlinedProperty);
         }
 
         public static readonly DependencyProperty HeaderFontSizeProperty =
