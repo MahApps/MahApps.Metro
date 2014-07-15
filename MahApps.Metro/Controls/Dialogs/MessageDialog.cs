@@ -263,15 +263,6 @@ namespace MahApps.Metro.Controls.Dialogs
             get { return (string)GetValue(SecondAuxiliaryButtonTextProperty); }
             set { SetValue(SecondAuxiliaryButtonTextProperty, value); }
         }
-
-
-        public override void OnApplyTemplate()
-        {
-            //AffirmativeButton = GetTemplateChild(PART_AffirmativeButton) as Button;
-            //NegativeButton = GetTemplateChild(PART_NegativeButton) as Button;
-
-            base.OnApplyTemplate();
-        }
     }
 
     /// <summary>
