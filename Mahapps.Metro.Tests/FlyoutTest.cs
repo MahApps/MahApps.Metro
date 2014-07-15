@@ -1,81 +1,23 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using ExposedObject;
+using Mahapps.Metro.Tests.TestHelpers;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Mahapps.Metro.Tests
 {
     public class FlyoutTest : AutomationTestBase
     {
         [Fact]
-        public async Task DefaultFlyoutPositionIsLeft()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-
-            Assert.Equal(Position.Left, window.DefaultFlyout.Position);
-        }
-        
-        [Fact]
-        public async Task DefaultFlyoutThemeIsDark()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-
-            Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
-        }
-
-        [Fact]
-        public async Task WindowButtonCommandsAreOverFlyout()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-
-            int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands);
-            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
-
-            Assert.True(windowCommandsZIndex > flyoutindex);
-        }
-
-        [Fact]
-        public async Task HiddenWindowCommandsAreBelowFlyout()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.ShowWindowCommandsOnTop = false;
-
-            int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands);
-            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
-
-            Assert.True(flyoutindex < windowCommandsZIndex);
-        }
-
-        [Fact]
-        public async Task FlyoutIsClosedByDefault()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-
-            Assert.False(window.DefaultFlyout.IsOpen);
-        }
-
-        [Fact]
         public async Task AdaptsWindowCommandsToDarkFlyout()
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             var flyout = new Flyout { Theme = FlyoutTheme.Dark };
             window.Flyouts.Items.Add(flyout);
@@ -88,14 +30,154 @@ namespace Mahapps.Metro.Tests
         }
 
         [Fact]
+        public async Task DefaultFlyoutPositionIsLeft()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+            Assert.Equal(Position.Left, window.DefaultFlyout.Position);
+        }
+
+        [Fact]
+        public async Task FlyoutIsClosedByDefault()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+            Assert.False(window.DefaultFlyout.IsOpen);
+        }
+
+        [Fact]
         public async Task FlyoutIsHiddenByDefault()
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
 
             // root grid should be hidden
             Assert.Equal(Visibility.Hidden, window.DefaultFlyout.Visibility);
+        }
+
+        [Fact]
+        public async Task HiddenIconIsBelowFlyout()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.LeftWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
+            window.LeftFlyout.IsOpen = true;
+
+            var exposedWindow = Exposed.From(window);
+            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.icon);
+            int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
+
+            Assert.True(flyoutindex < windowCommandsZIndex);
+        }
+
+        [Fact]
+        public async Task HiddenLeftWindowCommandsAreBelowFlyout()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.LeftWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
+            window.LeftFlyout.IsOpen = true;
+
+            var exposedWindow = Exposed.From(window);
+            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.LeftWindowCommandsPresenter);
+            int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
+
+            Assert.True(flyoutindex < windowCommandsZIndex);
+        }
+
+        [Fact]
+        public async Task HiddenRightWindowCommandsAreBelowFlyout()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.RightWindowCommandsOverlayBehavior = WindowCommandsOverlayBehavior.Never;
+            window.RightFlyout.IsOpen = true;
+
+            var exposedWindow = Exposed.From(window);
+            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.RightWindowCommandsPresenter);
+            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+
+            Assert.True(flyoutindex < windowCommandsZIndex);
+        }
+
+        [Fact]
+        public async Task HiddenWindowCommandsAreBelowFlyoutObsoleteTest()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.RightFlyout.IsOpen = true;
+            window.ShowWindowCommandsOnTop = false;
+
+            int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands);
+            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+
+            Assert.True(flyoutindex < windowCommandsZIndex);
+        }
+
+        [Fact]
+        public async Task LeftWindowCommandsAreOverFlyout()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.LeftFlyout.IsOpen = true;
+
+            var exposedWindow = Exposed.From(window);
+            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.LeftWindowCommandsPresenter);
+            int flyoutindex = Panel.GetZIndex(window.LeftFlyout);
+
+            Assert.True(windowCommandsZIndex > flyoutindex);
+        }
+
+        [Fact]
+        public async Task RightWindowCommandsAreOverFlyout()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.RightFlyout.IsOpen = true;
+
+            var exposedWindow = Exposed.From(window);
+            int windowCommandsZIndex = Panel.GetZIndex(exposedWindow.RightWindowCommandsPresenter);
+            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+
+            Assert.True(windowCommandsZIndex > flyoutindex);
+        }
+
+        [Fact]
+        public async Task WindowButtonCommandsAreOverFlyout()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+            window.RightFlyout.IsOpen = true;
+
+            int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands);
+            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
+
+            Assert.True(windowCommandsZIndex > flyoutindex);
+        }
+
+        public class ColorTest
+        {
+            [Fact]
+            public async Task DefaultFlyoutThemeIsDark()
+            {
+                await TestHost.SwitchToAppThread();
+
+                var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+                Assert.Equal(FlyoutTheme.Dark, window.DefaultFlyout.Theme);
+            }
         }
     }
 }

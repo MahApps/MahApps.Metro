@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -7,9 +7,9 @@ using System.Windows.Media;
 using MahApps.Metro.Controls;
 using Xunit;
 
-namespace Mahapps.Metro.Tests
+namespace Mahapps.Metro.Tests.TestHelpers
 {
-    public static class TestHelpers
+    public static class WindowHelpers
     {
         public static Task<T> CreateInvisibleWindowAsync<T>() where T : Window, new()
         {

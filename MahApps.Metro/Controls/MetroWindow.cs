@@ -46,8 +46,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
-        public static readonly DependencyProperty ShowWindowButtonCommandsOnHiddenTitleBarProperty = DependencyProperty.Register("ShowWindowButtonCommandsOnHiddenTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
@@ -73,7 +71,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register("RightWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
         [Obsolete("This property is obsolete and will be delete in next release, use RightWindowCommands instead.")]
         public static readonly DependencyProperty WindowCommandsProperty = DependencyProperty.Register("WindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null, WindowCommandsPropertyChangedCallback));
+        [Obsolete("This property is obsolete. Use the WindowCommandsBehaviorProperty flags instead.")]
         public static readonly DependencyProperty ShowWindowCommandsOnTopProperty = DependencyProperty.Register("ShowWindowCommandsOnTop", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
+        public static readonly DependencyProperty LeftWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register("LeftWindowCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
+        public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register("RightWindowCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
+        public static readonly DependencyProperty WindowButtonCommandsOverlayBehaviorProperty = DependencyProperty.Register("WindowButtonCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
+        public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register("IconOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never));
 
         public static readonly DependencyProperty WindowMinButtonStyleProperty = DependencyProperty.Register("WindowMinButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowMaxButtonStyleProperty = DependencyProperty.Register("WindowMaxButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
@@ -140,10 +144,35 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets whether the Window Commands will show on top of a Flyout with it's position set to Top or Right.
         /// </summary>
+        [Obsolete("This property is obsolete. Use the WindowCommandOverlayBehavior flags instead.")]
         public bool ShowWindowCommandsOnTop
         {
             get { return (bool)this.GetValue(ShowWindowCommandsOnTopProperty); }
             set { SetValue(ShowWindowCommandsOnTopProperty, value); }
+        }
+
+        public WindowCommandsOverlayBehavior LeftWindowCommandsOverlayBehavior
+        {
+            get { return (WindowCommandsOverlayBehavior)this.GetValue(LeftWindowCommandsOverlayBehaviorProperty); }
+            set { SetValue(LeftWindowCommandsOverlayBehaviorProperty, value); }
+        }
+
+        public WindowCommandsOverlayBehavior RightWindowCommandsOverlayBehavior
+        {
+            get { return (WindowCommandsOverlayBehavior)this.GetValue(RightWindowCommandsOverlayBehaviorProperty); }
+            set { SetValue(RightWindowCommandsOverlayBehaviorProperty, value); }
+        }
+
+        public WindowCommandsOverlayBehavior WindowButtonCommandsOverlayBehavior
+        {
+            get { return (WindowCommandsOverlayBehavior)this.GetValue(WindowButtonCommandsOverlayBehaviorProperty); }
+            set { SetValue(WindowButtonCommandsOverlayBehaviorProperty, value); }
+        }
+
+        public WindowCommandsOverlayBehavior IconOverlayBehavior
+        {
+            get { return (WindowCommandsOverlayBehavior)this.GetValue(IconOverlayBehaviorProperty); }
+            set { SetValue(IconOverlayBehaviorProperty, value); }
         }
 
         /// <summary>
@@ -319,7 +348,7 @@ namespace MahApps.Metro.Controls
             var window = (MetroWindow)d;
             if (e.NewValue != e.OldValue)
             {
-                window.ToggleVisibiltyForAllTitleElements((bool)e.NewValue);
+                window.SetVisibiltyForAllTitleElements((bool)e.NewValue);
             }
         }
 
@@ -382,15 +411,6 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets whether the Window Button Commands will show if the TitleBar is hidden.
-        /// </summary>
-        public bool ShowWindowButtonCommandsOnHiddenTitleBar
-        {
-            get { return (bool)GetValue(ShowWindowButtonCommandsOnHiddenTitleBarProperty); }
-            set { SetValue(ShowWindowButtonCommandsOnHiddenTitleBarProperty, value); }
-        }
-
-        /// <summary>
         /// Gets/sets if the the system menu should popup on right click.
         /// </summary>
         public bool ShowSystemMenuOnRightClick
@@ -413,16 +433,17 @@ namespace MahApps.Metro.Controls
             var window = (MetroWindow)dependencyObject;
             if (e.NewValue != e.OldValue)
             {
-                window.ToggleVisibiltyForAllTitleElements((int)e.NewValue > 0);
+                window.SetVisibiltyForAllTitleElements((int)e.NewValue > 0);
             }
         }
 
-        private void ToggleVisibiltyForAllTitleElements(bool visible)
+        private void SetVisibiltyForAllTitleElements(bool visible)
         {
             var newVisibility = visible && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
             if (this.icon != null)
             {
-                var iconVisibility = visible && this.ShowTitleBar && this.ShowIconOnTitleBar ? Visibility.Visible : Visibility.Collapsed;
+                var iconVisibility = this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) && this.ShowIconOnTitleBar ?
+                    Visibility.Visible : Visibility.Collapsed;
                 this.icon.Visibility = iconVisibility;
             }
             if (this.titleBar != null)
@@ -435,16 +456,18 @@ namespace MahApps.Metro.Controls
             }
             if (this.LeftWindowCommandsPresenter != null)
             {
-                this.LeftWindowCommandsPresenter.Visibility = newVisibility;
+                this.LeftWindowCommandsPresenter.Visibility = this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ?
+                    Visibility.Visible : newVisibility;
             }
             if (this.RightWindowCommandsPresenter != null)
             {
-                this.RightWindowCommandsPresenter.Visibility = newVisibility;
+                this.RightWindowCommandsPresenter.Visibility = this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ?
+                    Visibility.Visible : newVisibility;
             }
             if (this.WindowButtonCommands != null)
             {
-                var windowCommandsVisibility = ShowWindowButtonCommandsOnHiddenTitleBar ? Visibility.Visible : newVisibility;
-                this.WindowButtonCommands.Visibility = windowCommandsVisibility;
+                this.WindowButtonCommands.Visibility = this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? 
+                    Visibility.Visible : newVisibility;
             }
 
             SetWindowEvents();
@@ -765,7 +788,7 @@ namespace MahApps.Metro.Controls
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
 
-            this.ToggleVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
+            this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
         }
 
         private void ClearWindowEvents()
@@ -924,22 +947,30 @@ namespace MahApps.Metro.Controls
                 //get it's zindex
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
 
-                //if ShowWindowCommandsOnTop is true, set the window commands' and icon zindex to a number that is higher than the flyout's. 
+                // Note: ShowWindowCommandsOnTop is here for backwards compatibility reasons
+                //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the flyout's. 
                 if (icon != null)
                 {
-                    icon.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : 1);
+                    icon.SetValue(Panel.ZIndexProperty, 
+                        this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) && this.ShowWindowCommandsOnTop ? zIndex : 1);
                 }
+
                 if (LeftWindowCommandsPresenter != null)
                 {
-                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : 1);
+                    LeftWindowCommandsPresenter.SetValue(Panel.ZIndexProperty,
+                        this.LeftWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) && this.ShowWindowCommandsOnTop ? zIndex : 1);
                 }
+
                 if (RightWindowCommandsPresenter != null)
                 {
-                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : 1);
+                    RightWindowCommandsPresenter.SetValue(Panel.ZIndexProperty,
+                        this.RightWindowCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) && this.ShowWindowCommandsOnTop ? zIndex : 1);
                 }
+
                 if (WindowButtonCommands != null)
                 {
-                    WindowButtonCommands.SetValue(Panel.ZIndexProperty, this.ShowWindowCommandsOnTop ? zIndex : 1);
+                    WindowButtonCommands.SetValue(Panel.ZIndexProperty,
+                        this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) && this.ShowWindowCommandsOnTop ? zIndex : 1);
                 }
 
                 this.HandleWindowCommandsForFlyouts(visibleFlyouts);
