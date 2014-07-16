@@ -30,6 +30,7 @@
 
                     <!-- icon -->
                     <ContentControl x:Name="PART_Icon"
+                                    Focusable="False"
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Panel.ZIndex="1"
@@ -43,6 +44,7 @@
 
                     <!-- the left window commands -->
                     <ContentPresenter x:Name="PART_LeftWindowCommands"
+                                      Focusable="False"
                                       Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Panel.ZIndex="1"
                                       Grid.Row="0"
@@ -55,6 +57,7 @@
 
                     <!-- the title bar -->
                     <Grid x:Name="PART_TitleBar"
+                          Focusable="False"
                           Grid.Row="0"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
@@ -65,6 +68,7 @@
                         <Label VerticalContentAlignment="Center"
                                HorizontalContentAlignment="Center">
                             <ContentControl x:Name="TitleControl"
+                                            Focusable="False"
                                             Content="{TemplateBinding Title}"
                                             ContentTemplate="{TemplateBinding TitleTemplate}"
                                             HorizontalAlignment="Center">
@@ -85,6 +89,7 @@
 
                     <!-- the right window commands -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
+                                      Focusable="False"
                                       Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Panel.ZIndex="1"
                                       Grid.Row="0"
@@ -97,6 +102,7 @@
 
                     <!-- the window button commands -->
                     <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
+                                                   Focusable="False"
                                                    Panel.ZIndex="1"
                                                    Grid.Row="0"
                                                    Grid.Column="4"
@@ -143,6 +149,7 @@
                           Grid.ColumnSpan="5"
                           Grid.RowSpan="2"
                           Panel.ZIndex="3"
+                          Focusable="False"
                           FocusVisualStyle="{x:Null}"
                           x:Name="PART_OverlayBox"
                           Background="{DynamicResource BlackColorBrush}"
