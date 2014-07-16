@@ -27,6 +27,31 @@ namespace Mahapps.Metro.Tests
             Assert.True(window.ShowWindowCommandsOnTop);
         }
 
+        [Fact]
+        public async Task IconShouldBeVisibleByDefault()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var icon = window.GetPart<ContentControl>("PART_Icon");
+
+            Assert.Equal(Visibility.Visible, icon.Visibility);
+        }
+
+        [Fact]
+        public async Task IconCanOverlayHiddenTitlebar()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            window.IconOverlayBehavior = WindowCommandsOverlayBehavior.HiddenTitleBar;
+            window.ShowTitleBar = false;
+            var icon = window.GetPart<ContentControl>("PART_Icon");
+
+            Assert.Equal(Visibility.Visible, icon.Visibility);
+        }
+
+
         private Button GetButton(MetroWindow window, string buttonName)
         {
             var windowButtonCommands = window.GetPart<WindowButtonCommands>("PART_WindowButtonCommands");
