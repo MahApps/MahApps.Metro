@@ -35,6 +35,7 @@
                     </Grid.RowDefinitions>
 
                     <Rectangle x:Name="PART_WindowTitleBackground"
+                               Focusable="False"
                                Fill="{TemplateBinding WindowTitleBrush}"
                                Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -44,6 +45,7 @@
 
                     <!-- icon -->
                     <ContentControl x:Name="PART_Icon"
+                                    Focusable="False"
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     Panel.ZIndex="1"
@@ -57,6 +59,7 @@
 
                     <!-- the left window commands -->
                     <ContentPresenter x:Name="PART_LeftWindowCommands"
+                                      Focusable="False"
                                       Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Panel.ZIndex="1"
                                       Grid.Row="0"
@@ -68,11 +71,11 @@
 
                     <!-- the title bar -->
                     <ContentControl x:Name="PART_TitleBar"
+                                    Focusable="False"
                                     Grid.Row="0"
                                     Grid.Column="2"
                                     Content="{TemplateBinding Title}"
                                     ContentTemplate="{TemplateBinding TitleTemplate}"
-                                    Focusable="False"
                                     HorizontalContentAlignment="Stretch"
                                     VerticalContentAlignment="Stretch"
                                     Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -91,6 +94,7 @@
 
                     <!-- the right window commands -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
+                                      Focusable="False"
                                       Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Panel.ZIndex="1"
                                       Grid.Row="0"
@@ -102,6 +106,7 @@
 
                     <!-- the window button commands -->
                     <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
+                                                   Focusable="False"
                                                    Panel.ZIndex="1"
                                                    Grid.Row="0"
                                                    Grid.Column="4"
@@ -147,6 +152,7 @@
                           Grid.ColumnSpan="5"
                           Grid.RowSpan="2"
                           Panel.ZIndex="3"
+                          Focusable="False"
                           FocusVisualStyle="{x:Null}"
                           x:Name="PART_OverlayBox"
                           Background="{DynamicResource BlackColorBrush}"
@@ -327,6 +333,8 @@
                                         Value="Center" />
                                 <Setter Property="Padding"
                                         Value="1" />
+                                <Setter Property="Focusable"
+                                        Value="False" />
                                 <Setter Property="FocusVisualStyle"
                                         Value="{x:Null}" />
                                 <Setter Property="Template">
@@ -392,6 +400,8 @@
                                         Value="Center" />
                                 <Setter Property="Padding"
                                         Value="1" />
+                                <Setter Property="Focusable"
+                                        Value="False" />
                                 <Setter Property="FocusVisualStyle"
                                         Value="{x:Null}" />
                                 <Setter Property="Template">
@@ -489,6 +499,7 @@
                     <StackPanel Orientation="Horizontal">
 
                         <Button x:Name="PART_Min"
+                                Focusable="False"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMinButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 Foreground="{TemplateBinding Foreground}"
@@ -510,6 +521,7 @@
                         </Button>
 
                         <Button x:Name="PART_Max"
+                                Focusable="False"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMaxButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 Foreground="{TemplateBinding Foreground}"
@@ -538,6 +550,7 @@
                         </Button>
 
                         <Button x:Name="PART_Close"
+                                Focusable="False"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowCloseButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 Foreground="{TemplateBinding Foreground}"
