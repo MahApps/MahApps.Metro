@@ -96,13 +96,13 @@ namespace MahApps.Metro.Controls
 
             max = Template.FindName("PART_Max", this) as Button;
             if (max != null)
-                max.Click += MaximiseClick;
+                max.Click += MaximizeClick;
 
             min = Template.FindName("PART_Min", this) as Button;
             if (min != null)
                 min.Click += MinimiseClick;
 
-            RefreshMaximiseIconState();
+            RefreshMaximizeIconState();
         }
 
         protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
@@ -119,7 +119,7 @@ namespace MahApps.Metro.Controls
                 Microsoft.Windows.Shell.SystemCommands.MinimizeWindow(parentWindow);
         }
 
-        private void MaximiseClick(object sender, RoutedEventArgs e)
+        private void MaximizeClick(object sender, RoutedEventArgs e)
         {
             var parentWindow = GetParentWindow();
             if (parentWindow == null)
@@ -134,22 +134,22 @@ namespace MahApps.Metro.Controls
                 Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(parentWindow);
             }
             
-            RefreshMaximiseIconState(parentWindow);
+            RefreshMaximizeIconState(parentWindow);
         }
 
-        public void RefreshMaximiseIconState()
+        public void RefreshMaximizeIconState()
         {
-            RefreshMaximiseIconState(GetParentWindow());
+            RefreshMaximizeIconState(GetParentWindow());
         }
 
-        private void RefreshMaximiseIconState(Window parentWindow)
+        private void RefreshMaximizeIconState(Window parentWindow)
         {
             if (parentWindow == null || max == null)
                 return;
 
             if (parentWindow.WindowState == WindowState.Normal)
             {
-                var maxpath = (Path)max.FindName("MaximisePath");
+				var maxpath = (Path)max.FindName("MaximizePath");
                 maxpath.Visibility = Visibility.Visible;
 
                 var restorepath = (Path)max.FindName("RestorePath");
@@ -162,7 +162,7 @@ namespace MahApps.Metro.Controls
                 var restorepath = (Path)max.FindName("RestorePath");
                 restorepath.Visibility = Visibility.Visible;
 
-                var maxpath = (Path)max.FindName("MaximisePath");
+				var maxpath = (Path)max.FindName("MaximizePath");
                 maxpath.Visibility = Visibility.Collapsed;
                 max.ToolTip = Restore;
             }

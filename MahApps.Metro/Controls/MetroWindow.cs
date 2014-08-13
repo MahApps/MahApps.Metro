@@ -855,7 +855,7 @@ namespace MahApps.Metro.Controls
         {
             if (WindowButtonCommands != null && !this.UseNoneWindowStyle)
             {
-                WindowButtonCommands.RefreshMaximiseIconState();
+                WindowButtonCommands.RefreshMaximizeIconState();
             }
 
             base.OnStateChanged(e);
