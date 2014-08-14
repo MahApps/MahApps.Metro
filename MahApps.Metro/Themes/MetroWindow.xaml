@@ -538,7 +538,7 @@
                                 </MultiBinding>
                             </Button.Visibility>
                             <Grid>
-                                <Path x:Name="MaximisePath"
+                                <Path x:Name="MaximizePath"
                                       SnapsToDevicePixels="True"
                                       Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
                                       Fill="{TemplateBinding Foreground}" />
