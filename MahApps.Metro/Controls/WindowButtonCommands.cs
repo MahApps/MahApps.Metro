@@ -100,7 +100,7 @@ namespace MahApps.Metro.Controls
 
             min = Template.FindName("PART_Min", this) as Button;
             if (min != null)
-                min.Click += MinimiseClick;
+                min.Click += MinimizeClick;
 
             RefreshMaximizeIconState();
         }
@@ -112,7 +112,7 @@ namespace MahApps.Metro.Controls
                 handler(this, args);
         }
 
-        private void MinimiseClick(object sender, RoutedEventArgs e)
+        private void MinimizeClick(object sender, RoutedEventArgs e)
         {
             var parentWindow = GetParentWindow();
             if (parentWindow != null)
