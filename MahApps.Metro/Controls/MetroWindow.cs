@@ -851,16 +851,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected override void OnStateChanged(EventArgs e)
-        {
-            if (WindowButtonCommands != null && !this.UseNoneWindowStyle)
-            {
-                WindowButtonCommands.RefreshMaximiseIconState();
-            }
-
-            base.OnStateChanged(e);
-        }
-
         private void IconMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
