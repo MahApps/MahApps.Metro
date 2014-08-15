@@ -151,6 +151,7 @@
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converters\TreeViewMarginConverter.cs" />
+    <Compile Include="Converters\WindowStateToPathDataConverter.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\Debug.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\DoubleUtil.cs" />
