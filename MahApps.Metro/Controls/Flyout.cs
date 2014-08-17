@@ -41,6 +41,17 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
         public static readonly DependencyProperty IsNavButtonVisibleProperty =
             DependencyProperty.Register("IsNavButtonVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty IsTitleVisibleProperty =
+            DependencyProperty.Register("IsTitleVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
+
+        /// <summary>
+        /// Gets/sets if the title is visible in this flyout.
+        /// </summary>
+        public bool IsTitleVisible
+        {
+            get { return (bool)GetValue(IsTitleVisibleProperty); }
+            set { SetValue(IsTitleVisibleProperty, value); }
+        }
 
         /// <summary>
         /// Gets/sets if the nav button is visible in this flyout.

@@ -58,6 +58,7 @@
             </Button>
             <TextBlock Text="{Binding}"
                        x:Name="PART_BackButton"
+                       Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=IsTitleVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                        FontSize="20"
                        Margin="15,0,0,0"
                        VerticalAlignment="Center" />
