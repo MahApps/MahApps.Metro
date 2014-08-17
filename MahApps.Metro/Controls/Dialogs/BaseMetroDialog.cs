@@ -40,6 +40,7 @@ namespace MahApps.Metro.Controls.Dialogs
         }));
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty BackgroundVisualProperty = DependencyProperty.Register("BackgroundVisual", typeof(Brush), typeof(BaseMetroDialog), new FrameworkPropertyMetadata(null));
 
         protected MetroDialogSettings DialogSettings { get; private set; }
 
@@ -77,6 +78,19 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return GetValue(DialogBottomProperty); }
             set { SetValue(DialogBottomProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the dialog's background visual.
+        /// </summary>
+        /// <remarks>
+        /// Use Background for normal background colors. Use this (BackgroundVisual) for showing an overlay visual behind the content.
+        /// Recommended: Use a DrawingBrush or a VisualBrush for this property. Other brushes should be used in Background.
+        /// </remarks>
+        public Brush BackgroundVisual
+        {
+            get { return (Brush)GetValue(BackgroundVisualProperty); }
+            set { SetValue(BackgroundVisualProperty, value); }
         }
 
         internal SizeChangedEventHandler SizeChangedHandler { get; set; }

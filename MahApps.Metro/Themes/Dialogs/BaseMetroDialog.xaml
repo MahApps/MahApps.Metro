@@ -61,6 +61,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
+                            <Rectangle Grid.RowSpan="2" Margin="5" Stretch="Uniform" Fill="{TemplateBinding BackgroundVisual}" Opacity=".1"/>
                             <TextBlock Grid.Row="0"
                                        FontSize="26"
                                        Foreground="{TemplateBinding Foreground}"
