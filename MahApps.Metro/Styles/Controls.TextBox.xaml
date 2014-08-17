@@ -5,7 +5,11 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
+    <Converters:TextToIsEmptyConverter x:Key="TextToIsEmptyConverter" />
 
+    <ExponentialEase Exponent="2" EasingMode="EaseIn" x:Key="InExpoEase" />
+    <ExponentialEase Exponent="2" EasingMode="EaseOut" x:Key="OutExpoEase" />
+    
     <!--TextBox Style-->
     <Style TargetType="{x:Type TextBox}"
            x:Key="MetroTextBox">
@@ -93,6 +97,21 @@
                                     Grid.ColumnSpan="2"
                                     Background="{x:Null}"
                                     Opacity="0" />
+                            <TextBlock x:Name="FloatingMessage"
+                                       Grid.Column="0"
+                                       Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                       FontSize="10"
+                                       Opacity="0"
+                                       Visibility="Collapsed"
+                                       Foreground="{DynamicResource AccentColorBrush}"
+                                       IsHitTestVisible="False"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                       Margin="2, 0, 0, 0" >
+                                <TextBlock.RenderTransform>
+                                    <TranslateTransform Y="20" x:Name="FloatingMessageTransform" />
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Grid.Column="0"
                                           BorderThickness="0"
@@ -104,7 +123,7 @@
                                        Grid.Column="0"
                                        Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
                                        Padding="{TemplateBinding Padding}"
-                                       Visibility="Collapsed"
+                                       Visibility="Visible"
                                        Foreground="{TemplateBinding Foreground}"
                                        IsHitTestVisible="False"
                                        Opacity="0.6"
@@ -129,11 +148,30 @@
                                    Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
-                                     Value="">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.IsFloatingWatermarkEnabled)}" Value="true">
+                            <Setter TargetName="FloatingMessage" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource TextToIsEmptyConverter}}"
+                                     Value="false">
                             <Setter TargetName="Message"
                                     Property="Visibility"
-                                    Value="Visible" />
+                                    Value="Collapsed" /> 
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard Duration="0:0:0.1">
+                                        <DoubleAnimation Storyboard.TargetName="FloatingMessage" Storyboard.TargetProperty="Opacity" To=".8" Duration="0:0:0.1"/>
+                                        <DoubleAnimation EasingFunction="{StaticResource OutExpoEase}" Storyboard.TargetName="FloatingMessageTransform" Storyboard.TargetProperty="Y" To="0"  Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard Duration="0:0:0.1">
+                                        <DoubleAnimation Storyboard.TargetName="FloatingMessage" Storyboard.TargetProperty="Opacity" Duration="0:0:0.1"/>
+                                        <DoubleAnimation EasingFunction="{StaticResource InExpoEase}" Storyboard.TargetName="FloatingMessageTransform" Storyboard.TargetProperty="Y" Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
                         </DataTrigger>
 
                         <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->

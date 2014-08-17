@@ -143,6 +143,7 @@
     <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="Controls\WindowCommands.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
+    <Compile Include="Converters\TextToIsEmptyConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converters\TreeViewMarginConverter.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
