@@ -8,6 +8,8 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
     <DataTemplate x:Key="HeaderTemplate"
                   x:Shared="False">
         <DockPanel x:Name="dpHeader"
@@ -18,6 +20,7 @@
                     Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommand, Mode=OneWay}"
                     DockPanel.Dock="Left"
                     Style="{DynamicResource MetroCircleButtonStyle}"
+                    Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=IsNavButtonVisible, Converter={StaticResource BooleanToVisibilityConverter}}"
                     Height="40"
                     Width="40"
                     FontFamily="Segoe UI Symbol"

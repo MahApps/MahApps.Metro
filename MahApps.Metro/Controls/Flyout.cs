@@ -31,6 +31,17 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
+        public static readonly DependencyProperty IsNavButtonVisibleProperty =
+            DependencyProperty.Register("IsNavButtonVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
+
+        /// <summary>
+        /// Gets/sets if the nav button is visible in this flyout.
+        /// </summary>
+        public bool IsNavButtonVisible
+        {
+            get { return (bool)GetValue(IsNavButtonVisibleProperty); }
+            set { SetValue(IsNavButtonVisibleProperty, value); }
+        }
 
         /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
