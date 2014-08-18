@@ -20,6 +20,8 @@ namespace MahApps.Metro.Controls.Dialogs
     public abstract class BaseMetroDialog : Control
     {
         private const string PART_DialogBody_ContentPresenter = "PART_DialogBody_ContentPresenter";
+        private const string PART_VisualBackgroundRectangle = "PART_VisualBackgroundRectangle";
+
         protected ContentPresenter DialogBody_ContentPresenter = null;
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
@@ -40,7 +42,6 @@ namespace MahApps.Metro.Controls.Dialogs
         }));
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
-        public static readonly DependencyProperty BackgroundVisualProperty = DependencyProperty.Register("BackgroundVisual", typeof(Brush), typeof(BaseMetroDialog), new FrameworkPropertyMetadata(null));
 
         protected MetroDialogSettings DialogSettings { get; private set; }
 
@@ -80,19 +81,6 @@ namespace MahApps.Metro.Controls.Dialogs
             set { SetValue(DialogBottomProperty, value); }
         }
 
-        /// <summary>
-        /// Gets/sets the dialog's background visual.
-        /// </summary>
-        /// <remarks>
-        /// Use Background for normal background colors. Use this (BackgroundVisual) for showing an overlay visual behind the content.
-        /// Recommended: Use a DrawingBrush or a VisualBrush for this property. Other brushes should be used in Background.
-        /// </remarks>
-        public Brush BackgroundVisual
-        {
-            get { return (Brush)GetValue(BackgroundVisualProperty); }
-            set { SetValue(BackgroundVisualProperty, value); }
-        }
-
         internal SizeChangedEventHandler SizeChangedHandler { get; set; }
 
 
@@ -104,6 +92,12 @@ namespace MahApps.Metro.Controls.Dialogs
         public override void OnApplyTemplate()
         {
             DialogBody_ContentPresenter = GetTemplateChild(PART_DialogBody_ContentPresenter) as ContentPresenter;
+
+            System.Windows.Shapes.Rectangle r = GetTemplateChild(PART_VisualBackgroundRectangle) as System.Windows.Shapes.Rectangle;
+            if (r != null)
+            {
+                r.Fill = this.DialogSettings.VisualBackground;
+            }
 
             base.OnApplyTemplate();
         }
@@ -352,6 +346,15 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the default text( just the inputdialog needed)
         /// </summary>
         public string DefaultText { get; set; }
+
+        /// <summary>
+        /// Gets/sets the dialog's visual background.
+        /// </summary>
+        /// <remarks>
+        /// Use BaseMetroDialog.Background dp for normal background colors. Use this for showing an overlay visual behind the content.
+        /// Recommended: Use a DrawingBrush or a VisualBrush for this property. Other brushes should be used in Background.
+        /// </remarks>
+        public Brush VisualBackground { get; set; }
     }
 
     /// <summary>

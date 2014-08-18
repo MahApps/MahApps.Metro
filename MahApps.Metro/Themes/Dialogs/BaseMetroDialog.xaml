@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
 
     <ResourceDictionary.MergedDictionaries>
@@ -61,7 +62,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Rectangle Grid.RowSpan="2" Margin="5" Stretch="Uniform" Fill="{TemplateBinding BackgroundVisual}" Opacity=".1"/>
+                            <Rectangle x:Name="PART_VisualBackgroundRectangle" Grid.RowSpan="2" Margin="5" Stretch="Uniform" Opacity=".1"/>
                             <TextBlock Grid.Row="0"
                                        FontSize="26"
                                        Foreground="{TemplateBinding Foreground}"

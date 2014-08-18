@@ -21,7 +21,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the LoginDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static Task<LoginDialogData> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings settings = null, Brush backgroundViusal = null)
+        public static Task<LoginDialogData> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -35,7 +35,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     dialog.Title = title;
                     dialog.Message = message;
 
-                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog, backgroundViusal);
+                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
 
                     return dialog.WaitForLoadAsync().ContinueWith(x =>
@@ -82,7 +82,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null, Brush backgroundViusal = null)
+        public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -98,7 +98,7 @@ namespace MahApps.Metro.Controls.Dialogs
                             dialog.Message = message;
                             dialog.Input = settings.DefaultText;
 
-                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog, backgroundViusal);
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
 
                             return dialog.WaitForLoadAsync().ContinueWith(x =>
@@ -150,7 +150,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="style">The type of buttons to use.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null, Brush backgroundViusal = null)
+        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -166,7 +166,7 @@ namespace MahApps.Metro.Controls.Dialogs
                             dialog.Title = title;
                             dialog.ButtonStyle = style;
 
-                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog, backgroundViusal);
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
 
                             return dialog.WaitForLoadAsync().ContinueWith(x =>
@@ -219,7 +219,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="isCancelable">Determines if the cancel button is visible.</param>
         /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
         /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
-        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null, Brush backgroundViusal = null)
+        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
 
@@ -238,7 +238,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
                         dialog.NegativeButtonText = settings.NegativeButtonText;
 
-                        SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog, backgroundViusal);
+                        SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                         dialog.SizeChangedHandler = sizeHandler;
 
                         return dialog.WaitForLoadAsync().ContinueWith(x =>
@@ -308,7 +308,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     dialog.Dispatcher.Invoke(new Action(() =>
                         {
-                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog, dialog.BackgroundVisual);
+                            SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                             dialog.SizeChangedHandler = sizeHandler;
                         }));
                 }).ContinueWith(y =>
@@ -363,12 +363,11 @@ namespace MahApps.Metro.Controls.Dialogs
             }).Unwrap();
         }
 
-        private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog, Brush backgroundViusal)
+        private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog)
         {
             dialog.SetValue(Panel.ZIndexProperty, (int)window.overlayBox.GetValue(Panel.ZIndexProperty) + 1);
             dialog.MinHeight = window.ActualHeight / 4.0;
             dialog.MaxHeight = window.ActualHeight;
-            dialog.BackgroundVisual = backgroundViusal;
 
             SizeChangedEventHandler sizeHandler = null; //an event handler for auto resizing an open dialog.
             sizeHandler = new SizeChangedEventHandler((sender, args) =>
