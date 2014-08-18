@@ -1,9 +1,3 @@
-//------------------------------------------------------------------------------
-//  File    : UIExtensions.cs
-//  Author  : Mohammad Rahhal
-//  Created : 17/8/2014 8:54:19 PM
-//------------------------------------------------------------------------------
-
 //-------------------------------------------------------------------------------------------
 // We can use this class as the main class for attached dps that don't have a place to go.
 //-------------------------------------------------------------------------------------------
@@ -17,19 +11,13 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class UIExtensions
     {
-        #region Constructors
-
         public UIExtensions()
         {
         }
 
-        #endregion Constructors
-
         //-----------------------------------------------------------------------------------------------
         // LabelText
         //-----------------------------------------------------------------------------------------------
-
-        #region LabelText
 
         /// <summary>
         /// Gets the label text of a MetroCircleButtonStyle button.
@@ -49,8 +37,6 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty LabelTextProperty =
             DependencyProperty.RegisterAttached("LabelText", typeof(string), typeof(UIExtensions), new FrameworkPropertyMetadata(""));
-
-        #endregion LabelText
 
         //-----------------------------------------------------------------------------------------------
     }
