@@ -6,6 +6,62 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
 
+    <Storyboard x:Key="HideFloatingMessageStoryboard">
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
+                                       Storyboard.TargetProperty="Visibility"
+                                       BeginTime="00:00:0.75"
+                                       Duration="00:00:00">
+            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}"/>
+        </ObjectAnimationUsingKeyFrames>
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
+                                       Storyboard.TargetProperty="Height">
+            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
+                                  KeySpline="0.25,1,0.05,1"
+                                  Value="0"/>
+        </DoubleAnimationUsingKeyFrames>
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
+                                       Storyboard.TargetProperty="Opacity">
+            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
+                                  KeySpline="0.25,1,0.05,1"
+                                  Value="0"/>
+        </DoubleAnimationUsingKeyFrames>
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessage"
+                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
+            <DiscreteDoubleKeyFrame KeyTime="00:00:00"
+                                    Value="0"/>
+            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
+                                  KeySpline="0.25,1,0.05,1"
+                                  Value="15"/>
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+    <Storyboard x:Key="ShowFloatingMessageStoryboard">
+        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
+                                       Storyboard.TargetProperty="Visibility"
+                                       Duration="00:00:00">
+            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}"/>
+        </ObjectAnimationUsingKeyFrames>
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
+                                       Storyboard.TargetProperty="Height">
+            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
+                                  KeySpline="0.25,1,0.05,1"
+                                  Value="15"/>
+        </DoubleAnimationUsingKeyFrames>
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
+                                       Storyboard.TargetProperty="Opacity">
+            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
+                                  KeySpline="0.25,1,0.05,1"
+                                  Value="1"/>
+        </DoubleAnimationUsingKeyFrames>
+        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessage"
+                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
+            <DiscreteDoubleKeyFrame KeyTime="00:00:00"
+                                    Value="15"/>
+            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
+                                  KeySpline="0.25,1,0.05,1"
+                                  Value="0"/>
+        </DoubleAnimationUsingKeyFrames>
+    </Storyboard>
+
     <!--TextBox Style-->
     <Style TargetType="{x:Type TextBox}"
            x:Key="MetroTextBox">
@@ -88,13 +144,20 @@
                                 <ColumnDefinition x:Name="ButtonColumn"
                                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition x:Name="ButtonRow"
+                                               Height="*"/>
+                            </Grid.RowDefinitions>
 
                             <Border x:Name="ReadOnlyVisualElement"
+                                    Grid.Row="1"
                                     Grid.ColumnSpan="2"
                                     Background="{x:Null}"
                                     Opacity="0" />
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Grid.Column="0"
+                                          Grid.Row="1"
                                           BorderThickness="0"
                                           IsTabStop="False"
                                           Margin="2"
@@ -102,6 +165,7 @@
                                           Background="{x:Null}" />
                             <TextBlock x:Name="Message"
                                        Grid.Column="0"
+                                       Grid.Row="1"
                                        Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
                                        Padding="{TemplateBinding Padding}"
                                        Visibility="Collapsed"
@@ -111,8 +175,28 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
+                            <Grid x:Name="FloatingMessageContainer"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="2"
+                                  Height="0"
+                                  IsHitTestVisible="False"
+                                  Margin="5,0"
+                                  Visibility="Collapsed">
+                                <TextBlock x:Name="FloatingMessage"
+                                           Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                           FontSize="10"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           Opacity="0.6"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform/>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Grid>
                             <Button x:Name="PART_ClearText"
                                     Grid.Column="1"
+                                    Grid.RowSpan="2"
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     FontSize="16"
                                     Foreground="{TemplateBinding Foreground}"
@@ -136,6 +220,37 @@
                                     Value="Visible" />
                         </DataTrigger>
 
+                        <!--Sets the MiniMessage visibility (Watermark must not be "" and FloatWatermark must be true)-->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.HasText)}"
+                                     Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <!--To override Watermark == ""-->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.Watermark)}"
+                                     Value="">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <!--To override TextboxHelper.FloatingWatermark == false-->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.UseFloatingWatermark)}"
+                                     Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+
                         <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -146,7 +261,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="ButtonColumn"
                                     Property="Width"
-                                    Value="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}" />
+                                    Value="{Binding ElementName=ButtonRow, Path=ActualHeight, Mode=OneWay}" />
                         </MultiTrigger>
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}"
@@ -187,6 +302,12 @@
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="FloatingMessage"
+                                    Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}"/>
+                            <Setter TargetName="FloatingMessage"
+                                    Property="Opacity"
+                                    Value="1"/>
                         </Trigger>
                         <Trigger SourceName="PART_ClearText"
                                  Property="IsMouseOver"
@@ -321,13 +442,20 @@
                                 <ColumnDefinition x:Name="ButtonColumn"
                                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition x:Name="ButtonRow"
+                                               Height="*"/>
+                            </Grid.RowDefinitions>
 
                             <Border x:Name="ReadOnlyVisualElement"
                                     Grid.ColumnSpan="2"
+                                    Grid.Row="1"
                                     Background="{x:Null}"
                                     Opacity="0" />
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Grid.Column="0"
+                                          Grid.Row="1"
                                           BorderThickness="0"
                                           IsTabStop="False"
                                           Margin="2"
@@ -335,6 +463,7 @@
                                           Background="{x:Null}" />
                             <TextBlock x:Name="Message"
                                        Grid.Column="0"
+                                       Grid.Row="1"
                                        Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
                                        Padding="{TemplateBinding Padding}"
                                        Visibility="Collapsed"
@@ -344,8 +473,28 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
+                            <Grid x:Name="FloatingMessageContainer"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="2"
+                                  Height="0"
+                                  IsHitTestVisible="False"
+                                  Margin="5,0"
+                                  Visibility="Collapsed">
+                                <TextBlock x:Name="FloatingMessage"
+                                           Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                           FontSize="10"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           Opacity="0.6"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform/>
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Grid>
                             <Button x:Name="PART_ClearText"
                                     Grid.Column="1"
+                                    Grid.RowSpan="2"
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     FontSize="16"
                                     Foreground="{TemplateBinding Foreground}"
@@ -369,6 +518,37 @@
                                     Value="Visible" />
                         </DataTrigger>
 
+                        <!--Sets the MiniMessage visibility (Watermark must not be "" and FloatWatermark must be true)-->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.HasText)}"
+                                     Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <!--To override Watermark == ""-->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.Watermark)}"
+                                     Value="">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <!--To override TextboxHelper.FloatingWatermark == false-->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.UseFloatingWatermark)}"
+                                     Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+
                         <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -379,7 +559,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="ButtonColumn"
                                     Property="Width"
-                                    Value="{Binding ElementName=PART_InnerGrid, Path=ActualHeight, Mode=OneWay}" />
+                                    Value="{Binding ElementName=ButtonRow, Path=ActualHeight, Mode=OneWay}" />
                         </MultiTrigger>
 
                         <Trigger Property="IsMouseOver"
@@ -411,6 +591,12 @@
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="FloatingMessage"
+                                    Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}"/>
+                            <Setter TargetName="FloatingMessage"
+                                    Property="Opacity"
+                                    Value="1"/>
                         </Trigger>
                         <Trigger SourceName="PART_ClearText"
                                  Property="IsMouseOver"
@@ -603,5 +789,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>
