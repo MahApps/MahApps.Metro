@@ -1,9 +1,3 @@
-//------------------------------------------------------------------------------
-//  File    : TextToIsEmptyConverter.cs
-//  Author  : Mohammad Rahhal
-//  Created : 17/8/2014 4:51:27 PM
-//------------------------------------------------------------------------------
-
 namespace MahApps.Metro.Converters
 {
     using System;
@@ -11,8 +5,10 @@ namespace MahApps.Metro.Converters
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Windows;
     using System.Windows.Data;
 
+    [ValueConversion(typeof(string), typeof(bool))]
     public class TextToIsEmptyConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
@@ -24,7 +20,7 @@ namespace MahApps.Metro.Converters
         // Doesn't need to be implemented.
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            throw new NotImplementedException();
+            return DependencyProperty.UnsetValue;
         }
     }
 }

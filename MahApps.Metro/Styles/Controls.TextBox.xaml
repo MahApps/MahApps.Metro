@@ -93,8 +93,13 @@
                                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
 
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
                             <Border x:Name="ReadOnlyVisualElement"
                                     Grid.ColumnSpan="2"
+                                    Grid.RowSpan="2"
                                     Background="{x:Null}"
                                     Opacity="0" />
                             <TextBlock x:Name="FloatingMessage"
@@ -114,6 +119,7 @@
                             </TextBlock>
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Grid.Column="0"
+                                          Grid.Row="1"
                                           BorderThickness="0"
                                           IsTabStop="False"
                                           Margin="2"
@@ -121,6 +127,7 @@
                                           Background="{x:Null}" />
                             <TextBlock x:Name="Message"
                                        Grid.Column="0"
+                                       Grid.Row="1"
                                        Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
                                        Padding="{TemplateBinding Padding}"
                                        Visibility="Visible"
@@ -132,6 +139,7 @@
                                        Margin="6,2,6,2" />
                             <Button x:Name="PART_ClearText"
                                     Grid.Column="1"
+                                    Grid.Row="1"
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     FontSize="16"
                                     Foreground="{TemplateBinding Foreground}"
@@ -150,6 +158,9 @@
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.IsFloatingWatermarkEnabled)}" Value="true">
                             <Setter TargetName="FloatingMessage" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.Watermark), Converter={StaticResource TextToIsEmptyConverter}}" Value="true">
+                            <Setter TargetName="FloatingMessage" Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text, Converter={StaticResource TextToIsEmptyConverter}}"
                                      Value="false">
