@@ -3,65 +3,12 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
-
-    <Storyboard x:Key="HideFloatingMessageStoryboard">
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
-                                       Storyboard.TargetProperty="Visibility"
-                                       BeginTime="00:00:0.75"
-                                       Duration="00:00:00">
-            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Collapsed}"/>
-        </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
-                                       Storyboard.TargetProperty="Height">
-            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
-                                  KeySpline="0.25,1,0.05,1"
-                                  Value="0"/>
-        </DoubleAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
-                                       Storyboard.TargetProperty="Opacity">
-            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
-                                  KeySpline="0.25,1,0.05,1"
-                                  Value="0"/>
-        </DoubleAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessage"
-                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
-            <DiscreteDoubleKeyFrame KeyTime="00:00:00"
-                                    Value="0"/>
-            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
-                                  KeySpline="0.25,1,0.05,1"
-                                  Value="15"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-    <Storyboard x:Key="ShowFloatingMessageStoryboard">
-        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
-                                       Storyboard.TargetProperty="Visibility"
-                                       Duration="00:00:00">
-            <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}"/>
-        </ObjectAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
-                                       Storyboard.TargetProperty="Height">
-            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
-                                  KeySpline="0.25,1,0.05,1"
-                                  Value="15"/>
-        </DoubleAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessageContainer"
-                                       Storyboard.TargetProperty="Opacity">
-            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
-                                  KeySpline="0.25,1,0.05,1"
-                                  Value="1"/>
-        </DoubleAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="FloatingMessage"
-                                       Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)">
-            <DiscreteDoubleKeyFrame KeyTime="00:00:00"
-                                    Value="15"/>
-            <SplineDoubleKeyFrame KeyTime="00:00:00.75"
-                                  KeySpline="0.25,1,0.05,1"
-                                  Value="0"/>
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
     <!--TextBox Style-->
     <Style TargetType="{x:Type TextBox}"
            x:Key="MetroTextBox">
@@ -181,7 +128,7 @@
                                   Height="0"
                                   IsHitTestVisible="False"
                                   Margin="5,0"
-                                  Visibility="Collapsed">
+                                  Visibility="Visible">
                                 <TextBlock x:Name="FloatingMessage"
                                            Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
                                            FontSize="10"
@@ -240,7 +187,7 @@
                                 <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
                             </DataTrigger.ExitActions>
                         </DataTrigger>
-                        <!--To override TextboxHelper.FloatingWatermark == false-->
+                        <!--To override TextboxHelper.UseFloatingWatermark == false-->
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.UseFloatingWatermark)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
@@ -479,7 +426,7 @@
                                   Height="0"
                                   IsHitTestVisible="False"
                                   Margin="5,0"
-                                  Visibility="Collapsed">
+                                  Visibility="Visible">
                                 <TextBlock x:Name="FloatingMessage"
                                            Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
                                            FontSize="10"
@@ -538,7 +485,7 @@
                                 <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
                             </DataTrigger.ExitActions>
                         </DataTrigger>
-                        <!--To override TextboxHelper.FloatingWatermark == false-->
+                        <!--To override TextboxHelper.UseFloatingWatermark == false-->
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.UseFloatingWatermark)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
