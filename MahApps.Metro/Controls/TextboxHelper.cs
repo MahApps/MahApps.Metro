@@ -39,6 +39,24 @@ namespace MahApps.Metro.Controls
 
         private static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
 
+        public static readonly DependencyProperty IsFloatingWatermarkEnabledProperty = DependencyProperty.RegisterAttached("IsFloatingWatermarkEnabled", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
+
+        /// <summary>
+        /// Gets if the floating watermark feature is enabled.
+        /// </summary>
+        public static bool GetIsFloatingWatermarkEnabled(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsFloatingWatermarkEnabledProperty);
+        }
+
+        /// <summary>
+        /// Sets if the floating watermark feature is enabled.
+        /// </summary>
+        public static void SetIsFloatingWatermarkEnabled(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsFloatingWatermarkEnabledProperty, value);
+        }
+
         /// <summary>
         /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
         /// </summary>

@@ -32,9 +32,11 @@
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <TextBox Margin="0, 10, 0, 0"
                          Controls:TextboxHelper.IsSpellCheckContextMenuEnabled="True"
+                         Controls:TextboxHelper.IsFloatingWatermarkEnabled="True"
                          Text="Enabled" />
                 <TextBox Margin="0, 10, 0, 0"
                          Controls:TextboxHelper.Watermark="Watermark"
+                         Controls:TextboxHelper.IsFloatingWatermarkEnabled="True"
                          Controls:TextboxHelper.IsWaitingForData="True"
                          ToolTip="Default alignment" />
                 <TextBox Margin="0, 10, 0, 0"
@@ -100,6 +102,7 @@
                          Text="Disabled" />
                 <TextBox Margin="0, 10, 0, 0"
                          Controls:TextboxHelper.Watermark="Watermark"
+                         Controls:TextboxHelper.IsFloatingWatermarkEnabled="True"
                          IsEnabled="False" />
                 <TextBox Margin="0, 10, 0, 0"
                          Controls:TextboxHelper.ClearTextButton="True"
