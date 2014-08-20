@@ -224,5 +224,10 @@ namespace MetroDemo
             if (_shutdown)
                 Application.Current.Shutdown();
         }
+
+        private void IgnoreTaskBar_Click(object sender, RoutedEventArgs e)
+        {
+            this.IgnoreTaskbarOnMaximize = !this.IgnoreTaskbarOnMaximize;
+        }
     }
 }

@@ -35,6 +35,8 @@ namespace MahApps.Metro.Behaviours
                 windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
                 System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
                       .AddValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.UseNoneWindowStyleProperty, typeof(MetroWindow))
+                      .AddValueChanged(AssociatedObject, UseNoneWindowStylePropertyChangedCallback);
             }
 
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
@@ -52,7 +54,6 @@ namespace MahApps.Metro.Behaviours
                     //For some reason, we can't determine if the window has loaded or not, so we swallow the exception.
                 }
             }
-            AssociatedObject.WindowStyle = WindowStyle.None;
             savedBorderThickness = AssociatedObject.BorderThickness;
 
             AssociatedObject.Loaded += AssociatedObject_Loaded;
@@ -70,6 +71,17 @@ namespace MahApps.Metro.Behaviours
             if (metroWindow != null && windowChrome != null)
             {
                 windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                UpdateWindowStyle();
+            }
+        }
+
+        private void UseNoneWindowStylePropertyChangedCallback(object sender, EventArgs e)
+        {
+            var metroWindow = sender as MetroWindow;
+            if(metroWindow != null && windowChrome != null)
+            {
+                windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
+                UpdateWindowStyle();
             }
         }
 
@@ -86,6 +98,8 @@ namespace MahApps.Metro.Behaviours
                 {
                     System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
                           .RemoveValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                    System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.UseNoneWindowStyleProperty, typeof(MetroWindow))
+                          .RemoveValueChanged(AssociatedObject, UseNoneWindowStylePropertyChangedCallback);
                 }
                 AssociatedObject.Loaded -= AssociatedObject_Loaded;
                 AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
@@ -163,7 +177,8 @@ namespace MahApps.Metro.Behaviours
 
         private void HandleMaximize(bool handleOnlyMaximized = false)
         {
-            if (AssociatedObject.WindowState == WindowState.Maximized)
+            var metroWindow = AssociatedObject as MetroWindow;
+            if (AssociatedObject.WindowState == WindowState.Maximized && metroWindow.IgnoreTaskbarOnMaximize)
             {
                 // remove resize border and window border, so we can move the window from top monitor position
                 windowChrome.ResizeBorderThickness = new Thickness(0);
@@ -175,7 +190,6 @@ namespace MahApps.Metro.Behaviours
                 if (monitor != IntPtr.Zero) {
                     var monitorInfo = new MONITORINFO();
                     UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                    var metroWindow = AssociatedObject as MetroWindow;
                     var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
                     var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
                     var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
@@ -198,6 +212,15 @@ namespace MahApps.Metro.Behaviours
                 var topMost = AssociatedObject.Topmost;
                 AssociatedObject.Topmost = false;
                 AssociatedObject.Topmost = topMost;
+            }
+        }
+
+        private void UpdateWindowStyle()
+        {
+            var metroWindow = AssociatedObject as MetroWindow;
+            if(metroWindow != null)
+            {
+                metroWindow.WindowStyle = (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle) ? WindowStyle.None : WindowStyle.SingleBorderWindow;
             }
         }
 
@@ -318,6 +341,7 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
             AssociatedObject.SizeToContent = sizeToContent;
             AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
+            UpdateWindowStyle();
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)

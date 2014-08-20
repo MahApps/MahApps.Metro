@@ -254,6 +254,17 @@ namespace Microsoft.Windows.Shell
             set { SetValue(IgnoreTaskbarOnMaximizeProperty, value); }
         }
 
+        public static readonly DependencyProperty UseNoneWIndowStyleProperty = DependencyProperty.Register(
+            "UseNoneWindowStyle",
+            typeof(bool),
+            typeof(WindowChrome),
+            new FrameworkPropertyMetadata(false));
+        public bool UseNoneWindowStyle
+        {
+            get { return (bool)GetValue(UseNoneWIndowStyleProperty); }
+            set { SetValue(UseNoneWIndowStyleProperty, value); }
+        }
+
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
             "CornerRadius",
             typeof(CornerRadius),

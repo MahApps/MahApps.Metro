@@ -171,6 +171,9 @@
                     <MenuItem Click="ShowDialogOutside"
                               Header="Show SimpleDialog Externally" />
                 </MenuItem>
+                <MenuItem Header="Window">
+                    <MenuItem IsCheckable="True" Header="Ignore taskbar on maximize" Click="IgnoreTaskBar_Click"/>
+                </MenuItem>
             </Menu>
 
             <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
