@@ -286,11 +286,6 @@
                 Value="0" />
     </Style>
 
-    <!-- obsolete, will be deleted in 0.14 -->
-    <Style x:Key="IronicallyNamedChromelessButtonStyle"
-           TargetType="{x:Type Button}"
-           BasedOn="{StaticResource MetroBaseWindowButtonStyle}" />
-
     <!-- style for default button -->
     <Style TargetType="{x:Type Button}"
            x:Key="MetroButton">

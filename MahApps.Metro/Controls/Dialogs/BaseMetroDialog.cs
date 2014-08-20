@@ -308,19 +308,6 @@ namespace MahApps.Metro.Controls.Dialogs
         public MetroDialogColorScheme ColorScheme { get; set; }
 
         /// <summary>
-        /// Enable/disable dialog showing/hiding animations.
-        /// Setting this value will also set both AnimateShow and AnimateHide properties to the same value.
-        /// Getting "True" - at least AnimateHide or AnimateHide is "True".
-        /// Getting "False" - both AnimateHide and AnimateHide are "False".
-        /// </summary>
-        [Obsolete("This property is obsolete and will be deleted in next release, use AnimateShow and AnimateHide instead.")]
-        public bool UseAnimations
-        {
-            get { return AnimateShow || AnimateHide; }
-            set { AnimateShow = AnimateHide = value; }
-        }
-
-        /// <summary>
         /// Enable/disable dialog showing animation.
         /// "True" - play showing animation.
         /// "False" - skip showing animation.

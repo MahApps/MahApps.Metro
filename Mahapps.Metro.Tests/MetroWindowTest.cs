@@ -18,13 +18,13 @@ namespace Mahapps.Metro.Tests
         }
 
         [Fact]
-        public async Task ShowsWindowCommandsOnTopByDefault()
+        public async Task ShowsRightWindowCommandsOnTopByDefault()
         {
             await TestHost.SwitchToAppThread();
 
             var window = new MetroWindow();
 
-            Assert.True(window.ShowWindowCommandsOnTop);
+            Assert.Equal(WindowCommandsOverlayBehavior.Always, window.RightWindowCommandsOverlayBehavior);
         }
 
         [Fact]
