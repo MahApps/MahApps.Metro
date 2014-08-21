@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MetroDemo.ExampleViews;
 using MetroDemo.ExampleWindows;
-
+#if NET_4_5
+using MetroDemo.ViewModels;
+#endif
 namespace MetroDemo
 {
     public partial class MainWindow
@@ -17,6 +21,14 @@ namespace MetroDemo
             _viewModel = new MainWindowViewModel();
             DataContext = _viewModel;
             InitializeComponent();
+
+#if NET_4_5
+            TabControl.Items.Add(new TabItem
+            {
+                Header = "validation-errors",
+                Content = new ValidationErrors { DataContext = new ValidationErrorsViewModel() }
+            });
+#endif
         }
 
         private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)
@@ -120,6 +132,7 @@ namespace MetroDemo
 
             await this.HideMetroDialogAsync(dialog);
         }
+
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;

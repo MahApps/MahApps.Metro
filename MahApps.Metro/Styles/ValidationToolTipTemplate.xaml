@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
     <!-- is obsolete -->
     <ControlTemplate x:Key="ValidationToolTipTemplate">
@@ -203,11 +206,12 @@
                                                MaxWidth="250"
                                                Margin="8,4,8,4"
                                                TextWrapping="Wrap"
+                                               FontSize="{Binding ElementName=placeholder, Path=AdornedElement.FontSize, FallbackValue={StaticResource ContentFontSize}}"
                                                Text="{Binding ErrorContent}"
                                                UseLayoutRounding="false" />
                                 </DataTemplate>
                             </Border.Resources>
-                            <ContentPresenter Content="{Binding CurrentItem}" />
+                            <ItemsControl ItemsSource="{Binding}"/>
                         </Border>
                     </Grid>
                 </controls:CustomValidationPopup>
