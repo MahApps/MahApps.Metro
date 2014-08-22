@@ -116,12 +116,12 @@
                         <TextBlock x:Name="LabelText" 
                                    Grid.Row="1"
                                    Opacity=".6"
-                                   Text="{TemplateBinding Controls:UIExtensions.LabelText}"
+                                   Text="{TemplateBinding Controls:ControlsHelper.LabelText}"
                                    HorizontalAlignment="Center"
                                    Foreground="{DynamicResource AccentColorBrush}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:UIExtensions.LabelText)}" Value="">
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:ControlsHelper.LabelText)}" Value="">
                             <Setter TargetName="LabelText"
                                     Property="Visibility"
                                     Value="Collapsed" />

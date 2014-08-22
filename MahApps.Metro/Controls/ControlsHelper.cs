@@ -185,6 +185,25 @@ namespace MahApps.Metro.Controls
             element.SetValue(GroupBoxHeaderForegroundProperty, value);
         }
 
+        public static readonly DependencyProperty LabelTextProperty =
+            DependencyProperty.RegisterAttached("LabelText", typeof(string), typeof(ControlsHelper), new FrameworkPropertyMetadata(""));
+
+        /// <summary>
+        /// Gets the label text of a MetroCircleButtonStyle button.
+        /// </summary>
+        public static string GetLabelText(DependencyObject obj)
+        {
+            return (string)obj.GetValue(LabelTextProperty);
+        }
+
+        /// <summary>
+        /// Sets the label text of a MetroCircleButtonStyle button.
+        /// </summary>
+        public static void SetLabelText(DependencyObject obj, string value)
+        {
+            obj.SetValue(LabelTextProperty, value);
+        }
+
         /// <summary>
         /// Defines whether the underline below the <see cref="TabControl"/> is shown or not.
         /// </summary>
