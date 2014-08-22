@@ -137,13 +137,14 @@
             </Controls:Flyout>
             <exampleWindows:CustomFlyout />
 
-            <Controls:Flyout Header="Accented"
+            <Controls:Flyout IsCloseButtonVisible="False"
+                             IsTitleVisible="False"
                              Position="Right"
                              Theme="Accent">
                 <Grid Margin="10"
                       Width="400">
                     <StackPanel>
-                        <TextBlock Text="This flyout adapts its theme to the current accent"
+                        <TextBlock Text="This flyout adapts its theme to the current accent. And it's without a header."
                                Foreground="{DynamicResource IdealForegroundColorBrush}" />
                         <GroupBox Margin="10" Height="250" Header="Flyout Group Box" />
                     </StackPanel>
@@ -304,7 +305,7 @@
             <Button MinWidth="90"
                     Margin="2"
                     Click="ShowAccent"
-                    Content="Accent" />
+                    Content="Accented and Without Header" />
             <Button MinWidth="90"
                     Margin="2"
                     Click="ShowInverse"

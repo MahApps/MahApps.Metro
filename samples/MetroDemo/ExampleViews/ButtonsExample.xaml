@@ -153,6 +153,16 @@
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Button>
+            <Button  Style="{StaticResource MetroCircleButtonStyle}" Width="50" Height="65" Controls:ControlsHelper.LabelText="Label">
+                <Rectangle Width="20"
+                           Height="20"
+                           Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                                     Visual="{DynamicResource appbar_github}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
         </StackPanel>
         <StackPanel Grid.Row="1"
                     Grid.Column="0"
