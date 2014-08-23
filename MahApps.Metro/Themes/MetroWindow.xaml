@@ -537,16 +537,9 @@
                                              Mode="OneWay" />
                                 </MultiBinding>
                             </Button.Visibility>
-                            <Grid>
-                                <Path x:Name="MaximisePath"
-                                      SnapsToDevicePixels="True"
-                                      Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
-                                      Fill="{TemplateBinding Foreground}" />
-                                <Path x:Name="RestorePath"
-                                      SnapsToDevicePixels="True"
-                                      Data="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z"
-                                      Fill="{TemplateBinding Foreground}" />
-                            </Grid>
+                            <Path x:Name="MaxPath" SnapsToDevicePixels="True"
+                                  Fill="{TemplateBinding Foreground}" >
+                            </Path>
                         </Button>
 
                         <Button x:Name="PART_Close"
@@ -561,7 +554,14 @@
                                   Fill="{TemplateBinding Foreground}" />
                         </Button>
                     </StackPanel>
-
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Normal">
+                            <Setter TargetName="MaxPath" Property="Data" Value="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
+                            <Setter TargetName="MaxPath" Property="Data" Value="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
