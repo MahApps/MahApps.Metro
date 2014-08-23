@@ -61,15 +61,21 @@ namespace MahApps.Metro.Behaviours
         }
 
         private void RestoreGlow()
-        {
-            left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = true;
-            Update();
+        {           
+            if(left != null && top != null && right != null && bottom != null)
+            {
+                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = true;
+                Update();
+            }
         }
 
         private void HideGlow()
         {
-            left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = false;
-            Update();
+            if (left != null && top != null && right != null && bottom != null)
+            {
+                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = false;
+                Update();
+            }
         }
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
