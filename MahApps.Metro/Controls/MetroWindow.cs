@@ -735,7 +735,7 @@ namespace MahApps.Metro.Controls
         
         private void FlyoutsPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            FrameworkElement element = (e.OriginalSource as FrameworkElement);
+            DependencyObject element = (e.OriginalSource as DependencyObject);
             if (element != null && element.TryFindParent<Flyout>() != null)
             {
                 return;
