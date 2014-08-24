@@ -16,21 +16,6 @@ namespace MahApps.Metro
         private static IList<Accent> _accents;
         private static IList<AppTheme> _appThemes;
 
-        // We use this mapping to lookup the corresponding (obsolete) theme for the default themes
-        private static readonly Dictionary<string, Theme> compatibilityThemeMapping =
-            new Dictionary<string, Theme>
-            {
-                {"BaseDark", Theme.Dark},
-                {"BaseLight", Theme.Light}
-            };
-
-        private static readonly Dictionary<Theme, string> reverseCompatibilityThemeMapping =
-            new Dictionary<Theme, string>
-            {
-                {Theme.Dark, "BaseDark"},
-                {Theme.Light, "BaseLight"}
-            };
-
         /// <summary>
         /// Gets a list of all of default themes.
         /// </summary>
@@ -562,114 +547,12 @@ namespace MahApps.Metro
         {
             SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { AppTheme = newTheme, Accent = newAccent });
         }
-
-        #region obsoletes
-
-        [Obsolete("This property is obsolete. Use Accents instead.")]
-        public static IList<Accent> DefaultAccents
-        {
-            get
-            {
-                if (_accents != null)
-                    return _accents;
-
-                var colors = new[] {
-                                       "Red", "Green", "Blue", "Purple", "Orange", "Lime", "Emerald", "Teal", "Cyan", "Cobalt",
-                                       "Indigo", "Violet", "Pink", "Magenta", "Crimson", "Amber", "Yellow", "Brown", "Olive", "Steel", "Mauve", "Taupe", "Sienna"
-                                   };
-
-                _accents = new List<Accent>(colors.Length);
-
-                foreach (var color in colors)
-                {
-                    _accents.Add(new Accent(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color))));
-                }
-
-                return _accents;
-            }
-        }
-
-        [SecurityCritical]
-        [Obsolete("This method is obsolete. Use ChangeAppStyle instead.")]
-        public static void ChangeTheme(Application app, Accent newAccent, Theme newTheme)
-        {
-            if (app == null) throw new ArgumentNullException("app");
-
-            var oldTheme = DetectTheme(app);
-            AppTheme oldAppTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[oldTheme.Item1]);
-            AppTheme newAppTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[newTheme]);
-
-            ChangeAppStyle(app.Resources, Tuple.Create(oldAppTheme, oldTheme.Item2), newAccent, newAppTheme);
-        }
-
-        [SecurityCritical]
-        [Obsolete("This method is obsolete. Use ChangeAppStyle instead.")]
-        public static void ChangeTheme(Window window, Accent newAccent, Theme newTheme)
-        {
-            if (window == null) throw new ArgumentNullException("window");
-
-            var oldTheme = DetectTheme(window);
-            AppTheme oldAppTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[oldTheme.Item1]);
-            AppTheme newAppTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[newTheme]);
-
-            ChangeAppStyle(window.Resources, Tuple.Create(oldAppTheme, oldTheme.Item2), newAccent, newAppTheme);
-        }
-
-        [Obsolete("This method is obsolete. Use ChangeAppStyle instead.")]
-        public static void ChangeTheme(ResourceDictionary resources, Accent newAccent, Theme newTheme)
-        {
-            if (resources == null) throw new ArgumentNullException("resources");
-
-            AppTheme appTheme = AppThemes.First(x => x.Name == reverseCompatibilityThemeMapping[newTheme]);
-
-            ChangeAppStyle(resources, newAccent, appTheme);
-        }
-
-        [Obsolete("This method is obsolete. Use DetectAppStyle instead.")]
-        public static Tuple<Theme, Accent> DetectTheme()
-        {
-            try
-            {
-                return DetectTheme(Application.Current.MainWindow);
-            }
-            catch (Exception)
-            {
-                return DetectTheme(Application.Current);
-            }
-        }
-
-        [Obsolete("This method is obsolete. Use DetectAppStyle instead.")]
-        public static Tuple<Theme, Accent> DetectTheme(Window window)
-        {
-            if (window == null) throw new ArgumentNullException("window");
-
-            var appStyle = DetectAppStyle(window);
-
-            return Tuple.Create(compatibilityThemeMapping[appStyle.Item1.Name], appStyle.Item2);
-        }
-
-        [Obsolete("This method is obsolete. Use DetectAppStyle instead.")]
-        public static Tuple<Theme, Accent> DetectTheme(Application app)
-        {
-            if (app == null) throw new ArgumentNullException("app");
-
-            var appStyle = DetectAppStyle(app);
-
-            return Tuple.Create(compatibilityThemeMapping[appStyle.Item1.Name], appStyle.Item2);
-        }
-
-
-        [Obsolete("This property is obsolete and doesn't have a use anymore.")]
-        public static bool InvalidateSystemResourcesOnBackgroundThread { get; set; }
-
-        #endregion
     }
 
     public class OnThemeChangedEventArgs : EventArgs
     {
         public AppTheme AppTheme { get; set; }
-        [Obsolete("This property is obsolete. Use AppTheme.Theme instead.")]
-        public Theme Theme { get; set; }
+
         public Accent Accent { get; set; }
     }
 }

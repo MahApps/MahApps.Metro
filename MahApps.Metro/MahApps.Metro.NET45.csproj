@@ -79,6 +79,7 @@
     <Compile Include="Accent.cs" />
     <Compile Include="Actions\CloseTabItemAction.cs" />
     <Compile Include="Actions\SetFlyoutOpenAction.cs" />
+    <Compile Include="AppTheme.cs" />
     <Compile Include="Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
     <Compile Include="Behaviours\GlowWindowBehavior.cs" />
@@ -199,7 +200,6 @@
       <SubType>Code</SubType>
     </Compile>
     <!--<Compile Include="Properties\CommonAssemblyInfo.cs" Condition="EXISTS('Properties\CommonAssemblyInfo.cs')" />-->
-    <Compile Include="Theme.cs" />
     <Compile Include="ThemeManager.cs" />
     <AppDesigner Include="Properties\" />
     <Page Include="Controls\GlowWindow.xaml">
@@ -413,9 +413,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\ValidationToolTipTemplate.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Styles\ValidationErrorTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\VS\Button.xaml">
       <SubType>Designer</SubType>

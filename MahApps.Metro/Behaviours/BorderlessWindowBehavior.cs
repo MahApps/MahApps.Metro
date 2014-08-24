@@ -347,35 +347,5 @@ namespace MahApps.Metro.Behaviours
             get { return (bool)GetValue(EnableDWMDropShadowProperty); }
             set { SetValue(EnableDWMDropShadowProperty, value); }
         }
-
-        [Obsolete("This property is obsolete and will be removed in next release.")]
-        public static readonly DependencyProperty AllowsTransparencyProperty = DependencyProperty.Register("AllowsTransparency", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
-
-        [Obsolete("This property is obsolete and will be removed in next release.")]
-        public bool AllowsTransparency
-        {
-            get { return (bool)GetValue(AllowsTransparencyProperty); }
-            set { SetValue(AllowsTransparencyProperty, value); }
-        }
-
-        [Obsolete("This property is obsolete and will be removed in next release (use Window.ResizeMode instead to handle this).")]
-        public static readonly DependencyProperty ResizeWithGripProperty = DependencyProperty.Register("ResizeWithGrip", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(true));
-
-        [Obsolete("This property is obsolete and will be removed in next release (use Window.ResizeMode to handle this).")]
-        public bool ResizeWithGrip
-        {
-            get { return (bool)GetValue(ResizeWithGripProperty); }
-            set { SetValue(ResizeWithGripProperty, value); }
-        }
-
-        [Obsolete("This property is obsolete and will be removed in next release (use Window.AutoSizeToContent instead to handle this).")]
-        public static readonly DependencyProperty AutoSizeToContentProperty = DependencyProperty.Register("AutoSizeToContent", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
-
-        [Obsolete("This property is obsolete and will be removed in next release (use Window.AutoSizeToContent instead to handle this).")]
-        public bool AutoSizeToContent
-        {
-            get { return (bool)GetValue(AutoSizeToContentProperty); }
-            set { SetValue(AutoSizeToContentProperty, value); }
-        }
     }
 }

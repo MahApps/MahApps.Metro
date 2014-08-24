@@ -5,16 +5,6 @@ using System.Windows;
 namespace MahApps.Metro
 {
     /// <summary>
-    /// An enum that represents the two Metro styles: Light and Dark.
-    /// </summary>
-    [Obsolete("This class is obsolete and no longer used")]
-    public enum Theme
-    {
-        Light,
-        Dark
-    }
-
-    /// <summary>
     /// Represents the background theme of the application.
     /// </summary>
     [DebuggerDisplay("apptheme={Name}, theme={Theme}, res={Resources.Source}")]

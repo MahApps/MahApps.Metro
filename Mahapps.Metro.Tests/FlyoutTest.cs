@@ -109,21 +109,6 @@ namespace Mahapps.Metro.Tests
         }
 
         [Fact]
-        public async Task HiddenWindowCommandsAreBelowFlyoutObsoleteTest()
-        {
-            await TestHost.SwitchToAppThread();
-
-            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
-            window.RightFlyout.IsOpen = true;
-            window.ShowWindowCommandsOnTop = false;
-
-            int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands);
-            int flyoutindex = Panel.GetZIndex(window.RightFlyout);
-
-            Assert.True(flyoutindex < windowCommandsZIndex);
-        }
-
-        [Fact]
         public async Task LeftWindowCommandsAreOverFlyout()
         {
             await TestHost.SwitchToAppThread();
