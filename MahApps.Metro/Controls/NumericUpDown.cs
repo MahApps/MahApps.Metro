@@ -18,8 +18,8 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = ElementTextBox, Type = typeof(TextBox))]
     public class NumericUpDown : Control
     {
-        public static readonly RoutedEvent IncrementValueEvent = EventManager.RegisterRoutedEvent("IncrementValue", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
-        public static readonly RoutedEvent DecrementValueEvent = EventManager.RegisterRoutedEvent("DecrementValue", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
+        public static readonly RoutedEvent ValueIncrementedEvent = EventManager.RegisterRoutedEvent("ValueIncremented", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
+        public static readonly RoutedEvent ValueDecrementedEvent = EventManager.RegisterRoutedEvent("ValueDecremented", RoutingStrategy.Bubble, typeof(NumericUpDownChangedRoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent DelayChangedEvent = EventManager.RegisterRoutedEvent("DelayChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MaximumReachedEvent = EventManager.RegisterRoutedEvent("MaximumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
         public static readonly RoutedEvent MinimumReachedEvent = EventManager.RegisterRoutedEvent("MinimumReached", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(NumericUpDown));
@@ -157,16 +157,16 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(MinimumReachedEvent, value); }
         }
 
-        public event NumericUpDownChangedRoutedEventHandler IncrementValue
+        public event NumericUpDownChangedRoutedEventHandler ValueIncremented
         {
-            add { AddHandler(IncrementValueEvent, value); }
-            remove { RemoveHandler(IncrementValueEvent, value); }
+            add { AddHandler(ValueIncrementedEvent, value); }
+            remove { RemoveHandler(ValueIncrementedEvent, value); }
         }
 
-        public event NumericUpDownChangedRoutedEventHandler DecrementValue
+        public event NumericUpDownChangedRoutedEventHandler ValueDecremented
         {
-            add { AddHandler(DecrementValueEvent, value); }
-            remove { RemoveHandler(DecrementValueEvent, value); }
+            add { AddHandler(ValueDecrementedEvent, value); }
+            remove { RemoveHandler(ValueDecrementedEvent, value); }
         }
 
         public event RoutedEventHandler DelayChanged
@@ -818,8 +818,8 @@ namespace MahApps.Metro.Controls
         private void ChangeValueInternal(double interval)
         {
             NumericUpDownChangedRoutedEventArgs routedEvent = interval > 0 ?
-                new NumericUpDownChangedRoutedEventArgs(IncrementValueEvent, interval) :
-                new NumericUpDownChangedRoutedEventArgs(DecrementValueEvent, interval);
+                new NumericUpDownChangedRoutedEventArgs(ValueIncrementedEvent, interval) :
+                new NumericUpDownChangedRoutedEventArgs(ValueDecrementedEvent, interval);
 
             RaiseEvent(routedEvent);
 
