@@ -126,7 +126,6 @@ namespace MahApps.Metro.Controls.Dialogs
             HandleTheme();
 
             this.Resources.MergedDictionaries.Add(new System.Windows.ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
-
         }
 
         void BaseMetroDialog_Unloaded(object sender, RoutedEventArgs e)
@@ -149,6 +148,10 @@ namespace MahApps.Metro.Controls.Dialogs
                     case MetroDialogColorScheme.Theme:
                         this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
                         this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "BlackBrush"));
+                        break;
+                    case MetroDialogColorScheme.Inverted:
+                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
+                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "BlackColorBrush"));
                         break;
                     case MetroDialogColorScheme.Accented:
                         this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "HighlightBrush"));
@@ -288,6 +291,8 @@ namespace MahApps.Metro.Controls.Dialogs
             ColorScheme = MetroDialogColorScheme.Theme;
             AnimateShow = AnimateHide = true;
 
+            MaximumBodyHeight = Double.NaN;
+
             DefaultText = "";
         }
 
@@ -325,6 +330,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the default text( just the inputdialog needed)
         /// </summary>
         public string DefaultText { get; set; }
+
+        public double MaximumBodyHeight { get; set; }
     }
 
     /// <summary>
@@ -333,6 +340,7 @@ namespace MahApps.Metro.Controls.Dialogs
     public enum MetroDialogColorScheme
     {
         Theme = 0,
-        Accented = 1
+        Accented = 1,
+        Inverted = 2
     }
 }

@@ -31,6 +31,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
+        public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register("AreAnimationsEnabled", typeof(bool), typeof(Flyout), new PropertyMetadata(false));
+
+        public bool AreAnimationsEnabled
+        {
+            get { return (bool)GetValue(AreAnimationsEnabledProperty); }
+            set { SetValue(AreAnimationsEnabledProperty, value); }
+        }
 
         /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
@@ -217,24 +224,40 @@ namespace MahApps.Metro.Controls
 
             if (e.NewValue != e.OldValue)
             {
-                if ((bool)e.NewValue)
+                if ((bool)flyout.GetValue(AreAnimationsEnabledProperty))
                 {
-                    if (flyout.hideStoryboard != null)
+                    if ((bool)e.NewValue)
                     {
-                        // don't set visibility to hidden on show :-)
-                        flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
+                        if (flyout.hideStoryboard != null)
+                        {
+                            // don't set visibility to hidden on show :-)
+                            flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
+                        }
+                        flyout.Visibility = Visibility.Visible;
+                        flyout.ApplyAnimation(flyout.Position);
                     }
-                    flyout.Visibility = Visibility.Visible;
-                    flyout.ApplyAnimation(flyout.Position);
+                    else
+                    {
+                        if (flyout.hideStoryboard != null)
+                        {
+                            // after finished hide story board set the visibility to hidden
+                            flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
+                        }
+                    }
                 }
                 else
                 {
-                    if (flyout.hideStoryboard != null)
+                    if ((bool)e.NewValue)
                     {
-                        // after finished hide story board set the visibility to hidden
-                        flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
+                        flyout.Visibility = Visibility.Visible;
+                        
+                    }
+                    else
+                    {
+                        flyout.Visibility = Visibility.Hidden;
                     }
                 }
+
 
                 VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
             }

@@ -48,7 +48,10 @@ namespace MetroDemo.ExampleWindows
 
         private void Button_Click_1(object sender, System.Windows.RoutedEventArgs e)
         {
-            this.ShowMessageAsync("Something", "Something should be displayed here.");
+            this.ShowMessageAsync("Something", "Something should be displayed here.", MessageDialogStyle.Affirmative, new MetroDialogSettings()
+            {
+                ColorScheme = MetroDialogColorScheme.Inverted
+            });
         }
     }
 }

@@ -34,6 +34,8 @@ namespace MahApps.Metro.Controls.Dialogs
             : base(parentWindow, settings)
         {
             InitializeComponent();
+
+            PART_MessageTextBlock.Height = DialogSettings.MaximumBodyHeight;
         }
 
         internal Task<MessageDialogResult> WaitForButtonPressAsync()

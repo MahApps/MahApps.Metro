@@ -4,16 +4,17 @@
                          x:Class="MahApps.Metro.Controls.Dialogs.MessageDialog"
                          Loaded="Dialog_Loaded">
     <Dialogs:BaseMetroDialog.DialogBody>
+        
         <Grid Margin="0 10 0 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0"
-                       Margin="0 5 0 0"
+            <TextBlock Margin="0 5 0 0"
                        FontSize="15"
                        Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                       TextWrapping="Wrap"
+                       x:Name="PART_MessageTextBlock"
+                       ScrollViewer.CanContentScroll="True"
                        Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
 
             <StackPanel Grid.Row="1"

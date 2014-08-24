@@ -507,6 +507,8 @@ namespace MahApps.Metro.Controls
         /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task ShowOverlayAsync()
         {
+            if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
+
             if (IsOverlayVisible() && overlayStoryboard == null)
                 return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
 
@@ -547,6 +549,8 @@ namespace MahApps.Metro.Controls
         /// <returns>A task representing the process.</returns>
         public System.Threading.Tasks.Task HideOverlayAsync()
         {
+            if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
+
             if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity == 0.0)
                 return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
 
@@ -582,6 +586,8 @@ namespace MahApps.Metro.Controls
         }
         public bool IsOverlayVisible()
         {
+            if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
+
             return overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity >= 0.7;
         }
         public void ShowOverlay()
