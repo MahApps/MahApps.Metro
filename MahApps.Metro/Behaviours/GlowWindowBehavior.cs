@@ -2,22 +2,93 @@
 using System.Windows;
 using System.Windows.Interactivity;
 using MahApps.Metro.Controls;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.Behaviours
 {
     public class GlowWindowBehavior : Behavior<Window>
     {
+        private const int glowTimerDelay = 200; //200 ms delay, the same as VS2013
         private GlowWindow left, right, top, bottom;
-
+        private DispatcherTimer makeGlowVisibleTimer;
+        
         protected override void OnAttached()
         {
             base.OnAttached();
 
             this.AssociatedObject.Loaded += AssociatedObjectOnLoaded;
+            this.AssociatedObject.Unloaded += AssociatedObjectUnloaded;
+            this.AssociatedObject.StateChanged += AssociatedObjectStateChanged;
+        }
+
+        void AssociatedObjectStateChanged(object sender, EventArgs e)
+        {
+            makeGlowVisibleTimer.Stop();
+            if(AssociatedObject.WindowState != WindowState.Minimized)
+            {
+                if(AssociatedObject.WindowStyle == WindowStyle.None || !SystemParameters.MinimizeAnimation)
+                {
+                    RestoreGlow();
+                }
+                else
+                {
+                    makeGlowVisibleTimer.Start();
+                }
+            }
+            else
+            {
+                HideGlow();
+            }
+        }
+
+        void AssociatedObjectUnloaded(object sender, RoutedEventArgs e)
+        {
+            if(makeGlowVisibleTimer != null)
+            {
+                makeGlowVisibleTimer.Stop();
+                makeGlowVisibleTimer.Tick -= makeGlowVisibleTimer_Tick;
+                makeGlowVisibleTimer = null;
+            }
+        }
+
+        private void makeGlowVisibleTimer_Tick(object sender, EventArgs e)
+        {
+            if(makeGlowVisibleTimer != null)
+            {
+                makeGlowVisibleTimer.Stop();
+            }
+            RestoreGlow();
+        }
+
+        private void RestoreGlow()
+        {           
+            if(left != null && top != null && right != null && bottom != null)
+            {
+                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = true;
+                Update();
+            }
+        }
+
+        private void HideGlow()
+        {
+            if (left != null && top != null && right != null && bottom != null)
+            {
+                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = false;
+                Update();
+            }
         }
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
+            if(makeGlowVisibleTimer == null)
+            {
+                makeGlowVisibleTimer = new DispatcherTimer()
+                {
+                    Interval = TimeSpan.FromMilliseconds(glowTimerDelay)
+                };
+                makeGlowVisibleTimer.Tick += makeGlowVisibleTimer_Tick;
+            }
+
             // now glow effect if UseNoneWindowStyle is true or GlowBrush not set
             var metroWindow = this.AssociatedObject as MetroWindow;
             if (metroWindow != null && (metroWindow.UseNoneWindowStyle || metroWindow.GlowBrush == null))

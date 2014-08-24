@@ -36,6 +36,7 @@ namespace MahApps.Metro.Controls
 //            windowChrome.GlassFrameThickness = new Thickness(-1);
 //            windowChrome.UseAeroCaptionButtons = false;
 //            this.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
+            this.IsGlowing = true;
             this.AllowsTransparency = true;
 
             this.Owner = owner;
@@ -232,7 +233,7 @@ namespace MahApps.Metro.Controls
             {
                 if (this.closing) return;
 
-                Visibility = Visibility.Visible;
+                Visibility = IsGlowing ? Visibility.Visible : Visibility.Collapsed;
 
                 UpdateCore();
             }
@@ -240,6 +241,12 @@ namespace MahApps.Metro.Controls
             {
                 Visibility = Visibility.Collapsed;
             }
+        }
+
+        public bool IsGlowing
+        {
+            set;
+            get;
         }
 
         private void UpdateCore()
@@ -261,6 +268,13 @@ namespace MahApps.Metro.Controls
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            if (msg == (int)WM.SHOWWINDOW)
+            {
+                if((int)lParam == 3 && this.Visibility != Visibility.Visible) // 3 == SW_PARENTOPENING
+                {
+                    handled = true; //handle this message so window isn't shown until we want it to                   
+                }
+            }            
             if (msg == (int)WM.MOUSEACTIVATE)
             {
                 handled = true;

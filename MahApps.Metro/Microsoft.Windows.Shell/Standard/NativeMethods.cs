@@ -2324,6 +2324,21 @@
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    internal struct WINDOWINFO
+    {
+        public int cbSize;
+        public RECT rcWindow;
+        public RECT rcClient;
+        public int dwStyle;
+        public int dwExStyle;
+        public uint dwWindowStatus;
+        public uint cxWindowBorders;
+        public uint cyWindowBorders;
+        public ushort atomWindowType;
+        public ushort wCreatorVersion;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     internal struct MOUSEINPUT
     {
         public int dx;
@@ -2566,6 +2581,10 @@
             filterInfo = filterstruct.ExtStatus;
             return HRESULT.S_OK;
         }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", CharSet = CharSet.None, SetLastError = true, EntryPoint = "ClientToScreen")]
+        public static extern bool ClientToScreen(IntPtr hWnd, ref POINT point);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll")]
@@ -3062,6 +3081,23 @@
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
         public static extern int GetSystemMetrics(SM nIndex);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", CharSet = CharSet.None, SetLastError = true, EntryPoint = "GetWindowInfo")]
+        private static extern bool _GetWindowInfo(IntPtr hWnd, ref WINDOWINFO pwi);
+
+        public static WINDOWINFO GetWindowInfo(IntPtr hWnd)
+        {
+            WINDOWINFO info = new WINDOWINFO()
+            {
+                 cbSize = Marshal.SizeOf(typeof(WINDOWINFO))
+            };
+            if (!_GetWindowInfo(hWnd, ref info))
+            {
+                HRESULT.ThrowLastError();
+            }
+            return info;
+        }
 
         // This is aliased as a macro in 32bit Windows.
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]

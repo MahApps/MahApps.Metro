@@ -486,10 +486,16 @@ namespace Microsoft.Windows.Shell
             // Since the first field of NCCALCSIZE_PARAMS is a RECT and is the only field we care about
             // we can unconditionally treat it as a RECT.
 
-            if ((int)wParam == 1)
+            if (NativeMethods.GetWindowPlacement(_hwnd).showCmd == SW.MAXIMIZE)
             {
-                handled = true;
-                return IntPtr.Zero;
+                if(SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false && _chromeInfo.UseNoneWindowStyle == false)
+                {
+                    RECT rc = (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
+                    NativeMethods.DefWindowProc(_hwnd, WM.NCCALCSIZE, wParam, lParam);
+                    RECT def = (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
+                    def.Top = (int)(rc.Top + NativeMethods.GetWindowInfo(_hwnd).cyWindowBorders);
+                    Marshal.StructureToPtr(def, lParam, true);
+                }
             }
 
             if (_chromeInfo.SacrificialEdge != SacrificialEdge.None)
@@ -514,10 +520,13 @@ namespace Microsoft.Windows.Shell
                 }
 
                 Marshal.StructureToPtr(rcClientArea, lParam, false);
+
+                handled = true;
+                return new IntPtr((int)WVR.REDRAW);
             }
 
             handled = true;
-            return new IntPtr((int)WVR.REDRAW);
+            return IntPtr.Zero;
         }
 
         private HT _GetHTFromResizeGripDirection(ResizeGripDirection direction)
@@ -888,38 +897,61 @@ namespace Microsoft.Windows.Shell
             NativeMethods.SetWindowRgn(_hwnd, IntPtr.Zero, NativeMethods.IsWindowVisible(_hwnd));
         }
 
+        private static RECT _GetClientRectRelativeToWindowRect(IntPtr hWnd)
+        {
+            RECT windowRect = NativeMethods.GetWindowRect(hWnd);
+            RECT clientRect = NativeMethods.GetClientRect(hWnd);
+
+            POINT origin = new POINT()
+            {
+                x = 0,
+                y = 0
+            };
+            NativeMethods.ClientToScreen(hWnd, ref origin);
+            clientRect.Offset(origin.x - windowRect.Left, origin.y - windowRect.Top);
+            return clientRect;
+        }
+
         private void _SetRoundingRegion(WINDOWPOS? wp)
         {
-            const int MONITOR_DEFAULTTONEAREST = 0x00000002;
 
             // We're early - WPF hasn't necessarily updated the state of the window.
             // Need to query it ourselves.
             WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
+            const int MONITOR_DEFAULTTONEAREST = 0x00000002;
 
             if (wpl.showCmd == SW.SHOWMAXIMIZED)
             {
-                int left;
-                int top;
-
-                if (wp.HasValue)
+                RECT rcMax;
+                if (_chromeInfo.UseNoneWindowStyle == false && _chromeInfo.IgnoreTaskbarOnMaximize == false && SystemParameters.MinimizeAnimation)
                 {
-                    left = wp.Value.x;
-                    top = wp.Value.y;
+                    rcMax = _GetClientRectRelativeToWindowRect(_hwnd);
                 }
                 else
                 {
-                    Rect r = _GetWindowRect();
-                    left = (int)r.Left;
-                    top = (int)r.Top;
+                    int left;
+                    int top;
+
+                    if (wp.HasValue)
+                    {
+                        left = wp.Value.x;
+                        top = wp.Value.y;
+                    }
+                    else
+                    {
+                        Rect r = _GetWindowRect();
+                        left = (int)r.Left;
+                        top = (int)r.Top;
+                    }
+
+                    IntPtr hMon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
+
+                    MONITORINFO mi = NativeMethods.GetMonitorInfo(hMon);
+                    rcMax = _chromeInfo.IgnoreTaskbarOnMaximize ? mi.rcMonitor : mi.rcWork;
+                    // The location of maximized window takes into account the border that Windows was
+                    // going to remove, so we also need to consider it.
+                    rcMax.Offset(-left, -top);
                 }
-
-                IntPtr hMon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
-
-                MONITORINFO mi = NativeMethods.GetMonitorInfo(hMon);
-                RECT rcMax = _chromeInfo.IgnoreTaskbarOnMaximize ? mi.rcMonitor : mi.rcWork;
-                // The location of maximized window takes into account the border that Windows was
-                // going to remove, so we also need to consider it.
-                rcMax.Offset(-left, -top);
 
                 IntPtr hrgn = IntPtr.Zero;
                 try
@@ -981,7 +1013,7 @@ namespace Microsoft.Windows.Shell
                         Assert.AreEqual(topRightRegionRect.Right, windowSize.Width);
 
                         _CreateAndCombineRoundRectRgn(hrgn, topRightRegionRect, topRightRadius);
-                        
+
                         double bottomLeftRadius = DpiHelper.LogicalPixelsToDevice(new Point(_chromeInfo.CornerRadius.BottomLeft, 0)).X;
                         bottomLeftRadius = Math.Min(bottomLeftRadius, shortestDimension / 2);
                         Rect bottomLeftRegionRect = new Rect(0, 0, windowSize.Width / 2 + bottomLeftRadius, windowSize.Height / 2 + bottomLeftRadius);
@@ -989,7 +1021,7 @@ namespace Microsoft.Windows.Shell
                         Assert.AreEqual(bottomLeftRegionRect.Bottom, windowSize.Height);
 
                         _CreateAndCombineRoundRectRgn(hrgn, bottomLeftRegionRect, bottomLeftRadius);
-                        
+
                         double bottomRightRadius = DpiHelper.LogicalPixelsToDevice(new Point(_chromeInfo.CornerRadius.BottomRight, 0)).X;
                         bottomRightRadius = Math.Min(bottomRightRadius, shortestDimension / 2);
                         Rect bottomRightRegionRect = new Rect(0, 0, windowSize.Width / 2 + bottomRightRadius, windowSize.Height / 2 + bottomRightRadius);
