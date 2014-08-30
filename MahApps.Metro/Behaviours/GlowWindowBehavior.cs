@@ -99,7 +99,7 @@ namespace MahApps.Metro.Behaviours
                 makeGlowVisibleTimer.Tick += makeGlowVisibleTimer_Tick;
             }
 
-            // now glow effect if UseNoneWindowStyle is true or GlowBrush not set
+            // No glow effect if UseNoneWindowStyle is true or GlowBrush not set.
             var metroWindow = this.AssociatedObject as MetroWindow;
             if (metroWindow != null && (metroWindow.UseNoneWindowStyle || metroWindow.GlowBrush == null))
             {
@@ -127,12 +127,13 @@ namespace MahApps.Metro.Behaviours
                 // hide the glows if window get invisible state
                 this.AssociatedObject.IsVisibleChanged += this.AssociatedObjectIsVisibleChanged;
                 // closing always handled
-                this.AssociatedObject.Closing += (o, args) => {
-                                                     if (!args.Cancel)
-                                                     {
-                                                         this.AssociatedObject.IsVisibleChanged -= this.AssociatedObjectIsVisibleChanged;
-                                                     }
-                                                 };
+                this.AssociatedObject.Closing += (o, args) =>
+                {
+                    if (!args.Cancel)
+                    {
+                        this.AssociatedObject.IsVisibleChanged -= this.AssociatedObjectIsVisibleChanged;
+                    }
+                };
             }
         }
 
