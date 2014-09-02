@@ -290,7 +290,7 @@
                                    Opacity="0" />
                         <!-- AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme -->
                         <Popup x:Name="PART_Popup"
-                               AllowsTransparency="true"
+                               AllowsTransparency="True"
                                Focusable="False"
                                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
@@ -383,8 +383,10 @@
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
                 Value="Top" />
+        <Setter Property="RenderOptions.ClearTypeHint"
+                Value="Enabled" />
         <Setter Property="Background"
-                Value="{DynamicResource TransparentWhiteBrush}" />
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="Template">
