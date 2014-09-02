@@ -11,6 +11,7 @@ namespace MahApps.Metro.Behaviours
         private const int glowTimerDelay = 200; //200 ms delay, the same as VS2013
         private GlowWindow left, right, top, bottom;
         private DispatcherTimer makeGlowVisibleTimer;
+        private bool _PrevTopmost;
         
         protected override void OnAttached()
         {
@@ -23,6 +24,15 @@ namespace MahApps.Metro.Behaviours
 
         void AssociatedObjectStateChanged(object sender, EventArgs e)
         {
+            if (AssociatedObject.WindowState == WindowState.Minimized)
+            {
+                _PrevTopmost = AssociatedObject.Topmost;
+                AssociatedObject.Topmost = true;
+            }
+            else
+            {
+                AssociatedObject.Topmost = _PrevTopmost;
+            }
             makeGlowVisibleTimer.Stop();
             if(AssociatedObject.WindowState != WindowState.Minimized)
             {
@@ -89,7 +99,7 @@ namespace MahApps.Metro.Behaviours
                 makeGlowVisibleTimer.Tick += makeGlowVisibleTimer_Tick;
             }
 
-            // now glow effect if UseNoneWindowStyle is true or GlowBrush not set
+            // No glow effect if UseNoneWindowStyle is true or GlowBrush not set.
             var metroWindow = this.AssociatedObject as MetroWindow;
             if (metroWindow != null && (metroWindow.UseNoneWindowStyle || metroWindow.GlowBrush == null))
             {
@@ -117,12 +127,13 @@ namespace MahApps.Metro.Behaviours
                 // hide the glows if window get invisible state
                 this.AssociatedObject.IsVisibleChanged += this.AssociatedObjectIsVisibleChanged;
                 // closing always handled
-                this.AssociatedObject.Closing += (o, args) => {
-                                                     if (!args.Cancel)
-                                                     {
-                                                         this.AssociatedObject.IsVisibleChanged -= this.AssociatedObjectIsVisibleChanged;
-                                                     }
-                                                 };
+                this.AssociatedObject.Closing += (o, args) =>
+                {
+                    if (!args.Cancel)
+                    {
+                        this.AssociatedObject.IsVisibleChanged -= this.AssociatedObjectIsVisibleChanged;
+                    }
+                };
             }
         }
 
