@@ -147,14 +147,23 @@
         </Setter>
     </Style>
 
+    <!--
+        use this additional properties for a clearer text display
+        <Setter Property="TextOptions.TextRenderingMode"
+                Value="ClearType" />
+        <Setter Property="TextOptions.TextFormattingMode"
+                Value="Display" />
+    -->
     <Style x:Key="MetroMenuItem"
            TargetType="{x:Type MenuItem}">
         <Setter Property="HorizontalContentAlignment"
                 Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="VerticalContentAlignment"
                 Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="RenderOptions.ClearTypeHint"
+                Value="Enabled" />
         <Setter Property="Background"
-                Value="Transparent" />
+                Value="{DynamicResource MenuItemBackgroundBrush}" />
         <Setter Property="ScrollViewer.PanningMode"
                 Value="Both" />
         <Setter Property="Stylus.IsFlicksEnabled"
