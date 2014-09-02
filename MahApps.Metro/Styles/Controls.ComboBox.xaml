@@ -297,13 +297,15 @@
                                MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                                MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
                                Placement="Bottom">
-                            <Border x:Name="PopupBorder"
-                                    Effect="{DynamicResource DropShadowBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    HorizontalAlignment="Stretch"
-                                    Height="Auto"
-                                    BorderBrush="{DynamicResource ComboBoxPopupBrush}"
-                                    Background="{DynamicResource WhiteBrush}">
+                            <Grid>
+                                <Border x:Name="PopupBorder"
+                                        Effect="{DynamicResource DropShadowBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        HorizontalAlignment="Stretch"
+                                        Height="Auto"
+                                        BorderBrush="{DynamicResource ComboBoxPopupBrush}"
+                                        Background="{DynamicResource WhiteBrush}">
+                                </Border>
                                 <ScrollViewer x:Name="DropDownScrollViewer"
                                               BorderThickness="0"
                                               Margin="2"
@@ -311,7 +313,7 @@
                                     <ItemsPresenter x:Name="ItemsPresenter"
                                                     KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
-                            </Border>
+                            </Grid>
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
