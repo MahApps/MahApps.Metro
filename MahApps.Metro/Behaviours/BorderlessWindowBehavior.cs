@@ -218,9 +218,12 @@ namespace MahApps.Metro.Behaviours
         private void UpdateWindowStyle()
         {
             var metroWindow = AssociatedObject as MetroWindow;
-            if(metroWindow != null)
+            if (metroWindow != null && metroWindow.WindowStyle != WindowStyle.None)
             {
-                metroWindow.WindowStyle = (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle) ? WindowStyle.None : WindowStyle.SingleBorderWindow;
+                metroWindow.WindowStyle =
+                    (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle)
+                        ? WindowStyle.None
+                        : WindowStyle.SingleBorderWindow;
             }
         }
 
