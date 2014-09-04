@@ -373,13 +373,6 @@
         </Style.Triggers>
     </Style>
 
-    <!--
-        use this additional properties for a clearer text display
-        <Setter Property="TextOptions.TextRenderingMode"
-                Value="ClearType" />
-        <Setter Property="TextOptions.TextFormattingMode"
-                Value="Display" />
-    -->
     <Style TargetType="ComboBoxItem"
            x:Key="MetroComboBoxItem">
         <Setter Property="Foreground"

@@ -147,13 +147,6 @@
         </Setter>
     </Style>
 
-    <!--
-        use this additional properties for a clearer text display
-        <Setter Property="TextOptions.TextRenderingMode"
-                Value="ClearType" />
-        <Setter Property="TextOptions.TextFormattingMode"
-                Value="Display" />
-    -->
     <Style x:Key="MetroMenuItem"
            TargetType="{x:Type MenuItem}">
         <Setter Property="HorizontalContentAlignment"
