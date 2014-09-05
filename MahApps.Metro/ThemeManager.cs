@@ -118,7 +118,7 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException("resources");
 
-            return AppThemes.FirstOrDefault(x => x.Resources.Source == resources.Source);
+            return AppThemes.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources.Source, resources.Source));
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace MahApps.Metro
         {
             if (accentName == null) throw new ArgumentNullException("accentName");
 
-            return Accents.FirstOrDefault(x => x.Name == accentName);
+            return Accents.FirstOrDefault(x => x.Name.Equals(accentName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace MahApps.Metro
         {
             if (resources == null) throw new ArgumentNullException("resources");
 
-            var builtInAccent = Accents.FirstOrDefault(x => x.Resources.Source == resources.Source);
+            var builtInAccent = Accents.FirstOrDefault(x => AreResourceDictionarySourcesEqual(x.Resources.Source, resources.Source));
             if (builtInAccent != null)
             {
                 return builtInAccent;
@@ -546,6 +546,12 @@ namespace MahApps.Metro
         private static void OnThemeChanged(Accent newAccent, AppTheme newTheme)
         {
             SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { AppTheme = newTheme, Accent = newAccent });
+        }
+
+        private static bool AreResourceDictionarySourcesEqual(Uri first, Uri second)
+        {
+            return Uri.Compare(first, second,
+                 UriComponents.Host | UriComponents.Path, UriFormat.SafeUnescaped, StringComparison.InvariantCultureIgnoreCase) == 0;
         }
     }
 
