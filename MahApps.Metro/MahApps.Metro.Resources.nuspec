@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro.Resources</id>
-    <version>0.2.1.0</version>
+    <version>0.3.0.0</version>
     <title>MahApps.Metro.Resources</title>
     <authors>Paul Jenkins; Brendan Forster (shiftkey); Alex Mitchell (Amrykid); Dennis Daume (flagbug); Jan Karger (punker76); Austin Andrews (Templarian)</authors>
     <owners>Paul Jenkins</owners>
@@ -13,7 +13,7 @@
     <summary>"loose" file XAML Resource for Metro UI's. All icons taken from WindowsIcons created by Austin Andrews (Templarian) https://github.com/Templarian/WindowsIcons</summary>
     <tags>WPF XAML UI Icon Metro</tags>
     <dependencies>
-      <dependency id="MahApps.Metro" version="0.13.1" />
+      <dependency id="MahApps.Metro" version="0.14.0" />
     </dependencies>
   </metadata>
   <files>
