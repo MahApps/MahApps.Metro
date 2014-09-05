@@ -9,8 +9,18 @@
     <projectUrl>https://github.com/MahApps/MahApps.Metro</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/mahapps.metro.logo2.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>"loose" file XAML Resource for Metro UI's. All icons taken from WindowsIcons created by Austin Andrews (Templarian) https://github.com/Templarian/WindowsIcons</description>
-    <summary>"loose" file XAML Resource for Metro UI's. All icons taken from WindowsIcons created by Austin Andrews (Templarian) https://github.com/Templarian/WindowsIcons</summary>
+    <description>
+      "loose" file XAML Resource for Metro UI's.
+      All icons taken from "Modern UI Icons" created by Austin Andrews (Templarian)
+      http://modernuiicons.com
+      https://github.com/Templarian/WindowsIcons
+    </description>
+    <summary>
+      "loose" file XAML Resource for Metro UI's.
+      All icons taken from "Modern UI Icons" created by Austin Andrews (Templarian)
+      http://modernuiicons.com
+      https://github.com/Templarian/WindowsIcons
+    </summary>
     <tags>WPF XAML UI Icon Metro</tags>
     <dependencies>
       <dependency id="MahApps.Metro" version="0.14.0" />
