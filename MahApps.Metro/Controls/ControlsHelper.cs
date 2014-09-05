@@ -191,12 +191,12 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsUnderlinedProperty =
             DependencyProperty.RegisterAttached("IsUnderlined", typeof(bool), typeof(ControlsHelper), new PropertyMetadata(false));
 
+        [AttachedPropertyBrowsableForType(typeof(TabControl))]
         public static bool GetIsUnderlined(UIElement element)
         {
             return (bool)element.GetValue(IsUnderlinedProperty);
         }
 
-        [AttachedPropertyBrowsableForType(typeof(TabControl))]
         public static void SetIsUnderlined(UIElement element, bool value)
         {
             element.SetValue(IsUnderlinedProperty, value);
