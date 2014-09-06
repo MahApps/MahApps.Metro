@@ -131,7 +131,7 @@
                                   Visibility="Visible">
                                 <TextBlock x:Name="FloatingMessage"
                                            Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
-                                           FontSize="10"
+                                           FontSize="{DynamicResource FloatingWatermarkFontSize}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Opacity="0.6"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -429,7 +429,7 @@
                                   Visibility="Visible">
                                 <TextBlock x:Name="FloatingMessage"
                                            Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
-                                           FontSize="10"
+                                           FontSize="{DynamicResource FloatingWatermarkFontSize}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Opacity="0.6"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
