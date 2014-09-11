@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace MahApps.Metro.Controls.Dialogs
@@ -10,6 +11,7 @@ namespace MahApps.Metro.Controls.Dialogs
         private const string DEFAULT_USERNAME_WATERMARK = "Username...";
         private const string DEFAULT_PASSWORD_WATERMARK = "Password...";
         private const Visibility DEFAULT_NEGATIVE_BUTTON_VISIBILITY = Visibility.Collapsed;
+        private const bool DEFAULT_ENABLE_PASSWORD_PREVIEW = false;
 
         public LoginDialogSettings()
             : base()
@@ -18,6 +20,7 @@ namespace MahApps.Metro.Controls.Dialogs
             PasswordWatermark = DEFAULT_PASSWORD_WATERMARK;
             NegativeButtonVisibility = DEFAULT_NEGATIVE_BUTTON_VISIBILITY;
             AffirmativeButtonText = "Login";
+            EnablePasswordPreview = DEFAULT_ENABLE_PASSWORD_PREVIEW;
         }
 
         public string InitialUsername { get; set; }
@@ -27,6 +30,8 @@ namespace MahApps.Metro.Controls.Dialogs
         public string PasswordWatermark { get; set; }
 
         public Visibility NegativeButtonVisibility { get; set; }
+
+        public bool EnablePasswordPreview { get; set; }
     }
 
     public class LoginDialogData
@@ -50,6 +55,14 @@ namespace MahApps.Metro.Controls.Dialogs
             UsernameWatermark = settings.UsernameWatermark;
             PasswordWatermark = settings.PasswordWatermark;
             NegativeButtonButtonVisibility = settings.NegativeButtonVisibility;
+            if (settings.EnablePasswordPreview)
+            {
+                object resource = Application.Current.FindResource("Win8MetroPasswordBox");
+                if (resource != null && resource.GetType() == typeof(Style))
+                {
+                    PART_TextBox2.Style = (Style)resource;
+                }
+            }
         }
 
         internal Task<LoginDialogData> WaitForButtonPressAsync()
