@@ -93,7 +93,8 @@
                             <ColumnDefinition Width="*" x:Name="RightCol" />
                         </Grid.ColumnDefinitions>
                         <Grid x:Name="PART_CHECKBOX">
-                            <Rectangle Fill="{DynamicResource TransparentWhiteBrush}" />
+                            <Rectangle Fill="{DynamicResource TransparentWhiteBrush}"
+                                       Margin="-6, 0"/>
                             <Rectangle x:Name="normal"
                                        Opacity="1"
                                        Stroke="{DynamicResource CheckBoxBrush}"
