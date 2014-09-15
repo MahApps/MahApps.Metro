@@ -19,8 +19,15 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// An event that is raised when IsOpen changes.
         /// </summary>
-        public event EventHandler IsOpenChanged;
-        
+        public static readonly RoutedEvent IsOpenChangedEvent =
+            EventManager.RegisterRoutedEvent("IsOpenChanged", RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler), typeof(Flyout));
+
+        public event RoutedEventHandler IsOpenChanged
+        {
+            add { AddHandler(IsOpenChangedEvent, value); }
+            remove { RemoveHandler(IsOpenChangedEvent, value); }
+        }
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Flyout), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register("IsPinned", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
@@ -263,12 +270,8 @@ namespace MahApps.Metro.Controls
 
                 VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
             }
-
-            var eh = flyout.IsOpenChanged;
-            if (eh != null)
-            {
-                eh(flyout, EventArgs.Empty);
-            }
+            
+            flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
         }
 
         private void HideStoryboard_Completed(object sender, EventArgs e)
