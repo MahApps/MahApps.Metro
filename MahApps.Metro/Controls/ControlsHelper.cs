@@ -197,7 +197,6 @@ namespace MahApps.Metro.Controls
             return (FlowDirection)element.GetValue(ContentDirectionProperty);
         }
 
-        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
         public static void SetContentDirection(UIElement element, FlowDirection value)
         {
             element.SetValue(ContentDirectionProperty, value);
