@@ -7,34 +7,34 @@
     public class PasswordBoxHelper
     {
         #region Static Fields
-
+        
+        public static readonly DependencyProperty CapslockIconProperty = DependencyProperty.RegisterAttached(
+            "CapsLockIcon", typeof(object), typeof(PasswordBoxHelper), new PropertyMetadata("-", ShowCapslockWarningChanged));
         public static readonly DependencyProperty CapsLockWarningTextProperty = DependencyProperty.RegisterAttached(
-            "CapsLockWarningText", typeof(string), typeof(PasswordBoxHelper), new PropertyMetadata("Caps lock is on"));
-        public static readonly DependencyProperty ShowCapslockWarningProperty = DependencyProperty.RegisterAttached(
-            "ShowCapslockWarning", typeof(bool), typeof(PasswordBoxHelper), new PropertyMetadata(default(bool), ShowCapslockWarningChanged));
+            "CapsLockWarningText", typeof(object), typeof(PasswordBoxHelper), new PropertyMetadata("Caps lock is on"));
 
         #endregion
 
         #region Public Methods and Operators
 
-        public static string GetCapsLockWarningText(PasswordBox element)
+        public static object GetCapsLockIcon(PasswordBox element)
         {
-            return (string)element.GetValue(CapsLockWarningTextProperty);
+            return element.GetValue(CapslockIconProperty);
         }
 
-        public static bool GetShowCapslockWarning(PasswordBox element)
+        public static object GetCapsLockWarningText(PasswordBox element)
         {
-            return (bool)element.GetValue(ShowCapslockWarningProperty);
+            return element.GetValue(CapsLockWarningTextProperty);
         }
 
-        public static void SetCapsLockWarningText(PasswordBox element, string value)
+        public static void SetCapsLockIcon(PasswordBox element, object value)
+        {
+            element.SetValue(CapslockIconProperty, value);
+        }
+
+        public static void SetCapsLockWarningText(PasswordBox element, object value)
         {
             element.SetValue(CapsLockWarningTextProperty, value);
-        }
-
-        public static void SetShowCapslockWarning(PasswordBox element, bool value)
-        {
-            element.SetValue(ShowCapslockWarningProperty, value);
         }
 
         #endregion
@@ -43,8 +43,7 @@
 
         private static void RefreshCapslockStatus(object sender, RoutedEventArgs e)
         {
-            PasswordBox pb = (PasswordBox)sender;
-            FrameworkElement fe = pb.Template.FindName("PART_CapsLockIndicator", pb) as FrameworkElement;
+            FrameworkElement fe = FindCapsLockIndicator((Control)sender);
 
             if (fe != null)
             {
@@ -52,18 +51,33 @@
             }
         }
 
+        private static FrameworkElement FindCapsLockIndicator(Control pb)
+        {
+            return pb.Template.FindName("PART_CapsLockIndicator", pb) as FrameworkElement;
+        }
+
+        private static void HandlePasswordBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            FrameworkElement fe = FindCapsLockIndicator((Control)sender);
+
+            if (fe != null)
+            {
+                fe.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private static void ShowCapslockWarningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PasswordBox pb = (PasswordBox)d;
-            if ((bool)e.NewValue)
+            pb.KeyDown -= RefreshCapslockStatus;
+            pb.GotFocus -= RefreshCapslockStatus;
+            pb.LostFocus -= HandlePasswordBoxLostFocus;
+
+            if (e.NewValue != null)
             {
                 pb.KeyDown += RefreshCapslockStatus;
                 pb.GotFocus += RefreshCapslockStatus;
-            }
-            else
-            {
-                pb.KeyDown -= RefreshCapslockStatus;
-                pb.GotFocus -= RefreshCapslockStatus;
+                pb.LostFocus += HandlePasswordBoxLostFocus;
             }
         }
 
