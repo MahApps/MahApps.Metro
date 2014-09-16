@@ -9,7 +9,7 @@
         #region Static Fields
         
         public static readonly DependencyProperty CapsLockIconProperty = DependencyProperty.RegisterAttached(
-            "CapsLockIcon", typeof(object), typeof(PasswordBoxHelper), new PropertyMetadata("-", ShowCapslockWarningChanged));
+            "CapsLockIcon", typeof(object), typeof(PasswordBoxHelper), new PropertyMetadata("!", ShowCapslockWarningChanged));
         public static readonly DependencyProperty CapsLockWarningToolTipProperty = DependencyProperty.RegisterAttached(
             "CapsLockWarningToolTip", typeof(object), typeof(PasswordBoxHelper), new PropertyMetadata("Caps lock is on"));
 
