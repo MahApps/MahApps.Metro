@@ -182,13 +182,13 @@
                              Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:PasswordBoxHelper.CapsLockIcon="!"
                              Style="{DynamicResource MetroButtonPasswordBox}">
-                    <Controls:PasswordBoxHelper.CapsLockWarningText>
+                    <Controls:PasswordBoxHelper.CapsLockWarningToolTip>
                         <TextBlock>
                             <Run Text="This is a custom Warning to show you that" />
                             <Run Text="CAPS LOCK" TextDecorations="Underline" Foreground="Red" />
                             <Run Text=" is on" />
                         </TextBlock>
-                    </Controls:PasswordBoxHelper.CapsLockWarningText>
+                    </Controls:PasswordBoxHelper.CapsLockWarningToolTip>
                 </PasswordBox>
                 <PasswordBox Margin="0, 10, 0, 0"
                              IsEnabled="False"

@@ -8,10 +8,10 @@
     {
         #region Static Fields
         
-        public static readonly DependencyProperty CapslockIconProperty = DependencyProperty.RegisterAttached(
+        public static readonly DependencyProperty CapsLockIconProperty = DependencyProperty.RegisterAttached(
             "CapsLockIcon", typeof(object), typeof(PasswordBoxHelper), new PropertyMetadata("-", ShowCapslockWarningChanged));
-        public static readonly DependencyProperty CapsLockWarningTextProperty = DependencyProperty.RegisterAttached(
-            "CapsLockWarningText", typeof(object), typeof(PasswordBoxHelper), new PropertyMetadata("Caps lock is on"));
+        public static readonly DependencyProperty CapsLockWarningToolTipProperty = DependencyProperty.RegisterAttached(
+            "CapsLockWarningToolTip", typeof(object), typeof(PasswordBoxHelper), new PropertyMetadata("Caps lock is on"));
 
         #endregion
 
@@ -19,22 +19,22 @@
 
         public static object GetCapsLockIcon(PasswordBox element)
         {
-            return element.GetValue(CapslockIconProperty);
+            return element.GetValue(CapsLockIconProperty);
         }
 
-        public static object GetCapsLockWarningText(PasswordBox element)
+        public static object CapsLockWarningToolTipText(PasswordBox element)
         {
-            return element.GetValue(CapsLockWarningTextProperty);
+            return element.GetValue(CapsLockWarningToolTipProperty);
         }
 
         public static void SetCapsLockIcon(PasswordBox element, object value)
         {
-            element.SetValue(CapslockIconProperty, value);
+            element.SetValue(CapsLockIconProperty, value);
         }
 
-        public static void SetCapsLockWarningText(PasswordBox element, object value)
+        public static void SetCapsLockWarningToolTip(PasswordBox element, object value)
         {
-            element.SetValue(CapsLockWarningTextProperty, value);
+            element.SetValue(CapsLockWarningToolTipProperty, value);
         }
 
         #endregion
