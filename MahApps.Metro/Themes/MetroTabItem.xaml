@@ -31,7 +31,10 @@
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
-        <Setter Property="Template">
+        <!-- special property for header font size -->
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize" 
+                Value="{DynamicResource TabItemFontSize}" />
+            <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">
                     <Border x:Name="Border"
