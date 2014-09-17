@@ -32,9 +32,9 @@
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <!-- special property for header font size -->
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" 
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize"
                 Value="{DynamicResource TabItemFontSize}" />
-            <Setter Property="Template">
+        <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">
                     <Border x:Name="Border"
