@@ -128,6 +128,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Menu Grid.Row="0"
@@ -192,6 +193,12 @@
                     <exampleViews:OtherExamples DataContext="{Binding}" />
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
+            
+            <StatusBar Grid.Row="2">
+                <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
+                <Separator Style="{StaticResource MetroStatusBarSeparator}" />
+                <Hyperlink>http://mahapps.com</Hyperlink>
+            </StatusBar>
 
         </Grid>
     </Controls:MetroContentControl>
