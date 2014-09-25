@@ -18,4 +18,6 @@
     <System:Double x:Key="MenuFontSize">14</System:Double>
     <System:Double x:Key="ContextMenuFontSize">14</System:Double>
 
+    <System:Double x:Key="StatusBarFontSize">12</System:Double>
+
 </ResourceDictionary>
