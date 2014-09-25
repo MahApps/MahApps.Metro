@@ -164,7 +164,7 @@
                 </MenuItem>
             </Menu>
 
-            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
+            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1" x:Name="MainTabControl">
                 <TabItem Header="buttons">
                     <exampleViews:ButtonsExample DataContext="{Binding}" />
                 </TabItem>
@@ -197,7 +197,8 @@
             <StatusBar Grid.Row="2">
                 <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
                 <Separator Style="{StaticResource MetroStatusBarSeparator}" />
-                <Hyperlink>http://mahapps.com</Hyperlink>
+                <StatusBarItem>Selected Tab:</StatusBarItem>
+                <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
             </StatusBar>
 
         </Grid>
