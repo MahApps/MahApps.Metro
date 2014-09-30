@@ -48,6 +48,8 @@ namespace MahApps.Metro.Controls
             this.hostWindow.LocationChanged += this.hostWindow_SizeOrLocationChanged;
             this.hostWindow.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
             this.hostWindow.SizeChanged += this.hostWindow_SizeOrLocationChanged;
+            target.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
+            target.SizeChanged += this.hostWindow_SizeOrLocationChanged;
             this.hostWindow.StateChanged -= this.hostWindow_StateChanged;
             this.hostWindow.StateChanged += this.hostWindow_StateChanged;
             this.hostWindow.Activated -= this.hostWindow_Activated;
@@ -76,6 +78,11 @@ namespace MahApps.Metro.Controls
 
         private void CustomValidationPopup_Unloaded(object sender, RoutedEventArgs e)
         {
+            var target = this.PlacementTarget as FrameworkElement;
+            if (target != null)
+            {
+                target.SizeChanged -= this.hostWindow_SizeOrLocationChanged;
+            }
             if (this.hostWindow != null)
             {
                 this.hostWindow.LocationChanged -= this.hostWindow_SizeOrLocationChanged;
