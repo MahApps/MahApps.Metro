@@ -108,7 +108,8 @@
                                       SmallChange="0.1"
                                       LowerValue="-70"
                                       UpperValue="60" />
-                <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Vertical" Margin="5, 0, 0, 0" Width="228">
+
                     <Controls:RangeSlider Orientation="Horizontal"
                                           MinRangeWidth="20"
                                           x:Name="RangeSlider1"
@@ -128,30 +129,31 @@
                                           TickPlacement="TopLeft"
                                           TickFrequency="20"
                                           IsSnapToTickEnabled="False"
-                                          MinRange="50"
-                                          Width="250"
+                                          MinRange="0"
                                           Minimum="-200"
-                                          Maximum="200"
+                                          Maximum="205"
                                           IsMoveToPointEnabled="True"
                                           ExtendedMode="True"
                                           MoveWholeRange="False"
                                           SmallChange="0.1"
-                                          LowerValue="-70"
-                                          UpperValue="60"
+                                          LowerValue="120"
+                                          UpperValue="100"
                                           Height="28"
                                           Margin="0,0,0,20" />
 
-                    <Controls:RangeSlider Width="250"
+                    <Controls:RangeSlider Name="RangeSlider2"
                                           TickPlacement="Both"
+                                          AutoToolTipPlacement="TopLeft"
                                           LowerValue="20"
-                                          UpperValue="60"
+                                          UpperValue="360"
+                                          Maximum="610"
                                           Margin="0,0,0,20" />
 
-                    <Controls:RangeSlider Width="250"
+                    <Controls:RangeSlider
                                           TickPlacement="Both"
                                           IsEnabled="False"
                                           Margin="0,0,0,20" />
-                    <Controls:RangeSlider Width="250"
+                    <Controls:RangeSlider
                                           Height="20"
                                           IsEnabled="False"
                                           LowerValue="20"
@@ -187,12 +189,7 @@
                                        Width="200"
                                        Foreground="{DynamicResource AccentColorBrush}"
                                        Margin="0, 10, 0, 0" />
-            <CheckBox x:Name="indeterminateCB"
-                      Content="IsIndeterminate"
-                      Width="200"
-                      Margin="0, 10, 0, 0"
-                      IsChecked="True" />
-            <Controls:MetroProgressBar IsIndeterminate="{Binding ElementName=indeterminateCB, Path=IsChecked}"
+            <Controls:MetroProgressBar IsIndeterminate="True"
                                        Value="{Binding ElementName=horizSlider, Path=Value}"
                                        Minimum="0"
                                        Maximum="100"

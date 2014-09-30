@@ -26,7 +26,43 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <Grid Width="{TemplateBinding Width}"
+                  Height="{TemplateBinding Height}"
+                  Margin="4"
+                  Background="{DynamicResource IdealForegroundColorBrush}"
+                  RenderOptions.EdgeMode="Aliased"
+                  RenderOptions.BitmapScalingMode="HighQuality">
+                <Grid.OpacityMask>
+                    <VisualBrush Stretch="Uniform"
+                                 Visual="{DynamicResource appbar_box}" />
+                </Grid.OpacityMask>
+            </Grid>
+        </DataTemplate>
+    </Controls:MetroWindow.IconTemplate>
+
+    <Controls:MetroWindow.TitleTemplate>
+        <DataTemplate>
+            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}"
+                       TextTrimming="CharacterEllipsis"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Center"
+                       Margin="0 -1 8 0"
+                       FontSize="{DynamicResource WindowTitleFontSize}"
+                       FontFamily="{DynamicResource HeaderFontFamily}" />
+        </DataTemplate>
+    </Controls:MetroWindow.TitleTemplate>
+
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Button FontFamily="Wingdings"
+                    FontSize="20"
+                    Content="A" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
+    <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
             <Button FontFamily="Wingdings"
                     FontSize="20"
@@ -35,7 +71,7 @@
                     FontSize="20"
                     Content="C" />
         </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
@@ -43,20 +79,24 @@
                              Margin="100 0 0 0"
                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth}"
                              Header="Settings"
-                             Position="Right">
+                             Position="Right"
+                             AnimateOpacity="True">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0"
+                    <StackPanel>
+                        <TextBlock Grid.Row="0"
                                Text="Something above the ScrollPanel" />
-
+                        <TextBlock Grid.Row="0"
+                               Text="This Flyout animates its opacity when opening and closing."/>
+                    </StackPanel>
                     <ScrollViewer Grid.Row="1"
                                   VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical">
-                            <TextBox Controls:TextboxHelper.Watermark="TextBox 01" />
+                            <TextBox x:Name="firstTB" Controls:TextboxHelper.Watermark="TextBox 01" />
                             <TextBox Margin="0,5,0,0"
                                      Controls:TextboxHelper.Watermark="TextBox 02" />
                             <TextBox Margin="0,5,0,0"
@@ -99,8 +139,7 @@
                     <Button Content="cancel" />
                 </StackPanel>
             </Controls:Flyout>
-            <exampleWindows:CustomFlyout Header="Third"
-                                         Position="Right" />
+            <exampleWindows:CustomFlyout />
 
             <Controls:Flyout Header="Accented"
                              Position="Right"
@@ -292,7 +331,7 @@
                     Content="Close" />
         </StackPanel>
         <AdornerDecorator Margin="10"
-                          Width="180"
+                          MinWidth="100"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Center">
             <StackPanel>
@@ -303,7 +342,7 @@
                         Click="ShowBottom"
                         Content="Show Bottom" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.Watermark="Number smaller than 10"
+                         Controls:TextboxHelper.Watermark="Number greater than 10"
                          Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             </StackPanel>
         </AdornerDecorator>

@@ -28,6 +28,10 @@
                 Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Controls:TextboxHelper.IsMonitoring"
                 Value="True" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+                Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+                Value="Auto" />
         <Setter Property="MinHeight"
                 Value="26" />
         <Setter Property="MinWidth"
@@ -42,6 +46,7 @@
                     <Grid Height="{TemplateBinding Height}"
                           MinHeight="{TemplateBinding MinHeight}"
                           MaxHeight="{TemplateBinding MaxHeight}"
+                          Margin="{TemplateBinding Padding}"
                           VerticalAlignment="{TemplateBinding VerticalAlignment}"
                           Background="{TemplateBinding Background}">
                         <Rectangle x:Name="Base"
@@ -54,28 +59,30 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
-                                <ColumnDefinition Width="20" />
-                                <ColumnDefinition Width="20" />
+                                <ColumnDefinition x:Name="PART_NumericUpColumn"
+                                                  Width="20" />
+                                <ColumnDefinition x:Name="PART_NumericDownColumn"
+                                                  Width="20" />
                             </Grid.ColumnDefinitions>
 
-                            <ScrollViewer Grid.Column="0"
-                                          VerticalScrollBarVisibility="Hidden"
-                                          IsTabStop="False">
-                                <TextBox x:Name="PART_TextBox"
-                                         MinWidth="20"
-                                         HorizontalAlignment="Stretch"
-                                         HorizontalContentAlignment="Right"
-                                         VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                         BorderThickness="0"
-                                         Background="{x:Null}"
-                                         Focusable="True"
-                                         IsReadOnly="{TemplateBinding IsReadOnly}"
-                                         FontFamily="{TemplateBinding FontFamily}"
-                                         FontSize="{TemplateBinding FontSize}"
-                                         Controls:TextboxHelper.ClearTextButton="{TemplateBinding Controls:TextboxHelper.ClearTextButton}"
-                                         Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}" />
-                            </ScrollViewer>
+                            <TextBox x:Name="PART_TextBox"
+                                     MinWidth="20"
+                                     MinHeight="{TemplateBinding MinHeight}"
+                                     Foreground="{TemplateBinding Foreground}"
+                                     HorizontalAlignment="Stretch"
+                                     HorizontalContentAlignment="Right"
+                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                     BorderThickness="0"
+                                     Background="{x:Null}"
+                                     Focusable="True"
+                                     HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                     VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"
+                                     FontFamily="{TemplateBinding FontFamily}"
+                                     FontSize="{TemplateBinding FontSize}"
+                                     Controls:TextboxHelper.ClearTextButton="{TemplateBinding Controls:TextboxHelper.ClearTextButton}"
+                                     Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}" />
                             <RepeatButton x:Name="PART_NumericUp"
                                           Grid.Column="1"
                                           Margin="2,2,0,2"
@@ -110,8 +117,11 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
-                            <Setter TargetName="PART_TextBox"
-                                    Property="IsHitTestVisible"
+                            <Setter Property="InterceptArrowKeys"
+                                    Value="False" />
+                            <Setter Property="InterceptMouseWheel"
+                                    Value="False" />
+                            <Setter Property="InterceptManualEnter"
                                     Value="False" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
@@ -172,6 +182,31 @@
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused"
+                                 Value="true">
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="FocusRectangle"
+                                    Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                        </Trigger>
+
+                        <Trigger Property="HideUpDownButtons"
+                                 Value="True">
+                            <Setter TargetName="PART_NumericUp"
+                                    Property="Visibility"
+                                    Value="Collapsed" />
+                            <Setter TargetName="PART_NumericDown"
+                                    Property="Visibility"
+                                    Value="Collapsed" />
+                            <Setter TargetName="PART_NumericUpColumn"
+                                    Property="Width"
+                                    Value="0" />
+                            <Setter TargetName="PART_NumericDownColumn"
+                                    Property="Width"
+                                    Value="0" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

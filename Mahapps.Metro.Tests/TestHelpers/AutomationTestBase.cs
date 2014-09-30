@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using MahApps.Metro;
 
-namespace Mahapps.Metro.Tests
+namespace Mahapps.Metro.Tests.TestHelpers
 {
     /// <summary>
     /// This is the base class for all of our UI tests.
@@ -23,7 +23,12 @@ namespace Mahapps.Metro.Tests
                 }
             }));
 
-            ThemeManager.ChangeTheme(Application.Current, ThemeManager.DefaultAccents.First(x => x.Name == "Blue"), Theme.Light);
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                var accent = ThemeManager.Accents.First(x => x.Name == "Blue");
+                var theme = ThemeManager.GetAppTheme("BaseLight");
+                ThemeManager.ChangeAppStyle(Application.Current, accent, theme);
+            }));
         }
     }
 }

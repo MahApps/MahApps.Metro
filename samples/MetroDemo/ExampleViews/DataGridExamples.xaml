@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -14,51 +15,168 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <x:Array x:Key="DataGridSelectionUnitArray"
+                     Type="DataGridSelectionUnit">
+                <DataGridSelectionUnit>FullRow</DataGridSelectionUnit>
+                <DataGridSelectionUnit>CellOrRowHeader</DataGridSelectionUnit>
+                <DataGridSelectionUnit>Cell</DataGridSelectionUnit>
+            </x:Array>
+            <x:Array x:Key="DataGridGridLinesVisibilityArray"
+                     Type="DataGridGridLinesVisibility">
+                <DataGridGridLinesVisibility>All</DataGridGridLinesVisibility>
+                <DataGridGridLinesVisibility>Horizontal</DataGridGridLinesVisibility>
+                <DataGridGridLinesVisibility>Vertical</DataGridGridLinesVisibility>
+                <DataGridGridLinesVisibility>None</DataGridGridLinesVisibility>
+            </x:Array>
+            <x:Array x:Key="DataGridHeadersVisibilityArray"
+                     Type="DataGridHeadersVisibility">
+                <DataGridHeadersVisibility>All</DataGridHeadersVisibility>
+                <DataGridHeadersVisibility>Row</DataGridHeadersVisibility>
+                <DataGridHeadersVisibility>Column</DataGridHeadersVisibility>
+                <DataGridHeadersVisibility>None</DataGridHeadersVisibility>
+            </x:Array>
+
+            <ControlTemplate x:Key="ConfigDataTemplate">
+                <Grid d:DataContext="{d:DesignInstance DataGrid}"
+                      Grid.IsSharedSizeScope="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"
+                                          SharedSizeGroup="labels" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="0"
+                               VerticalAlignment="Center"
+                               Margin="2"
+                               Text="IsEnabled" />
+                    <CheckBox Grid.Column="1"
+                              Grid.Row="0"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              Margin="2"
+                              IsChecked="{Binding IsEnabled}" />
+
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="1"
+                               VerticalAlignment="Center"
+                               Margin="2"
+                               Text="SelectionUnit" />
+                    <ComboBox Grid.Column="1"
+                              Grid.Row="1"
+                              VerticalAlignment="Center"
+                              Margin="2"
+                              Width="100"
+                              ItemsSource="{StaticResource DataGridSelectionUnitArray}"
+                              SelectedValue="{Binding SelectionUnit}" />
+
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="2"
+                               VerticalAlignment="Center"
+                               Margin="2"
+                               Text="GridLines" />
+                    <ComboBox Grid.Column="1"
+                              Grid.Row="2"
+                              VerticalAlignment="Center"
+                              Margin="2"
+                              Width="100"
+                              ItemsSource="{StaticResource DataGridGridLinesVisibilityArray}"
+                              SelectedValue="{Binding GridLinesVisibility}" />
+
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="3"
+                               VerticalAlignment="Center"
+                               Margin="2"
+                               Text="Headers" />
+                    <ComboBox Grid.Column="1"
+                              Grid.Row="3"
+                              VerticalAlignment="Center"
+                              Margin="2"
+                              Width="100"
+                              ItemsSource="{StaticResource DataGridHeadersVisibilityArray}"
+                              SelectedValue="{Binding HeadersVisibility}" />
+                </Grid>
+            </ControlTemplate>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid RenderOptions.ClearTypeHint="Enabled"
+          TextOptions.TextFormattingMode="Display">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <DataGrid ItemsSource="{Binding Path=Albums}"
-                  Grid.Row="0"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Title"
-                                    Binding="{Binding Title}" />
-                <DataGridTextColumn Header="Artist"
-                                    Binding="{Binding Artist.Name}" />
-                <DataGridTextColumn Header="Genre"
-                                    Binding="{Binding Genre.Name}" />
-                <DataGridTextColumn Header="Price"
-                                    Binding="{Binding Price,StringFormat=c}" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <DataGrid ItemsSource="{Binding Path=Albums}"
-                  Grid.Row="1"
-                  Grid.Column="0"
-                  IsEnabled="False"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Title"
-                                    Binding="{Binding Title}" />
-                <DataGridTextColumn Header="Artist"
-                                    Binding="{Binding Artist.Name}" />
-                <DataGridTextColumn Header="Genre"
-                                    Binding="{Binding Genre.Name}" />
-                <DataGridTextColumn Header="Price"
-                                    Binding="{Binding Price,StringFormat=c}" />
-            </DataGrid.Columns>
-        </DataGrid>
-        <DataGrid ItemsSource="{Binding Path=Albums}"
-                  Grid.Row="0"
+
+        <ContentControl Grid.Column="0"
+                        Grid.Row="1"
+                        Margin="10,5,5,5"
+                        Template="{StaticResource ConfigDataTemplate}"
+                        DataContext="{Binding ElementName=MetroDataGrid}" />
+        <Label Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Grid.Row="0"
+               Content="Metro Style"
+               HorizontalAlignment="Left"
+               Style="{DynamicResource DescriptionHeaderStyle}" />
+        <DataGrid x:Name="MetroDataGrid"
                   Grid.Column="1"
+                  Grid.Row="1"
+                  RenderOptions.ClearTypeHint="Enabled"
+                  TextOptions.TextFormattingMode="Display"
+                  Margin="5"
+                  SelectionUnit="FullRow"
+                  ItemsSource="{Binding Path=Albums}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Header="IsSelected"
+                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
+                <DataGridTextColumn Header="Title"
+                                    Binding="{Binding Title}" />
+                <DataGridTextColumn Header="Artist"
+                                    Binding="{Binding Artist.Name}" />
+                <DataGridTextColumn Header="Genre"
+                                    Binding="{Binding Genre.Name}" />
+                <controls:DataGridNumericUpDownColumn Header="Price"
+                                                      Binding="{Binding Price}"
+                                                      StringFormat="C"
+                                                      Minimum="0" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <ContentControl Grid.Column="0"
+                        Grid.Row="3"
+                        Margin="10,5,5,5"
+                        Template="{StaticResource ConfigDataTemplate}"
+                        DataContext="{Binding ElementName=AzureDataGrid}" />
+        <Label Grid.Column="0"
+               Grid.ColumnSpan="2"
+               Grid.Row="2"
+               Content="Azure Style"
+               HorizontalAlignment="Left"
+               Style="{DynamicResource DescriptionHeaderStyle}" />
+        <DataGrid x:Name="AzureDataGrid"
+                  Grid.Column="1"
+                  Grid.Row="3"
+                  RenderOptions.ClearTypeHint="Enabled"
+                  TextOptions.TextFormattingMode="Display"
+                  Margin="5"
+                  ItemsSource="{Binding Path=Albums}"
                   Style="{DynamicResource AzureDataGrid}"
                   AutoGenerateColumns="False">
             <DataGrid.Columns>
@@ -68,27 +186,13 @@
                                     Binding="{Binding Artist.Name}" />
                 <DataGridTextColumn Header="Genre"
                                     Binding="{Binding Genre.Name}" />
-                <DataGridTextColumn Header="Price"
-                                    Binding="{Binding Price,StringFormat=c}" />
+                <controls:DataGridNumericUpDownColumn Header="Price"
+                                                      Binding="{Binding Price}"
+                                                      StringFormat="C"
+                                                      Minimum="0" />
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid ItemsSource="{Binding Path=Albums}"
-                  Grid.Row="1"
-                  IsEnabled="False"
-                  Grid.Column="1"
-                  Style="{DynamicResource AzureDataGrid}"
-                  AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Title"
-                                    Binding="{Binding Title}" />
-                <DataGridTextColumn Header="Artist"
-                                    Binding="{Binding Artist.Name}" />
-                <DataGridTextColumn Header="Genre"
-                                    Binding="{Binding Genre.Name}" />
-                <DataGridTextColumn Header="Price"
-                                    Binding="{Binding Price,StringFormat=c}" />
-            </DataGrid.Columns>
-        </DataGrid>
+
     </Grid>
 
 </UserControl>

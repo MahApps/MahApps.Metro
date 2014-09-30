@@ -8,21 +8,22 @@
                       ShowIconOnTitleBar="True"
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       Title="CleanWindowDemo"
-                      Height="300"
-                      Width="300"
+                      Height="400"
+                      Width="800"
+                      ResizeMode="CanResizeWithGrip"
                       Style="{DynamicResource CleanWindowStyleKey}">
 
-    <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True"
-                                             AllowsTransparency="False" />
-        <behaviours:GlowWindowBehavior />
-    </i:Interaction.Behaviors>
+    <!--    <i:Interaction.Behaviors>-->
+    <!--        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True"-->
+    <!--                                             AllowsTransparency="False" />-->
+    <!--        <behaviours:GlowWindowBehavior />-->
+    <!--    </i:Interaction.Behaviors>-->
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/Clean.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate x:Key="Temp0">
@@ -37,13 +38,18 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
             <Button Content="Test" />
-            <Button Content="Another Test" />
-            <ToggleButton Content="ToggleButton Test" />
         </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Content="Another Test" />
+            <ToggleButton Content="ToggleButton" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
@@ -102,10 +108,38 @@
     </Controls:MetroWindow.Flyouts>
 
     <Grid>
-        <StackPanel>
-            <GroupBox Header="Hello">
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <TextBlock Text="Play, Previous, Next, Volume and Seek bar here." />
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" />
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Column="0" Header="artists" Padding="5" Controls:ControlsHelper.HeaderFontSize="30">
+                <ListBox Height="900"/>
+            </GroupBox>
+
+            <Controls:MetroTabControl x:Name="TC" Grid.Column="1">
+                <Controls:MetroTabItem Header="my music">
+
+                </Controls:MetroTabItem>
+
+                <Controls:MetroTabItem Header="youtube">
+
+                </Controls:MetroTabItem>
+            </Controls:MetroTabControl>
+
+            <GroupBox Grid.Column="2" Header="playlists" Padding="5" Controls:ControlsHelper.HeaderFontSize="30">
+                <StackPanel Orientation="Horizontal">
                     <Button Content="Test"
                             Height="20"
                             Width="40"
@@ -116,21 +150,7 @@
                             Click="Button_Click_1" />
                 </StackPanel>
             </GroupBox>
-            <StackPanel Orientation="Horizontal">
-                <Controls:TransitioningContentControl x:Name="tc"
-                                                      Height="200"
-                                                      Width="200"
-                                                      Content="{Binding ElementName=lb,Path=SelectedItem}">
-
-                </Controls:TransitioningContentControl>
-                <ListBox x:Name="lb"
-                         Width="200"
-                         Height="200">
-                    <ListBoxItem>Item 1</ListBoxItem>
-                    <ListBoxItem>Item 2</ListBoxItem>
-                </ListBox>
-            </StackPanel>
-        </StackPanel>
+        </Grid>
     </Grid>
 
 </Controls:MetroWindow>

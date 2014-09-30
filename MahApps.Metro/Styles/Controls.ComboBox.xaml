@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -38,6 +37,8 @@
                 Value="True" />
         <Setter Property="Validation.ErrorTemplate"
                 Value="{DynamicResource ValidationErrorTemplate}" />
+        <Setter Property="ScrollViewer.CanContentScroll"
+                Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
@@ -255,6 +256,7 @@
                                 <TextBox x:Name="PART_EditableTextBox"
                                          HorizontalAlignment="Stretch"
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                          BorderThickness="0"
                                          Background="{x:Null}"
@@ -288,20 +290,22 @@
                                    Opacity="0" />
                         <!-- AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme -->
                         <Popup x:Name="PART_Popup"
-                               AllowsTransparency="true"
+                               AllowsTransparency="True"
                                Focusable="False"
                                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
                                MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                                MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
                                Placement="Bottom">
-                            <Border x:Name="PopupBorder"
-                                    Effect="{DynamicResource DropShadowBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    HorizontalAlignment="Stretch"
-                                    Height="Auto"
-                                    BorderBrush="{DynamicResource ComboBoxPopupBrush}"
-                                    Background="{DynamicResource WhiteBrush}">
+                            <Grid>
+                                <Border x:Name="PopupBorder"
+                                        Effect="{DynamicResource DropShadowBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        HorizontalAlignment="Stretch"
+                                        Height="Auto"
+                                        BorderBrush="{DynamicResource ComboBoxPopupBrush}"
+                                        Background="{DynamicResource WhiteBrush}">
+                                </Border>
                                 <ScrollViewer x:Name="DropDownScrollViewer"
                                               BorderThickness="0"
                                               Margin="2"
@@ -309,7 +313,7 @@
                                     <ItemsPresenter x:Name="ItemsPresenter"
                                                     KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
-                            </Border>
+                            </Grid>
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -346,6 +350,29 @@
         </Setter>
     </Style>
 
+    <Style x:Key="VirtualisedMetroComboBox"
+           TargetType="{x:Type ComboBox}"
+           BasedOn="{StaticResource MetroComboBox}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel IsItemsHost="True"
+                                            KeyboardNavigation.DirectionalNavigation="Contained"
+                                            IsVirtualizing="True"
+                                            VirtualizationMode="Recycling" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ScrollViewer.CanContentScroll"
+                Value="True" />
+        <Style.Triggers>
+            <Trigger Property="IsGrouping" Value="True">
+                <Setter Property="ScrollViewer.CanContentScroll"
+                        Value="False" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="ComboBoxItem"
            x:Key="MetroComboBoxItem">
         <Setter Property="Foreground"
@@ -356,8 +383,10 @@
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
                 Value="Top" />
+        <Setter Property="RenderOptions.ClearTypeHint"
+                Value="Enabled" />
         <Setter Property="Background"
-                Value="{DynamicResource TransparentWhiteBrush}" />
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="Template">
@@ -417,6 +446,7 @@
                         <ContentControl Foreground="{TemplateBinding Foreground}">
                             <ContentPresenter x:Name="contentPresenter"
                                               Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                         </ContentControl>
                         <Rectangle x:Name="FocusVisualElement"

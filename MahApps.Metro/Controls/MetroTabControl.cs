@@ -44,12 +44,13 @@ namespace MahApps.Metro.Controls
         void BaseMetroTabControl_Loaded(object sender, RoutedEventArgs e)
         {
             //Ensure each tabitem knows what the owning tab is.
-
             if (ItemsSource == null)
-                foreach (TabItem item in Items)
-                    if (item is MetroTabItem)
-                        ((MetroTabItem)item).OwningTabControl = this;
-
+            {
+                foreach (var item in Items.OfType<MetroTabItem>())
+                {
+                    item.OwningTabControl = this;
+                }
+            }
         }
 
         public Thickness TabStripMargin

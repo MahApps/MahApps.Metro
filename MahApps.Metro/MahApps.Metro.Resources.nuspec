@@ -1,22 +1,35 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <version>0.1.0.0</version>
-    <authors>Paul Jenkins</authors>
-    <owners>Paul Jenkins</owners>
-    <projectUrl>https://github.com/mahapps/mahapps.metro</projectUrl>
-    <iconUrl>http://c713056.r56.cf2.rackcdn.com/mahapps.metro.logo2.png</iconUrl>
-    <dependencies>
-      <dependency id="MahApps.Metro" version="0.5" />
-    </dependencies>
     <id>MahApps.Metro.Resources</id>
+    <version>0.3.0.0</version>
     <title>MahApps.Metro.Resources</title>
+    <authors>Paul Jenkins; Brendan Forster (shiftkey); Alex Mitchell (Amrykid); Dennis Daume (flagbug); Jan Karger (punker76); Austin Andrews (Templarian)</authors>
+    <owners>Paul Jenkins</owners>
+    <projectUrl>https://github.com/MahApps/MahApps.Metro</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/mahapps.metro.logo2.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>"loose" file XAML Resource for Metro UI's</description>
+    <description>
+      "loose" file XAML Resource for Metro UI's.
+      All icons taken from "Modern UI Icons" created by Austin Andrews (Templarian)
+      http://modernuiicons.com
+      https://github.com/Templarian/WindowsIcons
+    </description>
+    <summary>
+      "loose" file XAML Resource for Metro UI's.
+      All icons taken from "Modern UI Icons" created by Austin Andrews (Templarian)
+      http://modernuiicons.com
+      https://github.com/Templarian/WindowsIcons
+    </summary>
+    <tags>WPF XAML UI Icon Metro</tags>
+    <dependencies>
+      <dependency id="MahApps.Metro" version="0.14.0" />
+    </dependencies>
   </metadata>
   <files>
     <file src="..\MahApps.Metro.Resources\Entypo-license.txt" target="content\Resources\Entypo-license.txt" />
     <file src="..\MahApps.Metro.Resources\Entypo.ttf" target="content\Resources\Entypo.ttf" />
     <file src="..\MahApps.Metro.Resources\Icons.xaml" target="content\Resources\Icons.xaml" />
+    <file src="..\MahApps.Metro.Resources\WindowsIcons-license.txt" target="content\Resources\WindowsIcons-license.txt" />
   </files>
 </package>

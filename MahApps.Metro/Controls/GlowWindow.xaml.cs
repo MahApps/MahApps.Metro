@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using MahApps.Metro.Models.Win32;
+using Microsoft.Windows.Shell;
 
 namespace MahApps.Metro.Controls
 {
@@ -28,12 +29,19 @@ namespace MahApps.Metro.Controls
         {
             InitializeComponent();
 
+            this.IsGlowing = true;
+            this.AllowsTransparency = true;
+
             this.Owner = owner;
             glow.Visibility = Visibility.Collapsed;
 
             var b = new Binding("GlowBrush");
             b.Source = owner;
             glow.SetBinding(Glow.GlowBrushProperty, b);
+
+            b = new Binding("NonActiveGlowBrush");
+            b.Source = owner;
+            glow.SetBinding(Glow.NonActiveGlowBrushProperty, b);
 
             switch (direction)
             {
@@ -146,6 +154,7 @@ namespace MahApps.Metro.Controls
             owner.LocationChanged += (sender, e) => Update();
             owner.SizeChanged += (sender, e) => Update();
             owner.StateChanged += (sender, e) => Update();
+            owner.IsVisibleChanged += (sender, e) => Update();
             owner.Closed += (sender, e) =>
             {
                 closing = true;
@@ -217,7 +226,7 @@ namespace MahApps.Metro.Controls
             {
                 if (this.closing) return;
 
-                Visibility = Visibility.Visible;
+                Visibility = IsGlowing ? Visibility.Visible : Visibility.Collapsed;
 
                 UpdateCore();
             }
@@ -225,6 +234,12 @@ namespace MahApps.Metro.Controls
             {
                 Visibility = Visibility.Collapsed;
             }
+        }
+
+        public bool IsGlowing
+        {
+            set;
+            get;
         }
 
         private void UpdateCore()
@@ -246,6 +261,13 @@ namespace MahApps.Metro.Controls
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            if (msg == (int)WM.SHOWWINDOW)
+            {
+                if((int)lParam == 3 && this.Visibility != Visibility.Visible) // 3 == SW_PARENTOPENING
+                {
+                    handled = true; //handle this message so window isn't shown until we want it to                   
+                }
+            }            
             if (msg == (int)WM.MOUSEACTIVATE)
             {
                 handled = true;

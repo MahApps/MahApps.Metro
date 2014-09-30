@@ -18,7 +18,9 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Margin="1">
+    <Grid Margin="1"
+          RenderOptions.ClearTypeHint="Enabled"
+          TextOptions.TextFormattingMode="Display">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -193,6 +195,7 @@
             </ComboBox>
             <ComboBox Width="200"
                       Margin="0, 10, 0, 0"
+                      Style="{DynamicResource VirtualisedMetroComboBox}"
                       Controls:TextboxHelper.Watermark="Autocompletion"
                       DisplayMemberPath="Title"
                       IsEditable="True"
@@ -202,6 +205,7 @@
             <ComboBox Width="200"
                       Margin="0, 10, 0, 0"
                       Controls:TextboxHelper.Watermark="Autocompletion with grouping/virtualization"
+                      ToolTip="grouping/virtualization works only with .NET 4.5"
                       DisplayMemberPath="Title"
                       IsEditable="True"
                       IsEnabled="True"
@@ -218,11 +222,6 @@
                         </GroupStyle.HeaderTemplate>
                     </GroupStyle>
                 </ComboBox.GroupStyle>
-                <ComboBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel IsItemsHost="True" />
-                    </ItemsPanelTemplate>
-                </ComboBox.ItemsPanel>
             </ComboBox>
             <ComboBox Width="200"
                       Margin="0, 10, 0, 0"

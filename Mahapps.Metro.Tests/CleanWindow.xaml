@@ -6,11 +6,11 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"
-             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300"
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300" ResizeMode="CanResizeWithGrip"
              Style="{DynamicResource CleanWindowStyleKey}">
-    <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" AllowsTransparency="False" />
-    </i:Interaction.Behaviors>
+<!--    <i:Interaction.Behaviors>-->
+<!--        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" AllowsTransparency="False" />-->
+<!--    </i:Interaction.Behaviors>-->
     
     <Window.Resources>
         <ResourceDictionary>
@@ -19,9 +19,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <controls:MetroWindow.WindowCommands>
+    <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands>
             <Button Content="Test"/>
         </controls:WindowCommands>
-    </controls:MetroWindow.WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
 </controls:MetroWindow>

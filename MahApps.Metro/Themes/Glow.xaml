@@ -43,7 +43,7 @@
             <Trigger Property="IsGlow"
                      Value="False">
                 <Setter Property="Background"
-                        Value="#999999" />
+                        Value="{Binding RelativeSource={RelativeSource Self}, Path=NonActiveGlowBrush}" />
             </Trigger>
             <Trigger Property="Orientation"
                      Value="Horizontal">

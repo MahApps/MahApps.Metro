@@ -41,6 +41,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ExposedObject">
+      <HintPath>..\packages\ExposedObject.1.2.0.0\lib\net40\ExposedObject.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -82,23 +86,26 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutomationTestBase.cs" />
     <Compile Include="CleanWindowTest.cs" />
     <Compile Include="FlyoutTest.cs" />
     <Compile Include="CleanWindow.xaml.cs">
       <DependentUpon>CleanWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HiddenMinMaxCloseButtonsWindow.xaml.cs">
+      <DependentUpon>HiddenMinMaxCloseButtonsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="FlyoutWindow.xaml.cs">
       <DependentUpon>FlyoutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MetroWindowTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SwitchContextToUiThreadAwaiter.cs" />
     <Compile Include="TestApp.xaml.cs">
       <DependentUpon>TestApp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TestHelpers.cs" />
-    <Compile Include="TestHost.cs" />
+    <Compile Include="TestHelpers\AutomationTestBase.cs" />
+    <Compile Include="TestHelpers\SwitchContextToUiThreadAwaiter.cs" />
+    <Compile Include="TestHelpers\TestHost.cs" />
+    <Compile Include="TestHelpers\WindowHelpers.cs" />
     <Compile Include="ThemeManagerTest.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +120,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="CleanWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HiddenMinMaxCloseButtonsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

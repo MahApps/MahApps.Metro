@@ -15,36 +15,43 @@
                       ShowTitleBar="True"
                       WindowStartupLocation="CenterScreen"
                       GlowBrush="{DynamicResource AccentColorBrush}"
+                      NonActiveGlowBrush="Red"
                       mc:Ignorable="d"
                       d:DesignHeight="600"
                       d:DesignWidth="800"
-                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+                      d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
+                      Closing="MetroWindow_Closing">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <Ellipse x:Key="DarkThemeMenuIcon"
+            <Ellipse x:Key="AppThemeMenuIcon"
                      x:Shared="False"
                      Width="16"
                      Height="16"
                      StrokeThickness="1"
-                     Stroke="{DynamicResource BlackBrush}"
-                     Fill="{DynamicResource WhiteBrush}" />
-            <Ellipse x:Key="LightThemeMenuIcon"
-                     x:Shared="False"
-                     Width="16"
-                     Height="16"
-                     StrokeThickness="1"
-                     Stroke="{DynamicResource BlackBrush}"
-                     Fill="{DynamicResource BlackBrush}" />
+                     Stroke="{Binding BorderColorBrush, Mode=OneWay}"
+                     Fill="{Binding ColorBrush, Mode=OneWay}" />
             <Ellipse x:Key="AccentMenuIcon"
                      x:Shared="False"
                      Width="16"
                      Height="16"
                      Fill="{Binding ColorBrush, Mode=OneWay}" />
+
+            <Style x:Key="AppThemeMenuItemStyle"
+                   TargetType="{x:Type MenuItem}"
+                   BasedOn="{StaticResource MetroMenuItem}">
+                <Setter Property="Command"
+                        Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Icon"
+                        Value="{StaticResource AppThemeMenuIcon}" />
+                <Setter Property="Header"
+                        Value="{Binding Name, Mode=OneWay}" />
+            </Style>
 
             <Style x:Key="AccentColorMenuItemStyle"
                    TargetType="{x:Type MenuItem}"
@@ -60,52 +67,77 @@
             <Dialog:SimpleDialog x:Key="SimpleDialogTest"
                                  Title="This dialog allows arbitrary content. It will close in 5 seconds."
                                  x:Name="SimpleTestDialog">
-                <Button Content="Hello" />
+                <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentBrush}" />
             </Dialog:SimpleDialog>
 
         </ResourceDictionary>
     </Window.Resources>
 
-    <Controls:MetroWindow.WindowCommands>
+    <Controls:MetroWindow.LeftWindowCommands>
         <Controls:WindowCommands>
+            <Button Click="LaunchMahAppsOnGitHub"
+                    ToolTip="MahApps.Metro on GitHub">
+                <Rectangle Width="22"
+                           Height="22"
+                           Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Uniform"
+                                     Visual="{StaticResource appbar_github}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Button Click="LaunchSizeToContentDemo"
+                    ToolTip="SizeToContent demo"
+                    Content="STC" />
             <Button Click="LaunchVisualStudioDemo"
-                    Content="VS Demo" />
+                    ToolTip="Visual Studio style demo"
+                    Content="VS" />
             <Button Click="LaunchFlyoutDemo"
-                    Content="Flyout Demo" />
+                    ToolTip="Flyouts demo window"
+                    Content="Flyouts" />
             <Button Click="LaunchIcons"
+                    ToolTip="All MahApp icons"
                     Content="Icons" />
             <Button Click="LauchCleanDemo"
-                    Content="Clean Demo" />
+                    ToolTip="Clean window style demo"
+                    Content="Clean" />
             <!--<Button Click="LaunchRibbonDemo" Content="Ribbon Demo (.NET 4.5)" />-->
             <Button Click="InteropDemo"
-                    Content="Interop Demo" />
+                    ToolTip="The interop demo"
+                    Content="Interop" />
             <Button Click="LaunchNavigationDemo"
-                    Content="Navigation Demo" />
+                    ToolTip="Window navigation demo"
+                    Content="Navigation" />
             <ToggleButton Content="ToggleButton"
+                          ToolTip="Shows the toggle button magic"
                           x:Name="MagicToggleButton"
                           IsChecked="{Binding MagicToggleButtonIsChecked}" />
+            <ToggleButton Content="Confirm quit"
+                          ToolTip="Enable quit confirmation dialog on exit"
+                          IsChecked="{Binding QuitConfirmationEnabled}" />
         </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroContentControl>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <Menu Grid.Row="0"
                   Margin="5"
                   VerticalAlignment="Stretch"
                   HorizontalAlignment="Left">
-                <MenuItem Header="Theme">
-                    <MenuItem Click="ThemeLight"
-                              Header="Light"
-                              Icon="{StaticResource DarkThemeMenuIcon}" />
-                    <MenuItem Click="ThemeDark"
-                              Header="Dark"
-                              Icon="{StaticResource LightThemeMenuIcon}" />
-                </MenuItem>
+                <MenuItem Header="Theme"
+                          ItemsSource="{Binding AppThemes, Mode=OneWay}"
+                          ItemContainerStyle="{StaticResource AppThemeMenuItemStyle}" />
                 <MenuItem Header="Accent"
                           ItemsSource="{Binding AccentColors, Mode=OneWay}"
                           ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" />
@@ -116,6 +148,8 @@
                     <Separator />
                     <MenuItem Click="ShowInputDialog"
                               Header="Show InputDialog" />
+                    <MenuItem Click="ShowLoginDialog"
+                              Header="Show LoginDialog" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
                     <MenuItem Click="ShowProgressDialog"
@@ -125,9 +159,12 @@
                     <MenuItem Click="ShowDialogOutside"
                               Header="Show SimpleDialog Externally" />
                 </MenuItem>
+                <MenuItem Header="Window">
+                    <MenuItem IsCheckable="True" Header="Ignore taskbar on maximize" Click="IgnoreTaskBar_Click"/>
+                </MenuItem>
             </Menu>
 
-            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1">
+            <Controls:MetroAnimatedSingleRowTabControl Grid.Row="1" x:Name="MainTabControl">
                 <TabItem Header="buttons">
                     <exampleViews:ButtonsExample DataContext="{Binding}" />
                 </TabItem>
@@ -156,6 +193,13 @@
                     <exampleViews:OtherExamples DataContext="{Binding}" />
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
+            
+            <StatusBar Grid.Row="2">
+                <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
+                <Separator Style="{StaticResource MetroStatusBarSeparator}" />
+                <StatusBarItem>Selected Tab:</StatusBarItem>
+                <StatusBarItem Content="{Binding ElementName=MainTabControl, Path=SelectedItem.Header, Mode=OneWay}" />
+            </StatusBar>
 
         </Grid>
     </Controls:MetroContentControl>

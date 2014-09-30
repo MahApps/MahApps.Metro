@@ -140,6 +140,7 @@
     <SolidColorBrush x:Key="MenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
     <SolidColorBrush x:Key="ContextMenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
     <SolidColorBrush x:Key="SubMenuBackgroundBrush" Color="{StaticResource WhiteColor}" />
+    <SolidColorBrush x:Key="MenuItemBackgroundBrush" Color="{StaticResource WhiteColor}" />
 
     <SolidColorBrush x:Key="ContextMenuBorderBrush" Color="{StaticResource BlackColor}" />
     <SolidColorBrush x:Key="SubMenuBorderBrush" Color="{StaticResource BlackColor}" />

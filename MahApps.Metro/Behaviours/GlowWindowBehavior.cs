@@ -1,62 +1,144 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Interactivity;
 using MahApps.Metro.Controls;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.Behaviours
 {
     public class GlowWindowBehavior : Behavior<Window>
     {
+        private const int glowTimerDelay = 200; //200 ms delay, the same as VS2013
         private GlowWindow left, right, top, bottom;
-
+        private DispatcherTimer makeGlowVisibleTimer;
+        private bool _PrevTopmost;
+        
         protected override void OnAttached()
         {
             base.OnAttached();
 
-            // now glow effect if UseNoneWindowStyle is true or GlowBrush not set
+            this.AssociatedObject.Loaded += AssociatedObjectOnLoaded;
+            this.AssociatedObject.Unloaded += AssociatedObjectUnloaded;
+            this.AssociatedObject.StateChanged += AssociatedObjectStateChanged;
+        }
+
+        void AssociatedObjectStateChanged(object sender, EventArgs e)
+        {
+            if (AssociatedObject.WindowState == WindowState.Minimized)
+            {
+                _PrevTopmost = AssociatedObject.Topmost;
+                AssociatedObject.Topmost = true;
+            }
+            else
+            {
+                AssociatedObject.Topmost = _PrevTopmost;
+            }
+            makeGlowVisibleTimer.Stop();
+            if(AssociatedObject.WindowState != WindowState.Minimized)
+            {
+                if(AssociatedObject.WindowStyle == WindowStyle.None || !SystemParameters.MinimizeAnimation)
+                {
+                    RestoreGlow();
+                }
+                else
+                {
+                    makeGlowVisibleTimer.Start();
+                }
+            }
+            else
+            {
+                HideGlow();
+            }
+        }
+
+        void AssociatedObjectUnloaded(object sender, RoutedEventArgs e)
+        {
+            if(makeGlowVisibleTimer != null)
+            {
+                makeGlowVisibleTimer.Stop();
+                makeGlowVisibleTimer.Tick -= makeGlowVisibleTimer_Tick;
+                makeGlowVisibleTimer = null;
+            }
+        }
+
+        private void makeGlowVisibleTimer_Tick(object sender, EventArgs e)
+        {
+            if(makeGlowVisibleTimer != null)
+            {
+                makeGlowVisibleTimer.Stop();
+            }
+            RestoreGlow();
+        }
+
+        private void RestoreGlow()
+        {           
+            if(left != null && top != null && right != null && bottom != null)
+            {
+                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = true;
+                Update();
+            }
+        }
+
+        private void HideGlow()
+        {
+            if (left != null && top != null && right != null && bottom != null)
+            {
+                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = false;
+                Update();
+            }
+        }
+
+        private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if(makeGlowVisibleTimer == null)
+            {
+                makeGlowVisibleTimer = new DispatcherTimer()
+                {
+                    Interval = TimeSpan.FromMilliseconds(glowTimerDelay)
+                };
+                makeGlowVisibleTimer.Tick += makeGlowVisibleTimer_Tick;
+            }
+
+            // No glow effect if UseNoneWindowStyle is true or GlowBrush not set.
             var metroWindow = this.AssociatedObject as MetroWindow;
             if (metroWindow != null && (metroWindow.UseNoneWindowStyle || metroWindow.GlowBrush == null))
             {
                 return;
             }
 
-            this.AssociatedObject.Loaded += (sender, e) =>
-            {
-                this.left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);
-                this.right = new GlowWindow(this.AssociatedObject, GlowDirection.Right);
-                this.top = new GlowWindow(this.AssociatedObject, GlowDirection.Top);
-                this.bottom = new GlowWindow(this.AssociatedObject, GlowDirection.Bottom);
+            this.left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);
+            this.right = new GlowWindow(this.AssociatedObject, GlowDirection.Right);
+            this.top = new GlowWindow(this.AssociatedObject, GlowDirection.Top);
+            this.bottom = new GlowWindow(this.AssociatedObject, GlowDirection.Bottom);
 
-                this.Show();
-                this.Update();
-
-                var windowTransitionsEnabled = metroWindow != null && metroWindow.WindowTransitionsEnabled;
-                if (!windowTransitionsEnabled)
-                {
-                    // no storyboard so set opacity to 1
-                    this.SetOpacityTo(1);
-                }
-                else
-                {
-                    // start the opacity storyboard 0->1
-                    this.StartOpacityStoryboard();
-                    // hide the glows if window get invisible state
-                    this.AssociatedObject.IsVisibleChanged += this.AssociatedObject_IsVisibleChanged;
-                    // closing always handled
-                    this.AssociatedObject.Closing += (o, args) =>
-                    {
-                        if (!args.Cancel)
-                        {
-                            this.AssociatedObject.IsVisibleChanged -= this.AssociatedObject_IsVisibleChanged;
-                        }
-                    };
-                }
-            };
-        }
-
-        private void AssociatedObject_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
+            this.Show();
             this.Update();
 
+            var windowTransitionsEnabled = metroWindow != null && metroWindow.WindowTransitionsEnabled;
+            if (!windowTransitionsEnabled)
+            {
+                // no storyboard so set opacity to 1
+                this.SetOpacityTo(1);
+            }
+            else
+            {
+                // start the opacity storyboard 0->1
+                this.StartOpacityStoryboard();
+                // hide the glows if window get invisible state
+                this.AssociatedObject.IsVisibleChanged += this.AssociatedObjectIsVisibleChanged;
+                // closing always handled
+                this.AssociatedObject.Closing += (o, args) =>
+                {
+                    if (!args.Cancel)
+                    {
+                        this.AssociatedObject.IsVisibleChanged -= this.AssociatedObjectIsVisibleChanged;
+                    }
+                };
+            }
+        }
+
+        private void AssociatedObjectIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
             if (!this.AssociatedObject.IsVisible)
             {
                 // the associated owner got invisible so set opacity to 0 to start the storyboard by 0 for the next visible state

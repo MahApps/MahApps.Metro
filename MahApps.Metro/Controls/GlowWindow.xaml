@@ -6,7 +6,6 @@
         Width="300"
         Height="300"
         WindowStyle="None"
-        AllowsTransparency="True"
         Background="Transparent"
         ShowActivated="False"
         ResizeMode="NoResize"
@@ -16,18 +15,10 @@
     <Window.Resources>
         <!-- use this storyboard for a smoother visibility -->
         <Storyboard x:Key="OpacityStoryboard">
-            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
-                                           Storyboard.TargetProperty="(UIElement.Opacity)"
-                                           Storyboard.TargetName="glowWindow">
-                <SplineDoubleKeyFrame KeyTime="00:00:00"
-                                      Value="0" />
-                <EasingDoubleKeyFrame KeyTime="00:00:00.600"
-                                      Value="1">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <CubicEase EasingMode="EaseIn" />
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimation BeginTime="00:00:.2" Duration="00:00:.3"
+                             Storyboard.TargetProperty="(UIElement.Opacity)"
+                             Storyboard.TargetName="glowWindow"
+                             To="1" />
         </Storyboard>
     </Window.Resources>
     <metro:Glow x:Name="glow"

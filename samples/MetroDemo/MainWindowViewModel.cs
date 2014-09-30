@@ -14,20 +14,31 @@ namespace MetroDemo
     public class AccentColorMenuData
     {
         public string Name { get; set; }
+        public Brush BorderColorBrush { get; set; }
         public Brush ColorBrush { get; set; }
 
         private ICommand changeAccentCommand;
 
         public ICommand ChangeAccentCommand
         {
-            get { return this.changeAccentCommand ?? (changeAccentCommand = new SimpleCommand { CanExecuteDelegate = x => true, ExecuteDelegate = x => ChangeAccent(x) }); }
+            get { return this.changeAccentCommand ?? (changeAccentCommand = new SimpleCommand { CanExecuteDelegate = x => true, ExecuteDelegate = x => this.DoChangeTheme(x) }); }
         }
 
-        private void ChangeAccent(object sender)
+        protected virtual void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectTheme(Application.Current);
-            var accent = ThemeManager.DefaultAccents.First(x => x.Name == this.Name);
-            ThemeManager.ChangeTheme(Application.Current, accent, theme.Item1);
+            var theme = ThemeManager.DetectAppStyle(Application.Current);
+            var accent = ThemeManager.GetAccent(this.Name);
+            ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+        }
+    }
+
+    public class AppThemeMenuData : AccentColorMenuData
+    {
+        protected override void DoChangeTheme(object sender)
+        {
+            var theme = ThemeManager.DetectAppStyle(Application.Current);
+            var appTheme = ThemeManager.GetAppTheme(this.Name);
+            ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, appTheme);
         }
     }
 
@@ -41,12 +52,33 @@ namespace MetroDemo
             SampleData.Seed();
 
             // create accent color menu items for the demo
-            this.AccentColors = ThemeManager.DefaultAccents
+            this.AccentColors = ThemeManager.Accents
                                             .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
                                             .ToList();
+
+            // create metro theme color menu items for the demo
+            this.AppThemes = ThemeManager.AppThemes
+                                           .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
+                                           .ToList();
             
+
             Albums = SampleData.Albums;
             Artists = SampleData.Artists;
+
+            FlipViewTemplateSelector = new RandomDataTemplateSelector();
+
+            FrameworkElementFactory spFactory = new FrameworkElementFactory(typeof(Image));
+            spFactory.SetBinding(Image.SourceProperty, new System.Windows.Data.Binding("."));
+            spFactory.SetValue(Image.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
+            spFactory.SetValue(Image.StretchProperty, Stretch.Fill);
+            FlipViewTemplateSelector.TemplateOne = new DataTemplate()
+            {
+                VisualTree = spFactory
+            };
+            FlipViewImages = new string[] { "http://trinities.org/blog/wp-content/uploads/red-ball.jpg", "http://savingwithsisters.files.wordpress.com/2012/05/ball.gif" };
+
+            RaisePropertyChanged("FlipViewTemplateSelector");
+
 
             BrushResources = FindBrushResources();
         }
@@ -56,6 +88,7 @@ namespace MetroDemo
         public List<Album> Albums { get; set; }
         public List<Artist> Artists { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
+        public List<AppThemeMenuData> AppThemes { get; set; }
 
         public int? IntegerGreater10Property
         {
@@ -104,6 +137,18 @@ namespace MetroDemo
             }
         }
 
+        private bool _quitConfirmationEnabled;
+        public bool QuitConfirmationEnabled
+        {
+            get { return _quitConfirmationEnabled; }
+            set
+            {
+                if (value.Equals(_quitConfirmationEnabled)) return;
+                _quitConfirmationEnabled = value;
+                RaisePropertyChanged("QuitConfirmationEnabled");
+            }
+        }
+
         private ICommand textBoxButtonCmd;
 
         public ICommand TextBoxButtonCmd
@@ -116,7 +161,8 @@ namespace MetroDemo
 
         public class TextBoxButtonCommand : ICommand
         {
-            public bool CanExecute(object parameter) {
+            public bool CanExecute(object parameter)
+            {
                 return true;
             }
 
@@ -134,7 +180,7 @@ namespace MetroDemo
                 }
             }
         }
-        
+
         private ICommand textBoxButtonCmdWithParameter;
 
         public ICommand TextBoxButtonCmdWithParameter
@@ -162,7 +208,7 @@ namespace MetroDemo
                 }
             }
         }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
@@ -261,6 +307,29 @@ namespace MetroDemo
                     .ToList();
 
             return resources;
+        }
+
+        public RandomDataTemplateSelector FlipViewTemplateSelector
+        {
+            get;
+            set;
+        }
+
+        public string[] FlipViewImages
+        {
+            get;
+            set;
+        }
+
+
+        public class RandomDataTemplateSelector : DataTemplateSelector
+        {
+            public DataTemplate TemplateOne { get; set; }
+
+            public override DataTemplate SelectTemplate(object item, DependencyObject container)
+            {
+                return TemplateOne;
+            }
         }
     }
 }

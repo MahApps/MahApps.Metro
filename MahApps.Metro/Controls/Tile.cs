@@ -6,9 +6,9 @@ namespace MahApps.Metro.Controls
 {
     public class Tile : Button
     {
-        public Tile()
+        static Tile()
         {
-            DefaultStyleKey = typeof (Tile);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Tile), new FrameworkPropertyMetadata(typeof(Tile)));
         }
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(Tile), new PropertyMetadata(default(string)));

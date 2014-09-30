@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -104,6 +103,7 @@
                             <TextBlock x:Name="Message"
                                        Grid.Column="0"
                                        Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                       Padding="{TemplateBinding Padding}"
                                        Visibility="Collapsed"
                                        Foreground="{TemplateBinding Foreground}"
                                        IsHitTestVisible="False"
@@ -118,7 +118,7 @@
                                     Foreground="{TemplateBinding Foreground}"
                                     FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonFontFamily), Mode=OneWay}"
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonContent), Mode=OneWay}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     IsTabStop="False" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
@@ -171,7 +171,7 @@
                                  Value="False">
                             <Setter TargetName="DisabledVisualElement"
                                     Property="Opacity"
-                                    Value="1" />
+                                    Value="0.6"/>
                         </Trigger>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
@@ -336,6 +336,7 @@
                             <TextBlock x:Name="Message"
                                        Grid.Column="0"
                                        Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                       Padding="{TemplateBinding Padding}"
                                        Visibility="Collapsed"
                                        Foreground="{TemplateBinding Foreground}"
                                        IsHitTestVisible="False"
@@ -394,7 +395,7 @@
                                  Value="False">
                             <Setter TargetName="DisabledVisualElement"
                                     Property="Opacity"
-                                    Value="1" />
+                                    Value="0.6" />
                         </Trigger>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
@@ -478,11 +479,6 @@
                             <Setter TargetName="contentPresenter"
                                     Property="Opacity"
                                     Value=".5" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Foreground"
-                                    Value="#ADADAD" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -573,6 +569,7 @@
                                    Stroke="{DynamicResource ControlsDisabledBrush}"
                                    StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
+                                   Opacity="0.6"
                                    IsHitTestVisible="False"
                                    Visibility="Collapsed" />
                     </Grid>

@@ -182,6 +182,14 @@
                     </Grid>
                 </Controls:FlipView.Items>
             </Controls:FlipView>
+
+            <Controls:FlipView Height="400"
+                               IsBannerEnabled="True"
+                               BannerText="Databound Items"
+                               ItemTemplateSelector="{Binding FlipViewTemplateSelector, UpdateSourceTrigger=PropertyChanged}"
+                               ItemsSource="{Binding FlipViewImages, UpdateSourceTrigger=PropertyChanged}"
+                               Margin="0, 0, 10, 0">
+            </Controls:FlipView>
         </StackPanel>
     </Grid>
 
