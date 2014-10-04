@@ -10,7 +10,7 @@
     <Color x:Key="WhiteColor">#2D2D30</Color>
 
     <!-- re-set brushes too -->
-    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}"options:Freeze="True" />
+    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="AccentColorBrush2" Color="{StaticResource AccentColor2}" options:Freeze="True" />
     <SolidColorBrush x:Key="AccentColorBrush3" Color="{StaticResource AccentColor3}" options:Freeze="True" />
