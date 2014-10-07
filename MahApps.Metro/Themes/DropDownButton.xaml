@@ -258,4 +258,119 @@
         </Style.Triggers>
     </Style>
 
+
+
+    <ControlTemplate TargetType="{x:Type local:DropDownButton}"
+                     x:Key="DropDownButtonWithCircle">
+        <Border Name="PART_Border"
+                BorderThickness="1"
+                BorderBrush="{DynamicResource BlackColorBrush}">
+
+            <Grid
+                                HorizontalAlignment="Stretch" 
+                                VerticalAlignment="Stretch">
+                <Grid.ContextMenu>
+                    <ContextMenu Name="PART_Menu"
+                                     StaysOpen="False"
+                                     MinWidth="{TemplateBinding ActualWidth}"
+                                     IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                     DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                                     ItemTemplate="{TemplateBinding ItemTemplate}"
+                                     ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                     ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                     ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                     ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
+                                     ItemsSource="{TemplateBinding ItemsSource}" />
+                </Grid.ContextMenu>
+                <Rectangle Name="PART_Rectangle"
+                           Height="6"
+                           Width="10"
+                           Margin="0,0,10,0"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           ContextMenu="{Binding ContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
+                           Fill="{DynamicResource BlackColorBrush}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill">
+                            <VisualBrush.Visual>
+                                <Canvas Width="18"
+                                                Height="18"
+                                                Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                                                UseLayoutRounding="False">
+                                    <Path Width="18"
+                                                  Height="16"
+                                                  Canvas.Left="14.9063"
+                                                  Canvas.Top="15.75"
+                                                  Stretch="Fill"
+                                                  Fill="{DynamicResource BlackColorBrush}"
+                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                </Canvas>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+                <Button 
+                        x:Name="PART_Button"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Style="{DynamicResource MetroCircleButtonStyle}"
+                        ContextMenu="{Binding ContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
+                        Command="{TemplateBinding Command}"
+                        CommandParameter="{TemplateBinding CommandParameter}"
+                        CommandTarget="{TemplateBinding CommandTarget}">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
+                        <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
+                        <ContentControl MinWidth="20"
+                                        Margin="3"
+                                        x:Name="PART_ButtonContent"
+                                        VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                        HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                        VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                        Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ContentTemplate="{TemplateBinding ItemTemplate}">
+                        </ContentControl>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsFocused"
+                     Value="True"
+                     SourceName="PART_Button">
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource AccentColorBrush}"
+                        TargetName="PART_Border" />
+            </Trigger>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter TargetName="PART_Rectangle"
+                        Property="Fill"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style x:Key="MetroCircleDropDownButtonStyle"  TargetType="{x:Type local:DropDownButton}">
+        <Setter Property="MinHeight"
+                Value="26" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="FontFamily"
+                Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="Template"
+                Value="{StaticResource DropDownButtonWithCircle}" />
+        <Style.Triggers>
+            <Trigger Property="Orientation"
+                     Value="Vertical">
+                <Setter Property="Template"
+                        Value="{StaticResource DropDownButtonWithCircle}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
