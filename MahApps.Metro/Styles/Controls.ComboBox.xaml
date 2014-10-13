@@ -252,7 +252,7 @@
                                     BorderBrush="Transparent"
                                     BorderThickness="1,1,0,1"
                                     Margin="0,0,-2,0"
-                                    Background="{DynamicResource ControlBackgroundBrush}">
+                                    Background="{TemplateBinding Background}">
                                 <TextBox x:Name="PART_EditableTextBox"
                                          HorizontalAlignment="Stretch"
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
