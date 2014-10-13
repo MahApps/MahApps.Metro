@@ -217,6 +217,18 @@
                                     TargetName="Underline"
                                     Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="ContentSite" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
+                                    Value="{DynamicResource HighlightBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
+                                    Value="{DynamicResource HighlightBrush}" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
