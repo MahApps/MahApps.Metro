@@ -252,7 +252,7 @@
                                     BorderBrush="Transparent"
                                     BorderThickness="1,1,0,1"
                                     Margin="0,0,-2,0"
-                                    Background="{DynamicResource ControlBackgroundBrush}">
+                                    Background="{TemplateBinding Background}">
                                 <TextBox x:Name="PART_EditableTextBox"
                                          HorizontalAlignment="Stretch"
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -290,20 +290,22 @@
                                    Opacity="0" />
                         <!-- AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme -->
                         <Popup x:Name="PART_Popup"
-                               AllowsTransparency="true"
+                               AllowsTransparency="True"
                                Focusable="False"
                                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
                                MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
                                MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
                                Placement="Bottom">
-                            <Border x:Name="PopupBorder"
-                                    Effect="{DynamicResource DropShadowBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    HorizontalAlignment="Stretch"
-                                    Height="Auto"
-                                    BorderBrush="{DynamicResource ComboBoxPopupBrush}"
-                                    Background="{DynamicResource WhiteBrush}">
+                            <Grid>
+                                <Border x:Name="PopupBorder"
+                                        Effect="{DynamicResource DropShadowBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        HorizontalAlignment="Stretch"
+                                        Height="Auto"
+                                        BorderBrush="{DynamicResource ComboBoxPopupBrush}"
+                                        Background="{DynamicResource WhiteBrush}">
+                                </Border>
                                 <ScrollViewer x:Name="DropDownScrollViewer"
                                               BorderThickness="0"
                                               Margin="2"
@@ -311,7 +313,7 @@
                                     <ItemsPresenter x:Name="ItemsPresenter"
                                                     KeyboardNavigation.DirectionalNavigation="Contained" />
                                 </ScrollViewer>
-                            </Border>
+                            </Grid>
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -381,8 +383,10 @@
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
                 Value="Top" />
+        <Setter Property="RenderOptions.ClearTypeHint"
+                Value="Enabled" />
         <Setter Property="Background"
-                Value="{DynamicResource TransparentWhiteBrush}" />
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="Template">

@@ -17,7 +17,7 @@ namespace MahApps.Metro.Controls
             this.Loaded += MetroTabItem_Loaded;
         }
         
-         public MetroTabItem(BaseMetroTabControl OwningTabControl)
+        public MetroTabItem(BaseMetroTabControl OwningTabControl)
         {
             DefaultStyleKey = typeof(MetroTabItem);
             this.Unloaded += MetroTabItem_Unloaded;
@@ -47,12 +47,11 @@ namespace MahApps.Metro.Controls
             closeButtonClickUnloaded = true;
         }
 
-        private delegate void EmptyDelegate();
         ~MetroTabItem()
         {
             if (Application.Current != null)
             {
-                Application.Current.Dispatcher.Invoke(new EmptyDelegate(() =>
+                Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
                     this.Loaded -= MetroTabItem_Loaded;
                 }));
@@ -88,10 +87,10 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal Button closeButton = null;
+        internal Button closeButton;
         internal Thickness newButtonMargin;
-        internal ContentPresenter contentSite = null;
-        private bool closeButtonClickUnloaded = false;
+        internal ContentPresenter contentSite;
+        private bool closeButtonClickUnloaded;
 
         public override void OnApplyTemplate()
         {
@@ -139,7 +138,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the command that is executed when the Close Button is clicked.
         /// </summary>
-        public ICommand CloseTabCommand { get { return (ICommand)GetValue(CloseTabCommandProperty); } set { SetValue(CloseTabCommandProperty, value); } }
+        public ICommand CloseTabCommand 
+        { 
+            get { return (ICommand)GetValue(CloseTabCommandProperty); } 
+            set { SetValue(CloseTabCommandProperty, value); } 
+        }
+
         public static readonly DependencyProperty CloseTabCommandProperty = DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroTabItem));
 
         public object CloseTabCommandParameter { get { return GetValue(CloseTabCommandParameterProperty); } set { SetValue(CloseTabCommandParameterProperty, value); } }
@@ -169,9 +173,8 @@ namespace MahApps.Metro.Controls
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            if (closeButton != null)
-                if (CloseButtonEnabled)
-                    closeButton.Visibility = Visibility.Visible;
+            if (closeButton != null && CloseButtonEnabled) 
+                closeButton.Visibility = Visibility.Visible;
 
             base.OnMouseEnter(e);
         }

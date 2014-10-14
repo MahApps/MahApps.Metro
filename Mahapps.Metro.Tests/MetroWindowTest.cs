@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
+using Mahapps.Metro.Tests.TestHelpers;
 using Xunit;
 
 namespace Mahapps.Metro.Tests
@@ -13,18 +14,43 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
         }
 
         [Fact]
-        public async Task ShowsWindowCommandsOnTopByDefault()
+        public async Task ShowsRightWindowCommandsOnTopByDefault()
         {
             await TestHost.SwitchToAppThread();
 
             var window = new MetroWindow();
 
-            Assert.True(window.ShowWindowCommandsOnTop);
+            Assert.Equal(WindowCommandsOverlayBehavior.Always, window.RightWindowCommandsOverlayBehavior);
         }
+
+        [Fact]
+        public async Task IconShouldBeVisibleByDefault()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var icon = window.GetPart<ContentControl>("PART_Icon");
+
+            Assert.Equal(Visibility.Visible, icon.Visibility);
+        }
+
+        [Fact]
+        public async Task IconCanOverlayHiddenTitlebar()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            window.IconOverlayBehavior = WindowCommandsOverlayBehavior.HiddenTitleBar;
+            window.ShowTitleBar = false;
+            var icon = window.GetPart<ContentControl>("PART_Icon");
+
+            Assert.Equal(Visibility.Visible, icon.Visibility);
+        }
+
 
         private Button GetButton(MetroWindow window, string buttonName)
         {
@@ -42,7 +68,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");
@@ -60,7 +86,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");
@@ -83,7 +109,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");
@@ -106,7 +132,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");
@@ -167,7 +193,7 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<HiddenMinMaxCloseButtonsWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<HiddenMinMaxCloseButtonsWindow>();
 
             var minButton = GetButton(window, "PART_Min");
             var maxButton = GetButton(window, "PART_Max");

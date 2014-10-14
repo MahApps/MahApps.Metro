@@ -12,6 +12,7 @@
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout x:Name="DefaultFlyout" />
+            <controls:Flyout x:Name="LeftFlyout" Width="500" Header="Flyout" Position="Left" />
             <controls:Flyout x:Name="RightFlyout" Width="500" Header="Flyout" Position="Right" />
             <controls:Flyout x:Name="RightFlyout2" Width="500" Header="Flyout" Position="Right" />
         </controls:FlyoutsControl>

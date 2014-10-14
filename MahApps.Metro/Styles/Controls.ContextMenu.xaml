@@ -153,8 +153,10 @@
                 Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="VerticalContentAlignment"
                 Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="RenderOptions.ClearTypeHint"
+                Value="Enabled" />
         <Setter Property="Background"
-                Value="Transparent" />
+                Value="{DynamicResource MenuItemBackgroundBrush}" />
         <Setter Property="ScrollViewer.PanningMode"
                 Value="Both" />
         <Setter Property="Stylus.IsFlicksEnabled"

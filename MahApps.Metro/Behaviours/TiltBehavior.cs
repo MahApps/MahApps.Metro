@@ -47,21 +47,15 @@ namespace MahApps.Metro.Behaviours
             attachedElement = AssociatedObject;
             if (attachedElement is ListBox)
             {
-                var l = (ListBox) attachedElement;
-                l.Items.CurrentChanging += (s, e) =>
-                {
-                    Console.WriteLine("foo");
-                };
                 return;
             }
-            if (attachedElement as Panel != null)
-            {
-                var y = (attachedElement as ItemsControl);
-                y.Items.CurrentChanging += (s, e) => Console.WriteLine("foo");
 
-                (attachedElement as Panel).Loaded += (sl, el) =>
+            var attachedElementPanel = attachedElement as Panel;
+            if (attachedElementPanel != null)
+            {
+                attachedElementPanel.Loaded += (sl, el) =>
                 {
-                    var elements = (attachedElement as Panel).Children.Cast<UIElement>().ToList();
+                    var elements = attachedElementPanel.Children.Cast<UIElement>().ToList();
 
                     elements.ForEach(element =>
                         Interaction.GetBehaviors(element).Add(

@@ -981,7 +981,7 @@ namespace Microsoft.Windows.Shell
                         Assert.AreEqual(topRightRegionRect.Right, windowSize.Width);
 
                         _CreateAndCombineRoundRectRgn(hrgn, topRightRegionRect, topRightRadius);
-                        
+
                         double bottomLeftRadius = DpiHelper.LogicalPixelsToDevice(new Point(_chromeInfo.CornerRadius.BottomLeft, 0)).X;
                         bottomLeftRadius = Math.Min(bottomLeftRadius, shortestDimension / 2);
                         Rect bottomLeftRegionRect = new Rect(0, 0, windowSize.Width / 2 + bottomLeftRadius, windowSize.Height / 2 + bottomLeftRadius);
@@ -989,7 +989,7 @@ namespace Microsoft.Windows.Shell
                         Assert.AreEqual(bottomLeftRegionRect.Bottom, windowSize.Height);
 
                         _CreateAndCombineRoundRectRgn(hrgn, bottomLeftRegionRect, bottomLeftRadius);
-                        
+
                         double bottomRightRadius = DpiHelper.LogicalPixelsToDevice(new Point(_chromeInfo.CornerRadius.BottomRight, 0)).X;
                         bottomRightRadius = Math.Min(bottomRightRadius, shortestDimension / 2);
                         Rect bottomRightRegionRect = new Rect(0, 0, windowSize.Width / 2 + bottomRightRadius, windowSize.Height / 2 + bottomRightRadius);
@@ -1093,7 +1093,16 @@ namespace Microsoft.Windows.Shell
             // Ensure standard HWND background painting when DWM isn't enabled.
             if (!NativeMethods.DwmIsCompositionEnabled())
             {
-                _hwndSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
+                // Apply the transparent background to the HWND for disabled DwmIsComposition too
+                // but only if the window has the flag AllowsTransparency turned on
+                if (_window.AllowsTransparency)
+                {
+                    _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+                }
+                else
+                {
+                    _hwndSource.CompositionTarget.BackgroundColor = SystemColors.WindowColor;
+                }
             }
             else
             {
@@ -1101,7 +1110,11 @@ namespace Microsoft.Windows.Shell
                 // The Window's Background needs to be changed independent of this.
 
                 // Apply the transparent background to the HWND
-                _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+                // but only if the window has the flag AllowsTransparency turned on
+                if (_window.AllowsTransparency)
+                {
+                    _hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+                }
 
                 // Thickness is going to be DIPs, need to convert to system coordinates.
                 Thickness deviceGlassThickness = DpiHelper.LogicalThicknessToDevice(_chromeInfo.GlassFrameThickness);

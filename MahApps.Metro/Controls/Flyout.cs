@@ -19,13 +19,21 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// An event that is raised when IsOpen changes.
         /// </summary>
-        public event EventHandler IsOpenChanged;
-        
+        public static readonly RoutedEvent IsOpenChangedEvent =
+            EventManager.RegisterRoutedEvent("IsOpenChanged", RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler), typeof(Flyout));
+
+        public event RoutedEventHandler IsOpenChanged
+        {
+            add { AddHandler(IsOpenChangedEvent, value); }
+            remove { RemoveHandler(IsOpenChangedEvent, value); }
+        }
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Flyout), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register("IsPinned", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
         public static readonly DependencyProperty AnimateOnPositionChangeProperty = DependencyProperty.Register("AnimateOnPositionChange", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
+        public static readonly DependencyProperty AnimateOpacityProperty = DependencyProperty.Register("AnimateOpacity", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false, AnimateOpacityChanged));
         public static readonly DependencyProperty IsModalProperty = DependencyProperty.Register("IsModal", typeof(bool), typeof(Flyout));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(Flyout));
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
@@ -66,6 +74,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(AnimateOnPositionChangeProperty); }
             set { SetValue(AnimateOnPositionChangeProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets whether this flyout animates the opacity of the flyout when opening/closing.
+        /// </summary>
+        public bool AnimateOpacity
+        {
+            get { return (bool)GetValue(AnimateOpacityProperty); }
+            set { SetValue(AnimateOpacityProperty, value); }
         }
 
         /// <summary>
@@ -211,6 +228,21 @@ namespace MahApps.Metro.Controls
             return null;
         }
 
+        private void UpdateOpacityChange()
+        {
+            if (root == null || fadeOutFrame == null || System.ComponentModel.DesignerProperties.GetIsInDesignMode(this)) return;
+            if (!AnimateOpacity)
+            {
+                fadeOutFrame.Value = 1;
+                root.Opacity = 1;
+            }
+            else
+            {
+                fadeOutFrame.Value = 0;
+                if (!IsOpen) root.Opacity = 0;
+            }
+        }
+
         private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (Flyout)dependencyObject;
@@ -225,7 +257,7 @@ namespace MahApps.Metro.Controls
                         flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
                     }
                     flyout.Visibility = Visibility.Visible;
-                    flyout.ApplyAnimation(flyout.Position);
+                    flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
                 }
                 else
                 {
@@ -238,12 +270,8 @@ namespace MahApps.Metro.Controls
 
                 VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
             }
-
-            var eh = flyout.IsOpenChanged;
-            if (eh != null)
-            {
-                eh(flyout, EventArgs.Empty);
-            }
+            
+            flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
         }
 
         private void HideStoryboard_Completed(object sender, EventArgs e)
@@ -258,23 +286,29 @@ namespace MahApps.Metro.Controls
             flyout.UpdateFlyoutTheme();
         }
 
+        private static void AnimateOpacityChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var flyout = (Flyout)dependencyObject;
+            flyout.UpdateOpacityChange();
+        }
+
         private static void PositionChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             var flyout = (Flyout) dependencyObject;
             var wasOpen = flyout.IsOpen;
             if (wasOpen && flyout.AnimateOnPositionChange)
             {
-                flyout.ApplyAnimation((Position)e.NewValue);
+                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity);
                 VisualStateManager.GoToState(flyout, "Hide", true);
             }
             else
             {
-                flyout.ApplyAnimation((Position)e.NewValue, false);
+                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity, false);
             }
 
             if (wasOpen && flyout.AnimateOnPositionChange)
             {
-                flyout.ApplyAnimation((Position)e.NewValue);
+                flyout.ApplyAnimation((Position)e.NewValue, flyout.AnimateOpacity);
                 VisualStateManager.GoToState(flyout, "Show", true);
             }
         }
@@ -286,10 +320,11 @@ namespace MahApps.Metro.Controls
 
         Grid root;
         Storyboard hideStoryboard;
-        EasingDoubleKeyFrame hideFrame;
-        EasingDoubleKeyFrame hideFrameY;
-        EasingDoubleKeyFrame showFrame;
-        EasingDoubleKeyFrame showFrameY;
+        SplineDoubleKeyFrame hideFrame;
+        SplineDoubleKeyFrame hideFrameY;
+        SplineDoubleKeyFrame showFrame;
+        SplineDoubleKeyFrame showFrameY;
+        SplineDoubleKeyFrame fadeOutFrame;
 
         public override void OnApplyTemplate()
         {
@@ -300,20 +335,21 @@ namespace MahApps.Metro.Controls
                 return;
 
             hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
-            hideFrame = (EasingDoubleKeyFrame)GetTemplateChild("hideFrame");
-            hideFrameY = (EasingDoubleKeyFrame)GetTemplateChild("hideFrameY");
-            showFrame = (EasingDoubleKeyFrame)GetTemplateChild("showFrame");
-            showFrameY = (EasingDoubleKeyFrame)GetTemplateChild("showFrameY");
+            hideFrame = (SplineDoubleKeyFrame)GetTemplateChild("hideFrame");
+            hideFrameY = (SplineDoubleKeyFrame)GetTemplateChild("hideFrameY");
+            showFrame = (SplineDoubleKeyFrame)GetTemplateChild("showFrame");
+            showFrameY = (SplineDoubleKeyFrame)GetTemplateChild("showFrameY");
+            fadeOutFrame = (SplineDoubleKeyFrame)GetTemplateChild("fadeOutFrame");
 
-            if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
+            if (hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null || fadeOutFrame == null)
                 return;
-            
-            ApplyAnimation(Position);
+
+            ApplyAnimation(Position, AnimateOpacity);
         }
 
-        internal void ApplyAnimation(Position position, bool resetShowFrame = true)
+        internal void ApplyAnimation(Position position, bool animateOpacity, bool resetShowFrame = true)
         {
-            if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null)
+            if (root == null || hideFrame == null || showFrame == null || hideFrameY == null || showFrameY == null || fadeOutFrame == null)
                 return;
 
             if (Position == Position.Left || Position == Position.Right)
@@ -323,6 +359,17 @@ namespace MahApps.Metro.Controls
 
             // I mean, we don't need this anymore, because we use ActualWidth and ActualHeight of the root
             //root.Measure(new Size(Double.PositiveInfinity, Double.PositiveInfinity));
+
+            if (!animateOpacity)
+            {
+                fadeOutFrame.Value = 1;
+                root.Opacity = 1;
+            }
+            else
+            {
+                fadeOutFrame.Value = 0;
+                if (!IsOpen) root.Opacity = 0;
+            }
 
             switch (position)
             {

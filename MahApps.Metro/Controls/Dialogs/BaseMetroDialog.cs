@@ -25,7 +25,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null, (o, e) =>
         {
-            BaseMetroDialog dialog = (o as BaseMetroDialog);
+            var dialog = o as BaseMetroDialog;
             if (dialog != null)
             {
                 if (e.OldValue != null)
@@ -100,7 +100,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="owningWindow">The window that is the parent of the dialog.</param>
         protected BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
         {
-            DialogSettings = settings == null ? owningWindow.MetroDialogOptions : settings;
+            DialogSettings = settings ?? owningWindow.MetroDialogOptions;
 
             OwningWindow = owningWindow;
             
@@ -306,19 +306,6 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets whether the metro dialog should use the default black/white appearance (theme) or try to use the current accent.
         /// </summary>
         public MetroDialogColorScheme ColorScheme { get; set; }
-
-        /// <summary>
-        /// Enable/disable dialog showing/hiding animations.
-        /// Setting this value will also set both AnimateShow and AnimateHide properties to the same value.
-        /// Getting "True" - at least AnimateHide or AnimateHide is "True".
-        /// Getting "False" - both AnimateHide and AnimateHide are "False".
-        /// </summary>
-        [Obsolete("This property is obsolete and will be deleted in next release, use AnimateShow and AnimateHide instead.")]
-        public bool UseAnimations
-        {
-            get { return AnimateShow || AnimateHide; }
-            set { AnimateShow = AnimateHide = value; }
-        }
 
         /// <summary>
         /// Enable/disable dialog showing animation.

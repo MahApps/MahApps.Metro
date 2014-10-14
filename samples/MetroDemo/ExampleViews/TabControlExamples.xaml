@@ -57,6 +57,40 @@
                                        Text="This is not content (it is)" />
                         </TabItem>
                     </TabControl>
+                    <Label Content="Default TabControl with underline"
+                           Style="{DynamicResource DescriptionHeaderStyle}" />
+                    <TabControl Controls:ControlsHelper.IsUnderlined="True">
+                        <TabItem Header="item 1"
+                                 Controls:ControlsHelper.HeaderFontSize="18">
+                            <TextBlock FontSize="30"
+                                       Text="Content" />
+                        </TabItem>
+                        <TabItem Header="item 2"
+                                 Controls:ControlsHelper.HeaderFontSize="18">
+                            <TextBlock FontSize="30"
+                                       Text="More content" />
+                        </TabItem>
+                        <TabItem Header="item 3"
+                                 Controls:ControlsHelper.HeaderFontSize="18">
+                            <TextBlock FontSize="30"
+                                       Text="More more content" />
+                        </TabItem>
+                        <TabItem Header="item 4"
+                                 Controls:ControlsHelper.HeaderFontSize="18">
+                            <TextBlock FontSize="30"
+                                       Text="So much content!" />
+                        </TabItem>
+                        <TabItem Header="item 5"
+                                 Controls:ControlsHelper.HeaderFontSize="18">
+                            <TextBlock FontSize="30"
+                                       Text="Content!" />
+                        </TabItem>
+                        <TabItem Header="item 6"
+                                 Controls:ControlsHelper.HeaderFontSize="18">
+                            <TextBlock FontSize="30"
+                                       Text="This is not content (it is)" />
+                        </TabItem>
+                    </TabControl>
                     <Label Margin="0, 5, 0, 0"
                            Content="Default TabControl with AnimatedTabControl style"
                            Style="{DynamicResource DescriptionHeaderStyle}" />

@@ -333,6 +333,50 @@
                 <Setter Property="Foreground"
                         Value="{DynamicResource AccentSelectedColorBrush}" />
             </Trigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="True" />
+                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                               Value="Cell" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="True" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                               Value="False" />
+                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                               Value="CellOrRowHeader" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
+                               Value="True" />
+                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                               Value="Cell" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush3}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
+                               Value="True" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                               Value="False" />
+                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                               Value="CellOrRowHeader" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush3}" />
+            </MultiDataTrigger>
             <Trigger Property="IsEnabled"
                      Value="False">
                 <Setter Property="Foreground"
@@ -367,11 +411,6 @@
                 <Setter Property="Foreground"
                         Value="{DynamicResource AccentSelectedColorBrush}" />
             </Trigger>
-            <Trigger Property="IsMouseOver"
-                     Value="True">
-                <Setter Property="Background"
-                        Value="{DynamicResource AccentColorBrush3}" />
-            </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsSelected"
@@ -382,6 +421,28 @@
                 <Setter Property="Background"
                         Value="{DynamicResource AccentColorBrush2}" />
             </MultiTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
+                               Value="True" />
+                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                               Value="FullRow" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush3}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
+                               Value="True" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="True" />
+                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                               Value="CellOrRowHeader" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush3}" />
+            </MultiDataTrigger>
             <Trigger Property="IsEnabled"
                      Value="False">
                 <Setter Property="Foreground"
@@ -626,7 +687,8 @@
         <Setter Property="RowHeaderStyle"
                 Value="{StaticResource AzureDataGridRowHeader}" />
         <Style.Triggers>
-            <Trigger Property="GridLinesVisibility" Value="None">
+            <Trigger Property="GridLinesVisibility"
+                     Value="None">
                 <Setter Property="RowStyle"
                         Value="{StaticResource AzureDataGridRowWithMargin}" />
             </Trigger>
