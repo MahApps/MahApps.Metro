@@ -43,31 +43,6 @@
                         Visibility="Collapsed"
                         Content="{Binding SecondAuxiliaryButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Margin="5 0 0 0" />
-
-                <!--<StackPanel.Style>
-                    <Style>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}"
-                         Value="Affirmative">
-                                <Setter TargetName="PART_AffirmativeButton"
-                        Property="Visibility"
-                        Value="Visible" />
-                                <Setter TargetName="PART_NegativeButton"
-                        Property="Visibility"
-                        Value="Collapsed" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ButtonStyle, RelativeSource={RelativeSource Self}}"
-                         Value="AffirmativeAndNegative">
-                                <Setter TargetName="PART_AffirmativeButton"
-                        Property="Visibility"
-                        Value="Visible" />
-                                <Setter TargetName="PART_NegativeButton"
-                        Property="Visibility"
-                        Value="Visible" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>-->
             </StackPanel>
         </Grid>
     </Dialogs:BaseMetroDialog.DialogBody>
