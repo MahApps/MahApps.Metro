@@ -21,4 +21,7 @@
 
     <System:Double x:Key="StatusBarFontSize">12</System:Double>
 
+    <System:Double x:Key="DialogHeaderFontSize">26</System:Double>
+    <System:Double x:Key="DialogMessageFontSize">15</System:Double>
+
 </ResourceDictionary>

@@ -11,7 +11,7 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0"
                        Margin="0 5 0 0"
-                       FontSize="15"
+                       FontSize="{StaticResource DialogMessageFontSize}"
                        Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        TextWrapping="Wrap"
                        Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
