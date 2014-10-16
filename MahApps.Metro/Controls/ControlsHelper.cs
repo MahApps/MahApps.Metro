@@ -2,46 +2,14 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    /// A helper class that provides various attached properties for the GroupBox, TabItem and MetroTabItem controls.
+    /// A helper class that provides various controls.
     /// </summary>
     public static class ControlsHelper
     {
-        public static readonly DependencyProperty GroupBoxHeaderForegroundProperty =
-            DependencyProperty.RegisterAttached("GroupBoxHeaderForeground", typeof(Brush), typeof(ControlsHelper), new UIPropertyMetadata(Brushes.White));
-
-        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
-        public static Brush GetGroupBoxHeaderForeground(UIElement element)
-        {
-            return (Brush)element.GetValue(GroupBoxHeaderForegroundProperty);
-        }
-
-        public static void SetGroupBoxHeaderForeground(UIElement element, Brush value)
-        {
-            element.SetValue(GroupBoxHeaderForegroundProperty, value);
-        }
-
-        /// <summary>
-        /// Defines whether the underline below the <see cref="TabControl"/> is shown or not.
-        /// </summary>
-        public static readonly DependencyProperty IsUnderlinedProperty =
-            DependencyProperty.RegisterAttached("IsUnderlined", typeof(bool), typeof(ControlsHelper), new PropertyMetadata(false));
-
-        [AttachedPropertyBrowsableForType(typeof(TabControl))]
-        public static bool GetIsUnderlined(UIElement element)
-        {
-            return (bool)element.GetValue(IsUnderlinedProperty);
-        }
-
-        public static void SetIsUnderlined(UIElement element, bool value)
-        {
-            element.SetValue(IsUnderlinedProperty, value);
-        }
-
         public static readonly DependencyProperty HeaderFontSizeProperty =
             DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(26.67, HeaderFontSizePropertyChangedCallback){ Inherits = true});
 
@@ -143,22 +111,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonWidthProperty, value);
         }
 
-        /// <summary>
-        /// This property can be used to set vertical scrollbar left side from the tabpanel (look at MetroAnimatedSingleRowTabControl)
-        /// </summary>
-        public static readonly DependencyProperty VerticalScrollBarOnLeftSideProperty =
-            DependencyProperty.RegisterAttached("VerticalScrollBarOnLeftSide", typeof(bool), typeof(ControlsHelper),
-                                                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
-
-        public static bool GetVerticalScrollBarOnLeftSide(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(VerticalScrollBarOnLeftSideProperty);
-        }
-
-        public static void SetVerticalScrollBarOnLeftSide(DependencyObject obj, bool value)
-        {
-            obj.SetValue(VerticalScrollBarOnLeftSideProperty, value);
-        }
+        
 
         /// <summary>
         /// This property can be used to set the Transition for animated TabControls

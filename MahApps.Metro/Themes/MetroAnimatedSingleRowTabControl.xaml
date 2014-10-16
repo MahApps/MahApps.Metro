@@ -136,7 +136,7 @@
                             <Setter Property="HorizontalScrollBarVisibility"
                                     TargetName="HeaderPanelScroll"
                                     Value="Disabled" />
-                            <Setter Property="Controls:ControlsHelper.VerticalScrollBarOnLeftSide"
+                            <Setter Property="Controls:ScrollBarHelper.VerticalScrollBarOnLeftSide"
                                     TargetName="HeaderPanelScroll"
                                     Value="True" />
                         </Trigger>

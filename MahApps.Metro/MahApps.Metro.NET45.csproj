@@ -110,6 +110,7 @@
     <Compile Include="Controls\GlowWindow.xaml.cs">
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GroupBoxHelper.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroNavigationWindow.cs" />
@@ -126,8 +127,10 @@
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
+    <Compile Include="Controls\ScrollBarHelper.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
+    <Compile Include="Controls\TabControlHelper.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
     <Compile Include="Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />

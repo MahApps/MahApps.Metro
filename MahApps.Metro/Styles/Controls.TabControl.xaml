@@ -185,7 +185,7 @@
                                        Height="2" 
                                        HorizontalAlignment="Stretch" 
                                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, 
-                                           Path=(Controls:ControlsHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                           Path=(Controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>

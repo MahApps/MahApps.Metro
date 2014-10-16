@@ -332,7 +332,7 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize"
                 Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Controls:ControlsHelper.GroupBoxHeaderForeground"
+        <Setter Property="Controls:GroupBoxHelper.GroupBoxHeaderForeground"
                 Value="{x:Null}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
@@ -348,7 +348,7 @@
                                          RelativeSource="{RelativeSource FindAncestor,
                                                                          AncestorType={x:Type Expander}}" />
                                 <Binding Mode="OneWay"
-                                         Path="(Controls:ControlsHelper.GroupBoxHeaderForeground)"
+                                         Path="(Controls:GroupBoxHelper.GroupBoxHeaderForeground)"
                                          RelativeSource="{RelativeSource FindAncestor,
                                                                          AncestorType={x:Type Expander}}" />
                             </MultiBinding>
