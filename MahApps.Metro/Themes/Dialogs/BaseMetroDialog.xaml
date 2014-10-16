@@ -63,7 +63,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
-                                       FontSize="{StaticResource DialogHeaderFontSize}"
+                                       FontSize="{StaticResource DialogTitleFontSize}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Text="{TemplateBinding Title}"
                                        TextWrapping="Wrap" />
