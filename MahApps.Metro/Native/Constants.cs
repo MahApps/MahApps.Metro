@@ -1,6 +1,6 @@
 ﻿namespace MahApps.Metro.Native
 {
-    public static class Constants
+    internal static class Constants
     {
         public const int MONITOR_DEFAULTTONEAREST = 0x00000002;
         public const int WM_NCLBUTTONDOWN = 0x00A1;

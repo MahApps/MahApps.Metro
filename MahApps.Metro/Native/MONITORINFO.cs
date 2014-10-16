@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 namespace MahApps.Metro.Native
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-    public class MONITORINFO
+    internal class MONITORINFO
     {
         public int cbSize = Marshal.SizeOf(typeof(MONITORINFO));
         public RECT rcMonitor = new RECT();

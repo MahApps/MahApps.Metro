@@ -1,6 +1,6 @@
 ﻿namespace MahApps.Metro.Native
 {
-    public enum ABEdge
+    internal enum ABEdge
     {
         ABE_LEFT = 0,
         ABE_TOP = 1,
