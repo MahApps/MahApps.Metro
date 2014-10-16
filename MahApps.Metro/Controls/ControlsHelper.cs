@@ -110,57 +110,5 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(ButtonWidthProperty, value);
         }
-
-        
-
-        /// <summary>
-        /// This property can be used to set the Transition for animated TabControls
-        /// </summary>
-        public static readonly DependencyProperty TransitionProperty =
-            DependencyProperty.RegisterAttached("Transition", typeof(TransitionType), typeof(ControlsHelper),
-                                                new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
-
-        public static TransitionType GetTransition(DependencyObject obj)
-        {
-            return (TransitionType)obj.GetValue(TransitionProperty);
-        }
-
-        public static void SetTransition(DependencyObject obj, TransitionType value)
-        {
-            obj.SetValue(TransitionProperty, value);
-        }
-
-        /// <summary>
-        /// This property can be used to handle the style for CheckBox and RadioButton
-        /// LeftToRight means content left and button right and RightToLeft vise versa
-        /// </summary>
-        public static readonly DependencyProperty ContentDirectionProperty =
-            DependencyProperty.RegisterAttached("ContentDirection", typeof(FlowDirection), typeof(ControlsHelper),
-                                                new FrameworkPropertyMetadata(FlowDirection.LeftToRight,
-                                                                              //FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits,
-                                                                              ContentDirectionPropertyChanged));
-
-        /// <summary>
-        /// This property can be used to handle the style for CheckBox and RadioButton
-        /// LeftToRight means content left and button right and RightToLeft vise versa
-        /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
-        public static FlowDirection GetContentDirection(UIElement element)
-        {
-            return (FlowDirection)element.GetValue(ContentDirectionProperty);
-        }
-
-        public static void SetContentDirection(UIElement element, FlowDirection value)
-        {
-            element.SetValue(ContentDirectionProperty, value);
-        }
-
-        private static void ContentDirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var tb = d as ToggleButton;
-            if (null == tb) {
-                throw new InvalidOperationException("The property 'ContentDirection' may only be set on ToggleButton elements.");
-            }
-        }
     }
 }
