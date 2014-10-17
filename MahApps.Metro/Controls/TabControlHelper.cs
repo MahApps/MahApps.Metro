@@ -26,7 +26,7 @@ namespace MahApps.Metro.Controls
         /// This property can be used to set the Transition for animated TabControls
         /// </summary>
         public static readonly DependencyProperty TransitionProperty =
-            DependencyProperty.RegisterAttached("Transition", typeof(TransitionType), typeof(ControlsHelper),
+            DependencyProperty.RegisterAttached("Transition", typeof(TransitionType), typeof(TabControlHelper),
                                                 new FrameworkPropertyMetadata(TransitionType.Default, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
         public static TransitionType GetTransition(DependencyObject obj)
