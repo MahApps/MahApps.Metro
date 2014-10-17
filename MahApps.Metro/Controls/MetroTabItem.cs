@@ -47,17 +47,6 @@ namespace MahApps.Metro.Controls
             closeButtonClickUnloaded = true;
         }
 
-        ~MetroTabItem()
-        {
-            if (Application.Current != null)
-            {
-                Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    this.Loaded -= MetroTabItem_Loaded;
-                }));
-            }
-        }
-
         /// <summary>
         /// Gets/sets whether the Close Button is visible.
         /// </summary>
