@@ -9,7 +9,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ScrollViewer Grid.Row="0" MaxHeight="50" 
+            <ScrollViewer Grid.Row="0" MaxHeight="{Binding MaxHeight, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" 
                        Margin="0 5 0 0" VerticalScrollBarVisibility="Auto">
                 <TextBlock FontSize="{StaticResource DialogMessageFontSize}"
                            Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"

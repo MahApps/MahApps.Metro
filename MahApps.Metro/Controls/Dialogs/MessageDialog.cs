@@ -170,6 +170,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
         public static readonly DependencyProperty FirstAuxiliaryButtonTextProperty = DependencyProperty.Register("FirstAuxiliaryButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
         public static readonly DependencyProperty SecondAuxiliaryButtonTextProperty = DependencyProperty.Register("SecondAuxiliaryButtonText", typeof(string), typeof(MessageDialog), new PropertyMetadata("Cancel"));
+        public static readonly DependencyProperty MaxHeightProperty = DependencyProperty.Register("MaxHeight", typeof(int), typeof(MessageDialog), new PropertyMetadata(default(int)));
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(MessageDialogStyle), typeof(MessageDialog), new PropertyMetadata(MessageDialogStyle.Affirmative, new PropertyChangedCallback((s, e) =>
             {
                 MessageDialog md = (MessageDialog)s;
@@ -262,6 +263,12 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (string)GetValue(SecondAuxiliaryButtonTextProperty); }
             set { SetValue(SecondAuxiliaryButtonTextProperty, value); }
+        }
+
+        public int MaxHeight
+        {
+            get { return (int)GetValue(MaxHeightProperty); }
+            set { SetValue(MaxHeightProperty, value); }
         }
     }
 
