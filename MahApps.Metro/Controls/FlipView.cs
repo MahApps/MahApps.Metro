@@ -64,8 +64,6 @@ namespace MahApps.Metro.Controls
             this.Focus();
         }
         
-        private delegate void EmptyDelegate();
-
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is FlipViewItem;
@@ -440,14 +438,14 @@ namespace MahApps.Metro.Controls
         private static void ExecuteWhenLoaded(FlipView flipview, Action body)
         {
             if (flipview.IsLoaded)
-                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(new EmptyDelegate(() => body()));
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
             else
             {
                 RoutedEventHandler handler = null;
                 handler = (o, a) =>
                 {
                     flipview.Loaded -= handler;
-                    System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(new EmptyDelegate(() => body()));
+                    System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
                 };
 
                 flipview.Loaded += handler;
