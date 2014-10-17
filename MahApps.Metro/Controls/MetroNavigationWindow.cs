@@ -167,7 +167,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets or sets the base uniform resource identifier (URI) of the current context.
         /// </summary>
-        /// <see cref="System.Windows.Navigation.NavigationWindow.IUriContext.BaseUri"/>
+        /// <see cref="IUriContext.BaseUri"/>
         Uri IUriContext.BaseUri { get; set; }
 
         /// <summary>
