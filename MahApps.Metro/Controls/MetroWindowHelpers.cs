@@ -33,7 +33,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Adapts the WindowCommands to the theme of the first opened, topmost && && (top || right || left) flyout
+        /// Adapts the WindowCommands to the theme of the first opened, topmost &amp;&amp; (top || right || left) flyout
         /// </summary>
         /// <param name="flyouts">All the flyouts! Or flyouts that fall into the category described in the summary.</param>
         /// <param name="resetBrush">An optional brush to reset the window commands brush to.</param>
