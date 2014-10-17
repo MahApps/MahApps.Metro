@@ -98,6 +98,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Initializes a new MahApps.Metro.Controls.BaseMetroDialog.
         /// </summary>
         /// <param name="owningWindow">The window that is the parent of the dialog.</param>
+        /// <param name="settings">The settings for the message dialog.</param>
         protected BaseMetroDialog(MetroWindow owningWindow, MetroDialogSettings settings)
         {
             DialogSettings = settings ?? owningWindow.MetroDialogOptions;

@@ -14,9 +14,11 @@ namespace MahApps.Metro.Controls.Dialogs
     public static class DialogManager
     {
         #region In-Window Extension Methods
+
         /// <summary>
         /// Creates a LoginDialog inside of the current window.
         /// </summary>
+        /// <param name="window">The window that is the parent of the dialog.</param>
         /// <param name="title">The title of the LoginDialog.</param>
         /// <param name="message">The message contained within the LoginDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
@@ -78,6 +80,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Creates a InputDialog inside of the current window.
         /// </summary>
+        /// <param name="window">The MetroWindow</param>
         /// <param name="title">The title of the MessageDialog.</param>
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
@@ -145,6 +148,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
+        /// <param name="window">The MetroWindow</param>
         /// <param name="title">The title of the MessageDialog.</param>
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="style">The type of buttons to use.</param>
@@ -214,6 +218,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Creates a ProgressDialog inside of the current window.
         /// </summary>
+        /// <param name="window">The MetroWindow</param>
         /// <param name="title">The title of the ProgressDialog.</param>
         /// <param name="message">The message within the ProgressDialog.</param>
         /// <param name="isCancelable">Determines if the cancel button is visible.</param>

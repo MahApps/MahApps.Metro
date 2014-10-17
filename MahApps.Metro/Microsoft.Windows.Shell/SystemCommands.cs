@@ -60,6 +60,7 @@ namespace Microsoft.Windows.Shell
         }
 
         /// <summary>Display the system menu at a specified location.</summary>
+        /// <param name="window">The MetroWindow</param>
         /// <param name="screenLocation">The location to display the system menu, in logical screen coordinates.</param>
         public static void ShowSystemMenu(Window window, Point screenLocation)
         {

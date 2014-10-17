@@ -294,9 +294,6 @@ namespace Standard
         /// <summary>
         /// Wrapper around File.Copy to provide feedback as to whether the file wasn't copied because it didn't exist.
         /// </summary>
-        /// <param name="cachePath"></param>
-        /// <param name="suggestedPath"></param>
-        /// <param name="overwrite"></param>
         /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static string SafeCopyFile(string sourceFileName, string destFileName, SafeCopyFileOptions options)
