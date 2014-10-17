@@ -8,6 +8,8 @@ using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
+    using System.Runtime.CompilerServices;
+
     /// <summary>
     /// A standard MetroTabControl (Pivot).
     /// </summary>
@@ -154,7 +156,9 @@ namespace MahApps.Metro.Controls
                 return true;
             }
 
+#pragma warning disable 67
             public event System.EventHandler CanExecuteChanged;
+#pragma warning restore 67
 
             public void Execute(object parameter)
             {
