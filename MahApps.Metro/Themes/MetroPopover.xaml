@@ -1,0 +1,79 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Storyboard x:Key="PopoverShownStoryboard">
+        <DoubleAnimation AccelerationRatio=".9"
+                         BeginTime="0:0:0"
+                         Duration="0:0:0.2"
+                         Storyboard.TargetProperty="Opacity"
+                         To="1" />
+    </Storyboard>
+
+    <Storyboard x:Key="PopoverCloseStoryboard">
+        <DoubleAnimation AccelerationRatio=".9"
+                         BeginTime="0:0:0"
+                         Duration="0:0:0.2"
+                         Storyboard.TargetProperty="Opacity"
+                         To="0" />
+    </Storyboard>
+
+    <ControlTemplate x:Key="MetroPopoverTemplate"
+                     TargetType="{x:Type Controls:MetroPopover}">
+        <Grid Name="MainGrid" Background="#00FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top" MaxWidth="{TemplateBinding MaxWidth}" MinWidth="{TemplateBinding MinWidth}">
+            <Grid.Effect>
+                <DropShadowEffect Direction="270" ShadowDepth="0" BlurRadius="4" Opacity="0.6" />
+            </Grid.Effect>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Name="arrow" Margin="8,0,0,-7">
+                <Image Width="10" Height="20" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="-90" />
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <GeometryDrawing x:Name="arrowDrawing" Brush="#FFFFFFFF" Geometry="M897.41,613.924L887.08,624.255 887.08,603.594 897.41,613.924z" />
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+            </Grid>
+            <Grid Grid.Row="1" Background="#FFFFFFFF" Margin="0,-1,0,0">
+                <ContentPresenter x:Name="PART_ContentPresenter"
+                                  Margin="6, 3"
+                                  Content="{TemplateBinding Content}"
+                                  DataContext="{TemplateBinding DataContext}" />
+            </Grid>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <EventTrigger RoutedEvent="Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource PopoverShownStoryboard}" />
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type Controls:MetroPopover}">
+        <Setter Property="Template"
+                Value="{StaticResource MetroPopoverTemplate}" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="Cycle" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation"
+                Value="Cycle" />
+        <Setter Property="Opacity"
+                Value="0" />
+    </Style>
+</ResourceDictionary>

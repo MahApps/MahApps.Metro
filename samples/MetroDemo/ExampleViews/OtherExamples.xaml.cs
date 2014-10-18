@@ -27,7 +27,7 @@ namespace MetroDemo.ExampleViews
 
             var t = new DispatcherTimer(TimeSpan.FromSeconds(2), DispatcherPriority.Normal, Tick, this.Dispatcher);
         }
-
+                
         void Tick(object sender, EventArgs e)
         {
             var dateTime = DateTime.Now;
@@ -50,6 +50,12 @@ namespace MetroDemo.ExampleViews
                     flipview.BannerText = "Chess!";
                     break;
             }
+        }
+
+        private void ShowPopover(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = Application.Current.MainWindow as MetroWindow;
+            mainWindow.ShowMetroPopoverAsync((UIElement)sender, new TextBox());
         }
     }
 }

@@ -125,6 +125,9 @@
     <Compile Include="Controls\NumericUpDownChangedRoutedEventHandler.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
+    <Compile Include="Controls\MetroPopover.cs" />
+    <Compile Include="Controls\PopoverManager.cs" />
+    <Compile Include="Controls\PopoverStateChangedEventArgs.cs" />
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
@@ -451,6 +454,10 @@
     <Page Include="Styles\VS\Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\MetroPopover.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Dialogs\BaseMetroDialog.xaml">
       <SubType>Designer</SubType>
