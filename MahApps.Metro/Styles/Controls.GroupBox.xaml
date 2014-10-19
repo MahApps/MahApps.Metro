@@ -17,9 +17,9 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize"
+        <Setter Property="Controls:TabControlHelper.HeaderFontSize"
                 Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Controls:ControlsHelper.GroupBoxHeaderForeground"
+        <Setter Property="Controls:GroupBoxHelper.HeaderForeground"
                 Value="{x:Null}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
@@ -31,7 +31,7 @@
                                          Path="Background"
                                          Mode="OneWay" />
                                 <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type GroupBox}}"
-                                         Path="(Controls:ControlsHelper.GroupBoxHeaderForeground)"
+                                         Path="(Controls:GroupBoxHelper.HeaderForeground)"
                                          Mode="OneWay" />
                             </MultiBinding>
                         </TextElement.Foreground>
@@ -52,9 +52,9 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="1">
                             <ContentPresenter Margin="{TemplateBinding Padding}"
-                                              TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                              TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                              TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                              TextElement.FontSize="{TemplateBinding Controls:TabControlHelper.HeaderFontSize}"
+                                              TextElement.FontStretch="{TemplateBinding Controls:TabControlHelper.HeaderFontStretch}"
+                                              TextElement.FontWeight="{TemplateBinding Controls:TabControlHelper.HeaderFontWeight}"
                                               ContentSource="Header"
                                               RecognizesAccessKey="True" />
                         </Border>

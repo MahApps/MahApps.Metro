@@ -124,7 +124,7 @@
                 <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Header="artists" Padding="5" Controls:ControlsHelper.HeaderFontSize="30">
+            <GroupBox Grid.Column="0" Header="artists" Padding="5" Controls:TabControlHelper.HeaderFontSize="30">
                 <ListBox Height="900"/>
             </GroupBox>
 
@@ -138,7 +138,7 @@
                 </Controls:MetroTabItem>
             </Controls:MetroTabControl>
 
-            <GroupBox Grid.Column="2" Header="playlists" Padding="5" Controls:ControlsHelper.HeaderFontSize="30">
+            <GroupBox Grid.Column="2" Header="playlists" Padding="5" Controls:TabControlHelper.HeaderFontSize="30">
                 <StackPanel Orientation="Horizontal">
                     <Button Content="Test"
                             Height="20"
