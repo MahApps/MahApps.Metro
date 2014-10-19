@@ -156,7 +156,7 @@
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <!-- special property for header font size -->
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize"
+        <Setter Property="Controls:TabControlHelper.HeaderFontSize"
                 Value="{DynamicResource TabItemFontSize}" />
         <Setter Property="Template">
             <Setter.Value>
@@ -174,9 +174,9 @@
                                               Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                              TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                              TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                              TextElement.FontSize="{TemplateBinding Controls:TabControlHelper.HeaderFontSize}"
+                                              TextElement.FontStretch="{TemplateBinding Controls:TabControlHelper.HeaderFontStretch}"
+                                              TextElement.FontWeight="{TemplateBinding Controls:TabControlHelper.HeaderFontWeight}"
                                               TextElement.Foreground="{TemplateBinding Foreground}"
                                               ContentSource="Header"
                                               RecognizesAccessKey="True" />

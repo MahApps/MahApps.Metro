@@ -112,6 +112,7 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Dialogs\MessageDialog.cs" />
+    <Compile Include="Controls\GroupBoxHelper.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
@@ -131,6 +132,9 @@
     <Compile Include="Controls\SafeRaise.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
+    <Compile Include="Controls\TabControlHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controls\WindowButtonCommands.cs" />
     <Compile Include="Controls\WindowCommands.cs">
       <SubType>Code</SubType>

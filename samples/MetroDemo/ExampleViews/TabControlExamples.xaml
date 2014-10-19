@@ -27,66 +27,66 @@
                            Style="{DynamicResource DescriptionHeaderStyle}" />
                     <TabControl>
                         <TabItem Header="item 1"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="Content" />
                         </TabItem>
                         <TabItem Header="item 2"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="More content" />
                         </TabItem>
                         <TabItem Header="item 3"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="More more content" />
                         </TabItem>
                         <TabItem Header="item 4"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="So much content!" />
                         </TabItem>
                         <TabItem Header="item 5"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="Content!" />
                         </TabItem>
                         <TabItem Header="item 6"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="This is not content (it is)" />
                         </TabItem>
                     </TabControl>
                     <Label Content="Default TabControl with underline"
                            Style="{DynamicResource DescriptionHeaderStyle}" />
-                    <TabControl Controls:ControlsHelper.IsUnderlined="True">
+                    <TabControl Controls:TabControlHelper.IsUnderlined="True">
                         <TabItem Header="item 1"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="Content" />
                         </TabItem>
                         <TabItem Header="item 2"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="More content" />
                         </TabItem>
                         <TabItem Header="item 3"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="More more content" />
                         </TabItem>
                         <TabItem Header="item 4"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="So much content!" />
                         </TabItem>
                         <TabItem Header="item 5"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="Content!" />
                         </TabItem>
                         <TabItem Header="item 6"
-                                 Controls:ControlsHelper.HeaderFontSize="18">
+                                 Controls:TabControlHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="This is not content (it is)" />
                         </TabItem>
@@ -300,7 +300,7 @@
                            Style="{DynamicResource DescriptionHeaderStyle}" />
                     <Controls:MetroTabControl TabItemClosingEvent="MetroTabControl_TabItemClosingEvent">
                         <Controls:MetroTabItem Header="headers"
-                                               Controls:ControlsHelper.HeaderFontSize="20"
+                                               Controls:TabControlHelper.HeaderFontSize="20"
                                                CloseButtonEnabled="True"
                                                CloseTabCommand="{Binding SingleCloseTabCommand}"
                                                CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}">
@@ -308,7 +308,7 @@
                                        Text="you can bind to a command" />
                         </Controls:MetroTabItem>
                         <Controls:MetroTabItem Header="can"
-                                               Controls:ControlsHelper.HeaderFontSize="22"
+                                               Controls:TabControlHelper.HeaderFontSize="22"
                                                CloseButtonEnabled="True"
                                                CloseTabCommand="{Binding NeverCloseTabCommand}"
                                                CloseTabCommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Header}">
@@ -316,31 +316,31 @@
                                        Text="and ensure the command never closes" />
                         </Controls:MetroTabItem>
                         <Controls:MetroTabItem Header="have"
-                                               Controls:ControlsHelper.HeaderFontSize="24"
+                                               Controls:TabControlHelper.HeaderFontSize="24"
                                                CloseButtonEnabled="True">
                             <TextBlock FontSize="30"
                                        Text="More more content" />
                         </Controls:MetroTabItem>
                         <Controls:MetroTabItem Header="different"
-                                               Controls:ControlsHelper.HeaderFontSize="26"
+                                               Controls:TabControlHelper.HeaderFontSize="26"
                                                CloseButtonEnabled="True">
                             <TextBlock FontSize="30"
                                        Text="So much content!" />
                         </Controls:MetroTabItem>
                         <Controls:MetroTabItem Header="font"
-                                               Controls:ControlsHelper.HeaderFontSize="28"
+                                               Controls:TabControlHelper.HeaderFontSize="28"
                                                CloseButtonEnabled="True">
                             <TextBlock FontSize="30"
                                        Text="Content!" />
                         </Controls:MetroTabItem>
                         <Controls:MetroTabItem Header="sizes"
-                                               Controls:ControlsHelper.HeaderFontSize="30"
+                                               Controls:TabControlHelper.HeaderFontSize="30"
                                                CloseButtonEnabled="True">
                             <TextBlock FontSize="30"
                                        Text="This is not content (it is). This one won't close." />
                         </Controls:MetroTabItem>
                         <Controls:MetroTabItem Header="close button"
-                                               Controls:ControlsHelper.HeaderFontSize="36"
+                                               Controls:TabControlHelper.HeaderFontSize="36"
                                                CloseButtonEnabled="True">
                             <TextBlock FontSize="24"
                                        Text="The size of close button will be changed proportionately considering its header size." />

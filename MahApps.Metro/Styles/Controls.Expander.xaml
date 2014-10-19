@@ -330,9 +330,9 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize"
+        <Setter Property="Controls:TabControlHelper.HeaderFontSize"
                 Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Controls:ControlsHelper.GroupBoxHeaderForeground"
+        <Setter Property="Controls:GroupBoxHelper.HeaderForeground"
                 Value="{x:Null}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
@@ -348,7 +348,7 @@
                                          RelativeSource="{RelativeSource FindAncestor,
                                                                          AncestorType={x:Type Expander}}" />
                                 <Binding Mode="OneWay"
-                                         Path="(Controls:ControlsHelper.GroupBoxHeaderForeground)"
+                                         Path="(Controls:GroupBoxHelper.HeaderForeground)"
                                          RelativeSource="{RelativeSource FindAncestor,
                                                                          AncestorType={x:Type Expander}}" />
                             </MultiBinding>
@@ -409,9 +409,9 @@
                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                                       RecognizesAccessKey="True"
-                                                      TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                      TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                      TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}" />
+                                                      TextElement.FontSize="{TemplateBinding Controls:TabControlHelper.HeaderFontSize}"
+                                                      TextElement.FontStretch="{TemplateBinding Controls:TabControlHelper.HeaderFontStretch}"
+                                                      TextElement.FontWeight="{TemplateBinding Controls:TabControlHelper.HeaderFontWeight}" />
                                 </DockPanel>
                             </Border>
                             <Border x:Name="ExpandSite"
