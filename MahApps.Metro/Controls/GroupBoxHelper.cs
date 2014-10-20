@@ -6,18 +6,18 @@ namespace MahApps.Metro.Controls
 {
     public static class GroupBoxHelper
     {
-        public static readonly DependencyProperty GroupBoxHeaderForegroundProperty =
-            DependencyProperty.RegisterAttached("GroupBoxHeaderForeground", typeof(Brush), typeof(GroupBoxHelper), new UIPropertyMetadata(Brushes.White));
+        public static readonly DependencyProperty HeaderForegroundProperty =
+            DependencyProperty.RegisterAttached("HeaderForeground", typeof(Brush), typeof(GroupBoxHelper), new UIPropertyMetadata(Brushes.White));
 
         [AttachedPropertyBrowsableForType(typeof(GroupBox))]
-        public static Brush GetGroupBoxHeaderForeground(UIElement element)
+        public static Brush GetHeaderForeground(UIElement element)
         {
-            return (Brush)element.GetValue(GroupBoxHeaderForegroundProperty);
+            return (Brush)element.GetValue(HeaderForegroundProperty);
         }
 
-        public static void SetGroupBoxHeaderForeground(UIElement element, Brush value)
+        public static void SetHeaderForeground(UIElement element, Brush value)
         {
-            element.SetValue(GroupBoxHeaderForegroundProperty, value);
+            element.SetValue(HeaderForegroundProperty, value);
         }
     }
 }
