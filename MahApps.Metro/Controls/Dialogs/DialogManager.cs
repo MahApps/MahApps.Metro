@@ -228,7 +228,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                     {
                         //create the dialog control
-                        ProgressDialog dialog = new ProgressDialog(window);
+                        ProgressDialog dialog = new ProgressDialog(window, settings);
                         dialog.Message = message;
                         dialog.Title = title;
                         dialog.IsCancelable = isCancelable;
