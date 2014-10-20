@@ -4,7 +4,7 @@
                     xmlns:Behaviours="clr-namespace:MahApps.Metro.Behaviours">
 
     <Style TargetType="{x:Type TabControl}">
-        <Setter Property="Controls:ControlsHelper.Transition"
+        <Setter Property="Controls:TabControlHelper.Transition"
                 Value="Left" />
         <Setter Property="Background"
                 Value="{x:Null}" />
@@ -42,7 +42,7 @@
                                 Grid.Row="1"
                                 KeyboardNavigation.TabIndex="2"
                                 KeyboardNavigation.TabNavigation="Local">
-                            <Controls:TransitioningContentControl Transition="{TemplateBinding Controls:ControlsHelper.Transition}"
+                            <Controls:TransitioningContentControl Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
                                                                   Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
                                                                   RestartTransitionOnContentChange="True">
                                 <ContentPresenter x:Name="PART_SelectedContentHost"
@@ -73,7 +73,7 @@
                         </Trigger>
                         <Trigger Property="TabStripPlacement"
                                  Value="Left">
-                            <Setter Property="Controls:ControlsHelper.Transition"
+                            <Setter Property="Controls:TabControlHelper.Transition"
                                     Value="Right" />
                             <Setter Property="Grid.Row"
                                     TargetName="HeaderPanel"

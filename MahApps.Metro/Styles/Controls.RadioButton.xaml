@@ -137,7 +137,7 @@
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.ContentDirection"
+                        <Trigger Property="Controls:ToggleButtonHelper.ContentDirection"
                                  Value="RightToLeft">
                             <Setter Property="Padding"
                                     Value="0,0,6,0" />
