@@ -329,12 +329,12 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets/sets the Minimum Height Percent of the Dialog
         /// </summary>
-        public int MinHeightPercent { get; set; }
+        public double MinHeightPercent { get; set; }
 
         /// <summary>
         /// Gets/sets the Maximum Height Percent of the Dialog
         /// </summary>
-        public int MaxHeightPercent { get; set; }
+        public double MaxHeightPercent { get; set; }
     }
 
     /// <summary>
