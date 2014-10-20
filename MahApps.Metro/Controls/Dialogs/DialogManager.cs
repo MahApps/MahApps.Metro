@@ -366,14 +366,14 @@ namespace MahApps.Metro.Controls.Dialogs
         private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog)
         {
             dialog.SetValue(Panel.ZIndexProperty, (int)window.overlayBox.GetValue(Panel.ZIndexProperty) + 1);
-            dialog.MinHeight = window.ActualHeight * window.MetroDialogOptions.MinHeightPercent;
-            dialog.MaxHeight = window.ActualHeight * window.MetroDialogOptions.MaxHeightPercent;
+            dialog.MinHeight = window.ActualHeight * dialog.DialogSettings.MinHeightPercent;
+            dialog.MaxHeight = window.ActualHeight * dialog.DialogSettings.MaxHeightPercent;
 
             SizeChangedEventHandler sizeHandler = null; //an event handler for auto resizing an open dialog.
             sizeHandler = new SizeChangedEventHandler((sender, args) =>
             {
-                dialog.MinHeight = window.ActualHeight * window.MetroDialogOptions.MinHeightPercent;
-                dialog.MaxHeight = window.ActualHeight * window.MetroDialogOptions.MaxHeightPercent;
+                dialog.MinHeight = window.ActualHeight * dialog.DialogSettings.MinHeightPercent;
+                dialog.MaxHeight = window.ActualHeight * dialog.DialogSettings.MaxHeightPercent;
             });
 
             window.SizeChanged += sizeHandler;

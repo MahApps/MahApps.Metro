@@ -41,7 +41,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
 
-        protected MetroDialogSettings DialogSettings { get; private set; }
+        public MetroDialogSettings DialogSettings { get; private set; }
 
         /// <summary>
         /// Gets/sets the dialog's title.
@@ -289,6 +289,9 @@ namespace MahApps.Metro.Controls.Dialogs
             AnimateShow = AnimateHide = true;
 
             DefaultText = "";
+
+            MinHeightPercent = 0.25;
+            MaxHeightPercent = 1;
         }
 
         /// <summary>
