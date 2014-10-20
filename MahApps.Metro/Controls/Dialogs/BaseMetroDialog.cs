@@ -325,6 +325,16 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the default text( just the inputdialog needed)
         /// </summary>
         public string DefaultText { get; set; }
+
+        /// <summary>
+        /// Gets/sets the Minimum Height Percent of the Dialog
+        /// </summary>
+        public int MinHeightPercent { get; set; }
+
+        /// <summary>
+        /// Gets/sets the Maximum Height Percent of the Dialog
+        /// </summary>
+        public int MaxHeightPercent { get; set; }
     }
 
     /// <summary>
