@@ -31,6 +31,7 @@ namespace MahApps.Metro.Controls
 
             this.IsGlowing = true;
             this.AllowsTransparency = true;
+            this.Closing += (sender, e) => e.Cancel = !closing;
 
             this.Owner = owner;
             glow.Visibility = Visibility.Collapsed;
