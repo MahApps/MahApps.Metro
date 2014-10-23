@@ -6,27 +6,11 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Storyboard x:Key="PopoverShownStoryboard">
-        <DoubleAnimation AccelerationRatio=".9"
-                         BeginTime="0:0:0"
-                         Duration="0:0:0.2"
-                         Storyboard.TargetProperty="Opacity"
-                         To="1" />
-    </Storyboard>
-
-    <Storyboard x:Key="PopoverCloseStoryboard">
-        <DoubleAnimation AccelerationRatio=".9"
-                         BeginTime="0:0:0"
-                         Duration="0:0:0.2"
-                         Storyboard.TargetProperty="Opacity"
-                         To="0" />
-    </Storyboard>
-
     <ControlTemplate x:Key="MetroPopoverWindowTemplate"
                      TargetType="{x:Type Controls:MetroPopoverWindow}">
         <Grid Name="MainGrid" Background="#00FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top" MaxWidth="{TemplateBinding MaxWidth}" MinWidth="{TemplateBinding MinWidth}">
             <Grid.Effect>
-                <DropShadowEffect Direction="270" ShadowDepth="0" BlurRadius="4" Opacity="0.6" />
+                <DropShadowEffect Direction="315" ShadowDepth="1" BlurRadius="4" Opacity="0.6" />
             </Grid.Effect>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
