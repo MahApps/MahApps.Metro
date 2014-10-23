@@ -7,34 +7,191 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
-
+   
     [ContentProperty("Content")]
-    [TemplatePart(Name = PART_ContentPresenter, Type = typeof(UIElement))]
-    public class MetroPopover : Control
+    public class MetroPopover : FrameworkElement
     {
-        private const string PART_ContentPresenter = "PART_ContentPresenter";
+        #region Popover adorner
+
+        // see tech.pro/tutorial/856/wpf-tutorial-using-a-visual-collection by Michael Kuehl
+
+        class PopoverAdorner : Adorner
+        {
+            readonly VisualCollection _visuals;
+            readonly MetroPopover _popover;
+            readonly MetroPopoverWindow _popoverWindow;
+
+            public PopoverAdorner(UIElement adornedElement, MetroPopover popover)
+                : base(adornedElement)
+            {
+                _popover = popover;
+                _visuals = new VisualCollection(this);
+                _popoverWindow = new MetroPopoverWindow(popover) {
+                    Content = popover.Content
+                };
+
+                // bind the popover windows horizontal alignement property to the popovers
+                var horizontalAlignmentBinding = new Binding("HorizontalAlignment") {
+                    Source = popover,
+                    Mode = BindingMode.OneWay,
+                    
+                };
+                _popoverWindow.SetBinding(MetroPopoverWindow.HorizontalAlignmentProperty, horizontalAlignmentBinding);
+
+                _visuals.Add(_popoverWindow);
+            }
+
+            public MetroPopover Popover
+            {
+                get { return _popover; }
+            }
+
+            public void UpdateContent(object content)
+            {
+                _popoverWindow.Content = content;
+            }
+
+            public void ShowWindow()
+            {
+                _popoverWindow.Show();
+            }
+
+            public void HideWindow()
+            {
+                _popoverWindow.Hide();
+            }
+
+            public bool IsWindowOpen()
+            {
+                return _popoverWindow.IsLoaded && _popoverWindow.Opacity > 0;                
+            }
+
+            public void Detach()
+            {
+                var adornerLayer = AdornerLayer.GetAdornerLayer(AdornedElement);
+                if (adornerLayer != null) {
+                    adornerLayer.Remove(this);
+                }
+            }
+
+            public void Attach()
+            {
+                var adornerLayer = AdornerLayer.GetAdornerLayer(AdornedElement);
+                if (adornerLayer != null && !IsAttachedTo(adornerLayer)) {
+                    adornerLayer.Add(this);
+                }
+            }
+
+            bool IsAttachedTo(AdornerLayer adornerLayer)
+            {
+                if (adornerLayer != null) {
+                    var adorners = adornerLayer.GetAdorners(AdornedElement);
+                    return adorners != null && adorners.Contains(this);
+                } else {
+                    return false;
+                }
+            }
+
+            bool IsAdornedElementLoaded()
+            {
+                if (AdornedElement is FrameworkElement) {
+                    return ((FrameworkElement)AdornedElement).IsLoaded;
+                } else {
+                    return true;
+                }
+            }
+
+            protected override Size MeasureOverride(Size constraint)
+            {
+                _popoverWindow.Measure(constraint);
+                return _popoverWindow.DesiredSize;
+            }
+
+            protected override Size ArrangeOverride(Size finalSize)
+            {            
+                var targetSize = AdornedElement.RenderSize;
+
+                double offsetX;
+                if (Popover.HorizontalAlignment == System.Windows.HorizontalAlignment.Left) {
+                    offsetX = 0;
+                } else if (Popover.HorizontalAlignment == System.Windows.HorizontalAlignment.Right) {
+                    offsetX = targetSize.Width - finalSize.Width;
+                } else if (Popover.HorizontalAlignment == System.Windows.HorizontalAlignment.Center || Popover.HorizontalAlignment == System.Windows.HorizontalAlignment.Stretch) {
+                    offsetX = (targetSize.Width - finalSize.Width) / 2.0;
+                } else {
+                    offsetX = 0;
+                }
+
+                var offsetY = AdornedElement.RenderSize.Height;
+                if (AdornedElement is Control) {
+                    offsetY -= ((Control)AdornedElement).Margin.Bottom;
+                }
+
+                _popoverWindow.Arrange(new Rect(offsetX, offsetY, finalSize.Width, finalSize.Height));
+                return _popoverWindow.RenderSize;
+            }
+
+            protected override Visual GetVisualChild(int index)
+            {
+                return _visuals[index];
+            }
+
+            protected override int VisualChildrenCount
+            {
+                get { return _visuals.Count; }
+            }
+
+
+            static bool IsDescendant(DependencyObject reference, DependencyObject node)
+            {
+                bool result = false;
+                DependencyObject dependencyObject = node;
+                while (dependencyObject != null) {
+                    if (dependencyObject == reference) {
+                        result = true;
+                        break;
+                    }
+
+                    dependencyObject = dependencyObject.GetParentObject();
+                }
+                return result;
+            }
+        }
+
+        #endregion
+
+        PopoverAdorner _adorner;
 
         static MetroPopover()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroPopover), new FrameworkPropertyMetadata(typeof(MetroPopover)));
         }
 
-        public MetroPopover(UIElement target)
+        public MetroPopover()
         {
-            Target = target;
+            this.Loaded += OnLoaded;
+            this.Unloaded += OnUnloaded;
         }
+        
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(object), typeof(MetroPopover), new PropertyMetadata(null, OnContentChanged));
+        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(MetroPopover), new PropertyMetadata(false, OnIsOpenChanged));
+        public static readonly DependencyProperty TargetProperty = DependencyProperty.Register("Target", typeof(UIElement), typeof(MetroPopover), new PropertyMetadata(null, OnTargetChanged));
+        public static readonly DependencyProperty AutoCloseProperty = DependencyProperty.Register("AutoClose", typeof(bool), typeof(MetroPopover), new PropertyMetadata(true));
 
-        public MetroWindow Owner { get; internal set; }
-        public UIElement Target { get; private set; }
-
-        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(object), typeof(MetroPopover), new PropertyMetadata(null));
-        public static readonly DependencyProperty IsOpenProperty = DependencyProperty.Register("IsOpen", typeof(bool), typeof(MetroPopover), new PropertyMetadata(false));
+        public UIElement Target
+        {
+            get { return (UIElement)GetValue(TargetProperty); }
+            set { SetValue(TargetProperty, value); }
+        }
         
         public object Content
         {
@@ -48,35 +205,20 @@ namespace MahApps.Metro.Controls
             set { SetValue(IsOpenProperty, value); }
         }
 
-        public event EventHandler<EventArgs> Shown;
-        public event EventHandler<EventArgs> Closed;      
- 
-        public Task OpenAsync()
+        public bool AutoClose
         {
-            return WaitForLoadAsync()
-                .ContinueWith(t => {
-                    OnOpened();
-                }, TaskScheduler.FromCurrentSynchronizationContext());
+            get { return (bool)GetValue(AutoCloseProperty); }
+            set { SetValue(AutoCloseProperty, value); }
         }
 
-        public Task<bool> RequestCloseAsync()
+        public void Open()
         {
-            if (OnRequestClose()) {
-                return WaitForCloseAsync()
-                    .ContinueWith(t => {
-                        OnClosed();
-                        return true;
-                    }, TaskScheduler.FromCurrentSynchronizationContext());
-            }
-            return Task.Factory.StartNew(() => false);
+            IsOpen = true;
         }
 
-        protected virtual void OnOpened() 
+        public void Close()
         {
-            this.IsOpen = true;
-            if (Shown != null) {
-                Shown(this, EventArgs.Empty);
-            }
+            IsOpen = false;
         }
 
         /// <summary>
@@ -88,70 +230,116 @@ namespace MahApps.Metro.Controls
             return true; //allow the dialog to close.
         }
 
-        protected virtual void OnClosed()
+        private static void OnTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            this.IsOpen = false;
-            if (Closed != null) {
-                Closed(this, EventArgs.Empty);
-            }
+            var popover = (MetroPopover)d;
+            popover.SetupAdorner();
+        }
 
+        private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var popover = (MetroPopover)d;
+            var oldChild = e.OldValue;
+            var newChild = e.NewValue;
+            popover.RemoveLogicalChild(oldChild);
+            popover.AddLogicalChild(newChild);
+
+            // rebuild 
+            if (popover._adorner != null) {
+                popover._adorner.UpdateContent(newChild);
+            }
+        }
+        
+        private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var popover = (MetroPopover)d;
+            var isOpen = (bool)e.NewValue;
+
+            if (popover._adorner != null) {
+                if (isOpen) {
+                    popover._adorner.ShowWindow();
+                } else {
+                    popover._adorner.HideWindow();
+                }
+            }
+        }
+
+        // the adorner can only attach to loaded targets so call attach and detach when the target is loaded and unloaded respecitively
+        void OnTargetLoaded(object sender, RoutedEventArgs e)
+        {
+            _adorner.Attach();
+        }
+
+        private void OnTargetUnloaded(object sender, RoutedEventArgs e)
+        {
+            _adorner.Detach();
+        }
+
+        // Attach to parent window.
+
+        void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            Window owner = this.TryFindParent<Window>();
+            if(owner != null) {
+                owner.PreviewMouseDown -= OnPreviewOwningWindowMouseDown;
+            }
+        }
+
+        void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Window owner = this.TryFindParent<Window>();
+            if (owner != null) {
+                owner.PreviewMouseDown += OnPreviewOwningWindowMouseDown;
+            }
+        }
+
+        private void OnPreviewOwningWindowMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var originalSource = e.OriginalSource as Visual;
+            if (AutoClose && IsPopoverOpen() &&
+                !Target.IsAncestorOf(originalSource) &&
+                !_adorner.IsAncestorOf(originalSource)) {
+                Close();
+            }
         }
 
         /// <summary>
-        /// Waits for the popover to become ready for interaction.
+        /// Programically determines if the popover is actually open & visible.
         /// </summary>
-        /// <returns>A task that represents the operation and it's status.</returns>
-        Task WaitForLoadAsync()
+        /// <returns></returns>
+        bool IsPopoverOpen()
         {
-            Dispatcher.VerifyAccess();
-
-            if (this.IsLoaded) return new Task(() => { });
-
-            if (!false)
-                this.Opacity = 1.0; //skip the animation
-
-            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
-
-            RoutedEventHandler handler = null;
-            handler = new RoutedEventHandler((sender, args) => {
-                this.Loaded -= handler;
-
-                tcs.TrySetResult(null);
-            });
-
-            this.Loaded += handler;
-
-            return tcs.Task;
+            return _adorner != null && _adorner.IsWindowOpen();
         }
 
-        Task WaitForCloseAsync()
+        private void SetupAdorner()
         {
-            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+            if (_adorner == null || _adorner.AdornedElement != Target) {
+                if (_adorner != null) {
+                    _adorner.Detach();
 
-            if (false) {
-                Storyboard closingStoryboard = this.Resources["PopoverCloseStoryboard"] as Storyboard;
+                    var targetFrameworkElement = _adorner.AdornedElement as FrameworkElement;
+                    if (targetFrameworkElement != null) {
+                        targetFrameworkElement.Loaded -= OnTargetLoaded;
+                        targetFrameworkElement.Unloaded -= OnTargetUnloaded;
+                    }
 
-                if (closingStoryboard == null)
-                    throw new InvalidOperationException("Unable to find the dialog closing storyboard. Did you forget to add MetroPopoverDialog.xaml to your merged dictionaries?");
+                    _adorner = null;
+                }
 
-                EventHandler handler = null;
-                handler = new EventHandler((sender, args) => {
-                    closingStoryboard.Completed -= handler;
+                if (Target != null) {
+                    _adorner = new PopoverAdorner(Target, this);
+                    _adorner.Attach();
 
-                    tcs.TrySetResult(null);
-                });
-
-                closingStoryboard = closingStoryboard.Clone();
-
-                closingStoryboard.Completed += handler;
-
-                closingStoryboard.Begin(this);
-            } else {
-                this.Opacity = 0.0;
-                tcs.TrySetResult(null); //skip the animation
+                    var targetFrameworkElement = Target as FrameworkElement;
+                    if (targetFrameworkElement != null) {
+                        targetFrameworkElement.Loaded += OnTargetLoaded;
+                        targetFrameworkElement.Unloaded += OnTargetUnloaded;
+                    }
+                }
+            } else if (_adorner != null) {
+                _adorner.Attach();
             }
-
-            return tcs.Task;
         }
 
 

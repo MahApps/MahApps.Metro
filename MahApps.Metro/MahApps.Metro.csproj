@@ -116,6 +116,7 @@
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroNavigationWindow.cs" />
+    <Compile Include="Controls\MetroPopoverWindow.cs" />
     <Compile Include="Controls\MetroProgressBar.cs" />
     <Compile Include="Controls\MetroTabControl.cs" />
     <Compile Include="Controls\MetroTabItem.cs" />
@@ -126,7 +127,6 @@
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\MetroPopover.cs" />
-    <Compile Include="Controls\PopoverManager.cs" />
     <Compile Include="Controls\PopoverStateChangedEventArgs.cs" />
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />

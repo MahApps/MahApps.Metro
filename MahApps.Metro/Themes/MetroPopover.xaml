@@ -22,8 +22,8 @@
                          To="0" />
     </Storyboard>
 
-    <ControlTemplate x:Key="MetroPopoverTemplate"
-                     TargetType="{x:Type Controls:MetroPopover}">
+    <ControlTemplate x:Key="MetroPopoverWindowTemplate"
+                     TargetType="{x:Type Controls:MetroPopoverWindow}">
         <Grid Name="MainGrid" Background="#00FFFFFF" HorizontalAlignment="Left" VerticalAlignment="Top" MaxWidth="{TemplateBinding MaxWidth}" MinWidth="{TemplateBinding MinWidth}">
             <Grid.Effect>
                 <DropShadowEffect Direction="270" ShadowDepth="0" BlurRadius="4" Opacity="0.6" />
@@ -32,8 +32,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid Name="arrow" Margin="8,0,0,-7">
-                <Image Width="10" Height="20" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
+            <Grid Name="arrow" Margin="0,0,0,-7">
+                <Image Name="arrowIcon" Width="10" Height="20" RenderTransformOrigin="0.5,0.5">
                     <Image.RenderTransform>
                         <TransformGroup>
                             <RotateTransform Angle="-90" />
@@ -56,24 +56,27 @@
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
-            <EventTrigger RoutedEvent="Loaded">
-                <EventTrigger.Actions>
-                    <BeginStoryboard Storyboard="{StaticResource PopoverShownStoryboard}" />
-                </EventTrigger.Actions>
-            </EventTrigger>
+            <Trigger Property="HorizontalAlignment" Value="Left">
+                <Setter TargetName="arrowIcon" Property="HorizontalAlignment" Value="Left" />
+                <Setter TargetName="arrowIcon" Property="Margin" Value="8,0,0,0" />
+            </Trigger>
+            <Trigger Property="HorizontalAlignment" Value="Right">
+                <Setter TargetName="arrowIcon" Property="HorizontalAlignment" Value="Right" />
+                <Setter TargetName="arrowIcon" Property="Margin" Value="0,0,8,0" />
+            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <Style TargetType="{x:Type Controls:MetroPopover}">
+    <Style TargetType="{x:Type Controls:MetroPopoverWindow}">
         <Setter Property="Template"
-                Value="{StaticResource MetroPopoverTemplate}" />
+                Value="{StaticResource MetroPopoverWindowTemplate}" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="KeyboardNavigation.TabNavigation"
                 Value="Cycle" />
         <Setter Property="KeyboardNavigation.DirectionalNavigation"
                 Value="Cycle" />
-        <Setter Property="Opacity"
-                Value="0" />
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="Visibility" Value="Collapsed" />
     </Style>
 </ResourceDictionary>

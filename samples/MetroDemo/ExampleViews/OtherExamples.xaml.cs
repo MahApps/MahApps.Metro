@@ -54,8 +54,7 @@ namespace MetroDemo.ExampleViews
 
         private void ShowPopover(object sender, RoutedEventArgs e)
         {
-            var mainWindow = Application.Current.MainWindow as MetroWindow;
-            mainWindow.ShowMetroPopoverAsync((UIElement)sender, new TextBox());
+            
         }
     }
 }
