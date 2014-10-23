@@ -59,7 +59,7 @@
                     </TabControl>
                     <Label Content="Default TabControl with underline"
                            Style="{DynamicResource DescriptionHeaderStyle}" />
-                    <TabControl Controls:ControlsHelper.IsUnderlined="True">
+                    <TabControl Controls:TabControlHelper.IsUnderlined="True">
                         <TabItem Header="item 1"
                                  Controls:ControlsHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"

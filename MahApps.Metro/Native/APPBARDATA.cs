@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace MahApps.Metro.Native
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct APPBARDATA
+    internal struct APPBARDATA
     {
         public int cbSize;
         public IntPtr hWnd;

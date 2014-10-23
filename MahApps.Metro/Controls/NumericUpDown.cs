@@ -125,14 +125,6 @@ namespace MahApps.Metro.Controls
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
         }
 
-        ~NumericUpDown()
-        {
-            if (_valueTextBox != null)
-            {
-                DataObject.RemovePastingHandler(_valueTextBox, OnValueTextBoxPaste);
-            }
-        }
-
         public event RoutedPropertyChangedEventHandler<double?> ValueChanged
         {
             add { AddHandler(ValueChangedEvent, value); }

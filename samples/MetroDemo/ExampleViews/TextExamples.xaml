@@ -35,6 +35,7 @@
                          Text="Enabled" />
                 <TextBox Margin="0, 10, 0, 0"
                          Controls:TextboxHelper.Watermark="Watermark"
+                         Controls:TextboxHelper.UseFloatingWatermark="True"
                          Controls:TextboxHelper.IsWaitingForData="True"
                          ToolTip="Default alignment" />
                 <TextBox Margin="0, 10, 0, 0"
@@ -63,6 +64,7 @@
                 </TextBox>
                 <TextBox Margin="0, 10, 0, 0"
                          Controls:TextboxHelper.Watermark="Search..."
+                         Controls:TextboxHelper.UseFloatingWatermark="True"
                          Controls:TextboxHelper.ClearTextButton="True"
                          Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}">
                     <TextBox.Style>
@@ -173,13 +175,24 @@
                              Password="Password" />
                 <PasswordBox Margin="0, 10, 0, 0"
                              Controls:TextboxHelper.ClearTextButton="True"
+                             Controls:PasswordBoxHelper.CapsLockIcon="!"
                              Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Password="Password" />
                 <PasswordBox Margin="0, 10, 0, 0"
                              Controls:TextboxHelper.Watermark="Custom icon style"
+                             Controls:TextboxHelper.UseFloatingWatermark="True"
                              Controls:TextboxHelper.ButtonContent="4"
                              Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                             Style="{DynamicResource MetroButtonPasswordBox}" />
+                             Controls:PasswordBoxHelper.CapsLockIcon="!"
+                             Style="{DynamicResource MetroButtonPasswordBox}">
+                    <Controls:PasswordBoxHelper.CapsLockWarningToolTip>
+                        <TextBlock>
+                            <Run Text="This is a custom Warning to show you that" />
+                            <Run Text="CAPS LOCK" TextDecorations="Underline" Foreground="Red" />
+                            <Run Text=" is on" />
+                        </TextBlock>
+                    </Controls:PasswordBoxHelper.CapsLockWarningToolTip>
+                </PasswordBox>
                 <PasswordBox Margin="0, 10, 0, 0"
                              IsEnabled="False"
                              Password="Password" />

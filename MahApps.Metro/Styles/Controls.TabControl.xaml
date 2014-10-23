@@ -185,7 +185,7 @@
                                        Height="2" 
                                        HorizontalAlignment="Stretch" 
                                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, 
-                                           Path=(Controls:ControlsHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                           Path=(Controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -217,6 +217,18 @@
                                     TargetName="Underline"
                                     Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="ContentSite" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
+                                    Value="{DynamicResource HighlightBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
+                                    Value="{DynamicResource HighlightBrush}" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

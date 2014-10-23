@@ -252,7 +252,7 @@
                                     BorderBrush="Transparent"
                                     BorderThickness="1,1,0,1"
                                     Margin="0,0,-2,0"
-                                    Background="{DynamicResource ControlBackgroundBrush}">
+                                    Background="{TemplateBinding Background}">
                                 <TextBox x:Name="PART_EditableTextBox"
                                          HorizontalAlignment="Stretch"
                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -294,10 +294,9 @@
                                Focusable="False"
                                IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                                PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}"
-                               MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
-                               MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}"
                                Placement="Bottom">
-                            <Grid>
+                            <Grid MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}"
+                                  MaxHeight="{Binding MaxDropDownHeight, RelativeSource={RelativeSource TemplatedParent}}">
                                 <Border x:Name="PopupBorder"
                                         Effect="{DynamicResource DropShadowBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}"

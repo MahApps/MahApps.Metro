@@ -7,7 +7,7 @@ namespace Microsoft.Windows.Shell
     using System.Windows.Interop;
     using Standard;
 
-    public static class SystemCommands
+    internal static class SystemCommands
     {
         public static RoutedCommand CloseWindowCommand { get; private set; }
         public static RoutedCommand MaximizeWindowCommand { get; private set; }

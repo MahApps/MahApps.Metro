@@ -1,6 +1,6 @@
 ﻿namespace MahApps.Metro.Native
 {
-    public enum ABMsg
+    internal enum ABMsg
     {
         ABM_NEW = 0,
         ABM_REMOVE = 1,

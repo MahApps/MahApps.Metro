@@ -112,6 +112,7 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Dialogs\MessageDialog.cs" />
+    <Compile Include="Controls\GroupBoxHelper.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Controls\NumericUpDown.cs" />
     <Compile Include="Controls\NumericUpDownChangedRoutedEventArgs.cs" />
     <Compile Include="Controls\NumericUpDownChangedRoutedEventHandler.cs" />
+    <Compile Include="Controls\PasswordBoxHelper.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\MetroPopover.cs" />
@@ -131,8 +133,11 @@
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
+    <Compile Include="Controls\ScrollBarHelper.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
+    <Compile Include="Controls\TabControlHelper.cs" />
+    <Compile Include="Controls\ToggleButtonHelper.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
     <Compile Include="Controls\WindowCommands.cs">
       <SubType>Code</SubType>
@@ -410,6 +415,10 @@
     <Page Include="Styles\FlatSlider.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Shared.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Sizes.xaml">
       <SubType>Designer</SubType>

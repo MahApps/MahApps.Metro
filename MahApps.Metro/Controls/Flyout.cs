@@ -42,6 +42,7 @@ namespace MahApps.Metro.Controls
 
         /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.
+        /// Note that this won't execute when <see cref="IsOpen"/> is set to <c>false</c>.
         /// </summary>
         public ICommand CloseCommand
         {

@@ -16,13 +16,13 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0"
                        Margin="0 5 0 0"
-                       FontSize="15"
+                       FontSize="{StaticResource DialogMessageFontSize}"
                        Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        TextWrapping="Wrap"
                        Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox Grid.Row="1"
                      Margin="0 5 0 0"
-                     FontSize="15"
+                     FontSize="{StaticResource DialogMessageFontSize}"
                      x:Name="PART_TextBox"
                      Controls:TextboxHelper.Watermark="{Binding UsernameWatermark, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                      Text="{Binding Username, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
@@ -30,7 +30,7 @@
                      Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
             <PasswordBox Grid.Row="2"
                          Margin="0 5 0 0"
-                         FontSize="15"
+                         FontSize="{StaticResource DialogMessageFontSize}"
                          x:Name="PART_TextBox2"
                          Controls:TextboxHelper.Watermark="{Binding PasswordWatermark, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                          Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
