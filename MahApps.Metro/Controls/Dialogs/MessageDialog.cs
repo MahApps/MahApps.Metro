@@ -43,10 +43,11 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.Focus();
 
                     //kind of acts like a selective 'IsDefault' mechanism.
-                    if (ButtonStyle == MessageDialogStyle.Affirmative)
-                        PART_AffirmativeButton.Focus();
-                    else if (ButtonStyle == MessageDialogStyle.AffirmativeAndNegative)
-                        PART_NegativeButton.Focus();
+                    //if (ButtonStyle == MessageDialogStyle.Affirmative)
+                    //    PART_AffirmativeButton.Focus();
+                    //else if (ButtonStyle == MessageDialogStyle.AffirmativeAndNegative)
+                    //    PART_NegativeButton.Focus();
+                    SetDefaultButton(this);
                 }));
 
             TaskCompletionSource<MessageDialogResult> tcs = new TaskCompletionSource<MessageDialogResult>();
@@ -176,6 +177,12 @@ namespace MahApps.Metro.Controls.Dialogs
 
                 SetButtonState(md);
             })));
+        public static readonly DependencyProperty DefaultButtonProperty = DependencyProperty.Register("DefaultButton", typeof(MessageDialogResult), typeof(MessageDialog), new PropertyMetadata(MessageDialogResult.Affirmative, new PropertyChangedCallback((s, e) =>
+        {
+            MessageDialog md = (MessageDialog)s;
+
+            SetDefaultButton(md);
+        })));
 
         private static void SetButtonState(MessageDialog md)
         {
@@ -228,6 +235,58 @@ namespace MahApps.Metro.Controls.Dialogs
             }
         }
 
+        private static void SetDefaultButton(MessageDialog md)
+        {
+            switch (md.DefaultButton)
+            {
+                case MessageDialogResult.Affirmative:
+                    md.PART_AffirmativeButton.Focus();
+                    break;
+
+                case MessageDialogResult.Negative:
+
+                    if (md.ButtonStyle == MessageDialogStyle.Affirmative)
+                    {
+                        md.PART_AffirmativeButton.Focus();
+                    }
+
+                    else
+                    {
+                        md.PART_NegativeButton.Focus();
+                    }
+
+                    break;
+
+                case MessageDialogResult.FirstAuxiliary:
+                     switch (md.ButtonStyle)
+                    {
+                        case MessageDialogStyle.Affirmative:
+                        case MessageDialogStyle.AffirmativeAndNegative:
+                            md.PART_AffirmativeButton.Focus();
+                            break;
+
+                        case MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary:
+                        case MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary:
+                            md.PART_FirstAuxiliaryButton.Focus();
+                            break;
+                    }
+                    break;
+
+                case MessageDialogResult.SecondAuxiliary:
+                    if (md.ButtonStyle == MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary)
+                    {
+                        md.PART_SecondAuxiliaryButton.Focus();
+                    }
+
+                    else
+                    {
+                        md.PART_AffirmativeButton.Focus();
+                    }
+
+                    break;
+            }
+        }
+
         private void Dialog_Loaded(object sender, RoutedEventArgs e)
         {
             SetButtonState(this);
@@ -237,6 +296,11 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (MessageDialogStyle)GetValue(ButtonStyleProperty); }
             set { SetValue(ButtonStyleProperty, value); }
+        }
+        public MessageDialogResult DefaultButton
+        {
+            get { return (MessageDialogResult)GetValue(DefaultButtonProperty); }
+            set { SetValue(DefaultButtonProperty, value); }
         }
         public string Message
         {
