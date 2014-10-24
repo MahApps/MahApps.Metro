@@ -8,7 +8,7 @@ namespace MahApps.Metro.Behaviours
 {
     public class GlowWindowBehavior : Behavior<Window>
     {
-        private const int glowTimerDelay = 200; //200 ms delay, the same as VS2013
+        private static readonly TimeSpan GlowTimerDelay = TimeSpan.FromMilliseconds(200); //200 ms delay, the same as VS2013
         private GlowWindow left, right, top, bottom;
         private DispatcherTimer makeGlowVisibleTimer;
         private bool _PrevTopmost;
@@ -92,9 +92,9 @@ namespace MahApps.Metro.Behaviours
         {
             if(makeGlowVisibleTimer == null)
             {
-                makeGlowVisibleTimer = new DispatcherTimer()
+                makeGlowVisibleTimer = new DispatcherTimer
                 {
-                    Interval = TimeSpan.FromMilliseconds(glowTimerDelay)
+                    Interval = GlowTimerDelay
                 };
                 makeGlowVisibleTimer.Tick += makeGlowVisibleTimer_Tick;
             }

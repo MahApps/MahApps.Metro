@@ -43,7 +43,7 @@
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <IntermediateOutputPath>obj\NET4\Debug\</IntermediateOutputPath>
-    <DefineConstants>TRACE;DEBUG;NET_4</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\MahApps.Metro.XML</DocumentationFile>
@@ -54,7 +54,7 @@
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <IntermediateOutputPath>obj\NET4\Release\</IntermediateOutputPath>
-    <DefineConstants>TRACE;NET_4</DefineConstants>
+    <DefineConstants>TRACE;NET4</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\MahApps.Metro.XML</DocumentationFile>

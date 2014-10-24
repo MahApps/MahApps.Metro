@@ -41,7 +41,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\NET45\Debug\</OutputPath>
     <IntermediateOutputPath>obj\NET45\Debug\</IntermediateOutputPath>
-    <DefineConstants>TRACE;DEBUG;NET_4_5</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET4_5</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -49,7 +49,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-    <DefineConstants>TRACE;NET_4_5</DefineConstants>
+    <DefineConstants>TRACE;NET4_5</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>

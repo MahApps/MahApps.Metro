@@ -356,7 +356,7 @@ namespace MahApps.Metro
                     if (oldAccentResource != null)
                     {
                         resources.MergedDictionaries.Add(newAccent.Resources);
-                        var ok = resources.MergedDictionaries.Remove(oldAccentResource);
+                        resources.MergedDictionaries.Remove(oldAccentResource);
 
                         themeChanged = true;
                     }
@@ -369,7 +369,7 @@ namespace MahApps.Metro
                     if (oldThemeResource != null)
                     {
                         resources.MergedDictionaries.Add(newTheme.Resources);
-                        var ok = resources.MergedDictionaries.Remove(oldThemeResource);
+                        resources.MergedDictionaries.Remove(oldThemeResource);
 
                         themeChanged = true;
                     }
@@ -494,7 +494,7 @@ namespace MahApps.Metro
             {
                 var currentRd = enumerator.Current;
 
-                AppTheme matched = null;
+                AppTheme matched;
                 if ((matched = GetAppTheme(currentRd)) != null)
                 {
                     detectedTheme = matched;
@@ -516,10 +516,10 @@ namespace MahApps.Metro
         {
             AppTheme currentTheme = presetTheme;
 
-            Accent matched = null;
+            Accent matched;
             if ((matched = GetAccent(dict)) != null)
             {
-                detectedAccentTheme = Tuple.Create<AppTheme, Accent>(currentTheme, matched);
+                detectedAccentTheme = Tuple.Create(currentTheme, matched);
                 return true;
             }
 
@@ -545,7 +545,7 @@ namespace MahApps.Metro
         [SecurityCritical]
         private static void OnThemeChanged(Accent newAccent, AppTheme newTheme)
         {
-            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs() { AppTheme = newTheme, Accent = newAccent });
+            SafeRaise.Raise(IsThemeChanged, Application.Current, new OnThemeChangedEventArgs { AppTheme = newTheme, Accent = newAccent });
         }
 
         private static bool AreResourceDictionarySourcesEqual(Uri first, Uri second)
