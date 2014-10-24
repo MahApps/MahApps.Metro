@@ -72,20 +72,23 @@ namespace MahApps.Metro.Controls
                     Content = popover.Content
                 };
 
-                // bind the popover windows horizontal alignement property to the popovers
-                var horizontalAlignmentBinding = new Binding("HorizontalAlignment") {
-                    Source = popover,
-                    Mode = BindingMode.OneWay,
-                    
-                };
-                _popoverWindow.SetBinding(MetroPopoverWindow.HorizontalAlignmentProperty, horizontalAlignmentBinding);
-
+                // bind key popover window properties to the popovers           
+                _popoverWindow.SetBinding(MetroPopoverWindow.HorizontalAlignmentProperty, new Binding("HorizontalAlignment") { Source = popover, Mode = BindingMode.OneWay });
+                //_popoverWindow.SetBinding(MetroPopoverWindow.WidthProperty, new Binding("Width") { Source = popover, Mode = BindingMode.OneWay });
+                //_popoverWindow.SetBinding(MetroPopoverWindow.MinWidthProperty, new Binding("MinWidth") { Source = popover, Mode = BindingMode.OneWay });
+                //_popoverWindow.SetBinding(MetroPopoverWindow.MaxWidthProperty, new Binding("MaxWidth") { Source = popover, Mode = BindingMode.OneWay });
                 _visuals.Add(_popoverWindow);
+                this.AddLogicalChild(_popoverWindow);
             }
-
+            
             public MetroPopover Popover
             {
                 get { return _popover; }
+            }
+
+            public MetroPopoverWindow PopoverWindow
+            {
+                get { return _popoverWindow; }
             }
 
             public void UpdateContent(object content)
@@ -95,12 +98,14 @@ namespace MahApps.Metro.Controls
 
             public void ShowWindow()
             {
+                Attach();
                 _popoverWindow.Show();
             }
 
             public void HideWindow()
             {
                 _popoverWindow.Hide();
+                Detach();
             }
 
             public bool IsWindowOpen()
@@ -144,7 +149,7 @@ namespace MahApps.Metro.Controls
             }
 
             protected override Size MeasureOverride(Size constraint)
-            {
+            {                
                 _popoverWindow.Measure(constraint);
                 return _popoverWindow.DesiredSize;
             }
@@ -208,6 +213,14 @@ namespace MahApps.Metro.Controls
         static MetroPopover()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroPopover), new FrameworkPropertyMetadata(typeof(MetroPopover)));
+
+            // Ensure visibility is always collapsed
+            UIElement.VisibilityProperty.OverrideMetadata(typeof(MetroPopover), new FrameworkPropertyMetadata(Visibility.Collapsed, null, new CoerceValueCallback(MetroPopover.CoerceCollapsedVisibility)));
+        }
+
+        private static object CoerceCollapsedVisibility(DependencyObject d, object baseValue)
+        {
+            return Visibility.Collapsed;
         }
 
         public MetroPopover()
@@ -293,8 +306,6 @@ namespace MahApps.Metro.Controls
             var popover = (MetroPopover)d;
             var oldChild = e.OldValue;
             var newChild = e.NewValue;
-            popover.RemoveLogicalChild(oldChild);
-            popover.AddLogicalChild(newChild);
 
             // rebuild 
             if (popover._adorner != null) {
@@ -317,11 +328,7 @@ namespace MahApps.Metro.Controls
         }
 
         // the adorner can only attach to loaded targets so call attach and detach when the target is loaded and unloaded respecitively
-        void OnTargetLoaded(object sender, RoutedEventArgs e)
-        {
-            _adorner.Attach();
-        }
-
+      
         private void OnTargetUnloaded(object sender, RoutedEventArgs e)
         {
             _adorner.Detach();
@@ -356,6 +363,12 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            // The MetroPopover control itself isn't ever rendered on screen so set the measure to 0.
+            return default(Size);
+        }
+
         /// <summary>
         /// Programically determines if the popover is actually open & visible.
         /// </summary>
@@ -373,7 +386,6 @@ namespace MahApps.Metro.Controls
 
                     var targetFrameworkElement = _adorner.AdornedElement as FrameworkElement;
                     if (targetFrameworkElement != null) {
-                        targetFrameworkElement.Loaded -= OnTargetLoaded;
                         targetFrameworkElement.Unloaded -= OnTargetUnloaded;
                     }
 
@@ -382,16 +394,12 @@ namespace MahApps.Metro.Controls
 
                 if (Target != null) {
                     _adorner = new PopoverAdorner(Target, this);
-                    _adorner.Attach();
 
                     var targetFrameworkElement = Target as FrameworkElement;
                     if (targetFrameworkElement != null) {
-                        targetFrameworkElement.Loaded += OnTargetLoaded;
                         targetFrameworkElement.Unloaded += OnTargetUnloaded;
                     }
                 }
-            } else if (_adorner != null) {
-                _adorner.Attach();
             }
         }
 

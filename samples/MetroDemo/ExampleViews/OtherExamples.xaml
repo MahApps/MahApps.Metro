@@ -211,12 +211,17 @@
                     This popover is aligned to the bottom left.
                 </Controls:MetroPopover>
                 <ToggleButton x:Name="showPopoverBottomCenter" Grid.Column="2">Show Popover</ToggleButton>
-                <Controls:MetroPopover  Grid.Column="2" Target="{Binding ElementName=showPopoverBottomCenter}" IsOpen="{Binding ElementName=showPopoverBottomCenter, Path=IsChecked, Mode=TwoWay}" HorizontalAlignment="Center">
-                    This popover is aligned to the bottom center.
+                <Controls:MetroPopover  Grid.Column="2" Target="{Binding ElementName=showPopoverBottomCenter}" IsOpen="{Binding ElementName=showPopoverBottomCenter, Path=IsChecked, Mode=TwoWay}" 
+                                        HorizontalAlignment="Center">
+                    <TextBlock TextWrapping="WrapWithOverflow">This popover is aligned to the bottom center.</TextBlock> 
                 </Controls:MetroPopover>
                 <ToggleButton x:Name="showPopoverBottomRight" Grid.Column="4">Show Popover</ToggleButton>
                 <Controls:MetroPopover  Grid.Column="4" Target="{Binding ElementName=showPopoverBottomRight}" IsOpen="{Binding ElementName=showPopoverBottomRight, Path=IsChecked, Mode=TwoWay}" HorizontalAlignment="Right">
-                    This popover is aligned to the bottom right.
+                    <StackPanel Width="200">
+                        <TextBlock TextWrapping="Wrap">This popover is aligned to the bottom right.</TextBlock>
+                        <TextBox></TextBox>
+                    </StackPanel>
+                    
                 </Controls:MetroPopover>
             </Grid>
         </Grid>
