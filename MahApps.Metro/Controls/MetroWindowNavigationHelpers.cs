@@ -48,7 +48,7 @@ namespace MahApps.Metro.Controls
             Application.Current.Navigated += navigated;
         }
 
-#if NET4_5
+#if !NET_4
     /// <summary>
     ///     Provides an oppurtunity to execute an asynchronous action when a content is being navigated to.
     /// </summary>
