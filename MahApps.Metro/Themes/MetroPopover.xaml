@@ -16,17 +16,12 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid Name="arrow" Margin="0,0,0,-7">
-                <Image Name="arrowIcon" Width="10" Height="20" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <RotateTransform Angle="-90" />
-                        </TransformGroup>
-                    </Image.RenderTransform>
+            <Grid Name="arrow">
+                <Image Name="arrowIcon" Width="20" Height="10" RenderTransformOrigin="0.5,0.5">
                     <Image.Source>
                         <DrawingImage>
                             <DrawingImage.Drawing>
-                                <GeometryDrawing x:Name="arrowDrawing" Brush="#FFFFFFFF" Geometry="M897.41,613.924L887.08,624.255 887.08,603.594 897.41,613.924z" />
+                                <GeometryDrawing x:Name="arrowDrawing" Brush="#FFFFFFFF" Geometry="M0,0 L1,0 0.5,-0.5z" />
                             </DrawingImage.Drawing>
                         </DrawingImage>
                     </Image.Source>
