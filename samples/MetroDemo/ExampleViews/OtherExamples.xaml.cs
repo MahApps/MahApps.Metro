@@ -51,10 +51,5 @@ namespace MetroDemo.ExampleViews
                     break;
             }
         }
-
-        private void ShowPopover(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }

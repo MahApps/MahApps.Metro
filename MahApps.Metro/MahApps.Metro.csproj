@@ -129,7 +129,6 @@
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\MetroPopover.cs" />
-    <Compile Include="Controls\PopoverStateChangedEventArgs.cs" />
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
