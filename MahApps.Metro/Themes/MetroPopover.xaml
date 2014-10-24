@@ -8,16 +8,16 @@
 
     <ControlTemplate x:Key="MetroPopoverWindowTemplate"
                      TargetType="{x:Type Controls:MetroPopoverWindow}">
-        <Grid Name="MainGrid" Background="Transparent" HorizontalAlignment="Left" VerticalAlignment="Top" MaxWidth="{TemplateBinding MaxWidth}" MinWidth="{TemplateBinding MinWidth}">
-            <Grid.Effect>
-                <DropShadowEffect Direction="315" Color="{DynamicResource BlackColor}" ShadowDepth="1" BlurRadius="4" Opacity="0.6" />
-            </Grid.Effect>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid Name="arrow">
-                <Image Name="arrowIcon" Width="20" Height="10" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="MainGrid" Background="{DynamicResource TransparentWhiteBrush}" HorizontalAlignment="Left" VerticalAlignment="Top" MaxWidth="{TemplateBinding MaxWidth}" MinWidth="{TemplateBinding MinWidth}">
+            <Grid>
+                <Grid.Effect>
+                    <DropShadowEffect Direction="315" Color="{DynamicResource BlackColor}" ShadowDepth="1" BlurRadius="4" Opacity="0.6" />
+                </Grid.Effect>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Image Grid.Row="0" Name="arrowIcon" Width="20" Height="10" RenderTransformOrigin="0.5,0.5">
                     <Image.Source>
                         <DrawingImage>
                             <DrawingImage.Drawing>
@@ -26,13 +26,12 @@
                         </DrawingImage>
                     </Image.Source>
                 </Image>
+                <Grid Grid.Row="1" Background="{TemplateBinding Background}" Margin="0,-1,0,0" />
             </Grid>
-            <Grid Grid.Row="1" Background="{TemplateBinding Background}" Margin="0,-1,0,0" Effect="{x:Null}">
-                <ContentPresenter x:Name="PART_ContentPresenter"
-                                  Margin="6, 3"
-                                  Content="{TemplateBinding Content}"
-                                  DataContext="{TemplateBinding DataContext}" />
-            </Grid>
+            <ContentPresenter x:Name="PART_ContentPresenter"
+                        Margin="6 13 6 3"
+                        Content="{TemplateBinding Content}"
+                        DataContext="{TemplateBinding DataContext}" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="HorizontalAlignment" Value="Left">
