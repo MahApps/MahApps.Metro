@@ -6,7 +6,7 @@ using MahApps.Metro.Controls.Dialogs;
 namespace MetroDemo.Navigation
 {
     /// <summary>
-    /// Interaction logic for HomePage.xaml
+    ///     Interaction logic for HomePage.xaml
     /// </summary>
     public partial class HomePage : Page
     {
@@ -28,12 +28,20 @@ namespace MetroDemo.Navigation
             this.OnNavigated(async e =>
             {
                 // Show a message dialog to the user
-                var frame = (Frame) e.Navigator;
+                var frame = (Frame)e.Navigator;
                 var window = frame.TryFindParent<MetroWindow>();
                 if (window != null)
                 {
-                    string message = String.Format("Extra data received: {0}", e.ExtraData);
-                    await window.ShowMessageAsync("MetroWindow.OnNavigated async action example", message);
+                    if (window is MetroNavigationWindow)
+                    {
+                        // NOTE : actually OnNavigated is useful only for MetroWindow so
+                        // we do not show this example for MetroNavigationWindow 
+                    }
+                    else
+                    {
+                        string message = String.Format("Extra data received: {0}", e.ExtraData);
+                        await window.ShowMessageAsync("MetroWindow.OnNavigated async action example", message);
+                    }
                 }
             });
 #endif
