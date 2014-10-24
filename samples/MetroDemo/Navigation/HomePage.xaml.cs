@@ -23,7 +23,7 @@ namespace MetroDemo.Navigation
                 Console.WriteLine(format);
             });
 
-#if NET_4_5
+#if NET4_5
             // Example of an asynchronous operation when OnNavigated to here.
             this.OnNavigated(async e =>
             {
