@@ -121,6 +121,7 @@
     <Compile Include="Controls\MetroTabControl.cs" />
     <Compile Include="Controls\MetroTabItem.cs" />
     <Compile Include="Controls\MetroWindowHelpers.cs" />
+    <Compile Include="Controls\MetroWindowNavigationHelpers.cs" />
     <Compile Include="Controls\NumericUpDown.cs" />
     <Compile Include="Controls\NumericUpDownChangedRoutedEventArgs.cs" />
     <Compile Include="Controls\NumericUpDownChangedRoutedEventHandler.cs" />
@@ -330,6 +331,11 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.Expander.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.Frame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <DependentUpon>Controls.xaml</DependentUpon>

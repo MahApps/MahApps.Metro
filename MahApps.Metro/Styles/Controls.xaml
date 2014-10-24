@@ -18,6 +18,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DatePicker.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.DataGrid.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Expander.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Frame.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.GroupBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ListBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.PasswordBox.xaml" />
@@ -61,6 +62,7 @@
     <Style TargetType="Menu" BasedOn="{StaticResource MetroMenu}" />
     <Style TargetType="ContextMenu" BasedOn="{StaticResource MetroContextMenu}" />
     <Style TargetType="Expander" BasedOn="{StaticResource MetroExpander}" />
+    <Style TargetType="Frame" BasedOn="{StaticResource MetroFrame}" />
     <Style TargetType="GroupBox" BasedOn="{StaticResource MetroGroupBox}" />
     <Style TargetType="ListBox" BasedOn="{StaticResource MetroListBox}" />
     <Style TargetType="ListBoxItem" BasedOn="{StaticResource MetroListBoxItem}" />

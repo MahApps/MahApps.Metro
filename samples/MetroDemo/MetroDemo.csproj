@@ -159,6 +159,9 @@
     <Compile Include="Navigation\InterestingPage.xaml.cs">
       <DependentUpon>InterestingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Navigation\NavigationFrameWindow.xaml.cs">
+      <DependentUpon>NavigationFrameWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleWindows\VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
@@ -239,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Navigation\InterestingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Navigation\NavigationFrameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

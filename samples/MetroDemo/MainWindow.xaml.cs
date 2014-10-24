@@ -189,17 +189,46 @@ namespace MetroDemo
 
         }
 
-        private void LaunchNavigationDemo(object sender, RoutedEventArgs e)
+        private async void LaunchNavigationDemo(object sender, RoutedEventArgs e)
         {
-            var navWin = new MetroNavigationWindow();
-            navWin.Title = "Navigation Demo";
+            MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "MetroNavigationWindow",
+                NegativeButtonText = "MetroWindow + Frame",
+                FirstAuxiliaryButtonText = "Cancel",
+                ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme
+            };
 
-            //uncomment the next two lines if you want the clean style.
-            //navWin.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml", UriKind.Absolute) });
-            //navWin.SetResourceReference(StyleProperty, "CleanWindowStyleKey");
+            MessageDialogResult result = await this.ShowMessageAsync("Navigation demo", "Choose a navigation demo: ",
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+            switch (result)
+            {
+                case MessageDialogResult.Negative:
+                    var frameWin = new Navigation.NavigationFrameWindow();
+                    frameWin.Title = "Navigation Demo (MetroWindow + Frame)";
+                    frameWin.NavigateTo(new Navigation.HomePage());
+                    frameWin.Show();
+                    break;
+                case MessageDialogResult.Affirmative:
+                    var navWin = new MetroNavigationWindow();
+                    navWin.Title = "Navigation Demo (MetroNavigationWindow)";
 
-            navWin.Show();
-            navWin.Navigate(new Navigation.HomePage());
+                    //uncomment the next two lines if you want the clean style.
+                    //navWin.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml", UriKind.Absolute) });
+                    //navWin.SetResourceReference(StyleProperty, "CleanWindowStyleKey");
+
+                    navWin.Show();
+                    navWin.Navigate(new Navigation.HomePage());
+                    break;
+                case MessageDialogResult.FirstAuxiliary:
+                    // canceled
+                    break;
+                case MessageDialogResult.SecondAuxiliary:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private async void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
