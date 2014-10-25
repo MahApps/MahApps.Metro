@@ -184,6 +184,7 @@
     <Compile Include="Native\ABEdge.cs" />
     <Compile Include="Native\ABMsg.cs" />
     <Compile Include="Native\APPBARDATA.cs" />
+    <Compile Include="Native\SafeLibraryHandle.cs" />
     <Compile Include="Native\WINDOWPLACEMENT.cs" />
     <Compile Include="Controls\WindowSettings.cs" />
     <Compile Include="Native\Constants.cs" />
