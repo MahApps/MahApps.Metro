@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
@@ -64,22 +62,16 @@ namespace MahApps.Metro.Controls
         private Button min;
         private Button max;
         private Button close;
-        private IntPtr user32 = IntPtr.Zero;
+        private SafeLibraryHandle user32 = null;
 
         static WindowButtonCommands()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowButtonCommands), new FrameworkPropertyMetadata(typeof(WindowButtonCommands)));
         }
 
-        ~WindowButtonCommands()
-        {
-            if (user32 != IntPtr.Zero)
-                UnsafeNativeMethods.FreeLibrary(user32);
-        }
-
         private string GetCaption(int id)
         {
-            if (user32 == IntPtr.Zero)
+            if (user32 == null)
                 user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
 
             var sb = new StringBuilder(256);
