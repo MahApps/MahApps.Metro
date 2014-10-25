@@ -12,6 +12,8 @@
     <Style TargetType="{x:Type Controls:NumericUpDown}">
         <Setter Property="BorderThickness"
                 Value="1" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="true" />
         <Setter Property="Foreground"
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="BorderBrush"
