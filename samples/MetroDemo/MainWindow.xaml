@@ -150,6 +150,8 @@
                               Header="Show InputDialog" />
                     <MenuItem Click="ShowLoginDialog"
                               Header="Show LoginDialog" />
+                    <MenuItem Click="ShowLoginDialogPasswordPreview"
+                              Header="Show Password Preview LoginDialog" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
                     <MenuItem Click="ShowProgressDialog"
