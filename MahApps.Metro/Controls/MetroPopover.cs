@@ -78,7 +78,6 @@ namespace MahApps.Metro.Controls
                 //_popoverWindow.SetBinding(MetroPopoverWindow.MinWidthProperty, new Binding("MinWidth") { Source = popover, Mode = BindingMode.OneWay });
                 //_popoverWindow.SetBinding(MetroPopoverWindow.MaxWidthProperty, new Binding("MaxWidth") { Source = popover, Mode = BindingMode.OneWay });
                 _visuals.Add(_popoverWindow);
-                this.AddLogicalChild(_popoverWindow);
             }
             
             public MetroPopover Popover
@@ -120,7 +119,7 @@ namespace MahApps.Metro.Controls
                     adornerLayer.Remove(this);
                 }
             }
-
+            
             public void Attach()
             {
                 var adornerLayer = AdornerLayer.GetAdornerLayer(AdornedElement);
@@ -187,8 +186,7 @@ namespace MahApps.Metro.Controls
             {
                 get { return _visuals.Count; }
             }
-
-
+        
             static bool IsDescendant(DependencyObject reference, DependencyObject node)
             {
                 bool result = false;
@@ -327,13 +325,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        // the adorner can only attach to loaded targets so call attach and detach when the target is loaded and unloaded respecitively
-      
-        private void OnTargetUnloaded(object sender, RoutedEventArgs e)
-        {
-            _adorner.Detach();
-        }
-
         // Attach to parent window.
 
         void OnLoaded(object sender, RoutedEventArgs e)
@@ -383,26 +374,17 @@ namespace MahApps.Metro.Controls
             if (_adorner == null || _adorner.AdornedElement != Target) {
                 if (_adorner != null) {
                     _adorner.Detach();
-
-                    var targetFrameworkElement = _adorner.AdornedElement as FrameworkElement;
-                    if (targetFrameworkElement != null) {
-                        targetFrameworkElement.Unloaded -= OnTargetUnloaded;
-                    }
+                    this.RemoveLogicalChild(_adorner.PopoverWindow);
 
                     _adorner = null;
                 }
 
                 if (Target != null) {
                     _adorner = new PopoverAdorner(Target, this);
-
-                    var targetFrameworkElement = Target as FrameworkElement;
-                    if (targetFrameworkElement != null) {
-                        targetFrameworkElement.Unloaded += OnTargetUnloaded;
-                    }
+                    this.AddLogicalChild(_adorner.PopoverWindow);
                 }
             }
         }
-
 
     }
 }
