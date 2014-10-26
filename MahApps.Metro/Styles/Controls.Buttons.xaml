@@ -215,7 +215,7 @@
         <Setter Property="Background"
                 Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground"
-                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
