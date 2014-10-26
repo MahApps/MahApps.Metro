@@ -186,21 +186,6 @@ namespace MahApps.Metro.Controls
             {
                 get { return _visuals.Count; }
             }
-        
-            static bool IsDescendant(DependencyObject reference, DependencyObject node)
-            {
-                bool result = false;
-                DependencyObject dependencyObject = node;
-                while (dependencyObject != null) {
-                    if (dependencyObject == reference) {
-                        result = true;
-                        break;
-                    }
-
-                    dependencyObject = dependencyObject.GetParentObject();
-                }
-                return result;
-            }
         }
 
         #endregion
@@ -344,12 +329,12 @@ namespace MahApps.Metro.Controls
         }
         
         private void OnPreviewOwningWindowMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var originalSource = e.OriginalSource as Visual;
+        {            
+            var originalSource = e.OriginalSource as DependencyObject;
             if (AutoClose && IsPopoverOpen() &&
                 originalSource != null &&    // didn't click on target or popover (adorner)
-                !Target.IsAncestorOf(originalSource) &&
-                !_adorner.IsAncestorOf(originalSource)) {
+                !IsDescendant(Target, originalSource) &&
+                !IsDescendant(_adorner.PopoverWindow, originalSource)) {
                 Close();
             }
         }
@@ -386,5 +371,20 @@ namespace MahApps.Metro.Controls
             }
         }
 
+
+        static bool IsDescendant(DependencyObject reference, DependencyObject node)
+        {
+            bool result = false;
+            DependencyObject dependencyObject = node;
+            while (dependencyObject != null) {
+                if (dependencyObject == reference) {
+                    result = true;
+                    break;
+                }
+
+                dependencyObject = dependencyObject.GetParentObject();
+            }
+            return result;
+        }
     }
 }

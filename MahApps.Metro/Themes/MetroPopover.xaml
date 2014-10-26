@@ -24,7 +24,7 @@
                 <Grid Grid.Row="1" Background="{TemplateBinding Background}" Margin="0,-1,0,0" />
             </Grid>
             <ContentPresenter x:Name="PART_ContentPresenter"
-                        Margin="6 13 6 3"
+                        Margin="6 15 5 5"
                         Content="{TemplateBinding Content}"
                         DataContext="{TemplateBinding DataContext}" />
         </Grid>

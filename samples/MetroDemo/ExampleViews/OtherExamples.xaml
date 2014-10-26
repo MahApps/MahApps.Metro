@@ -217,10 +217,25 @@
                 </Controls:MetroPopover>
                 <ToggleButton x:Name="showPopoverBottomRight" Grid.Column="4">Show Popover</ToggleButton>
                 <Controls:MetroPopover  Grid.Column="4" Target="{Binding ElementName=showPopoverBottomRight}" IsOpen="{Binding ElementName=showPopoverBottomRight, Path=IsChecked, Mode=TwoWay}" HorizontalAlignment="Right">
-                    <StackPanel Width="200">
-                        <TextBlock TextWrapping="Wrap">This popover is aligned to the bottom right.</TextBlock>
-                        <TextBox></TextBox>
-                    </StackPanel>
+                    <Grid Width="200">    
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="6" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="6" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock TextWrapping="Wrap">This popover is aligned to the bottom right with form controls.</TextBlock>
+                        <TextBox Grid.Row="2"></TextBox>
+                        <ComboBox Grid.Row="4" >
+                            <ComboBox.Items>
+                                <TextBlock>Item 1</TextBlock>
+                                <TextBlock>Item 2</TextBlock>
+                                <TextBlock>Item 3</TextBlock>
+                                <TextBlock>Item 4</TextBlock>
+                            </ComboBox.Items>
+                        </ComboBox>
+                    </Grid>
                     
                 </Controls:MetroPopover>
             </Grid>
