@@ -8,8 +8,8 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <controls:MetroWindow.Resources>
-        <dialogs:SimpleDialog x:Key="CustomDialog">
+        <dialogs:CustomDialog x:Key="CustomDialog">
             <TextBlock x:Name="TheDialogBody" Text="{Binding Path=Text}" />
-        </dialogs:SimpleDialog>
+        </dialogs:CustomDialog>
     </controls:MetroWindow.Resources>
 </controls:MetroWindow>

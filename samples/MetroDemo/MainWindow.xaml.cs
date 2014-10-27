@@ -78,7 +78,7 @@ namespace MetroDemo
 
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
-            var dialog = (BaseMetroDialog)this.Resources["SimpleDialogTest"];
+            var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
             dialog = dialog.ShowDialogExternally();
 
             await TaskEx.Delay(5000);
@@ -108,11 +108,11 @@ namespace MetroDemo
                     Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
         }
 
-        private async void ShowSimpleDialog(object sender, RoutedEventArgs e)
+        private async void ShowCustomDialog(object sender, RoutedEventArgs e)
         {
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
 
-            var dialog = (BaseMetroDialog)this.Resources["SimpleDialogTest"];
+            var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
 
             await this.ShowMetroDialogAsync(dialog);
 
