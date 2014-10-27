@@ -41,7 +41,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
 
-        protected MetroDialogSettings DialogSettings { get; private set; }
+        public MetroDialogSettings DialogSettings { get; private set; }
 
         /// <summary>
         /// Gets/sets the dialog's title.
@@ -289,6 +289,9 @@ namespace MahApps.Metro.Controls.Dialogs
             AnimateShow = AnimateHide = true;
 
             DefaultText = "";
+
+            MinHeightPercent = 0.25;
+            MaxHeightPercent = 1;
         }
 
         /// <summary>
@@ -325,6 +328,16 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the default text( just the inputdialog needed)
         /// </summary>
         public string DefaultText { get; set; }
+
+        /// <summary>
+        /// Gets/sets the Minimum Height Percent of the Dialog. Default value is 0.25
+        /// </summary>
+        public double MinHeightPercent { get; set; }
+
+        /// <summary>
+        /// Gets/sets the Maximum Height Percent of the Dialog. Default value is 1.0
+        /// </summary>
+        public double MaxHeightPercent { get; set; }
     }
 
     /// <summary>
