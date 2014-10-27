@@ -87,6 +87,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CleanWindowTest.cs" />
+    <Compile Include="CustomDialogTest.cs" />
+    <Compile Include="DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FlyoutTest.cs" />
     <Compile Include="CleanWindow.xaml.cs">
       <DependentUpon>CleanWindow.xaml</DependentUpon>
@@ -122,6 +126,10 @@
     <Page Include="CleanWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HiddenMinMaxCloseButtonsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

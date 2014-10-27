@@ -4,7 +4,7 @@
                          xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                          x:Class="MahApps.Metro.Controls.Dialogs.ProgressDialog"
                          Cursor="Wait">
-    <Dialogs:BaseMetroDialog.DialogBody>
+    <Dialogs:BaseMetroDialog.Content>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -30,7 +30,7 @@
                         Visibility="Hidden" />
             </StackPanel>
         </Grid>
-    </Dialogs:BaseMetroDialog.DialogBody>
+    </Dialogs:BaseMetroDialog.Content>
     <Dialogs:BaseMetroDialog.DialogBottom>
         <Controls:MetroProgressBar HorizontalAlignment="Stretch"
                                    VerticalAlignment="Bottom"
