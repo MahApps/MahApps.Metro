@@ -16,28 +16,9 @@ namespace MahApps.Metro.Controls.Dialogs
     /// You probably don't want to use this class, if you want to add arbitrary content to your dialog, 
     /// use the <see cref="SimpleDialog"/> class.
     /// </summary>
-    [System.Windows.Markup.ContentProperty("DialogBody")]
-    public abstract class BaseMetroDialog : Control
+    public abstract class BaseMetroDialog : ContentControl
     {
-        private const string PART_DialogBody_ContentPresenter = "PART_DialogBody_ContentPresenter";
-        protected ContentPresenter DialogBody_ContentPresenter = null;
-
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
-        public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register("DialogBody", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null, (o, e) =>
-        {
-            var dialog = o as BaseMetroDialog;
-            if (dialog != null)
-            {
-                if (e.OldValue != null)
-                {
-                    dialog.RemoveLogicalChild(e.OldValue);
-                }
-                if (e.NewValue != null)
-                {
-                    dialog.AddLogicalChild(e.NewValue);
-                }
-            }
-        }));
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
 
@@ -50,15 +31,6 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets arbitrary content in the "message" area in the dialog. 
-        /// </summary>
-        public object DialogBody
-        {
-            get { return GetValue(DialogBodyProperty); }
-            set { SetValue(DialogBodyProperty, value); }
         }
 
         /// <summary>
@@ -85,13 +57,6 @@ namespace MahApps.Metro.Controls.Dialogs
         static BaseMetroDialog()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseMetroDialog), new FrameworkPropertyMetadata(typeof(BaseMetroDialog)));
-        }
-
-        public override void OnApplyTemplate()
-        {
-            DialogBody_ContentPresenter = GetTemplateChild(PART_DialogBody_ContentPresenter) as ContentPresenter;
-
-            base.OnApplyTemplate();
         }
 
         /// <summary>
