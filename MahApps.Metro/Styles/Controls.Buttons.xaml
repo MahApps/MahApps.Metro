@@ -215,7 +215,7 @@
         <Setter Property="Background"
                 Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground"
-                Value="{DynamicResource WhiteBrush}" />
+                Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
@@ -261,6 +261,7 @@
                      Value="True">
                 <Setter Property="Background"
                         Value="{DynamicResource HighlightBrush}" />
+                <Setter Property="Foreground" Value="White" />
             </Trigger>
             <Trigger Property="IsEnabled"
                      Value="false">

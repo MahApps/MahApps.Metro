@@ -262,7 +262,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="TitleForeground"
-                Value="White" />
+                Value="{DynamicResource IdealForegroundColor}" />
         <Setter Property="Template"
                 Value="{StaticResource WindowTemplateKey}" />
         <Setter Property="TitleTemplate">
@@ -325,6 +325,8 @@
                     <ControlTemplate.Resources>
                         <ResourceDictionary>
                             <Style TargetType="{x:Type Button}">
+                                <Setter Property="Foreground" 
+                                        Value="{DynamicResource IdealForegroundColor}"/>
                                 <Setter Property="Background"
                                         Value="{DynamicResource TransparentWhiteBrush}" />
                                 <Setter Property="HorizontalContentAlignment"
@@ -376,7 +378,7 @@
                                                 <Trigger Property="IsEnabled"
                                                          Value="false">
                                                     <Setter Property="Foreground"
-                                                            Value="#ADADAD" />
+                                                            Value="{DynamicResource IdealForegroundColorBrush}" />
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
@@ -386,7 +388,7 @@
                                     <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                                  Value="True">
                                         <Setter Property="Foreground"
-                                                Value="White" />
+                                                Value="{DynamicResource IdealForegroundColorBrush}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -448,7 +450,7 @@
                                                 <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                                              Value="True">
                                                     <Setter Property="Foreground"
-                                                            Value="White" />
+                                                            Value="{DynamicResource IdealForegroundColorBrush}" />
                                                 </DataTrigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
@@ -536,11 +538,13 @@
                                 </MultiBinding>
                             </Button.Visibility>
                             <Path x:Name="MaxPath" SnapsToDevicePixels="True"
-                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
+                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" >
+                            </Path>
                         </Button>
 
                         <Button x:Name="PART_Close"
-                                Focusable="False" RenderOptions.EdgeMode="Aliased"
+                                Focusable="False"
+                                RenderOptions.EdgeMode="Aliased"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowCloseButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
