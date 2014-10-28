@@ -9,8 +9,7 @@ using System.Windows.Markup;
 namespace MahApps.Metro.Controls
 {
     /// <summary>
-    ///     <MyNamespace:CustomControl1/>
-    ///
+    ///     &lt;MyNamespace:CustomControl1/&gt;
     /// </summary>
     [ContentProperty("ItemsSource")]
     [DefaultEvent("SelectionChanged"),

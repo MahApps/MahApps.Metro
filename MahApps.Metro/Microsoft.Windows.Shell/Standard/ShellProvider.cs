@@ -906,7 +906,6 @@
         /// Retrieve an IEnumObjects or IObjectArray for IShellItems and/or IShellLinks. 
         /// Items may appear in both the frequent and recent lists.  
         /// </summary>
-        /// <param name="?"></param>
         /// <returns></returns>
         [return: MarshalAs(UnmanagedType.IUnknown)]
         object GetList([In] APPDOCLISTTYPE listtype, [In] uint cItemsDesired, [In] ref Guid riid);
