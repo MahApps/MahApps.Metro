@@ -6,6 +6,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate x:Key="HeaderTemplate"
@@ -57,7 +58,7 @@
             <TextBlock Text="{Binding}"
                        x:Name="PART_BackButton"
                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=TitleVisibility}"
-                       FontSize="20"
+                       FontSize="{StaticResource FlyoutHeaderFontSize}"
                        Margin="15,0,0,0"
                        VerticalAlignment="Center" />
         </DockPanel>

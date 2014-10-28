@@ -24,4 +24,6 @@
     <System:Double x:Key="DialogTitleFontSize">26</System:Double>
     <System:Double x:Key="DialogMessageFontSize">15</System:Double>
 
+    <System:Double x:Key="FlyoutHeaderFontSize">20</System:Double>
+
 </ResourceDictionary>
