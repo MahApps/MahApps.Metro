@@ -325,8 +325,8 @@
                     <ControlTemplate.Resources>
                         <ResourceDictionary>
                             <Style TargetType="{x:Type Button}">
-                                <Setter Property="Foreground" 
-                                        Value="{DynamicResource IdealForegroundColorBrush}"/>
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource BlackBrush}"/>
                                 <Setter Property="Background"
                                         Value="{DynamicResource TransparentWhiteBrush}" />
                                 <Setter Property="HorizontalContentAlignment"
@@ -378,7 +378,7 @@
                                                 <Trigger Property="IsEnabled"
                                                          Value="false">
                                                     <Setter Property="Foreground"
-                                                            Value="{DynamicResource IdealForegroundColorBrush}" />
+                                                            Value="{DynamicResource GrayBrush4}" />
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
@@ -394,6 +394,8 @@
                             </Style>
                             <Style TargetType="{x:Type ToggleButton}">
                                 <!--Modified version of spiritdead's code-->
+                                <Setter Property="Foreground"
+                                        Value="{DynamicResource BlackBrush}" />
                                 <Setter Property="Background"
                                         Value="{DynamicResource TransparentWhiteBrush}" />
                                 <Setter Property="HorizontalContentAlignment"
@@ -445,7 +447,7 @@
                                                 <Trigger Property="IsEnabled"
                                                          Value="false">
                                                     <Setter Property="Foreground"
-                                                            Value="#ADADAD" />
+                                                            Value="{DynamicResource GrayBrush4}" />
                                                 </Trigger>
                                                 <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                                              Value="True">
@@ -477,7 +479,7 @@
             <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                          Value="True">
                 <Setter Property="Foreground"
-                        Value="White" />
+                        Value="{DynamicResource IdealForegroundColorBrush}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                          Value="False">
@@ -505,7 +507,7 @@
                                 Focusable="False"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMinButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                Foreground="{TemplateBinding Foreground}"
                                 ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
                             <Button.Visibility>
                                 <MultiBinding Converter="{x:Static conv:ResizeModeMinMaxButtonVisibilityConverter.Instance}"
@@ -520,14 +522,14 @@
                             </Button.Visibility>
                             <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
                                   SnapsToDevicePixels="True"
-                                  Fill="{DynamicResource IdealForegroundColorBrush}" />
+                                  Fill="{TemplateBinding Foreground}" />
                         </Button>
 
                         <Button x:Name="PART_Max"
                                 Focusable="False"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMaxButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                Foreground="{TemplateBinding Foreground}"
                                 ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
                             <Button.Visibility>
                                 <MultiBinding Converter="{x:Static conv:ResizeModeMinMaxButtonVisibilityConverter.Instance}"
@@ -541,7 +543,7 @@
                                 </MultiBinding>
                             </Button.Visibility>
                             <Path x:Name="MaxPath" SnapsToDevicePixels="True"
-                                  Fill="{DynamicResource IdealForegroundColorBrush}" >
+                                  Fill="{TemplateBinding Foreground}" >
                             </Path>
                         </Button>
 
@@ -549,12 +551,12 @@
                                 Focusable="False"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowCloseButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                Foreground="{DynamicResource IdealForegroundColorBrush}"
+                                Foreground="{TemplateBinding Foreground}"
                                 ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
                                 Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
                             <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
                                   SnapsToDevicePixels="True"
-                                  Fill="{DynamicResource IdealForegroundColorBrush}" />
+                                  Fill="{TemplateBinding Foreground}" />
                         </Button>
                     </StackPanel>
                     <ControlTemplate.Triggers>
@@ -572,7 +574,7 @@
             <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                          Value="True">
                 <Setter Property="Foreground"
-                        Value="White" />
+                        Value="{DynamicResource IdealForegroundColorBrush}" />
             </DataTrigger>
             <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                          Value="False">
