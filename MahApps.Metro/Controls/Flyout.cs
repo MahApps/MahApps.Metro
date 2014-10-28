@@ -39,10 +39,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
-        public static readonly DependencyProperty IsCloseButtonVisibleProperty =
-            DependencyProperty.Register("IsCloseButtonVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
-        public static readonly DependencyProperty IsTitleVisibleProperty =
-            DependencyProperty.Register("IsTitleVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty IsCloseButtonVisibleProperty = DependencyProperty.Register("IsCloseButtonVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty IsTitleVisibleProperty = DependencyProperty.Register("IsTitleVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
 
         /// <summary>
         /// Gets/sets if the title is visible in this flyout.
