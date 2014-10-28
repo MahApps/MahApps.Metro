@@ -58,6 +58,11 @@ namespace MetroDemo.ExampleWindows
             this.ToggleFlyout(10);
         }
 
+        private void ShowAppBar(object sender, RoutedEventArgs e)
+        {
+            this.ToggleFlyout(11);
+        }
+
         private void CloseMe(object sender, RoutedEventArgs e)
         {
             this.Close();

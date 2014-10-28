@@ -39,6 +39,26 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
+        public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
+        public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register("TitleVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
+
+        /// <summary>
+        /// Gets/sets if the title is visible in this flyout.
+        /// </summary>
+        public Visibility TitleVisibility
+        {
+            get { return (Visibility)GetValue(TitleVisibilityProperty); }
+            set { SetValue(TitleVisibilityProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets if the close button is visible in this flyout.
+        /// </summary>
+        public Visibility CloseButtonVisibility
+        {
+            get { return (Visibility)GetValue(CloseButtonVisibilityProperty); }
+            set { SetValue(CloseButtonVisibilityProperty, value); }
+        }
 
         /// <summary>
         /// An ICommand that executes when the flyout's close button is clicked.

@@ -283,6 +283,13 @@
                     <TextBlock>Modal Flyout</TextBlock>
                 </StackPanel>
             </Controls:Flyout>
+            <Controls:Flyout Position="Bottom" 
+                             CloseButtonVisibility="Collapsed" 
+                             TitleVisibility ="Collapsed" 
+                             IsPinned="False"
+                             Height="75">
+                <TextBlock VerticalAlignment="Center" Text="This is an AppBar" />
+            </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
     <Grid>
@@ -329,6 +336,10 @@
                     Margin="2"
                     Click="CloseMe"
                     Content="Close" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Click="ShowAppBar"
+                    Content="AppBar" />
         </StackPanel>
         <AdornerDecorator Margin="10"
                           MinWidth="100"
