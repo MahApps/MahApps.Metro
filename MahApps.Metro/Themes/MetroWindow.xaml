@@ -326,7 +326,7 @@
                         <ResourceDictionary>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Foreground" 
-                                        Value="{DynamicResource IdealForegroundColor}"/>
+                                        Value="{DynamicResource IdealForegroundColorBrush}"/>
                                 <Setter Property="Background"
                                         Value="{DynamicResource TransparentWhiteBrush}" />
                                 <Setter Property="HorizontalContentAlignment"
@@ -462,7 +462,8 @@
 
                     <ItemsControl IsTabStop="False"
                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
-                                  ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}">
+                                  ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
+                                  ItemTemplate="{TemplateBinding ItemTemplate}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />
