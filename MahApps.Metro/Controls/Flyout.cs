@@ -39,8 +39,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
-        public static readonly DependencyProperty IsNavButtonVisibleProperty =
-            DependencyProperty.Register("IsNavButtonVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty IsCloseButtonVisibleProperty =
+            DependencyProperty.Register("IsCloseButtonVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
         public static readonly DependencyProperty IsTitleVisibleProperty =
             DependencyProperty.Register("IsTitleVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
 
@@ -54,12 +54,12 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets if the nav button is visible in this flyout.
+        /// Gets/sets if the close button is visible in this flyout.
         /// </summary>
-        public bool IsNavButtonVisible
+        public bool IsCloseButtonVisible
         {
-            get { return (bool)GetValue(IsNavButtonVisibleProperty); }
-            set { SetValue(IsNavButtonVisibleProperty, value); }
+            get { return (bool)GetValue(IsCloseButtonVisibleProperty); }
+            set { SetValue(IsCloseButtonVisibleProperty, value); }
         }
 
         /// <summary>
