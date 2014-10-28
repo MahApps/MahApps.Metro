@@ -39,25 +39,25 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseCommandProperty = DependencyProperty.RegisterAttached("CloseCommand", typeof(ICommand), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
-        public static readonly DependencyProperty IsCloseButtonVisibleProperty = DependencyProperty.Register("IsCloseButtonVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
-        public static readonly DependencyProperty IsTitleVisibleProperty = DependencyProperty.Register("IsTitleVisible", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(true));
+        public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
+        public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register("TitleVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
 
         /// <summary>
         /// Gets/sets if the title is visible in this flyout.
         /// </summary>
-        public bool IsTitleVisible
+        public Visibility TitleVisibility
         {
-            get { return (bool)GetValue(IsTitleVisibleProperty); }
-            set { SetValue(IsTitleVisibleProperty, value); }
+            get { return (Visibility)GetValue(TitleVisibilityProperty); }
+            set { SetValue(TitleVisibilityProperty, value); }
         }
 
         /// <summary>
         /// Gets/sets if the close button is visible in this flyout.
         /// </summary>
-        public bool IsCloseButtonVisible
+        public Visibility CloseButtonVisibility
         {
-            get { return (bool)GetValue(IsCloseButtonVisibleProperty); }
-            set { SetValue(IsCloseButtonVisibleProperty, value); }
+            get { return (Visibility)GetValue(CloseButtonVisibilityProperty); }
+            set { SetValue(CloseButtonVisibilityProperty, value); }
         }
 
         /// <summary>

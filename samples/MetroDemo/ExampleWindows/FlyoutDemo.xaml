@@ -284,8 +284,8 @@
                 </StackPanel>
             </Controls:Flyout>
             <Controls:Flyout Position="Bottom" 
-                             IsCloseButtonVisible="False" 
-                             IsTitleVisible="False" 
+                             CloseButtonVisibility="Collapsed" 
+                             TitleVisibility ="Collapsed" 
                              IsPinned="False"
                              Height="75">
                 <TextBlock VerticalAlignment="Center" Text="This is an AppBar" />
