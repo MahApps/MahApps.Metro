@@ -326,7 +326,7 @@
                         <ResourceDictionary>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Foreground" 
-                                        Value="{DynamicResource IdealForegroundColor}"/>
+                                        Value="{DynamicResource IdealForegroundColorBrush}"/>
                                 <Setter Property="Background"
                                         Value="{DynamicResource TransparentWhiteBrush}" />
                                 <Setter Property="HorizontalContentAlignment"
