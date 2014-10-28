@@ -14,7 +14,7 @@ namespace MahApps.Metro.Controls.Dialogs
     /// The base class for dialogs.
     ///
     /// You probably don't want to use this class, if you want to add arbitrary content to your dialog, 
-    /// use the <see cref="SimpleDialog"/> class.
+    /// use the <see cref="CustomDialog"/> class.
     /// </summary>
     public abstract class BaseMetroDialog : ContentControl
     {

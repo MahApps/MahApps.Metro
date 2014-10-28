@@ -64,11 +64,11 @@
                         Value="{Binding Name, Mode=OneWay}" />
             </Style>
 
-            <Dialog:SimpleDialog x:Key="SimpleDialogTest"
+            <Dialog:CustomDialog x:Key="CustomDialogTest"
                                  Title="This dialog allows arbitrary content. It will close in 5 seconds."
-                                 x:Name="SimpleTestDialog">
+                                 x:Name="CustomTestDialog">
                 <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentBrush}" />
-            </Dialog:SimpleDialog>
+            </Dialog:CustomDialog>
 
         </ResourceDictionary>
     </Window.Resources>
@@ -154,10 +154,10 @@
                               Header="Show MessageDialog" />
                     <MenuItem Click="ShowProgressDialog"
                               Header="Show ProgressDialog" />
-                    <MenuItem Click="ShowSimpleDialog"
-                              Header="Show SimpleDialog" />
+                    <MenuItem Click="ShowCustomDialog"
+                              Header="Show CustomDialog" />
                     <MenuItem Click="ShowDialogOutside"
-                              Header="Show SimpleDialog Externally" />
+                              Header="Show CustomDialog Externally" />
                 </MenuItem>
                 <MenuItem Header="Window">
                     <MenuItem IsCheckable="True" Header="Ignore taskbar on maximize" Click="IgnoreTaskBar_Click"/>

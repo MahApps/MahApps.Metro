@@ -16,7 +16,7 @@ namespace Mahapps.Metro.Tests
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<DialogWindow>();
             var vm = new TheViewModel();
-            var dialog = (SimpleDialog) window.Resources["CustomDialog"];
+            var dialog = (CustomDialog) window.Resources["CustomDialog"];
 
             await window.ShowMetroDialogAsync(dialog);
 
