@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
@@ -16,15 +17,11 @@ namespace MahApps.Metro.Controls
             this.Unloaded += MetroTabItem_Unloaded;
             this.Loaded += MetroTabItem_Loaded;
         }
-        
-        public MetroTabItem(BaseMetroTabControl OwningTabControl)
-        {
-            DefaultStyleKey = typeof(MetroTabItem);
-            this.Unloaded += MetroTabItem_Unloaded;
-            this.Loaded += MetroTabItem_Loaded;
-            this.OwningTabControl = OwningTabControl;
-        }
 
+        [Obsolete("Use the parameterless constructor")]
+        public MetroTabItem(BaseMetroTabControl owningTabControl) : this()
+        {
+        }
 
         void MetroTabItem_Loaded(object sender, RoutedEventArgs e)
         {
@@ -142,7 +139,22 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the owning MetroTabControl of this MetroTabItem.
         /// </summary>
-        public BaseMetroTabControl OwningTabControl { get; internal set; }
+        private BaseMetroTabControl OwningTabControl
+        {
+            get
+            {
+                return FindParent<BaseMetroTabControl>(this);
+            }
+        }
+
+        private static T FindParent<T>(DependencyObject o) where T : DependencyObject {
+            var parent = VisualTreeHelper.GetParent(o);
+            if (parent == null)
+            {
+                return null;
+            }
+            return parent as T ?? FindParent<T>(parent);
+        }
 
         protected override void OnSelected(RoutedEventArgs e)
         {
