@@ -86,6 +86,7 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButtonTest.cs" />
     <Compile Include="CleanWindowTest.cs" />
     <Compile Include="CustomDialogTest.cs" />
     <Compile Include="DialogWindow.xaml.cs">
@@ -94,6 +95,9 @@
     <Compile Include="FlyoutTest.cs" />
     <Compile Include="CleanWindow.xaml.cs">
       <DependentUpon>CleanWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ButtonWindow.xaml.cs">
+      <DependentUpon>ButtonWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="HiddenMinMaxCloseButtonsWindow.xaml.cs">
       <DependentUpon>HiddenMinMaxCloseButtonsWindow.xaml</DependentUpon>
@@ -130,6 +134,10 @@
     <Page Include="DialogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ButtonWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="HiddenMinMaxCloseButtonsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
