@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs">
+                    xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
@@ -11,6 +12,8 @@
            TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
+        <Setter Property="controls:ButtonHelper.PreserveTextCase" 
+                Value="True" />
     </Style>
 
     <Style x:Key="AccentedDialogSquareButton"
@@ -18,6 +21,8 @@
            TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
+        <Setter Property="controls:ButtonHelper.PreserveTextCase" 
+                Value="True" />
     </Style>
 
     <Storyboard x:Key="DialogShownStoryboard">
