@@ -507,7 +507,6 @@
                                 Focusable="False"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMinButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                Foreground="{TemplateBinding Foreground}"
                                 ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
                             <Button.Visibility>
                                 <MultiBinding Converter="{x:Static conv:ResizeModeMinMaxButtonVisibilityConverter.Instance}"
@@ -522,14 +521,13 @@
                             </Button.Visibility>
                             <Path Data="F1M0,6L0,9 9,9 9,6 0,6z"
                                   SnapsToDevicePixels="True"
-                                  Fill="{TemplateBinding Foreground}" />
+                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                         </Button>
 
                         <Button x:Name="PART_Max"
                                 Focusable="False"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMaxButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                Foreground="{TemplateBinding Foreground}"
                                 ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
                             <Button.Visibility>
                                 <MultiBinding Converter="{x:Static conv:ResizeModeMinMaxButtonVisibilityConverter.Instance}"
@@ -543,20 +541,20 @@
                                 </MultiBinding>
                             </Button.Visibility>
                             <Path x:Name="MaxPath" SnapsToDevicePixels="True"
-                                  Fill="{TemplateBinding Foreground}" >
+                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" >
                             </Path>
                         </Button>
 
                         <Button x:Name="PART_Close"
                                 Focusable="False"
+                                RenderOptions.EdgeMode="Aliased"
                                 Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowCloseButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                Foreground="{TemplateBinding Foreground}"
                                 ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
                                 Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <Path Data="F1M0,0L2,0 5,3 8,0 10,0 6,4 10,8 8,8 5,5 2,8 0,8 4,4 0,0z"
+                            <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
                                   SnapsToDevicePixels="True"
-                                  Fill="{TemplateBinding Foreground}" />
+                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                         </Button>
                     </StackPanel>
                     <ControlTemplate.Triggers>
