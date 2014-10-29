@@ -9,6 +9,10 @@ namespace MahApps.Metro.Controls
                 DependencyProperty.RegisterAttached("PreserveTextCase", typeof(bool), typeof(ButtonHelper), new FrameworkPropertyMetadata(false, 
                     FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
+        /// <summary>
+        /// Overrides the text case behavior for certain buttons.
+        /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
+        /// </summary>
         [AttachedPropertyBrowsableForType(typeof(Button))]
         public static bool GetPreserveTextCase(UIElement element)
         {
