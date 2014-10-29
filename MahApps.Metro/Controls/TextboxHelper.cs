@@ -33,9 +33,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty IsWaitingForDataProperty = DependencyProperty.RegisterAttached("IsWaitingForData", typeof(bool), typeof(TextboxHelper), new UIPropertyMetadata(false));
 
-        public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(TextboxHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
-        public static readonly DependencyProperty MouseOverBorderBrushProperty = DependencyProperty.RegisterAttached("MouseOverBorderBrush", typeof(Brush), typeof(TextboxHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
-
         private static readonly DependencyProperty HasTextProperty = DependencyProperty.RegisterAttached("HasText", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false));
 
         private static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextboxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
@@ -140,38 +137,6 @@ namespace MahApps.Metro.Controls
             defaultMenu.Items.Add(m3);
 
             return defaultMenu;
-        }
-
-        /// <summary>
-        /// Sets the brush used to draw the focus border.
-        /// </summary>
-        public static void SetFocusBorderBrush(DependencyObject obj, Brush value)
-        {
-          obj.SetValue(FocusBorderBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets the brush used to draw the focus border.
-        /// </summary>
-        public static Brush GetFocusBorderBrush(DependencyObject obj)
-        {
-          return (Brush)obj.GetValue(FocusBorderBrushProperty);
-        }
-
-        /// <summary>
-        /// Sets the brush used to draw the mouse over brush.
-        /// </summary>
-        public static void SetMouseOverBorderBrush(DependencyObject obj, Brush value)
-        {
-          obj.SetValue(MouseOverBorderBrushProperty, value);
-        }
-
-        /// <summary>
-        /// Gets the brush used to draw the mouse over brush.
-        /// </summary>
-        public static Brush GetMouseOverBorderBrush(DependencyObject obj)
-        {
-          return (Brush)obj.GetValue(MouseOverBorderBrushProperty);
         }
 
         public static void SetIsWaitingForData(DependencyObject obj, bool value)

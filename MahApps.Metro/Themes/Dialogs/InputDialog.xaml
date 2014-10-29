@@ -20,7 +20,7 @@
         <TextBox Grid.Row="1"
                     Margin="0 5 0 0"
                     FontSize="{StaticResource DialogMessageFontSize}"
-                    controls:TextboxHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
+                    controls:ControlsHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
                     x:Name="PART_TextBox"
                     Text="{Binding Input, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     TextWrapping="Wrap"

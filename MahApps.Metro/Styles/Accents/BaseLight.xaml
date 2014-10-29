@@ -39,11 +39,6 @@
     <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{StaticResource WhiteColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{StaticResource BlackColor}" options:Freeze="True" />
 
-    <LinearGradientBrush x:Key="CheckBoxBackgroundBrush" EndPoint="0.5,1" StartPoint="0.5,0" options:Freeze="True">
-        <GradientStop Color="{StaticResource Gray7}" Offset="0" />
-        <GradientStop Color="{StaticResource WhiteColor}" Offset="1" />
-    </LinearGradientBrush>
-
     <SolidColorBrush x:Key="GrayBrush1" Color="{StaticResource Gray1}" options:Freeze="True" />
     <SolidColorBrush x:Key="GrayBrush2" Color="{StaticResource Gray2}" options:Freeze="True" />
     <SolidColorBrush x:Key="GrayBrush7" Color="{StaticResource Gray7}" options:Freeze="True" />
@@ -52,8 +47,6 @@
 
     <SolidColorBrush x:Key="GrayNormalBrush" Color="{StaticResource GrayNormal}" options:Freeze="True" />
     <SolidColorBrush x:Key="GrayHoverBrush" Color="{StaticResource GrayHover}" options:Freeze="True" />
-
-    <SolidColorBrush x:Key="CheckBoxMouseOverBrush" Color="{StaticResource Gray1}" options:Freeze="True" />
 
     <SolidColorBrush x:Key="SliderValueDisabled" Color="#FFBABABA" options:Freeze="True" />
     <SolidColorBrush x:Key="SliderTrackDisabled" Color="#FFDBDBDB" options:Freeze="True" />
