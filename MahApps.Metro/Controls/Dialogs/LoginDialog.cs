@@ -7,16 +7,15 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public class LoginDialogSettings : MetroDialogSettings
     {
-        private const string DEFAULT_USERNAME_WATERMARK = "Username...";
-        private const string DEFAULT_PASSWORD_WATERMARK = "Password...";
-        private const Visibility DEFAULT_NEGATIVE_BUTTON_VISIBILITY = Visibility.Collapsed;
+        private const string DefaultUsernameWatermark = "Username...";
+        private const string DefaultPasswordWatermark = "Password...";
+        private const Visibility DefaultNegativeButtonVisibility = Visibility.Collapsed;
 
         public LoginDialogSettings()
-            : base()
         {
-            UsernameWatermark = DEFAULT_USERNAME_WATERMARK;
-            PasswordWatermark = DEFAULT_PASSWORD_WATERMARK;
-            NegativeButtonVisibility = DEFAULT_NEGATIVE_BUTTON_VISIBILITY;
+            UsernameWatermark = DefaultUsernameWatermark;
+            PasswordWatermark = DefaultPasswordWatermark;
+            NegativeButtonVisibility = DefaultNegativeButtonVisibility;
             AffirmativeButtonText = "Login";
         }
 
@@ -54,7 +53,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         internal Task<LoginDialogData> WaitForButtonPressAsync()
         {
-            Dispatcher.BeginInvoke(new Action(() => {
+            Dispatcher.BeginInvoke(new Action(() => 
+            {
                 this.Focus();
                 if (string.IsNullOrEmpty(PART_TextBox.Text))
                 {
@@ -89,47 +89,52 @@ namespace MahApps.Metro.Controls.Dialogs
                 PART_AffirmativeButton.KeyDown -= affirmativeKeyHandler;
             };
 
-            escapeKeyHandler = new KeyEventHandler((sender, e) => {
+            escapeKeyHandler = (sender, e) => 
+            {
                 if (e.Key == Key.Escape)
                 {
                     cleanUpHandlers();
 
                     tcs.TrySetResult(null);
                 }
-            });
+            };
 
-            negativeKeyHandler = new KeyEventHandler((sender, e) => {
+            negativeKeyHandler = (sender, e) => 
+            {
                 if (e.Key == Key.Enter)
                 {
                     cleanUpHandlers();
 
                     tcs.TrySetResult(null);
                 }
-            });
+            };
 
-            affirmativeKeyHandler = new KeyEventHandler((sender, e) => {
+            affirmativeKeyHandler = (sender, e) => 
+            {
                 if (e.Key == Key.Enter)
                 {
                     cleanUpHandlers();
                     tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password });
                 }
-            });
+            };
 
-            negativeHandler = new RoutedEventHandler((sender, e) => {
+            negativeHandler = (sender, e) => 
+            {
                 cleanUpHandlers();
 
                 tcs.TrySetResult(null);
 
                 e.Handled = true;
-            });
+            };
 
-            affirmativeHandler = new RoutedEventHandler((sender, e) => {
+            affirmativeHandler = (sender, e) => 
+            {
                 cleanUpHandlers();
 
                 tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password });
 
                 e.Handled = true;
-            });
+            };
 
             PART_NegativeButton.KeyDown += negativeKeyHandler;
             PART_AffirmativeButton.KeyDown += affirmativeKeyHandler;
@@ -156,8 +161,6 @@ namespace MahApps.Metro.Controls.Dialogs
                     this.PART_NegativeButton.Style = this.FindResource("HighlightedSquareButtonStyle") as Style;
                     PART_TextBox.SetResourceReference(ForegroundProperty, "BlackColorBrush");
                     PART_TextBox2.SetResourceReference(ForegroundProperty, "BlackColorBrush");
-                    break;
-                default:
                     break;
             }
         }
