@@ -88,6 +88,7 @@
     <Compile Include="Behaviours\GlowWindowBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
+    <Compile Include="Controls\ButtonHelper.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="Controls\ComboBoxHelper.cs" />
     <Compile Include="Controls\ControlsHelper.cs" />
