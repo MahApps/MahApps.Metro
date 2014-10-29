@@ -111,7 +111,7 @@ namespace MahApps.Metro.Controls
                 CloseTabCommandParameter = null;
             }
 
-            var owningTabControl = FindParent<BaseMetroTabControl>(this);
+            var owningTabControl = this.TryFindParent<BaseMetroTabControl>();
             if (owningTabControl == null) // see #555
                 throw new InvalidOperationException();
 
@@ -136,15 +136,6 @@ namespace MahApps.Metro.Controls
         public object CloseTabCommandParameter { get { return GetValue(CloseTabCommandParameterProperty); } set { SetValue(CloseTabCommandParameterProperty, value); } }
         public static readonly DependencyProperty CloseTabCommandParameterProperty =
             DependencyProperty.Register("CloseTabCommandParameter", typeof(object), typeof(MetroTabItem), new PropertyMetadata(null));
-
-        private static T FindParent<T>(DependencyObject o) where T : DependencyObject {
-            var parent = VisualTreeHelper.GetParent(o);
-            if (parent == null)
-            {
-                return null;
-            }
-            return parent as T ?? FindParent<T>(parent);
-        }
 
         protected override void OnSelected(RoutedEventArgs e)
         {
