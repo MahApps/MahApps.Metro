@@ -18,11 +18,6 @@ namespace MahApps.Metro.Controls
             this.Loaded += MetroTabItem_Loaded;
         }
 
-        [Obsolete("Use the parameterless constructor")]
-        public MetroTabItem(BaseMetroTabControl owningTabControl) : this()
-        {
-        }
-
         void MetroTabItem_Loaded(object sender, RoutedEventArgs e)
         {
             if (closeButton != null && closeButtonClickUnloaded)
