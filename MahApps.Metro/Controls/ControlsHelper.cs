@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
@@ -109,6 +110,47 @@ namespace MahApps.Metro.Controls
         public static void SetButtonWidth(DependencyObject obj, double value)
         {
             obj.SetValue(ButtonWidthProperty, value);
+        }
+
+        public static readonly DependencyProperty FocusBorderBrushProperty = DependencyProperty.RegisterAttached("FocusBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+        public static readonly DependencyProperty MouseOverBorderBrushProperty = DependencyProperty.RegisterAttached("MouseOverBorderBrush", typeof(Brush), typeof(ControlsHelper), new FrameworkPropertyMetadata(Brushes.Transparent, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
+        /// <summary>
+        /// Sets the brush used to draw the focus border.
+        /// </summary>
+        public static void SetFocusBorderBrush(DependencyObject obj, Brush value)
+        {
+            obj.SetValue(FocusBorderBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets the brush used to draw the focus border.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(CheckBox))]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        public static Brush GetFocusBorderBrush(DependencyObject obj)
+        {
+            return (Brush)obj.GetValue(FocusBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// Sets the brush used to draw the mouse over brush.
+        /// </summary>
+        public static void SetMouseOverBorderBrush(DependencyObject obj, Brush value)
+        {
+            obj.SetValue(MouseOverBorderBrushProperty, value);
+        }
+
+        /// <summary>
+        /// Gets the brush used to draw the mouse over brush.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(CheckBox))]
+        [AttachedPropertyBrowsableForType(typeof(RadioButton))]
+        public static Brush GetMouseOverBorderBrush(DependencyObject obj)
+        {
+            return (Brush)obj.GetValue(MouseOverBorderBrushProperty);
         }
     }
 }

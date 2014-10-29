@@ -36,9 +36,9 @@
                 Value="0" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
-        <Setter Property="Controls:TextboxHelper.FocusBorderBrush"
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush"
                 Value="{DynamicResource TextBoxFocusBorderBrush}" />
-        <Setter Property="Controls:TextboxHelper.MouseOverBorderBrush"
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
                 Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <!-- change SnapsToDevicePixels to True to view a better border and validation error -->
         <Setter Property="SnapsToDevicePixels"
@@ -227,7 +227,7 @@
                                     Value="Visible" />
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.MouseOverBorderBrush)}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
@@ -248,7 +248,7 @@
                                     Value="Visible" />
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="FloatingMessage"
                                     Property="Foreground"
                                     Value="{DynamicResource AccentColorBrush}"/>
@@ -516,7 +516,7 @@
                                     Value="Visible" />
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.MouseOverBorderBrush)}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
@@ -537,7 +537,7 @@
                                     Value="Visible" />
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="FloatingMessage"
                                     Property="Foreground"
                                     Value="{DynamicResource AccentColorBrush}"/>
@@ -667,9 +667,9 @@
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
-        <Setter Property="Controls:TextboxHelper.FocusBorderBrush"
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush"
                 Value="{DynamicResource TextBoxFocusBorderBrush}" />
-        <Setter Property="Controls:TextboxHelper.MouseOverBorderBrush"
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
                 Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="Padding"
                 Value="1" />
@@ -714,7 +714,7 @@
                                     Value="Visible" />
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.MouseOverBorderBrush)}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsFocused"
                                  Value="True">
@@ -723,7 +723,7 @@
                                     Value="Visible" />
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">

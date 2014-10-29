@@ -18,9 +18,9 @@
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
-        <Setter Property="Controls:TextboxHelper.FocusBorderBrush"
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush"
                 Value="{DynamicResource TextBoxFocusBorderBrush}" />
-        <Setter Property="Controls:TextboxHelper.MouseOverBorderBrush"
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
                 Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="VerticalAlignment"
                 Value="Center" />
@@ -175,7 +175,7 @@
                                     Value="Visible" />
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.MouseOverBorderBrush)}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsFocused"
                                  Value="true"
@@ -185,7 +185,7 @@
                                     Value="Visible" />
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsFocused"
                                  Value="true">
@@ -194,7 +194,7 @@
                                     Value="Visible" />
                             <Setter TargetName="FocusRectangle"
                                     Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.FocusBorderBrush)}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
 
                         <Trigger Property="HideUpDownButtons"
