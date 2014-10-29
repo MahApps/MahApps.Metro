@@ -11,6 +11,26 @@
                 Value="{DynamicResource WindowGlowBrush}" />
         <Setter Property="TitleForeground"
                 Value="{DynamicResource WindowTitleForeground}" />
+        <Setter Property="WindowMinButtonStyle"
+                Value="{DynamicResource VSWindowButtonStyle}" />
+        <Setter Property="WindowMaxButtonStyle"
+                Value="{DynamicResource VSWindowButtonStyle}" />
+        <Setter Property="WindowCloseButtonStyle"
+                Value="{DynamicResource VSWindowButtonStyle}" />
+    </Style>
+
+    <Style x:Key="VSWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroWindowButtonStyle}">
+
+        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+
+        <Style.Triggers>
+
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+
+        </Style.Triggers>
     </Style>
 
 </ResourceDictionary>
