@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
@@ -114,7 +111,7 @@ namespace MahApps.Metro.Controls
 
             PageContent = PART_Frame.Content;
 
-            PART_BackButton.Visibility = CanGoBack ? Visibility.Visible : System.Windows.Visibility.Hidden;
+            PART_BackButton.Visibility = CanGoBack ? Visibility.Visible : Visibility.Hidden;
 
             PART_ForwardButton.Visibility = CanGoForward ? Visibility.Visible : Visibility.Collapsed;
 

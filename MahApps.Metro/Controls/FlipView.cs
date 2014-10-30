@@ -27,26 +27,26 @@ namespace MahApps.Metro.Controls
         private const string PART_BannerGrid = "PART_BannerGrid";
         private const string PART_BannerLabel = "PART_BannerLabel";
 
-        private TransitioningContentControl presenter = null;
-        private Button backButton = null;
-        private Button forwardButton = null;
-        private Button upButton = null;
-        private Button downButton = null;
-        private Grid bannerGrid = null;
-        private Label bannerLabel = null;
+        private TransitioningContentControl presenter;
+        private Button backButton;
+        private Button forwardButton;
+        private Button upButton;
+        private Button downButton;
+        private Grid bannerGrid;
+        private Label bannerLabel;
 
-        private Storyboard ShowBannerStoryboard = null;
-        private Storyboard HideBannerStoryboard = null;
-        private Storyboard HideControlStoryboard = null;
-        private Storyboard ShowControlStoryboard = null;
+        private Storyboard showBannerStoryboard;
+        private Storyboard hideBannerStoryboard;
+        private Storyboard hideControlStoryboard;
+        private Storyboard showControlStoryboard;
 
-        private EventHandler HideControlStoryboard_CompletedHandler = null;
+        private EventHandler hideControlStoryboardCompletedHandler;
         /// <summary>
         /// To counteract the double Loaded event issue.
         /// </summary>
         private bool loaded;
 
-        private bool controls_visibility_override;
+        private bool controlsVisibilityOverride;
 
         static FlipView()
         {
@@ -71,7 +71,7 @@ namespace MahApps.Metro.Controls
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new FlipViewItem() { HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch };
+            return new FlipViewItem() { HorizontalAlignment = HorizontalAlignment.Stretch };
         }
 
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
@@ -89,18 +89,18 @@ namespace MahApps.Metro.Controls
 
         private void DetectControlButtonsStatus()
         {
-            if (controls_visibility_override) return;
+            if (controlsVisibilityOverride) return;
 
             if (backButton == null || forwardButton == null) return;
 
-            backButton.Visibility = System.Windows.Visibility.Hidden;
-            forwardButton.Visibility = System.Windows.Visibility.Hidden;
-            upButton.Visibility = System.Windows.Visibility.Hidden;
-            downButton.Visibility = System.Windows.Visibility.Hidden;
+            backButton.Visibility = Visibility.Hidden;
+            forwardButton.Visibility = Visibility.Hidden;
+            upButton.Visibility = Visibility.Hidden;
+            downButton.Visibility = Visibility.Hidden;
 
             if (Items.Count > 0)
             {
-                if (Orientation == System.Windows.Controls.Orientation.Horizontal)
+                if (Orientation == Orientation.Horizontal)
                 {
                     backButton.Visibility = SelectedIndex == 0 ? Visibility.Hidden : Visibility.Visible;
                     forwardButton.Visibility = SelectedIndex == (Items.Count - 1) ? Visibility.Hidden : Visibility.Visible;
@@ -113,10 +113,10 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                backButton.Visibility = System.Windows.Visibility.Hidden;
-                forwardButton.Visibility = System.Windows.Visibility.Hidden;
-                upButton.Visibility = System.Windows.Visibility.Hidden;
-                downButton.Visibility = System.Windows.Visibility.Hidden;
+                backButton.Visibility = Visibility.Hidden;
+                forwardButton.Visibility = Visibility.Hidden;
+                upButton.Visibility = Visibility.Hidden;
+                downButton.Visibility = Visibility.Hidden;
             }
         }
 
@@ -160,8 +160,8 @@ namespace MahApps.Metro.Controls
             upButton.Click -= upButton_Click;
             downButton.Click -= downButton_Click;
 
-            if (HideControlStoryboard_CompletedHandler != null)
-                HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
+            if (hideControlStoryboardCompletedHandler != null)
+                hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
 
             loaded = false;
         }
@@ -188,11 +188,11 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            ShowBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
-            HideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
+            showBannerStoryboard = ((Storyboard)this.Template.Resources["ShowBannerStoryboard"]).Clone();
+            hideBannerStoryboard = ((Storyboard)this.Template.Resources["HideBannerStoryboard"]).Clone();
 
-            ShowControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
-            HideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
+            showControlStoryboard = ((Storyboard)this.Template.Resources["ShowControlStoryboard"]).Clone();
+            hideControlStoryboard = ((Storyboard)this.Template.Resources["HideControlStoryboard"]).Clone();
 
             presenter = GetTemplateChild(PART_Presenter) as TransitioningContentControl;
             backButton = GetTemplateChild(PART_BackButton) as Button;
@@ -246,7 +246,7 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex > 0)
             {
-                presenter.Transition = Orientation == System.Windows.Controls.Orientation.Horizontal ? RightTransition : UpTransition;
+                presenter.Transition = Orientation == Orientation.Horizontal ? RightTransition : UpTransition;
                 SelectedIndex--;
             }
         }
@@ -258,7 +258,7 @@ namespace MahApps.Metro.Controls
         {
             if (SelectedIndex < Items.Count - 1)
             {
-                presenter.Transition = Orientation == System.Windows.Controls.Orientation.Horizontal ? LeftTransition : DownTransition;
+                presenter.Transition = Orientation == Orientation.Horizontal ? LeftTransition : DownTransition;
                 SelectedIndex++;
             }
         }
@@ -268,25 +268,25 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public void ShowControlButtons()
         {
-            controls_visibility_override = false;
+            controlsVisibilityOverride = false;
 
             ExecuteWhenLoaded(this, () =>
-                {
-                    backButton.Visibility = Visibility.Visible;
-                    forwardButton.Visibility = Visibility.Visible;
-                });
+            {
+                backButton.Visibility = Visibility.Visible;
+                forwardButton.Visibility = Visibility.Visible;
+            });
         }
         /// <summary>
         /// Removes the control buttons (next/previous) from view.
         /// </summary>
         public void HideControlButtons()
         {
-            controls_visibility_override = true;
+            controlsVisibilityOverride = true;
             ExecuteWhenLoaded(this, () =>
-                {
-                    backButton.Visibility = Visibility.Hidden;
-                    forwardButton.Visibility = Visibility.Hidden;
-                });
+            {
+                backButton.Visibility = Visibility.Hidden;
+                forwardButton.Visibility = Visibility.Hidden;
+            });
         }
 
         public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register("UpTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
@@ -318,15 +318,15 @@ namespace MahApps.Metro.Controls
         private void ShowBanner()
         {
             if (IsBannerEnabled)
-                bannerGrid.BeginStoryboard(ShowBannerStoryboard);
+                bannerGrid.BeginStoryboard(showBannerStoryboard);
         }
 
         private void HideBanner()
         {
             if (this.ActualHeight > 0.0)
             {
-                bannerLabel.BeginStoryboard(HideControlStoryboard);
-                bannerGrid.BeginStoryboard(HideBannerStoryboard);
+                bannerLabel.BeginStoryboard(hideControlStoryboard);
+                bannerGrid.BeginStoryboard(hideBannerStoryboard);
             }
         }
 
@@ -352,18 +352,18 @@ namespace MahApps.Metro.Controls
 
                 if (newValue == null) return;
 
-                if (HideControlStoryboard_CompletedHandler != null)
-                    HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
+                if (hideControlStoryboardCompletedHandler != null)
+                    hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
 
-                HideControlStoryboard_CompletedHandler = (sender, e) =>
+                hideControlStoryboardCompletedHandler = (sender, e) =>
                 {
                     try
                     {
-                        HideControlStoryboard.Completed -= HideControlStoryboard_CompletedHandler;
+                        hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
 
                         bannerLabel.Content = newValue;
 
-                        bannerLabel.BeginStoryboard(ShowControlStoryboard, HandoffBehavior.SnapshotAndReplace);
+                        bannerLabel.BeginStoryboard(showControlStoryboard, HandoffBehavior.SnapshotAndReplace);
                     }
                     catch (Exception)
                     {
@@ -371,15 +371,18 @@ namespace MahApps.Metro.Controls
                 };
 
 
-                HideControlStoryboard.Completed += HideControlStoryboard_CompletedHandler;
+                hideControlStoryboard.Completed += hideControlStoryboardCompletedHandler;
 
-                bannerLabel.BeginStoryboard(HideControlStoryboard, HandoffBehavior.SnapshotAndReplace);
+                bannerLabel.BeginStoryboard(hideControlStoryboard, HandoffBehavior.SnapshotAndReplace);
             }
+
             else
+            {
                 ExecuteWhenLoaded(this, () =>
                 {
                     bannerLabel.Content = value ?? BannerText;
                 });
+            }
         }
 
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
@@ -408,7 +411,9 @@ namespace MahApps.Metro.Controls
                             flipview.ShowBanner();
                         }
                         else
+                        {
                             flipview.HideBanner();
+                        }
                     });
                 }
                 else
@@ -419,7 +424,9 @@ namespace MahApps.Metro.Controls
                         flipview.ShowBanner();
                     }
                     else
+                    {
                         flipview.HideBanner();
+                    }
                 }
             }));
 
@@ -429,16 +436,15 @@ namespace MahApps.Metro.Controls
         public bool IsBannerEnabled
         {
             get { return (bool)GetValue(IsBannerEnabledProperty); }
-            set
-            {
-                SetValue(IsBannerEnabledProperty, value);
-            }
+            set { SetValue(IsBannerEnabledProperty, value); }
         }
 
         private static void ExecuteWhenLoaded(FlipView flipview, Action body)
         {
             if (flipview.IsLoaded)
+            {
                 System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
+            }
             else
             {
                 RoutedEventHandler handler = null;
@@ -454,6 +460,5 @@ namespace MahApps.Metro.Controls
     }
 
     public class FlipViewItem : ContentControl
-    {
-    }
+    { }
 }

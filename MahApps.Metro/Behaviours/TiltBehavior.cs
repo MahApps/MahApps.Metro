@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,11 +17,10 @@ namespace MahApps.Metro.Behaviours
         public static readonly DependencyProperty TiltFactorProperty =
             DependencyProperty.Register("TiltFactor", typeof(Int32), typeof(TiltBehavior), new PropertyMetadata(20));
 
-        private bool IsPressed;
-
-        private Thickness OriginalMargin;
-        private Panel OriginalPanel;
-        private Size OriginalSize;
+        private bool isPressed;
+        private Thickness originalMargin;
+        private Panel originalPanel;
+        private Size originalSize;
         private FrameworkElement attachedElement;
 
         private Point current = new Point(-99, -99);
@@ -69,10 +67,10 @@ namespace MahApps.Metro.Behaviours
                 return;
             }
 
-            OriginalPanel = attachedElement.Parent as Panel ?? GetParentPanel(attachedElement);
+            originalPanel = attachedElement.Parent as Panel ?? GetParentPanel(attachedElement);
 
-            OriginalMargin = attachedElement.Margin;
-            OriginalSize = new Size(attachedElement.Width, attachedElement.Height);
+            originalMargin = attachedElement.Margin;
+            originalSize = new Size(attachedElement.Width, attachedElement.Height);
             double left = Canvas.GetLeft(attachedElement);
             double right = Canvas.GetRight(attachedElement);
             double top = Canvas.GetTop(attachedElement);
@@ -83,9 +81,9 @@ namespace MahApps.Metro.Behaviours
 
             RotatorParent = new Planerator
             {
-                Margin = OriginalMargin,
-                Width = OriginalSize.Width,
-                Height = OriginalSize.Height,
+                Margin = originalMargin,
+                Width = originalSize.Width,
+                Height = originalSize.Height,
                 VerticalAlignment = va,
                 HorizontalAlignment = ha
             };
@@ -96,12 +94,12 @@ namespace MahApps.Metro.Behaviours
             RotatorParent.SetValue(Canvas.BottomProperty, bottom);
             RotatorParent.SetValue(Panel.ZIndexProperty, z);
 
-            OriginalPanel.Children.Remove(attachedElement);
+            originalPanel.Children.Remove(attachedElement);
             attachedElement.Margin = new Thickness();
             attachedElement.Width = double.NaN;
             attachedElement.Height = double.NaN;
 
-            OriginalPanel.Children.Add(RotatorParent);
+            originalPanel.Children.Add(RotatorParent);
             RotatorParent.Child = attachedElement;
 
             CompositionTarget.Rendering += CompositionTargetRendering;
@@ -137,7 +135,7 @@ namespace MahApps.Metro.Behaviours
             {
                 if (Mouse.LeftButton == MouseButtonState.Pressed)
                 {
-                    if (!IsPressed)
+                    if (!isPressed)
                     {
                         current = Mouse.GetPosition(RotatorParent.Child);
                         if (current.X > 0 && current.X < (attachedElement).ActualWidth && current.Y > 0 &&
@@ -148,23 +146,23 @@ namespace MahApps.Metro.Behaviours
                             RotatorParent.RotationX = -1 * TiltFactor +
                                                       current.Y * 2 * TiltFactor / (attachedElement).ActualHeight;
                         }
-                        IsPressed = true;
+                        isPressed = true;
                     }
 
 
-                    if (IsPressed && times == 7)
+                    if (isPressed && times == 7)
                     {
                         RotatorParent.RotationY = RotatorParent.RotationY - 5 < 0 ? 0 : RotatorParent.RotationY - 5;
                         RotatorParent.RotationX = RotatorParent.RotationX - 5 < 0 ? 0 : RotatorParent.RotationX - 5;
                     }
-                    else if (IsPressed && times < 7)
+                    else if (isPressed && times < 7)
                     {
                         times++;
                     }
                 }
                 else
                 {
-                    IsPressed = false;
+                    isPressed = false;
                     times = -1;
                     RotatorParent.RotationY = RotatorParent.RotationY - 5 < 0 ? 0 : RotatorParent.RotationY - 5;
                     RotatorParent.RotationX = RotatorParent.RotationX - 5 < 0 ? 0 : RotatorParent.RotationX - 5;

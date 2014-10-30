@@ -134,7 +134,7 @@ namespace MahApps.Metro.Controls
             }
 
 #pragma warning disable 67
-            public event System.EventHandler CanExecuteChanged;
+            public event EventHandler CanExecuteChanged;
 #pragma warning restore 67
 
             public void Execute(object parameter)
