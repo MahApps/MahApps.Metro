@@ -290,7 +290,7 @@ namespace MahApps.Metro.Controls
                     {
                         // don't let the storyboard end it's completed event
                         // otherwise it could be hidden on start
-                        flyout.hideStoryboard.Completed -= flyout.hideStoryboard_Completed;
+                        flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
                     }
                     flyout.Visibility = Visibility.Visible;
                     flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
@@ -299,7 +299,7 @@ namespace MahApps.Metro.Controls
                 {
                     if (flyout.hideStoryboard != null)
                     {
-                        flyout.hideStoryboard.Completed += flyout.hideStoryboard_Completed;
+                        flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
                     }
                     else
                     {
@@ -313,9 +313,9 @@ namespace MahApps.Metro.Controls
             flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
         }
 
-        private void hideStoryboard_Completed(object sender, EventArgs e)
+        private void HideStoryboard_Completed(object sender, EventArgs e)
         {
-            this.hideStoryboard.Completed -= this.hideStoryboard_Completed;
+            this.hideStoryboard.Completed -= this.HideStoryboard_Completed;
 
             this.Hide();
         }
