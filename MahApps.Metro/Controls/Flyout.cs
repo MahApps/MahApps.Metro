@@ -286,6 +286,12 @@ namespace MahApps.Metro.Controls
             {
                 if ((bool)e.NewValue)
                 {
+                    if (flyout.hideStoryboard != null)
+                    {
+                        // don't let the storyboard end it's completed event
+                        // otherwise it could be hidden on start
+                        flyout.hideStoryboard.Completed -= flyout.hideStoryboard_Completed;
+                    }
                     flyout.Visibility = Visibility.Visible;
                     flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
                 }
@@ -293,24 +299,11 @@ namespace MahApps.Metro.Controls
                 {
                     if (flyout.hideStoryboard != null)
                     {
-                        EventHandler hideStoryboardCompletedHandler = null;
-                        hideStoryboardCompletedHandler = (sender, args) =>
-                        {
-                            flyout.hideStoryboard.Completed -= hideStoryboardCompletedHandler;
-
-                            // hide the flyout, we should get better performance and prevent showing the flyout on any resizing events
-                            flyout.Visibility = Visibility.Hidden;
-
-                            flyout.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
-                        };
-                        flyout.hideStoryboard.Completed += hideStoryboardCompletedHandler;
+                        flyout.hideStoryboard.Completed += flyout.hideStoryboard_Completed;
                     }
                     else
                     {
-                        // hide the flyout, we should get better performance and prevent showing the flyout on any resizing events
-                        flyout.Visibility = Visibility.Hidden;
-
-                        flyout.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
+                        flyout.Hide();
                     }
                 }
 
@@ -318,6 +311,20 @@ namespace MahApps.Metro.Controls
             }
 
             flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
+        }
+
+        private void hideStoryboard_Completed(object sender, EventArgs e)
+        {
+            this.hideStoryboard.Completed -= this.hideStoryboard_Completed;
+
+            this.Hide();
+        }
+
+        private void Hide() {
+            // hide the flyout, we should get better performance and prevent showing the flyout on any resizing events
+            this.Visibility = Visibility.Hidden;
+
+            this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
         }
 
         private static void ThemeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
