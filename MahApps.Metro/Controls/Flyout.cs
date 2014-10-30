@@ -301,6 +301,13 @@ namespace MahApps.Metro.Controls
                         // after finished hide story board set the visibility to hidden
                         flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
                     }
+                    else
+                    {
+                        // hide the flyout, we should get better performance and prevent showing the flyout on any resizing events
+                        flyout.Visibility = Visibility.Hidden;
+
+                        flyout.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
+                    }
                 }
 
                 VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
