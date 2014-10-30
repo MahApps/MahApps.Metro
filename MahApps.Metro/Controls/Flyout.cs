@@ -28,6 +28,20 @@ namespace MahApps.Metro.Controls
             add { AddHandler(IsOpenChangedEvent, value); }
             remove { RemoveHandler(IsOpenChangedEvent, value); }
         }
+
+        /// <summary>
+        /// An event that is raised when the closing animation has finished.
+        /// </summary>
+        public static readonly RoutedEvent ClosingFinishedEvent =
+            EventManager.RegisterRoutedEvent("ClosingFinished", RoutingStrategy.Bubble,
+                typeof(RoutedEventHandler), typeof(Flyout));
+
+        public event RoutedEventHandler ClosingFinished
+        {
+            add { AddHandler(ClosingFinishedEvent, value); }
+            remove { RemoveHandler(ClosingFinishedEvent, value); }
+        }
+
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(string), typeof(Flyout), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty PositionProperty = DependencyProperty.Register("Position", typeof(Position), typeof(Flyout), new PropertyMetadata(Position.Left, PositionChanged));
         public static readonly DependencyProperty IsPinnedProperty = DependencyProperty.Register("IsPinned", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
@@ -291,7 +305,7 @@ namespace MahApps.Metro.Controls
 
                 VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
             }
-            
+
             flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
         }
 
@@ -299,6 +313,8 @@ namespace MahApps.Metro.Controls
         {
             // hide the flyout, we should get better performance and prevent showing the flyout on any resizing events
             this.Visibility = Visibility.Hidden;
+
+            RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
         }
 
         private static void ThemeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
