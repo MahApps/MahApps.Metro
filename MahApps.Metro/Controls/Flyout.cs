@@ -181,9 +181,11 @@ namespace MahApps.Metro.Controls
 
         private void UpdateFlyoutTheme()
         {
+            var flyoutsControl = this.TryFindParent<FlyoutsControl>();
+            
             if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             {
-                this.Visibility = this.TryFindParent<FlyoutsControl>() != null ? Visibility.Collapsed : Visibility.Visible;
+                this.Visibility = flyoutsControl != null ? Visibility.Collapsed : Visibility.Visible;
             }
 
             var window = this.TryFindParent<MetroWindow>();
@@ -196,6 +198,12 @@ namespace MahApps.Metro.Controls
                     var accent = windowTheme.Item2;
 
                     this.ChangeFlyoutTheme(accent, windowTheme.Item1);
+                }
+
+                // we must certain to get the right foreground for window commands and buttons
+                if (flyoutsControl != null && this.IsOpen)
+                {
+                    flyoutsControl.HandleFlyoutStatusChange(this, window);
                 }
             }
         }
