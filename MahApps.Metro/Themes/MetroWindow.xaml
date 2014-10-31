@@ -298,11 +298,11 @@
                 <Setter Property="IconTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <Image Width="{TemplateBinding Width}"
-                                   Height="{TemplateBinding Height}"
-                                   Source="{TemplateBinding Content}"
-                                   RenderOptions.EdgeMode="{Binding IconEdgeMode, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                   RenderOptions.BitmapScalingMode="{Binding IconBitmapScalingMode, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                            <Controls:MultiFrameImage Width="{TemplateBinding Width}"
+                                                      Height="{TemplateBinding Height}"
+                                                      Source="{TemplateBinding Content}"
+                                                      RenderOptions.EdgeMode="{Binding IconEdgeMode, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                                      RenderOptions.BitmapScalingMode="{Binding IconBitmapScalingMode, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
