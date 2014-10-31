@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Threading;
 using MahApps.Metro.Controls;
 
 namespace MetroDemo.ExampleWindows
@@ -89,6 +92,28 @@ namespace MetroDemo.ExampleWindows
         {
             var flyout = (Flyout)this.Flyouts.Items[6];
             flyout.Position = Position.Right;
+        }
+
+        private void ShowDynamicFlyout(object sender, RoutedEventArgs e) {
+            var flyout = new DynamicFlyout
+            {
+                Header = "Dynamic flyout"
+            };
+
+            // when the flyout is closed, remove it from the hosting FlyoutsControl
+            RoutedEventHandler closingFinishedHandler = null;
+            closingFinishedHandler = (o, args) =>
+            {
+                flyout.ClosingFinished -= closingFinishedHandler;
+                flyoutsControl.Items.Remove(flyout);
+            };
+            flyout.ClosingFinished += closingFinishedHandler;
+
+            flyoutsControl.Items.Add(flyout);
+
+            // set IsOpen to true after the binding has happened
+            Action a = () => flyout.IsOpen = true;
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, a);
         }
     }
 }

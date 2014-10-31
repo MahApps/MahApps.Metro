@@ -124,6 +124,9 @@
     <Compile Include="ExampleWindows\CustomFlyout.xaml.cs">
       <DependentUpon>CustomFlyout.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExampleWindows\DynamicFlyout.xaml.cs">
+      <DependentUpon>DynamicFlyout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleWindows\FlyoutDemo.xaml.cs">
       <DependentUpon>FlyoutDemo.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ExampleWindows\CustomFlyout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleWindows\DynamicFlyout.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

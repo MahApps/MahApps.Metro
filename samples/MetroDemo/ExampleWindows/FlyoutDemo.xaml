@@ -74,7 +74,7 @@
     </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroWindow.Flyouts>
-        <Controls:FlyoutsControl>
+        <Controls:FlyoutsControl x:Name="flyoutsControl">
             <Controls:Flyout x:Name="settingsFlyout"
                              Margin="100 0 0 0"
                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth}"
@@ -340,6 +340,10 @@
                     Margin="2"
                     Click="ShowAppBar"
                     Content="AppBar" />
+            <Button MinWidth="90"
+                    Margin="2"
+                    Click="ShowDynamicFlyout" 
+                    Content="Dynamic" />
         </StackPanel>
         <AdornerDecorator Margin="10"
                           MinWidth="100"
