@@ -260,13 +260,7 @@
 
     <Style x:Key="CleanWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroWindowButtonStyle}">
 
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-
         <Style.Triggers>
-
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#EEEEEE" />
-            </Trigger>
 
             <Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
