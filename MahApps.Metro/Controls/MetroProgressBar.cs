@@ -141,7 +141,7 @@ namespace MahApps.Metro.Controls
                             doubleAnimParent.InvalidateProperty(Storyboard.TargetNameProperty);
                         }
 
-                        indeterminate.Storyboard.Remove();
+                        //indeterminate.Storyboard.Remove();
                         indeterminate.Storyboard = newStoryboard;
 
                         if (!IsIndeterminate)
