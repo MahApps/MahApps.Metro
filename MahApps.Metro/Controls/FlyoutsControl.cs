@@ -112,16 +112,22 @@ namespace MahApps.Metro.Controls
 
         private void FlyoutStatusChanged(object sender, EventArgs e)
         {
-            Flyout flyout = this.GetFlyout(sender); //Get the flyout that raised the handler.
+            var flyout = this.GetFlyout(sender); //Get the flyout that raised the handler.
+
+            this.HandleFlyoutStatusChange(flyout, this.TryFindParent<MetroWindow>());
+        }
+
+        internal void HandleFlyoutStatusChange(Flyout flyout, MetroWindow parentWindow)
+        {
+            if (flyout == null || parentWindow == null)
+            {
+                return;
+            }
 
             this.ReorderZIndices(flyout);
 
-            var parentWindow = this.TryFindParent<MetroWindow>();
-            if (parentWindow != null)
-            {
-                var visibleFlyouts = this.GetFlyouts(this.Items).Where(i => i.IsOpen).OrderBy(Panel.GetZIndex);
-                parentWindow.HandleFlyoutStatusChange(flyout, visibleFlyouts);
-            }
+            var visibleFlyouts = this.GetFlyouts(this.Items).Where(i => i.IsOpen).OrderBy(Panel.GetZIndex);
+            parentWindow.HandleFlyoutStatusChange(flyout, visibleFlyouts);
         }
 
         private Flyout GetFlyout(object item)

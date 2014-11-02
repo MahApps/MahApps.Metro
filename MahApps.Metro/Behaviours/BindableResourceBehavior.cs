@@ -15,7 +15,6 @@ namespace MahApps.Metro.Behaviours
             base.OnAttached();
         }
 
-
         public string ResourceName
         {
             get { return (string) GetValue(ResourceNameProperty); }

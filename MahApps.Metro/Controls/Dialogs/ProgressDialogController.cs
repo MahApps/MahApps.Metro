@@ -9,7 +9,6 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public class ProgressDialogController
     {
-        //No spiritdead, you can't change this.
         private ProgressDialog WrappedDialog { get; set; }
         private Func<Task> CloseCallback { get; set; }
 
@@ -26,9 +25,9 @@ namespace MahApps.Metro.Controls.Dialogs
             IsOpen = dialog.IsVisible;
 
             WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() =>
-                                                                           {
-                                                                               WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
-                                                                           }));
+            {
+                WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
+            }));
         }
 
         void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
@@ -39,14 +38,13 @@ namespace MahApps.Metro.Controls.Dialogs
 
                 WrappedDialog.PART_NegativeButton.IsEnabled = false;
             }
+
             WrappedDialog.Dispatcher.Invoke(new Action(() =>
-                                                       {
-                                                           IsCanceled = true;
+            {
+                IsCanceled = true;
 
-                                                           WrappedDialog.PART_NegativeButton.IsEnabled = false;
-                                                       }));
-
-            //Close();
+                WrappedDialog.PART_NegativeButton.IsEnabled = false;
+            }));
         }
 
         /// <summary>
@@ -55,13 +53,16 @@ namespace MahApps.Metro.Controls.Dialogs
         public void SetIndeterminate()
         {
             if (WrappedDialog.Dispatcher.CheckAccess())
+            {
                 WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
+            }
+
             else
             {
                 WrappedDialog.Dispatcher.Invoke(new Action(() =>
-                                                           {
-                                                               WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
-                                                           }));
+                {
+                    WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
+                }));
             }
         }
 
@@ -72,12 +73,16 @@ namespace MahApps.Metro.Controls.Dialogs
         public void SetCancelable(bool value)
         {
             if (WrappedDialog.Dispatcher.CheckAccess())
+            {
                 WrappedDialog.IsCancelable = value;
+            }
             else
+            {
                 WrappedDialog.Dispatcher.Invoke(new Action(() =>
-                                                           {
-                                                               WrappedDialog.IsCancelable = value;
-                                                           }));
+                {
+                    WrappedDialog.IsCancelable = value;
+                }));
+            }
         }
 
         /// <summary>
@@ -86,26 +91,26 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="value">The percentage to set as the value.</param>
         public void SetProgress(double value)
         {
-            if (value < 0.0 || value > 1.0) throw new ArgumentOutOfRangeException("value");
+            if (value < 0.0 || value > 1.0) 
+                throw new ArgumentOutOfRangeException("value");
 
             Action action = () =>
-                            {
-                                WrappedDialog.PART_ProgressBar.IsIndeterminate = false;
-                                WrappedDialog.PART_ProgressBar.Value = value;
-                                WrappedDialog.PART_ProgressBar.Maximum = 1.0;
-                                WrappedDialog.PART_ProgressBar.ApplyTemplate();
-                            };
+            {
+                WrappedDialog.PART_ProgressBar.IsIndeterminate = false;
+                WrappedDialog.PART_ProgressBar.Value = value;
+                WrappedDialog.PART_ProgressBar.Maximum = 1.0;
+                WrappedDialog.PART_ProgressBar.ApplyTemplate();
+            };
 
             if (WrappedDialog.Dispatcher.CheckAccess())
             {
                 action();
             }
+
             else
             {
                 WrappedDialog.Dispatcher.Invoke(action);
             }
-
-      
         }
 
         /// <summary>
@@ -152,11 +157,11 @@ namespace MahApps.Metro.Controls.Dialogs
         public Task CloseAsync()
         {
             Action action = () =>
-                            {
-                                if (!IsOpen) throw new InvalidOperationException();
-                                WrappedDialog.Dispatcher.VerifyAccess();
-                                WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
-                            };
+            {
+                if (!IsOpen) throw new InvalidOperationException();
+                WrappedDialog.Dispatcher.VerifyAccess();
+                WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
+            };
 
             if (WrappedDialog.Dispatcher.CheckAccess())
             {
@@ -169,9 +174,9 @@ namespace MahApps.Metro.Controls.Dialogs
             }
 
             return CloseCallback().ContinueWith(x => WrappedDialog.Dispatcher.Invoke(new Action(() =>
-                                                                                                {
-                                                                                                    IsOpen = false;
-                                                                                                })));
+            {
+                IsOpen = false;
+            })));
         }
     }
 }

@@ -85,7 +85,7 @@ namespace MahApps.Metro.Controls
         {
             double actualWidth = ActualWidth;
             MetroProgressBar bar = this;
-            if (this.Visibility == System.Windows.Visibility.Visible)
+            if (this.Visibility == Visibility.Visible)
             {
                 bar.ResetStoryboard(actualWidth);
             }

@@ -18,17 +18,19 @@ namespace MahApps.Metro.Behaviours
         private IntPtr handle;
         private HwndSource hwndSource;
         private WindowChrome windowChrome;
-        private Thickness? savedBorderThickness = null;
+        private Thickness? savedBorderThickness;
 
         protected override void OnAttached()
         {
-            windowChrome = new WindowChrome();
-            windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
-            windowChrome.CaptionHeight = 0;
-            windowChrome.CornerRadius = new CornerRadius(0);
-            windowChrome.GlassFrameThickness = new Thickness(0);
-            windowChrome.UseAeroCaptionButtons = false;
-            
+            windowChrome = new WindowChrome
+            {
+                ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness, 
+                CaptionHeight = 0, 
+                CornerRadius = new CornerRadius(0), 
+                GlassFrameThickness = new Thickness(0), 
+                UseAeroCaptionButtons = false
+            };
+
             var metroWindow = AssociatedObject as MetroWindow;
             if (metroWindow != null)
             {
@@ -111,7 +113,7 @@ namespace MahApps.Metro.Behaviours
             Cleanup();
         }
 
-        private System.IntPtr WindowProc(System.IntPtr hwnd, int msg, System.IntPtr wParam, System.IntPtr lParam, ref bool handled)
+        private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             var returnval = IntPtr.Zero;
 
@@ -201,15 +203,15 @@ namespace MahApps.Metro.Behaviours
             }
         }
 
-        private void WmGetMinMaxInfo(System.IntPtr hwnd, System.IntPtr lParam)
+        private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
         {
             MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
 
             // Adjust the maximized size and position to fit the work area of the correct monitor
             int MONITOR_DEFAULTTONEAREST = 0x00000002;
-            System.IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
+            IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
 
-            if (monitor != System.IntPtr.Zero)
+            if (monitor != IntPtr.Zero)
             {
 
                 MONITORINFO monitorInfo = new MONITORINFO();
@@ -308,7 +310,7 @@ namespace MahApps.Metro.Behaviours
             hwndSource = HwndSource.FromHwnd(handle);
             if (hwndSource != null)
             {
-                hwndSource.AddHook(new HwndSourceHook(WindowProc));
+                hwndSource.AddHook(WindowProc);
             }
 
             // handle size to content (thanks @lynnx)

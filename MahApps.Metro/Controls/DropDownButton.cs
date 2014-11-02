@@ -14,9 +14,6 @@ namespace MahApps.Metro.Controls
     TemplatePart(Name = "PART_Menu", Type = typeof(ContextMenu))]
     public class DropDownButton : ItemsControl
     {
-
-        #region Events
-
         public static readonly RoutedEvent ClickEvent =
             EventManager.RegisterRoutedEvent("Click", RoutingStrategy.Bubble,
                 typeof(RoutedEventHandler), typeof(DropDownButton));
@@ -27,21 +24,16 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(ClickEvent, value); }
         }
 
-        #endregion
-
-
-        #region DependencyProperties
-
         public static readonly DependencyProperty IsExpandedProperty =
             DependencyProperty.Register("IsExpanded", typeof(bool), typeof(DropDownButton), new FrameworkPropertyMetadata(new PropertyChangedCallback(Target)));
 
         private static void Target(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             DropDownButton button = (DropDownButton) dependencyObject;
-            if (button._clickButton != null)
+            if (button.clickButton != null)
             {
-                button._menu.Placement = PlacementMode.Bottom;
-                button._menu.PlacementTarget = button._clickButton;
+                button.menu.Placement = PlacementMode.Bottom;
+                button.menu.PlacementTarget = button.clickButton;
             }
         }
 
@@ -66,7 +58,6 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register("Content", typeof(Object), typeof(DropDownButton));
-
 
         public Object Content
         {
@@ -116,15 +107,8 @@ namespace MahApps.Metro.Controls
             set { SetValue(IconProperty, value); }
         }
 
-        #endregion
-
-
-        #region Variables
-
-        private Button _clickButton;
-        private ContextMenu _menu;
-
-        #endregion
+        private Button clickButton;
+        private ContextMenu menu;
 
         static DropDownButton()
         {
@@ -139,16 +123,16 @@ namespace MahApps.Metro.Controls
 
         private void ExpanderClick(object sender, RoutedEventArgs e)
         {
-            _menu.Placement = PlacementMode.Bottom;
-            _menu.PlacementTarget = _clickButton;
+            menu.Placement = PlacementMode.Bottom;
+            menu.PlacementTarget = clickButton;
             IsExpanded = true;
         }
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _clickButton = EnforceInstance<Button>("PART_Button");
-            _menu = EnforceInstance<ContextMenu>("PART_Menu");
+            clickButton = EnforceInstance<Button>("PART_Button");
+            menu = EnforceInstance<ContextMenu>("PART_Menu");
             InitializeVisualElementsContainer();
         }
 
@@ -162,8 +146,8 @@ namespace MahApps.Metro.Controls
         private void InitializeVisualElementsContainer()
         {
             MouseRightButtonUp += DropDownButton_MouseRightButtonUp;
-            _clickButton.Click += ExpanderClick;
-            _clickButton.Click += ButtonClick;
+            clickButton.Click += ExpanderClick;
+            clickButton.Click += ButtonClick;
         }
 
         void DropDownButton_MouseRightButtonUp(object sender, MouseButtonEventArgs e)

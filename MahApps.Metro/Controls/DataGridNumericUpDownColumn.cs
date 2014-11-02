@@ -1,36 +1,26 @@
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media;
+
 namespace MahApps.Metro.Controls
 {
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Media;
-
     public class DataGridNumericUpDownColumn : DataGridBoundColumn
     {
-        #region Static Fields
-
         private static Style _defaultEditingElementStyle;
         private static Style _defaultElementStyle;
-        private double _minimum = (double)NumericUpDown.MinimumProperty.DefaultMetadata.DefaultValue;
-        private double _maximum = (double)NumericUpDown.MaximumProperty.DefaultMetadata.DefaultValue;
-        private double _interval = (double)NumericUpDown.IntervalProperty.DefaultMetadata.DefaultValue;
-        private string _stringFormat = (string)NumericUpDown.StringFormatProperty.DefaultMetadata.DefaultValue;
-        private bool _hideUpDownButtons = (bool)NumericUpDown.HideUpDownButtonsProperty.DefaultMetadata.DefaultValue;
-        private Binding _foregroundBinding;
-
-        #endregion
-
-        #region Constructors and Destructors
+        private double minimum = (double)NumericUpDown.MinimumProperty.DefaultMetadata.DefaultValue;
+        private double maximum = (double)NumericUpDown.MaximumProperty.DefaultMetadata.DefaultValue;
+        private double interval = (double)NumericUpDown.IntervalProperty.DefaultMetadata.DefaultValue;
+        private string stringFormat = (string)NumericUpDown.StringFormatProperty.DefaultMetadata.DefaultValue;
+        private bool hideUpDownButtons = (bool)NumericUpDown.HideUpDownButtonsProperty.DefaultMetadata.DefaultValue;
+        private Binding foregroundBinding;
 
         static DataGridNumericUpDownColumn()
         {
             ElementStyleProperty.OverrideMetadata(typeof(DataGridNumericUpDownColumn), new FrameworkPropertyMetadata(DefaultElementStyle));
             EditingElementStyleProperty.OverrideMetadata(typeof(DataGridNumericUpDownColumn), new FrameworkPropertyMetadata(DefaultEditingElementStyle));
         }
-
-        #endregion
-
-        #region Public Properties
 
         public static Style DefaultEditingElementStyle
         {
@@ -79,10 +69,6 @@ namespace MahApps.Metro.Controls
                 return _defaultElementStyle;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         internal void ApplyBinding(DependencyObject target, DependencyProperty property)
         {
@@ -137,7 +123,7 @@ namespace MahApps.Metro.Controls
             {
                 numericUpDown = new NumericUpDown();
                 // create binding to cell foreground to get changed brush from selection
-                _foregroundBinding = new Binding("Foreground") { Source = cell, Mode = BindingMode.OneWay };
+                foregroundBinding = new Binding("Foreground") { Source = cell, Mode = BindingMode.OneWay };
             }
 
             ApplyStyle(isEditing, true, numericUpDown);
@@ -146,7 +132,7 @@ namespace MahApps.Metro.Controls
             if (!isEditing)
             {
                 // bind to cell foreground to get changed brush from selection
-                ApplyBinding(_foregroundBinding, numericUpDown, Control.ForegroundProperty);
+                ApplyBinding(foregroundBinding, numericUpDown, Control.ForegroundProperty);
             }
             else
             {
@@ -179,35 +165,32 @@ namespace MahApps.Metro.Controls
 
         public double Minimum
         {
-            get { return _minimum; }
-            set { _minimum = value; }
+            get { return minimum; }
+            set { minimum = value; }
         }
 
         public double Maximum
         {
-            get { return _maximum; }
-            set { _maximum = value; }
+            get { return maximum; }
+            set { maximum = value; }
         }
 
         public double Interval
         {
-            get { return _interval; }
-            set { _interval = value; }
+            get { return interval; }
+            set { interval = value; }
         }
 
         public string StringFormat
         {
-            get { return _stringFormat; }
-            set { _stringFormat = value; }
+            get { return stringFormat; }
+            set { stringFormat = value; }
         } 
         
         public bool HideUpDownButtons
         {
-            get { return _hideUpDownButtons; }
-            set { _hideUpDownButtons = value; }
+            get { return hideUpDownButtons; }
+            set { hideUpDownButtons = value; }
         }
-
-
-        #endregion
     }
 }

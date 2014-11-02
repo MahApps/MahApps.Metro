@@ -16,15 +16,6 @@ namespace MahApps.Metro.Controls
             this.Unloaded += MetroTabItem_Unloaded;
             this.Loaded += MetroTabItem_Loaded;
         }
-        
-        public MetroTabItem(BaseMetroTabControl OwningTabControl)
-        {
-            DefaultStyleKey = typeof(MetroTabItem);
-            this.Unloaded += MetroTabItem_Unloaded;
-            this.Loaded += MetroTabItem_Loaded;
-            this.OwningTabControl = OwningTabControl;
-        }
-
 
         void MetroTabItem_Loaded(object sender, RoutedEventArgs e)
         {
@@ -114,14 +105,15 @@ namespace MahApps.Metro.Controls
                 CloseTabCommandParameter = null;
             }
 
-            if (OwningTabControl == null) // see #555
+            var owningTabControl = this.TryFindParent<BaseMetroTabControl>();
+            if (owningTabControl == null) // see #555
                 throw new InvalidOperationException();
 
             // run the command handler for the TabControl
-            var itemFromContainer = OwningTabControl.ItemContainerGenerator.ItemFromContainer(this);
+            var itemFromContainer = owningTabControl.ItemContainerGenerator.ItemFromContainer(this);
 
             var data = itemFromContainer == DependencyProperty.UnsetValue ? this.Content : itemFromContainer;
-            OwningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(data, this));
+            owningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(data, this));
         }
 
         /// <summary>
@@ -138,11 +130,6 @@ namespace MahApps.Metro.Controls
         public object CloseTabCommandParameter { get { return GetValue(CloseTabCommandParameterProperty); } set { SetValue(CloseTabCommandParameterProperty, value); } }
         public static readonly DependencyProperty CloseTabCommandParameterProperty =
             DependencyProperty.Register("CloseTabCommandParameter", typeof(object), typeof(MetroTabItem), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets the owning MetroTabControl of this MetroTabItem.
-        /// </summary>
-        public BaseMetroTabControl OwningTabControl { get; internal set; }
 
         protected override void OnSelected(RoutedEventArgs e)
         {
