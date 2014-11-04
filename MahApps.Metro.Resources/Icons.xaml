@@ -1,6 +1,18 @@
 ﻿<ResourceDictionary x:Class="resources_icons_xaml"
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+    <Canvas x:Key="appbar_3d_3ds" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="32" Height="40" Canvas.Left="23" Canvas.Top="18" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 27,18L 23,26L 33,30L 24,38L 33,46L 23,50L 27,58L 45,58L 55,38L 45,18L 27,18 Z "/>
+    </Canvas>
+
+    <Canvas x:Key="appbar_3d_collada" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="44" Height="30.3735" Canvas.Left="15" Canvas.Top="21.6194" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 39.2598,21.6194C 47.9001,21.6194 55.3802,24.406 59,28.4646L 59,33.4834C 56.3537,29.575 49.2267,26.7756 40.85,26.7756C 30.2185,26.7756 21.6,31.285 21.6,36.8475C 21.6,40.4514 25.2176,43.6131 30.6564,45.3929C 22.7477,43.5121 17.2,39.1167 17.2,33.9944C 17.2,27.1599 27.0765,21.6194 39.2598,21.6194 Z M 35.8402,51.9929C 27.1999,51.9929 19.7198,49.2063 16.1,45.1478L 15,40.129C 17.6463,44.0373 25.8733,46.8367 34.25,46.8367C 44.8815,46.8367 53.5,42.3274 53.5,36.7648C 53.5,33.161 49.8824,29.9992 44.4436,28.2194C 52.3523,30.1002 57.9,34.4956 57.9,39.6179C 57.9,46.4525 48.0235,51.9929 35.8402,51.9929 Z "/>
+    </Canvas>
+
+    <Canvas x:Key="appbar_3d_obj" Width="76" Height="76" Clip="F1 M 0,0L 76,0L 76,76L 0,76L 0,0">
+        <Path Width="40" Height="40" Canvas.Left="18" Canvas.Top="18" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 18,21.7037L 43.9259,18L 58,25.4074L 58,54.2963L 32.8148,58L 18,49.1111L 18,21.7037 Z "/>
+    </Canvas>
+    
     <Canvas x:Key="appbar_acorn" Width="48" Height="48" Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0">
         <Path Width="22.3248" Height="25.8518" Canvas.Left="13.6757" Canvas.Top="11.4012" Stretch="Fill" Fill="{DynamicResource BlackBrush}" Data="F1 M 16.6309,18.6563C 17.1309,8.15625 29.8809,14.1563 29.8809,14.1563C 30.8809,11.1563 34.1308,11.4063 34.1308,11.4063C 33.5,12 34.6309,13.1563 34.6309,13.1563C 32.1309,13.1562 31.1309,14.9062 31.1309,14.9062C 41.1309,23.9062 32.6309,27.9063 32.6309,27.9062C 24.6309,24.9063 21.1309,22.1562 16.6309,18.6563 Z M 16.6309,19.9063C 21.6309,24.1563 25.1309,26.1562 31.6309,28.6562C 31.6309,28.6562 26.3809,39.1562 18.3809,36.1563C 18.3809,36.1563 18,38 16.3809,36.9063C 15,36 16.3809,34.9063 16.3809,34.9063C 16.3809,34.9063 10.1309,30.9062 16.6309,19.9063 Z "/>
     </Canvas>
