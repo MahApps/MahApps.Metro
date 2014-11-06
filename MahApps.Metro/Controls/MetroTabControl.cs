@@ -171,7 +171,7 @@ namespace MahApps.Metro.Controls
                                 if (collection == null) return;
 
                                 // find the item and kill it (I mean, remove it)
-                                foreach (var item in owner.ItemsSource.Cast<object>().Where(item => tabItem.DataContext == item))
+                                foreach (var item in owner.ItemsSource.Cast<object>().Where(item => tabItem == item || tabItem.DataContext == item))
                                 {
                                     collection.Remove(item);
                                     break;
