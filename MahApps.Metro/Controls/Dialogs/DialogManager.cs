@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,8 +9,6 @@ namespace MahApps.Metro.Controls.Dialogs
 {
     public static class DialogManager
     {
-        #region In-Window Extension Methods
-
         /// <summary>
         /// Creates a LoginDialog inside of the current window.
         /// </summary>
@@ -381,9 +375,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return sizeHandler;
         }
-        #endregion
 
-        #region External Windowed Dialog Methods
         public static BaseMetroDialog ShowDialogExternally(this BaseMetroDialog dialog)
         {
             Window win = SetupExternalDialogWindow(dialog);
@@ -448,7 +440,6 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return win;
         }
-        #endregion
 
         public delegate void DialogStateChangedHandler(object sender, DialogStateChangedEventArgs args);
 
