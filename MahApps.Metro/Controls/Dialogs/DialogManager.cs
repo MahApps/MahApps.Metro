@@ -441,9 +441,7 @@ namespace MahApps.Metro.Controls.Dialogs
             return win;
         }
 
-        public delegate void DialogStateChangedHandler(object sender, DialogStateChangedEventArgs args);
-
-        public static event DialogStateChangedHandler DialogOpened;
-        public static event DialogStateChangedHandler DialogClosed;
+        public static event EventHandler<DialogStateChangedEventArgs> DialogOpened;
+        public static event EventHandler<DialogStateChangedEventArgs> DialogClosed;
     }
 }
