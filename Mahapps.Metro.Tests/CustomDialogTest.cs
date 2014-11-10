@@ -2,10 +2,10 @@
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using Mahapps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
 
-namespace Mahapps.Metro.Tests
+namespace MahApps.Metro.Tests
 {
     public class CustomDialogTest : AutomationTestBase
     {

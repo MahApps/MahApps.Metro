@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Threading;
 
-namespace Mahapps.Metro.Tests.TestHelpers
+namespace MahApps.Metro.Tests.TestHelpers
 {
     public class SwitchContextToUiThreadAwaiter : INotifyCompletion
     {

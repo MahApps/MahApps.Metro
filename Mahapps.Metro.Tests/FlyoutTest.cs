@@ -3,12 +3,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ExposedObject;
-using Mahapps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 using Xunit;
 
-namespace Mahapps.Metro.Tests
+namespace MahApps.Metro.Tests
 {
     public class FlyoutTest : AutomationTestBase
     {

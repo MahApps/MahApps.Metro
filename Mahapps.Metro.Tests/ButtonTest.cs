@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
-using Mahapps.Metro.Tests.TestHelpers;
+using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
 
-namespace Mahapps.Metro.Tests
+namespace MahApps.Metro.Tests
 {
     public class ButtonTest : AutomationTestBase
     {

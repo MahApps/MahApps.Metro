@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using MahApps.Metro;
 
-namespace Mahapps.Metro.Tests.TestHelpers
+namespace MahApps.Metro.Tests.TestHelpers
 {
     /// <summary>
     /// This is the base class for all of our UI tests.

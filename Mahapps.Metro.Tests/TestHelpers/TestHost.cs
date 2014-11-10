@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Windows;
 
-namespace Mahapps.Metro.Tests.TestHelpers
+namespace MahApps.Metro.Tests.TestHelpers
 {
     /// <summary>
     /// This class is the ultimate hack to work around that we can't 

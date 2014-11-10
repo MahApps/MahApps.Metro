@@ -2,12 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Mahapps.Metro.Tests.TestHelpers;
-using MahApps.Metro;
+using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro.Controls;
 using Xunit;
 
-namespace Mahapps.Metro.Tests
+namespace MahApps.Metro.Tests
 {
     public class ThemeManagerTest : AutomationTestBase
     {

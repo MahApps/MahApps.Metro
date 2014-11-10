@@ -1,4 +1,4 @@
-﻿<controls:MetroWindow x:Class="Mahapps.Metro.Tests.CleanWindow"
+﻿<controls:MetroWindow x:Class="MahApps.Metro.Tests.CleanWindow"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

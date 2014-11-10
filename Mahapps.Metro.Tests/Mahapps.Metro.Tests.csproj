@@ -9,8 +9,8 @@
     <ProjectGuid>{4B381135-F480-478E-9635-B76A425670B7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mahapps.Metro.Tests</RootNamespace>
-    <AssemblyName>Mahapps.Metro.Tests</AssemblyName>
+    <RootNamespace>MahApps.Metro.Tests</RootNamespace>
+    <AssemblyName>MahApps.Metro.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

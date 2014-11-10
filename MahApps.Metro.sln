@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro", "MahApps.Metro\MahApps.Metro.csproj", "{5B1710D2-5DC8-4754-91B2-19165DE49B3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroDemo", "samples\MetroDemo\MetroDemo.csproj", "{56E8080F-FFEB-47CD-ADB9-92245F92565B}"
@@ -29,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4166BE
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mahapps.Metro.Tests", "Mahapps.Metro.Tests\Mahapps.Metro.Tests.csproj", "{4B381135-F480-478E-9635-B76A425670B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MahApps.Metro.Tests", "Mahapps.Metro.Tests\MahApps.Metro.Tests.csproj", "{4B381135-F480-478E-9635-B76A425670B7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5B1710D2-5DC8-4754-91B2-19165DE49B3D} = {5B1710D2-5DC8-4754-91B2-19165DE49B3D}
 	EndProjectSection
