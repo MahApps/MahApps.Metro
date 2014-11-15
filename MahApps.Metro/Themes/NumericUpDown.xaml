@@ -28,7 +28,7 @@
                 Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize"
                 Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Controls:TextboxHelper.IsMonitoring"
+        <Setter Property="Controls:TextBoxHelper.IsMonitoring"
                 Value="True" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
                 Value="Auto" />
@@ -85,8 +85,8 @@
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      FontFamily="{TemplateBinding FontFamily}"
                                      FontSize="{TemplateBinding FontSize}"
-                                     Controls:TextboxHelper.ClearTextButton="{TemplateBinding Controls:TextboxHelper.ClearTextButton}"
-                                     Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}" />
+                                     Controls:TextBoxHelper.ClearTextButton="{TemplateBinding Controls:TextBoxHelper.ClearTextButton}"
+                                     Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
                             <RepeatButton x:Name="PART_NumericUp"
                                           Grid.Column="1"
                                           Margin="2,2,0,2"

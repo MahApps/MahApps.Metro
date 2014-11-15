@@ -175,7 +175,7 @@
             <Label Content="ComboBox"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
             <ComboBox Width="200"
-                      Controls:TextboxHelper.ClearTextButton="True"
+                      Controls:TextBoxHelper.ClearTextButton="True"
                       Margin="0, 10, 0, 0"
                       SelectedIndex="0">
                 <ComboBoxItem Content="Item 1" />
@@ -184,7 +184,7 @@
                 <ComboBoxItem Content="Item 4" />
             </ComboBox>
             <ComboBox Width="200"
-                      Controls:TextboxHelper.ClearTextButton="True"
+                      Controls:TextBoxHelper.ClearTextButton="True"
                       Margin="0, 10, 0, 0"
                       SelectedIndex="0"
                       IsEditable="True">
@@ -196,7 +196,7 @@
             <ComboBox Width="200"
                       Margin="0, 10, 0, 0"
                       Style="{DynamicResource VirtualisedMetroComboBox}"
-                      Controls:TextboxHelper.Watermark="Autocompletion"
+                      Controls:TextBoxHelper.Watermark="Autocompletion"
                       DisplayMemberPath="Title"
                       IsEditable="True"
                       ItemsSource="{Binding Albums}"
@@ -204,7 +204,7 @@
                       Text="{Binding Path=Title}" />
             <ComboBox Width="200"
                       Margin="0, 10, 0, 0"
-                      Controls:TextboxHelper.Watermark="Autocompletion with grouping/virtualization"
+                      Controls:TextBoxHelper.Watermark="Autocompletion with grouping/virtualization"
                       ToolTip="grouping/virtualization works only with .NET 4.5"
                       DisplayMemberPath="Title"
                       IsEditable="True"
@@ -234,7 +234,7 @@
             </ComboBox>
             <ComboBox Width="200"
                       Margin="0, 10, 0, 0"
-                      Controls:TextboxHelper.Watermark="Autocompletion"
+                      Controls:TextBoxHelper.Watermark="Autocompletion"
                       DisplayMemberPath="Title"
                       IsEditable="True"
                       IsEnabled="False"

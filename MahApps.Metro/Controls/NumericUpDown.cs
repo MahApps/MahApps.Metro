@@ -763,9 +763,9 @@ namespace MahApps.Metro.Controls
                 _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
             }
 
-            if ((bool)GetValue(TextboxHelper.IsMonitoringProperty))
+            if ((bool)GetValue(TextBoxHelper.IsMonitoringProperty))
             {
-                SetValue(TextboxHelper.TextLengthProperty, _valueTextBox.Text.Length);
+                SetValue(TextBoxHelper.TextLengthProperty, _valueTextBox.Text.Length);
             }
         }
 

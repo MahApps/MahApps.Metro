@@ -14,7 +14,7 @@
            x:Key="MetroTextBox">
         <Setter Property="ContextMenu"
                 Value="{DynamicResource TextBoxMetroContextMenu}" />
-        <Setter Property="Controls:TextboxHelper.IsMonitoring"
+        <Setter Property="Controls:TextBoxHelper.IsMonitoring"
                 Value="True" />
         <Setter Property="Controls:ControlsHelper.ButtonWidth"
                 Value="22" />
@@ -113,7 +113,7 @@
                             <TextBlock x:Name="Message"
                                        Grid.Column="0"
                                        Grid.Row="1"
-                                       Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        Padding="{TemplateBinding Padding}"
                                        Visibility="Collapsed"
                                        Foreground="{TemplateBinding Foreground}"
@@ -130,7 +130,7 @@
                                   Margin="5,0"
                                   Visibility="Visible">
                                 <TextBlock x:Name="FloatingMessage"
-                                           Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            FontSize="{DynamicResource FloatingWatermarkFontSize}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Opacity="0.6"
@@ -147,9 +147,9 @@
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     FontSize="16"
                                     Foreground="{TemplateBinding Foreground}"
-                                    FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonFontFamily), Mode=OneWay}"
-                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonContent), Mode=OneWay}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonFontFamily), Mode=OneWay}"
+                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     IsTabStop="False" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
@@ -168,7 +168,7 @@
                         </DataTrigger>
 
                         <!--Sets the MiniMessage visibility (Watermark must not be "" and FloatWatermark must be true)-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.HasText)}"
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
@@ -178,7 +178,7 @@
                             </DataTrigger.ExitActions>
                         </DataTrigger>
                         <!--To override Watermark == ""-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.Watermark)}"
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}"
                                      Value="">
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
@@ -187,8 +187,8 @@
                                 <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
                             </DataTrigger.ExitActions>
                         </DataTrigger>
-                        <!--To override TextboxHelper.UseFloatingWatermark == false-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.UseFloatingWatermark)}"
+                        <!--To override TextBoxHelper.UseFloatingWatermark == false-->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
@@ -211,7 +211,7 @@
                                     Value="{Binding ElementName=ButtonRow, Path=ActualHeight, Mode=OneWay}" />
                         </MultiTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}"
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}"
                                      Value="False">
                             <Setter TargetName="PART_ContentHost"
                                     Property="Grid.ColumnSpan"
@@ -279,7 +279,7 @@
 
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="Controls:TextboxHelper.HasText"
+                                <Condition Property="Controls:TextBoxHelper.HasText"
                                            Value="False" />
                                 <Condition Property="IsFocused"
                                            Value="True" />
@@ -292,7 +292,7 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
-                        <Trigger Property="Controls:TextboxHelper.HasText"
+                        <Trigger Property="Controls:TextBoxHelper.HasText"
                                  Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource enterHasText}" />
@@ -302,7 +302,7 @@
                             </Trigger.ExitActions>
                         </Trigger>
 
-                        <Trigger Property="Controls:TextboxHelper.IsWaitingForData"
+                        <Trigger Property="Controls:TextBoxHelper.IsWaitingForData"
                                  Value="True">
                             <Setter TargetName="Base"
                                     Property="Effect">
@@ -327,7 +327,7 @@
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                         </Trigger>
-                        <Trigger Property="Controls:TextboxHelper.IsWaitingForData"
+                        <Trigger Property="Controls:TextBoxHelper.IsWaitingForData"
                                  Value="False">
                             <Setter TargetName="Base"
                                     Property="Effect"
@@ -342,7 +342,7 @@
     <Style TargetType="{x:Type TextBox}"
            BasedOn="{StaticResource MetroTextBox}"
            x:Key="MetroButtonTextBox">
-        <Setter Property="Controls:TextboxHelper.ButtonTemplate"
+        <Setter Property="Controls:TextBoxHelper.ButtonTemplate"
                 Value="{DynamicResource ChromelessButtonTemplate}" />
         <!-- change SnapsToDevicePixels to True to view a better border and validation error -->
         <Setter Property="Template">
@@ -411,7 +411,7 @@
                             <TextBlock x:Name="Message"
                                        Grid.Column="0"
                                        Grid.Row="1"
-                                       Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        Padding="{TemplateBinding Padding}"
                                        Visibility="Collapsed"
                                        Foreground="{TemplateBinding Foreground}"
@@ -428,7 +428,7 @@
                                   Margin="5,0"
                                   Visibility="Visible">
                                 <TextBlock x:Name="FloatingMessage"
-                                           Text="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            FontSize="{DynamicResource FloatingWatermarkFontSize}"
                                            Foreground="{TemplateBinding Foreground}"
                                            Opacity="0.6"
@@ -445,9 +445,9 @@
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     FontSize="16"
                                     Foreground="{TemplateBinding Foreground}"
-                                    FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonFontFamily), Mode=OneWay}"
-                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonContent), Mode=OneWay}"
-                                    Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextboxHelper.ButtonTemplate), Mode=OneWay}"
+                                    FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonFontFamily), Mode=OneWay}"
+                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
+                                    Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonTemplate), Mode=OneWay}"
                                     IsTabStop="False" />
                         </Grid>
                         <Rectangle x:Name="DisabledVisualElement"
@@ -466,7 +466,7 @@
                         </DataTrigger>
 
                         <!--Sets the MiniMessage visibility (Watermark must not be "" and FloatWatermark must be true)-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.HasText)}"
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
@@ -476,7 +476,7 @@
                             </DataTrigger.ExitActions>
                         </DataTrigger>
                         <!--To override Watermark == ""-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.Watermark)}"
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}"
                                      Value="">
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
@@ -485,8 +485,8 @@
                                 <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
                             </DataTrigger.ExitActions>
                         </DataTrigger>
-                        <!--To override TextboxHelper.UseFloatingWatermark == false-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.UseFloatingWatermark)}"
+                        <!--To override TextBoxHelper.UseFloatingWatermark == false-->
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
@@ -578,7 +578,7 @@
     <Style TargetType="{x:Type TextBox}"
            x:Key="SearchMetroTextBox"
            BasedOn="{StaticResource MetroButtonTextBox}">
-        <Setter Property="Controls:TextboxHelper.ButtonTemplate">
+        <Setter Property="Controls:TextBoxHelper.ButtonTemplate">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid Background="{TemplateBinding Background}">

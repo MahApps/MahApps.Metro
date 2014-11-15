@@ -137,7 +137,7 @@
                                                             Foreground="{TemplateBinding Foreground}"
                                                             FontFamily="Marlett"
                                                             Content="r"
-                                                            Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextboxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                            Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
                                                             IsTabStop="False" />
                                                     <Rectangle x:Name="BtnArrowBackground"
                                                                Grid.Column="2"
@@ -261,7 +261,7 @@
                                          BorderThickness="0"
                                          Background="{x:Null}"
                                          Margin="0,0,0,-2"
-                                         Controls:TextboxHelper.Watermark="{TemplateBinding Controls:TextboxHelper.Watermark}"
+                                         Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                          Foreground="{TemplateBinding Foreground}"
                                          Focusable="True"
                                          IsReadOnly="{TemplateBinding IsReadOnly}"
@@ -316,7 +316,7 @@
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextboxHelper.ClearTextButton)}"
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}"
                                      Value="False">
                             <Setter TargetName="EditableTextBoxBorder"
                                     Property="Grid.ColumnSpan"

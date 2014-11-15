@@ -31,31 +31,31 @@
                 <Label Content="TextBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.IsSpellCheckContextMenuEnabled="True"
+                         Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                          Text="Enabled" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.Watermark="Watermark"
-                         Controls:TextboxHelper.UseFloatingWatermark="True"
-                         Controls:TextboxHelper.IsWaitingForData="True"
+                         Controls:TextBoxHelper.Watermark="Watermark"
+                         Controls:TextBoxHelper.UseFloatingWatermark="True"
+                         Controls:TextBoxHelper.IsWaitingForData="True"
                          ToolTip="Default alignment" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                         Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                          Text="Clear button">
                     <TextBox.Style>
                         <Style TargetType="{x:Type TextBox}"
                                BasedOn="{StaticResource MetroTextBox}">
-                            <Setter Property="Controls:TextboxHelper.ClearTextButton" Value="True"></Setter>
+                            <Setter Property="Controls:TextBoxHelper.ClearTextButton" Value="True"></Setter>
                             <Style.Triggers>
-                                <Trigger Property="Controls:TextboxHelper.HasText"
+                                <Trigger Property="Controls:TextBoxHelper.HasText"
                                          Value="False">
-                                    <Setter Property="Controls:TextboxHelper.ClearTextButton"
+                                    <Setter Property="Controls:TextBoxHelper.ClearTextButton"
                                             Value="False" />
-                                    <Setter Property="Controls:TextboxHelper.Watermark"
+                                    <Setter Property="Controls:TextBoxHelper.Watermark"
                                             Value="Now enter some text..." />
                                 </Trigger>
-                                <Trigger Property="Controls:TextboxHelper.HasText"
+                                <Trigger Property="Controls:TextBoxHelper.HasText"
                                          Value="True">
-                                    <Setter Property="Controls:TextboxHelper.ClearTextButton"
+                                    <Setter Property="Controls:TextBoxHelper.ClearTextButton"
                                             Value="True" />
                                 </Trigger>
                             </Style.Triggers>
@@ -63,17 +63,17 @@
                     </TextBox.Style>
                 </TextBox>
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.Watermark="Search..."
-                         Controls:TextboxHelper.UseFloatingWatermark="True"
-                         Controls:TextboxHelper.ClearTextButton="True"
-                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}">
+                         Controls:TextBoxHelper.Watermark="Search..."
+                         Controls:TextBoxHelper.UseFloatingWatermark="True"
+                         Controls:TextBoxHelper.ClearTextButton="True"
+                         Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}">
                     <TextBox.Style>
                         <Style TargetType="{x:Type TextBox}"
                                BasedOn="{StaticResource SearchMetroTextBox}">
                             <Style.Triggers>
-                                <Trigger Property="Controls:TextboxHelper.HasText"
+                                <Trigger Property="Controls:TextBoxHelper.HasText"
                                          Value="True">
-                                    <Setter Property="Controls:TextboxHelper.ButtonTemplate"
+                                    <Setter Property="Controls:TextBoxHelper.ButtonTemplate"
                                             Value="{DynamicResource ChromelessButtonTemplate}" />
                                 </Trigger>
                             </Style.Triggers>
@@ -82,17 +82,17 @@
                 </TextBox>
                 <TextBox Margin="0, 10, 0, 0"
                          Name="test2"
-                         Controls:TextboxHelper.Watermark="Enter parameter"
-                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}"
-                         Controls:TextboxHelper.ButtonCommandParameter="{Binding ElementName=test2, Path=Text}"
+                         Controls:TextBoxHelper.Watermark="Enter parameter"
+                         Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}"
+                         Controls:TextBoxHelper.ButtonCommandParameter="{Binding ElementName=test2, Path=Text}"
                          Style="{DynamicResource SearchMetroTextBox}" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.Watermark="Custom icon style"
-                         Controls:TextboxHelper.ButtonContent="s"
-                         Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                         Controls:TextBoxHelper.Watermark="Custom icon style"
+                         Controls:TextBoxHelper.ButtonContent="s"
+                         Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                          Style="{DynamicResource MetroButtonTextBox}" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.Watermark="Number smaller than 10"
+                         Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          Text="{Binding IntegerGreater10Property,
                                                     ValidatesOnDataErrors=True,
                                                     UpdateSourceTrigger=PropertyChanged,
@@ -101,19 +101,19 @@
                          IsEnabled="False"
                          Text="Disabled" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.Watermark="Watermark"
+                         Controls:TextBoxHelper.Watermark="Watermark"
                          IsEnabled="False" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.ClearTextButton="True"
-                         Controls:TextboxHelper.Watermark="Watermark"
+                         Controls:TextBoxHelper.ClearTextButton="True"
+                         Controls:TextBoxHelper.Watermark="Watermark"
                          IsEnabled="False"
                          Text="Clear button" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.Watermark="Search style"
+                         Controls:TextBoxHelper.Watermark="Search style"
                          IsEnabled="False"
                          Style="{DynamicResource SearchMetroTextBox}" />
                 <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextboxHelper.Watermark="Number smaller than 10"
+                         Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          IsEnabled="False"
                          Text="{Binding IntegerGreater10Property,
                                                     ValidatesOnDataErrors=True,
@@ -125,7 +125,7 @@
                 <Label Content="RichTextBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <RichTextBox Margin="0, 10, 0, 0"
-                             Controls:TextboxHelper.IsSpellCheckContextMenuEnabled="True"
+                             Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                              Padding="5"
                              IsDocumentEnabled="True">
                     <FlowDocument>
@@ -174,15 +174,15 @@
                 <PasswordBox Margin="0, 10, 0, 0"
                              Password="Password" />
                 <PasswordBox Margin="0, 10, 0, 0"
-                             Controls:TextboxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:PasswordBoxHelper.CapsLockIcon="!"
-                             Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Password="Password" />
                 <PasswordBox Margin="0, 10, 0, 0"
-                             Controls:TextboxHelper.Watermark="Custom icon style"
-                             Controls:TextboxHelper.UseFloatingWatermark="True"
-                             Controls:TextboxHelper.ButtonContent="4"
-                             Controls:TextboxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
+                             Controls:TextBoxHelper.Watermark="Custom icon style"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Controls:TextBoxHelper.ButtonContent="4"
+                             Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:PasswordBoxHelper.CapsLockIcon="!"
                              Style="{DynamicResource MetroButtonPasswordBox}">
                     <Controls:PasswordBoxHelper.CapsLockWarningToolTip>
@@ -197,7 +197,7 @@
                              IsEnabled="False"
                              Password="Password" />
                 <PasswordBox Margin="0, 10, 0, 0"
-                             Controls:TextboxHelper.ClearTextButton="True"
+                             Controls:TextBoxHelper.ClearTextButton="True"
                              IsEnabled="False"
                              Password="Password" />
             </StackPanel>
@@ -218,14 +218,14 @@
                                         Interval="2" />
                 <Label Content='Interval="5"' />
                 <Controls:NumericUpDown Value="5"
-                                        Controls:TextboxHelper.ClearTextButton="True"
+                                        Controls:TextBoxHelper.ClearTextButton="True"
                                         Interval="5" />
 
                 <Label Content="No Speedup when long pressed" />
                 <Controls:NumericUpDown Value="5"
                                         Speedup="false" />
                 <Label Content="Speedup when long pressed but after 500ms" />
-                <Controls:NumericUpDown Controls:TextboxHelper.Watermark="Test"
+                <Controls:NumericUpDown Controls:TextBoxHelper.Watermark="Test"
                                         Delay="500"
                                         Speedup="true" />
 
