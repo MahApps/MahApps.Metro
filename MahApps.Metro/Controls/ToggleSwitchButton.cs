@@ -55,23 +55,28 @@ namespace MahApps.Metro.Controls
             UpdateThumb();
         }
 
+        DoubleAnimation _thumbAnimation;
         private void UpdateThumb()
         {
             if (_ThumbTranslate != null && _SwitchTrack != null && _ThumbIndicator != null)
             {
                 double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth) : 0;
 
-                DoubleAnimation animation = new DoubleAnimation();
-                animation.To = destination;
-                animation.Duration = TimeSpan.FromMilliseconds(500);
-                animation.EasingFunction = new ExponentialEase() { Exponent = 9 };
-                animation.FillBehavior = FillBehavior.Stop;
+                _thumbAnimation = new DoubleAnimation();
+                _thumbAnimation.To = destination;
+                _thumbAnimation.Duration = TimeSpan.FromMilliseconds(500);
+                _thumbAnimation.EasingFunction = new ExponentialEase() { Exponent = 9 };
+                _thumbAnimation.FillBehavior = FillBehavior.Stop;
 
-                animation.Completed += (sender, e) =>
+                _thumbAnimation.Completed += (sender, e) =>
                     {
-                        _ThumbTranslate.X = destination;
+                        if (_thumbAnimation != null)
+                        {
+                            _ThumbTranslate.X = destination;
+                            _thumbAnimation = null;
+                        }
                     };
-                _ThumbTranslate.BeginAnimation(TranslateTransform.XProperty, animation);
+                _ThumbTranslate.BeginAnimation(TranslateTransform.XProperty, _thumbAnimation);
             }
         }
 
@@ -103,6 +108,13 @@ namespace MahApps.Metro.Controls
         private bool _isDragging;
         void _DraggingThumb_DragStarted(object sender, DragStartedEventArgs e)
         {
+            if (_ThumbTranslate != null)
+            {
+                _ThumbTranslate.BeginAnimation(TranslateTransform.XProperty, null);
+                double destination = IsChecked.GetValueOrDefault() ? ActualWidth - (_SwitchTrack.Margin.Left + _SwitchTrack.Margin.Right + _ThumbIndicator.ActualWidth) : 0;
+                _ThumbTranslate.X = destination;
+                _thumbAnimation = null;
+            }
             _lastDragPosition = _ThumbTranslate.X;
             _isDragging = false;
         }
