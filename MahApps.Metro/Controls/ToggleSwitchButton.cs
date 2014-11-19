@@ -68,9 +68,10 @@ namespace MahApps.Metro.Controls
                 _thumbAnimation.EasingFunction = new ExponentialEase() { Exponent = 9 };
                 _thumbAnimation.FillBehavior = FillBehavior.Stop;
 
+                AnimationTimeline currentAnimation = _thumbAnimation;
                 _thumbAnimation.Completed += (sender, e) =>
                     {
-                        if (_thumbAnimation != null)
+                        if (_thumbAnimation != null && currentAnimation == _thumbAnimation)
                         {
                             _ThumbTranslate.X = destination;
                             _thumbAnimation = null;
