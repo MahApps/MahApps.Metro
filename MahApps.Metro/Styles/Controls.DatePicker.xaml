@@ -15,7 +15,7 @@
                 Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness"
                 Value="1" />
-        <Setter Property="Controls:TextboxHelper.IsMonitoring"
+        <Setter Property="Controls:TextBoxHelper.IsMonitoring"
                 Value="True" />
         <Setter Property="FontFamily"
                 Value="{DynamicResource ContentFontFamily}" />
@@ -171,7 +171,7 @@
 
     <Style x:Key="MetroDatePickerTextBox"
            TargetType="{x:Type DatePickerTextBox}">
-        <Setter Property="Controls:TextboxHelper.IsMonitoring"
+        <Setter Property="Controls:TextBoxHelper.IsMonitoring"
                 Value="True" />
         <Setter Property="Background"
                 Value="{DynamicResource ControlBackgroundBrush}" />
@@ -252,7 +252,7 @@
                                         Foreground="{TemplateBinding Foreground}"
                                         Visibility="Hidden" />
                         <TextBlock x:Name="Message"
-                                   Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextboxHelper.Watermark)}"
+                                   Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextBoxHelper.Watermark)}"
                                    Foreground="{TemplateBinding Foreground}"
                                    IsHitTestVisible="False"
                                    Opacity="0.6"
@@ -264,7 +264,7 @@
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="Controls:TextboxHelper.HasText"
+                                <Condition Property="Controls:TextBoxHelper.HasText"
                                            Value="False" />
                                 <Condition Property="IsFocused"
                                            Value="True" />
@@ -277,14 +277,14 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextboxHelper.Watermark)}"
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextBoxHelper.Watermark)}"
                                      Value="{x:Static System:String.Empty}">
                             <Setter TargetName="PART_Watermark"
                                     Property="Visibility"
                                     Value="Visible" />
                         </DataTrigger>
 
-                        <Trigger Property="Controls:TextboxHelper.HasText"
+                        <Trigger Property="Controls:TextBoxHelper.HasText"
                                  Value="True">
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource EnterHasText}" />
