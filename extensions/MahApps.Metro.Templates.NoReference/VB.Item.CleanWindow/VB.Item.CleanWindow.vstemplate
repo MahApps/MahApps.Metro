@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>Clean Window (WPF)</Name>
+    <Description>A clean window with a basic layout (No Reference Included).</Description>
+    <Icon>MahApps.Metro.Wpf.Window.png</Icon>
+    <TemplateID>7ac0fbad-75f4-4d6a-b2c6-d840aba3c163</TemplateID>
+    <SortOrder>1000</SortOrder>
+    <DefaultName>MetroWindow.xaml</DefaultName>
+    <ProjectType>VisualBasic</ProjectType>
+    <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$fileinputname$.xaml">MainWindow.xaml</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$fileinputname$.xaml.vb">MainWindow.xaml.vb</ProjectItem>
+  </TemplateContent>
+</VSTemplate>

@@ -1,0 +1,3 @@
+﻿Class $safeitemrootname$
+
+End Class

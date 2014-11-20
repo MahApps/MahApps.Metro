@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="MahApps.Metro.Templates.NoReference..8f0ebd79-ecb6-42cf-89bb-95d8d0f34cc0" Version="1.0" Language="en-US" Publisher="MahApps" />
+    <DisplayName>MahApps.Metro Templates (No Reference Included)</DisplayName>
+    <Description xml:space="preserve">Project and item templates in C# and VB for MahApps.Metro for WPF (No Refeferences Included).</Description>
+    <MoreInfo>https://github.com/MahApps/MahApps.Metro</MoreInfo>
+    <License>License.txt</License>
+    <GettingStartedGuide>http://mahapps.com</GettingStartedGuide>
+    <Icon>MahApps.Metro.Icon.png</Icon>
+    <PreviewImage>MahApps.Metro.Preview.png</PreviewImage>
+    <Tags>mahapps metro wpf UI</Tags>
+  </Metadata>
+  <Installation>
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[10.0,13.0]" />
+    <InstallationTarget Version="[10.0,13.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
+    <InstallationTarget Version="[10.0,13.0)" Id="Microsoft.VisualStudio.Premium" />
+    <InstallationTarget Version="[10.0,13.0)" Id="Microsoft.VisualStudio.Ultimate" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.0,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="Csharp.Item.MetroWindow" d:TargetPath="|Csharp.Item.MetroWindow;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="Csharp.Item.MetroWindow.Icon" d:TargetPath="|Csharp.Item.MetroWindow.Icon;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="Csharp.Item.CleanWindow" d:TargetPath="|Csharp.Item.CleanWindow;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="Csharp.Item.CleanWindow.Icon" d:TargetPath="|Csharp.Item.CleanWindow.Icon;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="Csharp.Project.MetroWindow" d:TargetPath="|Csharp.Project.MetroWindow;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="Csharp.Project.MetroWindow.Icon" d:TargetPath="|Csharp.Project.MetroWindow.Icon;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="Csharp.Project.CleanWindow" d:TargetPath="|Csharp.Project.CleanWindow;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="Csharp.Project.CleanWindow.Icon" d:TargetPath="|Csharp.Project.CleanWindow.Icon;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="VB.Item.CleanWindow.Icon" d:TargetPath="|VB.Item.CleanWindow.Icon;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="VB.Item.CleanWindow" d:TargetPath="|VB.Item.CleanWindow;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="VB.Item.MetroWindow.Icon" d:TargetPath="|VB.Item.MetroWindow.Icon;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" d:Source="Project" d:ProjectName="VB.Item.MetroWindow" d:TargetPath="|VB.Item.MetroWindow;TemplateProjectOutputGroup|" Path="ItemTemplates" d:VsixSubPath="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="VB.Project.CleanWindow.Icon" d:TargetPath="|VB.Project.CleanWindow.Icon;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="VB.Project.CleanWindow" d:TargetPath="|VB.Project.CleanWindow;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="VB.Project.MetroWindow.Icon" d:TargetPath="|VB.Project.MetroWindow.Icon;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" d:Source="Project" d:ProjectName="VB.Project.MetroWindow" d:TargetPath="|VB.Project.MetroWindow;TemplateProjectOutputGroup|" Path="ProjectTemplates" d:VsixSubPath="ProjectTemplates" />
+  </Assets>
+</PackageManifest>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>Clean Window WPF Application with Icons</Name>
+    <Description>A project for creating a WPF application with a clean Metro look and feel.  This project also contains icon resources for use in MahApps.Metro (Uses NuGet Stable).</Description>
+    <Icon>MahApps.Metro.Csharp.Project.png</Icon>
+    <PreviewImage>MahApps.Metro.Preview.png</PreviewImage>
+    <ProjectType>CSharp</ProjectType>
+    <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
+    <SortOrder>1000</SortOrder>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
+    <TemplateID>8e70e683-4fcd-44ca-adcb-6d630ef2b0c4</TemplateID>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MetroApplication</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ProjectTemplate.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="App.xaml">App.xaml</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="App.xaml.cs">App.xaml.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MainWindow.xaml" OpenInEditor="true">MainWindow.xaml</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="MainWindow.xaml.cs" OpenInEditor="true">MainWindow.xaml.cs</ProjectItem>
+      <Folder Name="Properties" TargetFolderName="Properties">
+        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.cs">AssemblyInfo.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Resources.Designer.cs">Resources.Designer.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="Resources.resx">Resources.resx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Settings.Designer.cs">Settings.Designer.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="Settings.settings">Settings.settings</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages repository="extension" repositoryId="MahApps.Metro.Templates.NuGet.Stable..d68f5ff1-d89a-433f-827b-eee6150935c7">
+      <package id="MahApps.Metro" version="0.13.1.0" />
+      <package id="MahApps.Metro.Resources" version="0.2.1.0" />
+    </packages>
+  </WizardData>
+</VSTemplate>

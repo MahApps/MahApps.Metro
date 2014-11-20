@@ -1,0 +1,35 @@
+﻿<VSTemplate Version="3.0.0" Type="Project" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>Metro Window WPF Application with Icons</Name>
+    <Description>A project for creating a WPF application with a Metro look and feel.  This project also contains icon resources for use in MahApps.Metro (No Reference Included).</Description>
+    <Icon>MahApps.Metro.VB.Project.png</Icon>
+    <PreviewImage>MahApps.Metro.Preview.png</PreviewImage>
+    <ProjectType>VisualBasic</ProjectType>
+    <TemplateID>7f8747f0-a8c1-4986-9198-798aa24c3e93</TemplateID>
+    <SortOrder>1000</SortOrder>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MetroApplication</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
+    <PromptForSaveOnCreation>true</PromptForSaveOnCreation>
+  </TemplateData>
+  <TemplateContent>
+    <Project File="ProjectTemplate.vbproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="false" TargetFileName="Application.xaml">Application.xaml</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="Application.xaml.vb">Application.xaml.vb</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="MainWindow.xaml" OpenInEditor="true">MainWindow.xaml</ProjectItem>
+      <ProjectItem ReplaceParameters="false" TargetFileName="MainWindow.xaml.vb" OpenInEditor="true">MainWindow.xaml.vb</ProjectItem>
+      <Folder Name="My Project" TargetFolderName="My Project">
+        <Folder Name="MyExtensions" TargetFolderName="MyExtensions">
+          <ProjectItem ReplaceParameters="false" TargetFileName="MyWpfExtension.vb">MyWpfExtension.vb</ProjectItem>
+        </Folder>
+        <ProjectItem ReplaceParameters="true" TargetFileName="AssemblyInfo.vb">AssemblyInfo.vb</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="Resources.Designer.vb">Resources.Designer.vb</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="Resources.resx">Resources.resx</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Settings.Designer.vb">Settings.Designer.vb</ProjectItem>
+        <ProjectItem ReplaceParameters="false" TargetFileName="Settings.settings">Settings.settings</ProjectItem>
+      </Folder>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
