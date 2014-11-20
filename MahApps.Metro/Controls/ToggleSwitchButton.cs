@@ -5,23 +5,27 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Data;
 
 namespace MahApps.Metro.Controls
 {
     /// <summary>
     /// A Button that allows the user to toggle between two states.
     /// </summary>
+    [TemplatePart(Name = PART_BackgroundTranslate, Type = typeof(TranslateTransform))]
     [TemplatePart(Name = PART_DraggingThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_SwitchTrack, Type = typeof(Grid))]
     [TemplatePart(Name = PART_ThumbIndicator, Type = typeof(Rectangle))]
     [TemplatePart(Name = PART_ThumbTranslate, Type = typeof(TranslateTransform))]
     public class ToggleSwitchButton : ToggleButton
     {
+        private const string PART_BackgroundTranslate = "PART_BackgroundTranslate";
         private const string PART_DraggingThumb = "PART_DraggingThumb";
         private const string PART_SwitchTrack = "PART_SwitchTrack";
         private const string PART_ThumbIndicator = "PART_ThumbIndicator";
         private const string PART_ThumbTranslate = "PART_ThumbTranslate";
 
+        private TranslateTransform _BackgroundTranslate;
         private Thumb _DraggingThumb;
         private Grid _SwitchTrack;
         private Rectangle _ThumbIndicator;
@@ -90,10 +94,19 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            _BackgroundTranslate = GetTemplateChild(PART_BackgroundTranslate) as TranslateTransform;
             _DraggingThumb = GetTemplateChild(PART_DraggingThumb) as Thumb;
             _SwitchTrack = GetTemplateChild(PART_SwitchTrack) as Grid;
             _ThumbIndicator = GetTemplateChild(PART_ThumbIndicator) as Rectangle;
             _ThumbTranslate = GetTemplateChild(PART_ThumbTranslate) as TranslateTransform;
+
+            if (_ThumbIndicator != null && _BackgroundTranslate != null)
+            {
+                Binding translationBinding;
+                translationBinding = new System.Windows.Data.Binding("X");
+                translationBinding.Source = _ThumbTranslate;
+                BindingOperations.SetBinding(_BackgroundTranslate, TranslateTransform.XProperty, translationBinding);
+            }
 
             if (_DraggingThumb != null && _SwitchTrack != null && _ThumbIndicator != null && _ThumbTranslate != null)
             {
