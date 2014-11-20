@@ -130,6 +130,8 @@
                 Value="10,4,4,7" />
         <Setter Property="Margin"
                 Value="0,0,0,0" />
+        <Setter Property="BorderThickness"
+                Value="0,0,0,3" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource GrayBrush5}" />
         <Setter Property="Background"
@@ -143,7 +145,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Border x:Name="BackgroundBorder"
-                                BorderThickness="0,0,0,3"
+                                BorderThickness="{TemplateBinding BorderThickness}"
                                 Grid.ColumnSpan="2"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}" />
@@ -224,7 +226,7 @@
                                  Value="0">
                             <Setter Property="Visibility"
                                     Value="Collapsed"
-                                    TargetName="PART_LeftHeaderGripper"></Setter>
+                                    TargetName="PART_LeftHeaderGripper" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
@@ -543,8 +545,7 @@
                                               Grid.ColumnSpan="2">
                                             <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
                                                                     CanContentScroll="{TemplateBinding CanContentScroll}"
-                                                                    Grid.ColumnSpan="2"
-                                                                    Grid.Row="1" />
+                                                                    Grid.ColumnSpan="2" />
                                         </Grid>
                                         <ScrollBar x:Name="PART_VerticalScrollBar"
                                                    Grid.Column="2"
