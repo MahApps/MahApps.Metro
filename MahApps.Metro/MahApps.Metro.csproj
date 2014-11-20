@@ -88,10 +88,7 @@
     <Compile Include="Behaviours\GlowWindowBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
-    <Compile Include="Controls\ButtonHelper.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
-    <Compile Include="Controls\ComboBoxHelper.cs" />
-    <Compile Include="Controls\ControlsHelper.cs" />
     <Compile Include="Controls\CustomValidationPopup.cs" />
     <Compile Include="Controls\DataGridNumericUpDownColumn.cs" />
     <Compile Include="Controls\Dialogs\BaseMetroDialog.cs" />
@@ -113,7 +110,15 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Dialogs\MessageDialog.cs" />
-    <Compile Include="Controls\GroupBoxHelper.cs" />
+    <Compile Include="Controls\Helper\ButtonHelper.cs" />
+    <Compile Include="Controls\Helper\ComboBoxHelper.cs" />
+    <Compile Include="Controls\Helper\ControlsHelper.cs" />
+    <Compile Include="Controls\Helper\GroupBoxHelper.cs" />
+    <Compile Include="Controls\Helper\PasswordBoxHelper.cs" />
+    <Compile Include="Controls\Helper\ScrollBarHelper.cs" />
+    <Compile Include="Controls\Helper\TabControlHelper.cs" />
+    <Compile Include="Controls\Helper\TextBoxHelper.cs" />
+    <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
@@ -126,18 +131,13 @@
     <Compile Include="Controls\NumericUpDown.cs" />
     <Compile Include="Controls\NumericUpDownChangedRoutedEventArgs.cs" />
     <Compile Include="Controls\NumericUpDownChangedRoutedEventHandler.cs" />
-    <Compile Include="Controls\PasswordBoxHelper.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
-    <Compile Include="Controls\ScrollBarHelper.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
-    <Compile Include="Controls\TabControlHelper.cs" />
-    <Compile Include="Controls\TextBoxHelper.cs" />
-    <Compile Include="Controls\ToggleButtonHelper.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
     <Compile Include="Controls\WindowCommands.cs">
       <SubType>Code</SubType>
