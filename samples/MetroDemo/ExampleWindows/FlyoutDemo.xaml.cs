@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using MahApps.Metro.Controls;
+using MetroDemo.Models;
 
 namespace MetroDemo.ExampleWindows
 {
@@ -15,44 +16,61 @@ namespace MetroDemo.ExampleWindows
             settingsFlyout.IsOpenChanged += (sender, args) => firstTB.Focus();
         }
 
-        private void ShowFirst(object sender, RoutedEventArgs e)
+        private ICommand openFirstFlyoutCommand;
+
+        public ICommand OpenFirstFlyoutCommand
         {
-            this.ToggleFlyout(0);
+            get
+            {
+                return this.openFirstFlyoutCommand ?? (this.openFirstFlyoutCommand = new SimpleCommand {
+                    CanExecuteDelegate = x => this.Flyouts.Items.Count > 0,
+                    ExecuteDelegate = x => this.ToggleFlyout(0)
+                });
+            }
         }
 
-        private void ShowSecond(object sender, RoutedEventArgs e) {
+        private void ShowSecond(object sender, RoutedEventArgs e)
+        {
             this.ToggleFlyout(1);
         }
 
-        private void ShowThird(object sender, RoutedEventArgs e) {
+        private void ShowThird(object sender, RoutedEventArgs e)
+        {
             this.ToggleFlyout(2);
         }
 
-        private void ShowAccent(object sender, RoutedEventArgs e) {
+        private void ShowAccent(object sender, RoutedEventArgs e)
+        {
             this.ToggleFlyout(3);
         }
 
-        private void ShowInverse(object sender, RoutedEventArgs e) {
+        private void ShowInverse(object sender, RoutedEventArgs e)
+        {
             this.ToggleFlyout(4);
         }
 
-        private void ShowAdapt(object sender, RoutedEventArgs e)  {
+        private void ShowAdapt(object sender, RoutedEventArgs e)
+        {
             this.ToggleFlyout(5);
         }
 
-        private void ShowSettings(object sender, RoutedEventArgs e) {
+        private void ShowSettings(object sender, RoutedEventArgs e)
+        {
             this.ToggleFlyout(6);
         }
 
-        private void ShowLeft(object sender, RoutedEventArgs e) {
+        private void ShowLeft(object sender, RoutedEventArgs e)
+        {
             this.ToggleFlyout(7);
         }
 
-        private void ShowTop(object sender, RoutedEventArgs e) {
+        private void ShowTop(object sender, RoutedEventArgs e)
+        {
             this.ToggleFlyout(8);
         }
 
-        private void ShowBottom(object sender, RoutedEventArgs e) {
+        private void ShowBottom(object sender, RoutedEventArgs e)
+        {
             this.ToggleFlyout(9);
         }
 
@@ -94,16 +112,15 @@ namespace MetroDemo.ExampleWindows
             flyout.Position = Position.Right;
         }
 
-        private void ShowDynamicFlyout(object sender, RoutedEventArgs e) {
-            var flyout = new DynamicFlyout
-            {
+        private void ShowDynamicFlyout(object sender, RoutedEventArgs e)
+        {
+            var flyout = new DynamicFlyout {
                 Header = "Dynamic flyout"
             };
 
             // when the flyout is closed, remove it from the hosting FlyoutsControl
             RoutedEventHandler closingFinishedHandler = null;
-            closingFinishedHandler = (o, args) =>
-            {
+            closingFinishedHandler = (o, args) => {
                 flyout.ClosingFinished -= closingFinishedHandler;
                 flyoutsControl.Items.Remove(flyout);
             };

@@ -302,7 +302,7 @@
                        Text="Some Flyout Tests..." />
             <Button MinWidth="90"
                     Margin="2"
-                    Click="ShowFirst"
+                    Command="{Binding ElementName=flyoutsDemo, Path=OpenFirstFlyoutCommand}"
                     Content="Show 1" />
             <Button MinWidth="90"
                     Margin="2"
