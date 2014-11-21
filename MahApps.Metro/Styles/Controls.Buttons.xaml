@@ -216,7 +216,7 @@
         <Setter Property="Background"
                 Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground"
-                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
@@ -249,19 +249,26 @@
                                     Value=".5" />
                         </Trigger>
                     </ControlTemplate.Triggers>
+                    
                 </ControlTemplate>
+
             </Setter.Value>
         </Setter>
+        
         <Style.Triggers>
+
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter Property="Background"
                         Value="{DynamicResource SemiTransparentWhiteBrush}" />
             </Trigger>
+            
             <Trigger Property="IsPressed"
                      Value="True">
                 <Setter Property="Background"
                         Value="{DynamicResource HighlightBrush}" />
+                <Setter Property="Foreground" 
+                        Value="White" />
             </Trigger>
             <Trigger Property="IsEnabled"
                      Value="false">
