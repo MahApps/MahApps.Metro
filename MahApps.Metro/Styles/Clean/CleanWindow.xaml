@@ -273,8 +273,12 @@
     <Style x:Key="CleanCloseWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CleanWindowButtonStyle}">
         <Style.Triggers>
 
-            <Trigger Property="IsPressed" Value="True">
+            <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="#EB2F2F" />
+                <Setter Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="#7C0000" />
             </Trigger>
 
         </Style.Triggers>
