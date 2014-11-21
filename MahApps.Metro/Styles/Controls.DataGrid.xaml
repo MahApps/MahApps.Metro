@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
@@ -297,6 +298,8 @@
     <!--____________________ Metro CellStyle ____________________-->
     <Style x:Key="MetroDataGridCell"
            TargetType="{x:Type DataGridCell}">
+        <Setter Property="Controls:DataGridCellHelper.SaveDataGrid"
+                Value="True" />
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
@@ -339,7 +342,7 @@
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
                                Value="True" />
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
                                Value="Cell" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
@@ -351,7 +354,7 @@
                                Value="True" />
                     <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
                                Value="False" />
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
                                Value="CellOrRowHeader" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
@@ -361,7 +364,7 @@
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
                                Value="True" />
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
                                Value="Cell" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
@@ -373,7 +376,7 @@
                                Value="True" />
                     <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
                                Value="False" />
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
                                Value="CellOrRowHeader" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
