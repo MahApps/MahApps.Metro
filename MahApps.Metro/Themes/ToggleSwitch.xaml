@@ -58,13 +58,13 @@
                                     <Rectangle Fill="{Binding SwitchForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
                                     <Rectangle Fill="{DynamicResource GrayBrush4}" RenderTransformOrigin="0.5,0.5">
                                         <Rectangle.RenderTransform>
-                                            <TranslateTransform X="{Binding X, ElementName=PART_ThumbTranslate}"/>
+                                            <TranslateTransform x:Name="PART_BackgroundTranslate"/>
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
                                     <Rectangle x:Name="PART_BackgroundOverlay" Fill="{DynamicResource WhiteBrush}" Opacity="0"/>
                                 </Grid>
                             </Border>
-                            <Rectangle x:Name="PART_ThumbIndicator" Fill="Black" Width="13" HorizontalAlignment="Left">
+                            <Rectangle x:Name="PART_ThumbIndicator" Fill="{DynamicResource BlackBrush}" Width="13" HorizontalAlignment="Left">
                                 <Rectangle.RenderTransform>
                                     <TranslateTransform x:Name="PART_ThumbTranslate"/>
                                 </Rectangle.RenderTransform>
