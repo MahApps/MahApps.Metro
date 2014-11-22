@@ -20,7 +20,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty EllipseOffsetProperty =
             DependencyProperty.Register("EllipseOffset", typeof(double), typeof(MetroProgressBar),
                                         new PropertyMetadata(default(double)));
-        
+
+        private Storyboard indeterminateStoryboard;
+
         static MetroProgressBar()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroProgressBar), new FrameworkPropertyMetadata(typeof(MetroProgressBar)));
@@ -51,14 +53,11 @@ namespace MahApps.Metro.Controls
                 var containingObject = bar.GetTemplateChild("ContainingGrid") as FrameworkElement;
                 if (indeterminateState != null && containingObject != null)
                 {
-                    if ((bool)e.NewValue)
-                    {
-                        indeterminateState.Storyboard.Begin(containingObject, true);
-                    }
-                    else
+                    if (indeterminateState.Storyboard != null)
                     {
                         indeterminateState.Storyboard.Stop(containingObject);
                     }
+                    bar.ResetStoryboard(bar.ActualWidth);
                 }
             }
         }
@@ -105,9 +104,9 @@ namespace MahApps.Metro.Controls
                 {
                     VisualState indeterminate = GetIndeterminate();
 
-                    if (indeterminate != null)
+                    if (indeterminate != null && this.indeterminateStoryboard != null)
                     {
-                        Storyboard newStoryboard = indeterminate.Storyboard.Clone();
+                        Storyboard newStoryboard = this.indeterminateStoryboard.Clone();
                         Timeline doubleAnim = newStoryboard.Children.First(t => t.Name == "MainDoubleAnim");
                         doubleAnim.SetValue(DoubleAnimation.FromProperty, containerAnimStart);
                         doubleAnim.SetValue(DoubleAnimation.ToProperty, containerAnimEnd);
@@ -141,7 +140,6 @@ namespace MahApps.Metro.Controls
                             doubleAnimParent.InvalidateProperty(Storyboard.TargetNameProperty);
                         }
 
-                        indeterminate.Storyboard.Remove();
                         indeterminate.Storyboard = newStoryboard;
 
                         if (!IsIndeterminate)
@@ -149,7 +147,10 @@ namespace MahApps.Metro.Controls
                             return;
                         }
 
-                        indeterminate.Storyboard.Begin((FrameworkElement)GetTemplateChild("ContainingGrid"), true);
+                        if (indeterminate.Storyboard != null)
+                        {
+                            indeterminate.Storyboard.Begin((FrameworkElement)GetTemplateChild("ContainingGrid"), true);
+                        }
                     }
                 }
                 catch (Exception)
@@ -242,6 +243,7 @@ namespace MahApps.Metro.Controls
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
+            indeterminateStoryboard = this.TryFindResource("IndeterminateStoryboard") as Storyboard;
             SizeChangedHandler(null, null);
         }
 

@@ -31,210 +31,211 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroProgressBar}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="IndeterminateStoryboard" RepeatBehavior="Forever">
+                                <DoubleAnimation Duration="0:0:3.917"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                         Storyboard.TargetName="EllipseGrid"
+                                                         x:Name="MainDoubleAnim" />
+
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="E1"
+                                                                       x:Name="E1Anim">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:3" />
+                                </DoubleAnimationUsingKeyFrames>
+
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="E2"
+                                                                       x:Name="E2Anim">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.167"
+                                                                  Value="0" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:1.167" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2.167" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:3.167" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="E3"
+                                                                       x:Name="E3Anim">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.333"
+                                                                  Value="0" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:1.333" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2.333" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:3.333" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="E4"
+                                                                       x:Name="E4Anim">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5"
+                                                                  Value="0" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:1.5" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2.5" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:3.5" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="E5"
+                                                                       x:Name="E5Anim">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.667"
+                                                                  Value="0" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:1.667" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2.667" />
+                                    <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
+                                                                  KeyTime="0:0:3.667" />
+                                </DoubleAnimationUsingKeyFrames>
+
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="B1">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="-50" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3"
+                                                                  Value="100" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="B2">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="-50" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.667"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2.167"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.167"
+                                                                  Value="100" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="B3">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="-50" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.833"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2.333"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.333"
+                                                                  Value="100" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="B4">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="-50" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:1"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2.5"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.5"
+                                                                  Value="100" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
+                                                                       Storyboard.TargetName="B5">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="-50" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:1.167"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:2.667"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.667"
+                                                                  Value="100" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimation Duration="0"
+                                                         To="1"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.TargetName="EllipseGrid" />
+
+                                <DoubleAnimation Duration="0"
+                                                         To="0"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.TargetName="DeterminateRoot" />
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
+                                                                       Storyboard.TargetName="E1">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3"
+                                                                  Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
+                                                                       Storyboard.TargetName="E2">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.167"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.167"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.167"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.167"
+                                                                  Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
+                                                                       Storyboard.TargetName="E3">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.333"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.333"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.333"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.333"
+                                                                  Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
+                                                                       Storyboard.TargetName="E4">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.5"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.5"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.5"
+                                                                  Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
+                                                                       Storyboard.TargetName="E5">
+                                    <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.667"
+                                                                  Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.667"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.667"
+                                                                  Value="1" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:3.667"
+                                                                  Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                    </ControlTemplate.Resources>
                     <Grid x:Name="ContainingGrid"
                           ClipToBounds="True">
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Determinate" />
-                                <VisualState x:Name="Indeterminate">
-                                    <Storyboard RepeatBehavior="Forever">
-                                        <DoubleAnimation Duration="0:0:3.917"
-                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                         Storyboard.TargetName="EllipseGrid"
-                                                         x:Name="MainDoubleAnim" />
-
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="E1"
-                                                                       x:Name="E1Anim">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:3" />
-                                        </DoubleAnimationUsingKeyFrames>
-
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="E2"
-                                                                       x:Name="E2Anim">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.167"
-                                                                  Value="0" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:1.167" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.167" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:3.167" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="E3"
-                                                                       x:Name="E3Anim">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.333"
-                                                                  Value="0" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:1.333" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.333" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:3.333" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="E4"
-                                                                       x:Name="E4Anim">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5"
-                                                                  Value="0" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:1.5" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.5" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:3.5" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="E5"
-                                                                       x:Name="E5Anim">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.667"
-                                                                  Value="0" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:1.667" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.667" />
-                                            <SplineDoubleKeyFrame KeySpline="0.4,0,0.6,1"
-                                                                  KeyTime="0:0:3.667" />
-                                        </DoubleAnimationUsingKeyFrames>
-
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="B1">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="-50" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3"
-                                                                  Value="100" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="B2">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="-50" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.667"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.167"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.167"
-                                                                  Value="100" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="B3">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="-50" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.833"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.333"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.333"
-                                                                  Value="100" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="B4">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="-50" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.5"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.5"
-                                                                  Value="100" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)"
-                                                                       Storyboard.TargetName="B5">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="-50" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:1.167"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:2.667"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.667"
-                                                                  Value="100" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimation Duration="0"
-                                                         To="1"
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="EllipseGrid" />
-
-                                        <DoubleAnimation Duration="0"
-                                                         To="0"
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="DeterminateRoot" />
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
-                                                                       Storyboard.TargetName="E1">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3"
-                                                                  Value="0" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
-                                                                       Storyboard.TargetName="E2">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.167"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.167"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.167"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.167"
-                                                                  Value="0" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
-                                                                       Storyboard.TargetName="E3">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.333"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.333"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.333"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.333"
-                                                                  Value="0" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
-                                                                       Storyboard.TargetName="E4">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.5"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.5"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.5"
-                                                                  Value="0" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
-                                                                       Storyboard.TargetName="E5">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.667"
-                                                                  Value="0" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.667"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.667"
-                                                                  Value="1" />
-                                            <EasingDoubleKeyFrame KeyTime="0:0:3.667"
-                                                                  Value="0" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Indeterminate" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="EllipseGrid"
