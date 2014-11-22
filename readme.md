@@ -8,7 +8,7 @@ CheckBox and RadioButton styles adapted from styles created by [Brian Lagunas of
 
 Read it here: [http://mahapps.com](http://mahapps.com)
 
-You can help keep the documentation up to date by submitting a pull request on the `gh-pages` branch of this repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
+You can help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
 
 ### Icons
 
