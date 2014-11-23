@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using MahApps.Metro.Controls;
 using MetroDemo.Models;
 
@@ -128,9 +127,7 @@ namespace MetroDemo.ExampleWindows
 
             flyoutsControl.Items.Add(flyout);
 
-            // set IsOpen to true after the binding has happened
-            Action a = () => flyout.IsOpen = true;
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, a);
+            flyout.IsOpen = true;
         }
     }
 }
