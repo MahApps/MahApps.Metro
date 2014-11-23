@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
@@ -289,35 +290,39 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            if (e.NewValue != e.OldValue)
-            {
-                if ((bool)e.NewValue)
+            Action openedChangedAction = () => {
+                if (e.NewValue != e.OldValue)
                 {
-                    if (flyout.hideStoryboard != null)
+                    if ((bool)e.NewValue)
                     {
-                        // don't let the storyboard end it's completed event
-                        // otherwise it could be hidden on start
-                        flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
-                    }
-                    flyout.Visibility = Visibility.Visible;
-                    flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
-                }
-                else
-                {
-                    if (flyout.hideStoryboard != null)
-                    {
-                        flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
+                        if (flyout.hideStoryboard != null)
+                        {
+                            // don't let the storyboard end it's completed event
+                            // otherwise it could be hidden on start
+                            flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
+                        }
+                        flyout.Visibility = Visibility.Visible;
+                        flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
                     }
                     else
                     {
-                        flyout.Hide();
+                        if (flyout.hideStoryboard != null)
+                        {
+                            flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
+                        }
+                        else
+                        {
+                            flyout.Hide();
+                        }
                     }
+
+                    VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
                 }
 
-                VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
-            }
+                flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
+            };
 
-            flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
+            flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
         }
 
         private void HideStoryboard_Completed(object sender, EventArgs e)
