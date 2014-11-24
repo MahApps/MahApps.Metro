@@ -31,10 +31,11 @@ Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-
 
 ### Visual Studio Templates
 
-Yes we did it! We have now 3 simple templates to start with the awesome MahApps.Metro library.
+Yes we did it! We have now 4 simple templates to start with the awesome MahApps.Metro library.
 
 * WPF MahApps.Metro Application (.NET4)
 * WPF MahApps.Metro Application (.NET45)
+* Visual Basic WPF MahApps.Metro Application (.NET45)
 * Window MahApps.Metro (WPF)
 
 Download this [Templates.zip](https://github.com/MahApps/MahApps.Metro/raw/master/Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
