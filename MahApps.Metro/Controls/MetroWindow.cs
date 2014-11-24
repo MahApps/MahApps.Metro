@@ -819,7 +819,7 @@ namespace MahApps.Metro.Controls
             else
             {
                 // handle mouse events for windows without PART_WindowTitleBackground or PART_TitleBar
-                if (WindowDragMove) MouseDown += TitleBarMouseDown; //Only 
+                if (WindowDragMove) MouseDown += TitleBarMouseDown; //Don't move the window if WindowDragMove is false
                 MouseUp += TitleBarMouseUp;
             }
         }
