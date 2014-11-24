@@ -2,7 +2,7 @@
 
 A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
 
-CheckBox and RadioButton styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
+`CheckBox` and `RadioButton` styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
 
 ### Documentation
 
@@ -17,6 +17,7 @@ MahApps.Metro has also an icon package used from [WindowsIcons](https://github.c
 You can download the Nuget package [here](https://www.nuget.org/packages/MahApps.Metro.Resources)
 
 ### Ran into an bug?
+
 Did you stumble upon a bug? Before reporting it to us, please check out the [FAQ](https://github.com/MahApps/MahApps.Metro/wiki/FAQ) to see if it is actually a bug. If you can not find anything related to your issue, feel free to report it to us in the issue tracker.
 
 #### Bug Reports
@@ -25,10 +26,31 @@ Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-
 
 ### Breaking Changes
 
-[Breaking Changes or WTF is happening with the ALPHA version](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
+* for v0.11.3.1 [WTF is happening with the ALPHA version](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
+* for the upcoming [v1.0.0](https://github.com/MahApps/MahApps.Metro/blob/master/docs/v1.0-Migration-Guide.md)
 
-### Quick How To
-or, how to create a simple MahApps.Metro App and a Window... it's so easy ;-)
+### Visual Studio Templates
+
+Yes we did it! We have now 3 simple templates to start with the awesome MahApps.Metro library.
+
+* WPF MahApps.Metro Application (.NET4)
+* WPF MahApps.Metro Application (.NET45)
+* Window MahApps.Metro (WPF)
+
+Download this [Templates.zip](https://github.com/MahApps/MahApps.Metro/raw/master/Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
+
+```
+c:\Users\<USER>\Documents\Visual Studio 2013\
+```
+
+Now you can choose the templates at the `New Project` dialog.
+
+![](./docs/new_project_dialog.png)
+
+### A short How To
+
+Or, how to create a simple `MahApps.Metro` Application and a Window...
+
 ```XML
 <Application x:Class="WpfApplication.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -47,6 +69,7 @@ or, how to create a simple MahApps.Metro App and a Window... it's so easy ;-)
   </Application.Resources>
 </Application>
 ```
+
 ```XML
 <controls:MetroWindow x:Class="WpfApplication.MainWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -61,6 +84,7 @@ or, how to create a simple MahApps.Metro App and a Window... it's so easy ;-)
   </Grid>
 </controls:MetroWindow>
 ```
+
 ```csharp
 namespace WpfApplication
 {
@@ -83,5 +107,7 @@ If you've improved MahApps.Metro and think that other people would enjoy it, sub
 Drop in on the Gitter room - https://gitter.im/MahApps/MahApps.Metro - if you want to ask a question or discuss something with the team.
 
 ### Missing a control?
+
 If you're looking for a control that we don't have, we have some friends who have made MA.M compatible controls. Check them out:
-- Loading indicators by [@100GPing100](https://github.com/100GPing100) - https://github.com/100GPing100/LoadingIndicators.WPF
+
+- [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
