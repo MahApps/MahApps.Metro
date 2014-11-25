@@ -6,13 +6,51 @@ using MetroDemo.Models;
 
 namespace MetroDemo.ExampleWindows
 {
-    public partial class FlyoutDemo
+    public partial class FlyoutDemo : IDisposable
     {
+        private bool _disposed;
+        private bool _hideOnClose = true;
+        
         public FlyoutDemo()
         {
             this.DataContext = new MainWindowViewModel();
             this.InitializeComponent();
             settingsFlyout.IsOpenChanged += (sender, args) => firstTB.Focus();
+            this.Closing += (s, e) =>
+                {
+                    if (_hideOnClose)
+                    {
+                        Hide();
+                        e.Cancel = true;
+                    }
+                };
+        }
+
+        public void ShowDialog()
+        {
+            Owner = Application.Current.MainWindow;
+            // only for this window, because we allow minimizing
+            if (WindowState == WindowState.Minimized)
+            {
+                WindowState = WindowState.Normal;
+            }
+            Show();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (!_disposed && disposing)
+            {
+                _disposed = true;
+                _hideOnClose = false;
+                Close();
+            }
         }
 
         private ICommand openFirstFlyoutCommand;
@@ -85,6 +123,7 @@ namespace MetroDemo.ExampleWindows
 
         private void CloseMe(object sender, RoutedEventArgs e)
         {
+            this._hideOnClose = false;
             this.Close();
         }
 

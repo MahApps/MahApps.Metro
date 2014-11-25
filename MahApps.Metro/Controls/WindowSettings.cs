@@ -71,8 +71,8 @@ namespace MahApps.Metro.Controls
             if (_settings == null) return;
             _settings.Reload();
 
-            if (_settings.Placement == null) 
-                return;
+            // check for existing placement and prevent empty bounds
+            if (_settings.Placement == null || _settings.Placement.Value.normalPosition.IsEmpty) return;
 
             try
             {
@@ -80,7 +80,7 @@ namespace MahApps.Metro.Controls
 
                 wp.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
                 wp.flags = 0;
-                wp.showCmd = (wp.showCmd == Constants.SW_SHOWMINIMIZED ? Constants.SW_SHOWNORMAL : wp.showCmd);
+                wp.showCmd = (wp.showCmd == (int)Constants.ShowWindowCommands.SW_SHOWMINIMIZED ? (int)Constants.ShowWindowCommands.SW_SHOWNORMAL : wp.showCmd);
                 var hwnd = new WindowInteropHelper(_window).Handle;
                 UnsafeNativeMethods.SetWindowPlacement(hwnd, ref wp);
             }
@@ -93,29 +93,55 @@ namespace MahApps.Metro.Controls
         protected virtual void SaveWindowState()
         {
             if (_settings == null) return;
-            WINDOWPLACEMENT wp;
             var hwnd = new WindowInteropHelper(_window).Handle;
-            UnsafeNativeMethods.GetWindowPlacement(hwnd, out wp);
-            _settings.Placement = wp;
+            var wp = new WINDOWPLACEMENT();
+            wp.length = Marshal.SizeOf(wp);
+            UnsafeNativeMethods.GetWindowPlacement(hwnd, ref wp);
+            // check for saveable values
+            if (wp.showCmd != (int)Constants.ShowWindowCommands.SW_HIDE && wp.length > 0 && !wp.normalPosition.IsEmpty)
+            {
+                _settings.Placement = wp;
+            }
             _settings.Save();
         }
 
         private void Attach()
         {
-            if (_window == null) return;
-            _window.Closing += WindowClosing;
-            _window.SourceInitialized += WindowSourceInitialized;
+            if (_window != null)
+            {
+                _window.SourceInitialized += WindowSourceInitialized;
+                _window.Closed += WindowClosed;
+            }
         }
 
         void WindowSourceInitialized(object sender, EventArgs e)
         {
             LoadWindowState();
+            _window.StateChanged += WindowStateChanged;
+            _window.Closing += WindowClosing;
+        }
+
+        private void WindowStateChanged(object sender, EventArgs e)
+        {
+            // save the settings on this state change, because hidden windows gets no window placements
+            // all the saving stuff could be so much easier with ReactiveUI :-D 
+            if (_window.WindowState == WindowState.Minimized)
+            {
+                SaveWindowState();
+            }
         }
 
         private void WindowClosing(object sender, CancelEventArgs e)
         {
             SaveWindowState();
+        }
+
+        private void WindowClosed(object sender, EventArgs e)
+        {
+            SaveWindowState();
+            _window.StateChanged -= WindowStateChanged;
             _window.Closing -= WindowClosing;
+            _window.Closed -= WindowClosed;
             _window.SourceInitialized -= WindowSourceInitialized;
             _window = null;
             _settings = null;
