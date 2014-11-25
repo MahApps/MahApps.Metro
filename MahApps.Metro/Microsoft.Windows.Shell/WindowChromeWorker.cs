@@ -1233,11 +1233,13 @@ namespace Microsoft.Windows.Shell
 
         private void _UnhookCustomChrome()
         {
-            Assert.IsNotDefault(_hwnd);
             Assert.IsNotNull(_window);
 
             if (_isHooked)
             {
+                Assert.IsNotDefault(_hwnd);
+                Assert.IsNotNull(_hwndSource);
+                
                 _hwndSource.RemoveHook(_WndProc);
                 _isHooked = false;
             }
