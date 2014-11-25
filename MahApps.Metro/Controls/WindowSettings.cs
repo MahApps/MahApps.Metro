@@ -110,28 +110,41 @@ namespace MahApps.Metro.Controls
             if (_window != null)
             {
                 _window.SourceInitialized += WindowSourceInitialized;
+                _window.Closed += WindowClosed;
             }
         }
 
         void WindowSourceInitialized(object sender, EventArgs e)
         {
             LoadWindowState();
-            if (_window != null)
+            _window.StateChanged += WindowStateChanged;
+            _window.Closing += WindowClosing;
+        }
+
+        private void WindowStateChanged(object sender, EventArgs e)
+        {
+            // save the settings on this state change, because hidden windows gets no window placements
+            // all the saving stuff could be so much easier with ReactiveUI :-D 
+            if (_window.WindowState == WindowState.Minimized)
             {
-                _window.Closing += WindowClosing;
+                SaveWindowState();
             }
         }
 
         private void WindowClosing(object sender, CancelEventArgs e)
         {
             SaveWindowState();
-            if (!e.Cancel)
-            {
-                _window.Closing -= WindowClosing;
-                _window.SourceInitialized -= WindowSourceInitialized;
-                _window = null;
-                _settings = null;
-            }
+        }
+
+        private void WindowClosed(object sender, EventArgs e)
+        {
+            SaveWindowState();
+            _window.StateChanged -= WindowStateChanged;
+            _window.Closing -= WindowClosing;
+            _window.Closed -= WindowClosed;
+            _window.SourceInitialized -= WindowSourceInitialized;
+            _window = null;
+            _settings = null;
         }
     }
 }
