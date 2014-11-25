@@ -11,12 +11,22 @@ namespace MetroDemo
     {
         private bool _shutdown;
         private readonly MainWindowViewModel _viewModel;
+        private FlyoutDemo flyoutDemo;
 
         public MainWindow()
         {
             _viewModel = new MainWindowViewModel();
             DataContext = _viewModel;
             InitializeComponent();
+            flyoutDemo = new FlyoutDemo();
+            flyoutDemo.Closed += (o, args) => flyoutDemo = null;
+            Closing += (s, e) =>
+                {
+                    if (!e.Cancel && flyoutDemo != null)
+                    {
+                        flyoutDemo.Dispose();
+                    }
+                };
         }
 
         private void LaunchMahAppsOnGitHub(object sender, RoutedEventArgs e)
@@ -34,7 +44,6 @@ namespace MetroDemo
             new VSDemo().Show();
         }
 
-        private Window flyoutDemo;
         private void LaunchFlyoutDemo(object sender, RoutedEventArgs e)
         {
             if (flyoutDemo == null)
@@ -42,10 +51,7 @@ namespace MetroDemo
                 flyoutDemo = new FlyoutDemo();
                 flyoutDemo.Closed += (o, args) => flyoutDemo = null;
             }
-            if (flyoutDemo.IsVisible)
-                flyoutDemo.Hide();
-            else
-                flyoutDemo.Show();
+            flyoutDemo.ShowDialog();
         }
 
         private void LaunchIcons(object sender, RoutedEventArgs e)
