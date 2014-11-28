@@ -18,7 +18,7 @@ namespace MahApps.Metro.Controls
     /// 
     /// Complete implementation can be found here: http://agsmith.wordpress.com/2008/04/07/propertydescriptor-addvaluechanged-alternative/
     /// </summary>
-    public sealed class PropertyChangeNotifier : DependencyObject, IDisposable
+    internal sealed class PropertyChangeNotifier : DependencyObject, IDisposable
     {
         private WeakReference _propertySource;
 
