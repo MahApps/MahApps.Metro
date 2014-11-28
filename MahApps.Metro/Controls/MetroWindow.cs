@@ -701,24 +701,30 @@ namespace MahApps.Metro.Controls
         
         private void FlyoutsPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            DependencyObject element = (e.OriginalSource as DependencyObject);
-            if (element != null && element.TryFindParent<Flyout>() != null)
+            var element = (e.OriginalSource as DependencyObject);
+            if (element != null)
             {
-                return;
+                // no preview if we just clicked these elements
+                if (element.TryFindParent<Flyout>() != null
+                    || Equals(element.TryFindParent<ContentControl>(), this.icon)
+                    || element.TryFindParent<WindowCommands>() != null
+                    || element.TryFindParent<WindowButtonCommands>() != null)
+                {
+                    return;
+                }
             }
             
             if (Flyouts.OverrideExternalCloseButton == null)
             {
-                foreach (Flyout flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
+                foreach (var flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
                     flyout.IsOpen = false;
                     e.Handled = true;
                 }
             }
-
             else if (Flyouts.OverrideExternalCloseButton == e.ChangedButton)
             {
-                foreach (Flyout flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && (!x.IsPinned || Flyouts.OverrideIsPinned)))
+                foreach (var flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && (!x.IsPinned || Flyouts.OverrideIsPinned)))
                 {
                     flyout.IsOpen = false;
                     e.Handled = true;
