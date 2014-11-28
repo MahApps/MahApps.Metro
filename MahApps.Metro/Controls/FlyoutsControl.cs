@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,60 +52,21 @@ namespace MahApps.Metro.Controls
             return item is Flyout;
         }
 
-        protected override void OnItemsChanged(NotifyCollectionChangedEventArgs e)
+        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
-            base.OnItemsChanged(e);
-
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    this.AttachHandlers(this.GetFlyouts(e.NewItems));
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    this.AttachHandlers(this.GetFlyouts(e.NewItems));
-                    this.DetachHandlers(this.GetFlyouts(e.OldItems));
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    this.DetachHandlers(this.GetFlyouts(e.OldItems));
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    List<Flyout> flyouts = this.GetFlyouts(this.Items).ToList();
-                    this.DetachHandlers(flyouts);
-                    this.AttachHandlers(flyouts);
-                    break;
-            }
+            base.PrepareContainerForItemOverride(element, item);
+            this.AttachHandlers((Flyout)element);
         }
 
-        private void AttachHandlers(IEnumerable<Flyout> items)
+        private void AttachHandlers(Flyout flyout)
         {
-            foreach (var item in items)
-            {
-                this.AttachHandlers(item);
-            }
-        }
+            var isOpenNotifier = new PropertyChangeNotifier(flyout, Flyout.IsOpenProperty);
+            isOpenNotifier.ValueChanged += FlyoutStatusChanged;
+            flyout.IsOpenPropertyChangeNotifier = isOpenNotifier;
 
-        private void AttachHandlers(Flyout item)
-        {
-            var isOpenChanged = DependencyPropertyDescriptor.FromProperty(Flyout.IsOpenProperty, typeof(Flyout));
-            var themeChanged = DependencyPropertyDescriptor.FromProperty(Flyout.ThemeProperty, typeof(Flyout));
-            isOpenChanged.AddValueChanged(item, this.FlyoutStatusChanged);
-            themeChanged.AddValueChanged(item, this.FlyoutStatusChanged);
-        }
-
-        private void DetachHandlers(IEnumerable<Flyout> items)
-        {
-            foreach (var item in items)
-            {
-                this.DetachHandlers(item);
-            }
-        }
-
-        private void DetachHandlers(Flyout item)
-        {
-            var isOpenChanged = DependencyPropertyDescriptor.FromProperty(Flyout.IsOpenProperty, typeof(Flyout));
-            var themeChanged = DependencyPropertyDescriptor.FromProperty(Flyout.ThemeProperty, typeof(Flyout));
-            isOpenChanged.RemoveValueChanged(item, this.FlyoutStatusChanged);
-            themeChanged.RemoveValueChanged(item, this.FlyoutStatusChanged);
+            var themeNotifier = new PropertyChangeNotifier(flyout, Flyout.ThemeProperty);
+            themeNotifier.ValueChanged += FlyoutStatusChanged;
+            flyout.ThemePropertyChangeNotifier = themeNotifier;
         }
 
         private void FlyoutStatusChanged(object sender, EventArgs e)
