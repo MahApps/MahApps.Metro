@@ -104,10 +104,13 @@ namespace MahApps.Metro.Controls
 
         private void DetachHandlers(Flyout item)
         {
-            var isOpenChanged = DependencyPropertyDescriptor.FromProperty(Flyout.IsOpenProperty, typeof(Flyout));
-            var themeChanged = DependencyPropertyDescriptor.FromProperty(Flyout.ThemeProperty, typeof(Flyout));
-            isOpenChanged.RemoveValueChanged(item, this.FlyoutStatusChanged);
-            themeChanged.RemoveValueChanged(item, this.FlyoutStatusChanged);
+            if (item != null)
+            {
+                var isOpenChanged = DependencyPropertyDescriptor.FromProperty(Flyout.IsOpenProperty, typeof(Flyout));
+                var themeChanged = DependencyPropertyDescriptor.FromProperty(Flyout.ThemeProperty, typeof(Flyout));
+                isOpenChanged.RemoveValueChanged(item, this.FlyoutStatusChanged);
+                themeChanged.RemoveValueChanged(item, this.FlyoutStatusChanged);
+            }
         }
 
         private void FlyoutStatusChanged(object sender, EventArgs e)
