@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
 using ExposedObject;
 using MahApps.Metro.Tests.TestHelpers;
 using MahApps.Metro;
@@ -161,14 +163,14 @@ namespace MahApps.Metro.Tests
 
             bool eventRaised = false;
 
-            window.RightFlyout.IsOpenChanged += (sender, args) =>
-            {
+            window.RightFlyout.IsOpenChanged += (sender, args) => {
                 eventRaised = true;
             };
 
             window.RightFlyout.IsOpen = true;
 
-            Assert.True(eventRaised);
+            // IsOpen fires IsOpenChangedEvent with DispatcherPriority.Background
+            window.RightFlyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Assert.True(eventRaised)));
         }
 
         public class ColorTest
