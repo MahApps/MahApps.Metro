@@ -57,6 +57,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register("TitleVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
 
+        internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
+        internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
+
         /// <summary>
         /// Gets/sets if the title is visible in this flyout.
         /// </summary>
