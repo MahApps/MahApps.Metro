@@ -27,14 +27,17 @@ namespace MahApps.Metro.Controls.Dialogs
                 this.Focus();
 
                 //kind of acts like a selective 'IsDefault' mechanism.
-                if (ButtonStyle == MessageDialogStyle.Affirmative)
+                switch (this.ButtonStyle)
                 {
-                    PART_AffirmativeButton.Focus();
-                }
+                    case MessageDialogStyle.Affirmative:
+                        PART_AffirmativeButton.Focus();
+                        break;
 
-                else if (ButtonStyle == MessageDialogStyle.AffirmativeAndNegative)
-                {
-                    PART_NegativeButton.Focus();
+                    case MessageDialogStyle.AffirmativeAndNegative:
+                    case MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary:
+                    case MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary:
+                        PART_NegativeButton.Focus();
+                        break;
                 }
             }));
 
