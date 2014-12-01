@@ -10,8 +10,6 @@
 
     <Style BasedOn="{StaticResource SquareButtonStyle}"
            TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle"
-                Value="{x:Null}" />
         <Setter Property="controls:ButtonHelper.PreserveTextCase" 
                 Value="True" />
     </Style>
@@ -19,8 +17,6 @@
     <Style x:Key="AccentedDialogSquareButton"
            BasedOn="{StaticResource AccentedSquareButtonStyle}"
            TargetType="{x:Type Button}">
-        <Setter Property="FocusVisualStyle"
-                Value="{x:Null}" />
         <Setter Property="controls:ButtonHelper.PreserveTextCase" 
                 Value="True" />
     </Style>

@@ -140,6 +140,8 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 this.Loaded -= handler;
 
+                this.Focus();
+
                 tcs.TrySetResult(null);
             };
 
