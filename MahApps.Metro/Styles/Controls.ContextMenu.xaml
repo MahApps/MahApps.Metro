@@ -103,8 +103,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
-                    <Border x:Name="LayoutRoot"
-                            Background="Transparent">
+                    <Grid>
+                        <Rectangle x:Name="LayoutRoot"
+                                   Fill="{TemplateBinding Background}" />
                         <Border x:Name="Border"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -123,7 +124,7 @@
                                                 KeyboardNavigation.TabNavigation="Cycle" />
                             </ScrollViewer>
                         </Border>
-                    </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasDropShadow"
                                  Value="True">
@@ -138,7 +139,10 @@
                                 </Setter.Value>
                             </Setter>
                             <Setter TargetName="LayoutRoot"
-                                    Property="Padding"
+                                    Property="Margin"
+                                    Value="0,0,6,6" />
+                            <Setter TargetName="Border"
+                                    Property="Margin"
                                     Value="0,0,6,6" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -379,8 +383,9 @@
                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                    Placement="Bottom"
                    VerticalOffset="-1">
-                <Border x:Name="LayoutRoot"
-                        Background="Transparent">
+                <Grid>
+                    <Rectangle x:Name="LayoutRoot"
+                               Fill="{TemplateBinding Background}" />
                     <ContentControl x:Name="SubMenuBorder"
                                     IsTabStop="False"
                                     Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
@@ -395,7 +400,7 @@
                                             KeyboardNavigation.TabNavigation="Cycle" />
                         </ScrollViewer>
                     </ContentControl>
-                </Border>
+                </Grid>
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
@@ -434,7 +439,10 @@
                     </Setter.Value>
                 </Setter>
                 <Setter TargetName="LayoutRoot"
-                        Property="Padding"
+                        Property="Margin"
+                        Value="0,0,6,6" />
+                <Setter TargetName="SubMenuBorder"
+                        Property="Margin"
                         Value="0,0,6,6" />
             </Trigger>
             <Trigger Property="IsHighlighted"
@@ -597,8 +605,9 @@
                    PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}"
                    Placement="Right"
                    VerticalOffset="-3">
-                <Border x:Name="LayoutRoot"
-                        Background="Transparent">
+                <Grid>
+                    <Rectangle x:Name="LayoutRoot"
+                               Fill="{TemplateBinding Background}" />
                     <ContentControl x:Name="SubMenuBorder"
                                     IsTabStop="False"
                                     Template="{DynamicResource {ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}}">
@@ -613,7 +622,7 @@
                                             KeyboardNavigation.TabNavigation="Cycle" />
                         </ScrollViewer>
                     </ContentControl>
-                </Border>
+                </Grid>
             </Popup>
         </Grid>
         <ControlTemplate.Triggers>
@@ -652,7 +661,10 @@
                     </Setter.Value>
                 </Setter>
                 <Setter TargetName="LayoutRoot"
-                        Property="Padding"
+                        Property="Margin"
+                        Value="0,0,6,6" />
+                <Setter TargetName="SubMenuBorder"
+                        Property="Margin"
                         Value="0,0,6,6" />
             </Trigger>
             <Trigger Property="IsHighlighted"
