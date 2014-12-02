@@ -17,6 +17,6 @@ using System.Windows.Markup;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: AssemblyTitleAttribute("MahApps.Metro")]
 [assembly: AssemblyDescriptionAttribute("Toolkit for creating Metro styled WPF apps")]
-[assembly: AssemblyProductAttribute("MahApps.Metro 1.0.0-ALPHA")]
+[assembly: AssemblyProductAttribute("MahApps.Metro")]
 
 [assembly: InternalsVisibleTo("Mahapps.Metro.Tests")]
