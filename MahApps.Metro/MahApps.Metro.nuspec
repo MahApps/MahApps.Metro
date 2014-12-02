@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro</id>
-    <version>0.14.0.0</version>
+    <version>1.0.0.0</version>
     <title>MahApps.Metro</title>
     <authors>Paul Jenkins; Jake Ginnivan; Brendan Forster (shiftkey); Alex Mitchell (Amrykid); Dennis Daume (flagbug); Jan Karger (punker76)</authors>
     <owners>Paul Jenkins; Jake Ginnivan</owners>
@@ -10,8 +10,8 @@
     <projectUrl>https://github.com/MahApps/MahApps.Metro</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/mahapps.metro.logo2.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>The goal of MahApps.Metro is to allow devs to quickly and easily cobble togther a "Metro" UI for their WPF4+ apps, with minimal effort.</description>
-    <summary>The goal of MahApps.Metro is to allow devs to quickly and easily cobble togther a "Metro" UI for their WPF4+ apps, with minimal effort.</summary>
+    <description>The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a "Metro" or "Modern" UI for their WPF4+ apps, with minimal effort.</description>
+    <summary>The goal of MahApps.Metro is to allow devs to quickly and easily cobble together a "Metro" or "Modern" UI for their WPF4+ apps, with minimal effort.</summary>
     <releaseNotes />
 	  <tags>WPF UI Metro</tags>
     </metadata>
