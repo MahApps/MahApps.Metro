@@ -326,7 +326,7 @@
                         <ResourceDictionary>
                             <Style TargetType="{x:Type Button}">
                                 <Setter Property="Foreground"
-                                        Value="{DynamicResource BlackBrush}"/>
+                                        Value="{DynamicResource BlackBrush}" />
                                 <Setter Property="Background"
                                         Value="{DynamicResource TransparentWhiteBrush}" />
                                 <Setter Property="HorizontalContentAlignment"
@@ -540,9 +540,13 @@
                                              Mode="OneWay" />
                                 </MultiBinding>
                             </Button.Visibility>
-                            <Path x:Name="MaxPath" SnapsToDevicePixels="True"
-                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" >
-                            </Path>
+                            <!-- normal state -->
+                            <Path x:Name="PART_MaxPath"
+                                  Width="10"
+                                  Height="10"
+                                  Data="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z"
+                                  SnapsToDevicePixels="True"
+                                  Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />
                         </Button>
 
                         <Button x:Name="PART_Close"
@@ -558,11 +562,11 @@
                         </Button>
                     </StackPanel>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Normal">
-                            <Setter TargetName="MaxPath" Property="Data" Value="F1M0,0L0,9 9,9 9,0 0,0 0,3 8,3 8,8 1,8 1,3z" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}" Value="Maximized">
-                            <Setter TargetName="MaxPath" Property="Data" Value="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" />
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=WindowState}"
+                                     Value="Maximized">
+                            <Setter TargetName="PART_MaxPath"
+                                    Property="Data"
+                                    Value="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
