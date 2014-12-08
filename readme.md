@@ -27,7 +27,7 @@ Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-
 ### Breaking Changes
 
 * for v0.11.3.1 [WTF is happening with the ALPHA version](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
-* for the upcoming [v1.0.0](https://github.com/MahApps/MahApps.Metro/blob/master/docs/v1.0-Migration-Guide.md)
+* For version [0.14 to 1.0.0](https://github.com/MahApps/MahApps.Metro/blob/master/docs/v1.0-Migration-Guide.md)
 
 ### Visual Studio Templates
 
