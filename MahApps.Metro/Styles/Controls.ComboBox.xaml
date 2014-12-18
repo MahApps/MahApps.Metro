@@ -11,7 +11,7 @@
         <Setter Property="Foreground"
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="Background"
-                Value="{DynamicResource GrayBrush10}" />
+                Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
@@ -49,7 +49,7 @@
                                 <Setter Property="Foreground"
                                         Value="{DynamicResource TextBrush}" />
                                 <Setter Property="Background"
-                                        Value="{DynamicResource GrayBrush10}" />
+                                        Value="{DynamicResource ControlBackgroundBrush}" />
                                 <Setter Property="BorderBrush"
                                         Value="{DynamicResource TextBoxBorderBrush}" />
                                 <Setter Property="BorderThickness"
