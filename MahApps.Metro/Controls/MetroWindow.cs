@@ -274,6 +274,14 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets the window placement settings (can be overwritten).
+        /// </summary>
+        public virtual IWindowPlacementSettings GetWindowPlacementSettings()
+        {
+            return this.WindowPlacementSettings ?? new WindowApplicationSettings(this);
+        }
+
+        /// <summary>
         /// Get/sets whether the titlebar icon is visible or not.
         /// </summary>
         public bool ShowIconOnTitleBar
