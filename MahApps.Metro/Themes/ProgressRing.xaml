@@ -19,6 +19,8 @@
                 Value="60" />
         <Setter Property="Width"
                 Value="60" />
+        <Setter Property="EllipseDiameter"
+                Value="7" />
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="Template">

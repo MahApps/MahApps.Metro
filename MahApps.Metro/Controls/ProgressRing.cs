@@ -23,6 +23,8 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty EllipseDiameterProperty = DependencyProperty.Register("EllipseDiameter", typeof(double), typeof(ProgressRing), new PropertyMetadata(default(double)));
 
+		
+
         public static readonly DependencyProperty EllipseOffsetProperty = DependencyProperty.Register("EllipseOffset", typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(default(Thickness)));
 
         private List<Action> _deferredActions = new List<Action>();
@@ -62,7 +64,7 @@ namespace MahApps.Metro.Controls
         public double EllipseDiameter
         {
             get { return (double)GetValue(EllipseDiameterProperty); }
-            private set { SetValue(EllipseDiameterProperty, value); }
+            set { SetValue(EllipseDiameterProperty, value); }
         }
 
         public Thickness EllipseOffset
@@ -97,8 +99,8 @@ namespace MahApps.Metro.Controls
 
             var action = new Action(() =>
             {
-                ring.SetEllipseDiameter(
-                    (double) dependencyPropertyChangedEventArgs.NewValue);
+				//ring.SetEllipseDiameter(
+				//	(double) dependencyPropertyChangedEventArgs.NewValue);
                 ring.SetEllipseOffset(
                     (double) dependencyPropertyChangedEventArgs.NewValue);
                 ring.SetMaxSideLength(
@@ -109,8 +111,7 @@ namespace MahApps.Metro.Controls
                 ring._deferredActions.Add(action);
             else
                 action();
-        }
-
+        }		
         private void SetMaxSideLength(double width)
         {
             MaxSideLength = width <= 20 ? 20 : width;
