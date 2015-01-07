@@ -362,16 +362,18 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
-        
-        //Get the current dialog of a MetroWindow
+
+        /// <summary>
+        /// Gets the current shown dialog.
+        /// </summary>
+        /// <param name="window">The dialog owner.</param>
         public static Task<TDialog> GetCurrentDialogAsync<TDialog>(this MetroWindow window) where TDialog : BaseMetroDialog
         {
+            window.Dispatcher.VerifyAccess();
             var t = new TaskCompletionSource<TDialog>();
             window.Dispatcher.Invoke((Action)(() =>
             {
-                TDialog dialog = null;
-                if (window.metroDialogContainer.Children.Count != 0)
-                    dialog = window.metroDialogContainer.Children[0] as TDialog;
+                TDialog dialog = window.metroDialogContainer.Children.OfType<TDialog>().LastOrDefault();
                 t.TrySetResult(dialog);
             }));
             return t.Task;

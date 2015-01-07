@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Xunit;
 
 namespace Mahapps.Metro.Tests
@@ -14,6 +16,30 @@ namespace Mahapps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+        }
+
+        [Fact]
+        public async Task MetroDialogSmokeTest()
+        {
+            await TestHost.SwitchToAppThread();
+            var window = await TestHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var dialog = new SimpleDialog();
+            await window.ShowMetroDialogAsync(dialog);
+
+            await TaskEx.Delay(500);
+
+            await TestHost.SwitchToAppThread();
+            Assert.Equal(await window.GetCurrentDialogAsync<SimpleDialog>(), dialog);
+            Assert.NotNull(await window.GetCurrentDialogAsync<BaseMetroDialog>());
+            Assert.Null(await window.GetCurrentDialogAsync<MessageDialog>());
+
+            await TaskEx.Delay(500);
+
+            await TestHost.SwitchToAppThread();
+            await window.HideMetroDialogAsync(dialog);
+
+            await TestHost.SwitchToAppThread();
+            Assert.Null(await window.GetCurrentDialogAsync<MessageDialog>());
         }
 
         [Fact]
