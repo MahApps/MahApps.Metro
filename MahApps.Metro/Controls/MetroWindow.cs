@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -833,7 +833,7 @@ namespace MahApps.Metro.Controls
             else
             {
                 // handle mouse events for windows without PART_WindowTitleBackground or PART_TitleBar
-                if (IsWindowDraggable) MouseDown += TitleBarMouseDown; //Don't move the window if WindowDragMove is false
+                MouseDown += TitleBarMouseDown;
                 MouseUp += TitleBarMouseUp;
             }
         }
@@ -855,21 +855,26 @@ namespace MahApps.Metro.Controls
 
         protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
+            // if UseNoneWindowStyle = true no movement, no maximize please
             if (e.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
             {
-                // if UseNoneWindowStyle = true no movement, no maximize please
-                IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-                UnsafeNativeMethods.ReleaseCapture();
-
                 var mPoint = Mouse.GetPosition(this);
+                
+                if (IsWindowDraggable)
+                {
+                    IntPtr windowHandle = new WindowInteropHelper(this).Handle;
+                    UnsafeNativeMethods.ReleaseCapture();
+                    var wpfPoint = this.PointToScreen(mPoint);
+                    var x = Convert.ToInt16(wpfPoint.X);
+                    var y = Convert.ToInt16(wpfPoint.Y);
+                    var lParam = (int) (uint) x | (y << 16);
+                    UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
+                }
 
-                var wpfPoint = this.PointToScreen(mPoint);
-                var x = Convert.ToInt16(wpfPoint.X);
-                var y = Convert.ToInt16(wpfPoint.Y);
-                var lParam = (int)(uint)x | (y << 16);
-                UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
-
-                if (e.ClickCount == 2 && (this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize) && mPoint.Y <= this.TitlebarHeight && this.TitlebarHeight > 0)
+                var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
+                // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
+                var isMouseOnTitlebar = mPoint.Y <= this.TitlebarHeight && this.TitlebarHeight > 0;
+                if (e.ClickCount == 2 && canResize && isMouseOnTitlebar)
                 {
                     if (this.WindowState == WindowState.Maximized)
                     {
