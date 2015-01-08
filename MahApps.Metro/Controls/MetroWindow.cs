@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -83,6 +83,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
 
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         UIElement icon;
         UIElement titleBar;
@@ -125,6 +126,12 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(EnableDWMDropShadowProperty); }
             set { SetValue(EnableDWMDropShadowProperty, value); }
+        }
+
+        public bool IsWindowDraggable
+        {
+            get { return (bool)GetValue(IsWindowDraggableProperty); }
+            set { SetValue(IsWindowDraggableProperty, value); }
         }
 
         public WindowCommandsOverlayBehavior LeftWindowCommandsOverlayBehavior
@@ -826,7 +833,7 @@ namespace MahApps.Metro.Controls
             else
             {
                 // handle mouse events for windows without PART_WindowTitleBackground or PART_TitleBar
-                MouseDown += TitleBarMouseDown;
+                if (IsWindowDraggable) MouseDown += TitleBarMouseDown; //Don't move the window if WindowDragMove is false
                 MouseUp += TitleBarMouseUp;
             }
         }
