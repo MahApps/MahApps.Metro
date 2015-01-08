@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -353,6 +354,22 @@ namespace MahApps.Metro.Controls.Dialogs
                     return HandleOverlayOnHide(settings,window);
                 }));
             }).Unwrap();
+        }
+
+        /// <summary>
+        /// Gets the current shown dialog.
+        /// </summary>
+        /// <param name="window">The dialog owner.</param>
+        public static Task<TDialog> GetCurrentDialogAsync<TDialog>(this MetroWindow window) where TDialog : BaseMetroDialog
+        {
+            window.Dispatcher.VerifyAccess();
+            var t = new TaskCompletionSource<TDialog>();
+            window.Dispatcher.Invoke((Action)(() =>
+            {
+                TDialog dialog = window.metroDialogContainer.Children.OfType<TDialog>().LastOrDefault();
+                t.TrySetResult(dialog);
+            }));
+            return t.Task;
         }
 
         private static SizeChangedEventHandler SetupAndOpenDialog(MetroWindow window, BaseMetroDialog dialog)
