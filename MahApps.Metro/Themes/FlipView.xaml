@@ -91,11 +91,16 @@
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger SourceName="root" Property="IsMouseOver" Value="True">
-                <Trigger.Setters>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition SourceName="root" Property="IsMouseOver" Value="True" />
+                    <Condition Property="MouseOverGlowEnabled" Value="True"/>
+                </MultiTrigger.Conditions>
+                
+                <MultiTrigger.Setters>
                     <Setter TargetName="PART_GlowBorder" Property="BorderBrush" Value="LightGray" />
-                </Trigger.Setters>
-            </Trigger>
+                </MultiTrigger.Setters>
+            </MultiTrigger>
             
             <Trigger Property="Orientation" Value="Vertical">
                 <Trigger.Setters>
