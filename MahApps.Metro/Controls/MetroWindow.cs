@@ -515,7 +515,7 @@ namespace MahApps.Metro.Controls
         {
             get { return TitleCaps ? Title.ToUpper() : Title; }
         }
-
+        
         /// <summary>
         /// Begins to show the MetroWindow's overlay effect.
         /// </summary>
@@ -556,6 +556,7 @@ namespace MahApps.Metro.Controls
 
             return tcs.Task;
         }
+
         /// <summary>
         /// Begins to hide the MetroWindow's overlay effect.
         /// </summary>
