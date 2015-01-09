@@ -3,7 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                       GlowBrush="{DynamicResource AccentColorBrush}">
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -19,8 +19,7 @@
                     Width="40"
                     FontFamily="Segoe UI Symbol"
                     FontSize="16"
-                    VerticalAlignment="Bottom"
-                    Visibility="Hidden">
+                    VerticalAlignment="Bottom">
                 <Rectangle Width="20"
                            Height="15">
                     <Rectangle.Fill>
@@ -46,9 +45,6 @@
                     <ScaleTransform ScaleX="-1" />
                 </Button.LayoutTransform>
             </Button>
-            <Label FontSize="25"
-                   x:Name="PART_Title"
-                   Margin="0 5 0 0" />
             <Button x:Name="PART_ForwardButton"
                     DockPanel.Dock="Right"
                     Style="{DynamicResource MetroCircleButtonStyle}"
@@ -58,7 +54,7 @@
                     FontSize="16"
                     VerticalAlignment="Bottom"
                     HorizontalAlignment="Right"
-                    Visibility="Collapsed">
+                    IsEnabled="False">
                 <Rectangle Width="20"
                            Height="15">
                     <Rectangle.Fill>
@@ -81,6 +77,9 @@
                     </Rectangle.Fill>
                 </Rectangle>
             </Button>
+            <Label FontSize="25"
+                   x:Name="PART_Title"
+                   Margin="0 5 0 0" />
         </StackPanel>
 
         <Grid Grid.Row="1">
