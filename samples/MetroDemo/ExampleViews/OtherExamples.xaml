@@ -190,7 +190,7 @@
                     </Grid>
                 </Controls:FlipView.Items>
             </Controls:FlipView>
-            
+
             <Separator Margin="0,5" />
 
             <Controls:FlipView Height="400"
