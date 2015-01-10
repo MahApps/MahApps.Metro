@@ -8,12 +8,15 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0"
-                    Margin="0 5 0 0"
-                    FontSize="{StaticResource DialogMessageFontSize}"
-                    Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap"
-                    Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+        <ScrollViewer x:Name="PART_MessageScrollViewer"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+            <TextBlock x:Name="PART_MessageTextBlock"
+                       Margin="0 5 0 0"
+                       FontSize="{StaticResource DialogMessageFontSize}"
+                       Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                       Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+        </ScrollViewer>
 
         <StackPanel Grid.Row="1"
                     Orientation="Horizontal"

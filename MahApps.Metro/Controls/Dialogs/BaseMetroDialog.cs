@@ -88,7 +88,6 @@ namespace MahApps.Metro.Controls.Dialogs
             HandleTheme();
 
             this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
-
         }
 
         void BaseMetroDialog_Unloaded(object sender, RoutedEventArgs e)
@@ -291,6 +290,8 @@ namespace MahApps.Metro.Controls.Dialogs
             ColorScheme = MetroDialogColorScheme.Theme;
             AnimateShow = AnimateHide = true;
 
+            MaximumBodyHeight = Double.NaN;
+
             DefaultText = "";
         }
 
@@ -328,6 +329,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the default text( just the inputdialog needed)
         /// </summary>
         public string DefaultText { get; set; }
+
+        public double MaximumBodyHeight { get; set; }
     }
 
     /// <summary>
