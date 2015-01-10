@@ -146,10 +146,18 @@
                 <CheckBox Height="20"
                           Content="Show Banner?"
                           x:Name="ShowBannerCheckBox"
-                          HorizontalAlignment="Right" />
+                          HorizontalAlignment="Right"
+                          Margin="5 0 5 0" />
+                <CheckBox Height="20"
+                          Content="Show MouseOver Glow?"
+                          x:Name="ShowMouseOverCheckBox"
+                          HorizontalAlignment="Right"
+                          IsChecked="True"
+                          Margin="5 0 5 0" />
             </StackPanel>
             <Controls:FlipView Height="200"
                                IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                SelectionChanged="FlipView_SelectionChanged"
                                Margin="0, 0, 10, 0">
                 <Controls:FlipView.Items>
@@ -182,6 +190,8 @@
                     </Grid>
                 </Controls:FlipView.Items>
             </Controls:FlipView>
+
+            <Separator Margin="0,5" />
 
             <Controls:FlipView Height="400"
                                IsBannerEnabled="True"

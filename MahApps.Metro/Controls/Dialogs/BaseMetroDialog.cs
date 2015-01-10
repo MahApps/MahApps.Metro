@@ -65,7 +65,7 @@ namespace MahApps.Metro.Controls.Dialogs
             DialogSettings = settings ?? owningWindow.MetroDialogOptions;
 
             OwningWindow = owningWindow;
-            
+
             Initialize();
         }
 
@@ -88,7 +88,6 @@ namespace MahApps.Metro.Controls.Dialogs
             HandleTheme();
 
             this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
-
         }
 
         void BaseMetroDialog_Unloaded(object sender, RoutedEventArgs e)
@@ -106,18 +105,63 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             if (DialogSettings != null)
             {
+                var windowTheme = DetectTheme(this);
+                var theme = windowTheme.Item1;
+                var windowAccent = windowTheme.Item2;
+
                 switch (DialogSettings.ColorScheme)
                 {
                     case MetroDialogColorScheme.Theme:
+                        ThemeManager.ChangeAppStyle(this.Resources, windowAccent, theme);
                         this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
                         this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "BlackBrush"));
                         break;
+                    case MetroDialogColorScheme.Inverted:
+                        var inverseTheme = ThemeManager.GetInverseAppTheme(theme);
+                        if (inverseTheme == null)
+                        {
+                            throw new InvalidOperationException("The inverse dialog theme only works if the window theme abides the naming convention. " +
+                                                                "See ThemeManager.GetInverseAppTheme for more infos");
+                        }
+
+                        ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
+                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "BlackColorBrush"));
+                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
+                        break;
                     case MetroDialogColorScheme.Accented:
+                        ThemeManager.ChangeAppStyle(this.Resources, windowAccent, theme);
                         this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "HighlightBrush"));
                         this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "IdealForegroundColorBrush"));
                         break;
                 }
             }
+        }
+
+        private static Tuple<AppTheme, Accent> DetectTheme(BaseMetroDialog dialog)
+        {
+            if (dialog == null)
+                return null;
+
+            // first look for owner
+            var window = dialog.TryFindParent<MetroWindow>();
+            var theme = window != null ? ThemeManager.DetectAppStyle(window) : null;
+            if (theme != null && theme.Item2 != null)
+                return theme;
+
+            // second try, look for main window
+            if (Application.Current != null)
+            {
+                var mainWindow = Application.Current.MainWindow as MetroWindow;
+                theme = mainWindow != null ? ThemeManager.DetectAppStyle(mainWindow) : null;
+                if (theme != null && theme.Item2 != null)
+                    return theme;
+
+                // oh no, now look at application resource
+                theme = ThemeManager.DetectAppStyle(Application.Current);
+                if (theme != null && theme.Item2 != null)
+                    return theme;
+            }
+            return null;
         }
 
         /// <summary>
@@ -136,8 +180,7 @@ namespace MahApps.Metro.Controls.Dialogs
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
             RoutedEventHandler handler = null;
-            handler = (sender, args) =>
-            {
+            handler = (sender, args) => {
                 this.Loaded -= handler;
 
                 this.Focus();
@@ -166,10 +209,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
 
                 //This is from a MetroWindow created by the external dialog APIs.
-                return _WaitForCloseAsync().ContinueWith(x =>
-                {
-                    ParentDialogWindow.Dispatcher.Invoke(new Action(() =>
-                    {
+                return _WaitForCloseAsync().ContinueWith(x => {
+                    ParentDialogWindow.Dispatcher.Invoke(new Action(() => {
                         ParentDialogWindow.Close();
                     }));
                 });
@@ -214,8 +255,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     throw new InvalidOperationException("Unable to find the dialog closing storyboard. Did you forget to add BaseMetroDialog.xaml to your merged dictionaries?");
 
                 EventHandler handler = null;
-                handler = (sender, args) =>
-                {
+                handler = (sender, args) => {
                     closingStoryboard.Completed -= handler;
 
                     tcs.TrySetResult(null);
@@ -249,6 +289,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
             ColorScheme = MetroDialogColorScheme.Theme;
             AnimateShow = AnimateHide = true;
+
+            MaximumBodyHeight = Double.NaN;
 
             DefaultText = "";
         }
@@ -287,6 +329,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the default text( just the inputdialog needed)
         /// </summary>
         public string DefaultText { get; set; }
+
+        public double MaximumBodyHeight { get; set; }
     }
 
     /// <summary>
@@ -295,6 +339,7 @@ namespace MahApps.Metro.Controls.Dialogs
     public enum MetroDialogColorScheme
     {
         Theme = 0,
-        Accented = 1
+        Accented = 1,
+        Inverted = 2
     }
 }

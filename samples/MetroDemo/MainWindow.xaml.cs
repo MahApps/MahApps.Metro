@@ -106,7 +106,27 @@ namespace MetroDemo
                 ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme
             };
 
-            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro! ",
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!",
+                MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
+
+            if (result != MessageDialogResult.FirstAuxiliary)
+                await this.ShowMessageAsync("Result", "You said: " + (result == MessageDialogResult.Affirmative ? mySettings.AffirmativeButtonText : mySettings.NegativeButtonText +
+                    Environment.NewLine + Environment.NewLine + "This dialog will follow the Use Accent setting."));
+        }
+
+
+        private async void ShowLimitedMessageDialog(object sender, RoutedEventArgs e)
+        {
+            var mySettings = new MetroDialogSettings()
+            {
+                AffirmativeButtonText = "Hi",
+                NegativeButtonText = "Go away!",
+                FirstAuxiliaryButtonText = "Cancel",
+                MaximumBodyHeight = 100,
+                ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme
+            };
+
+            MessageDialogResult result = await this.ShowMessageAsync("Hello!", "Welcome to the world of metro!" + string.Join(Environment.NewLine, "abc","def","ghi", "jkl","mno","pqr","stu","vwx","yz"),
                 MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary, mySettings);
 
             if (result != MessageDialogResult.FirstAuxiliary)

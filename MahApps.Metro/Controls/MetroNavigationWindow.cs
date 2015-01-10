@@ -106,14 +106,14 @@ namespace MahApps.Metro.Controls
         [System.Diagnostics.DebuggerNonUserCode]
         void PART_Frame_Navigated(object sender, NavigationEventArgs e)
         {
-            PART_Title.Content = ((Page) PART_Frame.Content).Title;
+            PART_Title.Content = ((Page)PART_Frame.Content).Title;
             (this as IUriContext).BaseUri = e.Uri;
 
             PageContent = PART_Frame.Content;
 
-            PART_BackButton.Visibility = CanGoBack ? Visibility.Visible : Visibility.Hidden;
+            PART_BackButton.IsEnabled = CanGoBack;
 
-            PART_ForwardButton.Visibility = CanGoForward ? Visibility.Visible : Visibility.Collapsed;
+            PART_ForwardButton.IsEnabled = CanGoForward;
 
             if (Navigated != null)
                 Navigated(this, e);

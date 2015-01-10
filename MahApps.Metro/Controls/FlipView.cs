@@ -7,6 +7,9 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls
 {
+    public class FlipViewItem : ContentControl
+    { }
+
     /// <summary>
     /// A control that imitate a slideshow with back/forward buttons.
     /// </summary>
@@ -45,13 +48,13 @@ namespace MahApps.Metro.Controls
         /// To counteract the double Loaded event issue.
         /// </summary>
         private bool loaded;
-
         private bool controlsVisibilityOverride;
 
         static FlipView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(FlipView), new FrameworkPropertyMetadata(typeof(FlipView)));
         }
+        
         public FlipView()
         {
             this.Unloaded += FlipView_Unloaded;
@@ -63,7 +66,7 @@ namespace MahApps.Metro.Controls
         {
             this.Focus();
         }
-        
+
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is FlipViewItem;
@@ -270,8 +273,7 @@ namespace MahApps.Metro.Controls
         {
             controlsVisibilityOverride = false;
 
-            ExecuteWhenLoaded(this, () =>
-            {
+            ExecuteWhenLoaded(this, () => {
                 backButton.Visibility = Visibility.Visible;
                 forwardButton.Visibility = Visibility.Visible;
             });
@@ -282,37 +284,10 @@ namespace MahApps.Metro.Controls
         public void HideControlButtons()
         {
             controlsVisibilityOverride = true;
-            ExecuteWhenLoaded(this, () =>
-            {
+            ExecuteWhenLoaded(this, () => {
                 backButton.Visibility = Visibility.Hidden;
                 forwardButton.Visibility = Visibility.Hidden;
             });
-        }
-
-        public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register("UpTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
-        public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register("DownTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
-        public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register("LeftTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
-        public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register("RightTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
-
-        public TransitionType UpTransition
-        {
-            get { return (TransitionType)GetValue(UpTransitionProperty); }
-            set { SetValue(UpTransitionProperty, value); }
-        }
-        public TransitionType DownTransition
-        {
-            get { return (TransitionType)GetValue(DownTransitionProperty); }
-            set { SetValue(DownTransitionProperty, value); }
-        }
-        public TransitionType LeftTransition
-        {
-            get { return (TransitionType)GetValue(LeftTransitionProperty); }
-            set { SetValue(LeftTransitionProperty, value); }
-        }
-        public TransitionType RightTransition
-        {
-            get { return (TransitionType)GetValue(RightTransitionProperty); }
-            set { SetValue(RightTransitionProperty, value); }
         }
 
         private void ShowBanner()
@@ -330,10 +305,73 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private static void ExecuteWhenLoaded(FlipView flipview, Action body)
+        {
+            if (flipview.IsLoaded)
+            {
+                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
+            }
+            else
+            {
+                RoutedEventHandler handler = null;
+                handler = (o, a) => {
+                    flipview.Loaded -= handler;
+                    System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
+                };
+
+                flipview.Loaded += handler;
+            }
+        }
+
+        public static readonly DependencyProperty UpTransitionProperty = DependencyProperty.Register("UpTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Up));
+        public static readonly DependencyProperty DownTransitionProperty = DependencyProperty.Register("DownTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.Down));
+        public static readonly DependencyProperty LeftTransitionProperty = DependencyProperty.Register("LeftTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.LeftReplace));
+        public static readonly DependencyProperty RightTransitionProperty = DependencyProperty.Register("RightTransition", typeof(TransitionType), typeof(FlipView), new PropertyMetadata(TransitionType.RightReplace));
+        public static readonly DependencyProperty MouseOverGlowEnabledProperty = DependencyProperty.Register("MouseOverGlowEnabled", typeof(bool), typeof(FlipView), new PropertyMetadata(true));
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
+        public static readonly DependencyProperty IsBannerEnabledProperty = DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, OnIsBannerEnabledPropertyChangedCallback));
         public static readonly DependencyProperty BannerTextProperty =
-            DependencyProperty.Register("BannerText", typeof(string), typeof(FlipView), 
-                new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender,(d, e) => ExecuteWhenLoaded(((FlipView)d), 
-                    () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+            DependencyProperty.Register("BannerText",
+                                        typeof(string),
+                                        typeof(FlipView),
+                                        new FrameworkPropertyMetadata("Banner", FrameworkPropertyMetadataOptions.AffectsRender,
+                                                                      (d, e) => ExecuteWhenLoaded(((FlipView)d), () => ((FlipView)d).ChangeBannerText((string)e.NewValue))));
+
+        public TransitionType UpTransition
+        {
+            get { return (TransitionType)GetValue(UpTransitionProperty); }
+            set { SetValue(UpTransitionProperty, value); }
+        }
+
+        public TransitionType DownTransition
+        {
+            get { return (TransitionType)GetValue(DownTransitionProperty); }
+            set { SetValue(DownTransitionProperty, value); }
+        }
+
+        public TransitionType LeftTransition
+        {
+            get { return (TransitionType)GetValue(LeftTransitionProperty); }
+            set { SetValue(LeftTransitionProperty, value); }
+        }
+
+        public TransitionType RightTransition
+        {
+            get { return (TransitionType)GetValue(RightTransitionProperty); }
+            set { SetValue(RightTransitionProperty, value); }
+        }
+
+        public bool MouseOverGlowEnabled
+        {
+            get { return (bool)GetValue(MouseOverGlowEnabledProperty); }
+            set { SetValue(MouseOverGlowEnabledProperty, value); }
+        }
+
+        public Orientation Orientation
+        {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
+        }
 
         /// <summary>
         /// Gets/sets the text that is displayed in the FlipView's banner.
@@ -355,8 +393,7 @@ namespace MahApps.Metro.Controls
                 if (hideControlStoryboardCompletedHandler != null)
                     hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
 
-                hideControlStoryboardCompletedHandler = (sender, e) =>
-                {
+                hideControlStoryboardCompletedHandler = (sender, e) => {
                     try
                     {
                         hideControlStoryboard.Completed -= hideControlStoryboardCompletedHandler;
@@ -378,57 +415,11 @@ namespace MahApps.Metro.Controls
 
             else
             {
-                ExecuteWhenLoaded(this, () =>
-                {
+                ExecuteWhenLoaded(this, () => {
                     bannerLabel.Content = value ?? BannerText;
                 });
             }
         }
-
-        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(FlipView), new PropertyMetadata(Orientation.Horizontal));
-
-        public Orientation Orientation
-        {
-            get { return (Orientation)GetValue(OrientationProperty); }
-            set { SetValue(OrientationProperty, value); }
-        }
-
-        public static readonly DependencyProperty IsBannerEnabledProperty =
-            DependencyProperty.Register("IsBannerEnabled", typeof(bool), typeof(FlipView), new UIPropertyMetadata(true, (d, e) =>
-            {
-                var flipview = ((FlipView)d);
-
-                if (!flipview.IsLoaded)
-                {
-                    //wait to be loaded?
-                    ExecuteWhenLoaded(flipview, () =>
-                    {
-                        flipview.ApplyTemplate();
-
-                        if ((bool)e.NewValue)
-                        {
-                            flipview.ChangeBannerText(flipview.BannerText);
-                            flipview.ShowBanner();
-                        }
-                        else
-                        {
-                            flipview.HideBanner();
-                        }
-                    });
-                }
-                else
-                {
-                    if ((bool)e.NewValue)
-                    {
-                        flipview.ChangeBannerText(flipview.BannerText);
-                        flipview.ShowBanner();
-                    }
-                    else
-                    {
-                        flipview.HideBanner();
-                    }
-                }
-            }));
 
         /// <summary>
         /// Gets/sets whether the FlipView's banner is visible.
@@ -439,26 +430,40 @@ namespace MahApps.Metro.Controls
             set { SetValue(IsBannerEnabledProperty, value); }
         }
 
-        private static void ExecuteWhenLoaded(FlipView flipview, Action body)
+        private static void OnIsBannerEnabledPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (flipview.IsLoaded)
+            var flipview = ((FlipView)d);
+
+            if (!flipview.IsLoaded)
             {
-                System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
+                //wait to be loaded?
+                ExecuteWhenLoaded(flipview, () => {
+                    flipview.ApplyTemplate();
+
+                    if ((bool)e.NewValue)
+                    {
+                        flipview.ChangeBannerText(flipview.BannerText);
+                        flipview.ShowBanner();
+                    }
+                    else
+                    {
+                        flipview.HideBanner();
+                    }
+                });
             }
             else
             {
-                RoutedEventHandler handler = null;
-                handler = (o, a) =>
+                if ((bool)e.NewValue)
                 {
-                    flipview.Loaded -= handler;
-                    System.Windows.Threading.Dispatcher.CurrentDispatcher.Invoke(body);
-                };
-
-                flipview.Loaded += handler;
+                    flipview.ChangeBannerText(flipview.BannerText);
+                    flipview.ShowBanner();
+                }
+                else
+                {
+                    flipview.HideBanner();
+                }
             }
         }
-    }
 
-    public class FlipViewItem : ContentControl
-    { }
+    }
 }

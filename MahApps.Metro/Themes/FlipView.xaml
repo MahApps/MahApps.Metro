@@ -4,64 +4,68 @@
 
     <ControlTemplate x:Key="FlipViewTemplate"
                      TargetType="{x:Type Controls:FlipView}">
-        <Grid x:Name="root" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid x:Name="root"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch">
             <Border Background="{TemplateBinding Background}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}">
-                <Border x:Name="PART_GlowBorder" BorderBrush="Transparent" BorderThickness="4">
+                <Border x:Name="PART_GlowBorder"
+                        BorderBrush="Transparent"
+                        BorderThickness="4">
                     <Grid>
                         <Grid x:Name="ControlGrid"
-                          Panel.ZIndex="7">
+                              Panel.ZIndex="7">
                             <Button x:Name="PART_BackButton"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left"
-                                Style="{DynamicResource ControlButton}">
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Left"
+                                    Style="{DynamicResource ControlButton}">
                                 <Path Width="16"
-                                  Height="18"
-                                  Canvas.Left="15.9063"
-                                  Canvas.Top="14.75"
-                                  Stretch="Fill"
-                                  Fill="{DynamicResource BlackBrush}"
-                                  Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z " />
+                                      Height="18"
+                                      Canvas.Left="15.9063"
+                                      Canvas.Top="14.75"
+                                      Stretch="Fill"
+                                      Fill="{DynamicResource BlackBrush}"
+                                      Data="F1 M 22.6563,23.75L 24.6563,25.75L 31.9063,32.75L 25.4063,32.75L 15.9063,23.75L 25.4063,14.75L 31.9063,14.75L 24.6563,21.75L 22.6563,23.75 Z " />
                             </Button>
                             <Button x:Name="PART_ForwardButton"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Right"
-                                Style="{DynamicResource ControlButton}">
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Style="{DynamicResource ControlButton}">
                                 <Path Width="16"
-                                  Height="18"
-                                  Canvas.Left="15.9063"
-                                  Canvas.Top="14.75"
-                                  Stretch="Fill"
-                                  Fill="{DynamicResource BlackBrush}"
-                                  Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z " />
+                                      Height="18"
+                                      Canvas.Left="15.9063"
+                                      Canvas.Top="14.75"
+                                      Stretch="Fill"
+                                      Fill="{DynamicResource BlackBrush}"
+                                      Data="F1 M 25.1563,23.75L 23.1563,21.75L 15.9063,14.75L 22.4063,14.75L 31.9063,23.75L 22.4063,32.75L 15.9063,32.75L 23.1563,25.75L 25.1563,23.75 Z " />
                             </Button>
 
                             <Button x:Name="PART_UpButton"
-                                VerticalAlignment="Top"
-                                HorizontalAlignment="Center"
-                                Visibility="Hidden"
-                                Style="{DynamicResource ControlButton}">
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Center"
+                                    Visibility="Hidden"
+                                    Style="{DynamicResource ControlButton}">
                                 <Path Width="16"
-                                  Height="18"
-                                  Canvas.Left="15.9063"
-                                  Canvas.Top="14.75"
-                                  Stretch="Fill"
-                                  Fill="{DynamicResource BlackBrush}"
-                                  Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z " />
+                                      Height="18"
+                                      Canvas.Left="15.9063"
+                                      Canvas.Top="14.75"
+                                      Stretch="Fill"
+                                      Fill="{DynamicResource BlackBrush}"
+                                      Data="F1 M 23.9063,22.5L 21.9063,24.5L 14.9063,31.75L 14.9063,25.25L 23.9063,15.75L 32.9063,25.25L 32.9063,31.75L 25.9063,24.5L 23.9063,22.5 Z " />
                             </Button>
                             <Button x:Name="PART_DownButton"
-                                VerticalAlignment="Bottom"
-                                HorizontalAlignment="Center"
-                                Visibility="Hidden"
-                                Style="{DynamicResource ControlButton}">
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center"
+                                    Visibility="Hidden"
+                                    Style="{DynamicResource ControlButton}">
                                 <Path Width="16"
-                                  Height="18"
-                                  Canvas.Left="15.9063"
-                                  Canvas.Top="14.75"
-                                  Stretch="Fill"
-                                  Fill="{DynamicResource BlackBrush}"
-                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                      Height="18"
+                                      Canvas.Left="15.9063"
+                                      Canvas.Top="14.75"
+                                      Stretch="Fill"
+                                      Fill="{DynamicResource BlackBrush}"
+                                      Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
                             </Button>
                         </Grid>
 
@@ -79,31 +83,50 @@
                         </Grid>
 
                         <Controls:TransitioningContentControl Content="{TemplateBinding SelectedItem}"
-                                                          ContentTemplate="{TemplateBinding ItemTemplate}"
-                                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                          x:Name="PART_Presenter"
-                                                          Panel.ZIndex="1"
-                                                          IsTabStop="False"
-                                                          HorizontalAlignment="Stretch"
-                                                          VerticalAlignment="Stretch" />
+                                                              ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                              x:Name="PART_Presenter"
+                                                              Panel.ZIndex="1"
+                                                              IsTabStop="False"
+                                                              HorizontalAlignment="Stretch"
+                                                              VerticalAlignment="Stretch" />
                     </Grid>
                 </Border>
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
-            <Trigger SourceName="root" Property="IsMouseOver" Value="True">
-                <Trigger.Setters>
-                    <Setter TargetName="PART_GlowBorder" Property="BorderBrush" Value="LightGray" />
-                </Trigger.Setters>
-            </Trigger>
-            
-            <Trigger Property="Orientation" Value="Vertical">
-                <Trigger.Setters>
-                    <Setter TargetName="PART_BackButton" Property="Visibility" Value="Hidden" />
-                    <Setter TargetName="PART_ForwardButton" Property="Visibility" Value="Hidden" />
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition SourceName="root"
+                               Property="IsMouseOver"
+                               Value="True" />
+                    <Condition Property="MouseOverGlowEnabled"
+                               Value="True" />
+                </MultiTrigger.Conditions>
 
-                    <Setter TargetName="PART_UpButton" Property="Visibility" Value="Visible" />
-                    <Setter TargetName="PART_DownButton" Property="Visibility" Value="Visible" />
+                <MultiTrigger.Setters>
+                    <Setter TargetName="PART_GlowBorder"
+                            Property="BorderBrush"
+                            Value="LightGray" />
+                </MultiTrigger.Setters>
+            </MultiTrigger>
+
+            <Trigger Property="Orientation"
+                     Value="Vertical">
+                <Trigger.Setters>
+                    <Setter TargetName="PART_BackButton"
+                            Property="Visibility"
+                            Value="Hidden" />
+                    <Setter TargetName="PART_ForwardButton"
+                            Property="Visibility"
+                            Value="Hidden" />
+
+                    <Setter TargetName="PART_UpButton"
+                            Property="Visibility"
+                            Value="Visible" />
+                    <Setter TargetName="PART_DownButton"
+                            Property="Visibility"
+                            Value="Visible" />
                 </Trigger.Setters>
             </Trigger>
         </ControlTemplate.Triggers>

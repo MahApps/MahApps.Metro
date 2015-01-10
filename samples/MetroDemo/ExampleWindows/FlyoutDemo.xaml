@@ -76,6 +76,7 @@
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl x:Name="flyoutsControl">
             <Controls:Flyout x:Name="settingsFlyout"
+                             AreAnimationsEnabled="False"
                              Margin="100 0 0 0"
                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth}"
                              Header="Settings"
@@ -89,14 +90,15 @@
                     </Grid.RowDefinitions>
                     <StackPanel>
                         <TextBlock Grid.Row="0"
-                               Text="Something above the ScrollPanel" />
+                                   Text="Something above the ScrollPanel" />
                         <TextBlock Grid.Row="0"
-                               Text="This Flyout animates its opacity when opening and closing."/>
+                                   Text="This Flyout animates its opacity when opening and closing." />
                     </StackPanel>
                     <ScrollViewer Grid.Row="1"
                                   VerticalScrollBarVisibility="Auto">
                         <StackPanel Orientation="Vertical">
-                            <TextBox x:Name="firstTB" Controls:TextBoxHelper.Watermark="TextBox 01" />
+                            <TextBox x:Name="firstTB"
+                                     Controls:TextBoxHelper.Watermark="TextBox 01" />
                             <TextBox Margin="0,5,0,0"
                                      Controls:TextBoxHelper.Watermark="TextBox 02" />
                             <TextBox Margin="0,5,0,0"
@@ -148,8 +150,10 @@
                       Width="400">
                     <StackPanel>
                         <TextBlock Text="This flyout adapts its theme to the current accent"
-                               Foreground="{DynamicResource IdealForegroundColorBrush}" />
-                        <GroupBox Margin="10" Height="250" Header="Flyout Group Box" />
+                                   Foreground="{DynamicResource IdealForegroundColorBrush}" />
+                        <GroupBox Margin="10"
+                                  Height="250"
+                                  Header="Flyout Group Box" />
                     </StackPanel>
                 </Grid>
             </Controls:Flyout>
@@ -283,12 +287,13 @@
                     <TextBlock>Modal Flyout</TextBlock>
                 </StackPanel>
             </Controls:Flyout>
-            <Controls:Flyout Position="Bottom" 
-                             CloseButtonVisibility="Collapsed" 
-                             TitleVisibility ="Collapsed" 
+            <Controls:Flyout Position="Bottom"
+                             CloseButtonVisibility="Collapsed"
+                             TitleVisibility="Collapsed"
                              IsPinned="False"
                              Height="75">
-                <TextBlock VerticalAlignment="Center" Text="This is an AppBar" />
+                <TextBlock VerticalAlignment="Center"
+                           Text="This is an AppBar" />
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
@@ -342,7 +347,7 @@
                     Content="AppBar" />
             <Button MinWidth="90"
                     Margin="2"
-                    Click="ShowDynamicFlyout" 
+                    Click="ShowDynamicFlyout"
                     Content="Dynamic" />
         </StackPanel>
         <AdornerDecorator Margin="10"
