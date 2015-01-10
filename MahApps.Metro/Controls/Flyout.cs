@@ -56,9 +56,16 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register("TitleVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
+        public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register("AreAnimationsEnabled", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
 
         internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
         internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
+
+        public bool AreAnimationsEnabled
+        {
+            get { return (bool)GetValue(AreAnimationsEnabledProperty); }
+            set { SetValue(AreAnimationsEnabledProperty, value); }
+        }
 
         /// <summary>
         /// Gets/sets if the title is visible in this flyout.
@@ -296,30 +303,44 @@ namespace MahApps.Metro.Controls
             Action openedChangedAction = () => {
                 if (e.NewValue != e.OldValue)
                 {
-                    if ((bool)e.NewValue)
+                    if (flyout.AreAnimationsEnabled)
                     {
-                        if (flyout.hideStoryboard != null)
+                        if ((bool)e.NewValue)
                         {
-                            // don't let the storyboard end it's completed event
-                            // otherwise it could be hidden on start
-                            flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
+                            if (flyout.hideStoryboard != null)
+                            {
+                                // don't let the storyboard end it's completed event
+                                // otherwise it could be hidden on start
+                                flyout.hideStoryboard.Completed -= flyout.HideStoryboard_Completed;
+                            }
+                            flyout.Visibility = Visibility.Visible;
+                            flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
                         }
-                        flyout.Visibility = Visibility.Visible;
-                        flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
+                        else
+                        {
+                            if (flyout.hideStoryboard != null)
+                            {
+                                flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
+                            }
+                            else
+                            {
+                                flyout.Hide();
+                            }
+                        }
+                        VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
                     }
                     else
                     {
-                        if (flyout.hideStoryboard != null)
+                        if ((bool)e.NewValue)
                         {
-                            flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
+                            flyout.Visibility = Visibility.Visible;
                         }
                         else
                         {
                             flyout.Hide();
                         }
+                        VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "HideDirect" : "ShowDirect", true);
                     }
-
-                    VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
                 }
 
                 flyout.RaiseEvent(new RoutedEventArgs(IsOpenChangedEvent));
