@@ -2,7 +2,6 @@
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
@@ -104,14 +103,14 @@ namespace MahApps.Metro.Controls
 
         private void MinimizeClick(object sender, RoutedEventArgs e)
         {
-            var parentWindow = GetParentWindow();
+            var parentWindow = this.TryFindParent<Window>();
             if (parentWindow != null)
                 Microsoft.Windows.Shell.SystemCommands.MinimizeWindow(parentWindow);
         }
 
         private void MaximizeClick(object sender, RoutedEventArgs e)
         {
-            var parentWindow = GetParentWindow();
+            var parentWindow = this.TryFindParent<Window>();
             if (parentWindow == null)
                 return;
 
@@ -133,24 +132,11 @@ namespace MahApps.Metro.Controls
             if (closingWindowEventHandlerArgs.Cancelled)
                 return;
 
-            var parentWindow = GetParentWindow();
+            var parentWindow = this.TryFindParent<Window>();
             if (parentWindow != null)
             {
                 parentWindow.Close();
             }
-        }
-
-        private Window GetParentWindow()
-        {
-            var parent = VisualTreeHelper.GetParent(this);
-
-            while (parent != null && !(parent is Window))
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
-
-            var parentWindow = parent as Window;
-            return parentWindow;
         }
     }
 }
