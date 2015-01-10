@@ -465,7 +465,6 @@
                     </ControlTemplate.Resources>
 
                     <ItemsControl IsTabStop="False"
-                                  Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                   ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                                   ItemTemplate="{TemplateBinding ItemTemplate}">
                         <ItemsControl.ItemsPanel>
@@ -507,7 +506,6 @@
 
                         <Button x:Name="PART_Min"
                                 Focusable="False"
-                                Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMinButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
                             <Button.Visibility>
@@ -528,7 +526,6 @@
 
                         <Button x:Name="PART_Max"
                                 Focusable="False"
-                                Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowMaxButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
                             <Button.Visibility>
@@ -554,7 +551,6 @@
                         <Button x:Name="PART_Close"
                                 Focusable="False"
                                 RenderOptions.EdgeMode="Aliased"
-                                Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}"
                                 Style="{Binding WindowCloseButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
                                 Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
