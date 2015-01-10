@@ -3,6 +3,7 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="SizeToContent Demo"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
                       WindowStartupLocation="CenterOwner"
                       SizeToContent="WidthAndHeight">
     <Window.Resources>
