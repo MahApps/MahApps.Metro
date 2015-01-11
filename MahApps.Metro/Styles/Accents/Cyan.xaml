@@ -33,7 +33,7 @@
     <SolidColorBrush x:Key="CheckmarkFill" Color="{StaticResource AccentColor}" options:Freeze="True" />
     <SolidColorBrush x:Key="RightArrowFill" Color="{StaticResource AccentColor}" options:Freeze="True" />
 
-    <Color x:Key="IdealForegroundColor">Black</Color>
+    <Color x:Key="IdealForegroundColor">White</Color>
     <SolidColorBrush x:Key="IdealForegroundColorBrush" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
 
 </ResourceDictionary>
