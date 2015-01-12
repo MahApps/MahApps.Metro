@@ -46,6 +46,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
+        public static readonly DependencyProperty IsMinButtonEnabledProperty = DependencyProperty.Register("IsMinButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty IsMaxRestoreButtonEnabledProperty = DependencyProperty.Register("IsMaxRestoreButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register("IsCloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -394,11 +396,29 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets/sets if the min button is enabled.
+        /// </summary>
+        public bool IsMinButtonEnabled
+        {
+            get { return (bool)GetValue(IsMinButtonEnabledProperty); }
+            set { SetValue(IsMinButtonEnabledProperty, value); }
+        }
+        
+        /// <summary>
+        /// Gets/sets if the max/restore button is enabled.
+        /// </summary>
+        public bool IsMaxRestoreButtonEnabled
+        {
+            get { return (bool)GetValue(IsMaxRestoreButtonEnabledProperty); }
+            set { SetValue(IsMaxRestoreButtonEnabledProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets if the close button is enabled.
         /// </summary>
         public bool IsCloseButtonEnabled
         {
-            get { return (bool) GetValue(IsCloseButtonEnabledProperty); }
+            get { return (bool)GetValue(IsCloseButtonEnabledProperty); }
             set { SetValue(IsCloseButtonEnabledProperty, value); }
         }
 

@@ -507,7 +507,8 @@
                         <Button x:Name="PART_Min"
                                 Focusable="False"
                                 Style="{Binding WindowMinButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
+                                ToolTip="{Binding Minimize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
+                                IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}">
                             <Button.Visibility>
                                 <MultiBinding Converter="{x:Static conv:ResizeModeMinMaxButtonVisibilityConverter.Instance}"
                                               ConverterParameter="MIN">
@@ -527,7 +528,8 @@
                         <Button x:Name="PART_Max"
                                 Focusable="False"
                                 Style="{Binding WindowMaxButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}">
+                                ToolTip="{Binding Maximize, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
+                                IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}">
                             <Button.Visibility>
                                 <MultiBinding Converter="{x:Static conv:ResizeModeMinMaxButtonVisibilityConverter.Instance}"
                                               ConverterParameter="MAX">
