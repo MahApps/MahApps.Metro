@@ -46,6 +46,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ShowMaxRestoreButtonProperty = DependencyProperty.Register("ShowMaxRestoreButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty ShowCloseButtonProperty = DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
+        public static readonly DependencyProperty CloseButtonEnabledProperty = DependencyProperty.Register("CloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
@@ -389,6 +391,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(ShowCloseButtonProperty); }
             set { SetValue(ShowCloseButtonProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets if the close button is enabled.
+        /// </summary>
+        public bool CloseButtonEnabled
+        {
+            get { return (bool) GetValue(CloseButtonEnabledProperty); }
+            set { SetValue(CloseButtonEnabledProperty, value); }
         }
 
         /// <summary>
