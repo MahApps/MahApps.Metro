@@ -330,6 +330,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public string DefaultText { get; set; }
 
+        /// <summary>
+        /// Gets/sets the maximum height. (Default is unlimited height, <a href="http://msdn.microsoft.com/de-de/library/system.double.nan">Double.NaN</a>)
+        /// </summary>
         public double MaximumBodyHeight { get; set; }
     }
 
