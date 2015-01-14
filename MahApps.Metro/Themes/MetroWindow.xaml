@@ -568,6 +568,9 @@
                             <Setter TargetName="PART_MaxPath"
                                     Property="Data"
                                     Value="F1M0,10L0,3 3,3 3,0 10,0 10,2 4,2 4,3 7,3 7,6 6,6 6,5 1,5 1,10z M1,10L7,10 7,7 10,7 10,2 9,2 9,6 6,6 6,9 1,9z" />
+                            <Setter TargetName="PART_Max"
+                                    Property="ToolTip"
+                                    Value="{Binding Restore, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
