@@ -33,12 +33,15 @@ namespace MahApps.Metro.Behaviours
             {
                 AssociatedObject.Topmost = prevTopmost;
             }
-            makeGlowVisibleTimer.Stop();
+            if (makeGlowVisibleTimer != null)
+            {
+                makeGlowVisibleTimer.Stop();
+            }
             if(AssociatedObject.WindowState != WindowState.Minimized)
             {
                 var metroWindow = this.AssociatedObject as MetroWindow;
                 var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
-                if (SystemParameters.MinimizeAnimation && !ignoreTaskBar)
+                if (makeGlowVisibleTimer != null && SystemParameters.MinimizeAnimation && !ignoreTaskBar)
                 {
                     makeGlowVisibleTimer.Start();
                 }
