@@ -259,6 +259,9 @@ namespace Microsoft.Windows.Shell
                 _isHooked = true;
             }
 
+            // allow animation
+            _ModifyStyle(0, WS.CAPTION);
+
             _FixupTemplateIssues();
 
             // Force this the first time.
@@ -486,10 +489,16 @@ namespace Microsoft.Windows.Shell
             // Since the first field of NCCALCSIZE_PARAMS is a RECT and is the only field we care about
             // we can unconditionally treat it as a RECT.
 
-            if ((int)wParam == 1)
+            if (NativeMethods.GetWindowPlacement(_hwnd).showCmd == SW.MAXIMIZE)
             {
-                handled = true;
-                return IntPtr.Zero;
+                if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
+                {
+                    RECT rc = (RECT) Marshal.PtrToStructure(lParam, typeof(RECT));
+                    NativeMethods.DefWindowProc(_hwnd, WM.NCCALCSIZE, wParam, lParam);
+                    RECT def = (RECT) Marshal.PtrToStructure(lParam, typeof(RECT));
+                    def.Top = (int) (rc.Top + NativeMethods.GetWindowInfo(_hwnd).cyWindowBorders);
+                    Marshal.StructureToPtr(def, lParam, true);
+                }
             }
 
             if (_chromeInfo.SacrificialEdge != SacrificialEdge.None)
@@ -514,10 +523,13 @@ namespace Microsoft.Windows.Shell
                 }
 
                 Marshal.StructureToPtr(rcClientArea, lParam, false);
+
+                handled = true;
+                new IntPtr((int)WVR.REDRAW);
             }
 
             handled = true;
-            return new IntPtr((int)WVR.REDRAW);
+            return IntPtr.Zero;
         }
 
         private HT _GetHTFromResizeGripDirection(ResizeGripDirection direction)
@@ -865,6 +877,17 @@ namespace Microsoft.Windows.Shell
 
             if (force || frameState != _isGlassEnabled)
             {
+                if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
+                {
+                    // allow animation
+                    _ModifyStyle(0, WS.CAPTION);
+                }
+                else
+                {
+                    // no animation
+                    _ModifyStyle(WS.CAPTION, 0);
+                }
+
                 _isGlassEnabled = frameState && _chromeInfo.GlassFrameThickness != default(Thickness);
 
                 if (!_isGlassEnabled)
@@ -888,6 +911,21 @@ namespace Microsoft.Windows.Shell
             NativeMethods.SetWindowRgn(_hwnd, IntPtr.Zero, NativeMethods.IsWindowVisible(_hwnd));
         }
 
+        private static RECT _GetClientRectRelativeToWindowRect(IntPtr hWnd)
+        {
+            RECT windowRect = NativeMethods.GetWindowRect(hWnd);
+            RECT clientRect = NativeMethods.GetClientRect(hWnd);
+
+            POINT test = new POINT()
+            {
+                x = 0,
+                y = 0
+            };
+            NativeMethods.ClientToScreen(hWnd, ref test);
+            clientRect.Offset(test.x - windowRect.Left, test.y - windowRect.Top);
+            return clientRect;
+        }
+
         private void _SetRoundingRegion(WINDOWPOS? wp)
         {
             const int MONITOR_DEFAULTTONEAREST = 0x00000002;
@@ -898,28 +936,36 @@ namespace Microsoft.Windows.Shell
 
             if (wpl.showCmd == SW.SHOWMAXIMIZED)
             {
-                int left;
-                int top;
-
-                if (wp.HasValue)
+                RECT rcMax;
+                if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
                 {
-                    left = wp.Value.x;
-                    top = wp.Value.y;
+                    rcMax = _GetClientRectRelativeToWindowRect(_hwnd);
                 }
                 else
                 {
-                    Rect r = _GetWindowRect();
-                    left = (int)r.Left;
-                    top = (int)r.Top;
+                    int left;
+                    int top;
+
+                    if (wp.HasValue)
+                    {
+                        left = wp.Value.x;
+                        top = wp.Value.y;
+                    }
+                    else
+                    {
+                        Rect r = _GetWindowRect();
+                        left = (int)r.Left;
+                        top = (int)r.Top;
+                    }
+
+                    IntPtr hMon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
+
+                    MONITORINFO mi = NativeMethods.GetMonitorInfo(hMon);
+                    rcMax = _chromeInfo.IgnoreTaskbarOnMaximize ? mi.rcMonitor : mi.rcWork;
+                    // The location of maximized window takes into account the border that Windows was
+                    // going to remove, so we also need to consider it.
+                    rcMax.Offset(-left, -top);
                 }
-
-                IntPtr hMon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
-
-                MONITORINFO mi = NativeMethods.GetMonitorInfo(hMon);
-                RECT rcMax = _chromeInfo.IgnoreTaskbarOnMaximize ? mi.rcMonitor : mi.rcWork;
-                // The location of maximized window takes into account the border that Windows was
-                // going to remove, so we also need to consider it.
-                rcMax.Offset(-left, -top);
 
                 IntPtr hrgn = IntPtr.Zero;
                 try

@@ -35,8 +35,11 @@ namespace MahApps.Metro.Behaviours
             if (metroWindow != null)
             {
                 windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
                 System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
                       .AddValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.UseNoneWindowStyleProperty, typeof(MetroWindow))
+                      .AddValueChanged(AssociatedObject, UseNoneWindowStylePropertyChangedCallback);
             }
 
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
@@ -66,6 +69,15 @@ namespace MahApps.Metro.Behaviours
             base.OnAttached();
         }
 
+        private void UseNoneWindowStylePropertyChangedCallback(object sender, EventArgs e)
+        {
+            var metroWindow = sender as MetroWindow;
+            if (metroWindow != null && windowChrome != null)
+            {
+                windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
+            }
+        }
+
         private void IgnoreTaskbarOnMaximizePropertyChangedCallback(object sender, EventArgs e)
         {
             var metroWindow = sender as MetroWindow;
@@ -88,6 +100,8 @@ namespace MahApps.Metro.Behaviours
                 {
                     System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
                           .RemoveValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                    System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.UseNoneWindowStyleProperty, typeof(MetroWindow))
+                          .RemoveValueChanged(AssociatedObject, UseNoneWindowStylePropertyChangedCallback);
                 }
                 AssociatedObject.Loaded -= AssociatedObject_Loaded;
                 AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
@@ -165,7 +179,9 @@ namespace MahApps.Metro.Behaviours
 
         private void HandleMaximize(bool handleOnlyMaximized = false)
         {
-            if (AssociatedObject.WindowState == WindowState.Maximized)
+            var metroWindow = AssociatedObject as MetroWindow;
+            var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
+            if (AssociatedObject.WindowState == WindowState.Maximized && ignoreTaskBar)
             {
                 // remove resize border and window border, so we can move the window from top monitor position
                 windowChrome.ResizeBorderThickness = new Thickness(0);
@@ -177,8 +193,8 @@ namespace MahApps.Metro.Behaviours
                 if (monitor != IntPtr.Zero) {
                     var monitorInfo = new MONITORINFO();
                     UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                    var metroWindow = AssociatedObject as MetroWindow;
-                    var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
+
+                    ignoreTaskBar = metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle;
                     var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
                     var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
                     var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
@@ -328,11 +344,6 @@ namespace MahApps.Metro.Behaviours
             if (window == null)
             {
                 return;
-            }
-
-            if (windowChrome != null)
-            {
-                windowChrome.IgnoreTaskbarOnMaximize = window.IgnoreTaskbarOnMaximize;
             }
 
             window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
