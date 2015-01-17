@@ -162,7 +162,8 @@
                               Header="Show CustomDialog Externally" />
                 </MenuItem>
                 <MenuItem Header="Window">
-                    <MenuItem IsCheckable="True" Header="Ignore taskbar on maximize" Click="IgnoreTaskBar_Click"/>
+                    <MenuItem IsCheckable="True" Header="Ignore taskbar on maximize"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=IgnoreTaskbarOnMaximize}" />
                 </MenuItem>
             </Menu>
 
