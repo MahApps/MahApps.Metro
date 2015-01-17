@@ -228,6 +228,7 @@ namespace MahApps.Metro.Controls
                 if (this.closing) return;
 
                 Visibility = IsGlowing ? Visibility.Visible : Visibility.Collapsed;
+                glow.Visibility = IsGlowing ? Visibility.Visible : Visibility.Collapsed;
 
                 UpdateCore();
             }
