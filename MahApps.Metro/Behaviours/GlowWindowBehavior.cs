@@ -92,20 +92,17 @@ namespace MahApps.Metro.Behaviours
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            if(makeGlowVisibleTimer == null)
-            {
-                makeGlowVisibleTimer = new DispatcherTimer
-                {
-                    Interval = GlowTimerDelay
-                };
-                makeGlowVisibleTimer.Tick += makeGlowVisibleTimer_Tick;
-            }
-
             // No glow effect if UseNoneWindowStyle is true or GlowBrush not set.
             var metroWindow = this.AssociatedObject as MetroWindow;
             if (metroWindow != null && (metroWindow.UseNoneWindowStyle || metroWindow.GlowBrush == null))
             {
                 return;
+            }
+
+            if (makeGlowVisibleTimer == null)
+            {
+                makeGlowVisibleTimer = new DispatcherTimer { Interval = GlowTimerDelay };
+                makeGlowVisibleTimer.Tick += makeGlowVisibleTimer_Tick;
             }
 
             this.left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);
