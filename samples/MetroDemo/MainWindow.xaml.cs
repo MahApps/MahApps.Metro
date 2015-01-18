@@ -288,5 +288,11 @@ namespace MetroDemo
             if (_shutdown)
                 Application.Current.Shutdown();
         }
+
+        private void DeferResize_Click(object sender, RoutedEventArgs e)
+        {
+            MetroResizeGrip.SetDeferResize(this, !MetroResizeGrip.GetDeferResize(this));
+            this.InvalidateDeferResizeProperty();
+        }
     }
 }

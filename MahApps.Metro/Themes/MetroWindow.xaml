@@ -174,7 +174,7 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch" />
-			<Controls:MetroResizeGrip x:Name="PART_MetroResizeGrip"
+            <Controls:MetroResizeGrip x:Name="PART_MetroResizeGrip"
                                       Cursor="SizeNWSE"
                                       HorizontalAlignment="Right"
                                       VerticalAlignment="Bottom"
