@@ -130,11 +130,12 @@ namespace MahApps.Metro.Behaviours
         private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             var returnval = IntPtr.Zero;
+            var metroWindow = AssociatedObject as MetroWindow;
 
             switch (msg) {
                 case Constants.WM_NCPAINT:
                     var enableDWMDropShadow = EnableDWMDropShadow;
-                    var metroWindow = AssociatedObject as MetroWindow;
+
                     if (metroWindow != null)
                     {
                         enableDWMDropShadow = metroWindow.GlowBrush == null && (metroWindow.EnableDWMDropShadow || EnableDWMDropShadow);
@@ -149,9 +150,15 @@ namespace MahApps.Metro.Behaviours
                     handled = true;
                     break;
                 case Constants.WM_GETMINMAXINFO:
-                    WmGetMinMaxInfo(hwnd, lParam);
-                    /* Setting handled to false enables the application to process it's own Min/Max requirements,
-                     * as mentioned by jason.bullard (comment from September 22, 2011) on http://gallery.expression.microsoft.com/ZuneWindowBehavior/ */
+                    /*
+                     * With newly added min/max/restore animations, this is handled in WindowChromeWorker 
+                     */
+                    if (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle)
+                    {
+                        WmGetMinMaxInfo(hwnd, lParam);
+                        /* Setting handled to false enables the application to process it's own Min/Max requirements,
+                         * as mentioned by jason.bullard (comment from September 22, 2011) on http://gallery.expression.microsoft.com/ZuneWindowBehavior/ */
+                    }
                     handled = false;
                     break;
                 case Constants.WM_NCACTIVATE:
