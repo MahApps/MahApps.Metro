@@ -18,15 +18,15 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty DeferResizeProperty =
             DependencyProperty.RegisterAttached("DeferResize", typeof(bool), typeof(MetroResizeGrip), new PropertyMetadata(false));
 
-        private bool _IsDragging;
-        private MetroWindow _ParentWindow;
-        private IntPtr _ParentWindowHandle;
-        private ResizerWindow _ResizerWindow;
-        private IntPtr _ResizerWindowHandle;
-        private int _XOffset;
-        private int _YOffset;
-        private bool _DeferResize;
-        private Point _MousePosition;
+        private bool isDragging;
+        private MetroWindow parentWindow;
+        private IntPtr parentWindowHandle;
+        private ResizerWindow resizerWindow;
+        private IntPtr resizerWindowHandle;
+        private int xOffset;
+        private int yOffset;
+        private bool deferResize;
+        private Point mousePosition;
 
         public MetroResizeGrip()
         {
@@ -34,17 +34,17 @@ namespace MahApps.Metro.Controls
             {
                 _FindParentWindow();
                 InvalidateDeferResizeProperty();
-                _ResizerWindow = new ResizerWindow(_ParentWindow);
-                _ResizerWindow.SourceInitialized += (sender2, e2) =>
+                resizerWindow = new ResizerWindow(parentWindow);
+                resizerWindow.SourceInitialized += (sender2, e2) =>
                 {
-                    _ResizerWindowHandle = ((HwndSource)HwndSource.FromVisual(_ResizerWindow)).Handle;
+                    resizerWindowHandle = ((HwndSource)HwndSource.FromVisual(resizerWindow)).Handle;
                 };
-                _ResizerWindow.Show();
-                _ResizerWindow.Visibility = System.Windows.Visibility.Collapsed;
-                _ResizerWindow.HideStoryboard.Completed += (sender2, e2) =>
+                resizerWindow.Show();
+                resizerWindow.Visibility = System.Windows.Visibility.Collapsed;
+                resizerWindow.HideStoryboard.Completed += (sender2, e2) =>
                 {
-                    if (_ResizerWindow.Opacity == 0)
-                        _ResizerWindow.Visibility = System.Windows.Visibility.Collapsed;
+                    if (resizerWindow.Opacity == 0)
+                        resizerWindow.Visibility = System.Windows.Visibility.Collapsed;
                 };
             };
             this.MouseLeftButtonDown += ResizeGrip_MouseLeftButtonDown;
@@ -64,27 +64,27 @@ namespace MahApps.Metro.Controls
 
         public void InvalidateDeferResizeProperty()
         {
-            _DeferResize = MetroResizeGrip.GetDeferResize(_ParentWindow);
+            deferResize = MetroResizeGrip.GetDeferResize(parentWindow);
         }
 
         private void _DetermineNewSize(out int cx, out int cy)
         {
             Point pt = _GetRelativePoint();
 
-            cx = (int)pt.X + _XOffset;
-            cy = (int)pt.Y + _YOffset;
+            cx = (int)pt.X + xOffset;
+            cy = (int)pt.Y + yOffset;
 
-            if (pt.X <= _ParentWindow.MinWidth)
-                cx = (int)_ParentWindow.MinWidth;
-            if (pt.Y <= _ParentWindow.MinHeight)
-                cy = (int)_ParentWindow.MinHeight;
+            if (pt.X <= parentWindow.MinWidth)
+                cx = (int)parentWindow.MinWidth;
+            if (pt.Y <= parentWindow.MinHeight)
+                cy = (int)parentWindow.MinHeight;
 
             // This is to guard against the user dragging the resize grip under the taskbar, since he won't be able to get a
             // grip on it again.
-            Int32Rect r = _GetScreenWorkingAreaBoundsFromPoint(_MousePosition);
-            if (_MousePosition.Y + _YOffset >= r.Height)
+            Int32Rect r = _GetScreenWorkingAreaBoundsFromPoint(mousePosition);
+            if (mousePosition.Y + yOffset >= r.Height)
             {
-                cy = r.Height - (int)_ParentWindow.Top;
+                cy = r.Height - (int)parentWindow.Top;
             }
         }
 
@@ -96,9 +96,9 @@ namespace MahApps.Metro.Controls
                 DO = VisualTreeHelper.GetParent(DO);
                 if (DO is Window)
                 {
-                    _ParentWindow = (MetroWindow)DO;
-                    _ParentWindowHandle = ((HwndSource)(HwndSource.FromVisual(_ParentWindow))).Handle;
-                    _ParentWindow.Closed += (sender, e) => _ResizerWindow.Close();
+                    parentWindow = (MetroWindow)DO;
+                    parentWindowHandle = ((HwndSource)(HwndSource.FromVisual(parentWindow))).Handle;
+                    parentWindow.Closed += (sender, e) => resizerWindow.Close();
                     break;
                 }
             }
@@ -107,8 +107,8 @@ namespace MahApps.Metro.Controls
         private Point _GetRelativePoint()
         {
             POINT p; UnsafeNativeMethods.GetCursorPos(out p);
-            Point point = _MousePosition = new Point(p.X, p.Y);
-            Point point2 = _ParentWindow.PointFromScreen(point);
+            Point point = mousePosition = new Point(p.X, p.Y);
+            Point point2 = parentWindow.PointFromScreen(point);
             return point2;
         }
 
@@ -117,7 +117,7 @@ namespace MahApps.Metro.Controls
             int cx, cy;
             _DetermineNewSize(out cx, out cy);
 
-            UnsafeNativeMethods.SetWindowPos(_ParentWindowHandle, IntPtr.Zero, 0, 0, cx, cy, (uint)0x2 /* SWP_NOMOVE */);
+            UnsafeNativeMethods.SetWindowPos(parentWindowHandle, IntPtr.Zero, 0, 0, cx, cy, (uint)0x2 /* SWP_NOMOVE */);
         }
 
         private void _UpdateResizer()
@@ -125,51 +125,51 @@ namespace MahApps.Metro.Controls
             int cx, cy;
             _DetermineNewSize(out cx, out cy);
 
-            UnsafeNativeMethods.SetWindowPos(_ResizerWindowHandle, new IntPtr((int)-1 /* HWND_TOPMOST */), (int)_ParentWindow.Left - 10, (int)_ParentWindow.Top - 10, cx + 20, cy + 20, (uint)0x10 /* SWP_NOACTIVE */);
+            UnsafeNativeMethods.SetWindowPos(resizerWindowHandle, new IntPtr((int)-1 /* HWND_TOPMOST */), (int)parentWindow.Left - 10, (int)parentWindow.Top - 10, cx + 20, cy + 20, (uint)0x10 /* SWP_NOACTIVE */);
         }
 
         private void ResizeGrip_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Debug.Assert(_ParentWindow != null);
+            Debug.Assert(parentWindow != null);
 
             e.Handled = true;
-            _IsDragging = true;
+            isDragging = true;
             Point basePoint = _GetRelativePoint();
-            _XOffset = (int)_ParentWindow.ActualWidth - (int)basePoint.X;
-            _YOffset = (int)_ParentWindow.ActualHeight - (int)basePoint.Y;
+            xOffset = (int)parentWindow.ActualWidth - (int)basePoint.X;
+            yOffset = (int)parentWindow.ActualHeight - (int)basePoint.Y;
 
-            if (MetroResizeGrip.GetDeferResize(_ParentWindow))
+            if (MetroResizeGrip.GetDeferResize(parentWindow))
             {
-                _ResizerWindow.Visibility = System.Windows.Visibility.Visible;
-                _ResizerWindow.ShowStoryboard.Begin();
+                resizerWindow.Visibility = System.Windows.Visibility.Visible;
+                resizerWindow.ShowStoryboard.Begin();
             }
             Mouse.Capture(this);
         }
 
         private void ResizeGrip_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Debug.Assert(_ParentWindow != null);
+            Debug.Assert(parentWindow != null);
 
             e.Handled = true;
-            if (MetroResizeGrip.GetDeferResize(_ParentWindow))
+            if (MetroResizeGrip.GetDeferResize(parentWindow))
             {
                 _Process();
-                _ResizerWindow.HideStoryboard.Begin();
+                resizerWindow.HideStoryboard.Begin();
             }
-            _IsDragging = false;
+            isDragging = false;
             this.ReleaseMouseCapture();
         }
 
         private void ResizeGrip_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Debug.Assert(_ParentWindow != null);
-            Debug.Assert(_ParentWindowHandle != null);
+            Debug.Assert(parentWindow != null);
+            Debug.Assert(parentWindowHandle != null);
 
             e.Handled = true;
-            if (!_IsDragging)
+            if (!isDragging)
                 return;
 
-            if (_DeferResize)
+            if (deferResize)
             {
                 _UpdateResizer();
             }
