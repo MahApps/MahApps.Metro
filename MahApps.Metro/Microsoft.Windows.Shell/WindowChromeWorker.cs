@@ -75,13 +75,16 @@ namespace Microsoft.Windows.Shell
             {
                 new HANDLE_MESSAGE(WM.SETTEXT,               _HandleSetTextOrIcon),
                 new HANDLE_MESSAGE(WM.SETICON,               _HandleSetTextOrIcon),
+                new HANDLE_MESSAGE(WM.SYSCOMMAND,            _HandleRestoreWindow),
                 new HANDLE_MESSAGE(WM.NCACTIVATE,            _HandleNCActivate),
                 new HANDLE_MESSAGE(WM.NCCALCSIZE,            _HandleNCCalcSize),
                 new HANDLE_MESSAGE(WM.NCHITTEST,             _HandleNCHitTest),
                 new HANDLE_MESSAGE(WM.NCRBUTTONUP,           _HandleNCRButtonUp),
                 new HANDLE_MESSAGE(WM.SIZE,                  _HandleSize),
                 new HANDLE_MESSAGE(WM.WINDOWPOSCHANGED,      _HandleWindowPosChanged),
-                new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged), 
+                new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged),
+                new HANDLE_MESSAGE(WM.ENTERSIZEMOVE,         _HandleEnterSizeMove2),
+                new HANDLE_MESSAGE(WM.EXITSIZEMOVE,          _HandleExitSizeMove2),
             };
 
             if (_IsPresentationFrameworkVersionLessThan4)
@@ -465,6 +468,35 @@ namespace Microsoft.Windows.Shell
             return lRet;
         }
 
+        private IntPtr _HandleRestoreWindow(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
+            if (SC.RESTORE == (SC)wParam.ToInt32() && wpl.showCmd == SW.SHOWMAXIMIZED)
+            {
+                bool modified = _ModifyStyle(WS.CAPTION, 0);
+
+                IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, uMsg, wParam, lParam);
+
+                // Put back the style we removed.
+                if (modified && SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
+                {
+                    // allow animation
+                    if (_ModifyStyle(0, WS.CAPTION))
+                    {
+                        _UpdateFrameState(true);
+                    }
+                }
+                
+                handled = true;
+                return lRet;
+            }
+            else
+            {
+                handled = false;
+                return IntPtr.Zero;
+            }
+        }
+
         private IntPtr _HandleNCActivate(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             // Despite MSDN's documentation of lParam not being used,
@@ -723,6 +755,30 @@ namespace Microsoft.Windows.Shell
                 // Realistically we also don't want to update the start position when moving from one docked state to another (or to and from maximized),
                 // but it's tricky to detect and this is already a workaround for a bug that's fixed in newer versions of the framework.
                 // Not going to try to handle all cases.
+            }
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleEnterSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            // no animation
+            _ModifyStyle(WS.CAPTION, 0);
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleExitSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
+            {
+                // allow animation
+                if (_ModifyStyle(0, WS.CAPTION))
+                {
+                    _UpdateFrameState(true);
+                }
             }
 
             handled = false;
