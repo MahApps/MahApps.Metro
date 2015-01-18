@@ -66,6 +66,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\NET40\System.Windows.Interactivity.dll</HintPath>
@@ -125,6 +127,7 @@
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroNavigationWindow.cs" />
     <Compile Include="Controls\MetroProgressBar.cs" />
+    <Compile Include="Controls\MetroResizeGrip.cs" />
     <Compile Include="Controls\MetroTabControl.cs" />
     <Compile Include="Controls\MetroTabItem.cs" />
     <Compile Include="Controls\MetroWindowHelpers.cs" />
@@ -137,6 +140,9 @@
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\PropertyChangeNotifier.cs" />
     <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
+    <Compile Include="Controls\ResizerWindow.xaml.cs">
+      <DependentUpon>ResizerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SafeRaise.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
@@ -217,6 +223,10 @@
     <Compile Include="ThemeManager.cs" />
     <AppDesigner Include="Properties\" />
     <Page Include="Controls\GlowWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\ResizerWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
