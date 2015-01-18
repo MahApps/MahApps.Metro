@@ -352,7 +352,8 @@ namespace MahApps.Metro
                 var oldAccent = oldThemeInfo.Item2;
                 if (oldAccent != null && oldAccent.Name != newAccent.Name)
                 {
-                    var oldAccentResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldAccent.Resources.Source);
+                    var key = oldAccent.Resources.Source.ToString().ToLower();
+                    var oldAccentResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
                     if (oldAccentResource != null)
                     {
                         resources.MergedDictionaries.Add(newAccent.Resources);
@@ -365,7 +366,8 @@ namespace MahApps.Metro
                 var oldTheme = oldThemeInfo.Item1;
                 if (oldTheme != null && oldTheme != newTheme)
                 {
-                    var oldThemeResource = resources.MergedDictionaries.FirstOrDefault(d => d.Source == oldTheme.Resources.Source);
+                    var key = oldTheme.Resources.Source.ToString().ToLower();
+                    var oldThemeResource = resources.MergedDictionaries.Where(x => x.Source != null).FirstOrDefault(d => d.Source.ToString().ToLower() == key);
                     if (oldThemeResource != null)
                     {
                         resources.MergedDictionaries.Add(newTheme.Resources);
