@@ -174,11 +174,12 @@
                     BorderThickness="{TemplateBinding BorderThickness}"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch" />
-            <ResizeGrip x:Name="WindowResizeGrip"
-                        HorizontalAlignment="Right"
-                        IsTabStop="false"
-                        Visibility="Collapsed"
-                        VerticalAlignment="Bottom" />
+			<Controls:MetroResizeGrip x:Name="PART_MetroResizeGrip"
+                                      Cursor="SizeNWSE"
+                                      HorizontalAlignment="Right"
+                                      VerticalAlignment="Bottom"
+                                      Visibility="Collapsed"
+                                      IsTabStop="false" />
         </Grid>
 
         <ControlTemplate.Resources>
@@ -231,7 +232,7 @@
                                Value="Normal" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Visibility"
-                        TargetName="WindowResizeGrip"
+                        TargetName="PART_MetroResizeGrip"
                         Value="Visible" />
             </MultiTrigger>
         </ControlTemplate.Triggers>
