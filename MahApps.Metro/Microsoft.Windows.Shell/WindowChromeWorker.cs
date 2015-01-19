@@ -509,6 +509,48 @@ namespace Microsoft.Windows.Shell
             return lRet;
         }
 
+        /// <summary>
+        /// This method handles the window size if the taskbar is set to auto-hide.
+        /// </summary>
+        private static Standard.RECT AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, Standard.RECT area )
+        {
+            IntPtr hwnd =  MahApps.Metro.Native.UnsafeNativeMethods.FindWindow("Shell_TrayWnd", null);
+            IntPtr monitorWithTaskbarOnIt = MahApps.Metro.Native.UnsafeNativeMethods.MonitorFromWindow(hwnd, 
+                                                MahApps.Metro.Native.Constants.MONITOR_DEFAULTTONEAREST);
+
+
+            var abd = new MahApps.Metro.Native.APPBARDATA();
+            abd.cbSize = Marshal.SizeOf(abd);
+            abd.hWnd = hwnd;
+            MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETTASKBARPOS, ref abd);
+            bool autoHide = Convert.ToBoolean(
+                MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETSTATE, ref abd));
+
+            if (!autoHide)
+            {
+                return area;
+            }
+
+            switch (abd.uEdge)
+            {
+                case (int)MahApps.Metro.Native.ABEdge.ABE_LEFT:
+                    area.Left += 2;
+                    break;
+                case (int)MahApps.Metro.Native.ABEdge.ABE_RIGHT:
+                    area.Right -= 2;
+                    break;
+                case (int)MahApps.Metro.Native.ABEdge.ABE_TOP:
+                    area.Top += 2;
+                    break;
+                case (int)MahApps.Metro.Native.ABEdge.ABE_BOTTOM:
+                    area.Bottom -= 2;
+                    break;
+                default:
+                    return area;
+            }
+            return area;
+        }
+
         // There was a regression in DWM in Windows 7 with regard to handling WM_NCCALCSIZE to effect custom chrome.
         // When windows with glass are maximized on a multimonitor setup the glass frame tends to turn black.
         // Also when windows are resized they tend to flicker black, sometimes staying that way until resized again.
@@ -525,10 +567,18 @@ namespace Microsoft.Windows.Shell
             {
                 if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
                 {
+                    const int MONITOR_DEFAULTTONEAREST = 0x00000002;
+                    IntPtr mon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
+                    MONITORINFO mi = NativeMethods.GetMonitorInfo(mon);
+
                     RECT rc = (RECT) Marshal.PtrToStructure(lParam, typeof(RECT));
                     NativeMethods.DefWindowProc(_hwnd, WM.NCCALCSIZE, wParam, lParam);
                     RECT def = (RECT) Marshal.PtrToStructure(lParam, typeof(RECT));
                     def.Top = (int) (rc.Top + NativeMethods.GetWindowInfo(_hwnd).cyWindowBorders);
+
+                    // monitor an work area will be equal if taskbar is hidden
+                    if(mi.rcMonitor.Height == mi.rcWork.Height && mi.rcMonitor.Width == mi.rcWork.Width)
+                        def = AdjustWorkingAreaForAutoHide(mon, def);
                     Marshal.StructureToPtr(def, lParam, true);
                 }
             }
