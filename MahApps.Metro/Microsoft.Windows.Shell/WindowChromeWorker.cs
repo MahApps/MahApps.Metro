@@ -526,7 +526,7 @@ namespace Microsoft.Windows.Shell
             bool autoHide = Convert.ToBoolean(
                 MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETSTATE, ref abd));
 
-            if (!autoHide)
+            if (!autoHide || !Equals(monitorContainingApplication, monitorWithTaskbarOnIt))
             {
                 return area;
             }
