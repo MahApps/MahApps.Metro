@@ -432,6 +432,15 @@ namespace Microsoft.Windows.Shell
             }
         }
 
+        /// A borderless window lost his animation, with this we bring it back.
+        private bool _MinimizeAnimation
+        {
+            get
+            {
+                return SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false; /* && _chromeInfo.UseNoneWindowStyle == false*/
+            }
+        }
+
         #region WindowProc and Message Handlers
 
         private IntPtr _WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -471,7 +480,7 @@ namespace Microsoft.Windows.Shell
         private IntPtr _HandleRestoreWindow(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
-            if (SC.RESTORE == (SC)wParam.ToInt32() && wpl.showCmd == SW.SHOWMAXIMIZED && SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
+            if (SC.RESTORE == (SC)wParam.ToInt32() && wpl.showCmd == SW.SHOWMAXIMIZED && _MinimizeAnimation)
             {
                 bool modified = _ModifyStyle(WS.DLGFRAME, 0);
 
@@ -563,7 +572,7 @@ namespace Microsoft.Windows.Shell
 
             if (NativeMethods.GetWindowPlacement(_hwnd).showCmd == SW.MAXIMIZE)
             {
-                if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
+                if (_MinimizeAnimation)
                 {
                     IntPtr mon = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
                     MONITORINFO mi = NativeMethods.GetMonitorInfo(mon);
@@ -810,7 +819,8 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleEnterSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/) {
+            if (_MinimizeAnimation)
+            {
                 /* we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
                  * to prevent nasty drawing
                  * removing border will cause a 1 off error on the client rect size
@@ -826,7 +836,7 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleExitSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
+            if (_MinimizeAnimation)
             {
                 // restore DLGFRAME
                 if (_ModifyStyle(0, WS.DLGFRAME))
@@ -987,7 +997,7 @@ namespace Microsoft.Windows.Shell
 
             if (force || frameState != _isGlassEnabled)
             {
-                if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
+                if (_MinimizeAnimation)
                 {
                     // allow animation
                     _ModifyStyle(0, WS.CAPTION);
@@ -1045,7 +1055,7 @@ namespace Microsoft.Windows.Shell
             if (wpl.showCmd == SW.SHOWMAXIMIZED)
             {
                 RECT rcMax;
-                if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
+                if (_MinimizeAnimation)
                 {
                     rcMax = _GetClientRectRelativeToWindowRect(_hwnd);
                 }
