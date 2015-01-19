@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
@@ -63,8 +62,7 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.Loaded += AssociatedObject_Loaded;
             AssociatedObject.Unloaded += AssociatedObject_Unloaded;
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
-            AssociatedObject.StateChanged += AssociatedObject_StateChanged;
-            AssociatedObject.Activated += AssociatedObject_Activated;
+            AssociatedObject.StateChanged += OnAssociatedObjectHandleMaximize;
 
             base.OnAttached();
         }
@@ -123,8 +121,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Loaded -= AssociatedObject_Loaded;
                 AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
                 AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
-                AssociatedObject.StateChanged -= AssociatedObject_StateChanged;
-                AssociatedObject.Activated -= AssociatedObject_Activated;
+                AssociatedObject.StateChanged -= OnAssociatedObjectHandleMaximize;
                 if (hwndSource != null)
                 {
                     hwndSource.RemoveHook(WindowProc);
@@ -171,25 +168,17 @@ namespace MahApps.Metro.Behaviours
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
                     handled = true;
                     break;
-                /*case Constants.WM_MOVE:
-                    this.HandleMaximize(true);
-                    break;*/
             }
 
             return returnval;
         }
 
-        private void AssociatedObject_Activated(object sender, EventArgs e)
+        private void OnAssociatedObjectHandleMaximize(object sender, EventArgs e)
         {
             HandleMaximize();
         }
 
-        private void AssociatedObject_StateChanged(object sender, EventArgs e)
-        {
-            HandleMaximize();
-        }
-
-        private void HandleMaximize(bool handleOnlyMaximized = false)
+        private void HandleMaximize()
         {
             var metroWindow = AssociatedObject as MetroWindow;
             var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
@@ -214,7 +203,7 @@ namespace MahApps.Metro.Behaviours
                     UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
                 }
             }
-            else if (!handleOnlyMaximized)
+            else
             {
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
@@ -229,20 +218,6 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Topmost = false;
                 AssociatedObject.Topmost = topMost;
             }
-        }
-
-        private static int GetEdge(RECT rc)
-        {
-            int uEdge;
-            if (rc.top == rc.left && rc.bottom > rc.right)
-                uEdge = (int)ABEdge.ABE_LEFT;
-            else if (rc.top == rc.left && rc.bottom < rc.right)
-                uEdge = (int)ABEdge.ABE_TOP;
-            else if (rc.top > rc.left)
-                uEdge = (int)ABEdge.ABE_BOTTOM;
-            else
-                uEdge = (int)ABEdge.ABE_RIGHT;
-            return uEdge;
         }
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
