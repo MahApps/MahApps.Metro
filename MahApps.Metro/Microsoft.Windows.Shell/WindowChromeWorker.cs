@@ -473,7 +473,7 @@ namespace Microsoft.Windows.Shell
             WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
             if (SC.RESTORE == (SC)wParam.ToInt32() && wpl.showCmd == SW.SHOWMAXIMIZED)
             {
-                bool modified = _ModifyStyle(WS.CAPTION, 0);
+                bool modified = _ModifyStyle(WS.DLGFRAME, 0);
 
                 IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, uMsg, wParam, lParam);
 
@@ -481,7 +481,7 @@ namespace Microsoft.Windows.Shell
                 if (modified && SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
                 {
                     // allow animation
-                    if (_ModifyStyle(0, WS.CAPTION))
+                    if (_ModifyStyle(0, WS.DLGFRAME))
                     {
                         _UpdateFrameState(true);
                     }
@@ -813,9 +813,14 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleEnterSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            // no animation
-            _ModifyStyle(WS.CAPTION, 0);
-
+            /* we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
+             * to prevent nasty drawing
+             * removing border will cause a 1 off error on the client rect size
+             * when maximizing via aero snapping, because max by aero snapping
+             * will call this method, resulting in a 2px black border on the side
+             * when maximized.
+             */
+            _ModifyStyle(WS.DLGFRAME, 0);
             handled = false;
             return IntPtr.Zero;
         }
@@ -824,8 +829,8 @@ namespace Microsoft.Windows.Shell
         {
             if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
             {
-                // allow animation
-                if (_ModifyStyle(0, WS.CAPTION))
+                // restore DLGFRAME
+                if (_ModifyStyle(0, WS.DLGFRAME))
                 {
                     _UpdateFrameState(true);
                 }
@@ -983,17 +988,6 @@ namespace Microsoft.Windows.Shell
 
             if (force || frameState != _isGlassEnabled)
             {
-                if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
-                {
-                    // allow animation
-                    _ModifyStyle(0, WS.CAPTION);
-                }
-                else
-                {
-                    // no animation
-                    _ModifyStyle(WS.CAPTION, 0);
-                }
-
                 _isGlassEnabled = frameState && _chromeInfo.GlassFrameThickness != default(Thickness);
 
                 if (!_isGlassEnabled)
