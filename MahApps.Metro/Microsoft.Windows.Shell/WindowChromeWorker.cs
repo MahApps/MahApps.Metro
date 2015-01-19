@@ -990,7 +990,6 @@ namespace Microsoft.Windows.Shell
 
             if (force || frameState != _isGlassEnabled)
             {
-                bool modified = _ModifyStyle(WS.VISIBLE, 0);
                 if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
                 {
                     // allow animation
@@ -1015,11 +1014,6 @@ namespace Microsoft.Windows.Shell
 
                 // update the glass frame too, if the user sets the glass frame thickness to 0 at run time
                 _ExtendGlassFrame();
-
-                if (modified)
-                {
-                    _ModifyStyle(0, WS.VISIBLE);
-                }
 
                 NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
             }
