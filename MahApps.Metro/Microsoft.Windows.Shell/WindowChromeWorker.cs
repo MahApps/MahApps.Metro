@@ -471,14 +471,14 @@ namespace Microsoft.Windows.Shell
         private IntPtr _HandleRestoreWindow(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
-            if (SC.RESTORE == (SC)wParam.ToInt32() && wpl.showCmd == SW.SHOWMAXIMIZED)
+            if (SC.RESTORE == (SC)wParam.ToInt32() && wpl.showCmd == SW.SHOWMAXIMIZED && SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
             {
                 bool modified = _ModifyStyle(WS.DLGFRAME, 0);
 
                 IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, uMsg, wParam, lParam);
 
                 // Put back the style we removed.
-                if (modified && SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
+                if (modified)
                 {
                     // allow animation
                     if (_ModifyStyle(0, WS.DLGFRAME))
@@ -607,7 +607,7 @@ namespace Microsoft.Windows.Shell
                 Marshal.StructureToPtr(rcClientArea, lParam, false);
 
                 handled = true;
-                new IntPtr((int)WVR.REDRAW);
+                return new IntPtr((int)WVR.REDRAW);
             }
 
             handled = true;
@@ -813,14 +813,16 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleEnterSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            /* we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
-             * to prevent nasty drawing
-             * removing border will cause a 1 off error on the client rect size
-             * when maximizing via aero snapping, because max by aero snapping
-             * will call this method, resulting in a 2px black border on the side
-             * when maximized.
-             */
-            _ModifyStyle(WS.DLGFRAME, 0);
+            if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/) {
+                /* we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
+                 * to prevent nasty drawing
+                 * removing border will cause a 1 off error on the client rect size
+                 * when maximizing via aero snapping, because max by aero snapping
+                 * will call this method, resulting in a 2px black border on the side
+                 * when maximized.
+                 */
+                _ModifyStyle(WS.DLGFRAME, 0);
+            }
             handled = false;
             return IntPtr.Zero;
         }
@@ -988,6 +990,7 @@ namespace Microsoft.Windows.Shell
 
             if (force || frameState != _isGlassEnabled)
             {
+                bool modified = _ModifyStyle(WS.VISIBLE, 0);
                 if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
                 {
                     // allow animation
@@ -1012,6 +1015,11 @@ namespace Microsoft.Windows.Shell
 
                 // update the glass frame too, if the user sets the glass frame thickness to 0 at run time
                 _ExtendGlassFrame();
+
+                if (modified)
+                {
+                    _ModifyStyle(0, WS.VISIBLE);
+                }
 
                 NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, 0, 0, 0, 0, _SwpFlags);
             }
