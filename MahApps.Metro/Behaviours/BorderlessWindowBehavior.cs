@@ -74,7 +74,11 @@ namespace MahApps.Metro.Behaviours
             var metroWindow = sender as MetroWindow;
             if (metroWindow != null && windowChrome != null)
             {
-                windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
+                if (!Equals(windowChrome.UseNoneWindowStyle, metroWindow.UseNoneWindowStyle))
+                {
+                    windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
+                    this.ForceRedrawWindowFromPropertyChanged();
+                }
             }
         }
 
@@ -83,7 +87,20 @@ namespace MahApps.Metro.Behaviours
             var metroWindow = sender as MetroWindow;
             if (metroWindow != null && windowChrome != null)
             {
-                windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                if (!Equals(windowChrome.IgnoreTaskbarOnMaximize, metroWindow.IgnoreTaskbarOnMaximize))
+                {
+                    windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                    this.ForceRedrawWindowFromPropertyChanged();
+                }
+            }
+        }
+
+        private void ForceRedrawWindowFromPropertyChanged()
+        {
+            this.HandleMaximize();
+            if (this.handle != IntPtr.Zero)
+            {
+                UnsafeNativeMethods.RedrawWindow(this.handle, IntPtr.Zero, IntPtr.Zero, Constants.RedrawWindowFlags.Invalidate | Constants.RedrawWindowFlags.Frame);
             }
         }
 
