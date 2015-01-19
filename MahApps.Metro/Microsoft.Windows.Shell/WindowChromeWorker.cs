@@ -988,6 +988,17 @@ namespace Microsoft.Windows.Shell
 
             if (force || frameState != _isGlassEnabled)
             {
+                if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
+                {
+                    // allow animation
+                    _ModifyStyle(0, WS.CAPTION);
+                }
+                else
+                {
+                    // no animation
+                    _ModifyStyle(WS.CAPTION, 0);
+                }
+
                 _isGlassEnabled = frameState && _chromeInfo.GlassFrameThickness != default(Thickness);
 
                 if (!_isGlassEnabled)
