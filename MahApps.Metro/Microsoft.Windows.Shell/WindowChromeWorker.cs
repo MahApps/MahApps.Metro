@@ -512,19 +512,17 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         /// This method handles the window size if the taskbar is set to auto-hide.
         /// </summary>
-        private static Standard.RECT AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, Standard.RECT area )
+        private static RECT AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, RECT area )
         {
+            // maybe we can use ReBarWindow32 isntead Shell_TrayWnd
             IntPtr hwnd =  MahApps.Metro.Native.UnsafeNativeMethods.FindWindow("Shell_TrayWnd", null);
-            IntPtr monitorWithTaskbarOnIt = MahApps.Metro.Native.UnsafeNativeMethods.MonitorFromWindow(hwnd, 
-                                                MahApps.Metro.Native.Constants.MONITOR_DEFAULTTONEAREST);
-
+            IntPtr monitorWithTaskbarOnIt = MahApps.Metro.Native.UnsafeNativeMethods.MonitorFromWindow(hwnd, MahApps.Metro.Native.Constants.MONITOR_DEFAULTTONEAREST);
 
             var abd = new MahApps.Metro.Native.APPBARDATA();
             abd.cbSize = Marshal.SizeOf(abd);
             abd.hWnd = hwnd;
             MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETTASKBARPOS, ref abd);
-            bool autoHide = Convert.ToBoolean(
-                MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETSTATE, ref abd));
+            bool autoHide = Convert.ToBoolean(MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETSTATE, ref abd));
 
             if (!autoHide || !Equals(monitorContainingApplication, monitorWithTaskbarOnIt))
             {
