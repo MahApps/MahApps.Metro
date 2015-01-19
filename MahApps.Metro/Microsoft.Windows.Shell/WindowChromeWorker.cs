@@ -473,7 +473,7 @@ namespace Microsoft.Windows.Shell
             WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
             if (SC.RESTORE == (SC)wParam.ToInt32() && wpl.showCmd == SW.SHOWMAXIMIZED)
             {
-                bool modified = _ModifyStyle(WS.CAPTION, 0);
+                bool modified = _ModifyStyle(WS.DLGFRAME, 0);
 
                 IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, uMsg, wParam, lParam);
 
@@ -481,7 +481,7 @@ namespace Microsoft.Windows.Shell
                 if (modified && SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
                 {
                     // allow animation
-                    if (_ModifyStyle(0, WS.CAPTION))
+                    if (_ModifyStyle(0, WS.DLGFRAME))
                     {
                         _UpdateFrameState(true);
                     }
@@ -509,6 +509,48 @@ namespace Microsoft.Windows.Shell
             return lRet;
         }
 
+        /// <summary>
+        /// This method handles the window size if the taskbar is set to auto-hide.
+        /// </summary>
+        private static Standard.RECT AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, Standard.RECT area )
+        {
+            IntPtr hwnd =  MahApps.Metro.Native.UnsafeNativeMethods.FindWindow("Shell_TrayWnd", null);
+            IntPtr monitorWithTaskbarOnIt = MahApps.Metro.Native.UnsafeNativeMethods.MonitorFromWindow(hwnd, 
+                                                MahApps.Metro.Native.Constants.MONITOR_DEFAULTTONEAREST);
+
+
+            var abd = new MahApps.Metro.Native.APPBARDATA();
+            abd.cbSize = Marshal.SizeOf(abd);
+            abd.hWnd = hwnd;
+            MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETTASKBARPOS, ref abd);
+            bool autoHide = Convert.ToBoolean(
+                MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETSTATE, ref abd));
+
+            if (!autoHide)
+            {
+                return area;
+            }
+
+            switch (abd.uEdge)
+            {
+                case (int)MahApps.Metro.Native.ABEdge.ABE_LEFT:
+                    area.Left += 2;
+                    break;
+                case (int)MahApps.Metro.Native.ABEdge.ABE_RIGHT:
+                    area.Right -= 2;
+                    break;
+                case (int)MahApps.Metro.Native.ABEdge.ABE_TOP:
+                    area.Top += 2;
+                    break;
+                case (int)MahApps.Metro.Native.ABEdge.ABE_BOTTOM:
+                    area.Bottom -= 2;
+                    break;
+                default:
+                    return area;
+            }
+            return area;
+        }
+
         // There was a regression in DWM in Windows 7 with regard to handling WM_NCCALCSIZE to effect custom chrome.
         // When windows with glass are maximized on a multimonitor setup the glass frame tends to turn black.
         // Also when windows are resized they tend to flicker black, sometimes staying that way until resized again.
@@ -525,10 +567,18 @@ namespace Microsoft.Windows.Shell
             {
                 if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
                 {
+                    const int MONITOR_DEFAULTTONEAREST = 0x00000002;
+                    IntPtr mon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
+                    MONITORINFO mi = NativeMethods.GetMonitorInfo(mon);
+
                     RECT rc = (RECT) Marshal.PtrToStructure(lParam, typeof(RECT));
                     NativeMethods.DefWindowProc(_hwnd, WM.NCCALCSIZE, wParam, lParam);
                     RECT def = (RECT) Marshal.PtrToStructure(lParam, typeof(RECT));
                     def.Top = (int) (rc.Top + NativeMethods.GetWindowInfo(_hwnd).cyWindowBorders);
+
+                    // monitor an work area will be equal if taskbar is hidden
+                    if(mi.rcMonitor.Height == mi.rcWork.Height && mi.rcMonitor.Width == mi.rcWork.Width)
+                        def = AdjustWorkingAreaForAutoHide(mon, def);
                     Marshal.StructureToPtr(def, lParam, true);
                 }
             }
@@ -763,9 +813,14 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleEnterSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            // no animation
-            _ModifyStyle(WS.CAPTION, 0);
-
+            /* we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
+             * to prevent nasty drawing
+             * removing border will cause a 1 off error on the client rect size
+             * when maximizing via aero snapping, because max by aero snapping
+             * will call this method, resulting in a 2px black border on the side
+             * when maximized.
+             */
+            _ModifyStyle(WS.DLGFRAME, 0);
             handled = false;
             return IntPtr.Zero;
         }
@@ -774,8 +829,8 @@ namespace Microsoft.Windows.Shell
         {
             if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false /* && _chromeInfo.UseNoneWindowStyle == false*/)
             {
-                // allow animation
-                if (_ModifyStyle(0, WS.CAPTION))
+                // restore DLGFRAME
+                if (_ModifyStyle(0, WS.DLGFRAME))
                 {
                     _UpdateFrameState(true);
                 }
