@@ -515,14 +515,14 @@ namespace Microsoft.Windows.Shell
         private static RECT AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, RECT area )
         {
             // maybe we can use ReBarWindow32 isntead Shell_TrayWnd
-            IntPtr hwnd =  MahApps.Metro.Native.UnsafeNativeMethods.FindWindow("Shell_TrayWnd", null);
-            IntPtr monitorWithTaskbarOnIt = MahApps.Metro.Native.UnsafeNativeMethods.MonitorFromWindow(hwnd, MahApps.Metro.Native.Constants.MONITOR_DEFAULTTONEAREST);
+            IntPtr hwnd = NativeMethods.FindWindow("Shell_TrayWnd", null);
+            IntPtr monitorWithTaskbarOnIt = NativeMethods.MonitorFromWindow(hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
 
-            var abd = new MahApps.Metro.Native.APPBARDATA();
+            var abd = new APPBARDATA();
             abd.cbSize = Marshal.SizeOf(abd);
             abd.hWnd = hwnd;
-            MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETTASKBARPOS, ref abd);
-            bool autoHide = Convert.ToBoolean(MahApps.Metro.Native.UnsafeNativeMethods.SHAppBarMessage((int)MahApps.Metro.Native.ABMsg.ABM_GETSTATE, ref abd));
+            NativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, ref abd);
+            bool autoHide = Convert.ToBoolean(NativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETSTATE, ref abd));
 
             if (!autoHide || !Equals(monitorContainingApplication, monitorWithTaskbarOnIt))
             {
@@ -531,16 +531,16 @@ namespace Microsoft.Windows.Shell
 
             switch (abd.uEdge)
             {
-                case (int)MahApps.Metro.Native.ABEdge.ABE_LEFT:
+                case (int)ABEdge.ABE_LEFT:
                     area.Left += 2;
                     break;
-                case (int)MahApps.Metro.Native.ABEdge.ABE_RIGHT:
+                case (int)ABEdge.ABE_RIGHT:
                     area.Right -= 2;
                     break;
-                case (int)MahApps.Metro.Native.ABEdge.ABE_TOP:
+                case (int)ABEdge.ABE_TOP:
                     area.Top += 2;
                     break;
-                case (int)MahApps.Metro.Native.ABEdge.ABE_BOTTOM:
+                case (int)ABEdge.ABE_BOTTOM:
                     area.Bottom -= 2;
                     break;
                 default:
@@ -565,8 +565,7 @@ namespace Microsoft.Windows.Shell
             {
                 if (SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false/* && _chromeInfo.UseNoneWindowStyle == false*/)
                 {
-                    const int MONITOR_DEFAULTTONEAREST = 0x00000002;
-                    IntPtr mon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
+                    IntPtr mon = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
                     MONITORINFO mi = NativeMethods.GetMonitorInfo(mon);
 
                     RECT rc = (RECT) Marshal.PtrToStructure(lParam, typeof(RECT));
@@ -1039,8 +1038,6 @@ namespace Microsoft.Windows.Shell
 
         private void _SetRoundingRegion(WINDOWPOS? wp)
         {
-            const int MONITOR_DEFAULTTONEAREST = 0x00000002;
-
             // We're early - WPF hasn't necessarily updated the state of the window.
             // Need to query it ourselves.
             WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
@@ -1069,7 +1066,7 @@ namespace Microsoft.Windows.Shell
                         top = (int)r.Top;
                     }
 
-                    IntPtr hMon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
+                    IntPtr hMon = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
 
                     MONITORINFO mi = NativeMethods.GetMonitorInfo(hMon);
                     rcMax = _chromeInfo.IgnoreTaskbarOnMaximize ? mi.rcMonitor : mi.rcWork;

@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace MahApps.Metro.Native
 {
+    [Obsolete("Use Standard.APPBARDATA instead.")]
     [StructLayout(LayoutKind.Sequential)]
     internal struct APPBARDATA
     {

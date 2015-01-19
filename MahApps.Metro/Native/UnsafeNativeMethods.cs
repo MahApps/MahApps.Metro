@@ -209,9 +209,11 @@ namespace MahApps.Metro.Native
         [DllImport("user32.dll")]
         internal static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
+        [Obsolete("Use NativeMethods.FindWindow instead.")]
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
+        [Obsolete("Use NativeMethods.SHAppBarMessage instead.")]
         [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern int SHAppBarMessage(int dwMessage, ref APPBARDATA pData);
 
