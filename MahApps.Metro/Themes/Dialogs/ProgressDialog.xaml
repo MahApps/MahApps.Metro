@@ -27,6 +27,7 @@
                         Style="{DynamicResource AccentedDialogSquareButton}"
                         Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Margin="5 0 0 0"
+                        Cursor="Arrow"
                         Visibility="Hidden" />
             </StackPanel>
         </Grid>
