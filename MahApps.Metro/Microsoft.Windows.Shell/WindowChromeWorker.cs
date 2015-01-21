@@ -82,6 +82,7 @@ namespace Microsoft.Windows.Shell
                 new HANDLE_MESSAGE(WM.NCRBUTTONUP,           _HandleNCRButtonUp),
                 new HANDLE_MESSAGE(WM.SIZE,                  _HandleSize),
                 new HANDLE_MESSAGE(WM.WINDOWPOSCHANGED,      _HandleWindowPosChanged),
+                new HANDLE_MESSAGE(WM.GETMINMAXINFO,         _HandleGetMinMaxInfo),
                 new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged),
                 new HANDLE_MESSAGE(WM.ENTERSIZEMOVE,         _HandleEnterSizeMove2),
                 new HANDLE_MESSAGE(WM.EXITSIZEMOVE,          _HandleExitSizeMove2),
@@ -766,6 +767,47 @@ namespace Microsoft.Windows.Shell
             }
 
             // Still want to pass this to DefWndProc
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleGetMinMaxInfo(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            /*
+             * This is a workaround for wrong windows behaviour.
+             * If a Window sets the WindoStyle to None and WindowState to maximized and we have a multi monitor system
+             * we can move the Window only one time. After that it's not possible to move the Window back to the
+             * previous monitor.
+             * This fix is not really a full fix. Moving the Window back gives us the wrong size, because
+             * MonitorFromWindow gives us the wrong (old) monitor!
+             */
+            var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize || _chromeInfo.UseNoneWindowStyle;
+            WindowState state = _GetHwndState();
+            if (ignoreTaskBar && state == WindowState.Maximized)
+            {
+                MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+                IntPtr monitor = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
+                if (monitor != IntPtr.Zero)
+                {
+                    MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitor);
+                    RECT rcWorkArea = monitorInfo.rcWork;
+                    RECT rcMonitorArea = monitorInfo.rcMonitor;
+                    mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.Left - rcMonitorArea.Left);
+                    mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.Top - rcMonitorArea.Top);
+
+                    var x = ignoreTaskBar ? monitorInfo.rcMonitor.Left : monitorInfo.rcWork.Left;
+                    var y = ignoreTaskBar ? monitorInfo.rcMonitor.Top : monitorInfo.rcWork.Top;
+                    mmi.ptMaxSize.x = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.Right - x) : Math.Abs(monitorInfo.rcWork.Right - x);
+                    mmi.ptMaxSize.y = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.Bottom - y) : Math.Abs(monitorInfo.rcWork.Bottom - y);
+
+                    mmi.ptMaxTrackSize.x = mmi.ptMaxSize.x;
+                    mmi.ptMaxTrackSize.y = mmi.ptMaxSize.y;
+                }
+                Marshal.StructureToPtr(mmi, lParam, true);
+            }
+
+            /* Setting handled to false enables the application to process it's own Min/Max requirements,
+             * as mentioned by jason.bullard (comment from September 22, 2011) on http://gallery.expression.microsoft.com/ZuneWindowBehavior/ */
             handled = false;
             return IntPtr.Zero;
         }
