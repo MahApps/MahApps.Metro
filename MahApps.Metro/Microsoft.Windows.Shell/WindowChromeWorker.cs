@@ -439,7 +439,7 @@ namespace Microsoft.Windows.Shell
         {
             get
             {
-                return SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false; /* && _chromeInfo.UseNoneWindowStyle == false*/
+                return SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false;// && _chromeInfo.UseNoneWindowStyle == false;
             }
         }
 
@@ -787,7 +787,7 @@ namespace Microsoft.Windows.Shell
              * This fix is not really a full fix. Moving the Window back gives us the wrong size, because
              * MonitorFromWindow gives us the wrong (old) monitor!
              */
-            var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize || _chromeInfo.UseNoneWindowStyle;
+            var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize;// || _chromeInfo.UseNoneWindowStyle;
             WindowState state = _GetHwndState();
             if (ignoreTaskBar && state == WindowState.Maximized)
             {
@@ -884,22 +884,15 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize || _chromeInfo.UseNoneWindowStyle;
             WindowState state = _GetHwndState();
-            if (ignoreTaskBar && state == WindowState.Maximized) {
+            if (state == WindowState.Maximized) {
                 IntPtr monitorFromWindow = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
                 if (monitorFromWindow != IntPtr.Zero)
                 {
-                    //RECT windowRect = NativeMethods.GetWindowRect(_hwnd);
-                    //POINT screenPoint = new POINT() { x = windowRect.Left + windowRect.Width / 2, y = windowRect.Top + windowRect.Height / 2 };
-                    //IntPtr monitor = NativeMethods.MonitorFromPoint(screenPoint, MonitorOptions.MONITOR_DEFAULTTONEAREST);
-                    //if (monitor != IntPtr.Zero)
-                    {
-                        //MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitor);
-                        MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitorFromWindow);
-                        RECT rcMonitorArea = monitorInfo.rcMonitor;
-                        NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, rcMonitorArea.Left, rcMonitorArea.Top, rcMonitorArea.Width, rcMonitorArea.Height, SWP.ASYNCWINDOWPOS | SWP.FRAMECHANGED);
-                    }
+                    var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize;// || _chromeInfo.UseNoneWindowStyle;
+                    MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitorFromWindow);
+                    RECT rcMonitorArea = ignoreTaskBar ? monitorInfo.rcMonitor : monitorInfo.rcWork;
+                    NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, rcMonitorArea.Left, rcMonitorArea.Top, rcMonitorArea.Width, rcMonitorArea.Height, SWP.ASYNCWINDOWPOS | SWP.FRAMECHANGED);
                 }
             }
 

@@ -9,7 +9,7 @@
                       xmlns:exampleViews="clr-namespace:MetroDemo.ExampleViews"
                       Title="MahApps.Metro - Demo Application"
                       Width="960"
-                      Height="600"
+                      Height="600" UseNoneWindowStyle="True" WindowState="Maximized"
                       Icon="mahapps.metro.logo2.ico"
                       ShowIconOnTitleBar="True"
                       ShowTitleBar="True"
