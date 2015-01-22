@@ -1063,17 +1063,6 @@ namespace Microsoft.Windows.Shell
 
             if (force || frameState != _isGlassEnabled)
             {
-                if (_MinimizeAnimation)
-                {
-                    // allow animation
-                    _ModifyStyle(0, WS.CAPTION);
-                }
-                else
-                {
-                    // no animation
-                    _ModifyStyle(WS.CAPTION, 0);
-                }
-
                 _isGlassEnabled = frameState && _chromeInfo.GlassFrameThickness != default(Thickness);
 
                 if (!_isGlassEnabled)
@@ -1083,6 +1072,17 @@ namespace Microsoft.Windows.Shell
                 else
                 {
                     _ClearRoundingRegion();
+                }
+
+                if (_MinimizeAnimation)
+                {
+                    // allow animation
+                    _ModifyStyle(0, WS.CAPTION);
+                }
+                else
+                {
+                    // no animation
+                    _ModifyStyle(WS.CAPTION, 0);
                 }
 
                 // update the glass frame too, if the user sets the glass frame thickness to 0 at run time
