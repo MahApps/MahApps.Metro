@@ -572,6 +572,8 @@ namespace Microsoft.Windows.Shell
             // Since the first field of NCCALCSIZE_PARAMS is a RECT and is the only field we care about
             // we can unconditionally treat it as a RECT.
 
+            var redraw = false;
+
             if (NativeMethods.GetWindowPlacement(_hwnd).showCmd == SW.MAXIMIZE)
             {
                 if (_MinimizeAnimation)
@@ -585,9 +587,13 @@ namespace Microsoft.Windows.Shell
                     def.Top = (int) (rc.Top + NativeMethods.GetWindowInfo(_hwnd).cyWindowBorders);
 
                     // monitor an work area will be equal if taskbar is hidden
-                    if(mi.rcMonitor.Height == mi.rcWork.Height && mi.rcMonitor.Width == mi.rcWork.Width)
+                    if (mi.rcMonitor.Height == mi.rcWork.Height && mi.rcMonitor.Width == mi.rcWork.Width)
+                    {
                         def = AdjustWorkingAreaForAutoHide(mon, def);
+                    }
                     Marshal.StructureToPtr(def, lParam, true);
+
+                    redraw = true;
                 }
             }
 
@@ -614,12 +620,11 @@ namespace Microsoft.Windows.Shell
 
                 Marshal.StructureToPtr(rcClientArea, lParam, false);
 
-                handled = true;
-                return new IntPtr((int)WVR.REDRAW);
+                redraw = true;
             }
 
             handled = true;
-            return IntPtr.Zero;
+            return redraw ? new IntPtr((int)WVR.REDRAW) : IntPtr.Zero;
         }
 
         private HT _GetHTFromResizeGripDirection(ResizeGripDirection direction)
