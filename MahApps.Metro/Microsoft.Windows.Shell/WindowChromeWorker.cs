@@ -84,9 +84,9 @@ namespace Microsoft.Windows.Shell
                 new HANDLE_MESSAGE(WM.WINDOWPOSCHANGED,      _HandleWindowPosChanged),
                 new HANDLE_MESSAGE(WM.GETMINMAXINFO,         _HandleGetMinMaxInfo),
                 new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged),
-                new HANDLE_MESSAGE(WM.ENTERSIZEMOVE,         _HandleEnterSizeMove2),
-                new HANDLE_MESSAGE(WM.MOVE,                  _HandleMove2),
-                new HANDLE_MESSAGE(WM.EXITSIZEMOVE,          _HandleExitSizeMove2),
+                new HANDLE_MESSAGE(WM.ENTERSIZEMOVE,         _HandleEnterSizeMoveForAnimation),
+                new HANDLE_MESSAGE(WM.MOVE,                  _HandleMoveForRealSize),
+                new HANDLE_MESSAGE(WM.EXITSIZEMOVE,          _HandleExitSizeMoveForAnimation),
             };
 
             if (_IsPresentationFrameworkVersionLessThan4)
@@ -785,7 +785,7 @@ namespace Microsoft.Windows.Shell
              * we can move the Window only one time. After that it's not possible to move the Window back to the
              * previous monitor.
              * This fix is not really a full fix. Moving the Window back gives us the wrong size, because
-             * MonitorFromWindow gives us the wrong (old) monitor!
+             * MonitorFromWindow gives us the wrong (old) monitor! This is fixed in _HandleMoveForRealSize.
              */
             var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize;// || _chromeInfo.UseNoneWindowStyle;
             WindowState state = _GetHwndState();
@@ -798,14 +798,12 @@ namespace Microsoft.Windows.Shell
                     MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitor);
                     RECT rcWorkArea = monitorInfo.rcWork;
                     RECT rcMonitorArea = monitorInfo.rcMonitor;
+                    
                     mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.Left - rcMonitorArea.Left);
                     mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.Top - rcMonitorArea.Top);
 
-                    var x = ignoreTaskBar ? monitorInfo.rcMonitor.Left : monitorInfo.rcWork.Left;
-                    var y = ignoreTaskBar ? monitorInfo.rcMonitor.Top : monitorInfo.rcWork.Top;
-                    mmi.ptMaxSize.x = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.Right - x) : Math.Abs(monitorInfo.rcWork.Right - x);
-                    mmi.ptMaxSize.y = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.Bottom - y) : Math.Abs(monitorInfo.rcWork.Bottom - y);
-
+                    mmi.ptMaxSize.x = Math.Abs(monitorInfo.rcMonitor.Width);
+                    mmi.ptMaxSize.y = Math.Abs(monitorInfo.rcMonitor.Height);
                     mmi.ptMaxTrackSize.x = mmi.ptMaxSize.x;
                     mmi.ptMaxTrackSize.y = mmi.ptMaxSize.y;
                 }
@@ -865,7 +863,7 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        private IntPtr _HandleEnterSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        private IntPtr _HandleEnterSizeMoveForAnimation(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             if (_MinimizeAnimation)
             {
@@ -882,8 +880,14 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        private IntPtr _HandleMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        private IntPtr _HandleMoveForRealSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
+            /*
+             * This is a workaround for wrong windows behaviour (with multi monitor system).
+             * If a Window sets the WindoStyle to None and WindowState to maximized
+             * we can move the Window to different monitor with maybe different dimension.
+             * But after moving to the previous monitor we got a wrong size (from the old monitor dimension).
+             */
             WindowState state = _GetHwndState();
             if (state == WindowState.Maximized) {
                 IntPtr monitorFromWindow = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
@@ -900,7 +904,7 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
-        private IntPtr _HandleExitSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        private IntPtr _HandleExitSizeMoveForAnimation(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             if (_MinimizeAnimation)
             {
