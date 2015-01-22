@@ -85,6 +85,7 @@ namespace Microsoft.Windows.Shell
                 new HANDLE_MESSAGE(WM.GETMINMAXINFO,         _HandleGetMinMaxInfo),
                 new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged),
                 new HANDLE_MESSAGE(WM.ENTERSIZEMOVE,         _HandleEnterSizeMove2),
+                new HANDLE_MESSAGE(WM.MOVE,                  _HandleMove2),
                 new HANDLE_MESSAGE(WM.EXITSIZEMOVE,          _HandleExitSizeMove2),
             };
 
@@ -876,6 +877,31 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
+        private IntPtr _HandleMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize || _chromeInfo.UseNoneWindowStyle;
+            WindowState state = _GetHwndState();
+            if (ignoreTaskBar && state == WindowState.Maximized) {
+                IntPtr monitorFromWindow = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
+                if (monitorFromWindow != IntPtr.Zero)
+                {
+                    //RECT windowRect = NativeMethods.GetWindowRect(_hwnd);
+                    //POINT screenPoint = new POINT() { x = windowRect.Left + windowRect.Width / 2, y = windowRect.Top + windowRect.Height / 2 };
+                    //IntPtr monitor = NativeMethods.MonitorFromPoint(screenPoint, MonitorOptions.MONITOR_DEFAULTTONEAREST);
+                    //if (monitor != IntPtr.Zero)
+                    {
+                        //MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitor);
+                        MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitorFromWindow);
+                        RECT rcMonitorArea = monitorInfo.rcMonitor;
+                        NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, rcMonitorArea.Left, rcMonitorArea.Top, rcMonitorArea.Width, rcMonitorArea.Height, SWP.ASYNCWINDOWPOS | SWP.FRAMECHANGED);
+                    }
+                }
+            }
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
         private IntPtr _HandleExitSizeMove2(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             if (_MinimizeAnimation)
@@ -1078,11 +1104,7 @@ namespace Microsoft.Windows.Shell
             RECT windowRect = NativeMethods.GetWindowRect(hWnd);
             RECT clientRect = NativeMethods.GetClientRect(hWnd);
 
-            POINT test = new POINT()
-            {
-                x = 0,
-                y = 0
-            };
+            POINT test = new POINT() { x = 0, y = 0 };
             NativeMethods.ClientToScreen(hWnd, ref test);
             clientRect.Offset(test.x - windowRect.Left, test.y - windowRect.Top);
             return clientRect;

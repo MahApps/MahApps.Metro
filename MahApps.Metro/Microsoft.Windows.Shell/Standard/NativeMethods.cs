@@ -3300,6 +3300,10 @@
         public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll")]
+        public static extern IntPtr MonitorFromPoint(POINT pt, MonitorOptions dwFlags);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "PostMessage", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _PostMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
