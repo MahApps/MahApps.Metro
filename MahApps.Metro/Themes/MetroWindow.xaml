@@ -470,9 +470,7 @@
                             </Style>
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
-                    <Border>
-                        <ItemsPresenter />
-                    </Border>
+                    <ItemsPresenter />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
