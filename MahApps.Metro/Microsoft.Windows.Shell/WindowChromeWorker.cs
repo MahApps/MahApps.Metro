@@ -81,6 +81,7 @@ namespace Microsoft.Windows.Shell
                 new HANDLE_MESSAGE(WM.NCHITTEST,             _HandleNCHitTest),
                 new HANDLE_MESSAGE(WM.NCRBUTTONUP,           _HandleNCRButtonUp),
                 new HANDLE_MESSAGE(WM.SIZE,                  _HandleSize),
+                new HANDLE_MESSAGE(WM.WINDOWPOSCHANGING,     _HandleWindowPosChanging),   
                 new HANDLE_MESSAGE(WM.WINDOWPOSCHANGED,      _HandleWindowPosChanged),
                 new HANDLE_MESSAGE(WM.GETMINMAXINFO,         _HandleGetMinMaxInfo),
                 new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged),
@@ -624,7 +625,7 @@ namespace Microsoft.Windows.Shell
             }
 
             handled = true;
-            return redraw ? new IntPtr((int)WVR.REDRAW) : IntPtr.Zero;
+            return redraw ? new IntPtr((int)WVR.REDRAW | (int)WVR.VALIDRECTS) : IntPtr.Zero;
         }
 
         private HT _GetHTFromResizeGripDirection(ResizeGripDirection direction)
@@ -738,6 +739,22 @@ namespace Microsoft.Windows.Shell
             _UpdateSystemMenu(state);
 
             // Still let the default WndProc handle this.
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleWindowPosChanging(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            var wp = (WINDOWPOS)Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
+            
+            // we don't do bitwise operations cuz we're checking for this flag being the only one there
+            // I have no clue why this works, I tried this because VS2013 has this flag removed on fullscreen window movws
+            if (_chromeInfo.IgnoreTaskbarOnMaximize && _GetHwndState() == WindowState.Maximized && wp.flags == (int)SWP.FRAMECHANGED)
+            {
+                wp.flags = wp.flags & ~((int)SWP.FRAMECHANGED);
+                Marshal.StructureToPtr(wp, lParam, true);
+            }
+
             handled = false;
             return IntPtr.Zero;
         }
