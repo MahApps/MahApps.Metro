@@ -751,7 +751,7 @@ namespace Microsoft.Windows.Shell
             // I have no clue why this works, I tried this because VS2013 has this flag removed on fullscreen window movws
             if (_chromeInfo.IgnoreTaskbarOnMaximize && _GetHwndState() == WindowState.Maximized && wp.flags == (int)SWP.FRAMECHANGED)
             {
-                wp.flags = wp.flags & ~((int)SWP.FRAMECHANGED);
+                wp.flags = 0;
                 Marshal.StructureToPtr(wp, lParam, true);
             }
 
