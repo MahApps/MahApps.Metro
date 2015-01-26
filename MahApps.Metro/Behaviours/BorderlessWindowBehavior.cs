@@ -180,27 +180,31 @@ namespace MahApps.Metro.Behaviours
 
         private void HandleMaximize()
         {
-            var metroWindow = AssociatedObject as MetroWindow;
-            var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
-            if (AssociatedObject.WindowState == WindowState.Maximized && ignoreTaskBar)
+            if (AssociatedObject.WindowState == WindowState.Maximized)
             {
                 // remove resize border and window border, so we can move the window from top monitor position
                 windowChrome.ResizeBorderThickness = new Thickness(0);
                 AssociatedObject.BorderThickness = new Thickness(0);
 
-                // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
-                // so set the window pos/size twice
-                IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
-                if (monitor != IntPtr.Zero) {
-                    var monitorInfo = new MONITORINFO();
-                    UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
+                var metroWindow = AssociatedObject as MetroWindow;
+                var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
+                if (ignoreTaskBar)
+                {
+                    // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
+                    // so set the window pos/size twice
+                    IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
+                    if (monitor != IntPtr.Zero)
+                    {
+                        var monitorInfo = new MONITORINFO();
+                        UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
-                    ignoreTaskBar = metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle;
-                    var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
-                    var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
-                    var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
-                    var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
-                    UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                        //ignoreTaskBar = metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle;
+                        var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
+                        var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
+                        var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
+                        var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
+                        UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                    }
                 }
             }
             else
