@@ -625,7 +625,8 @@ namespace Microsoft.Windows.Shell
             }
 
             handled = true;
-            return redraw ? new IntPtr((int)WVR.REDRAW | (int)WVR.VALIDRECTS) : IntPtr.Zero;
+            // revert VALIDRECTS for now
+            return redraw ? new IntPtr((int)WVR.REDRAW/* | (int)WVR.VALIDRECTS*/) : IntPtr.Zero;
         }
 
         private HT _GetHTFromResizeGripDirection(ResizeGripDirection direction)
