@@ -1353,6 +1353,36 @@
         ALLOWDROPDESCRIPTIONTEXT = 1,
     }
 
+    internal enum MonitorOptions : uint
+    {
+        MONITOR_DEFAULTTONULL = 0x00000000,
+        MONITOR_DEFAULTTOPRIMARY = 0x00000001,
+        MONITOR_DEFAULTTONEAREST = 0x00000002
+    }
+
+    internal enum ABEdge
+    {
+        ABE_LEFT = 0,
+        ABE_TOP = 1,
+        ABE_RIGHT = 2,
+        ABE_BOTTOM = 3
+    }
+
+    internal enum ABMsg
+    {
+        ABM_NEW = 0,
+        ABM_REMOVE = 1,
+        ABM_QUERYPOS = 2,
+        ABM_SETPOS = 3,
+        ABM_GETSTATE = 4,
+        ABM_GETTASKBARPOS = 5,
+        ABM_ACTIVATE = 6,
+        ABM_GETAUTOHIDEBAR = 7,
+        ABM_SETAUTOHIDEBAR = 8,
+        ABM_WINDOWPOSCHANGED = 9,
+        ABM_SETSTATE = 10
+    }
+
     #endregion
 
     #region SafeHandles
@@ -2427,6 +2457,20 @@
         public string szInsert;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct APPBARDATA
+    {
+        /// <summary>
+        /// initialize this field using: Marshal.SizeOf(typeof(APPBARDATA));
+        /// </summary>
+        public int cbSize;
+        public IntPtr hWnd;
+        public int uCallbackMessage;
+        public int uEdge;
+        public RECT rc;
+        public bool lParam;
+    }
+
     #endregion
 
     #region Interfaces
@@ -3060,6 +3104,22 @@
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", EntryPoint = "GetMonitorInfoW", SetLastError = true, ExactSpelling = true, CharSet = CharSet.Unicode)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool _GetMonitorInfoW([In] IntPtr hMonitor, [Out] MONITORINFO lpmi);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static MONITORINFO GetMonitorInfoW(IntPtr hMonitor)
+        {
+            var mi = new MONITORINFO();
+            if (!_GetMonitorInfoW(hMonitor, mi))
+            {
+                throw new Win32Exception();
+            }
+            return mi;
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("gdi32.dll", EntryPoint = "GetStockObject", SetLastError = true)]
         private static extern IntPtr _GetStockObject(StockObject fnObject);
 
@@ -3238,6 +3298,10 @@
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll")]
         public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll")]
+        public static extern IntPtr MonitorFromPoint(POINT pt, MonitorOptions dwFlags);
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DllImport("user32.dll", EntryPoint = "PostMessage", SetLastError = true)]
@@ -3616,6 +3680,13 @@
         [DllImport("urlmon.dll")]
         public static extern HRESULT CopyStgMedium(ref STGMEDIUM pcstgmedSrc, ref STGMEDIUM pstgmedDest);
 
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DllImport("shell32.dll", CallingConvention = CallingConvention.StdCall)]
+        public static extern uint SHAppBarMessage(int dwMessage, ref APPBARDATA pData);
 
         #region Win7 declarations
 

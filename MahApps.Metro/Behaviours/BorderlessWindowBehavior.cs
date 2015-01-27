@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
@@ -35,8 +34,11 @@ namespace MahApps.Metro.Behaviours
             if (metroWindow != null)
             {
                 windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
                 System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
                       .AddValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.UseNoneWindowStyleProperty, typeof(MetroWindow))
+                      .AddValueChanged(AssociatedObject, UseNoneWindowStylePropertyChangedCallback);
             }
 
             AssociatedObject.SetValue(WindowChrome.WindowChromeProperty, windowChrome);
@@ -60,10 +62,22 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.Loaded += AssociatedObject_Loaded;
             AssociatedObject.Unloaded += AssociatedObject_Unloaded;
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
-            AssociatedObject.StateChanged += AssociatedObject_StateChanged;
-            AssociatedObject.Activated += AssociatedObject_Activated;
+            AssociatedObject.StateChanged += OnAssociatedObjectHandleMaximize;
 
             base.OnAttached();
+        }
+
+        private void UseNoneWindowStylePropertyChangedCallback(object sender, EventArgs e)
+        {
+            var metroWindow = sender as MetroWindow;
+            if (metroWindow != null && windowChrome != null)
+            {
+                if (!Equals(windowChrome.UseNoneWindowStyle, metroWindow.UseNoneWindowStyle))
+                {
+                    windowChrome.UseNoneWindowStyle = metroWindow.UseNoneWindowStyle;
+                    this.ForceRedrawWindowFromPropertyChanged();
+                }
+            }
         }
 
         private void IgnoreTaskbarOnMaximizePropertyChangedCallback(object sender, EventArgs e)
@@ -71,7 +85,20 @@ namespace MahApps.Metro.Behaviours
             var metroWindow = sender as MetroWindow;
             if (metroWindow != null && windowChrome != null)
             {
-                windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                if (!Equals(windowChrome.IgnoreTaskbarOnMaximize, metroWindow.IgnoreTaskbarOnMaximize))
+                {
+                    windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
+                    this.ForceRedrawWindowFromPropertyChanged();
+                }
+            }
+        }
+
+        private void ForceRedrawWindowFromPropertyChanged()
+        {
+            this.HandleMaximize();
+            if (this.handle != IntPtr.Zero)
+            {
+                UnsafeNativeMethods.RedrawWindow(this.handle, IntPtr.Zero, IntPtr.Zero, Constants.RedrawWindowFlags.Invalidate | Constants.RedrawWindowFlags.Frame);
             }
         }
 
@@ -88,12 +115,13 @@ namespace MahApps.Metro.Behaviours
                 {
                     System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.IgnoreTaskbarOnMaximizeProperty, typeof(MetroWindow))
                           .RemoveValueChanged(AssociatedObject, IgnoreTaskbarOnMaximizePropertyChangedCallback);
+                    System.ComponentModel.DependencyPropertyDescriptor.FromProperty(MetroWindow.UseNoneWindowStyleProperty, typeof(MetroWindow))
+                          .RemoveValueChanged(AssociatedObject, UseNoneWindowStylePropertyChangedCallback);
                 }
                 AssociatedObject.Loaded -= AssociatedObject_Loaded;
                 AssociatedObject.Unloaded -= AssociatedObject_Unloaded;
                 AssociatedObject.SourceInitialized -= AssociatedObject_SourceInitialized;
-                AssociatedObject.StateChanged -= AssociatedObject_StateChanged;
-                AssociatedObject.Activated -= AssociatedObject_Activated;
+                AssociatedObject.StateChanged -= OnAssociatedObjectHandleMaximize;
                 if (hwndSource != null)
                 {
                     hwndSource.RemoveHook(WindowProc);
@@ -116,11 +144,12 @@ namespace MahApps.Metro.Behaviours
         private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             var returnval = IntPtr.Zero;
+            var metroWindow = AssociatedObject as MetroWindow;
 
             switch (msg) {
                 case Constants.WM_NCPAINT:
                     var enableDWMDropShadow = EnableDWMDropShadow;
-                    var metroWindow = AssociatedObject as MetroWindow;
+
                     if (metroWindow != null)
                     {
                         enableDWMDropShadow = metroWindow.GlowBrush == null && (metroWindow.EnableDWMDropShadow || EnableDWMDropShadow);
@@ -134,36 +163,22 @@ namespace MahApps.Metro.Behaviours
                     }
                     handled = true;
                     break;
-                case Constants.WM_GETMINMAXINFO:
-                    WmGetMinMaxInfo(hwnd, lParam);
-                    /* Setting handled to false enables the application to process it's own Min/Max requirements,
-                     * as mentioned by jason.bullard (comment from September 22, 2011) on http://gallery.expression.microsoft.com/ZuneWindowBehavior/ */
-                    handled = false;
-                    break;
                 case Constants.WM_NCACTIVATE:
                     /* As per http://msdn.microsoft.com/en-us/library/ms632633(VS.85).aspx , "-1" lParam "does not repaint the nonclient area to reflect the state change." */
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
                     handled = true;
                     break;
-                /*case Constants.WM_MOVE:
-                    this.HandleMaximize(true);
-                    break;*/
             }
 
             return returnval;
         }
 
-        private void AssociatedObject_Activated(object sender, EventArgs e)
+        private void OnAssociatedObjectHandleMaximize(object sender, EventArgs e)
         {
             HandleMaximize();
         }
 
-        private void AssociatedObject_StateChanged(object sender, EventArgs e)
-        {
-            HandleMaximize();
-        }
-
-        private void HandleMaximize(bool handleOnlyMaximized = false)
+        private void HandleMaximize()
         {
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
@@ -171,22 +186,28 @@ namespace MahApps.Metro.Behaviours
                 windowChrome.ResizeBorderThickness = new Thickness(0);
                 AssociatedObject.BorderThickness = new Thickness(0);
 
-                // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
-                // so set the window pos/size twice
-                IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
-                if (monitor != IntPtr.Zero) {
-                    var monitorInfo = new MONITORINFO();
-                    UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                    var metroWindow = AssociatedObject as MetroWindow;
-                    var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
-                    var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
-                    var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
-                    var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
-                    var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
-                    UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                var metroWindow = AssociatedObject as MetroWindow;
+                var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
+                if (ignoreTaskBar)
+                {
+                    // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
+                    // so set the window pos/size twice
+                    IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
+                    if (monitor != IntPtr.Zero)
+                    {
+                        var monitorInfo = new MONITORINFO();
+                        UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
+
+                        //ignoreTaskBar = metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle;
+                        var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
+                        var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
+                        var cx = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
+                        var cy = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
+                        UnsafeNativeMethods.SetWindowPos(handle, new IntPtr(-2), x, y, cx, cy, 0x0040);
+                    }
                 }
             }
-            else if (!handleOnlyMaximized)
+            else
             {
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
@@ -201,107 +222,6 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Topmost = false;
                 AssociatedObject.Topmost = topMost;
             }
-        }
-
-        private void WmGetMinMaxInfo(IntPtr hwnd, IntPtr lParam)
-        {
-            MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
-
-            // Adjust the maximized size and position to fit the work area of the correct monitor
-            int MONITOR_DEFAULTTONEAREST = 0x00000002;
-            IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(hwnd, MONITOR_DEFAULTTONEAREST);
-
-            if (monitor != IntPtr.Zero)
-            {
-
-                MONITORINFO monitorInfo = new MONITORINFO();
-                UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
-                RECT rcWorkArea = monitorInfo.rcWork;
-                RECT rcMonitorArea = monitorInfo.rcMonitor;
-                mmi.ptMaxPosition.X = Math.Abs(rcWorkArea.left - rcMonitorArea.left);
-                mmi.ptMaxPosition.Y = Math.Abs(rcWorkArea.top - rcMonitorArea.top);
-
-                var metroWindow = AssociatedObject as MetroWindow;
-                var ignoreTaskBar = metroWindow != null && (metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle);
-                var x = ignoreTaskBar ? monitorInfo.rcMonitor.left : monitorInfo.rcWork.left;
-                var y = ignoreTaskBar ? monitorInfo.rcMonitor.top : monitorInfo.rcWork.top;
-                mmi.ptMaxSize.X = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.right - x) : Math.Abs(monitorInfo.rcWork.right - x);
-                mmi.ptMaxSize.Y = ignoreTaskBar ? Math.Abs(monitorInfo.rcMonitor.bottom - y) : Math.Abs(monitorInfo.rcWork.bottom - y);
-
-                // only do this on maximize
-                if (!ignoreTaskBar && AssociatedObject.WindowState == WindowState.Maximized) {
-                    mmi.ptMaxTrackSize.X = mmi.ptMaxSize.X;
-                    mmi.ptMaxTrackSize.Y = mmi.ptMaxSize.Y;
-                    mmi = AdjustWorkingAreaForAutoHide(monitor, mmi);
-                }
-            }
-
-            Marshal.StructureToPtr(mmi, lParam, true);
-        }
-
-        private static int GetEdge(RECT rc)
-        {
-            int uEdge;
-            if (rc.top == rc.left && rc.bottom > rc.right)
-                uEdge = (int)ABEdge.ABE_LEFT;
-            else if (rc.top == rc.left && rc.bottom < rc.right)
-                uEdge = (int)ABEdge.ABE_TOP;
-            else if (rc.top > rc.left)
-                uEdge = (int)ABEdge.ABE_BOTTOM;
-            else
-                uEdge = (int)ABEdge.ABE_RIGHT;
-            return uEdge;
-        }
-
-        /// <summary>
-        /// This method handles the window size if the taskbar is set to auto-hide.
-        /// </summary>
-        private static MINMAXINFO AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, MINMAXINFO mmi)
-        {
-            IntPtr hwnd = UnsafeNativeMethods.FindWindow("Shell_TrayWnd", null);
-            IntPtr monitorWithTaskbarOnIt = UnsafeNativeMethods.MonitorFromWindow(hwnd, Constants.MONITOR_DEFAULTTONEAREST);
-
-            if (!monitorContainingApplication.Equals(monitorWithTaskbarOnIt))
-            {
-                return mmi;
-            }
-
-            var abd = new APPBARDATA();
-            abd.cbSize = Marshal.SizeOf(abd);
-            abd.hWnd = hwnd;
-            UnsafeNativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, ref abd);
-            int uEdge = GetEdge(abd.rc);
-            bool autoHide = Convert.ToBoolean(UnsafeNativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETSTATE, ref abd));
-
-            if (!autoHide)
-            {
-                return mmi;
-            }
-
-            switch (uEdge)
-            {
-                case (int)ABEdge.ABE_LEFT:
-                    mmi.ptMaxPosition.X += 2;
-                    mmi.ptMaxTrackSize.X -= 2;
-                    mmi.ptMaxSize.X -= 2;
-                    break;
-                case (int)ABEdge.ABE_RIGHT:
-                    mmi.ptMaxSize.X -= 2;
-                    mmi.ptMaxTrackSize.X -= 2;
-                    break;
-                case (int)ABEdge.ABE_TOP:
-                    mmi.ptMaxPosition.Y += 2;
-                    mmi.ptMaxTrackSize.Y -= 2;
-                    mmi.ptMaxSize.Y -= 2;
-                    break;
-                case (int)ABEdge.ABE_BOTTOM:
-                    mmi.ptMaxSize.Y -= 2;
-                    mmi.ptMaxTrackSize.Y -= 2;
-                    break;
-                default:
-                    return mmi;
-            }
-            return mmi;
         }
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
@@ -328,11 +248,6 @@ namespace MahApps.Metro.Behaviours
             if (window == null)
             {
                 return;
-            }
-
-            if (windowChrome != null)
-            {
-                windowChrome.IgnoreTaskbarOnMaximize = window.IgnoreTaskbarOnMaximize;
             }
 
             window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");

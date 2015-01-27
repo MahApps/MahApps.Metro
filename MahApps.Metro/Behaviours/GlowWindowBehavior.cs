@@ -33,16 +33,21 @@ namespace MahApps.Metro.Behaviours
             {
                 AssociatedObject.Topmost = prevTopmost;
             }
-            makeGlowVisibleTimer.Stop();
+            if (makeGlowVisibleTimer != null)
+            {
+                makeGlowVisibleTimer.Stop();
+            }
             if(AssociatedObject.WindowState != WindowState.Minimized)
             {
-                if(AssociatedObject.WindowStyle == WindowStyle.None || !SystemParameters.MinimizeAnimation)
+                var metroWindow = this.AssociatedObject as MetroWindow;
+                var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
+                if (makeGlowVisibleTimer != null && SystemParameters.MinimizeAnimation && !ignoreTaskBar)
                 {
-                    RestoreGlow();
+                    makeGlowVisibleTimer.Start();
                 }
                 else
                 {
-                    makeGlowVisibleTimer.Start();
+                    RestoreGlow();
                 }
             }
             else
@@ -90,20 +95,17 @@ namespace MahApps.Metro.Behaviours
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
-            if(makeGlowVisibleTimer == null)
-            {
-                makeGlowVisibleTimer = new DispatcherTimer
-                {
-                    Interval = GlowTimerDelay
-                };
-                makeGlowVisibleTimer.Tick += makeGlowVisibleTimer_Tick;
-            }
-
             // No glow effect if UseNoneWindowStyle is true or GlowBrush not set.
             var metroWindow = this.AssociatedObject as MetroWindow;
             if (metroWindow != null && (metroWindow.UseNoneWindowStyle || metroWindow.GlowBrush == null))
             {
                 return;
+            }
+
+            if (makeGlowVisibleTimer == null)
+            {
+                makeGlowVisibleTimer = new DispatcherTimer { Interval = GlowTimerDelay };
+                makeGlowVisibleTimer.Tick += makeGlowVisibleTimer_Tick;
             }
 
             this.left = new GlowWindow(this.AssociatedObject, GlowDirection.Left);

@@ -75,13 +75,19 @@ namespace Microsoft.Windows.Shell
             {
                 new HANDLE_MESSAGE(WM.SETTEXT,               _HandleSetTextOrIcon),
                 new HANDLE_MESSAGE(WM.SETICON,               _HandleSetTextOrIcon),
+                new HANDLE_MESSAGE(WM.SYSCOMMAND,            _HandleRestoreWindow),
                 new HANDLE_MESSAGE(WM.NCACTIVATE,            _HandleNCActivate),
                 new HANDLE_MESSAGE(WM.NCCALCSIZE,            _HandleNCCalcSize),
                 new HANDLE_MESSAGE(WM.NCHITTEST,             _HandleNCHitTest),
                 new HANDLE_MESSAGE(WM.NCRBUTTONUP,           _HandleNCRButtonUp),
                 new HANDLE_MESSAGE(WM.SIZE,                  _HandleSize),
+                new HANDLE_MESSAGE(WM.WINDOWPOSCHANGING,     _HandleWindowPosChanging),   
                 new HANDLE_MESSAGE(WM.WINDOWPOSCHANGED,      _HandleWindowPosChanged),
-                new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged), 
+                new HANDLE_MESSAGE(WM.GETMINMAXINFO,         _HandleGetMinMaxInfo),
+                new HANDLE_MESSAGE(WM.DWMCOMPOSITIONCHANGED, _HandleDwmCompositionChanged),
+                new HANDLE_MESSAGE(WM.ENTERSIZEMOVE,         _HandleEnterSizeMoveForAnimation),
+                new HANDLE_MESSAGE(WM.MOVE,                  _HandleMoveForRealSize),
+                new HANDLE_MESSAGE(WM.EXITSIZEMOVE,          _HandleExitSizeMoveForAnimation),
             };
 
             if (_IsPresentationFrameworkVersionLessThan4)
@@ -259,6 +265,9 @@ namespace Microsoft.Windows.Shell
                 _isHooked = true;
             }
 
+            // allow animation
+            _ModifyStyle(0, WS.CAPTION);
+
             _FixupTemplateIssues();
 
             // Force this the first time.
@@ -426,6 +435,15 @@ namespace Microsoft.Windows.Shell
             }
         }
 
+        /// A borderless window lost his animation, with this we bring it back.
+        private bool _MinimizeAnimation
+        {
+            get
+            {
+                return SystemParameters.MinimizeAnimation && _chromeInfo.IgnoreTaskbarOnMaximize == false;// && _chromeInfo.UseNoneWindowStyle == false;
+            }
+        }
+
         #region WindowProc and Message Handlers
 
         private IntPtr _WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -462,6 +480,35 @@ namespace Microsoft.Windows.Shell
             return lRet;
         }
 
+        private IntPtr _HandleRestoreWindow(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
+            if (SC.RESTORE == (SC)wParam.ToInt32() && wpl.showCmd == SW.SHOWMAXIMIZED && _MinimizeAnimation)
+            {
+                bool modified = _ModifyStyle(WS.DLGFRAME, 0);
+
+                IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, uMsg, wParam, lParam);
+
+                // Put back the style we removed.
+                if (modified)
+                {
+                    // allow animation
+                    if (_ModifyStyle(0, WS.DLGFRAME))
+                    {
+                        _UpdateFrameState(true);
+                    }
+                }
+                
+                handled = true;
+                return lRet;
+            }
+            else
+            {
+                handled = false;
+                return IntPtr.Zero;
+            }
+        }
+
         private IntPtr _HandleNCActivate(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             // Despite MSDN's documentation of lParam not being used,
@@ -472,6 +519,46 @@ namespace Microsoft.Windows.Shell
             IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, WM.NCACTIVATE, wParam, new IntPtr(-1));
             handled = true;
             return lRet;
+        }
+
+        /// <summary>
+        /// This method handles the window size if the taskbar is set to auto-hide.
+        /// </summary>
+        private static RECT AdjustWorkingAreaForAutoHide(IntPtr monitorContainingApplication, RECT area )
+        {
+            // maybe we can use ReBarWindow32 isntead Shell_TrayWnd
+            IntPtr hwnd = NativeMethods.FindWindow("Shell_TrayWnd", null);
+            IntPtr monitorWithTaskbarOnIt = NativeMethods.MonitorFromWindow(hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
+
+            var abd = new APPBARDATA();
+            abd.cbSize = Marshal.SizeOf(abd);
+            abd.hWnd = hwnd;
+            NativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETTASKBARPOS, ref abd);
+            bool autoHide = Convert.ToBoolean(NativeMethods.SHAppBarMessage((int)ABMsg.ABM_GETSTATE, ref abd));
+
+            if (!autoHide || !Equals(monitorContainingApplication, monitorWithTaskbarOnIt))
+            {
+                return area;
+            }
+
+            switch (abd.uEdge)
+            {
+                case (int)ABEdge.ABE_LEFT:
+                    area.Left += 2;
+                    break;
+                case (int)ABEdge.ABE_RIGHT:
+                    area.Right -= 2;
+                    break;
+                case (int)ABEdge.ABE_TOP:
+                    area.Top += 2;
+                    break;
+                case (int)ABEdge.ABE_BOTTOM:
+                    area.Bottom -= 2;
+                    break;
+                default:
+                    return area;
+            }
+            return area;
         }
 
         // There was a regression in DWM in Windows 7 with regard to handling WM_NCCALCSIZE to effect custom chrome.
@@ -486,10 +573,29 @@ namespace Microsoft.Windows.Shell
             // Since the first field of NCCALCSIZE_PARAMS is a RECT and is the only field we care about
             // we can unconditionally treat it as a RECT.
 
-            if ((int)wParam == 1)
+            var redraw = false;
+
+            if (NativeMethods.GetWindowPlacement(_hwnd).showCmd == SW.MAXIMIZE)
             {
-                handled = true;
-                return IntPtr.Zero;
+                if (_MinimizeAnimation)
+                {
+                    IntPtr mon = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
+                    MONITORINFO mi = NativeMethods.GetMonitorInfo(mon);
+
+                    RECT rc = (RECT) Marshal.PtrToStructure(lParam, typeof(RECT));
+                    NativeMethods.DefWindowProc(_hwnd, WM.NCCALCSIZE, wParam, lParam);
+                    RECT def = (RECT) Marshal.PtrToStructure(lParam, typeof(RECT));
+                    def.Top = (int) (rc.Top + NativeMethods.GetWindowInfo(_hwnd).cyWindowBorders);
+
+                    // monitor an work area will be equal if taskbar is hidden
+                    if (mi.rcMonitor.Height == mi.rcWork.Height && mi.rcMonitor.Width == mi.rcWork.Width)
+                    {
+                        def = AdjustWorkingAreaForAutoHide(mon, def);
+                    }
+                    Marshal.StructureToPtr(def, lParam, true);
+
+                    redraw = true;
+                }
             }
 
             if (_chromeInfo.SacrificialEdge != SacrificialEdge.None)
@@ -514,10 +620,12 @@ namespace Microsoft.Windows.Shell
                 }
 
                 Marshal.StructureToPtr(rcClientArea, lParam, false);
+
+                redraw = true;
             }
 
             handled = true;
-            return new IntPtr((int)WVR.REDRAW);
+            return redraw ? new IntPtr((int)WVR.REDRAW | (int)WVR.VALIDRECTS) : IntPtr.Zero;
         }
 
         private HT _GetHTFromResizeGripDirection(ResizeGripDirection direction)
@@ -635,6 +743,22 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
+        private IntPtr _HandleWindowPosChanging(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            var wp = (WINDOWPOS)Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
+            
+            // we don't do bitwise operations cuz we're checking for this flag being the only one there
+            // I have no clue why this works, I tried this because VS2013 has this flag removed on fullscreen window movws
+            if (_chromeInfo.IgnoreTaskbarOnMaximize && _GetHwndState() == WindowState.Maximized && wp.flags == (int)SWP.FRAMECHANGED)
+            {
+                wp.flags = 0;
+                Marshal.StructureToPtr(wp, lParam, true);
+            }
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
         private IntPtr _HandleWindowPosChanged(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             // http://blogs.msdn.com/oldnewthing/archive/2008/01/15/7113860.aspx
@@ -666,6 +790,45 @@ namespace Microsoft.Windows.Shell
             }
 
             // Still want to pass this to DefWndProc
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleGetMinMaxInfo(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            /*
+             * This is a workaround for wrong windows behaviour.
+             * If a Window sets the WindoStyle to None and WindowState to maximized and we have a multi monitor system
+             * we can move the Window only one time. After that it's not possible to move the Window back to the
+             * previous monitor.
+             * This fix is not really a full fix. Moving the Window back gives us the wrong size, because
+             * MonitorFromWindow gives us the wrong (old) monitor! This is fixed in _HandleMoveForRealSize.
+             */
+            var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize;// || _chromeInfo.UseNoneWindowStyle;
+            WindowState state = _GetHwndState();
+            if (ignoreTaskBar && state == WindowState.Maximized)
+            {
+                MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+                IntPtr monitor = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
+                if (monitor != IntPtr.Zero)
+                {
+                    MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitor);
+                    RECT rcWorkArea = monitorInfo.rcWork;
+                    RECT rcMonitorArea = monitorInfo.rcMonitor;
+                    
+                    mmi.ptMaxPosition.x = Math.Abs(rcWorkArea.Left - rcMonitorArea.Left);
+                    mmi.ptMaxPosition.y = Math.Abs(rcWorkArea.Top - rcMonitorArea.Top);
+
+                    mmi.ptMaxSize.x = Math.Abs(monitorInfo.rcMonitor.Width);
+                    mmi.ptMaxSize.y = Math.Abs(monitorInfo.rcMonitor.Height);
+                    mmi.ptMaxTrackSize.x = mmi.ptMaxSize.x;
+                    mmi.ptMaxTrackSize.y = mmi.ptMaxSize.y;
+                }
+                Marshal.StructureToPtr(mmi, lParam, true);
+            }
+
+            /* Setting handled to false enables the application to process it's own Min/Max requirements,
+             * as mentioned by jason.bullard (comment from September 22, 2011) on http://gallery.expression.microsoft.com/ZuneWindowBehavior/ */
             handled = false;
             return IntPtr.Zero;
         }
@@ -711,6 +874,78 @@ namespace Microsoft.Windows.Shell
                 // Realistically we also don't want to update the start position when moving from one docked state to another (or to and from maximized),
                 // but it's tricky to detect and this is already a workaround for a bug that's fixed in newer versions of the framework.
                 // Not going to try to handle all cases.
+            }
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleEnterSizeMoveForAnimation(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            if (_MinimizeAnimation && _GetHwndState() == WindowState.Maximized)
+            {
+                /* we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
+                 * to prevent nasty drawing
+                 * removing border will cause a 1 off error on the client rect size
+                 * when maximizing via aero snapping, because max by aero snapping
+                 * will call this method, resulting in a 2px black border on the side
+                 * when maximized.
+                 */
+                _ModifyStyle(WS.DLGFRAME, 0);
+            }
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleMoveForRealSize(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            /*
+             * This is a workaround for wrong windows behaviour (with multi monitor system).
+             * If a Window sets the WindoStyle to None and WindowState to maximized
+             * we can move the Window to different monitor with maybe different dimension.
+             * But after moving to the previous monitor we got a wrong size (from the old monitor dimension).
+             */
+            WindowState state = _GetHwndState();
+            if (state == WindowState.Maximized) {
+                IntPtr monitorFromWindow = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
+                if (monitorFromWindow != IntPtr.Zero)
+                {
+                    var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize;// || _chromeInfo.UseNoneWindowStyle;
+                    MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitorFromWindow);
+                    RECT rcMonitorArea = ignoreTaskBar ? monitorInfo.rcMonitor : monitorInfo.rcWork;
+                    /*
+                     * ASYNCWINDOWPOS
+                     * If the calling thread and the thread that owns the window are attached to different input queues,
+                     * the system posts the request to the thread that owns the window. This prevents the calling thread
+                     * from blocking its execution while other threads process the request.
+                     * 
+                     * FRAMECHANGED
+                     * Applies new frame styles set using the SetWindowLong function. Sends a WM_NCCALCSIZE message to the window,
+                     * even if the window's size is not being changed. If this flag is not specified, WM_NCCALCSIZE is sent only
+                     * when the window's size is being changed.
+                     * 
+                     * NOCOPYBITS
+                     * Discards the entire contents of the client area. If this flag is not specified, the valid contents of the client
+                     * area are saved and copied back into the client area after the window is sized or repositioned.
+                     * 
+                     */
+                    NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, rcMonitorArea.Left, rcMonitorArea.Top, rcMonitorArea.Width, rcMonitorArea.Height, SWP.ASYNCWINDOWPOS | SWP.FRAMECHANGED | SWP.NOCOPYBITS);
+                }
+            }
+
+            handled = false;
+            return IntPtr.Zero;
+        }
+
+        private IntPtr _HandleExitSizeMoveForAnimation(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            if (_MinimizeAnimation)
+            {
+                // restore DLGFRAME
+                if (_ModifyStyle(0, WS.DLGFRAME))
+                {
+                    _UpdateFrameState(true);
+                }
             }
 
             handled = false;
@@ -876,6 +1111,17 @@ namespace Microsoft.Windows.Shell
                     _ClearRoundingRegion();
                 }
 
+                if (_MinimizeAnimation)
+                {
+                    // allow animation
+                    _ModifyStyle(0, WS.CAPTION);
+                }
+                else
+                {
+                    // no animation
+                    _ModifyStyle(WS.CAPTION, 0);
+                }
+
                 // update the glass frame too, if the user sets the glass frame thickness to 0 at run time
                 _ExtendGlassFrame();
 
@@ -888,38 +1134,55 @@ namespace Microsoft.Windows.Shell
             NativeMethods.SetWindowRgn(_hwnd, IntPtr.Zero, NativeMethods.IsWindowVisible(_hwnd));
         }
 
+        private static RECT _GetClientRectRelativeToWindowRect(IntPtr hWnd)
+        {
+            RECT windowRect = NativeMethods.GetWindowRect(hWnd);
+            RECT clientRect = NativeMethods.GetClientRect(hWnd);
+
+            POINT test = new POINT() { x = 0, y = 0 };
+            NativeMethods.ClientToScreen(hWnd, ref test);
+            clientRect.Offset(test.x - windowRect.Left, test.y - windowRect.Top);
+            return clientRect;
+        }
+
         private void _SetRoundingRegion(WINDOWPOS? wp)
         {
-            const int MONITOR_DEFAULTTONEAREST = 0x00000002;
-
             // We're early - WPF hasn't necessarily updated the state of the window.
             // Need to query it ourselves.
             WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
 
             if (wpl.showCmd == SW.SHOWMAXIMIZED)
             {
-                int left;
-                int top;
-
-                if (wp.HasValue)
+                RECT rcMax;
+                if (_MinimizeAnimation)
                 {
-                    left = wp.Value.x;
-                    top = wp.Value.y;
+                    rcMax = _GetClientRectRelativeToWindowRect(_hwnd);
                 }
                 else
                 {
-                    Rect r = _GetWindowRect();
-                    left = (int)r.Left;
-                    top = (int)r.Top;
+                    int left;
+                    int top;
+
+                    if (wp.HasValue)
+                    {
+                        left = wp.Value.x;
+                        top = wp.Value.y;
+                    }
+                    else
+                    {
+                        Rect r = _GetWindowRect();
+                        left = (int)r.Left;
+                        top = (int)r.Top;
+                    }
+
+                    IntPtr hMon = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
+
+                    MONITORINFO mi = NativeMethods.GetMonitorInfo(hMon);
+                    rcMax = _chromeInfo.IgnoreTaskbarOnMaximize ? mi.rcMonitor : mi.rcWork;
+                    // The location of maximized window takes into account the border that Windows was
+                    // going to remove, so we also need to consider it.
+                    rcMax.Offset(-left, -top);
                 }
-
-                IntPtr hMon = NativeMethods.MonitorFromWindow(_hwnd, MONITOR_DEFAULTTONEAREST);
-
-                MONITORINFO mi = NativeMethods.GetMonitorInfo(hMon);
-                RECT rcMax = _chromeInfo.IgnoreTaskbarOnMaximize ? mi.rcMonitor : mi.rcWork;
-                // The location of maximized window takes into account the border that Windows was
-                // going to remove, so we also need to consider it.
-                rcMax.Offset(-left, -top);
 
                 IntPtr hrgn = IntPtr.Zero;
                 try
