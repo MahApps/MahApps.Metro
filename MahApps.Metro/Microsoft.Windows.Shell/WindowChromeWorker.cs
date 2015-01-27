@@ -882,7 +882,7 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleEnterSizeMoveForAnimation(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            if (_MinimizeAnimation)
+            if (_MinimizeAnimation && _GetHwndState() == WindowState.Maximized)
             {
                 /* we only need to remove DLGFRAME ( CAPTION = BORDER | DLGFRAME )
                  * to prevent nasty drawing
