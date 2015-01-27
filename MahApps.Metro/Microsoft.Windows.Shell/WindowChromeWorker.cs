@@ -913,7 +913,23 @@ namespace Microsoft.Windows.Shell
                     var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize;// || _chromeInfo.UseNoneWindowStyle;
                     MONITORINFO monitorInfo = NativeMethods.GetMonitorInfoW(monitorFromWindow);
                     RECT rcMonitorArea = ignoreTaskBar ? monitorInfo.rcMonitor : monitorInfo.rcWork;
-                    NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, rcMonitorArea.Left, rcMonitorArea.Top, rcMonitorArea.Width, rcMonitorArea.Height, SWP.ASYNCWINDOWPOS | SWP.FRAMECHANGED);
+                    /*
+                     * ASYNCWINDOWPOS
+                     * If the calling thread and the thread that owns the window are attached to different input queues,
+                     * the system posts the request to the thread that owns the window. This prevents the calling thread
+                     * from blocking its execution while other threads process the request.
+                     * 
+                     * FRAMECHANGED
+                     * Applies new frame styles set using the SetWindowLong function. Sends a WM_NCCALCSIZE message to the window,
+                     * even if the window's size is not being changed. If this flag is not specified, WM_NCCALCSIZE is sent only
+                     * when the window's size is being changed.
+                     * 
+                     * NOCOPYBITS
+                     * Discards the entire contents of the client area. If this flag is not specified, the valid contents of the client
+                     * area are saved and copied back into the client area after the window is sized or repositioned.
+                     * 
+                     */
+                    NativeMethods.SetWindowPos(_hwnd, IntPtr.Zero, rcMonitorArea.Left, rcMonitorArea.Top, rcMonitorArea.Width, rcMonitorArea.Height, SWP.ASYNCWINDOWPOS | SWP.FRAMECHANGED | SWP.NOCOPYBITS);
                 }
             }
 
