@@ -321,6 +321,13 @@
                 Value="Center" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:WindowCommands">
@@ -463,16 +470,7 @@
                             </Style>
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
-
-                    <ItemsControl IsTabStop="False"
-                                  ItemsSource="{Binding Items, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
-                                  ItemTemplate="{TemplateBinding ItemTemplate}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
+                    <ItemsPresenter />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
