@@ -32,6 +32,7 @@
                                StrokeThickness="0" />
 
                     <DockPanel LastChildFill="True"
+                               Panel.ZIndex="3"
                                Grid.Row="0"
                                Grid.RowSpan="2"
                                Grid.Column="0">
