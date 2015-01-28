@@ -17,23 +17,11 @@
         <Grid>
             <AdornerDecorator>
                 <Grid Background="{TemplateBinding Background}">
-                    <Grid.ColumnDefinitions>
-                        <!-- icon -->
-                        <ColumnDefinition Width="Auto" />
-                        <!-- left window commands -->
-                        <ColumnDefinition Width="Auto" />
-                        <!-- title -->
-                        <ColumnDefinition Width="*" />
-                        <!-- right window commands -->
-                        <ColumnDefinition Width="Auto" />
-                        <!-- min,max,close buttons -->
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-
+                    
                     <Rectangle x:Name="PART_WindowTitleBackground"
                                Focusable="False"
                                Fill="{TemplateBinding WindowTitleBrush}"
@@ -42,77 +30,77 @@
                                Grid.Column="0"
                                Grid.ColumnSpan="5"
                                StrokeThickness="0" />
+                    
+                    <DockPanel LastChildFill="True"
+                               Grid.Row="0"
+                               Grid.Column="0">
+                        <!-- the window button commands -->
+                        <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
+                                                       DockPanel.Dock="Right"
+                                                       Focusable="False"
+                                                       Panel.ZIndex="1"
+                                                       Grid.Column="4"
+                                                       Grid.RowSpan="2"
+                                                       VerticalAlignment="Top"
+                                                       Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
-                    <!-- icon -->
-                    <ContentControl x:Name="PART_Icon"
-                                    Focusable="False"
-                                    Grid.Row="0"
-                                    Grid.Column="0"
-                                    Panel.ZIndex="1"
-                                    Content="{TemplateBinding Icon}"
-                                    ContentTemplate="{TemplateBinding IconTemplate}"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <!-- icon -->
+                        <ContentControl x:Name="PART_Icon"
+                                        Focusable="False"
+                                        DockPanel.Dock="Left"
+                                        Panel.ZIndex="1"
+                                        Content="{TemplateBinding Icon}"
+                                        ContentTemplate="{TemplateBinding IconTemplate}"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <!-- the left window commands -->
-                    <ContentPresenter x:Name="PART_LeftWindowCommands"
-                                      Focusable="False"
-                                      Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Panel.ZIndex="1"
-                                      Grid.Row="0"
-                                      Grid.Column="1"
-                                      Grid.RowSpan="2"
-                                      VerticalAlignment="Top"
-                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <!-- the left window commands -->
+                        <ContentPresenter x:Name="PART_LeftWindowCommands"
+                                          DockPanel.Dock="Left"
+                                          Focusable="False"
+                                          Content="{Binding LeftWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                          Panel.ZIndex="1"
+                                          VerticalAlignment="Top"
+                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                          Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-                    <!-- the title bar -->
-                    <ContentControl x:Name="PART_TitleBar"
-                                    Focusable="False"
-                                    Grid.Row="0"
-                                    Grid.Column="2"
-                                    Content="{TemplateBinding Title}"
-                                    ContentTemplate="{TemplateBinding TitleTemplate}"
-                                    HorizontalContentAlignment="Stretch"
-                                    VerticalContentAlignment="Stretch"
-                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <ContentControl.Foreground>
-                            <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                <Binding ElementName="PART_WindowTitleBackground"
+                        <!-- the right window commands -->
+                        <ContentPresenter x:Name="PART_RightWindowCommands"
+                                          DockPanel.Dock="Right"
+                                          HorizontalAlignment="Right"
+                                          Focusable="False"
+                                          Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                          Panel.ZIndex="1"
+                                          VerticalAlignment="Top"
+                                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                          Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+                        <!-- the title bar -->
+                        <ContentControl x:Name="PART_TitleBar"
+                                        DockPanel.Dock="Left"
+                                        Focusable="False"
+                                        Content="{TemplateBinding Title}"
+                                        ContentTemplate="{TemplateBinding TitleTemplate}"
+                                        HorizontalContentAlignment="Left"
+                                        VerticalContentAlignment="Stretch"
+                                        Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                        Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <ContentControl.Foreground>
+                                <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                    <Binding ElementName="PART_WindowTitleBackground"
                                          Path="Fill"
                                          Mode="OneWay" />
-                                <Binding RelativeSource="{RelativeSource TemplatedParent}"
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}"
                                          Path="TitleForeground"
                                          Mode="OneWay" />
-                            </MultiBinding>
-                        </ContentControl.Foreground>
-                    </ContentControl>
+                                </MultiBinding>
+                            </ContentControl.Foreground>
+                        </ContentControl>
 
-                    <!-- the right window commands -->
-                    <ContentPresenter x:Name="PART_RightWindowCommands"
-                                      Focusable="False"
-                                      Content="{Binding RightWindowCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Panel.ZIndex="1"
-                                      Grid.Row="0"
-                                      Grid.Column="3"
-                                      Grid.RowSpan="2"
-                                      VerticalAlignment="Top"
-                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
-
-                    <!-- the window button commands -->
-                    <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
-                                                   Focusable="False"
-                                                   Panel.ZIndex="1"
-                                                   Grid.Row="0"
-                                                   Grid.Column="4"
-                                                   Grid.RowSpan="2"
-                                                   VerticalAlignment="Top"
-                                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                    </DockPanel>
 
                     <!-- the main window content -->
                     <Controls:MetroContentControl Grid.Row="1"
