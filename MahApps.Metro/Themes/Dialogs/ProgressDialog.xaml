@@ -3,7 +3,7 @@
                          xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                          xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                          x:Class="MahApps.Metro.Controls.Dialogs.ProgressDialog"
-                         Cursor="Wait">
+                         Cursor="Arrow">
     <Dialogs:BaseMetroDialog.Content>
         <Grid>
             <Grid.RowDefinitions>
