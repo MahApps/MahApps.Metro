@@ -6,6 +6,10 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     mc:Ignorable="options">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <SolidColorBrush x:Key="IdealForegroundDisabledBrush" Color="#ADADAD" options:Freeze="True" />
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
