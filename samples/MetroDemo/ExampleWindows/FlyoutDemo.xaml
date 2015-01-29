@@ -7,8 +7,10 @@
                       xmlns:metroDemo="clr-namespace:MetroDemo"
                       xmlns:exampleWindows="clr-namespace:MetroDemo.ExampleWindows"
                       Title="Flyouts Demo"
-                      Width="800"
-                      Height="600"
+                      MinWidth="700"
+                      Width="700"
+                      MinHeight="500"
+                      Height="500"
                       SaveWindowPosition="True"
                       WindowStartupLocation="CenterScreen"
                       BorderThickness="1"
@@ -23,6 +25,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatButton.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <x:Array x:Key="WindowCommandsOverlayBehaviorArray"
+                     Type="Controls:WindowCommandsOverlayBehavior">
+                <Controls:WindowCommandsOverlayBehavior>Always</Controls:WindowCommandsOverlayBehavior>
+                <Controls:WindowCommandsOverlayBehavior>Flyouts</Controls:WindowCommandsOverlayBehavior>
+                <Controls:WindowCommandsOverlayBehavior>HiddenTitleBar</Controls:WindowCommandsOverlayBehavior>
+                <Controls:WindowCommandsOverlayBehavior>Never</Controls:WindowCommandsOverlayBehavior>
+            </x:Array>
+
         </ResourceDictionary>
     </Window.Resources>
 
@@ -80,8 +91,7 @@
                              Margin="100 0 0 0"
                              Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth}"
                              Header="Settings"
-                             Position="Right"
-                             AnimateOpacity="True">
+                             Position="Right">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -134,7 +144,8 @@
 
             <Controls:Flyout Header="New Goodness"
                              Position="Right"
-                             Width="{Binding ElementName=settingsFlyout, Path=ActualWidth, Mode=OneWay}">
+                             AnimateOpacity="True"
+                             Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth, Mode=OneWay}">
                 <StackPanel Orientation="Vertical"
                             Margin="10">
                     <Button Content="create" />
@@ -297,82 +308,168 @@
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
+
     <Grid>
-        <StackPanel Margin="10"
-                    HorizontalAlignment="Left">
-            <CheckBox Content="ShowWindowCommandsOnTop"
-                      IsChecked="{Binding ElementName=flyoutsDemo, Path=ShowWindowCommandsOnTop}" />
-            <TextBlock Margin="10"
-                       FontSize="30"
-                       Text="Some Flyout Tests..." />
-            <Button MinWidth="90"
-                    Margin="2"
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Column="0"
+                   Grid.ColumnSpan="3"
+                   Grid.Row="0"
+                   Margin="10"
+                   FontSize="30"
+                   Text="Some Flyout Tests..." />
+
+        <StackPanel Grid.Column="0"
+                    Grid.Row="1"
+                    MinWidth="200"
+                    Margin="5"
+                    HorizontalAlignment="Center">
+            <Button Margin="2"
                     Command="{Binding ElementName=flyoutsDemo, Path=OpenFirstFlyoutCommand}"
                     Content="Show 1" />
-            <Button MinWidth="90"
-                    Margin="2"
+            <Button Margin="2"
                     Click="ShowSecond"
                     Content="Show 2" />
-            <Button MinWidth="90"
-                    Margin="2"
+            <Button Margin="2"
                     Click="ShowThird"
                     Content="Show 3" />
-            <Button MinWidth="90"
-                    Margin="2"
+            <Button Margin="2"
                     Click="ShowAccent"
                     Content="Accent" />
-            <Button MinWidth="90"
-                    Margin="2"
+            <Button Margin="2"
                     Click="ShowInverse"
                     Content="Inverse" />
-            <Button MinWidth="90"
-                    Margin="2"
+            <Button Margin="2"
                     Click="ShowAdapt"
                     Content="Adapt" />
-            <Button MinWidth="90"
-                    Margin="2"
+            <Button Margin="2"
                     Click="ShowSettings"
                     Content="Settings" />
-            <Button MinWidth="90"
-                    Margin="2"
+            <Button Margin="2"
                     Click="ShowModal"
                     Content="Modal" />
-            <Button MinWidth="90"
-                    Margin="2"
-                    Click="CloseMe"
-                    Content="Close" />
-            <Button MinWidth="90"
-                    Margin="2"
+            <Button Margin="2"
                     Click="ShowAppBar"
                     Content="AppBar" />
-            <Button MinWidth="90"
-                    Margin="2"
+            <Button Margin="2"
                     Click="ShowDynamicFlyout"
                     Content="Dynamic" />
         </StackPanel>
-        <AdornerDecorator Margin="10"
+
+        <AdornerDecorator Grid.Column="1"
+                          Grid.Row="1"
+                          Margin="5"
                           MinWidth="100"
                           HorizontalAlignment="Center"
-                          VerticalAlignment="Center">
-            <StackPanel>
-                <Button Margin="2"
-                        Click="ShowTop"
-                        Content="Show Top" />
-                <Button Margin="2"
-                        Click="ShowBottom"
-                        Content="Show Bottom" />
-                <TextBox Margin="0, 10, 0, 0"
-                         Controls:TextBoxHelper.Watermark="Number greater than 10"
+                          VerticalAlignment="Top">
+                <TextBox Controls:TextBoxHelper.Watermark="Number greater than 10"
                          Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
-            </StackPanel>
         </AdornerDecorator>
 
-        <StackPanel Margin="10"
-                    HorizontalAlignment="Right">
-            <Button MinWidth="90"
-                    Margin="2"
+        <StackPanel Grid.Column="2"
+                    Grid.Row="1"
+                    Grid.IsSharedSizeScope="True"
+                    MinWidth="120"
+                    Margin="5"
+                    HorizontalAlignment="Center">
+
+            <TextBlock Text="OverlayBehavior"
+                       Margin="5"
+                       FontSize="30" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"
+                                      SharedSizeGroup="labels" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="2"
+                           Text="LeftWindowCommands" />
+                <ComboBox Grid.Column="1"
+                          VerticalAlignment="Center"
+                          Margin="2"
+                          Width="100"
+                          ItemsSource="{StaticResource WindowCommandsOverlayBehaviorArray}"
+                          SelectedValue="{Binding ElementName=flyoutsDemo, Path=LeftWindowCommandsOverlayBehavior}" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"
+                                      SharedSizeGroup="labels" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="2"
+                           Text="RightWindowCommands" />
+                <ComboBox Grid.Column="1"
+                          VerticalAlignment="Center"
+                          Margin="2"
+                          Width="100"
+                          ItemsSource="{StaticResource WindowCommandsOverlayBehaviorArray}"
+                          SelectedValue="{Binding ElementName=flyoutsDemo, Path=RightWindowCommandsOverlayBehavior}" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"
+                                      SharedSizeGroup="labels" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="2"
+                           Text="WindowButtonCommands" />
+                <ComboBox Grid.Column="1"
+                          VerticalAlignment="Center"
+                          Margin="2"
+                          Width="100"
+                          ItemsSource="{StaticResource WindowCommandsOverlayBehaviorArray}"
+                          SelectedValue="{Binding ElementName=flyoutsDemo, Path=WindowButtonCommandsOverlayBehavior}" />
+            </Grid>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"
+                                      SharedSizeGroup="labels" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           VerticalAlignment="Center"
+                           Margin="2"
+                           Text="Icon" />
+                <ComboBox Grid.Column="1"
+                          VerticalAlignment="Center"
+                          Margin="2"
+                          Width="100"
+                          ItemsSource="{StaticResource WindowCommandsOverlayBehaviorArray}"
+                          SelectedValue="{Binding ElementName=flyoutsDemo, Path=IconOverlayBehavior}" />
+            </Grid>
+
+            <Button Margin="2,10,2,2"
                     Click="ShowLeft"
                     Content="Show Left" />
+            <Button Margin="2"
+                    Click="ShowTop"
+                    Content="Show Top" />
+            <Button Margin="2"
+                    Click="ShowBottom"
+                    Content="Show Bottom" />
+            <Button Margin="2"
+                    Click="CloseMe"
+                    Content="Close" />
         </StackPanel>
     </Grid>
 
