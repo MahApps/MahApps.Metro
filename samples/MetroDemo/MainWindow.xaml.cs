@@ -17,9 +17,13 @@ namespace MetroDemo
         {
             _viewModel = new MainWindowViewModel();
             DataContext = _viewModel;
+            
             InitializeComponent();
+
             flyoutDemo = new FlyoutDemo();
-            flyoutDemo.Closed += (o, args) => flyoutDemo = null;
+            flyoutDemo.ApplyTemplate();
+            flyoutDemo.Closed += (o, e) => flyoutDemo = null;
+
             Closing += (s, e) =>
                 {
                     if (!e.Cancel && flyoutDemo != null)
