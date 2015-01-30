@@ -13,6 +13,7 @@
                       VerticalScrollBarVisibility="Auto">
             <TextBlock x:Name="PART_MessageTextBlock"
                        Margin="0 5 0 0"
+                       TextWrapping="Wrap"
                        FontSize="{StaticResource DialogMessageFontSize}"
                        Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
