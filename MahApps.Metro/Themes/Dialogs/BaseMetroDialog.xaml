@@ -53,11 +53,12 @@
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="25*" />
-                            <ColumnDefinition Width="50*" />
+                            <ColumnDefinition Width="50*" MaxWidth="620" />
                             <ColumnDefinition Width="25*" />
                         </Grid.ColumnDefinitions>
                         <!--  Content area  -->
                         <Grid Grid.Column="1"
+							  VerticalAlignment="Center"
                               Margin="0 10 0 0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
