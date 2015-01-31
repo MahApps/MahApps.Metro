@@ -36,11 +36,7 @@ namespace MahApps.Metro.Converters
 
                 if (whichButton == "CLOSE")
                 {
-                    if (useNoneWindowStyle)
-                    {
-                        return Visibility.Collapsed;
-                    }
-                    return showButton ? Visibility.Visible : Visibility.Collapsed;
+                    return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                 }
 
                 switch (windowResizeMode)
@@ -50,21 +46,13 @@ namespace MahApps.Metro.Converters
                     case ResizeMode.CanMinimize:
                         if (whichButton == "MIN")
                         {
-                            if (useNoneWindowStyle)
-                            {
-                                return Visibility.Collapsed;
-                            }
-                            return showButton ? Visibility.Visible : Visibility.Collapsed;
+                            return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                         }
                         return Visibility.Collapsed;
                     case ResizeMode.CanResize:
                     case ResizeMode.CanResizeWithGrip:
                     default:
-                        if (useNoneWindowStyle)
-                        {
-                            return Visibility.Collapsed;
-                        }
-                        return showButton ? Visibility.Visible : Visibility.Collapsed;
+                        return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                 }
             }
             return Visibility.Visible;
