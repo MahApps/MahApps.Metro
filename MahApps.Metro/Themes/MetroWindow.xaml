@@ -513,6 +513,9 @@
                                     <Binding Path="ShowMinButton"
                                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
                                              Mode="OneWay" />
+                                    <Binding Path="UseNoneWindowStyle"
+                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
+                                             Mode="OneWay" />
                                     <Binding Path="ResizeMode"
                                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
                                              Mode="OneWay" />
@@ -534,6 +537,9 @@
                                     <Binding Path="ShowMaxRestoreButton"
                                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
                                              Mode="OneWay" />
+                                    <Binding Path="UseNoneWindowStyle"
+                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
+                                             Mode="OneWay" />
                                     <Binding Path="ResizeMode"
                                              RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
                                              Mode="OneWay" />
@@ -553,8 +559,18 @@
                                 RenderOptions.EdgeMode="Aliased"
                                 Style="{Binding WindowCloseButtonStyle, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                                 ToolTip="{Binding Close, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowButtonCommands}}}"
-                                IsEnabled="{Binding IsCloseButtonEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                                Visibility="{Binding ShowCloseButton, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                IsEnabled="{Binding IsCloseButtonEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}">
+                            <Button.Visibility>
+                                <MultiBinding Converter="{x:Static conv:ResizeModeMinMaxButtonVisibilityConverter.Instance}"
+                                              ConverterParameter="CLOSE">
+                                    <Binding Path="ShowCloseButton"
+                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
+                                             Mode="OneWay" />
+                                    <Binding Path="UseNoneWindowStyle"
+                                             RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}"
+                                             Mode="OneWay" />
+                                </MultiBinding>
+                            </Button.Visibility>
                             <Path Data="M 10.009,1.704 L 8.331,0.026 5.03,3.327 1.703,0 0,1.704 3.326,5.031 0.025,8.332 1.703,10.009 5.004,6.708 8.305,10.009 10.009,8.305 6.708,5.005"
                                   SnapsToDevicePixels="True"
                                   Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}" />

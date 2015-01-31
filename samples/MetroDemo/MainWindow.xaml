@@ -164,7 +164,7 @@
                 <MenuItem Header="Window">
                     <MenuItem IsCheckable="True" Header="Ignore taskbar on maximize"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=IgnoreTaskbarOnMaximize}" />
-                    <MenuItem IsCheckable="True" Header="Toggle FullScreen"
+                    <MenuItem IsCheckable="True" Header="Toggle FullScreen (no taskbar, window style = none)"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}" />
                 </MenuItem>
             </Menu>

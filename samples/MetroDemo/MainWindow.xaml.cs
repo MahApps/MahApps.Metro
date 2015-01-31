@@ -49,9 +49,6 @@ namespace MetroDemo
                 {
                     metroWindow.UseNoneWindowStyle = true;
                     metroWindow.IgnoreTaskbarOnMaximize = true;
-                    metroWindow.ShowMinButton = false;
-                    metroWindow.ShowMaxRestoreButton = false;
-                    metroWindow.ShowCloseButton = false;
                     metroWindow.WindowState = WindowState.Maximized;
                 }
                 else
@@ -59,9 +56,6 @@ namespace MetroDemo
                     metroWindow.UseNoneWindowStyle = false;
                     metroWindow.ShowTitleBar = true; // <-- this must be set to true
                     metroWindow.IgnoreTaskbarOnMaximize = false;
-                    metroWindow.ShowMinButton = true;
-                    metroWindow.ShowMaxRestoreButton = true;
-                    metroWindow.ShowCloseButton = true;
                     metroWindow.WindowState = WindowState.Normal;
                 }
             }
