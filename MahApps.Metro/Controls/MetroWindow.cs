@@ -889,7 +889,6 @@ namespace MahApps.Metro.Controls
 
         private void IconMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (!this.ShowSystemMenuOnWindowIcon) return;
             if (e.ChangedButton == MouseButton.Left)
             {
                 if (e.ClickCount == 2)
@@ -898,6 +897,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
+                    if (!this.ShowSystemMenuOnWindowIcon) return;
                     ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitlebarHeight)));
                 }
             }
