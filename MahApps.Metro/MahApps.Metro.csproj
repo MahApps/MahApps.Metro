@@ -6,22 +6,17 @@
     <StrongName Condition=" '$(StrongName)' == '' ">False</StrongName>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{5B1710D2-5DC8-4754-91B2-19165DE49B3D}</ProjectGuid>
+    <ProjectGuid>{942D11C4-29F5-46C4-8C14-4B976D56C637}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MahApps.Metro</RootNamespace>
     <AssemblyName>MahApps.Metro</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <Version>$(BUILD_NUMBER)</Version>
-    <!-- dev config -->
-    <Version Condition=" '$(Version)' == '' ">1.0.0.9999</Version>
-    <SolutionDir Condition=" '$(SolutionDir)' == '' ">..</SolutionDir>
-    <ExpressionBlendVersion>5.0.30709.0</ExpressionBlendVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -34,30 +29,74 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <IntermediateOutputPath>obj\NET4\Debug\</IntermediateOutputPath>
-    <DefineConstants>TRACE;DEBUG;NET4</DefineConstants>
+    <OutputPath>bin\Debug\NET45\</OutputPath>
+    <IntermediateOutputPath>obj\NET45\Debug\</IntermediateOutputPath>
+    <DefineConstants>TRACE;DEBUG;NET4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\MahApps.Metro.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\NET45\MahApps.Metro.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>True</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>True</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>True</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>True</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>True</CodeContractsRedundantAssumptions>
+    <CodeContractsAssertsToContractsCheckBox>True</CodeContractsAssertsToContractsCheckBox>
+    <CodeContractsRedundantTests>True</CodeContractsRedundantTests>
+    <CodeContractsMissingPublicRequiresAsWarnings>True</CodeContractsMissingPublicRequiresAsWarnings>
+    <CodeContractsMissingPublicEnsuresAsWarnings>False</CodeContractsMissingPublicEnsuresAsWarnings>
+    <CodeContractsInferRequires>True</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestAssumptionsForCallees>False</CodeContractsSuggestAssumptionsForCallees>
+    <CodeContractsSuggestRequires>False</CodeContractsSuggestRequires>
+    <CodeContractsNecessaryEnsures>True</CodeContractsNecessaryEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsSuggestReadonly>True</CodeContractsSuggestReadonly>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsSQLServerOption />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsSkipAnalysisIfCannotConnectToCache>False</CodeContractsSkipAnalysisIfCannotConnectToCache>
+    <CodeContractsFailBuildOnWarnings>False</CodeContractsFailBuildOnWarnings>
+    <CodeContractsBeingOptimisticOnExternal>True</CodeContractsBeingOptimisticOnExternal>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <IntermediateOutputPath>obj\NET4\Release\</IntermediateOutputPath>
-    <DefineConstants>TRACE;NET4</DefineConstants>
+    <OutputPath>bin\Release\NET45\</OutputPath>
+    <IntermediateOutputPath>obj\NET45\Release\</IntermediateOutputPath>
+    <DefineConstants>TRACE;NET4_5</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\MahApps.Metro.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\NET45\MahApps.Metro.XML</DocumentationFile>
     <NoWarn>1572,1573,1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(StrongName)'=='True'">
@@ -66,14 +105,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\NET40\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\Lib\NET45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <RequiredTargetFramework>4.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -83,22 +122,28 @@
     <Compile Include="Accent.cs" />
     <Compile Include="Actions\CloseTabItemAction.cs" />
     <Compile Include="Actions\SetFlyoutOpenAction.cs" />
+    <Compile Include="AppTheme.cs" />
     <Compile Include="Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
     <Compile Include="Behaviours\GlowWindowBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
+    <Compile Include="Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
+    <Compile Include="Controls\Helper\ButtonHelper.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
+    <Compile Include="Controls\Helper\ComboBoxHelper.cs" />
+    <Compile Include="Controls\Helper\ControlsHelper.cs" />
     <Compile Include="Controls\CustomValidationPopup.cs" />
     <Compile Include="Controls\DataGridNumericUpDownColumn.cs" />
     <Compile Include="Controls\Dialogs\BaseMetroDialog.cs" />
+    <Compile Include="Controls\Dialogs\CustomDialog.cs" />
     <Compile Include="Controls\Dialogs\DialogManager.cs" />
     <Compile Include="Controls\Dialogs\DialogStateChangedEventArgs.cs" />
     <Compile Include="Controls\Dialogs\InputDialog.cs" />
     <Compile Include="Controls\Dialogs\LoginDialog.cs" />
+    <Compile Include="Controls\Dialogs\MessageDialog.cs" />
     <Compile Include="Controls\Dialogs\ProgressDialog.cs" />
     <Compile Include="Controls\Dialogs\ProgressDialogController.cs" />
-    <Compile Include="Controls\Dialogs\CustomDialog.cs" />
     <Compile Include="Controls\DropDownButton.cs" />
     <Compile Include="Controls\FlipView.cs" />
     <Compile Include="Controls\Flyout.cs" />
@@ -109,18 +154,8 @@
     <Compile Include="Controls\GlowWindow.xaml.cs">
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Dialogs\MessageDialog.cs" />
-    <Compile Include="Controls\Helper\ButtonHelper.cs" />
-    <Compile Include="Controls\Helper\ComboBoxHelper.cs" />
-    <Compile Include="Controls\Helper\ControlsHelper.cs" />
     <Compile Include="Controls\Helper\DataGridCellHelper.cs" />
     <Compile Include="Controls\Helper\GroupBoxHelper.cs" />
-    <Compile Include="Controls\Helper\PasswordBoxHelper.cs" />
-    <Compile Include="Controls\Helper\ScrollBarHelper.cs" />
-    <Compile Include="Controls\Helper\TabControlHelper.cs" />
-    <Compile Include="Controls\Helper\TextBoxHelper.cs" />
-    <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
-    <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroNavigationWindow.cs" />
@@ -132,32 +167,35 @@
     <Compile Include="Controls\NumericUpDown.cs" />
     <Compile Include="Controls\NumericUpDownChangedRoutedEventArgs.cs" />
     <Compile Include="Controls\NumericUpDownChangedRoutedEventHandler.cs" />
+    <Compile Include="Controls\Helper\PasswordBoxHelper.cs" />
     <Compile Include="Controls\Pivot.cs" />
     <Compile Include="Controls\PivotItem.cs" />
     <Compile Include="Controls\Position.cs" />
     <Compile Include="Controls\PropertyChangeNotifier.cs" />
     <Compile Include="Controls\RangeParameterChangedEventArgs.cs" />
     <Compile Include="Controls\SafeRaise.cs" />
+    <Compile Include="Controls\Helper\ScrollBarHelper.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
+    <Compile Include="Controls\Helper\TabControlHelper.cs" />
+    <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
-    <Compile Include="Controls\WindowCommands.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
-    <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\FontSizeOffsetConverter.cs" />
+    <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\MetroTabItemCloseButtonWidthConverter.cs" />
     <Compile Include="Converters\OffOnConverter.cs" />
     <Compile Include="Controls\Planerator.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
     <Compile Include="Controls\RangeSelectionChangedEventArgs.cs" />
     <Compile Include="Controls\RangeSlider.cs" />
+    <Compile Include="Controls\Helper\TextBoxHelper.cs" />
     <Compile Include="Controls\ToggleSwitchButton.cs" />
     <Compile Include="Controls\TransitioningContentControl.cs" />
     <Compile Include="Controls\TreeHelper.cs" />
     <Compile Include="Controls\VisualStates.cs" />
+    <Compile Include="Controls\WindowCommands.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converters\TreeViewMarginConverter.cs" />
@@ -201,6 +239,7 @@
     <Compile Include="Behaviours\ReloadBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviors.cs" />
     <Compile Include="Behaviours\TiltBehavior.cs" />
+    <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroContentControl.cs" />
     <Compile Include="Controls\MetroWindow.cs" />
     <Compile Include="Controls\RevealImage.xaml.cs">
@@ -211,9 +250,10 @@
     <Compile Include="Converters\MarkupConverter.cs" />
     <Compile Include="Converters\ToUpperConverter.cs" />
     <Compile Include="Native\UnsafeNativeMethods.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <!--<Compile Include="Properties\CommonAssemblyInfo.cs" Condition="EXISTS('Properties\CommonAssemblyInfo.cs')" />-->
-    <Compile Include="AppTheme.cs" />
     <Compile Include="ThemeManager.cs" />
     <AppDesigner Include="Properties\" />
     <Page Include="Controls\GlowWindow.xaml">
@@ -221,6 +261,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Accents\Amber.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Blue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -244,6 +288,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\Accents\Green.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Accents\Indigo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -264,7 +312,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\Accents\Orange.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Accents\Pink.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Purple.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Red.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -293,12 +353,12 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Clean\Clean.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Clean\CleanGroupBox.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Clean\CleanWindow.xaml">
       <SubType>Designer</SubType>
@@ -320,16 +380,6 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.ContextMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <DependentUpon>Controls.xaml</DependentUpon>
-    </Page>
-    <Page Include="Styles\Controls.DatePicker.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-      <DependentUpon>Controls.xaml</DependentUpon>
-    </Page>
-    <Page Include="Styles\Controls.DataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>
@@ -375,8 +425,8 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.StatusBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.TextBlock.xaml">
@@ -415,20 +465,20 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\FlatSlider.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Shared.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Sizes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ValidationErrorTemplate.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\VS\Button.xaml">
       <SubType>Designer</SubType>
@@ -463,76 +513,76 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\VS\Window.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Dialogs\BaseMetroDialog.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Dialogs\InputDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Dialogs\LoginDialog.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Dialogs\MessageDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Dialogs\ProgressDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\DropDownButton.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\FlipView.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Flyout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\FlyoutsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Dialogs\MessageDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\MetroAnimatedTabControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Glow.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\MetroAnimatedTabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\MetroContentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroNavigationWindow.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\MetroProgressBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroTabControl.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\MetroTabItem.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\MetroWindow.xaml">
       <SubType>Designer</SubType>
@@ -555,8 +605,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\SplitButton.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Tile.xaml">
       <SubType>Designer</SubType>
@@ -584,26 +634,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\Accents\Orange.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\Accents\Purple.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\Accents\Red.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\Accents\Blue.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\Accents\Green.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Styles\Colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -618,6 +648,21 @@
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
     <Page Include="Styles\Controls.Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.Calendar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.DatePicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
+    <Page Include="Styles\Controls.DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <DependentUpon>Controls.xaml</DependentUpon>
@@ -650,16 +695,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Styles\Controls.Calendar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-      <DependentUpon>Controls.xaml</DependentUpon>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -672,12 +710,8 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 4.5</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

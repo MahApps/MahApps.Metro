@@ -121,12 +121,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.csproj">
-      <Project>{5b1710d2-5dc8-4754-91b2-19165de49b3d}</Project>
-      <Name>MahApps.Metro</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="CleanWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
