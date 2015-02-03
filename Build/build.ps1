@@ -13,11 +13,11 @@ $proj = Join-Path (Get-ScriptDirectory) ..\MahApps.Metro\MahApps.Metro.csproj
 
 . $env:windir\Microsoft.NET\Framework\$version\MSBuild.exe $script /t:Version /ToolsVersion:4.0 /p:SolutionDir=$solution_dir /p:BUILD_NUMBER=$build_number
 
-. $env:windir\Microsoft.NET\Framework\$version\MSBuild.exe $proj /t:Rebuild /ToolsVersion:4.0 /p:StrongName=False /p:configuration=Release /m /v:q /p:BUILD_NUMBER=$build_number
+. $env:windir\Microsoft.NET\Framework\$version\MSBuild.exe $proj /t:Rebuild /ToolsVersion:4.0 /p:StrongName=False /p:configuration=Net4-Release /m /v:q /p:BUILD_NUMBER=$build_number
 
-$proj = Join-Path (Get-ScriptDirectory) ..\MahApps.Metro\MahApps.Metro.NET45.csproj
+$proj = Join-Path (Get-ScriptDirectory) ..\MahApps.Metro\MahApps.Metro.csproj
 
-. $env:windir\Microsoft.NET\Framework\$version\MSBuild.exe $proj /t:Rebuild /ToolsVersion:4.0 /p:StrongName=False /p:configuration=Release /m /v:q /p:BUILD_NUMBER=$build_number
+. $env:windir\Microsoft.NET\Framework\$version\MSBuild.exe $proj /t:Rebuild /ToolsVersion:4.0 /p:StrongName=False /p:configuration=Net45-Release /m /v:q /p:BUILD_NUMBER=$build_number
 
 # package it up
 
