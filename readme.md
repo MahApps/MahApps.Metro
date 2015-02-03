@@ -112,6 +112,7 @@ Drop in on the Gitter room - https://gitter.im/MahApps/MahApps.Metro - if you wa
 If you're looking for a control that we don't have, we have some friends who have made MA.M compatible controls. Check them out:
 
 - [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
+- [Dragablz - TabControl with Chrome style tearing, and docking/tool window/MDI support](https://github.com/ButchersBoy/Dragablz)
 
 ### Licence
 
