@@ -394,7 +394,7 @@
                                     </Setter.Value>
                                 </Setter>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                    <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                                                  Value="True">
                                         <Setter Property="Foreground"
                                                 Value="{DynamicResource IdealForegroundColorBrush}" />
@@ -458,7 +458,7 @@
                                                     <Setter Property="Foreground"
                                                             Value="{DynamicResource GrayBrush4}" />
                                                 </Trigger>
-                                                <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                                <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                                                              Value="True">
                                                     <Setter Property="Foreground"
                                                             Value="{DynamicResource IdealForegroundColorBrush}" />
@@ -475,12 +475,12 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+            <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}"
                          Value="True">
                 <Setter Property="Foreground"
                         Value="{DynamicResource IdealForegroundColorBrush}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+            <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}"
                          Value="False">
                 <Setter Property="Background"
                         Value="Transparent" />
@@ -591,12 +591,12 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+            <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}"
                          Value="True">
                 <Setter Property="Foreground"
                         Value="{DynamicResource IdealForegroundColorBrush}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding ShowTitleBar, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+            <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}"
                          Value="False">
                 <Setter Property="Background"
                         Value="Transparent" />
