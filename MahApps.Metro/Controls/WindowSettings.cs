@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -12,7 +13,31 @@ namespace MahApps.Metro.Controls
     public interface IWindowPlacementSettings
     {
         WINDOWPLACEMENT? Placement { get; set; }
+
+        /// <summary>
+        /// Refreshes the application settings property values from persistent storage.
+        /// </summary>
         void Reload();
+
+        /// <summary>
+        /// Restores the persisted application settings values to their corresponding default properties.
+        /// </summary>
+        void Reset();
+
+        /// <summary>
+        /// Upgrades the application settings on loading.
+        /// </summary>
+        [DefaultValue(true)]
+        bool UpgradeSettings { get; set; }
+
+        /// <summary>
+        /// Updates application settings to reflect a more recent installation of the application.
+        /// </summary>
+        void Upgrade();
+
+        /// <summary>
+        /// Stores the current values of the settings properties.
+        /// </summary>
         void Save();
     }
 
@@ -37,6 +62,12 @@ namespace MahApps.Metro.Controls
                 this["Placement"] = value;
             }
         }
+
+        /// <summary>
+        /// Upgrades the application settings on loading.
+        /// </summary>
+        [DefaultValue(true)]
+        public bool UpgradeSettings { get; set; }
     }
     
     public class WindowSettings
@@ -69,6 +100,14 @@ namespace MahApps.Metro.Controls
         protected virtual void LoadWindowState()
         {
             if (_settings == null) return;
+
+            if (_settings.UpgradeSettings)
+            {
+                _settings.Upgrade();
+                _settings.UpgradeSettings = false;
+                _settings.Save();
+            }
+
             _settings.Reload();
 
             // check for existing placement and prevent empty bounds
