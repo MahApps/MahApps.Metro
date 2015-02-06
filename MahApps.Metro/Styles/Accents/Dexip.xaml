@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <Color x:Key="HighlightColor">#ffd79120</Color>
     <!--80%-->
@@ -28,5 +29,10 @@
     <SolidColorBrush x:Key="FlatButtonMouseOverBackgroundBrush"
                      Color="#FFD79120"
                      options:Freeze="True" />
+    
+    <!-- Controls.Slider -->
+    <system:Double x:Key="HorizontalThumbWidth">40</system:Double>
+    <system:Double x:Key="VerticalThumbHeight">40</system:Double>
+
 
 </ResourceDictionary>
