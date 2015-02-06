@@ -92,44 +92,72 @@ namespace MahApps.Metro.Controls
 
             if (scroller != null)
             {
-                scroller.ScrollChanged += scroller_ScrollChanged;
-                scroller.PreviewMouseWheel += scroller_MouseWheel;
+                scroller.SizeChanged += ScrollerOnSizeChanged;
             }
             if (headers != null)
+            {
                 headers.SelectionChanged += headers_SelectionChanged;
+                if (headers.SelectedItem == null)
+                {
+                    headers.SelectedIndex = 0;
+                }
+            }
         }
 
-        void scroller_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        private void ScrollerOnSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
         {
-            scroller.ScrollToHorizontalOffset(scroller.HorizontalOffset + -e.Delta);
-        }
+            var item = (PivotItem)headers.SelectedItem;
 
+            if (item == null || item == selectedItem)
+                return;
+
+            var widthToScroll = 0.0;
+            int index;
+            for (index = 0; index < Items.Count; index++)
+            {
+                if (Items[index] == item)
+                {
+                    internalIndex = index;
+                    break;
+                }
+                widthToScroll += ((PivotItem)Items[index]).ActualWidth;
+            }
+
+            scroller.ScrollToHorizontalOffset(widthToScroll);
+        }
+        
         void headers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             GoToItem((PivotItem)headers.SelectedItem);
         }
 
-        void scroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        private void scroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            var position = 0.0;
-            for (int i = 0; i < Items.Count; i++)
+            var scrollViewer = e.OriginalSource as ScrollViewer;
+            // detect this is the right ScrollViewer of Pivot;
+            // avoid manipulate pivot when some inner-scrollviewer moving.
+            if (scrollViewer == scroller)
             {
-                var pivotItem = ((PivotItem)Items[i]);
-                var widthOfItem = pivotItem.ActualWidth;
-                if (e.HorizontalOffset <= (position + widthOfItem - 1))
+                var position = 0.0;
+                for (int i = 0; i < Items.Count; i++)
                 {
-                    selectedItem = pivotItem;
-                    if (headers.SelectedItem != selectedItem)
+                    var pivotItem = ((PivotItem) Items[i]);
+                    var widthOfItem = pivotItem.ActualWidth;
+                    if (e.HorizontalOffset <= (position + widthOfItem - 1))
                     {
-                        headers.SelectedItem = selectedItem;
-                        internalIndex = i;
-                        SelectedIndex = i;
+                        selectedItem = pivotItem;
+                        if (headers.SelectedItem != selectedItem)
+                        {
+                            headers.SelectedItem = selectedItem;
+                            internalIndex = i;
+                            SelectedIndex = i;
 
-                        RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
+                            RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
+                        }
+                        break;
                     }
-                    break;
+                    position += widthOfItem;
                 }
-                position += widthOfItem;
             }
         }
 
