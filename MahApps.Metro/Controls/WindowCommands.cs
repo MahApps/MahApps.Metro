@@ -6,6 +6,23 @@ namespace MahApps.Metro.Controls
 {
     public class WindowCommands : ItemsControl, INotifyPropertyChanged
     {
+        public static readonly DependencyProperty ShowSeparatorsProperty
+            = DependencyProperty.Register("ShowSeparators",
+                                          typeof(bool),
+                                          typeof(WindowCommands),
+                                          new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender |
+                                                                              FrameworkPropertyMetadataOptions.AffectsArrange |
+                                                                              FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets or sets the value indicating whether to show the separators.
+        /// </summary>
+        public bool ShowSeparators
+        {
+            get { return (bool)this.GetValue(ShowSeparatorsProperty); }
+            set { this.SetValue(ShowSeparatorsProperty, value); }
+        }
+
         static WindowCommands()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowCommands), new FrameworkPropertyMetadata(typeof(WindowCommands)));

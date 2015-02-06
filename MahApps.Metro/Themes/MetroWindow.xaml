@@ -361,6 +361,7 @@
                                                                   Margin="9,1,9,1" />
 
                                                 <Rectangle x:Name="border"
+                                                           Visibility="{Binding ShowSeparators, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                                                            SnapsToDevicePixels="True"
                                                            IsHitTestVisible="False"
                                                            Opacity="0.25"
@@ -430,6 +431,7 @@
                                                                   Margin="9,1,9,1" />
 
                                                 <Rectangle x:Name="border"
+                                                           Visibility="{Binding ShowSeparators, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
                                                            SnapsToDevicePixels="True"
                                                            IsHitTestVisible="False"
                                                            Opacity=".2"
