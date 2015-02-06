@@ -2,78 +2,144 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-                    xmlns:Actions="clr-namespace:MahApps.Metro.Actions">
+                    xmlns:Actions="clr-namespace:MahApps.Metro.Actions"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+    <converters:StringToVisibilityConverter x:Key="stringToVisi" />
+
+    <LinearGradientBrush x:Key="DefaultButtonHoverGradientBrush"
+                         EndPoint="0,0"
+                         StartPoint="1,0">
+        <GradientStop Offset="0"
+                      Color="#FFEDC237" />
+        <GradientStop Offset=".238"
+                      Color="#FFEABC32" />
+        <GradientStop Offset=".63"
+                      Color="#FFE2A826" />
+        <GradientStop Offset="1"
+                      Color="#FFD78F13" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DefaultButtonGradientBrush"
+                         EndPoint="0,0"
+                         StartPoint="1,0">
+        <GradientStop Color="#FFB1B2B6" />
+        <GradientStop Color="#FFDCDBD8"
+                      Offset="1" />
+    </LinearGradientBrush>
+
     <DataTemplate x:Key="HeaderTemplate"
                   x:Shared="False">
-        <DockPanel x:Name="dpHeader"
-                   Margin="10,25,10,10"
-                   VerticalAlignment="Center"
-                   LastChildFill="True">
-            <Button x:Name="nav"
-                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommand, Mode=OneWay}"
-                    DockPanel.Dock="Left"
-                    Style="{DynamicResource MetroCircleButtonStyle}"
-                    Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonVisibility}"
-                    Height="40"
-                    Width="40"
-                    FontFamily="Segoe UI Symbol"
-                    Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
-                    FontSize="16"
-                    VerticalAlignment="Bottom">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
-                                                     Value="False" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-                <Rectangle Width="20"
-                           Height="15"
-                           Fill="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}">
-                    <Rectangle.OpacityMask>
-                        <VisualBrush Stretch="Fill">
-                            <VisualBrush.Visual>
-                                <Canvas Width="48"
-                                        Height="48"
-                                        Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                        UseLayoutRounding="False">
-                                    <Path Width="25"
-                                          Height="18"
-                                          Canvas.Left="12"
-                                          Canvas.Top="15"
-                                          Stretch="Fill"
-                                          Fill="Black"
-                                          Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z " />
+        <Grid Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=HeaderBackground}"
+              Height="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=HeaderHeight}">
+            <DockPanel x:Name="dpHeader"
+                       Margin="10,25,10,10"
+                       VerticalAlignment="Center"
+                       LastChildFill="True">
+                <Button x:Name="nav"
+                        Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=CloseCommand, Mode=OneWay}"
+                        DockPanel.Dock="Right"
+                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonVisibility}"
+                        Height="40"
+                        Width="40"
+                        Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
+                        VerticalAlignment="Bottom">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
+                                                         Value="False" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Button.Template>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Viewbox Stretch="Uniform">
+                                <Canvas Height="4.8"
+                                        Width="3.5"
+                                        Margin="1.5">
+                                    <Path x:Name="back"
+                                          Data="M2.602,0.075C2.86,0.075 3.104,0.176 3.287,0.357 3.666,0.738 3.666,1.354 3.288,1.731L2.539,2.481 3.288,3.229C3.472,3.413 3.573,3.657 3.572,3.916 3.572,4.175 3.471,4.42 3.288,4.602 3.104,4.785 2.861,4.886 2.602,4.886 2.344,4.886 2.101,4.785 1.917,4.603L0.43,3.187C0.246,3.003,0.075,2.76,0.075,2.5L0.075,2.461C0.075,2.204,0.245,1.962,0.426,1.778L1.88,0.359C2.066,0.176,2.344,0.075,2.602,0.075z"
+                                          Height="4.961"
+                                          StrokeThickness="0.15"
+                                          Stroke="#FFDCDBD8"
+                                          Fill="White"
+                                          Canvas.Left="-0.076"
+                                          Canvas.Top="-0.074"
+                                          Width="3.647" />
+                                    <Path x:Name="arrow"
+                                          Data="F1M0,1.683L0,1.722C0,1.793,0.029,1.861,0.078,1.912L1.493,3.327C1.599,3.431 1.768,3.431 1.873,3.327 1.977,3.223 1.977,3.053 1.873,2.948L0.626,1.703 1.873,0.456C1.977,0.352 1.977,0.182 1.873,0.078 1.768,-0.027 1.599,-0.027 1.493,0.078L0.078,1.493C0.029,1.544,0,1.612,0,1.683"
+                                          Fill="#FF989997"
+                                          Height="3.406"
+                                          Canvas.Left="0.773"
+                                          Canvas.Top="0.704"
+                                          Width="1.951" />
                                 </Canvas>
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </Rectangle.OpacityMask>
-                </Rectangle>
-            </Button>
-            <TextBlock Text="{Binding}"
-                       x:Name="PART_BackButton"
-                       Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=TitleVisibility}"
-                       FontSize="{StaticResource FlyoutHeaderFontSize}"
-                       Margin="15,0,0,0"
-                       VerticalAlignment="Center" />
-        </DockPanel>
+                            </Viewbox>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver"
+                                                   Value="True" />
+                                        <Condition Property="IsPressed"
+                                                   Value="False" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Fill"
+                                            TargetName="back"
+                                            Value="{StaticResource DefaultButtonHoverGradientBrush}" />
+                                    <Setter Property="Fill"
+                                            TargetName="arrow"
+                                            Value="White" />
+                                </MultiTrigger>
+                                <Trigger Property="IsPressed"
+                                         Value="True">
+                                    <Setter Property="Fill"
+                                            TargetName="back"
+                                            Value="{StaticResource DefaultButtonHoverGradientBrush}" />
+                                    <Setter Property="Fill"
+                                            TargetName="arrow"
+                                            Value="#FFDCDBD8" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+                <Grid x:Name="PlaceHolder"
+                      Width="35"
+                      DockPanel.Dock="Left" />
+                <Image x:Name="PART_Image"
+                       Source="/MahApps.Metro;component/Resource/filet_listboxitems.png"
+                       Stretch="None"
+                       Visibility="{Binding ElementName=PART_BackButton, Path=Text, Converter={StaticResource stringToVisi}}"
+                       DockPanel.Dock="Bottom"
+                       Margin="2,15" />
+                <TextBlock x:Name="PART_BackButton"
+                           Text="{Binding}"
+                           Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=HeaderForeground}"
+                           FontSize="{StaticResource FlyoutHeaderFontSize}"
+                           Margin="15,0,0,0"
+                           HorizontalAlignment="Center"
+                           Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=TitleVisibility}"
+                           VerticalAlignment="Center" />
+            </DockPanel>
+        </Grid>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
-                         Value="Left">
+                         Value="Right">
                 <Setter TargetName="nav"
+                        Property="DockPanel.Dock"
+                        Value="Left" />
+                <Setter TargetName="PlaceHolder"
                         Property="DockPanel.Dock"
                         Value="Right" />
                 <Setter TargetName="PART_BackButton"
                         Property="TextAlignment"
-                        Value="Right" />
+                        Value="Left" />
                 <Setter TargetName="PART_BackButton"
                         Property="Margin"
-                        Value="0,0,15,0" />
+                        Value="15,0,0,0" />
                 <Setter TargetName="nav"
                         Property="LayoutTransform">
                     <Setter.Value>
@@ -86,6 +152,9 @@
                 <Setter TargetName="dpHeader"
                         Property="Margin"
                         Value="10" />
+                <Setter TargetName="dpHeader"
+                        Property="VerticalAlignment"
+                        Value="Bottom" />
                 <Setter TargetName="nav"
                         Property="LayoutTransform">
                     <Setter.Value>
@@ -111,8 +180,7 @@
     <ControlTemplate x:Key="FlyoutTemplate"
                      TargetType="{x:Type Controls:Flyout}">
         <Grid x:Name="root"
-              Margin="{TemplateBinding Margin}"
-              Background="{TemplateBinding Background}">
+              Margin="{TemplateBinding Margin}">
             <Grid.RenderTransform>
                 <TranslateTransform />
             </Grid.RenderTransform>
@@ -220,15 +288,20 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <DockPanel>
-                <ContentPresenter x:Name="PART_Header"
-                                  DockPanel.Dock="Top"
-                                  ContentSource="Header"
-                                  ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                <ContentPresenter x:Name="PART_Content"
-                                  DockPanel.Dock="Bottom">
-                </ContentPresenter>
-            </DockPanel>
+            <Border CornerRadius="{TemplateBinding CornerRadius}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Background="{TemplateBinding ContentBackground}">
+                <DockPanel>
+                    <ContentPresenter x:Name="PART_Header"
+                                      DockPanel.Dock="Top"
+                                      ContentSource="Header"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                    <ContentPresenter x:Name="PART_Content"
+                                      DockPanel.Dock="Bottom">
+                    </ContentPresenter>
+                </DockPanel>
+            </Border>
         </Grid>
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}"
@@ -267,6 +340,8 @@
                 Value="{StaticResource FlyoutTemplate}" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
+        <Setter Property="HeaderHeight"
+                Value="NaN" />
         <Setter Property="Foreground"
                 Value="{DynamicResource FlyoutForegroundBrush}" />
         <Setter Property="Background"

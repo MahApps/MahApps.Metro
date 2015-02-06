@@ -20,9 +20,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// An event that is raised when IsOpen changes.
         /// </summary>
-        public static readonly RoutedEvent IsOpenChangedEvent =
-            EventManager.RegisterRoutedEvent("IsOpenChanged", RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler), typeof(Flyout));
+        public static readonly RoutedEvent IsOpenChangedEvent = EventManager.RegisterRoutedEvent("IsOpenChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Flyout));
 
         public event RoutedEventHandler IsOpenChanged
         {
@@ -33,9 +31,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// An event that is raised when the closing animation has finished.
         /// </summary>
-        public static readonly RoutedEvent ClosingFinishedEvent =
-            EventManager.RegisterRoutedEvent("ClosingFinished", RoutingStrategy.Bubble,
-                typeof(RoutedEventHandler), typeof(Flyout));
+        public static readonly RoutedEvent ClosingFinishedEvent = EventManager.RegisterRoutedEvent("ClosingFinished", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(Flyout));
 
         public event RoutedEventHandler ClosingFinished
         {
@@ -57,6 +53,41 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register("TitleVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register("AreAnimationsEnabled", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
+        
+        public static readonly DependencyProperty HeaderForegroundProperty = DependencyProperty.Register("HeaderForeground", typeof(Brush), typeof(Flyout), new PropertyMetadata(default(Brush)));
+        public static readonly DependencyProperty HeaderBackgroundProperty = DependencyProperty.Register("HeaderBackground", typeof(Brush), typeof(Flyout), new PropertyMetadata(default(Brush)));
+        public static readonly DependencyProperty ContentBackgroundProperty = DependencyProperty.Register("ContentBackground", typeof(Brush), typeof(Flyout), new PropertyMetadata(default(Brush)));
+        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register("CornerRadius", typeof(CornerRadius), typeof(Flyout), new PropertyMetadata(default(CornerRadius)));
+        public static readonly DependencyProperty HeaderHeightProperty = DependencyProperty.Register("HeaderHeight", typeof(double), typeof(Flyout), new PropertyMetadata());
+        public double HeaderHeight
+        {
+            get { return (double)GetValue(HeaderHeightProperty); }
+            set { SetValue(HeaderHeightProperty, value); }
+        }
+
+        public Brush HeaderForeground
+        {
+            get { return (Brush)GetValue(HeaderForegroundProperty); }
+            set { SetValue(HeaderForegroundProperty, value); }
+        }
+
+        public CornerRadius CornerRadius
+        {
+            get { return (CornerRadius)GetValue(CornerRadiusProperty); }
+            set { SetValue(CornerRadiusProperty, value); }
+        }
+
+        public Brush ContentBackground
+        {
+            get { return (Brush)GetValue(ContentBackgroundProperty); }
+            set { SetValue(ContentBackgroundProperty, value); }
+        }
+
+        public Brush HeaderBackground
+        {
+            get { return (Brush)GetValue(HeaderBackgroundProperty); }
+            set { SetValue(HeaderBackgroundProperty, value); }
+        }
 
         internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
         internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
@@ -300,7 +331,8 @@ namespace MahApps.Metro.Controls
         {
             var flyout = (Flyout)dependencyObject;
 
-            Action openedChangedAction = () => {
+            Action openedChangedAction = () =>
+            {
                 if (e.NewValue != e.OldValue)
                 {
                     if (flyout.AreAnimationsEnabled)
