@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -23,13 +25,13 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
-        
+
         public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonCommandParameterProperty = DependencyProperty.RegisterAttached("ButtonCommandParameter", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata("r"));
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonFontFamilyProperty = DependencyProperty.RegisterAttached("ButtonFontFamily", typeof(FontFamily), typeof(TextBoxHelper), new FrameworkPropertyMetadata((new FontFamilyConverter()).ConvertFromString("Marlett")));
-        
+
         public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.RegisterAttached("SelectAllOnFocus", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty IsWaitingForDataProperty = DependencyProperty.RegisterAttached("IsWaitingForData", typeof(bool), typeof(TextBoxHelper), new UIPropertyMetadata(false));
 
@@ -37,6 +39,7 @@ namespace MahApps.Metro.Controls
 
         private static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
 
+        private static Process keyboardProc;
         /// <summary>
         /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
         /// </summary>
@@ -60,7 +63,8 @@ namespace MahApps.Metro.Controls
                 throw new InvalidOperationException("The property 'IsSpellCheckContextMenuEnabled' may only be set on TextBoxBase elements.");
             }
 
-            if ((bool)e.NewValue) {
+            if ((bool)e.NewValue)
+            {
                 // set the spell check to true
                 tb.SetValue(SpellCheck.IsEnabledProperty, true);
                 // override pre defined context menu
@@ -89,10 +93,13 @@ namespace MahApps.Metro.Controls
                 : (richTextBox != null
                     ? richTextBox.GetSpellingError(richTextBox.CaretPosition)
                     : null);
-            if (spellingError != null) {
+            if (spellingError != null)
+            {
                 var suggestions = spellingError.Suggestions;
-                if (suggestions.Any()) {
-                    foreach (var suggestion in suggestions) {
+                if (suggestions.Any())
+                {
+                    foreach (var suggestion in suggestions)
+                    {
                         var mi = new MenuItem();
                         mi.Header = suggestion;
                         mi.FontWeight = FontWeights.Bold;
@@ -143,7 +150,7 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(IsWaitingForDataProperty, value);
         }
-        
+
         public static bool GetIsWaitingForData(DependencyObject obj)
         {
             return (bool)obj.GetValue(IsWaitingForDataProperty);
@@ -214,7 +221,7 @@ namespace MahApps.Metro.Controls
                     txtBox.TextChanged += TextChanged;
                     txtBox.GotFocus += TextBoxGotFocus;
 
-                    txtBox.Dispatcher.BeginInvoke((Action)(() => 
+                    txtBox.Dispatcher.BeginInvoke((Action)(() =>
                         TextChanged(txtBox, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.None))));
                 }
                 else
@@ -282,9 +289,11 @@ namespace MahApps.Metro.Controls
             {
                 txtBox.Dispatcher.BeginInvoke((Action)(txtBox.SelectAll));
             }
+
+            OpenKeyboard();
         }
 
-        static void PasswordGotFocus(object sender, RoutedEventArgs e)
+        private static void PasswordGotFocus(object sender, RoutedEventArgs e)
         {
             var passBox = sender as PasswordBox;
             if (passBox == null)
@@ -292,7 +301,17 @@ namespace MahApps.Metro.Controls
             if (GetSelectAllOnFocus(passBox))
             {
                 passBox.Dispatcher.BeginInvoke((Action)(passBox.SelectAll));
+
+                OpenKeyboard();
             }
+        }
+
+        static void OpenKeyboard()
+        {
+            var progFiles = @"C:\Program Files\Common Files\Microsoft Shared\ink";
+            var keyboardPath = Path.Combine(progFiles, "TabTip.exe");
+
+            keyboardProc = Process.Start(keyboardPath);
         }
 
         static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
@@ -485,17 +504,17 @@ namespace MahApps.Metro.Controls
             {
                 parent = VisualTreeHelper.GetParent(parent);
             }
-            
+
             var command = GetButtonCommand(parent);
             if (command != null && command.CanExecute(parent))
             {
                 var commandParameter = GetButtonCommandParameter(parent);
-               
+
                 command.Execute(commandParameter ?? parent);
             }
 
             if (GetClearTextButton(parent))
-            { 
+            {
                 if (parent is TextBox)
                 {
                     ((TextBox)parent).Clear();
