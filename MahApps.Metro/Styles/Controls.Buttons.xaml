@@ -48,7 +48,7 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="DarkGray" />
+                                    Value="{DynamicResource FlatButtonMouseOverBackgroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -100,7 +100,7 @@
                                  Margin="4"
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
-                                 Margin="4"
+                                 Margin="6"
                                  Stroke="{TemplateBinding BorderBrush}"
                                  StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
                         <ContentPresenter x:Name="content"
@@ -172,9 +172,9 @@
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                               RecognizesAccessKey="True"
-                              Opacity="0.75" />
+                              Opacity="1" />
         </Grid>
-        <ControlTemplate.Triggers>
+        <!--<ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter TargetName="contentPresenter"
@@ -192,7 +192,7 @@
                 <Setter Property="Foreground"
                         Value="#ADADAD" />
             </Trigger>
-        </ControlTemplate.Triggers>
+        </ControlTemplate.Triggers>-->
     </ControlTemplate>
     <Style x:Key="ChromelessButtonStyle"
            TargetType="{x:Type ButtonBase}">
