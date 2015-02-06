@@ -574,6 +574,8 @@
            TargetType="{x:Type ScrollViewer}">
         <Setter Property="Controls:ScrollBarHelper.VerticalScrollBarOnLeftSide"
                 Value="False" />
+        <Setter Property="Padding"
+                Value="15,2,15,0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollViewer}">
