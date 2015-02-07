@@ -429,8 +429,12 @@ namespace MahApps.Metro.Controls
                 return;
 
             var template = passbox.Template;
-            if (template == null)
-                return;
+            if (template == null) {
+                passbox.ApplyTemplate();
+                template = passbox.Template;
+                if (template == null) 
+                    return;
+            }
 
             var button = template.FindName("PART_ClearText", passbox) as Button;
             if (button == null)
