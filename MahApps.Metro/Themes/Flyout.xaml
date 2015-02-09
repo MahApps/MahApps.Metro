@@ -180,7 +180,8 @@
     <ControlTemplate x:Key="FlyoutTemplate"
                      TargetType="{x:Type Controls:Flyout}">
         <Grid x:Name="root"
-              Margin="{TemplateBinding Margin}">
+              Margin="{TemplateBinding Margin}"
+              Background="{TemplateBinding Background}">
             <Grid.RenderTransform>
                 <TranslateTransform />
             </Grid.RenderTransform>
