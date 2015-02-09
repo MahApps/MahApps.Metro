@@ -13,6 +13,16 @@
     <!--20%-->
     <Color x:Key="AccentColor4">#33d79120</Color>
 
+    <SolidColorBrush x:Key="HighlightBrush"
+                     Color="{DynamicResource HighlightColor}" />
+    <SolidColorBrush x:Key="AccentColorBrush"
+                     Color="{DynamicResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentColorBrush2"
+                     Color="{DynamicResource AccentColor2}" />
+    <SolidColorBrush x:Key="AccentColorBrush3"
+                     Color="{DynamicResource AccentColor3}" />
+    <SolidColorBrush x:Key="AccentColorBrush4"
+                     Color="{DynamicResource AccentColor4}" />
 
     <SolidColorBrush x:Key="FlatButtonBackgroundBrush"
                      Color="#BBBCBE"
