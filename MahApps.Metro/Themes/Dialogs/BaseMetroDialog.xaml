@@ -10,15 +10,22 @@
 
     <Style BasedOn="{StaticResource SquareButtonStyle}"
            TargetType="{x:Type Button}">
-        <Setter Property="controls:ButtonHelper.PreserveTextCase" 
-                Value="True" />
+        <Setter Property="controls:ButtonHelper.PreserveTextCase"
+                Value="{Binding Path=DialogSettings.PreserveTextCase, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Dialogs:BaseMetroDialog}}}" />
     </Style>
 
     <Style x:Key="AccentedDialogSquareButton"
            BasedOn="{StaticResource AccentedSquareButtonStyle}"
            TargetType="{x:Type Button}">
-        <Setter Property="controls:ButtonHelper.PreserveTextCase" 
-                Value="True" />
+        <Setter Property="controls:ButtonHelper.PreserveTextCase"
+                Value="{Binding Path=DialogSettings.PreserveTextCase, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Dialogs:BaseMetroDialog}}}" />
+    </Style>
+
+    <Style x:Key="AccentedDialogHighlightedSquareButton"
+           BasedOn="{StaticResource HighlightedSquareButtonStyle}"
+           TargetType="{x:Type Button}">
+        <Setter Property="controls:ButtonHelper.PreserveTextCase"
+                Value="{Binding Path=DialogSettings.PreserveTextCase, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Dialogs:BaseMetroDialog}}}" />
     </Style>
 
     <Storyboard x:Key="DialogShownStoryboard">
