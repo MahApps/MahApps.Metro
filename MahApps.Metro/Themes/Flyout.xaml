@@ -343,6 +343,8 @@
                 Value="{x:Null}" />
         <Setter Property="HeaderHeight"
                 Value="NaN" />
+        <Setter Property="Theme"
+                Value="Adapt" />
         <Setter Property="Foreground"
                 Value="{DynamicResource FlyoutForegroundBrush}" />
         <Setter Property="Background"
