@@ -9,6 +9,8 @@
         <!-- doesn't need this anymore... -->
         <!--<Setter Property="Foreground"
                 Value="{DynamicResource LabelTextBrush}" />-->
+        <Setter Property="TextOptions.TextFormattingMode"
+                Value="Ideal" />
     </Style>
 
 </ResourceDictionary>

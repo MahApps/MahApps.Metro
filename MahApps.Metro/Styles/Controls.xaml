@@ -43,6 +43,7 @@
     <Style TargetType="Button" BasedOn="{StaticResource MetroButton}" />
     <Style TargetType="ToggleButton" BasedOn="{StaticResource MetroToggleButton}" />
     <Style TargetType="TextBox" BasedOn="{StaticResource MetroTextBox}" />
+    <Style TargetType="TextBlock" BasedOn="{StaticResource MetroTextBlock}" />
     <Style TargetType="RichTextBox" BasedOn="{StaticResource MetroRichTextBox}" />
     <Style TargetType="Slider" BasedOn="{StaticResource MetroSlider}" />
     <Style TargetType="Label" BasedOn="{StaticResource MetroLabel}" />
