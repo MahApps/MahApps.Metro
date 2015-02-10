@@ -18,7 +18,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
 
-        protected MetroDialogSettings DialogSettings { get; private set; }
+        public MetroDialogSettings DialogSettings { get; private set; }
 
         /// <summary>
         /// Gets/sets the dialog's title.
@@ -284,6 +284,8 @@ namespace MahApps.Metro.Controls.Dialogs
     {
         public MetroDialogSettings()
         {
+            PreserveTextCase = true;
+            
             AffirmativeButtonText = "OK";
             NegativeButtonText = "Cancel";
 
@@ -334,6 +336,12 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the maximum height. (Default is unlimited height, <a href="http://msdn.microsoft.com/de-de/library/system.double.nan">Double.NaN</a>)
         /// </summary>
         public double MaximumBodyHeight { get; set; }
+
+        /// <summary>
+        /// Overrides the text case behavior for certain buttons.
+        /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
+        /// </summary>
+        public bool PreserveTextCase { get; set; }
     }
 
     /// <summary>
