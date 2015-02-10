@@ -166,10 +166,10 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                            <StackPanel.Resources>
+                        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <DockPanel.Resources>
                                 <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-                            </StackPanel.Resources>
+                            </DockPanel.Resources>
                             <ContentPresenter x:Name="ContentSite"
                                               Margin="{TemplateBinding Padding}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -179,16 +179,56 @@
                                               TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
                                               TextElement.Foreground="{TemplateBinding Foreground}"
                                               ContentSource="Header"
-                                              RecognizesAccessKey="True" />
+                                              RecognizesAccessKey="True"
+                                              DockPanel.Dock="Top"/>
                             <Rectangle x:Name="Underline" 
                                        Margin="0, 1, 0, 0" 
                                        Height="2" 
                                        HorizontalAlignment="Stretch" 
                                        Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, 
-                                           Path=(Controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
-                        </StackPanel>
+                                           Path=(Controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}"
+                                       DockPanel.Dock="Bottom"/>
+                        </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="ContentSite" Value="Left"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Right"/>
+                            <Setter Property="Width" TargetName="Underline" Value="2"/>
+                            <Setter Property="Height" TargetName="Underline" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="Underline" Value="1,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Top">
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="ContentSite" Value="Top"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Bottom"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Right"/>
+                            <Setter Property="Height" TargetName="Underline" Value="2"/>
+                            <Setter Property="Width" TargetName="Underline" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="Underline" Value="0,1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Right">
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="ContentSite" Value="Right"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Left"/>
+                            <Setter Property="Width" TargetName="Underline" Value="2"/>
+                            <Setter Property="Height" TargetName="Underline" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="Underline" Value="0,0,1,0"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Bottom">
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="ContentSite" Value="Bottom"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Top"/>
+                            <Setter Property="Height" TargetName="Underline" Value="2"/>
+                            <Setter Property="Width" TargetName="Underline" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="Underline" Value="0,0,0,1"/>
+                        </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="true">
                             <Setter Property="TextElement.Foreground"

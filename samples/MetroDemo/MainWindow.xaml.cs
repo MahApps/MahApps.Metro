@@ -17,9 +17,13 @@ namespace MetroDemo
         {
             _viewModel = new MainWindowViewModel();
             DataContext = _viewModel;
+            
             InitializeComponent();
+
             flyoutDemo = new FlyoutDemo();
-            flyoutDemo.Closed += (o, args) => flyoutDemo = null;
+            flyoutDemo.ApplyTemplate();
+            flyoutDemo.Closed += (o, e) => flyoutDemo = null;
+
             Closing += (s, e) =>
                 {
                     if (!e.Cancel && flyoutDemo != null)
@@ -45,9 +49,6 @@ namespace MetroDemo
                 {
                     metroWindow.UseNoneWindowStyle = true;
                     metroWindow.IgnoreTaskbarOnMaximize = true;
-                    metroWindow.ShowMinButton = false;
-                    metroWindow.ShowMaxRestoreButton = false;
-                    metroWindow.ShowCloseButton = false;
                     metroWindow.WindowState = WindowState.Maximized;
                 }
                 else
@@ -55,9 +56,6 @@ namespace MetroDemo
                     metroWindow.UseNoneWindowStyle = false;
                     metroWindow.ShowTitleBar = true; // <-- this must be set to true
                     metroWindow.IgnoreTaskbarOnMaximize = false;
-                    metroWindow.ShowMinButton = true;
-                    metroWindow.ShowMaxRestoreButton = true;
-                    metroWindow.ShowCloseButton = true;
                     metroWindow.WindowState = WindowState.Normal;
                 }
             }

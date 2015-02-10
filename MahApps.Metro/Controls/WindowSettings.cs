@@ -12,7 +12,26 @@ namespace MahApps.Metro.Controls
     public interface IWindowPlacementSettings
     {
         WINDOWPLACEMENT? Placement { get; set; }
+
+        /// <summary>
+        /// Refreshes the application settings property values from persistent storage.
+        /// </summary>
         void Reload();
+
+        /// <summary>
+        /// Upgrades the application settings on loading.
+        /// </summary>
+        [DefaultValue(true)]
+        bool UpgradeSettings { get; set; }
+
+        /// <summary>
+        /// Updates application settings to reflect a more recent installation of the application.
+        /// </summary>
+        void Upgrade();
+
+        /// <summary>
+        /// Stores the current values of the settings properties.
+        /// </summary>
         void Save();
     }
 
@@ -37,6 +56,12 @@ namespace MahApps.Metro.Controls
                 this["Placement"] = value;
             }
         }
+
+        /// <summary>
+        /// Upgrades the application settings on loading.
+        /// </summary>
+        [DefaultValue(true)]
+        public bool UpgradeSettings { get; set; }
     }
     
     public class WindowSettings

@@ -361,10 +361,26 @@ namespace MahApps.Metro.Controls
             if (e.NewValue != e.OldValue)
             {
                 // if UseNoneWindowStyle = true no title bar should be shown
-                if ((bool)e.NewValue)
-                {
-                    ((MetroWindow)d).ShowTitleBar = false;
-                }
+                var useNoneWindowStyle = (bool)e.NewValue;
+                var window = (MetroWindow)d;
+                window.ToggleNoneWindowStyle(useNoneWindowStyle);
+            }
+        }
+
+        private void ToggleNoneWindowStyle(bool useNoneWindowStyle)
+        {
+            // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
+            if (useNoneWindowStyle)
+            {
+                ShowTitleBar = false;
+            }
+            if (LeftWindowCommandsPresenter != null)
+            {
+                LeftWindowCommandsPresenter.Visibility = useNoneWindowStyle ? Visibility.Collapsed : Visibility.Visible;
+            }
+            if (RightWindowCommandsPresenter != null)
+            {
+                RightWindowCommandsPresenter.Visibility = useNoneWindowStyle ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
@@ -664,21 +680,7 @@ namespace MahApps.Metro.Controls
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
             }
 
-            // if UseNoneWindowStyle = true no title bar, window commands or min, max, close buttons should be shown
-            if (UseNoneWindowStyle)
-            {
-                if (LeftWindowCommandsPresenter != null)
-                {
-                    LeftWindowCommandsPresenter.Visibility = Visibility.Collapsed;
-                }
-                if (RightWindowCommandsPresenter != null)
-                {
-                    RightWindowCommandsPresenter.Visibility = Visibility.Collapsed;
-                }
-                ShowMinButton = false;
-                ShowMaxRestoreButton = false;
-                ShowCloseButton = false;
-            }
+            this.ToggleNoneWindowStyle(this.UseNoneWindowStyle);
 
             if (this.Flyouts == null)
             {

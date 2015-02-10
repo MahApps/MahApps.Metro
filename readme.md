@@ -2,7 +2,10 @@
 
 A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the box.
 
-`CheckBox` and `RadioButton` styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
+[![Build status](https://img.shields.io/appveyor/ci/flagbug/mahapps-metro/master.svg?style=flat-square)](https://ci.appveyor.com/project/flagbug/mahapps-metro/branch/master)
+[![Release](https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/releases/latest)
+[![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro/)
+[![Issues](https://img.shields.io/github/issues/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/issues)
 
 ### Documentation
 
@@ -16,6 +19,10 @@ MahApps.Metro has also an icon package used from [WindowsIcons](https://github.c
 
 You can download the Nuget package [here](https://www.nuget.org/packages/MahApps.Metro.Resources)
 
+### Styles
+
+`CheckBox` and `RadioButton` styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
+
 ### Ran into an bug?
 
 Did you stumble upon a bug? Before reporting it to us, please check out the [FAQ](https://github.com/MahApps/MahApps.Metro/wiki/FAQ) to see if it is actually a bug. If you can not find anything related to your issue, feel free to report it to us in the issue tracker.
@@ -26,27 +33,8 @@ Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-
 
 ### Breaking Changes
 
-* for v0.11.3.1 [WTF is happening with the ALPHA version](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
+* For version [0.11.3.1](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
 * For version [0.14 to 1.0.0](https://github.com/MahApps/MahApps.Metro/blob/master/docs/v1.0-Migration-Guide.md)
-
-### Visual Studio Templates
-
-Yes we did it! We have now 4 simple templates to start with the awesome MahApps.Metro library.
-
-* WPF MahApps.Metro Application (.NET4)
-* WPF MahApps.Metro Application (.NET45)
-* Visual Basic WPF MahApps.Metro Application (.NET45)
-* Window MahApps.Metro (WPF)
-
-Download this [Templates.zip](https://github.com/MahApps/MahApps.Metro/raw/master/Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
-
-```
-c:\Users\<USER>\Documents\Visual Studio 2013\
-```
-
-Now you can choose the templates at the `New Project` dialog.
-
-![](./docs/new_project_dialog.png)
 
 ### A short How To
 
@@ -99,6 +87,25 @@ namespace WpfApplication
 }
 ```
 
+### Visual Studio Templates
+
+Yes we did it! We have now 4 simple templates to start with the awesome MahApps.Metro library.
+
+* WPF MahApps.Metro Application (.NET4)
+* WPF MahApps.Metro Application (.NET45)
+* Visual Basic WPF MahApps.Metro Application (.NET45)
+* Window MahApps.Metro (WPF)
+
+Download this [Templates.zip](https://github.com/MahApps/MahApps.Metro/raw/master/Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
+
+```
+c:\Users\<USER>\Documents\Visual Studio 2013\
+```
+
+Now you can choose the templates at the `New Project` dialog.
+
+![](./docs/new_project_dialog.png)
+
 ### Contributions
 
 If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request.
@@ -112,6 +119,7 @@ Drop in on the Gitter room - https://gitter.im/MahApps/MahApps.Metro - if you wa
 If you're looking for a control that we don't have, we have some friends who have made MA.M compatible controls. Check them out:
 
 - [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
+- [Dragablz - TabControl with Chrome style tearing, and docking/tool window/MDI support](https://github.com/ButchersBoy/Dragablz)
 
 ### Licence
 
