@@ -13,6 +13,8 @@
     <!--20%-->
     <Color x:Key="AccentColor4">#33d79120</Color>
 
+    <Color x:Key="NullColor" />
+    
     <SolidColorBrush x:Key="HighlightBrush"
                      Color="{DynamicResource HighlightColor}" />
     <SolidColorBrush x:Key="AccentColorBrush"
@@ -39,7 +41,17 @@
     <SolidColorBrush x:Key="FlatButtonMouseOverBackgroundBrush"
                      Color="#FFD79120"
                      options:Freeze="True" />
-    
+
+    <SolidColorBrush x:Key="FlyoutBackgroundBrush"
+                     Color="{StaticResource NullColor}"
+                     options:Freeze="True" />
+
+    <!-- foreground en theme Accent -->
+    <Color x:Key="IdealForegroundColor">White</Color>
+    <SolidColorBrush x:Key="IdealForegroundColorBrush"
+                     Color="{StaticResource IdealForegroundColor}"
+                     options:Freeze="True" />
+
     <!-- Controls.Slider -->
     <system:Double x:Key="HorizontalThumbWidth">40</system:Double>
     <system:Double x:Key="VerticalThumbHeight">40</system:Double>
