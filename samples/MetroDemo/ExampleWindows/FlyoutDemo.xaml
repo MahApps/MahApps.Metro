@@ -66,7 +66,7 @@
     </Controls:MetroWindow.TitleTemplate>
 
     <Controls:MetroWindow.LeftWindowCommands>
-        <Controls:WindowCommands>
+        <Controls:WindowCommands ShowSeparators="False">
             <Button FontFamily="Wingdings"
                     FontSize="20"
                     Content="A" />
