@@ -203,9 +203,9 @@ namespace MahApps.Metro.Controls.Dialogs
             switch (md.DialogSettings.ColorScheme)
             {
                 case MetroDialogColorScheme.Accented:
-                    md.PART_NegativeButton.Style = md.FindResource("HighlightedSquareButtonStyle") as Style;
-                    md.PART_FirstAuxiliaryButton.Style = md.FindResource("HighlightedSquareButtonStyle") as Style;
-                    md.PART_SecondAuxiliaryButton.Style = md.FindResource("HighlightedSquareButtonStyle") as Style;
+                    md.PART_NegativeButton.Style = md.FindResource("AccentedDialogHighlightedSquareButton") as Style;
+                    md.PART_FirstAuxiliaryButton.Style = md.FindResource("AccentedDialogHighlightedSquareButton") as Style;
+                    md.PART_SecondAuxiliaryButton.Style = md.FindResource("AccentedDialogHighlightedSquareButton") as Style;
                     break;
             }
         }
