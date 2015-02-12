@@ -38,12 +38,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroTabItem}">
                     <Border x:Name="Border"
-                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Stretch"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
+                            <StackPanel Orientation="Horizontal">
                             <ContentPresenter x:Name="ContentSite"
                                               Margin="2,1,2,1"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -75,6 +76,13 @@
                                                  Visual="{StaticResource tabitem_close}" />
                                 </Button.OpacityMask>
                             </Button>
+                            </StackPanel>
+                            <Rectangle x:Name="Underline"
+                                       Margin="0, 1, 0, 0"
+                                       Height="2"
+                                       HorizontalAlignment="Stretch"
+                                       Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, 
+                                           Path=(Controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -83,11 +91,17 @@
                             <Setter Property="TextElement.Foreground"
                                     TargetName="ContentSite"
                                     Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
+                                    Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="false">
                             <Setter Property="TextElement.Foreground"
                                     TargetName="ContentSite"
+                                    Value="{DynamicResource GrayNormalBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
                                     Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         <Trigger SourceName="ContentSite"
@@ -95,6 +109,9 @@
                                  Value="True">
                             <Setter Property="TextElement.Foreground"
                                     TargetName="ContentSite"
+                                    Value="{DynamicResource GrayHoverBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
                                     Value="{DynamicResource GrayHoverBrush}" />
                             <Setter TargetName="PART_CloseButton"
                                     Property="Background"
@@ -107,6 +124,18 @@
                                     Property="Background"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="ContentSite" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
+                                    Value="{DynamicResource HighlightBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
+                                    Value="{DynamicResource HighlightBrush}" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
