@@ -374,6 +374,10 @@ namespace MahApps.Metro.Controls
                 // only one loaded event
                 textbox.Loaded -= TextBoxLoaded;
                 textbox.Loaded += TextBoxLoaded;
+                if (textbox.IsLoaded)
+                {
+                    TextBoxLoaded(textbox, new RoutedEventArgs());
+                }
             }
             var passbox = d as PasswordBox;
             if (passbox != null)
@@ -381,6 +385,10 @@ namespace MahApps.Metro.Controls
                 // only one loaded event
                 passbox.Loaded -= PassBoxLoaded;
                 passbox.Loaded += PassBoxLoaded;
+                if (passbox.IsLoaded)
+                {
+                    PassBoxLoaded(passbox, new RoutedEventArgs());
+                }
             }
             var combobox = d as ComboBox;
             if (combobox != null)
@@ -388,6 +396,10 @@ namespace MahApps.Metro.Controls
                 // only one loaded event
                 combobox.Loaded -= ComboBoxLoaded;
                 combobox.Loaded += ComboBoxLoaded;
+                if (combobox.IsLoaded)
+                {
+                    ComboBoxLoaded(combobox, new RoutedEventArgs());
+                }
             }
         }
 
