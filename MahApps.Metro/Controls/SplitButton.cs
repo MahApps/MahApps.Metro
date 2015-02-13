@@ -53,10 +53,12 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("IsExpanded", typeof(bool), typeof(SplitButton));
 
         public static readonly DependencyProperty SelectedIndexProperty =
-            DependencyProperty.Register("SelectedIndex", typeof(Int32), typeof(SplitButton), new FrameworkPropertyMetadata(0));
+            DependencyProperty.Register("SelectedIndex", typeof(Int32), typeof(SplitButton),
+                new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty SelectedItemProperty =
-            DependencyProperty.Register("SelectedItem", typeof(Object), typeof(SplitButton));
+            DependencyProperty.Register("SelectedItem", typeof(Object), typeof(SplitButton),
+                new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public static readonly DependencyProperty ExtraTagProperty =
             DependencyProperty.Register("ExtraTag", typeof(Object), typeof(SplitButton));
