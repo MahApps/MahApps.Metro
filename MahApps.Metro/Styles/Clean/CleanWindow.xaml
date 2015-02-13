@@ -203,11 +203,22 @@
         </ControlTemplate.Resources>
         <ControlTemplate.Triggers>
             <!-- handle active/inactive state -->
-            <Trigger Property="IsActive"
-                     Value="False">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsActive"
+                               Value="False" />
+                    <Condition Property="GlowBrush"
+                               Value="{x:Null}" />
+                </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border"
                         Property="BorderBrush"
                         Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+            </MultiTrigger>
+            <Trigger Property="BorderBrush"
+                     Value="{x:Null}">
+                <Setter TargetName="PART_Border"
+                        Property="Visibility"
+                        Value="Collapsed" />
             </Trigger>
             <!-- no icon and no icon content template -> collapse the icon content control -->
             <MultiTrigger>
