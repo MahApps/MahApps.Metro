@@ -1,0 +1,56 @@
+﻿<Window x:Class="MahApps.Metro.Controls.ResizerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ResizerWindow" Height="300" Width="300"
+        ResizeMode="NoResize"
+        x:ClassModifier="internal"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Background="Transparent"
+        x:Name="resizerWindow"
+        Opacity="0"
+        ShowActivated="False"
+        ShowInTaskbar="False"
+        IsHitTestVisible="False">
+    <Window.Resources>
+        <Storyboard x:Key="ShowStoryboard">
+            <DoubleAnimation
+                Storyboard.TargetProperty="(UIElement.Opacity)"
+                Storyboard.TargetName="resizerWindow"
+                To="1"
+                Duration="00:00:.2" />
+        </Storyboard>
+        <Storyboard x:Key="HideStoryboard">
+            <DoubleAnimation
+                Storyboard.TargetProperty="(UIElement.Opacity)"
+                Storyboard.TargetName="resizerWindow"
+                To="0"
+                Duration="00:00:.1" />
+        </Storyboard>
+    </Window.Resources>
+    <Grid Name="RootGrid" Margin="10">
+        <Grid.Resources>
+            <Style x:Key="VerticalBorderStyle" TargetType="Border">
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="UseLayoutRounding" Value="True" />
+                <Setter Property="Width" Value="6" />
+                <Setter Property="BorderBrush" Value="#66666666" />
+                <Setter Property="BorderThickness" Value="6" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="Margin" Value="0,6" />
+            </Style>
+            <Style x:Key="HorizontalBorderStyle" TargetType="Border">
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="UseLayoutRounding" Value="True" />
+                <Setter Property="Height" Value="6" />
+                <Setter Property="BorderBrush" Value="#66666666" />
+                <Setter Property="BorderThickness" Value="6" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+            </Style>
+        </Grid.Resources>
+        <Border Style="{StaticResource VerticalBorderStyle}" HorizontalAlignment="Left" />
+        <Border Style="{StaticResource HorizontalBorderStyle}" VerticalAlignment="Top" />
+        <Border Style="{StaticResource VerticalBorderStyle}" HorizontalAlignment="Right" />
+        <Border Style="{StaticResource HorizontalBorderStyle}" VerticalAlignment="Bottom" />
+    </Grid>
+</Window>

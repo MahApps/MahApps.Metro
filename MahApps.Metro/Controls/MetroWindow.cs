@@ -36,6 +36,7 @@ namespace MahApps.Metro.Controls
         private const string PART_OverlayBox = "PART_OverlayBox";
         private const string PART_MetroDialogContainer = "PART_MetroDialogContainer";
         private const string PART_FlyoutModal = "PART_FlyoutModal";
+        private const string PART_MetroResizeGrip = "PART_MetroResizeGrip";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
         public static readonly DependencyProperty IconEdgeModeProperty = DependencyProperty.Register("IconEdgeMode", typeof(EdgeMode), typeof(MetroWindow), new PropertyMetadata(EdgeMode.Aliased));
@@ -95,6 +96,7 @@ namespace MahApps.Metro.Controls
         internal ContentPresenter LeftWindowCommandsPresenter;
         internal ContentPresenter RightWindowCommandsPresenter;
         internal WindowButtonCommands WindowButtonCommands;
+        internal MetroResizeGrip metroResizeGrip;
         
         internal Grid overlayBox;
         internal Grid metroDialogContainer;
@@ -813,6 +815,7 @@ namespace MahApps.Metro.Controls
             icon = GetTemplateChild(PART_Icon) as UIElement;
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
+            metroResizeGrip = GetTemplateChild(PART_MetroResizeGrip) as MetroResizeGrip;
 
             this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
         }
@@ -1011,6 +1014,11 @@ namespace MahApps.Metro.Controls
             { }
 
             public Flyout ChangedFlyout { get; internal set; }
+        }
+
+        public void InvalidateDeferResizeProperty()
+        {
+            metroResizeGrip.InvalidateDeferResizeProperty();
         }
     }
 }
