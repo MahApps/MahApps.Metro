@@ -48,6 +48,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Debug\MahApps.Metro.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>

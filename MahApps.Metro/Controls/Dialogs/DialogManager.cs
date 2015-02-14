@@ -293,6 +293,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         /// <param name="window">The owning window of the dialog.</param>
         /// <param name="dialog">The dialog instance itself.</param>
+        /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
         public static Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog, MetroDialogSettings settings = null)
@@ -324,6 +325,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         /// <param name="window">The window with the dialog that is visible.</param>
         /// <param name="dialog">The dialog instance to hide.</param>
+        /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">
         /// The <paramref name="dialog"/> is not visible in the window.
