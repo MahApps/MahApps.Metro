@@ -166,6 +166,10 @@
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=IgnoreTaskbarOnMaximize}" />
                     <MenuItem IsCheckable="True" Header="Toggle FullScreen (no taskbar, window style = none)"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ToggleFullScreen}" />
+                    <Separator />
+                    <MenuItem Header="Window with a Border" Click="MenuWindowWithBorderOnClick" />
+                    <MenuItem Header="Window with a Glow" Click="MenuWindowWithGlowOnClick" />
+                    <MenuItem Header="Window with drop shadow" Click="MenuWindowWithShadowOnClick" />
                 </MenuItem>
             </Menu>
 
