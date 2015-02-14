@@ -107,7 +107,6 @@
                                           Grid.Row="1"
                                           BorderThickness="0"
                                           IsTabStop="False"
-                                          Margin="2"
                                           VerticalAlignment="Stretch"
                                           Background="{x:Null}" />
                             <TextBlock x:Name="Message"
