@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <Color x:Key="HighlightColor">#ffd79120</Color>
+    <!--80%-->
+    <Color x:Key="AccentColor">#CCd79120</Color>
+    <!--60%-->
+    <Color x:Key="AccentColor2">#99d79120</Color>
+    <!--40%-->
+    <Color x:Key="AccentColor3">#66d79120</Color>
+    <!--20%-->
+    <Color x:Key="AccentColor4">#33d79120</Color>
+
+    <Color x:Key="NullColor" />
+    
+    <SolidColorBrush x:Key="HighlightBrush"
+                     Color="{DynamicResource HighlightColor}" />
+    <SolidColorBrush x:Key="AccentColorBrush"
+                     Color="{DynamicResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentColorBrush2"
+                     Color="{DynamicResource AccentColor2}" />
+    <SolidColorBrush x:Key="AccentColorBrush3"
+                     Color="{DynamicResource AccentColor3}" />
+    <SolidColorBrush x:Key="AccentColorBrush4"
+                     Color="{DynamicResource AccentColor4}" />
+
+    <SolidColorBrush x:Key="FlatButtonBackgroundBrush"
+                     Color="#BBBCBE"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="FlatButtonForegroundBrush"
+                     Color="#3F403D"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="FlatButtonPressedBackgroundBrush"
+                     Color="#FFD79120"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="FlatButtonPressedForegroundBrush"
+                     Color="White"
+                     options:Freeze="True" />
+    <SolidColorBrush x:Key="FlatButtonMouseOverBackgroundBrush"
+                     Color="#FFD79120"
+                     options:Freeze="True" />
+
+    <SolidColorBrush x:Key="FlyoutBackgroundBrush"
+                     Color="{StaticResource NullColor}"
+                     options:Freeze="True" />
+
+    <!-- foreground en theme Accent -->
+    <Color x:Key="IdealForegroundColor">White</Color>
+    <SolidColorBrush x:Key="IdealForegroundColorBrush"
+                     Color="{StaticResource IdealForegroundColor}"
+                     options:Freeze="True" />
+
+    <!-- Controls.Slider -->
+    <system:Double x:Key="HorizontalThumbWidth">40</system:Double>
+    <system:Double x:Key="VerticalThumbHeight">40</system:Double>
+
+
+</ResourceDictionary>

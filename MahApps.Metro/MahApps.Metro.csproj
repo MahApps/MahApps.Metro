@@ -159,6 +159,7 @@
     <Compile Include="Controls\TreeHelper.cs" />
     <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
+    <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converters\TreeViewMarginConverter.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
@@ -239,6 +240,10 @@
     <Page Include="Styles\Accents\Cyan.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Accents\Dexip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Accents\Emerald.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -677,6 +682,9 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\filet_listboxitems.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

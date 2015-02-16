@@ -64,7 +64,7 @@
                                     <Rectangle x:Name="PART_BackgroundOverlay" Fill="{DynamicResource WhiteBrush}" Opacity="0"/>
                                 </Grid>
                             </Border>
-                            <Rectangle x:Name="PART_ThumbIndicator" Fill="{DynamicResource BlackBrush}" Width="13" HorizontalAlignment="Left">
+                            <Rectangle x:Name="PART_ThumbIndicator" Fill="{DynamicResource BlackBrush}" Width="23" HorizontalAlignment="Left">
                                 <Rectangle.RenderTransform>
                                     <TranslateTransform x:Name="PART_ThumbTranslate"/>
                                 </Rectangle.RenderTransform>
