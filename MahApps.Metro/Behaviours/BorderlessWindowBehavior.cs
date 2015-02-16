@@ -17,6 +17,7 @@ namespace MahApps.Metro.Behaviours
         private IntPtr handle;
         private HwndSource hwndSource;
         private WindowChrome windowChrome;
+        private PropertyChangeNotifier borderThicknessChangeNotifier;
         private Thickness? savedBorderThickness;
 
         protected override void OnAttached()
@@ -57,7 +58,10 @@ namespace MahApps.Metro.Behaviours
                 }
             }
             AssociatedObject.WindowStyle = WindowStyle.None;
+
             savedBorderThickness = AssociatedObject.BorderThickness;
+            borderThicknessChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.BorderThicknessProperty);
+            borderThicknessChangeNotifier.ValueChanged += BorderThicknessChangeNotifierOnValueChanged;
 
             AssociatedObject.Loaded += AssociatedObject_Loaded;
             AssociatedObject.Unloaded += AssociatedObject_Unloaded;
@@ -65,6 +69,11 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.StateChanged += OnAssociatedObjectHandleMaximize;
 
             base.OnAttached();
+        }
+
+        private void BorderThicknessChangeNotifierOnValueChanged(object sender, EventArgs e)
+        {
+            savedBorderThickness = AssociatedObject.BorderThickness;
         }
 
         private void UseNoneWindowStylePropertyChangedCallback(object sender, EventArgs e)
@@ -144,25 +153,8 @@ namespace MahApps.Metro.Behaviours
         private IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             var returnval = IntPtr.Zero;
-            var metroWindow = AssociatedObject as MetroWindow;
-
+            
             switch (msg) {
-                case Constants.WM_NCPAINT:
-                    var enableDWMDropShadow = EnableDWMDropShadow;
-
-                    if (metroWindow != null)
-                    {
-                        enableDWMDropShadow = metroWindow.GlowBrush == null && (metroWindow.EnableDWMDropShadow || EnableDWMDropShadow);
-                    }
-                    if (enableDWMDropShadow)
-                    {
-                        var val = 2;
-                        UnsafeNativeMethods.DwmSetWindowAttribute(hwnd, 2, ref val, 4);
-                        var m = new MARGINS { bottomHeight = 1, leftWidth = 1, rightWidth = 1, topHeight = 1 };
-                        UnsafeNativeMethods.DwmExtendFrameIntoClientArea(hwnd, ref m);
-                    }
-                    handled = true;
-                    break;
                 case Constants.WM_NCACTIVATE:
                     /* As per http://msdn.microsoft.com/en-us/library/ms632633(VS.85).aspx , "-1" lParam "does not repaint the nonclient area to reflect the state change." */
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
@@ -180,13 +172,21 @@ namespace MahApps.Metro.Behaviours
 
         private void HandleMaximize()
         {
+            borderThicknessChangeNotifier.ValueChanged -= BorderThicknessChangeNotifierOnValueChanged;
+
+            var metroWindow = AssociatedObject as MetroWindow;
+            var enableDWMDropShadow = EnableDWMDropShadow;
+            if (metroWindow != null)
+            {
+                enableDWMDropShadow = metroWindow.GlowBrush == null && (metroWindow.EnableDWMDropShadow || EnableDWMDropShadow);
+            }
+            
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
                 // remove resize border and window border, so we can move the window from top monitor position
                 windowChrome.ResizeBorderThickness = new Thickness(0);
                 AssociatedObject.BorderThickness = new Thickness(0);
 
-                var metroWindow = AssociatedObject as MetroWindow;
                 var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
                 if (ignoreTaskBar)
                 {
@@ -210,7 +210,10 @@ namespace MahApps.Metro.Behaviours
             else
             {
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
-                AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
+                if (!enableDWMDropShadow)
+                {
+                    AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
+                }
                 
                 // fix nasty TopMost bug
                 // - set TopMost="True"
@@ -222,6 +225,8 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.Topmost = false;
                 AssociatedObject.Topmost = topMost;
             }
+            
+            borderThicknessChangeNotifier.ValueChanged += BorderThicknessChangeNotifierOnValueChanged;
         }
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
@@ -257,8 +262,10 @@ namespace MahApps.Metro.Behaviours
             window.SetIsHitTestVisibleInChromeProperty<ContentControl>("PART_WindowButtonCommands");
         }
 
+        [Obsolete("This property will be deleted in the next release. Use the MetroWindow EnableDWMDropShadow property instead.")]
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
 
+        [Obsolete("This property will be deleted in the next release. Use the MetroWindow EnableDWMDropShadow property instead.")]
         public bool EnableDWMDropShadow
         {
             get { return (bool)GetValue(EnableDWMDropShadowProperty); }

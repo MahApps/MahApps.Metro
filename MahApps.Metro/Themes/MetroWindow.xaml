@@ -199,14 +199,28 @@
         </ControlTemplate.Resources>
         <ControlTemplate.Triggers>
             <!-- handle active/inactive state -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsActive"
+                               Value="False" />
+                    <Condition Property="GlowBrush"
+                               Value="{x:Null}" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="PART_Border"
+                        Property="BorderBrush"
+                        Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+            </MultiTrigger>
             <Trigger Property="IsActive"
                      Value="False">
                 <Setter TargetName="PART_WindowTitleBackground"
                         Property="Fill"
                         Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+            </Trigger>
+            <Trigger Property="BorderBrush"
+                     Value="{x:Null}">
                 <Setter TargetName="PART_Border"
-                        Property="BorderBrush"
-                        Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                        Property="Visibility"
+                        Value="Collapsed" />
             </Trigger>
             <!-- no icon and no icon content template -> collapse the icon content control -->
             <MultiTrigger>
@@ -238,6 +252,8 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
+        <Setter Property="BorderThickness"
+                Value="1" />
         <Setter Property="UseLayoutRounding"
                 Value="True" />
         <Setter Property="WindowTitleBrush"

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleWindows;
@@ -287,6 +289,46 @@ namespace MetroDemo
 
             if (_shutdown)
                 Application.Current.Shutdown();
+        }
+
+        private MetroWindow testWindow;
+
+        private MetroWindow GetTestWindow()
+        {
+            if (testWindow != null) {
+                testWindow.Close();
+            }
+            testWindow = new MetroWindow() { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner, Title = "Another Test...", Width = 500, Height = 300 };
+            testWindow.Closed += (o, args) => testWindow = null;
+            return testWindow;
+        }
+
+        private void MenuWindowWithBorderOnClick(object sender, RoutedEventArgs e)
+        {
+            var w = this.GetTestWindow();
+            w.Content = new TextBlock() { Text = "MetroWindow with a Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.BorderThickness = new Thickness(1);
+            w.GlowBrush = null;
+            w.BorderBrush = this.FindResource("AccentColorBrush") as Brush;
+            w.Show();
+        }
+
+        private void MenuWindowWithGlowOnClick(object sender, RoutedEventArgs e)
+        {
+            var w = this.GetTestWindow();
+            w.Content = new TextBlock() { Text = "MetroWindow with a Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.BorderThickness = new Thickness(1);
+            w.BorderBrush = null;
+            w.GlowBrush = this.FindResource("AccentColorBrush") as SolidColorBrush;
+            w.Show();
+        }
+
+        private void MenuWindowWithShadowOnClick(object sender, RoutedEventArgs e)
+        {
+            var w = this.GetTestWindow();
+            w.Content = new TextBlock() { Text = "MetroWindow with a Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            w.EnableDWMDropShadow = true;
+            w.Show();
         }
     }
 }

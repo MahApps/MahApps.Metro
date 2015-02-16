@@ -44,6 +44,10 @@ namespace MahApps.Metro.Controls
             b.Source = owner;
             glow.SetBinding(Glow.NonActiveGlowBrushProperty, b);
 
+            b = new Binding("BorderThickness");
+            b.Source = owner;
+            glow.SetBinding(Glow.BorderThicknessProperty, b);
+
             switch (direction)
             {
                 case GlowDirection.Left:

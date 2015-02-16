@@ -86,7 +86,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
 
-        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
+        public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnEnableDWMDropShadowPropertyChangedCallback));
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         UIElement icon;
@@ -130,6 +130,22 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(EnableDWMDropShadowProperty); }
             set { SetValue(EnableDWMDropShadowProperty, value); }
+        }
+
+        private static void OnEnableDWMDropShadowPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue && (bool)e.NewValue)
+            {
+                var window = (MetroWindow)d;
+                window.UseDropShadow();
+            }
+        }
+
+        private void UseDropShadow()
+        {
+            this.BorderThickness = new Thickness(0);
+            this.BorderBrush = null;
+            this.GlowBrush = Brushes.Black;
         }
 
         public bool IsWindowDraggable
@@ -675,6 +691,11 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            if (EnableDWMDropShadow)
+            {
+                this.UseDropShadow();
+            }
+
             if (this.WindowTransitionsEnabled)
             {
                 VisualStateManager.GoToState(this, "AfterLoaded", true);
