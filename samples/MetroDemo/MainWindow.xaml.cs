@@ -327,6 +327,7 @@ namespace MetroDemo
         {
             var w = this.GetTestWindow();
             w.Content = new TextBlock() { Text = "MetroWindow with a Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
+            // use this to test the obsolete under the hood code
             w.EnableDWMDropShadow = true;
             w.Show();
         }

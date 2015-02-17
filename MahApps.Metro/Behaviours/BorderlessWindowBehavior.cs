@@ -262,10 +262,10 @@ namespace MahApps.Metro.Behaviours
             window.SetIsHitTestVisibleInChromeProperty<ContentControl>("PART_WindowButtonCommands");
         }
 
-        [Obsolete("This property will be deleted in the next release. Use the MetroWindow EnableDWMDropShadow property instead.")]
+        [Obsolete(@"This property will be deleted in the next release. You should use BorderThickness=""0"" and a GlowBrush=""Black"" properties in your Window to get a drop shadow around it.")]
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(BorderlessWindowBehavior), new PropertyMetadata(false));
 
-        [Obsolete("This property will be deleted in the next release. Use the MetroWindow EnableDWMDropShadow property instead.")]
+        [Obsolete(@"This property will be deleted in the next release. You should use BorderThickness=""0"" and a GlowBrush=""Black"" properties in your Window to get a drop shadow around it.")]
         public bool EnableDWMDropShadow
         {
             get { return (bool)GetValue(EnableDWMDropShadowProperty); }
