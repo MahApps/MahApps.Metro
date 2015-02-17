@@ -387,11 +387,11 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Path Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
+            <Path Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
                               Height="6"
                               Stretch="Uniform"
                               Width="10"
-                              Margin="0.5,0,0,0"
+                              Margin="0.5,0,0.5,0"
                               Fill="{DynamicResource GrayBrush1}" />
                         <Path x:Name="HoverPath"
                               Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
@@ -400,7 +400,7 @@
                               Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="1,0,0,0"
+                              Margin="0.5,0,0.5,0"
                               Fill="{DynamicResource BlackBrush}" />
                         <Path x:Name="Blur"
                               Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
@@ -409,7 +409,7 @@
                               Width="10"
                               UseLayoutRounding="False"
                               Opacity="0"
-                              Margin="0,0,2,0"
+                              Margin="0.5,0,0.5,0"
                               Fill="{DynamicResource BlackBrush}">
                             <Path.Effect>
                                 <BlurEffect />
