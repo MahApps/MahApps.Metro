@@ -281,6 +281,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             return (settings == null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.HideOverlay))));
         }
+        
         private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
         {
             return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
@@ -293,6 +294,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         /// <param name="window">The owning window of the dialog.</param>
         /// <param name="dialog">The dialog instance itself.</param>
+        /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
         public static Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog, MetroDialogSettings settings = null)
@@ -319,11 +321,13 @@ namespace MahApps.Metro.Controls.Dialogs
                     }
                 })))));
         }
+
         /// <summary>
         /// Hides a visible Metro Dialog instance.
         /// </summary>
         /// <param name="window">The window with the dialog that is visible.</param>
         /// <param name="dialog">The dialog instance to hide.</param>
+        /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">
         /// The <paramref name="dialog"/> is not visible in the window.

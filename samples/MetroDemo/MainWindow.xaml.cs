@@ -91,7 +91,7 @@ namespace MetroDemo
                 flyoutDemo = new FlyoutDemo();
                 flyoutDemo.Closed += (o, args) => flyoutDemo = null;
             }
-            flyoutDemo.ShowDialog();
+            flyoutDemo.Launch();
         }
 
         private void LaunchIcons(object sender, RoutedEventArgs e)

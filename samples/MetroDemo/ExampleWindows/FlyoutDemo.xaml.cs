@@ -26,7 +26,7 @@ namespace MetroDemo.ExampleWindows
                 };
         }
 
-        public void ShowDialog()
+        public void Launch()
         {
             Owner = Application.Current.MainWindow;
             // only for this window, because we allow minimizing

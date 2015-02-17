@@ -8,6 +8,8 @@ using System.Windows.Media;
 using MahApps.Metro;
 using MetroDemo.Models;
 using System.Windows.Input;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace MetroDemo
 {
@@ -155,29 +157,23 @@ namespace MetroDemo
         {
             get
             {
-                return this.textBoxButtonCmd ?? (this.textBoxButtonCmd = new TextBoxButtonCommand());
-            }
-        }
-
-        public class TextBoxButtonCommand : ICommand
-        {
-            public bool CanExecute(object parameter)
-            {
-                return true;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
-            {
-                if (parameter is TextBox)
+                return this.textBoxButtonCmd ?? (this.textBoxButtonCmd = new SimpleCommand
                 {
-                    MessageBox.Show("TextBox Button was clicked!" + Environment.NewLine + "Text: " + ((TextBox)parameter).Text);
-                }
-                else if (parameter is PasswordBox)
-                {
-                    MessageBox.Show("PasswordBox Button was clicked!" + Environment.NewLine + "Text: " + ((PasswordBox)parameter).Password);
-                }
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = async x =>
+                    {
+                        if (x is TextBox)
+                        {
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!",
+                                                                                                    string.Format("Text: {0}", ((TextBox) x).Text));
+                        }
+                        else if (x is PasswordBox)
+                        {
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!",
+                                                                                                    string.Format("Password: {0}", ((PasswordBox) x).Password));
+                        }
+                    }
+                });
             }
         }
 
@@ -187,25 +183,18 @@ namespace MetroDemo
         {
             get
             {
-                return this.textBoxButtonCmdWithParameter ?? (this.textBoxButtonCmdWithParameter = new TextBoxButtonCommandWithIntParameter());
-            }
-        }
-
-        public class TextBoxButtonCommandWithIntParameter : ICommand
-        {
-            public bool CanExecute(object parameter)
-            {
-                return true;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
-            {
-                if (parameter is String)
+                return this.textBoxButtonCmdWithParameter ?? (this.textBoxButtonCmdWithParameter = new SimpleCommand
                 {
-                    MessageBox.Show("TextBox Button was clicked with parameter!" + Environment.NewLine + "Text: " + parameter);
-                }
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = async x =>
+                    {
+                        if (x is String)
+                        {
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!",
+                                                                                                  string.Format("Parameter: {0}", x));
+                        }
+                    }
+                });
             }
         }
 
@@ -243,38 +232,28 @@ namespace MetroDemo
 
         public string Error { get { return string.Empty; } }
 
-        public ICommand SingleCloseTabCommand { get { return new ExampleSingleTabCloseCommand(); } }
+        private ICommand singleCloseTabCommand;
 
-        public class ExampleSingleTabCloseCommand : ICommand
+        public ICommand SingleCloseTabCommand
         {
-            public bool CanExecute(object parameter)
+            get
             {
-                return true;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
-            {
-                System.Windows.MessageBox.Show("You are now closing the '" + parameter + "' tab!");
+                return this.singleCloseTabCommand ?? (this.singleCloseTabCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = async x =>
+                    {
+                        await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Closing tab!", string.Format("You are now closing the '{0}' tab", x));
+                    }
+                });
             }
         }
 
-        public ICommand NeverCloseTabCommand { get { return new AlwaysInvalidCloseCommand(); } }
+        private ICommand neverCloseTabCommand;
 
-        public class AlwaysInvalidCloseCommand : ICommand
+        public ICommand NeverCloseTabCommand
         {
-            public bool CanExecute(object parameter)
-            {
-                return false;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
-            {
-
-            }
+            get { return this.neverCloseTabCommand ?? (this.neverCloseTabCommand = new SimpleCommand { CanExecuteDelegate = x => false }); }
         }
 
         public IEnumerable<string> BrushResources { get; private set; }
