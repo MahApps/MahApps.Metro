@@ -81,7 +81,7 @@
                                        Margin="0, 1, 0, 0"
                                        Height="2"
                                        HorizontalAlignment="Stretch"
-                                       Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Controls:MetroTabControl}}, 
+                                       Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, 
                                            Path=(Controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </StackPanel>
                     </Border>
