@@ -4,6 +4,7 @@ using System.Windows;
 
 namespace MahApps.Metro.Native
 {
+    [Serializable]
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
     public struct RECT
     {
