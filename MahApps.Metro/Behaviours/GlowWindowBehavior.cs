@@ -19,7 +19,6 @@ namespace MahApps.Metro.Behaviours
 
             this.AssociatedObject.Loaded += AssociatedObjectOnLoaded;
             this.AssociatedObject.Unloaded += AssociatedObjectUnloaded;
-            this.AssociatedObject.StateChanged += AssociatedObjectStateChanged;
         }
 
         void AssociatedObjectStateChanged(object sender, EventArgs e)
@@ -101,6 +100,9 @@ namespace MahApps.Metro.Behaviours
             {
                 return;
             }
+
+            this.AssociatedObject.StateChanged -= AssociatedObjectStateChanged;
+            this.AssociatedObject.StateChanged += AssociatedObjectStateChanged;
 
             if (makeGlowVisibleTimer == null)
             {
