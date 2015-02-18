@@ -15,7 +15,6 @@ namespace MetroDemo.ExampleWindows
         {
             this.DataContext = new MainWindowViewModel();
             this.InitializeComponent();
-            settingsFlyout.IsOpenChanged += (sender, args) => firstTB.Focus();
             this.Closing += (s, e) =>
                 {
                     if (_hideOnClose)
