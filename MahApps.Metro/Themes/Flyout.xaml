@@ -220,7 +220,8 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <DockPanel>
+            <DockPanel FocusVisualStyle="{x:Null}"
+                       Focusable="False">
                 <ContentPresenter x:Name="PART_Header"
                                   DockPanel.Dock="Top"
                                   ContentSource="Header"
@@ -255,7 +256,11 @@
     <Style TargetType="{x:Type Controls:Flyout}">
         <Setter Property="Visibility"
                 Value="Hidden" />
+        <Setter Property="KeyboardNavigation.ControlTabNavigation"
+                Value="Cycle" />
         <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="Cycle" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation"
                 Value="Cycle" />
         <Setter Property="VerticalAlignment"
                 Value="Stretch" />

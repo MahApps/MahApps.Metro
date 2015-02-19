@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,6 +16,7 @@ namespace MahApps.Metro.Controls
     /// </summary>
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = "PART_Content", Type = typeof(ContentPresenter))]
     public class Flyout : ContentControl
     {
         /// <summary>
@@ -57,6 +59,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register("TitleVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register("AreAnimationsEnabled", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
+        public static readonly DependencyProperty FocusedElementProperty = DependencyProperty.Register("FocusedElement", typeof(FrameworkElement), typeof(Flyout), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty AllowFocusElementProperty = DependencyProperty.Register("AllowFocusElement", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
 
         internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
         internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
@@ -185,6 +189,24 @@ namespace MahApps.Metro.Controls
             set { SetValue(ThemeProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the focused element.
+        /// </summary>
+        public FrameworkElement FocusedElement
+        {
+            get { return (FrameworkElement)this.GetValue(FocusedElementProperty); }
+            set { this.SetValue(FocusedElementProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the flyout should try focus an element.
+        /// </summary>
+        public bool AllowFocusElement
+        {
+            get { return (bool)this.GetValue(AllowFocusElementProperty); }
+            set { this.SetValue(AllowFocusElementProperty, value); }
+        }
+        
         public Flyout()
         {
             this.Loaded += (sender, args) => UpdateFlyoutTheme();
@@ -315,9 +337,12 @@ namespace MahApps.Metro.Controls
                             }
                             flyout.Visibility = Visibility.Visible;
                             flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
+                            flyout.TryFocusElement();
                         }
                         else
                         {
+                            // focus the Flyout itself to avoid nasty FocusVisual painting (it's visible until the Flyout is closed)
+                            flyout.Focus();
                             if (flyout.hideStoryboard != null)
                             {
                                 flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
@@ -334,9 +359,12 @@ namespace MahApps.Metro.Controls
                         if ((bool)e.NewValue)
                         {
                             flyout.Visibility = Visibility.Visible;
+                            flyout.TryFocusElement();
                         }
                         else
                         {
+                            // focus the Flyout itself to avoid nasty FocusVisual painting (it's visible until the Flyout is closed)
+                            flyout.Focus();
                             flyout.Hide();
                         }
                         VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "HideDirect" : "ShowDirect", true);
@@ -362,6 +390,27 @@ namespace MahApps.Metro.Controls
             this.Visibility = Visibility.Hidden;
 
             this.RaiseEvent(new RoutedEventArgs(ClosingFinishedEvent));
+        }
+
+        private void TryFocusElement()
+        {
+            if (this.AllowFocusElement)
+            {
+                // first focus itself
+                this.Focus();
+                
+                if (this.FocusedElement != null)
+                {
+                    this.FocusedElement.Focus();
+                }
+                else if (this.PART_Content == null || !this.PART_Content.MoveFocus(new TraversalRequest(FocusNavigationDirection.First)))
+                {
+                    if (this.PART_Header != null)
+                    {
+                        this.PART_Header.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+                    }
+                }
+            }
         }
 
         private static void ThemeChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
@@ -409,6 +458,8 @@ namespace MahApps.Metro.Controls
         SplineDoubleKeyFrame showFrame;
         SplineDoubleKeyFrame showFrameY;
         SplineDoubleKeyFrame fadeOutFrame;
+        ContentPresenter PART_Header;
+        ContentPresenter PART_Content;
 
         public override void OnApplyTemplate()
         {
@@ -418,6 +469,9 @@ namespace MahApps.Metro.Controls
             if (root == null)
                 return;
 
+            PART_Header = (ContentPresenter)GetTemplateChild("PART_Header");
+            PART_Content = (ContentPresenter)GetTemplateChild("PART_Content");
+            
             hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
             hideFrame = (SplineDoubleKeyFrame)GetTemplateChild("hideFrame");
             hideFrameY = (SplineDoubleKeyFrame)GetTemplateChild("hideFrameY");
