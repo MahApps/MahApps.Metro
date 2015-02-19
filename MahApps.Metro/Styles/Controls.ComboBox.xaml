@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
@@ -138,7 +140,11 @@
                                                             FontFamily="Marlett"
                                                             Content="r"
                                                             Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
-                                                            IsTabStop="False" />
+                                                            IsTabStop="False">
+                                                        <i:Interaction.Behaviors>
+                                                            <behaviours:ClearTextButtonBehavior />
+                                                        </i:Interaction.Behaviors>
+                                                    </Button>
                                                     <Rectangle x:Name="BtnArrowBackground"
                                                                Grid.Column="2"
                                                                Fill="Transparent"
