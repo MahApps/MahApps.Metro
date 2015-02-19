@@ -172,10 +172,12 @@
                 <Label Content="PasswordBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <PasswordBox Margin="0, 10, 0, 0"
+                             Controls:TextBoxHelper.Watermark="Password"
                              Password="Password" />
                 <PasswordBox Margin="0, 10, 0, 0"
+                             Controls:TextBoxHelper.Watermark="Password"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.ClearTextButton="True"
-                             Controls:PasswordBoxHelper.CapsLockIcon="!"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Password="Password" />
                 <PasswordBox Margin="0, 10, 0, 0"
