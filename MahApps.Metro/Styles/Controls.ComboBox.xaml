@@ -138,6 +138,7 @@
                                                             FontFamily="Marlett"
                                                             Content="r"
                                                             Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
+                                                            Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
                                                             IsTabStop="False" />
                                                     <Rectangle x:Name="BtnArrowBackground"
                                                                Grid.Column="2"

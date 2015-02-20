@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +22,10 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
+        /// <summary>
+        /// The clear text button behavior property. It sets a click event to the button if the value is true.
+        /// </summary>
+        public static readonly DependencyProperty IsClearTextButtonBehaviorEnabledProperty = DependencyProperty.RegisterAttached("IsClearTextButtonBehaviorEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, IsClearTextButtonBehaviorEnabledChanged));
         
         public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonCommandParameterProperty = DependencyProperty.RegisterAttached("ButtonCommandParameter", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
@@ -316,6 +319,24 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ClearTextButtonProperty, value);
         }
 
+        /// <summary>
+        /// Gets the clear text button behavior.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(Button))]
+        public static bool GetIsClearTextButtonBehaviorEnabled(Button d)
+        {
+            return (bool)d.GetValue(IsClearTextButtonBehaviorEnabledProperty);
+        }
+
+        /// <summary>
+        /// Sets the clear text button behavior.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(Button))]
+        public static void SetIsClearTextButtonBehaviorEnabled(Button obj, bool value)
+        {
+            obj.SetValue(IsClearTextButtonBehaviorEnabledProperty, value);
+        }
+
         public static ICommand GetButtonCommand(DependencyObject d)
         {
             return (ICommand)d.GetValue(ButtonCommandProperty);
@@ -366,6 +387,57 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonFontFamilyProperty, value);
         }
 
+        private static void IsClearTextButtonBehaviorEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var button = d as Button;
+            if (e.OldValue != e.NewValue && button != null)
+            {
+                button.Click -= ButtonClicked;
+                if ((bool)e.NewValue)
+                {
+                    button.Click += ButtonClicked;
+                }
+            }
+        }
+
+        public static void ButtonClicked(object sender, RoutedEventArgs e)
+        {
+            var button = ((Button)sender);
+            var parent = VisualTreeHelper.GetParent(button);
+            while (!(parent is TextBox || parent is PasswordBox || parent is ComboBox))
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            var command = GetButtonCommand(parent);
+            if (command != null && command.CanExecute(parent))
+            {
+                var commandParameter = GetButtonCommandParameter(parent);
+
+                command.Execute(commandParameter ?? parent);
+            }
+
+            if (GetClearTextButton(parent))
+            {
+                if (parent is TextBox)
+                {
+                    ((TextBox)parent).Clear();
+                }
+                else if (parent is PasswordBox)
+                {
+                    ((PasswordBox)parent).Clear();
+                }
+                else if (parent is ComboBox)
+                {
+                    if (((ComboBox)parent).IsEditable)
+                    {
+                        ((ComboBox)parent).Text = string.Empty;
+                    }
+                    ((ComboBox)parent).SelectedItem = null;
+                }
+            }
+        }
+
         private static void ButtonCommandOrClearTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var textbox = d as TextBox;
@@ -406,130 +478,28 @@ namespace MahApps.Metro.Controls
         static void ComboBoxLoaded(object sender, RoutedEventArgs e)
         {
             var comboBox = sender as ComboBox;
-            if (comboBox == null || comboBox.Style == null)
-                return;
-
-            var template = comboBox.Template;
-            if (template == null)
-                return;
-
-            var dropDown = template.FindName("PART_DropDownToggle", comboBox) as ToggleButton;
-            if (dropDown == null || dropDown.Template == null)
-                return;
-
-            var button = dropDown.Template.FindName("PART_ClearText", dropDown) as Button;
-            if (button == null)
-                return;
-
-            if (GetClearTextButton(comboBox))
+            if (comboBox != null)
             {
-                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
-                button.Click -= ButtonClicked;
-                button.Click += ButtonClicked;
                 comboBox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(comboBox.Text) || comboBox.SelectedItem != null);
-            }
-            else
-            {
-                button.Click -= ButtonClicked;
             }
         }
 
         static void PassBoxLoaded(object sender, RoutedEventArgs e)
         {
             var passbox = sender as PasswordBox;
-            if (passbox == null || passbox.Style == null)
-                return;
-
-            var template = passbox.Template;
-            if (template == null) {
-                passbox.ApplyTemplate();
-                template = passbox.Template;
-                if (template == null) 
-                    return;
-            }
-
-            var button = template.FindName("PART_ClearText", passbox) as Button;
-            if (button == null)
-                return;
-
-            if (GetButtonCommand(passbox) != null || GetClearTextButton(passbox))
+            if (passbox != null)
             {
-                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
-                button.Click -= ButtonClicked;
-                button.Click += ButtonClicked;
                 passbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(passbox.Password));
-            }
-            else
-            {
-                button.Click -= ButtonClicked;
             }
         }
 
         static void TextBoxLoaded(object sender, RoutedEventArgs e)
         {
             var textbox = sender as TextBox;
-            if (textbox == null || textbox.Style == null)
-                return;
-
-            var template = textbox.Template;
-            if (template == null)
-                return;
-
-            var button = template.FindName("PART_ClearText", textbox) as Button;
-            if (button == null)
-                return;
-
-            if (GetButtonCommand(textbox) != null || GetClearTextButton(textbox))
+            if (textbox != null)
             {
-                // only one event, because loaded event fires more than once, if the textbox is hosted in a tab item
-                button.Click -= ButtonClicked;
-                button.Click += ButtonClicked;
                 textbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(textbox.Text));
-            }
-            else
-            {
-                button.Click -= ButtonClicked;
-                textbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(textbox.Text));
-            }
-        }
-
-        static void ButtonClicked(object sender, RoutedEventArgs e)
-        {
-            var button = ((Button)sender);
-            var parent = VisualTreeHelper.GetParent(button);
-            while (!(parent is TextBox || parent is PasswordBox || parent is ComboBox))
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
-            
-            var command = GetButtonCommand(parent);
-            if (command != null && command.CanExecute(parent))
-            {
-                var commandParameter = GetButtonCommandParameter(parent);
-               
-                command.Execute(commandParameter ?? parent);
-            }
-
-            if (GetClearTextButton(parent))
-            { 
-                if (parent is TextBox)
-                {
-                    ((TextBox)parent).Clear();
-                }
-                else if (parent is PasswordBox)
-                {
-                    ((PasswordBox)parent).Clear();
-                }
-                else if (parent is ComboBox)
-                {
-                    if (((ComboBox)parent).IsEditable)
-                    {
-                        ((ComboBox)parent).Text = string.Empty;
-                    }
-                    ((ComboBox)parent).SelectedItem = null;
-                }
             }
         }
     }
-
 }
