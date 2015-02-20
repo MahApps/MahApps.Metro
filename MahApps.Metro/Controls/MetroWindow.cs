@@ -37,7 +37,7 @@ namespace MahApps.Metro.Controls
         private const string PART_MetroDialogContainer = "PART_MetroDialogContainer";
         private const string PART_FlyoutModal = "PART_FlyoutModal";
 
-        public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowIconOnTitleBarPropertyChangedCallback));
         public static readonly DependencyProperty IconEdgeModeProperty = DependencyProperty.Register("IconEdgeMode", typeof(EdgeMode), typeof(MetroWindow), new PropertyMetadata(EdgeMode.Aliased));
         public static readonly DependencyProperty IconBitmapScalingModeProperty = DependencyProperty.Register("IconBitmapScalingMode", typeof(BitmapScalingMode), typeof(MetroWindow), new PropertyMetadata(BitmapScalingMode.HighQuality));
         public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
@@ -319,6 +319,15 @@ namespace MahApps.Metro.Controls
             set { SetValue(ShowIconOnTitleBarProperty, value); }
         }
 
+        private static void OnShowIconOnTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (MetroWindow)d;
+            if (e.NewValue != e.OldValue)
+            {
+                window.SetVisibiltyForIcon((bool)e.NewValue);
+            }
+        }
+
         /// <summary>
         /// Gets/sets edge mode of the titlebar icon.
         /// </summary>
@@ -483,15 +492,22 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void SetVisibiltyForAllTitleElements(bool visible)
+        private void SetVisibiltyForIcon(bool visible)
         {
-            var newVisibility = visible && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
             if (this.icon != null)
             {
-                var iconVisibility = this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar 
-                    || this.ShowIconOnTitleBar && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
+                var iconVisibility = (this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar)
+                                     || (visible && this.ShowTitleBar)
+                    ? Visibility.Visible
+                    : Visibility.Collapsed;
                 this.icon.Visibility = iconVisibility;
             }
+        }
+        
+        private void SetVisibiltyForAllTitleElements(bool visible)
+        {
+            this.SetVisibiltyForIcon(visible);
+            var newVisibility = visible && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
             if (this.titleBar != null)
             {
                 this.titleBar.Visibility = newVisibility;
