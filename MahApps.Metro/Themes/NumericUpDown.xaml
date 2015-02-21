@@ -53,13 +53,11 @@
                           Margin="{TemplateBinding Padding}"
                           VerticalAlignment="{TemplateBinding VerticalAlignment}"
                           Background="{TemplateBinding Background}">
-                        <Rectangle x:Name="Base"
-                                   Stroke="{TemplateBinding BorderBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Fill="{TemplateBinding Background}" />
-                        <Rectangle x:Name="FocusRectangle"
-                                   Visibility="Collapsed"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" />
+                        <Border x:Name="Base"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -170,30 +168,15 @@
                         </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="true">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Stroke"
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsFocused"
                                  Value="true"
                                  SourceName="PART_TextBox">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Stroke"
-                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
-                        </Trigger>
-                        <Trigger Property="IsFocused"
-                                 Value="true">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Stroke"
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
 
