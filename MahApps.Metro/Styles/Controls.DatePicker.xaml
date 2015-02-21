@@ -43,10 +43,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
                     <Grid x:Name="PART_Root">
-                        <Grid.Resources>
-                            <SolidColorBrush x:Key="DisabledBrush"
-                                             Color="#A5FFFFFF" />
-                        </Grid.Resources>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
