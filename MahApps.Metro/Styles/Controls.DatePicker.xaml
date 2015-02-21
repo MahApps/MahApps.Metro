@@ -13,6 +13,10 @@
                 Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush"
+                Value="{DynamicResource TextBoxFocusBorderBrush}" />
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
+                Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring"
@@ -56,15 +60,11 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="Base"
-                                   Stroke="{TemplateBinding BorderBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Opacity="1"
-                                   Fill="{TemplateBinding Background}" />
-                        <Rectangle x:Name="FocusRectangle"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Opacity="0"
-                                   Stroke="{DynamicResource BlackBrush}" />
+                        <Border x:Name="Base"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" />
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -109,14 +109,14 @@
                                                HorizontalContentAlignment="Stretch"
                                                VerticalContentAlignment="Stretch" />
 
-                            <Rectangle x:Name="PART_DisabledVisual"
-                                       Grid.Column="0"
-                                       Grid.ColumnSpan="2"
-                                       Stroke="{DynamicResource ControlsDisabledBrush}"
-                                       StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                       Fill="{DynamicResource ControlsDisabledBrush}"
-                                       IsHitTestVisible="False"
-                                       Opacity="0" />
+                            <Border x:Name="PART_DisabledVisual"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{DynamicResource ControlsDisabledBrush}"
+                                    IsHitTestVisible="False"
+                                    Opacity="0" />
 
                             <Popup x:Name="PART_Popup"
                                    AllowsTransparency="True"
@@ -129,15 +129,21 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Opacity"
-                                    Value="1" />
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Opacity"
-                                    Value="1" />
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         <Trigger SourceName="PART_Button"
                                  Property="IsMouseOver"
