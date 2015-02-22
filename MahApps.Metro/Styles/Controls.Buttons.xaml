@@ -320,9 +320,13 @@
                 <ControlTemplate TargetType="Button">
                     <Grid>
                         <Border x:Name="Background"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="3" />
+                        <Border x:Name="Border"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}"
+                                Background="{x:Null}"
                                 CornerRadius="3" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
@@ -331,6 +335,7 @@
                                    RadiusY="3"
                                    RadiusX="3" />
                         <ContentPresenter x:Name="contentPresenter"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           RecognizesAccessKey="True"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -338,11 +343,17 @@
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="controls:ButtonHelper.PreserveTextCase" Value="False">
-                            <Setter TargetName="contentPresenter" Property="Content" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
+                        <Trigger Property="controls:ButtonHelper.PreserveTextCase"
+                                 Value="False">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
                         </Trigger>
-                        <Trigger Property="controls:ButtonHelper.PreserveTextCase" Value="True">
-                            <Setter TargetName="contentPresenter"  Property="Content" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}"/>
+                        <Trigger Property="controls:ButtonHelper.PreserveTextCase"
+                                 Value="True">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
                         </Trigger >
                         <Trigger Property="IsMouseOver"
                                  Value="True">
@@ -358,10 +369,10 @@
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin"
                                  Value="True">
-                            <Setter TargetName="Background"
+                            <Setter TargetName="Border"
                                     Property="BorderThickness"
                                     Value="2" />
-                            <Setter TargetName="Background"
+                            <Setter TargetName="Border"
                                     Property="BorderBrush"
                                     Value="{DynamicResource ButtonMouseOverBorderBrush}" />
                         </Trigger>
