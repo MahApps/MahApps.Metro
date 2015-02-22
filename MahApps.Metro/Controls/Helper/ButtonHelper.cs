@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
 namespace MahApps.Metro.Controls
 {
@@ -42,6 +43,7 @@ namespace MahApps.Metro.Controls
         /// Description taken from original Microsoft description :-D
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
         public static CornerRadius GetCornerRadius(UIElement element)
         {
             return (CornerRadius)element.GetValue(CornerRadiusProperty);
