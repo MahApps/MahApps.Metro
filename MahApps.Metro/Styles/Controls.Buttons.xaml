@@ -330,12 +330,12 @@
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{x:Null}"
                                 CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
-                        <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource ControlsDisabledBrush}"
-                                   IsHitTestVisible="false"
-                                   Opacity="0"
-                                   RadiusY="3"
-                                   RadiusX="3" />
+                        <Border x:Name="DisabledVisualElement"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                IsHitTestVisible="false"
+                                Opacity="0"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
                         <ContentPresenter x:Name="contentPresenter"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           RecognizesAccessKey="True"
@@ -691,6 +691,8 @@
 
     <Style TargetType="ToggleButton"
            x:Key="MetroToggleButton">
+        <Setter Property="Controls:ButtonHelper.CornerRadius"
+                Value="3" />
         <Setter Property="Background"
                 Value="{DynamicResource GrayBrush10}" />
         <Setter Property="BorderBrush"
@@ -714,20 +716,24 @@
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
                         <Border x:Name="Background"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                        <Border x:Name="Border"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}"
-                                CornerRadius="3" />
-                        <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource WhiteBrush}"
-                                   IsHitTestVisible="false"
-                                   Opacity="0"
-                                   RadiusY="3"
-                                   RadiusX="3" />
+                                Background="{x:Null}"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                        <Border x:Name="DisabledVisualElement"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                IsHitTestVisible="false"
+                                Opacity="0"
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
                         <ContentPresenter x:Name="contentPresenter"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           RecognizesAccessKey="True"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          Content="{TemplateBinding Content}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -735,13 +741,13 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked"
                                  Value="True">
-                            <Setter TargetName="Background"
+                            <Setter TargetName="Border"
                                     Property="BorderThickness"
                                     Value="2" />
                             <Setter TargetName="Background"
                                     Property="Background"
                                     Value="{DynamicResource GrayBrush2}" />
-                            <Setter TargetName="Background"
+                            <Setter TargetName="Border"
                                     Property="BorderBrush"
                                     Value="{DynamicResource GrayBrush5}" />
                         </Trigger>
@@ -775,10 +781,10 @@
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin"
                                  Value="True">
-                            <Setter TargetName="Background"
+                            <Setter TargetName="Border"
                                     Property="BorderThickness"
                                     Value="2" />
-                            <Setter TargetName="Background"
+                            <Setter TargetName="Border"
                                     Property="BorderBrush"
                                     Value="{DynamicResource ButtonMouseOverBorderBrush}" />
                         </Trigger>
