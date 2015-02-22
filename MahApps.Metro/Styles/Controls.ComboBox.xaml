@@ -46,14 +46,6 @@
                         <Grid.Resources>
                             <Style x:Key="comboToggleStyle"
                                    TargetType="{x:Type ToggleButton}">
-                                <Setter Property="Foreground"
-                                        Value="{DynamicResource TextBrush}" />
-                                <Setter Property="Background"
-                                        Value="{DynamicResource ControlBackgroundBrush}" />
-                                <Setter Property="BorderBrush"
-                                        Value="{DynamicResource TextBoxBorderBrush}" />
-                                <Setter Property="BorderThickness"
-                                        Value="1" />
                                 <Setter Property="Padding"
                                         Value="3" />
                                 <Setter Property="Template">
@@ -116,12 +108,6 @@
                                                 <Rectangle x:Name="FocusRectangle"
                                                            Stroke="{DynamicResource ComboBoxMouseOverInnerBorderBrush}"
                                                            Opacity="0" />
-                                                <Rectangle x:Name="FocusVisualElement"
-                                                           IsHitTestVisible="false"
-                                                           Margin="1"
-                                                           Stroke="{DynamicResource HighlightBrush}"
-                                                           StrokeThickness="1"
-                                                           Visibility="Collapsed" />
 
                                                 <Grid Margin="1">
                                                     <Grid.ColumnDefinitions>
@@ -239,6 +225,7 @@
 
                             <ToggleButton x:Name="PART_DropDownToggle"
                                           Grid.ColumnSpan="3"
+                                          Foreground="{TemplateBinding Foreground}"
                                           BorderBrush="{TemplateBinding BorderBrush}"
                                           BorderThickness="{TemplateBinding BorderThickness}"
                                           Background="{TemplateBinding Background}"
@@ -276,7 +263,7 @@
                                                   Content="{TemplateBinding SelectionBoxItem}"
                                                   ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  IsHitTestVisible="false"
+                                                  IsHitTestVisible="False"
                                                   Margin="{TemplateBinding Padding}"
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
@@ -388,7 +375,7 @@
         <Setter Property="Background"
                 Value="{DynamicResource WhiteBrush}" />
         <Setter Property="BorderThickness"
-                Value="1" />
+                Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBoxItem">
@@ -397,15 +384,7 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="MouseOverRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1"
-                                                                  Value=".65" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="MouseOver" />
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
@@ -416,50 +395,34 @@
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="SelectionStates">
-                                <VisualState x:Name="Unselected" />
-                                <VisualState x:Name="Selected">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="SelectedRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.1"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused">
-                                    <Storyboard />
-                                </VisualState>
-                                <VisualState x:Name="Unfocused" />
-                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="SelectedRectangle"
-                                   IsHitTestVisible="False"
-                                   Opacity="0"
-                                   Fill="{DynamicResource AccentColorBrush}" />
-                        <Rectangle x:Name="MouseOverRectangle"
-                                   IsHitTestVisible="False"
-                                   Opacity="0"
-                                   Fill="{DynamicResource AccentColorBrush3}" />
-                        <ContentControl Foreground="{TemplateBinding Foreground}">
-                            <ContentPresenter x:Name="contentPresenter"
-                                              Margin="{TemplateBinding Padding}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
-                        </ContentControl>
-                        <Rectangle x:Name="FocusVisualElement"
-                                   Stroke="{DynamicResource HighlightBrush}"
-                                   StrokeThickness="1"
-                                   Visibility="Collapsed" />
+                        <Border x:Name="ItemBackground"
+                                IsHitTestVisible="False"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                Background="{TemplateBinding Background}" />
+                        <ContentPresenter x:Name="contentPresenter"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"
+                                          Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsSelected"
                                  Value="True">
+                            <Setter TargetName="ItemBackground"
+                                    Property="Background"
+                                    Value="{DynamicResource AccentColorBrush}" />
                             <Setter Property="Foreground"
                                     Value="{DynamicResource AccentSelectedColorBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="ItemBackground"
+                                    Property="Background"
+                                    Value="{DynamicResource AccentColorBrush2}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
