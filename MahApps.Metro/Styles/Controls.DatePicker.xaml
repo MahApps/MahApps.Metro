@@ -102,6 +102,7 @@
 
                             <DatePickerTextBox x:Name="PART_TextBox"
                                                Grid.Column="0"
+                                               CaretBrush="{DynamicResource BlackBrush}"
                                                ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                                Foreground="{TemplateBinding Foreground}"
                                                Focusable="{TemplateBinding Focusable}"
