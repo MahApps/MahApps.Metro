@@ -36,7 +36,6 @@
                 <DatePicker Margin="0, 10, 0, 0"
                             Width="150"
                             HorizontalAlignment="Center"
-                            Controls:TextBoxHelper.Watermark="Select a date"
                             IsEnabled="False" />
                 <DatePicker Margin="0, 10, 0, 0"
                             Width="300"

@@ -47,25 +47,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
                     <Grid x:Name="PART_Root">
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         To="1"
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="PART_DisabledVisual" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
                         <Border x:Name="Base"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{TemplateBinding Background}" />
-                        <Grid Margin="2">
+                        <Grid x:Name="PART_InnerGrid"
+                              Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
@@ -102,6 +90,7 @@
 
                             <DatePickerTextBox x:Name="PART_TextBox"
                                                Grid.Column="0"
+                                               Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
                                                CaretBrush="{DynamicResource BlackBrush}"
                                                ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                                Foreground="{TemplateBinding Foreground}"
@@ -110,21 +99,19 @@
                                                HorizontalContentAlignment="Stretch"
                                                VerticalContentAlignment="Stretch" />
 
-                            <Border x:Name="PART_DisabledVisual"
-                                    Grid.Column="0"
-                                    Grid.ColumnSpan="2"
-                                    BorderBrush="{DynamicResource ControlsDisabledBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    Background="{DynamicResource ControlsDisabledBrush}"
-                                    IsHitTestVisible="False"
-                                    Opacity="0" />
-
                             <Popup x:Name="PART_Popup"
                                    AllowsTransparency="True"
                                    Placement="Bottom"
                                    PlacementTarget="{Binding ElementName=PART_Root}"
                                    StaysOpen="False" />
                         </Grid>
+                        <Border x:Name="DisabledVisualElement"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                IsHitTestVisible="False"
+                                Opacity="0" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
@@ -145,6 +132,12 @@
                             <Setter TargetName="Base"
                                     Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="DisabledVisualElement"
+                                    Property="Opacity"
+                                    Value="0.6" />
                         </Trigger>
                         <Trigger SourceName="PART_Button"
                                  Property="IsMouseOver"
@@ -255,7 +248,7 @@
                                         Foreground="{TemplateBinding Foreground}"
                                         Visibility="Hidden" />
                         <TextBlock x:Name="Message"
-                                   Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextBoxHelper.Watermark)}"
+                                   Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                    Foreground="{TemplateBinding Foreground}"
                                    IsHitTestVisible="False"
                                    Opacity="0.6"
@@ -280,7 +273,7 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextBoxHelper.Watermark)}"
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}"
                                      Value="{x:Static System:String.Empty}">
                             <Setter TargetName="PART_Watermark"
                                     Property="Visibility"
