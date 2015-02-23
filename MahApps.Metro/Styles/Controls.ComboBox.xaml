@@ -277,6 +277,10 @@
                 Value="Auto" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush"
+                Value="{DynamicResource ComboBoxMouseOverInnerBorderBrush}" />
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
+                Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="FontFamily"
                 Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize"
@@ -467,7 +471,7 @@
                         <Border x:Name="FocusBorder"
                                 Grid.ColumnSpan="3"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                BorderBrush="{DynamicResource ComboBoxMouseOverInnerBorderBrush}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{x:Null}"
                                 Visibility="Collapsed" />
@@ -536,25 +540,44 @@
                                     Property="Background"
                                     Value="Transparent" /> -->
                         </Trigger>
-                        
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="FocusBorder"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="FocusBorder"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
+                        </Trigger>
+
                         <Trigger SourceName="PART_EditableTextBox"
                                  Property="IsFocused"
                                  Value="True">
                             <Setter TargetName="FocusBorder"
                                     Property="Visibility"
                                     Value="Visible" />
+                            <Setter TargetName="FocusBorder"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsFocused"
                                  Value="True">
                             <Setter TargetName="FocusBorder"
                                     Property="Visibility"
                                     Value="Visible" />
+                            <Setter TargetName="FocusBorder"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin"
                                  Value="True">
                             <Setter TargetName="FocusBorder"
                                     Property="Visibility"
                                     Value="Visible" />
+                            <Setter TargetName="FocusBorder"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         
                         <Trigger Property="IsEnabled"

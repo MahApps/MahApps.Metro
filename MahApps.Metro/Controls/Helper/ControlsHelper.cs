@@ -129,6 +129,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         public static Brush GetFocusBorderBrush(DependencyObject obj)
         {
             return (Brush)obj.GetValue(FocusBorderBrushProperty);
@@ -149,6 +150,7 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         public static Brush GetMouseOverBorderBrush(DependencyObject obj)
         {
             return (Brush)obj.GetValue(MouseOverBorderBrushProperty);
