@@ -52,62 +52,19 @@
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ToggleButton}">
                                             <Grid>
-                                                <VisualStateManager.VisualStateGroups>
-                                                    <VisualStateGroup x:Name="CommonStates">
-                                                        <VisualState x:Name="Normal" />
-                                                        <VisualState x:Name="MouseOver">
-                                                            <Storyboard>
-                                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                                               Storyboard.TargetName="MouseOverBorder">
-                                                                    <EasingDoubleKeyFrame KeyTime="0"
-                                                                                          Value="1" />
-                                                                </DoubleAnimationUsingKeyFrames>
-                                                            </Storyboard>
-                                                        </VisualState>
-                                                        <VisualState x:Name="Pressed">
-                                                            <Storyboard>
-                                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                                               Storyboard.TargetName="PressedBorder">
-                                                                    <EasingDoubleKeyFrame KeyTime="0"
-                                                                                          Value="1" />
-                                                                </DoubleAnimationUsingKeyFrames>
-                                                            </Storyboard>
-                                                        </VisualState>
-                                                        <VisualState x:Name="Disabled" />
-                                                    </VisualStateGroup>
-                                                    <VisualStateGroup x:Name="FocusStates">
-                                                        <VisualState x:Name="Focused">
-                                                            <Storyboard>
-                                                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                                               Storyboard.TargetName="FocusRectangle">
-                                                                    <EasingDoubleKeyFrame KeyTime="0"
-                                                                                          Value="1" />
-                                                                </DoubleAnimationUsingKeyFrames>
-                                                            </Storyboard>
-                                                        </VisualState>
-                                                        <VisualState x:Name="Unfocused" />
-                                                    </VisualStateGroup>
-                                                </VisualStateManager.VisualStateGroups>
-
                                                 <Border x:Name="Background"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                         BorderBrush="{TemplateBinding BorderBrush}"
                                                         BorderThickness="{TemplateBinding BorderThickness}"
                                                         Background="{TemplateBinding Background}" />
-                                                <Rectangle x:Name="DisabledVisualElement"
-                                                           Fill="{DynamicResource WhiteBrush}"
-                                                           IsHitTestVisible="false"
-                                                           Opacity="0" />
-                                                <Border x:Name="MouseOverBorder"
-                                                        Background="{DynamicResource GrayBrush8}"
+                                                <Border x:Name="DisabledVisualElement"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                        BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                                         BorderThickness="{TemplateBinding BorderThickness}"
-                                                        Opacity="0" />
-                                                <Border x:Name="PressedBorder"
-                                                        Background="{DynamicResource GrayBrush7}"
-                                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                                        Opacity="0" />
-                                                <Rectangle x:Name="FocusRectangle"
-                                                           Stroke="{DynamicResource ComboBoxMouseOverInnerBorderBrush}"
-                                                           Opacity="0" />
+                                                        Background="{DynamicResource ControlsDisabledBrush}"
+                                                        Opacity="0.6"
+                                                        IsHitTestVisible="False"
+                                                        Visibility="Collapsed" />
 
                                                 <Grid Margin="1">
                                                     <Grid.ColumnDefinitions>
@@ -170,6 +127,24 @@
                                                             Property="Foreground"
                                                             Value="{DynamicResource WhiteBrush}" />
                                                 </Trigger>
+                                                <Trigger Property="IsMouseOver"
+                                                         Value="True">
+                                                    <Setter TargetName="Background"
+                                                            Property="Background"
+                                                            Value="{DynamicResource GrayBrush8}" />
+                                                </Trigger>
+                                                <Trigger Property="IsPressed"
+                                                         Value="True">
+                                                    <Setter TargetName="Background"
+                                                            Property="Background"
+                                                            Value="{DynamicResource GrayBrush7}" />
+                                                </Trigger>
+                                                <Trigger Property="IsEnabled"
+                                                         Value="False">
+                                                    <Setter TargetName="DisabledVisualElement"
+                                                            Property="Visibility"
+                                                            Value="Visible" />
+                                                </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
                                     </Setter.Value>
@@ -177,29 +152,8 @@
                             </Style>
                         </Grid.Resources>
                         <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="DisabledVisualElement">
-                                            <SplineDoubleKeyFrame KeyTime="00:00:00"
-                                                                  Value="0.45" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
                             <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="FocusRectangle">
-                                            <EasingDoubleKeyFrame KeyTime="0"
-                                                                  Value="1" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
+                                <VisualState x:Name="Focused" />
                                 <VisualState x:Name="Unfocused" />
                                 <VisualState x:Name="FocusedDropDown">
                                     <Storyboard>
@@ -225,17 +179,19 @@
 
                             <ToggleButton x:Name="PART_DropDownToggle"
                                           Grid.ColumnSpan="3"
+                                          Style="{DynamicResource comboToggleStyle}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           Foreground="{TemplateBinding Foreground}"
                                           BorderBrush="{TemplateBinding BorderBrush}"
                                           BorderThickness="{TemplateBinding BorderThickness}"
                                           Background="{TemplateBinding Background}"
                                           Margin="0"
-                                          Style="{DynamicResource comboToggleStyle}"
                                           IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           VerticalAlignment="Stretch"
                                           KeyboardNavigation.IsTabStop="False" />
 
                             <Border x:Name="EditableTextBoxBorder"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     Visibility="Collapsed"
                                     BorderBrush="Transparent"
                                     BorderThickness="1,1,0,1"
@@ -269,13 +225,23 @@
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                         </Grid>
-                        <Rectangle x:Name="FocusRectangle"
-                                   Stroke="{DynamicResource ComboBoxMouseOverInnerBorderBrush}"
-                                   Opacity="0" />
-                        <Rectangle x:Name="DisabledVisualElement"
-                                   Fill="{DynamicResource DisabledWhiteBrush}"
-                                   IsHitTestVisible="false"
-                                   Opacity="0" />
+                        
+                        <Border x:Name="FocusBorder"
+                                Grid.ColumnSpan="3"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource ComboBoxMouseOverInnerBorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{x:Null}"
+                                Visibility="Collapsed" />
+                        <Border x:Name="DisabledVisualElement"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                Opacity="0.6"
+                                IsHitTestVisible="False"
+                                Visibility="Collapsed" />
+                        
                         <!-- AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme -->
                         <Popup x:Name="PART_Popup"
                                AllowsTransparency="True"
@@ -330,6 +296,33 @@
                             <Setter TargetName="PART_DropDownToggle"
                                     Property="Background"
                                     Value="Transparent" /> -->
+                        </Trigger>
+                        
+                        <Trigger SourceName="PART_EditableTextBox"
+                                 Property="IsFocused"
+                                 Value="True">
+                            <Setter TargetName="FocusBorder"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter TargetName="FocusBorder"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocusWithin"
+                                 Value="True">
+                            <Setter TargetName="FocusBorder"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                        </Trigger>
+                        
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="DisabledVisualElement"
+                                    Property="Visibility"
+                                    Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
