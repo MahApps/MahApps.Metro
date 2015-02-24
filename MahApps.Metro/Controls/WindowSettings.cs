@@ -123,9 +123,20 @@ namespace MahApps.Metro.Controls
             wp.length = Marshal.SizeOf(wp);
             UnsafeNativeMethods.GetWindowPlacement(hwnd, ref wp);
             // check for saveable values
-            if (wp.showCmd != (int)Constants.ShowWindowCommands.SW_HIDE && wp.length > 0 && !wp.normalPosition.IsEmpty)
+            if (wp.showCmd != (int)Constants.ShowWindowCommands.SW_HIDE && wp.length > 0)
             {
-                _settings.Placement = wp;
+                if (wp.showCmd == (int)Constants.ShowWindowCommands.SW_NORMAL)
+                {
+                    RECT rect;
+                    if (UnsafeNativeMethods.GetWindowRect(hwnd, out rect))
+                    {
+                        wp.normalPosition = rect;
+                    }
+                }
+                if (!wp.normalPosition.IsEmpty)
+                {
+                    _settings.Placement = wp;
+                }
             }
             _settings.Save();
         }
