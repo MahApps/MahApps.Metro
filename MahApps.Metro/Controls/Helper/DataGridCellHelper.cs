@@ -17,17 +17,26 @@ namespace MahApps.Metro.Controls
             var cell = dependencyObject as DataGridCell;
             if (cell != null && e.NewValue != e.OldValue && e.NewValue is bool)
             {
+                cell.Loaded -= DataGridCellLoaded;
                 cell.Unloaded -= DataGridCellUnloaded;
-                var dataGrid = cell.TryFindParent<DataGrid>();
+                DataGrid dataGrid = null;
                 if ((bool)e.NewValue)
                 {
+                    dataGrid = cell.TryFindParent<DataGrid>();
+                    cell.Loaded += DataGridCellLoaded;
                     cell.Unloaded += DataGridCellUnloaded;
-                    SetDataGrid(cell, dataGrid);
                 }
-                else
-                {
-                    SetDataGrid(cell, null);
-                }
+                SetDataGrid(cell, dataGrid);
+            }
+        }
+
+        static void DataGridCellLoaded(object sender, RoutedEventArgs e)
+        {
+            var cell = (DataGridCell)sender;
+            if (GetDataGrid(cell) == null)
+            {
+                var dataGrid = cell.TryFindParent<DataGrid>();
+                SetDataGrid(cell, dataGrid);
             }
         }
 
