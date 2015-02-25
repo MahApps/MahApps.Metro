@@ -21,7 +21,6 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Upgrades the application settings on loading.
         /// </summary>
-        [DefaultValue(true)]
         bool UpgradeSettings { get; set; }
 
         /// <summary>
@@ -57,11 +56,16 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private bool upgradeSettings = true;
+        
         /// <summary>
         /// Upgrades the application settings on loading.
         /// </summary>
-        [DefaultValue(true)]
-        public bool UpgradeSettings { get; set; }
+        public bool UpgradeSettings
+        {
+            get { return upgradeSettings; }
+            set { upgradeSettings = value; }
+        }
     }
     
     public class WindowSettings

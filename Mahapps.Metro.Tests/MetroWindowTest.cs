@@ -205,5 +205,18 @@ namespace MahApps.Metro.Tests
             Assert.False(closeButton.IsVisible);
             Assert.Equal(ResizeMode.CanResize, window.ResizeMode);
         }
+
+        [Fact]
+        public async Task WindowSettingsUpgradeSettingsShouldBeTrueByDefault()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            window.SaveWindowPosition = true;
+
+            var settings = window.GetWindowPlacementSettings();
+            Assert.NotNull(settings);
+            Assert.Equal(true, settings.UpgradeSettings);
+        }
     }
 }
