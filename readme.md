@@ -7,7 +7,7 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 [![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro/)
 [![Issues](https://img.shields.io/github/issues/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/issues)
 
-![](./docs/main_demo_window.png)
+![main demo window](https://cloud.githubusercontent.com/assets/658431/6370409/83415d36-bcf0-11e4-8ae7-0a14dadaf55d.png)
 
 ### Documentation
 
