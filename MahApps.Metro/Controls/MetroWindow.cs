@@ -324,7 +324,7 @@ namespace MahApps.Metro.Controls
             var window = (MetroWindow)d;
             if (e.NewValue != e.OldValue)
             {
-                window.SetVisibiltyForIcon((bool)e.NewValue);
+                window.SetVisibiltyForIcon();
             }
         }
 
@@ -492,21 +492,20 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void SetVisibiltyForIcon(bool visible)
+        private void SetVisibiltyForIcon()
         {
             if (this.icon != null)
             {
-                var iconVisibility = (this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar)
-                                     || (visible && this.ShowTitleBar)
-                    ? Visibility.Visible
-                    : Visibility.Collapsed;
+                var isVisible = (this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) && !this.ShowTitleBar)
+                                || (this.ShowIconOnTitleBar && this.ShowTitleBar);
+                var iconVisibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
                 this.icon.Visibility = iconVisibility;
             }
         }
         
         private void SetVisibiltyForAllTitleElements(bool visible)
         {
-            this.SetVisibiltyForIcon(visible);
+            this.SetVisibiltyForIcon();
             var newVisibility = visible && this.ShowTitleBar ? Visibility.Visible : Visibility.Collapsed;
             if (this.titleBar != null)
             {
