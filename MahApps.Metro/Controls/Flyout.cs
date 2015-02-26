@@ -487,7 +487,7 @@ namespace MahApps.Metro.Controls
 
             ApplyAnimation(Position, AnimateOpacity);
 
-            SetWindowEvents();
+            SetParentWindowEvents();
         }
 
         internal void ApplyAnimation(Position position, bool animateOpacity, bool resetShowFrame = true)
@@ -547,19 +547,19 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void SetWindowEvents()
+        private void SetParentWindowEvents()
         {
             var window = this.TryFindParent<MetroWindow>();
             if (window != null)
             {
-                this.ClearWindowEvents(window);
+                this.ClearParentWindowEvents(window);
 
                 PART_WindowTitle.MouseDown += window.TitleBarMouseDown;
                 PART_WindowTitle.MouseUp += window.TitleBarMouseUp;
             }
         }
 
-        private void ClearWindowEvents(MetroWindow window)
+        private void ClearParentWindowEvents(MetroWindow window)
         {
             PART_WindowTitle.MouseDown -= window.TitleBarMouseDown;
             PART_WindowTitle.MouseUp -= window.TitleBarMouseUp;
