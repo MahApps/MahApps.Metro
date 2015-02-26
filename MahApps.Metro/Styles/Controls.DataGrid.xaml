@@ -251,7 +251,7 @@
     <Style x:Key="MetroDataGridRowHeader"
            TargetType="{x:Type DataGridRowHeader}">
         <Setter Property="HorizontalContentAlignment"
-                Value="Left" />
+                Value="Stretch" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="Background"
