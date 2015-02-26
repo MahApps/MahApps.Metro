@@ -250,6 +250,10 @@
 
     <Style x:Key="MetroDataGridRowHeader"
            TargetType="{x:Type DataGridRowHeader}">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
@@ -268,10 +272,9 @@
                                 Padding="{TemplateBinding Padding}"
                                 Margin="{TemplateBinding Margin}"
                                 SnapsToDevicePixels="True">
-                            <StackPanel Orientation="Horizontal">
-                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                  VerticalAlignment="Center" />
-                            </StackPanel>
+                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                         </Border>
                         <Thumb x:Name="PART_TopHeaderGripper"
                                VerticalAlignment="Top"
