@@ -58,6 +58,17 @@ namespace MahApps.Metro.Controls
             this.AttachHandlers((Flyout)element);
         }
 
+        protected override void ClearContainerForItemOverride(DependencyObject element, object item)
+        {
+            var window = this.TryFindParent<MetroWindow>();
+            if (window != null)
+            {
+                // To avoid memory leaks (cause it's possible to have dynamic flyouts), clear parent window events.
+                ((Flyout)element).ClearParentWindowEvents(window);
+            }
+            base.ClearContainerForItemOverride(element, item);
+        }
+
         private void AttachHandlers(Flyout flyout)
         {
             var isOpenNotifier = new PropertyChangeNotifier(flyout, Flyout.IsOpenProperty);

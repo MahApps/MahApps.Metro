@@ -559,7 +559,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void ClearParentWindowEvents(MetroWindow window)
+        protected internal void ClearParentWindowEvents(MetroWindow window)
         {
             PART_WindowTitle.MouseDown -= window.TitleBarMouseDown;
             PART_WindowTitle.MouseUp -= window.TitleBarMouseUp;
