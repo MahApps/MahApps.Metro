@@ -23,6 +23,15 @@ namespace MetroDemo.ExampleWindows
                         e.Cancel = true;
                     }
                 };
+
+            var mainWindow = (MetroWindow)this;
+            var windowPlacementSettings = mainWindow.GetWindowPlacementSettings();
+            if (windowPlacementSettings.UpgradeSettings)
+            {
+                windowPlacementSettings.Upgrade();
+                windowPlacementSettings.UpgradeSettings = false;
+                windowPlacementSettings.Save();
+            }
         }
 
         public void Launch()

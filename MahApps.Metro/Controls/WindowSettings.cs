@@ -56,15 +56,21 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private bool upgradeSettings = true;
-        
         /// <summary>
         /// Upgrades the application settings on loading.
         /// </summary>
+        [UserScopedSetting]
         public bool UpgradeSettings
         {
-            get { return upgradeSettings; }
-            set { upgradeSettings = value; }
+            get
+            {
+                if (this["UpgradeSettings"] != null)
+                {
+                    return (bool)this["UpgradeSettings"];
+                }
+                return true;
+            }
+            set { this["UpgradeSettings"] = value; }
         }
     }
     
