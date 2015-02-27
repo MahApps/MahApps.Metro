@@ -68,6 +68,9 @@ namespace MahApps.Metro.Behaviours
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
             AssociatedObject.StateChanged += OnAssociatedObjectHandleMaximize;
 
+            // handle the maximized state here too (to handle the border in a correct way)
+            this.HandleMaximize();
+
             base.OnAttached();
         }
 
@@ -96,10 +99,32 @@ namespace MahApps.Metro.Behaviours
             {
                 if (!Equals(windowChrome.IgnoreTaskbarOnMaximize, metroWindow.IgnoreTaskbarOnMaximize))
                 {
+                    // another special hack to avoid nasty resizing
+                    // repro
+                    // ResizeMode="NoResize"
+                    // WindowState="Maximized"
+                    // IgnoreTaskbarOnMaximize="True"
+                    // this only happens if we change this at runtime
+                    var removed = _ModifyStyle(0, Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME);
                     windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
                     this.ForceRedrawWindowFromPropertyChanged();
+                    if (removed)
+                    {
+                        _ModifyStyle(Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME, 0);
+                    }
                 }
             }
+        }
+
+        private bool _ModifyStyle(Standard.WS removeStyle, Standard.WS addStyle)
+        {
+            var dwStyle = (Standard.WS)Standard.NativeMethods.GetWindowLongPtr(this.handle, Standard.GWL.STYLE).ToInt32();
+            var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
+            if (dwStyle == dwNewStyle) {
+                return false;
+            }
+            Standard.NativeMethods.SetWindowLongPtr(this.handle, Standard.GWL.STYLE, new IntPtr((int)dwNewStyle));
+            return true;
         }
 
         private void ForceRedrawWindowFromPropertyChanged()
@@ -184,6 +209,7 @@ namespace MahApps.Metro.Behaviours
             if (AssociatedObject.WindowState == WindowState.Maximized)
             {
                 // remove resize border and window border, so we can move the window from top monitor position
+                // note (punker76): check this, maybe we doesn't need this anymore
                 windowChrome.ResizeBorderThickness = new Thickness(0);
                 AssociatedObject.BorderThickness = new Thickness(0);
 
@@ -195,7 +221,7 @@ namespace MahApps.Metro.Behaviours
                     IntPtr monitor = UnsafeNativeMethods.MonitorFromWindow(handle, Constants.MONITOR_DEFAULTTONEAREST);
                     if (monitor != IntPtr.Zero)
                     {
-                        var monitorInfo = new MONITORINFO();
+                        var monitorInfo = new MahApps.Metro.Native.MONITORINFO();
                         UnsafeNativeMethods.GetMonitorInfo(monitor, monitorInfo);
 
                         //ignoreTaskBar = metroWindow.IgnoreTaskbarOnMaximize || metroWindow.UseNoneWindowStyle;
@@ -209,6 +235,7 @@ namespace MahApps.Metro.Behaviours
             }
             else
             {
+                // note (punker76): check this, maybe we doesn't need this anymore
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
                 if (!enableDWMDropShadow)
                 {
