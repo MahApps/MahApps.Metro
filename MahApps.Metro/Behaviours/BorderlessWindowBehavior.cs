@@ -272,6 +272,7 @@ namespace MahApps.Metro.Behaviours
             // Note that the minimize animation in this case does actually run, but somehow the other
             // application (Google Chrome in this example) is instantly switched to being the top window,
             // and so blocking the animation view.
+            AssociatedObject.Topmost = false;
             AssociatedObject.Topmost = AssociatedObject.WindowState == WindowState.Minimized || savedTopMost;
             
             borderThicknessChangeNotifier.ValueChanged += BorderThicknessChangeNotifierOnValueChanged;
