@@ -19,6 +19,8 @@ namespace MahApps.Metro.Behaviours
         private WindowChrome windowChrome;
         private PropertyChangeNotifier borderThicknessChangeNotifier;
         private Thickness? savedBorderThickness;
+        private PropertyChangeNotifier topMostChangeNotifier;
+        private bool savedTopMost;
 
         protected override void OnAttached()
         {
@@ -63,6 +65,10 @@ namespace MahApps.Metro.Behaviours
             borderThicknessChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.BorderThicknessProperty);
             borderThicknessChangeNotifier.ValueChanged += BorderThicknessChangeNotifierOnValueChanged;
 
+            savedTopMost = AssociatedObject.Topmost;
+            topMostChangeNotifier = new PropertyChangeNotifier(this.AssociatedObject, Window.TopmostProperty);
+            topMostChangeNotifier.ValueChanged += TopMostChangeNotifierOnValueChanged;
+
             AssociatedObject.Loaded += AssociatedObject_Loaded;
             AssociatedObject.Unloaded += AssociatedObject_Unloaded;
             AssociatedObject.SourceInitialized += AssociatedObject_SourceInitialized;
@@ -77,6 +83,11 @@ namespace MahApps.Metro.Behaviours
         private void BorderThicknessChangeNotifierOnValueChanged(object sender, EventArgs e)
         {
             savedBorderThickness = AssociatedObject.BorderThickness;
+        }
+
+        private void TopMostChangeNotifierOnValueChanged(object sender, EventArgs e)
+        {
+            savedTopMost = AssociatedObject.Topmost;
         }
 
         private void UseNoneWindowStylePropertyChangedCallback(object sender, EventArgs e)
@@ -201,6 +212,7 @@ namespace MahApps.Metro.Behaviours
         private void HandleMaximize()
         {
             borderThicknessChangeNotifier.ValueChanged -= BorderThicknessChangeNotifierOnValueChanged;
+            topMostChangeNotifier.ValueChanged -= TopMostChangeNotifierOnValueChanged;
 
             var metroWindow = AssociatedObject as MetroWindow;
             var enableDWMDropShadow = EnableDWMDropShadow;
@@ -244,19 +256,26 @@ namespace MahApps.Metro.Behaviours
                 {
                     AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
                 }
-                
-                // fix nasty TopMost bug
-                // - set TopMost="True"
-                // - start mahapps demo
-                // - TopMost works
-                // - maximize window and back to normal
-                // - TopMost is gone
-                var topMost = AssociatedObject.Topmost;
-                AssociatedObject.Topmost = false;
-                AssociatedObject.Topmost = topMost;
             }
+
+            // fix nasty TopMost bug
+            // - set TopMost="True"
+            // - start mahapps demo
+            // - TopMost works
+            // - maximize window and back to normal
+            // - TopMost is gone
+            //
+            // Problem with minimize animation when window is maximized #1528
+            // 1. Activate another application (such as Google Chrome).
+            // 2. Run the demo and maximize it.
+            // 3. Minimize the demo by clicking on the taskbar button.
+            // Note that the minimize animation in this case does actually run, but somehow the other
+            // application (Google Chrome in this example) is instantly switched to being the top window,
+            // and so blocking the animation view.
+            AssociatedObject.Topmost = AssociatedObject.WindowState == WindowState.Minimized || savedTopMost;
             
             borderThicknessChangeNotifier.ValueChanged += BorderThicknessChangeNotifierOnValueChanged;
+            topMostChangeNotifier.ValueChanged += TopMostChangeNotifierOnValueChanged;
         }
 
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)

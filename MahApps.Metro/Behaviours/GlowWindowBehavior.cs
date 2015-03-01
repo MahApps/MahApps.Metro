@@ -11,7 +11,6 @@ namespace MahApps.Metro.Behaviours
         private static readonly TimeSpan GlowTimerDelay = TimeSpan.FromMilliseconds(200); //200 ms delay, the same as VS2013
         private GlowWindow left, right, top, bottom;
         private DispatcherTimer makeGlowVisibleTimer;
-        private bool prevTopmost;
         
         protected override void OnAttached()
         {
@@ -23,15 +22,6 @@ namespace MahApps.Metro.Behaviours
 
         void AssociatedObjectStateChanged(object sender, EventArgs e)
         {
-            if (AssociatedObject.WindowState == WindowState.Minimized)
-            {
-                prevTopmost = AssociatedObject.Topmost;
-                AssociatedObject.Topmost = true;
-            }
-            else
-            {
-                AssociatedObject.Topmost = prevTopmost;
-            }
             if (makeGlowVisibleTimer != null)
             {
                 makeGlowVisibleTimer.Stop();
