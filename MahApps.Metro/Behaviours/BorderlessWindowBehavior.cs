@@ -180,6 +180,9 @@ namespace MahApps.Metro.Behaviours
             var returnval = IntPtr.Zero;
             
             switch (msg) {
+                case Constants.WM_NCPAINT:
+                    handled = true;
+                    break;
                 case Constants.WM_NCACTIVATE:
                     /* As per http://msdn.microsoft.com/en-us/library/ms632633(VS.85).aspx , "-1" lParam "does not repaint the nonclient area to reflect the state change." */
                     returnval = UnsafeNativeMethods.DefWindowProc(hwnd, msg, wParam, new IntPtr(-1));
