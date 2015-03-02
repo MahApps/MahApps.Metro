@@ -26,4 +26,6 @@
 
     <System:Double x:Key="FlyoutHeaderFontSize">20</System:Double>
 
+    <System:Double x:Key="CommonHeaderFontSize">10</System:Double>
+
 </ResourceDictionary>
