@@ -110,6 +110,7 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Dialogs\MessageDialog.cs" />
+    <Compile Include="Controls\GroupsButton.cs" />
     <Compile Include="Controls\Helper\ButtonHelper.cs" />
     <Compile Include="Controls\Helper\ComboBoxHelper.cs" />
     <Compile Include="Controls\Helper\ControlsHelper.cs" />
@@ -501,6 +502,10 @@
     <Page Include="Themes\Dialogs\MessageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\GroupsButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
       <SubType>Designer</SubType>
