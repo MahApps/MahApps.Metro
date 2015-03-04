@@ -211,6 +211,7 @@ namespace MahApps.Metro.Controls
             //ws |= WS.POPUP;
             wsex ^= WSEX.APPWINDOW;
             wsex |= WSEX.NOACTIVATE;
+            wsex |= WSEX.TRANSPARENT;
 
             source.Handle.SetWindowLong(ws);
             source.Handle.SetWindowLongEx(wsex);
