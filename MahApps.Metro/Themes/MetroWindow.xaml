@@ -254,6 +254,8 @@
     <Style TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="BorderThickness"
                 Value="1" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
         <Setter Property="UseLayoutRounding"
                 Value="True" />
         <Setter Property="WindowTitleBrush"
