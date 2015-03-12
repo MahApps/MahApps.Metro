@@ -2158,8 +2158,15 @@ namespace MahApps.Metro.Controls
         //Get lower value for autotooltip
         private String GetLowerToolTipNumber()
         {
-            if (AutoToolTipTextConverter != null)
-                return AutoToolTipTextConverter.Convert(LowerValue, typeof(string), null, CultureInfo.InvariantCulture).ToString();
+            var converter = AutoToolTipTextConverter;
+            if (converter != null)
+            {
+                var convertedValue = converter.Convert(LowerValue, typeof(string), null, CultureInfo.InvariantCulture);
+                if (convertedValue != null)
+                {
+                    return convertedValue.ToString();
+                }
+            }
 
             NumberFormatInfo format = (NumberFormatInfo)(NumberFormatInfo.CurrentInfo.Clone());
             format.NumberDecimalDigits = AutoToolTipPrecision;
@@ -2169,8 +2176,15 @@ namespace MahApps.Metro.Controls
         //Get upper value for autotooltip
         private String GetUpperToolTipNumber()
         {
-            if (AutoToolTipTextConverter != null)
-                return AutoToolTipTextConverter.Convert(UpperValue, typeof(string), null, CultureInfo.InvariantCulture).ToString();
+            var converter = AutoToolTipTextConverter;
+            if (converter != null)
+            {
+                var convertedValue = converter.Convert(UpperValue, typeof(string), null, CultureInfo.InvariantCulture);
+                if (convertedValue != null)
+                {
+                    return convertedValue.ToString();
+                }
+            }
 
             NumberFormatInfo format = (NumberFormatInfo)(NumberFormatInfo.CurrentInfo.Clone());
             format.NumberDecimalDigits = AutoToolTipPrecision;
