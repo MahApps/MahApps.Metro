@@ -784,6 +784,10 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueWithSpeedUp(bool toPositive)
         {
+            if(IsReadOnly)
+            {
+                return;
+            }
             double direction = toPositive ? 1 : -1;
             if (Speedup)
             {
@@ -809,6 +813,11 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueInternal(double interval)
         {
+            if(IsReadOnly)
+            {
+                return;
+            }
+            
             NumericUpDownChangedRoutedEventArgs routedEvent = interval > 0 ?
                 new NumericUpDownChangedRoutedEventArgs(ValueIncrementedEvent, interval) :
                 new NumericUpDownChangedRoutedEventArgs(ValueDecrementedEvent, interval);
