@@ -44,6 +44,10 @@ namespace MahApps.Metro.Controls
             b.Source = owner;
             glow.SetBinding(Glow.NonActiveGlowBrushProperty, b);
 
+            b = new Binding("BorderThickness");
+            b.Source = owner;
+            glow.SetBinding(Glow.BorderThicknessProperty, b);
+
             switch (direction)
             {
                 case GlowDirection.Left:
@@ -207,6 +211,7 @@ namespace MahApps.Metro.Controls
             //ws |= WS.POPUP;
             wsex ^= WSEX.APPWINDOW;
             wsex |= WSEX.NOACTIVATE;
+            wsex |= WSEX.TRANSPARENT;
 
             source.Handle.SetWindowLong(ws);
             source.Handle.SetWindowLongEx(wsex);

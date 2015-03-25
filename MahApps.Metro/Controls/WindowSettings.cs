@@ -12,7 +12,25 @@ namespace MahApps.Metro.Controls
     public interface IWindowPlacementSettings
     {
         WINDOWPLACEMENT? Placement { get; set; }
+
+        /// <summary>
+        /// Refreshes the application settings property values from persistent storage.
+        /// </summary>
         void Reload();
+
+        /// <summary>
+        /// Upgrades the application settings on loading.
+        /// </summary>
+        bool UpgradeSettings { get; set; }
+
+        /// <summary>
+        /// Updates application settings to reflect a more recent installation of the application.
+        /// </summary>
+        void Upgrade();
+
+        /// <summary>
+        /// Stores the current values of the settings properties.
+        /// </summary>
         void Save();
     }
 
@@ -36,6 +54,23 @@ namespace MahApps.Metro.Controls
             set {
                 this["Placement"] = value;
             }
+        }
+
+        /// <summary>
+        /// Upgrades the application settings on loading.
+        /// </summary>
+        [UserScopedSetting]
+        public bool UpgradeSettings
+        {
+            get
+            {
+                if (this["UpgradeSettings"] != null)
+                {
+                    return (bool)this["UpgradeSettings"];
+                }
+                return true;
+            }
+            set { this["UpgradeSettings"] = value; }
         }
     }
     
@@ -98,9 +133,20 @@ namespace MahApps.Metro.Controls
             wp.length = Marshal.SizeOf(wp);
             UnsafeNativeMethods.GetWindowPlacement(hwnd, ref wp);
             // check for saveable values
-            if (wp.showCmd != (int)Constants.ShowWindowCommands.SW_HIDE && wp.length > 0 && !wp.normalPosition.IsEmpty)
+            if (wp.showCmd != (int)Constants.ShowWindowCommands.SW_HIDE && wp.length > 0)
             {
-                _settings.Placement = wp;
+                if (wp.showCmd == (int)Constants.ShowWindowCommands.SW_NORMAL)
+                {
+                    RECT rect;
+                    if (UnsafeNativeMethods.GetWindowRect(hwnd, out rect))
+                    {
+                        wp.normalPosition = rect;
+                    }
+                }
+                if (!wp.normalPosition.IsEmpty)
+                {
+                    _settings.Placement = wp;
+                }
             }
             _settings.Save();
         }

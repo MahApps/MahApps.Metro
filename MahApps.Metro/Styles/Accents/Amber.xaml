@@ -21,8 +21,6 @@
 
     <SolidColorBrush x:Key="WindowTitleColorBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
 
-    <SolidColorBrush x:Key="AccentSelectedColorBrush" Color="White" options:Freeze="True" />
-
     <LinearGradientBrush x:Key="ProgressBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5" options:Freeze="True">
         <GradientStop Color="{StaticResource HighlightColor}" Offset="0" />
         <GradientStop Color="{StaticResource AccentColor3}" Offset="1" />
@@ -33,7 +31,7 @@
 
     <Color x:Key="IdealForegroundColor">White</Color>
     <SolidColorBrush x:Key="IdealForegroundColorBrush" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
-
     <SolidColorBrush x:Key="IdealForegroundDisabledBrush" Color="{StaticResource IdealForegroundColor}" Opacity="0.4" options:Freeze="True" />
+    <SolidColorBrush x:Key="AccentSelectedColorBrush" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
 
 </ResourceDictionary>

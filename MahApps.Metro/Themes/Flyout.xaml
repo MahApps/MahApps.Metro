@@ -220,15 +220,17 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <DockPanel>
-                <ContentPresenter x:Name="PART_Header"
-                                  DockPanel.Dock="Top"
-                                  ContentSource="Header"
-                                  ContentTemplate="{TemplateBinding HeaderTemplate}" />
-                <ContentPresenter x:Name="PART_Content"
-                                  DockPanel.Dock="Bottom">
-                </ContentPresenter>
-            </DockPanel>
+            <AdornerDecorator>
+                <DockPanel FocusVisualStyle="{x:Null}"
+                           Focusable="False">
+                    <ContentPresenter x:Name="PART_Header"
+                                      DockPanel.Dock="Top"
+                                      ContentSource="Header"
+                                      ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                    <ContentPresenter x:Name="PART_Content"
+                                      DockPanel.Dock="Bottom" />
+                </DockPanel>
+            </AdornerDecorator>
         </Grid>
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}"
@@ -255,7 +257,11 @@
     <Style TargetType="{x:Type Controls:Flyout}">
         <Setter Property="Visibility"
                 Value="Hidden" />
+        <Setter Property="KeyboardNavigation.ControlTabNavigation"
+                Value="Cycle" />
         <Setter Property="KeyboardNavigation.TabNavigation"
+                Value="Cycle" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation"
                 Value="Cycle" />
         <Setter Property="VerticalAlignment"
                 Value="Stretch" />

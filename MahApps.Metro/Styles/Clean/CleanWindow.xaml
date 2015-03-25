@@ -6,6 +6,10 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     mc:Ignorable="options">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
     <SolidColorBrush x:Key="IdealForegroundDisabledBrush" Color="#ADADAD" options:Freeze="True" />
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -199,11 +203,22 @@
         </ControlTemplate.Resources>
         <ControlTemplate.Triggers>
             <!-- handle active/inactive state -->
-            <Trigger Property="IsActive"
-                     Value="False">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsActive"
+                               Value="False" />
+                    <Condition Property="GlowBrush"
+                               Value="{x:Null}" />
+                </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border"
                         Property="BorderBrush"
                         Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+            </MultiTrigger>
+            <Trigger Property="BorderBrush"
+                     Value="{x:Null}">
+                <Setter TargetName="PART_Border"
+                        Property="Visibility"
+                        Value="Collapsed" />
             </Trigger>
             <!-- no icon and no icon content template -> collapse the icon content control -->
             <MultiTrigger>

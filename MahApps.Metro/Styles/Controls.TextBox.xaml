@@ -6,7 +6,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
     <!--TextBox Style-->
@@ -77,13 +77,11 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
-                        <Rectangle x:Name="Base"
-                                   Stroke="{TemplateBinding BorderBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Fill="{TemplateBinding Background}" />
-                        <Rectangle x:Name="FocusRectangle"
-                                   Visibility="Collapsed"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" />
+                        <Border x:Name="Base"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" />
                         <Grid x:Name="PART_InnerGrid"
                               Margin="2">
                             <Grid.ColumnDefinitions>
@@ -92,9 +90,9 @@
                                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition x:Name="ButtonRow"
-                                               Height="*"/>
+                                               Height="*" />
                             </Grid.RowDefinitions>
 
                             <Border x:Name="ReadOnlyVisualElement"
@@ -137,7 +135,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                     <TextBlock.RenderTransform>
-                                        <TranslateTransform/>
+                                        <TranslateTransform />
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
                             </Grid>
@@ -150,14 +148,16 @@
                                     FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonFontFamily), Mode=OneWay}"
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
                                     IsTabStop="False" />
                         </Grid>
-                        <Rectangle x:Name="DisabledVisualElement"
-                                   Stroke="{DynamicResource ControlsDisabledBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Fill="{DynamicResource ControlsDisabledBrush}"
-                                   IsHitTestVisible="False"
-                                   Opacity="0" />
+                        <Border x:Name="DisabledVisualElement"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                IsHitTestVisible="False"
+                                Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
@@ -171,30 +171,30 @@
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
                             </DataTrigger.EnterActions>
                             <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
                             </DataTrigger.ExitActions>
                         </DataTrigger>
                         <!--To override Watermark == ""-->
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}"
                                      Value="">
                             <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
                             </DataTrigger.EnterActions>
                             <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
                             </DataTrigger.ExitActions>
                         </DataTrigger>
                         <!--To override TextBoxHelper.UseFloatingWatermark == false-->
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
                             </DataTrigger.EnterActions>
                             <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
                             </DataTrigger.ExitActions>
                         </DataTrigger>
 
@@ -222,18 +222,15 @@
                         </DataTrigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Stroke"
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter TargetName="DisabledVisualElement"
                                     Property="Opacity"
-                                    Value="0.6"/>
+                                    Value="0.6" />
                         </Trigger>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
@@ -243,18 +240,15 @@
                         </Trigger>
                         <Trigger Property="IsFocused"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Stroke"
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="FloatingMessage"
                                     Property="Foreground"
-                                    Value="{DynamicResource AccentColorBrush}"/>
+                                    Value="{DynamicResource AccentColorBrush}" />
                             <Setter TargetName="FloatingMessage"
                                     Property="Opacity"
-                                    Value="1"/>
+                                    Value="1" />
                         </Trigger>
                         <Trigger SourceName="PART_ClearText"
                                  Property="IsMouseOver"
@@ -375,13 +369,11 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
-                        <Rectangle x:Name="Base"
-                                   Stroke="{TemplateBinding BorderBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Fill="{TemplateBinding Background}" />
-                        <Rectangle x:Name="FocusRectangle"
-                                   Visibility="Collapsed"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" />
+                        <Border x:Name="Base"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" />
                         <Grid x:Name="PART_InnerGrid"
                               Margin="2">
                             <Grid.ColumnDefinitions>
@@ -390,9 +382,9 @@
                                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition x:Name="ButtonRow"
-                                               Height="*"/>
+                                               Height="*" />
                             </Grid.RowDefinitions>
 
                             <Border x:Name="ReadOnlyVisualElement"
@@ -435,7 +427,7 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                     <TextBlock.RenderTransform>
-                                        <TranslateTransform/>
+                                        <TranslateTransform />
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
                             </Grid>
@@ -448,14 +440,16 @@
                                     FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonFontFamily), Mode=OneWay}"
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
                                     Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonTemplate), Mode=OneWay}"
+                                    Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="True"
                                     IsTabStop="False" />
                         </Grid>
-                        <Rectangle x:Name="DisabledVisualElement"
-                                   Stroke="{DynamicResource ControlsDisabledBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Fill="{DynamicResource ControlsDisabledBrush}"
-                                   IsHitTestVisible="False"
-                                   Opacity="0" />
+                        <Border x:Name="DisabledVisualElement"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                IsHitTestVisible="False"
+                                Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
@@ -469,30 +463,30 @@
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
                             </DataTrigger.EnterActions>
                             <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
                             </DataTrigger.ExitActions>
                         </DataTrigger>
                         <!--To override Watermark == ""-->
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}"
                                      Value="">
                             <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
                             </DataTrigger.EnterActions>
                             <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
                             </DataTrigger.ExitActions>
                         </DataTrigger>
                         <!--To override TextBoxHelper.UseFloatingWatermark == false-->
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark)}"
                                      Value="False">
                             <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
                             </DataTrigger.EnterActions>
                             <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}"/>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
                             </DataTrigger.ExitActions>
                         </DataTrigger>
 
@@ -511,11 +505,8 @@
 
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Stroke"
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
@@ -532,18 +523,15 @@
                         </Trigger>
                         <Trigger Property="IsFocused"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Stroke"
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                             <Setter TargetName="FloatingMessage"
                                     Property="Foreground"
-                                    Value="{DynamicResource AccentColorBrush}"/>
+                                    Value="{DynamicResource AccentColorBrush}" />
                             <Setter TargetName="FloatingMessage"
                                     Property="Opacity"
-                                    Value="1"/>
+                                    Value="1" />
                         </Trigger>
                         <Trigger SourceName="PART_ClearText"
                                  Property="IsMouseOver"
@@ -695,34 +683,26 @@
                             <ScrollViewer x:Name="PART_ContentHost"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
-                        <Rectangle x:Name="FocusRectangle"
-                                   Visibility="Collapsed"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}" />
-                        <Rectangle x:Name="DisabledVisualElement"
-                                   Stroke="{DynamicResource ControlsDisabledBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Fill="{DynamicResource ControlsDisabledBrush}"
-                                   Opacity="0.6"
-                                   IsHitTestVisible="False"
-                                   Visibility="Collapsed" />
+                        <Border x:Name="DisabledVisualElement"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                Opacity="0.6"
+                                IsHitTestVisible="False"
+                                Visibility="Collapsed" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Stroke"
+                            <Setter TargetName="Bd"
+                                    Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsFocused"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Visibility"
-                                    Value="Visible" />
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Stroke"
+                            <Setter TargetName="Bd"
+                                    Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"

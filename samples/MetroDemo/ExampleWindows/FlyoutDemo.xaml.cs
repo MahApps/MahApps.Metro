@@ -15,7 +15,6 @@ namespace MetroDemo.ExampleWindows
         {
             this.DataContext = new MainWindowViewModel();
             this.InitializeComponent();
-            settingsFlyout.IsOpenChanged += (sender, args) => firstTB.Focus();
             this.Closing += (s, e) =>
                 {
                     if (_hideOnClose)
@@ -24,9 +23,18 @@ namespace MetroDemo.ExampleWindows
                         e.Cancel = true;
                     }
                 };
+
+            var mainWindow = (MetroWindow)this;
+            var windowPlacementSettings = mainWindow.GetWindowPlacementSettings();
+            if (windowPlacementSettings.UpgradeSettings)
+            {
+                windowPlacementSettings.Upgrade();
+                windowPlacementSettings.UpgradeSettings = false;
+                windowPlacementSettings.Save();
+            }
         }
 
-        public void ShowDialog()
+        public void Launch()
         {
             Owner = Application.Current.MainWindow;
             // only for this window, because we allow minimizing

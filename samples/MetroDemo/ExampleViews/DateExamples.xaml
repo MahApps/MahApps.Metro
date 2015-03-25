@@ -24,52 +24,36 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <StackPanel>
-                <TextBlock Text="date picker"
-                           Margin="0,5"
-                           FontSize="20"
-                           HorizontalAlignment="Center" />
-                <DatePicker Width="150"
+
+            <StackPanel VerticalAlignment="Top">
+                <Label Content="Date picker"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+
+                <DatePicker Margin="0, 10, 0, 0"
+                            Width="150"
                             HorizontalAlignment="Center"
                             Controls:TextBoxHelper.Watermark="Select a date" />
-                <DatePicker Width="300"
-                            Margin="2"
+                <DatePicker Margin="0, 10, 0, 0"
+                            Width="150"
+                            HorizontalAlignment="Center"
+                            IsEnabled="False" />
+                <DatePicker Margin="0, 10, 0, 0"
+                            Width="300"
                             FontSize="24"
                             HorizontalAlignment="Center"
                             SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                             Controls:TextBoxHelper.Watermark="Select a date" />
             </StackPanel>
-            <StackPanel Grid.Row="1"
-                        Grid.Column="0">
-                <TextBlock Text="disabled date picker"
-                           Margin="0,5"
-                           FontSize="20"
-                           HorizontalAlignment="Center" />
-                <DatePicker Width="150"
-                            HorizontalAlignment="Center"
-                            Controls:TextBoxHelper.Watermark="Select a date"
-                            IsEnabled="False" />
-            </StackPanel>
-            <StackPanel Grid.Row="0"
-                        Grid.Column="1">
-                <TextBlock Text="calendar"
-                           Margin="0,5"
-                           FontSize="20"
-                           HorizontalAlignment="Center" />
-                <Calendar />
-            </StackPanel>
 
-            <StackPanel Grid.Column="1"
-                        Grid.Row="1">
-                <TextBlock Text="disabled calendar"
-                           Margin="0,5"
-                           FontSize="20"
-                           HorizontalAlignment="Center" />
-                <Calendar IsEnabled="False" />
+            <StackPanel VerticalAlignment="Top"
+                        Grid.Row="0"
+                        Grid.Column="1">
+                <Label Content="Calendar"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+
+                <Calendar Margin="5" />
+                <Calendar Margin="5"
+                          IsEnabled="False" />
             </StackPanel>
         </Grid>
     </AdornerDecorator>

@@ -6,12 +6,8 @@
                      TargetType="{x:Type Controls:Glow}">
         <Grid Margin="{TemplateBinding Padding}"
               Background="Transparent">
-            <Border Grid.Row="1"
-                    Grid.Column="1"
-                    Background="{TemplateBinding Background}" />
+            <Border Background="{TemplateBinding Background}" />
             <Border x:Name="glowSource"
-                    Grid.Row="1"
-                    Grid.Column="1"
                     Margin="-1,0"
                     Opacity="0.6"
                     Background="{TemplateBinding Background}">
@@ -27,14 +23,21 @@
                         Property="Margin"
                         Value="0,-1" />
             </Trigger>
+            <Trigger Property="BorderThickness" Value="0">
+                <Setter TargetName="glowSource"
+                        Property="Opacity"
+                        Value="1" />
+            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Glow}">
+        <Setter Property="BorderThickness"
+                Value="1" />
         <Setter Property="Background"
                 Value="{Binding RelativeSource={RelativeSource Self}, Path=GlowBrush}" />
         <Setter Property="Width"
-                Value="1" />
+                Value="{Binding RelativeSource={RelativeSource Self}, Path=BorderThickness.Left, Mode=OneWay}" />
         <Setter Property="Padding"
                 Value="0,8" />
         <Setter Property="Template"
@@ -50,7 +53,7 @@
                 <Setter Property="Width"
                         Value="Auto" />
                 <Setter Property="Height"
-                        Value="1" />
+                        Value="{Binding RelativeSource={RelativeSource Self}, Path=BorderThickness.Top, Mode=OneWay}" />
                 <Setter Property="Padding"
                         Value="0" />
             </Trigger>

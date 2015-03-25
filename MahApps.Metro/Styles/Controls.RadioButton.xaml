@@ -32,22 +32,6 @@
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         To="1"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         Storyboard.TargetName="hover" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         To="1"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         Storyboard.TargetName="pressed" />
-                                    </Storyboard>
-                                </VisualState>
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
                                         <DoubleAnimation Duration="0"
@@ -73,17 +57,6 @@
                                 <VisualState x:Name="Unchecked" />
                                 <VisualState x:Name="Indeterminate" />
                             </VisualStateGroup>
-                            <VisualStateGroup x:Name="FocusStates">
-                                <VisualState x:Name="Focused">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         To="1"
-                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                         Storyboard.TargetName="focused" />
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Unfocused" />
-                            </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="18" x:Name="LeftCol" />
@@ -93,29 +66,7 @@
                             <Rectangle Fill="{DynamicResource TransparentWhiteBrush}"
                                        Margin="-6,0" />
                             <Ellipse x:Name="normal"
-                                     Opacity="1"
                                      Stroke="{DynamicResource CheckBoxBrush}"
-                                     StrokeThickness="1"
-                                     Fill="{DynamicResource WhiteBrush}"
-                                     Width="18"
-                                     Height="18" />
-                            <Ellipse x:Name="hover"
-                                     Stroke="{TemplateBinding Controls:ControlsHelper.MouseOverBorderBrush}"
-                                     StrokeThickness="1"
-                                     Fill="{DynamicResource WhiteBrush}"
-                                     Opacity="0"
-                                     Width="18"
-                                     Height="18" />
-                            <Ellipse x:Name="pressed"
-                                     Opacity="0"
-                                     Stroke="{DynamicResource HighlightBrush}"
-                                     StrokeThickness="1"
-                                     Fill="{DynamicResource WhiteBrush}"
-                                     Width="18"
-                                     Height="18" />
-                            <Ellipse x:Name="focused"
-                                     Opacity="0"
-                                     Stroke="{TemplateBinding Controls:ControlsHelper.FocusBorderBrush}"
                                      StrokeThickness="1"
                                      Fill="{DynamicResource WhiteBrush}"
                                      Width="18"
@@ -141,6 +92,24 @@
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="normal"
+                                    Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="normal"
+                                    Property="Stroke"
+                                    Value="{DynamicResource HighlightBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter TargetName="normal"
+                                    Property="Stroke"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                        </Trigger>
                         <Trigger Property="Controls:ToggleButtonHelper.ContentDirection"
                                  Value="RightToLeft">
                             <Setter Property="Padding"

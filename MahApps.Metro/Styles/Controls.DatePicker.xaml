@@ -13,6 +13,10 @@
                 Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="Controls:ControlsHelper.FocusBorderBrush"
+                Value="{DynamicResource TextBoxFocusBorderBrush}" />
+        <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
+                Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring"
@@ -43,33 +47,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DatePicker}">
                     <Grid x:Name="PART_Root">
-                        <Grid.Resources>
-                            <SolidColorBrush x:Key="DisabledBrush"
-                                             Color="#A5FFFFFF" />
-                        </Grid.Resources>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         To="1"
-                                                         Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="PART_DisabledVisual" />
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <Rectangle x:Name="Base"
-                                   Stroke="{TemplateBinding BorderBrush}"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Opacity="1"
-                                   Fill="{TemplateBinding Background}" />
-                        <Rectangle x:Name="FocusRectangle"
-                                   StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                   Opacity="0"
-                                   Stroke="{DynamicResource BlackBrush}" />
-                        <Grid Margin="2">
+                        <Border x:Name="Base"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" />
+                        <Grid x:Name="PART_InnerGrid"
+                              Margin="2">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
@@ -106,6 +90,8 @@
 
                             <DatePickerTextBox x:Name="PART_TextBox"
                                                Grid.Column="0"
+                                               Controls:TextBoxHelper.Watermark="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.Watermark), Mode=OneWay}"
+                                               CaretBrush="{DynamicResource BlackBrush}"
                                                ContextMenu="{DynamicResource TextBoxMetroContextMenu}"
                                                Foreground="{TemplateBinding Foreground}"
                                                Focusable="{TemplateBinding Focusable}"
@@ -113,35 +99,45 @@
                                                HorizontalContentAlignment="Stretch"
                                                VerticalContentAlignment="Stretch" />
 
-                            <Rectangle x:Name="PART_DisabledVisual"
-                                       Grid.Column="0"
-                                       Grid.ColumnSpan="2"
-                                       Stroke="{DynamicResource ControlsDisabledBrush}"
-                                       StrokeThickness="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}}"
-                                       Fill="{DynamicResource ControlsDisabledBrush}"
-                                       IsHitTestVisible="False"
-                                       Opacity="0" />
-
                             <Popup x:Name="PART_Popup"
                                    AllowsTransparency="True"
                                    Placement="Bottom"
                                    PlacementTarget="{Binding ElementName=PART_Root}"
                                    StaysOpen="False" />
                         </Grid>
+                        <Border x:Name="DisabledVisualElement"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                IsHitTestVisible="False"
+                                Opacity="0" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
-                                    Property="Opacity"
-                                    Value="1" />
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.MouseOverBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused"
+                                 Value="True">
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin"
                                  Value="True">
-                            <Setter TargetName="FocusRectangle"
+                            <Setter TargetName="Base"
+                                    Property="BorderBrush"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="DisabledVisualElement"
                                     Property="Opacity"
-                                    Value="1" />
+                                    Value="0.6" />
                         </Trigger>
                         <Trigger SourceName="PART_Button"
                                  Property="IsMouseOver"
@@ -252,7 +248,7 @@
                                         Foreground="{TemplateBinding Foreground}"
                                         Visibility="Hidden" />
                         <TextBlock x:Name="Message"
-                                   Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextBoxHelper.Watermark)}"
+                                   Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                    Foreground="{TemplateBinding Foreground}"
                                    IsHitTestVisible="False"
                                    Opacity="0.6"
@@ -277,7 +273,7 @@
                             </MultiTrigger.ExitActions>
                         </MultiTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DatePicker}}, Path=(Controls:TextBoxHelper.Watermark)}"
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}"
                                      Value="{x:Static System:String.Empty}">
                             <Setter TargetName="PART_Watermark"
                                     Property="Visibility"

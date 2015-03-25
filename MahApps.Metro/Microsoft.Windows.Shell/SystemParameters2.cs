@@ -167,7 +167,8 @@ namespace Microsoft.Windows.Shell
                 Marshal.StructureToPtr(tbix, lParam, false);
                 // This might flash a window in the taskbar while being calculated.
                 // WM_GETTITLEBARINFOEX doesn't work correctly unless the window is visible while processing.
-                NativeMethods.ShowWindow(_messageHwnd.Handle, SW.SHOW);
+                // use SW.SHOWNA instead SW.SHOW to avoid some brief flashing when launched the window
+                NativeMethods.ShowWindow(_messageHwnd.Handle, SW.SHOWNA);
                 NativeMethods.SendMessage(_messageHwnd.Handle, WM.GETTITLEBARINFOEX, IntPtr.Zero, lParam);
                 tbix = (TITLEBARINFOEX)Marshal.PtrToStructure(lParam, typeof(TITLEBARINFOEX));
             }

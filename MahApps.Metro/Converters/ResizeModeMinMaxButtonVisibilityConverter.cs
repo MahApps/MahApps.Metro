@@ -27,11 +27,18 @@ namespace MahApps.Metro.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values != null && values.Length == 2 && parameter is string)
+            var whichButton = parameter as string;
+            if (values != null && !string.IsNullOrEmpty(whichButton))
             {
-                var windowPropValue = (bool)values[0];
-                var windowResizeMode = (ResizeMode)values[1];
-                var whichButton = (string)parameter;
+                var showButton = values.Length > 0 && (bool) values[0];
+                var useNoneWindowStyle = values.Length > 1 && (bool)values[1];
+                var windowResizeMode = values.Length > 2 ? (ResizeMode)values[2] : ResizeMode.CanResize;
+
+                if (whichButton == "CLOSE")
+                {
+                    return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
+                }
+
                 switch (windowResizeMode)
                 {
                     case ResizeMode.NoResize:
@@ -39,13 +46,13 @@ namespace MahApps.Metro.Converters
                     case ResizeMode.CanMinimize:
                         if (whichButton == "MIN")
                         {
-                            return windowPropValue ? Visibility.Visible : Visibility.Collapsed;
+                            return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                         }
                         return Visibility.Collapsed;
                     case ResizeMode.CanResize:
                     case ResizeMode.CanResizeWithGrip:
                     default:
-                        return windowPropValue ? Visibility.Visible : Visibility.Collapsed;
+                        return useNoneWindowStyle || !showButton ? Visibility.Collapsed : Visibility.Visible;
                 }
             }
             return Visibility.Visible;

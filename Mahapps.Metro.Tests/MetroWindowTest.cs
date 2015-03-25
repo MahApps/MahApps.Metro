@@ -39,6 +39,57 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        public async Task IconShouldBeCollapsedWithShowIconOnTitleBarFalse()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.ShowIconOnTitleBar = false);
+            var icon = window.GetPart<ContentControl>("PART_Icon");
+
+            Assert.Equal(Visibility.Collapsed, icon.Visibility);
+        }
+
+        [Fact]
+        public async Task IconShouldBeCollapsedWithShowTitleBarFalse()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.ShowTitleBar = false);
+            var icon = window.GetPart<ContentControl>("PART_Icon");
+
+            Assert.Equal(Visibility.Collapsed, icon.Visibility);
+        }
+
+        [Fact]
+        public async Task IconShouldBeVisibleWithShowTitleBarFalseAndOverlayBehaviorHiddenTitleBar()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => {
+                                                                                         w.IconOverlayBehavior = WindowCommandsOverlayBehavior.HiddenTitleBar;
+                                                                                         w.ShowTitleBar = false;
+                                                                                     });
+            var icon = window.GetPart<ContentControl>("PART_Icon");
+
+            Assert.Equal(Visibility.Visible, icon.Visibility);
+        }
+
+        [Fact]
+        public async Task IconShouldBeHiddenWithChangedShowIconOnTitleBar()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            var icon = window.GetPart<ContentControl>("PART_Icon");
+
+            Assert.Equal(Visibility.Visible, icon.Visibility);
+
+            window.ShowIconOnTitleBar = false;
+
+            Assert.Equal(Visibility.Collapsed, icon.Visibility);
+        }
+
+        [Fact]
         public async Task IconCanOverlayHiddenTitlebar()
         {
             await TestHost.SwitchToAppThread();
@@ -204,6 +255,19 @@ namespace MahApps.Metro.Tests
             Assert.False(maxButton.IsVisible);
             Assert.False(closeButton.IsVisible);
             Assert.Equal(ResizeMode.CanResize, window.ResizeMode);
+        }
+
+        [Fact]
+        public async Task WindowSettingsUpgradeSettingsShouldBeTrueByDefault()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+            window.SaveWindowPosition = true;
+
+            var settings = window.GetWindowPlacementSettings();
+            Assert.NotNull(settings);
+            Assert.Equal(true, settings.UpgradeSettings);
         }
     }
 }
