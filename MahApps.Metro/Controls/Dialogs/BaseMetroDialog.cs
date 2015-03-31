@@ -106,6 +106,10 @@ namespace MahApps.Metro.Controls.Dialogs
             if (DialogSettings != null)
             {
                 var windowTheme = DetectTheme(this);
+                
+                if (windowTheme == null)
+                    return;
+                
                 var theme = windowTheme.Item1;
                 var windowAccent = windowTheme.Item2;
 
