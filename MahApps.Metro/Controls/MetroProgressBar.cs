@@ -140,6 +140,15 @@ namespace MahApps.Metro.Controls
                             doubleAnimParent.InvalidateProperty(Storyboard.TargetNameProperty);
                         }
 
+                        var containingGrid = (FrameworkElement)GetTemplateChild("ContainingGrid");
+
+                        if (indeterminate.Storyboard != null)
+                        {
+                            // remove the previous storyboard from the Grid #1855
+                            indeterminate.Storyboard.Stop(containingGrid);
+                            indeterminate.Storyboard.Remove(containingGrid);
+                        }
+
                         indeterminate.Storyboard = newStoryboard;
 
                         if (!IsIndeterminate)
@@ -149,7 +158,7 @@ namespace MahApps.Metro.Controls
 
                         if (indeterminate.Storyboard != null)
                         {
-                            indeterminate.Storyboard.Begin((FrameworkElement)GetTemplateChild("ContainingGrid"), true);
+                            indeterminate.Storyboard.Begin(containingGrid, true);
                         }
                     }
                 }
