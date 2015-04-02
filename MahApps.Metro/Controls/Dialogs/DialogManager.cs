@@ -443,9 +443,6 @@ namespace MahApps.Metro.Controls.Dialogs
             win.MinHeight = SystemParameters.PrimaryScreenHeight / 4.0;
             win.SizeToContent = SizeToContent.Height;
 
-            var glowWindow = new GlowWindowBehavior();
-            glowWindow.Attach(win);
-
             dialog.ParentDialogWindow = win; //THIS IS ONLY, I REPEAT, ONLY SET FOR EXTERNAL DIALOGS!
 
             win.Content = dialog;
