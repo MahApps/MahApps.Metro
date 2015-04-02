@@ -222,6 +222,7 @@ namespace MahApps.Metro.Controls
 
         public void Update()
         {
+            if (!Owner.IsLoaded) return;
             if (Owner.Visibility == Visibility.Hidden)
             {
                 Visibility = Visibility.Hidden;
