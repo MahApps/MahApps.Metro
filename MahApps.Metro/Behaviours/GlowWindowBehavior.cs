@@ -65,21 +65,21 @@ namespace MahApps.Metro.Behaviours
         }
 
         private void RestoreGlow()
-        {           
-            if(left != null && top != null && right != null && bottom != null)
-            {
-                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = true;
-                Update();
-            }
+        {
+            if (left != null) left.IsGlowing = true;
+            if (top != null) top.IsGlowing = true;
+            if (right != null) right.IsGlowing = true;
+            if (bottom != null) bottom.IsGlowing = true;
+            Update();
         }
 
         private void HideGlow()
         {
-            if (left != null && top != null && right != null && bottom != null)
-            {
-                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = false;
-                Update();
-            }
+            if (left != null) left.IsGlowing = false;
+            if (top != null) top.IsGlowing = false;
+            if (right != null) right.IsGlowing = false;
+            if (bottom != null) bottom.IsGlowing = false;
+            Update();
         }
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -149,16 +149,10 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void Update()
         {
-            if (this.left != null
-                && this.right != null
-                && this.top != null
-                && this.bottom != null)
-            {
-                this.left.Update();
-                this.right.Update();
-                this.top.Update();
-                this.bottom.Update();
-            }
+            if (left != null) left.Update();
+            if (right != null) right.Update();
+            if (top != null) top.Update();
+            if (bottom != null) bottom.Update();
         }
 
         /// <summary>
@@ -166,16 +160,10 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void SetOpacityTo(double newOpacity)
         {
-            if (this.left != null
-                && this.right != null
-                && this.top != null
-                && this.bottom != null)
-            {
-                this.left.Opacity = newOpacity;
-                this.right.Opacity = newOpacity;
-                this.top.Opacity = newOpacity;
-                this.bottom.Opacity = newOpacity;
-            }
+            if (left != null) left.Opacity = newOpacity;
+            if (right != null) right.Opacity = newOpacity;
+            if (top != null) top.Opacity = newOpacity;
+            if (bottom != null) bottom.Opacity = newOpacity;
         }
 
         /// <summary>
@@ -183,16 +171,10 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void StartOpacityStoryboard()
         {
-            if (this.left != null && this.left.OpacityStoryboard != null
-                && this.right != null && this.right.OpacityStoryboard != null
-                && this.top != null && this.top.OpacityStoryboard != null
-                && this.bottom != null && this.bottom.OpacityStoryboard != null)
-            {
-                this.left.BeginStoryboard(this.left.OpacityStoryboard);
-                this.right.BeginStoryboard(this.right.OpacityStoryboard);
-                this.top.BeginStoryboard(this.top.OpacityStoryboard);
-                this.bottom.BeginStoryboard(this.bottom.OpacityStoryboard);
-            }
+            if (left != null && this.left.OpacityStoryboard != null) left.BeginStoryboard(this.left.OpacityStoryboard);
+            if (right != null && this.right.OpacityStoryboard != null) right.BeginStoryboard(this.right.OpacityStoryboard);
+            if (top != null && this.top.OpacityStoryboard != null) top.BeginStoryboard(this.top.OpacityStoryboard);
+            if (bottom != null && this.bottom.OpacityStoryboard != null) bottom.BeginStoryboard(this.bottom.OpacityStoryboard);
         }
 
         /// <summary>
@@ -200,10 +182,10 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void Show()
         {
-            left.Show();
-            right.Show();
-            top.Show();
-            bottom.Show();
+            if (left != null) left.Show();
+            if (right != null) right.Show();
+            if (top != null) top.Show();
+            if (bottom != null) bottom.Show();
         }
     }
 }
