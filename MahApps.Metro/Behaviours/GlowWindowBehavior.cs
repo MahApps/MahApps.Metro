@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interactivity;
+using System.Windows.Interop;
 using MahApps.Metro.Controls;
 using System.Windows.Threading;
+using Standard;
+using WM = MahApps.Metro.Models.Win32.WM;
 
 namespace MahApps.Metro.Behaviours
 {
@@ -16,6 +20,14 @@ namespace MahApps.Metro.Behaviours
         {
             base.OnAttached();
 
+            this.AssociatedObject.SourceInitialized += (o, args) => {
+                var handle = new WindowInteropHelper(this.AssociatedObject).Handle;
+                var hwndSource = HwndSource.FromHwnd(handle);
+                if (hwndSource != null)
+                {
+                    hwndSource.AddHook(AssociatedObjectWindowProc);
+                }
+            };
             this.AssociatedObject.Loaded += AssociatedObjectOnLoaded;
             this.AssociatedObject.Unloaded += AssociatedObjectUnloaded;
         }
@@ -65,21 +77,21 @@ namespace MahApps.Metro.Behaviours
         }
 
         private void RestoreGlow()
-        {           
-            if(left != null && top != null && right != null && bottom != null)
-            {
-                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = true;
-                Update();
-            }
+        {
+            if (left != null) left.IsGlowing = true;
+            if (top != null) top.IsGlowing = true;
+            if (right != null) right.IsGlowing = true;
+            if (bottom != null) bottom.IsGlowing = true;
+            Update();
         }
 
         private void HideGlow()
         {
-            if (left != null && top != null && right != null && bottom != null)
-            {
-                left.IsGlowing = top.IsGlowing = right.IsGlowing = bottom.IsGlowing = false;
-                Update();
-            }
+            if (left != null) left.IsGlowing = false;
+            if (top != null) top.IsGlowing = false;
+            if (right != null) right.IsGlowing = false;
+            if (bottom != null) bottom.IsGlowing = false;
+            Update();
         }
 
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -131,6 +143,30 @@ namespace MahApps.Metro.Behaviours
             }
         }
 
+        private WINDOWPOS _previousWP;
+
+        private IntPtr AssociatedObjectWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch ((WM)msg)
+            {
+                case WM.WINDOWPOSCHANGED:
+                case WM.WINDOWPOSCHANGING:
+                    Assert.IsNotDefault(lParam);
+                    var wp = (WINDOWPOS)Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
+                    if (!wp.Equals(_previousWP))
+                    {
+                        this.UpdateCore();
+                    }
+                    _previousWP = wp;
+                    break;
+                case WM.SIZE:
+                case WM.SIZING:
+                    this.UpdateCore();
+                    break;
+            }
+            return IntPtr.Zero;
+        }
+
         private void AssociatedObjectIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!this.AssociatedObject.IsVisible)
@@ -149,16 +185,18 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void Update()
         {
-            if (this.left != null
-                && this.right != null
-                && this.top != null
-                && this.bottom != null)
-            {
-                this.left.Update();
-                this.right.Update();
-                this.top.Update();
-                this.bottom.Update();
-            }
+            if (left != null) left.Update();
+            if (right != null) right.Update();
+            if (top != null) top.Update();
+            if (bottom != null) bottom.Update();
+        }
+
+        private void UpdateCore()
+        {
+            if (left != null) left.UpdateCore();
+            if (right != null) right.UpdateCore();
+            if (top != null) top.UpdateCore();
+            if (bottom != null) bottom.UpdateCore();
         }
 
         /// <summary>
@@ -166,16 +204,10 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void SetOpacityTo(double newOpacity)
         {
-            if (this.left != null
-                && this.right != null
-                && this.top != null
-                && this.bottom != null)
-            {
-                this.left.Opacity = newOpacity;
-                this.right.Opacity = newOpacity;
-                this.top.Opacity = newOpacity;
-                this.bottom.Opacity = newOpacity;
-            }
+            if (left != null) left.Opacity = newOpacity;
+            if (right != null) right.Opacity = newOpacity;
+            if (top != null) top.Opacity = newOpacity;
+            if (bottom != null) bottom.Opacity = newOpacity;
         }
 
         /// <summary>
@@ -183,16 +215,10 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void StartOpacityStoryboard()
         {
-            if (this.left != null && this.left.OpacityStoryboard != null
-                && this.right != null && this.right.OpacityStoryboard != null
-                && this.top != null && this.top.OpacityStoryboard != null
-                && this.bottom != null && this.bottom.OpacityStoryboard != null)
-            {
-                this.left.BeginStoryboard(this.left.OpacityStoryboard);
-                this.right.BeginStoryboard(this.right.OpacityStoryboard);
-                this.top.BeginStoryboard(this.top.OpacityStoryboard);
-                this.bottom.BeginStoryboard(this.bottom.OpacityStoryboard);
-            }
+            if (left != null && this.left.OpacityStoryboard != null) left.BeginStoryboard(this.left.OpacityStoryboard);
+            if (right != null && this.right.OpacityStoryboard != null) right.BeginStoryboard(this.right.OpacityStoryboard);
+            if (top != null && this.top.OpacityStoryboard != null) top.BeginStoryboard(this.top.OpacityStoryboard);
+            if (bottom != null && this.bottom.OpacityStoryboard != null) bottom.BeginStoryboard(this.bottom.OpacityStoryboard);
         }
 
         /// <summary>
@@ -200,10 +226,10 @@ namespace MahApps.Metro.Behaviours
         /// </summary>
         private void Show()
         {
-            left.Show();
-            right.Show();
-            top.Show();
-            bottom.Show();
+            if (left != null) left.Show();
+            if (right != null) right.Show();
+            if (top != null) top.Show();
+            if (bottom != null) bottom.Show();
         }
     }
 }
