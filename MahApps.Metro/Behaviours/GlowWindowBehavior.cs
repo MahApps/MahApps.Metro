@@ -196,7 +196,7 @@ namespace MahApps.Metro.Behaviours
             if (left != null) left.UpdateCore();
             if (right != null) right.UpdateCore();
             if (top != null) top.UpdateCore();
-            if (bottom != null) bottom.Update();
+            if (bottom != null) bottom.UpdateCore();
         }
 
         /// <summary>
