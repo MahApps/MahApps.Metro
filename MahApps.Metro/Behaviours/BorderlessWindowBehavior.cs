@@ -129,6 +129,10 @@ namespace MahApps.Metro.Behaviours
 
         private bool _ModifyStyle(Standard.WS removeStyle, Standard.WS addStyle)
         {
+            if (this.handle == IntPtr.Zero)
+            {
+                return false;
+            }
             var dwStyle = (Standard.WS)Standard.NativeMethods.GetWindowLongPtr(this.handle, Standard.GWL.STYLE).ToInt32();
             var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
             if (dwStyle == dwNewStyle) {
@@ -229,7 +233,7 @@ namespace MahApps.Metro.Behaviours
                 AssociatedObject.BorderThickness = new Thickness(0);
 
                 var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
-                if (ignoreTaskBar)
+                if (ignoreTaskBar && handle != IntPtr.Zero)
                 {
                     // WindowChrome handles the size false if the main monitor is lesser the monitor where the window is maximized
                     // so set the window pos/size twice
