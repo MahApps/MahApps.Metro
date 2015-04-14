@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,7 +7,6 @@ using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using MahApps.Metro.Models.Win32;
 using MahApps.Metro.Native;
-using Standard;
 using NativeMethods = MahApps.Metro.Models.Win32.NativeMethods;
 using RECT = MahApps.Metro.Native.RECT;
 using SWP = MahApps.Metro.Models.Win32.SWP;
@@ -224,13 +222,7 @@ namespace MahApps.Metro.Controls
             source.AddHook(WndProc);
 
             handle = source.Handle;
-
             ownerHandle = new WindowInteropHelper(Owner).Handle;
-            var hwndSource = HwndSource.FromHwnd(ownerHandle);
-            if (hwndSource != null)
-            {
-                hwndSource.AddHook(OwnerWindowProc);
-            }
         }
 
         public void Update()
@@ -262,41 +254,17 @@ namespace MahApps.Metro.Controls
             get;
         }
 
-        private WINDOWPOS _previousWP;
-        
-        private IntPtr OwnerWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            switch ((WM) msg)
-            {
-                case WM.WINDOWPOSCHANGED:
-                case WM.WINDOWPOSCHANGING:
-                    Assert.IsNotDefault(lParam);
-                    var wp = (WINDOWPOS) Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
-                    if (!wp.Equals(_previousWP))
-                    {
-                        this.UpdateCore();
-                    }
-                    _previousWP = wp;
-                    break;
-                case WM.SIZE:
-                case WM.SIZING:
-                    this.UpdateCore();
-                    break;
-            }
-            return IntPtr.Zero;
-        }
-
-        private void UpdateCore()
+        internal void UpdateCore()
         {
             RECT rect;
-            if (UnsafeNativeMethods.GetWindowRect(ownerHandle, out rect))
+            if (ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(ownerHandle, out rect))
             {
                 NativeMethods.SetWindowPos(handle, ownerHandle,
                                            (int)(getLeft(DpiFactor, rect)),
                                            (int)(getTop(DpiFactor, rect)),
                                            (int)(getWidth(DpiFactor, rect)),
                                            (int)(getHeight(DpiFactor, rect)),
-                                           SWP.NOACTIVATE);
+                                           SWP.NOACTIVATE | SWP.NOZORDER);
             }
         }
 
@@ -318,9 +286,7 @@ namespace MahApps.Metro.Controls
             if (msg == (int)WM.LBUTTONDOWN)
             {
                 var pt = new Point((int)lParam & 0xFFFF, ((int)lParam >> 16) & 0xFFFF);
-
-                NativeMethods.PostMessage(ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)getHitTestValue(pt),
-                                          IntPtr.Zero);
+                NativeMethods.PostMessage(ownerHandle, (uint)WM.NCLBUTTONDOWN, (IntPtr)getHitTestValue(pt), IntPtr.Zero);
             }
             if (msg == (int)WM.NCHITTEST)
             {

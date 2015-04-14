@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interactivity;
+using System.Windows.Interop;
 using MahApps.Metro.Controls;
 using System.Windows.Threading;
+using Standard;
+using WM = MahApps.Metro.Models.Win32.WM;
 
 namespace MahApps.Metro.Behaviours
 {
@@ -16,6 +20,14 @@ namespace MahApps.Metro.Behaviours
         {
             base.OnAttached();
 
+            this.AssociatedObject.SourceInitialized += (o, args) => {
+                var handle = new WindowInteropHelper(this.AssociatedObject).Handle;
+                var hwndSource = HwndSource.FromHwnd(handle);
+                if (hwndSource != null)
+                {
+                    hwndSource.AddHook(AssociatedObjectWindowProc);
+                }
+            };
             this.AssociatedObject.Loaded += AssociatedObjectOnLoaded;
             this.AssociatedObject.Unloaded += AssociatedObjectUnloaded;
         }
@@ -131,6 +143,30 @@ namespace MahApps.Metro.Behaviours
             }
         }
 
+        private WINDOWPOS _previousWP;
+
+        private IntPtr AssociatedObjectWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            switch ((WM)msg)
+            {
+                case WM.WINDOWPOSCHANGED:
+                case WM.WINDOWPOSCHANGING:
+                    Assert.IsNotDefault(lParam);
+                    var wp = (WINDOWPOS)Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
+                    if (!wp.Equals(_previousWP))
+                    {
+                        this.UpdateCore();
+                    }
+                    _previousWP = wp;
+                    break;
+                case WM.SIZE:
+                case WM.SIZING:
+                    this.UpdateCore();
+                    break;
+            }
+            return IntPtr.Zero;
+        }
+
         private void AssociatedObjectIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!this.AssociatedObject.IsVisible)
@@ -152,6 +188,14 @@ namespace MahApps.Metro.Behaviours
             if (left != null) left.Update();
             if (right != null) right.Update();
             if (top != null) top.Update();
+            if (bottom != null) bottom.Update();
+        }
+
+        private void UpdateCore()
+        {
+            if (left != null) left.UpdateCore();
+            if (right != null) right.UpdateCore();
+            if (top != null) top.UpdateCore();
             if (bottom != null) bottom.Update();
         }
 
