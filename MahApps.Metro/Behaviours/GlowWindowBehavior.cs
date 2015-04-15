@@ -16,12 +16,35 @@ namespace MahApps.Metro.Behaviours
         private GlowWindow left, right, top, bottom;
         private DispatcherTimer makeGlowVisibleTimer;
         private IntPtr handle;
+
+        private bool IsGlowDisabled
+        {
+            get
+            {
+                var metroWindow = this.AssociatedObject as MetroWindow;
+                return metroWindow != null && (metroWindow.UseNoneWindowStyle || metroWindow.GlowBrush == null);
+            }
+        }
+
+        private bool IsWindowTransitionsEnabled
+        {
+            get
+            {
+                var metroWindow = this.AssociatedObject as MetroWindow;
+                return metroWindow != null && metroWindow.WindowTransitionsEnabled;
+            }
+        }
         
         protected override void OnAttached()
         {
             base.OnAttached();
 
             this.AssociatedObject.SourceInitialized += (o, args) => {
+                // No glow effect if UseNoneWindowStyle is true or GlowBrush not set.
+                if (this.IsGlowDisabled)
+                {
+                    return;
+                }
                 handle = new WindowInteropHelper(this.AssociatedObject).Handle;
                 var hwndSource = HwndSource.FromHwnd(handle);
                 if (hwndSource != null)
@@ -98,8 +121,7 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObjectOnLoaded(object sender, RoutedEventArgs routedEventArgs)
         {
             // No glow effect if UseNoneWindowStyle is true or GlowBrush not set.
-            var metroWindow = this.AssociatedObject as MetroWindow;
-            if (metroWindow != null && (metroWindow.UseNoneWindowStyle || metroWindow.GlowBrush == null))
+            if (this.IsGlowDisabled)
             {
                 return;
             }
@@ -121,8 +143,7 @@ namespace MahApps.Metro.Behaviours
             this.Show();
             this.Update();
 
-            var windowTransitionsEnabled = metroWindow != null && metroWindow.WindowTransitionsEnabled;
-            if (!windowTransitionsEnabled)
+            if (!this.IsWindowTransitionsEnabled)
             {
                 // no storyboard so set opacity to 1
                 this.SetOpacityTo(1);
