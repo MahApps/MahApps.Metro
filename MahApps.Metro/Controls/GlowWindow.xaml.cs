@@ -19,15 +19,14 @@ namespace MahApps.Metro.Controls
     {
         private readonly Func<Point, Cursor> getCursor;
         private readonly Func<Point, HitTestValues> getHitTestValue;
-        private readonly Func<double, RECT, double> getLeft;
-        private readonly Func<double, RECT, double> getTop;
-        private readonly Func<double, RECT, double> getWidth;
-        private readonly Func<double, RECT, double> getHeight;
+        private readonly Func<RECT, double> getLeft;
+        private readonly Func<RECT, double> getTop;
+        private readonly Func<RECT, double> getWidth;
+        private readonly Func<RECT, double> getHeight;
         private const double edgeSize = 20.0;
         private const double glowSize = 9.0;
         private IntPtr handle;
         private IntPtr ownerHandle;
-        private static double? _dpiFactor = null;
         private bool closing = false;
 
         public GlowWindow(Window owner, GlowDirection direction)
@@ -58,10 +57,10 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Left:
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Right;
-                    getLeft = (dpi, rect) => Math.Round((rect.left - glowSize) * dpi);
-                    getTop = (dpi, rect) => Math.Round((rect.top - glowSize) * dpi);
-                    getWidth = (dpi, rect) => glowSize * dpi;
-                    getHeight = (dpi, rect) => Math.Round((rect.Height + glowSize * 2.0) * dpi);
+                    getLeft = (rect) => rect.left - glowSize;
+                    getTop = (rect) => rect.top - owner.BorderThickness.Top;
+                    getWidth = (rect) => glowSize;
+                    getHeight = (rect) => rect.Height + owner.BorderThickness.Top + owner.BorderThickness.Bottom;
                     getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                                ? HitTestValues.HTTOPLEFT
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
@@ -81,10 +80,10 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Right:
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Left;
-                    getLeft = (dpi, rect) => Math.Round(rect.right * dpi);
-                    getTop = (dpi, rect) => Math.Round((rect.top - glowSize) * dpi);
-                    getWidth = (dpi, rect) => glowSize * dpi;
-                    getHeight = (dpi, rect) => Math.Round((rect.Height + glowSize * 2.0) * dpi);
+                    getLeft = (rect) => rect.right;
+                    getTop = (rect) => rect.top - owner.BorderThickness.Top;
+                    getWidth = (rect) => glowSize;
+                    getHeight = (rect) => rect.Height + owner.BorderThickness.Top + owner.BorderThickness.Bottom;
                     getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                                ? HitTestValues.HTTOPRIGHT
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
@@ -104,10 +103,10 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Top:
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Bottom;
-                    getLeft = (dpi, rect) => Math.Round(rect.left * dpi);
-                    getTop = (dpi, rect) => Math.Round((rect.top - glowSize) * dpi);
-                    getWidth = (dpi, rect) => Math.Round(rect.Width * dpi);
-                    getHeight = (dpi, rect) => glowSize * dpi;
+                    getLeft = (rect) => rect.left - owner.BorderThickness.Left;
+                    getTop = (rect) => rect.top - glowSize;
+                    getWidth = (rect) => rect.Width + owner.BorderThickness.Left + owner.BorderThickness.Right;
+                    getHeight = (rect) => glowSize;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                                ? HitTestValues.HTTOPLEFT
                                                : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize,
@@ -129,10 +128,10 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Bottom:
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Top;
-                    getLeft = (dpi, rect) => Math.Round(rect.left * dpi);
-                    getTop = (dpi, rect) => Math.Round(rect.bottom * dpi);
-                    getWidth = (dpi, rect) => Math.Round(rect.Width * dpi);
-                    getHeight = (dpi, rect) => glowSize * dpi;
+                    getLeft = (rect) => rect.left - owner.BorderThickness.Left;
+                    getTop = (rect) => rect.bottom;
+                    getWidth = (rect) => rect.Width + owner.BorderThickness.Left + owner.BorderThickness.Right;
+                    getHeight = (rect) => glowSize;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                                ? HitTestValues.HTBOTTOMLEFT
                                                : new Rect(Width - edgeSize + glowSize, 0, edgeSize - glowSize,
@@ -160,8 +159,6 @@ namespace MahApps.Metro.Controls
                 glow.IsGlow = true;
             };
             owner.Deactivated += (sender, e) => glow.IsGlow = false;
-            //owner.LocationChanged += (sender, e) => Update();
-            //owner.SizeChanged += (sender, e) => Update();
             owner.StateChanged += (sender, e) => Update();
             owner.IsVisibleChanged += (sender, e) => Update();
             owner.Closed += (sender, e) =>
@@ -169,30 +166,6 @@ namespace MahApps.Metro.Controls
                 closing = true;
                 Close();
             };
-        }
-
-        public double DpiFactor
-        {
-            get
-            {
-                if (_dpiFactor == null)
-                {
-                    double dpiX = 96.0, dpiY = 96.0;
-
-                    // #652, #752 check if Owner not null
-                    var owner = this.Owner ?? (Application.Current != null ? Application.Current.MainWindow : null);
-                    var source = owner != null ? PresentationSource.FromVisual(owner) : null;
-                    if (source != null && source.CompositionTarget != null)
-                    {
-                        dpiX = 96.0 * source.CompositionTarget.TransformToDevice.M11;
-                        dpiY = 96.0 * source.CompositionTarget.TransformToDevice.M22;
-                    }
-
-                    _dpiFactor = dpiX == dpiY ? dpiX / 96.0 : 1;
-                }
-                return _dpiFactor.Value;
-            }
-
         }
 
         public Storyboard OpacityStoryboard { get; set; }
@@ -227,11 +200,15 @@ namespace MahApps.Metro.Controls
 
         public void Update()
         {
+            RECT rect;
             if (Owner.Visibility == Visibility.Hidden)
             {
                 Visibility = Visibility.Hidden;
 
-                UpdateCore();
+                if (ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(ownerHandle, out rect))
+                {
+                    UpdateCore(rect);
+                }
             }
             else if (Owner.WindowState == WindowState.Normal)
             {
@@ -240,7 +217,10 @@ namespace MahApps.Metro.Controls
                 Visibility = IsGlowing ? Visibility.Visible : Visibility.Collapsed;
                 glow.Visibility = IsGlowing ? Visibility.Visible : Visibility.Collapsed;
 
-                UpdateCore();
+                if (ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(ownerHandle, out rect))
+                {
+                    UpdateCore(rect);
+                }
             }
             else
             {
@@ -254,18 +234,14 @@ namespace MahApps.Metro.Controls
             get;
         }
 
-        internal void UpdateCore()
+        internal void UpdateCore(RECT rect)
         {
-            RECT rect;
-            if (ownerHandle != IntPtr.Zero && UnsafeNativeMethods.GetWindowRect(ownerHandle, out rect))
-            {
-                NativeMethods.SetWindowPos(handle, ownerHandle,
-                                           (int)(getLeft(DpiFactor, rect)),
-                                           (int)(getTop(DpiFactor, rect)),
-                                           (int)(getWidth(DpiFactor, rect)),
-                                           (int)(getHeight(DpiFactor, rect)),
-                                           SWP.NOACTIVATE | SWP.NOZORDER);
-            }
+            NativeMethods.SetWindowPos(handle, ownerHandle,
+                                       (int)(getLeft(rect)),
+                                       (int)(getTop(rect)),
+                                       (int)(getWidth(rect)),
+                                       (int)(getHeight(rect)),
+                                       SWP.NOACTIVATE | SWP.NOZORDER);
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

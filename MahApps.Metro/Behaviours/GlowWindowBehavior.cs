@@ -15,13 +15,14 @@ namespace MahApps.Metro.Behaviours
         private static readonly TimeSpan GlowTimerDelay = TimeSpan.FromMilliseconds(200); //200 ms delay, the same as VS2013
         private GlowWindow left, right, top, bottom;
         private DispatcherTimer makeGlowVisibleTimer;
+        private IntPtr handle;
         
         protected override void OnAttached()
         {
             base.OnAttached();
 
             this.AssociatedObject.SourceInitialized += (o, args) => {
-                var handle = new WindowInteropHelper(this.AssociatedObject).Handle;
+                handle = new WindowInteropHelper(this.AssociatedObject).Handle;
                 var hwndSource = HwndSource.FromHwnd(handle);
                 if (hwndSource != null)
                 {
@@ -193,10 +194,14 @@ namespace MahApps.Metro.Behaviours
 
         private void UpdateCore()
         {
-            if (left != null) left.UpdateCore();
-            if (right != null) right.UpdateCore();
-            if (top != null) top.UpdateCore();
-            if (bottom != null) bottom.UpdateCore();
+            MahApps.Metro.Native.RECT rect;
+            if (handle != IntPtr.Zero && MahApps.Metro.Native.UnsafeNativeMethods.GetWindowRect(handle, out rect))
+            {
+                if (left != null) left.UpdateCore(rect);
+                if (right != null) right.UpdateCore(rect);
+                if (top != null) top.UpdateCore(rect);
+                if (bottom != null) bottom.UpdateCore(rect);
+            }
         }
 
         /// <summary>
