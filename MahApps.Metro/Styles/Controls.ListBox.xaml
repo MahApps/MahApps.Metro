@@ -59,6 +59,8 @@
                 Value="25" />
         <Setter Property="Margin"
                 Value="0" />
+        <Setter Property="Padding"
+                Value="5,0,0,0" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="Template">
@@ -67,7 +69,7 @@
                     <Border x:Name="Border"
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ContentPresenter Margin="5, 0, 0, 0"
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
