@@ -2,6 +2,7 @@
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                          xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
+                         xmlns:Behaviors="clr-namespace:MahApps.Metro.Behaviours"
                          x:Class="MahApps.Metro.Controls.Dialogs.LoginDialog"
                          Loaded="Dialog_Loaded">
     <Grid Margin="0 10 0 0">
@@ -30,6 +31,7 @@
                         Margin="0 5 0 0"
                         FontSize="{StaticResource DialogMessageFontSize}"
                         x:Name="PART_TextBox2"
+                        Behaviors:PasswordBoxBindingBehavior.Password="{Binding Password, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Controls:TextBoxHelper.Watermark="{Binding PasswordWatermark, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
         <StackPanel Grid.Row="3"
