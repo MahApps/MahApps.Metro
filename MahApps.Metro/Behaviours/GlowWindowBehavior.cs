@@ -146,7 +146,7 @@ namespace MahApps.Metro.Behaviours
             if (!this.IsWindowTransitionsEnabled)
             {
                 // no storyboard so set opacity to 1
-                this.SetOpacityTo(1);
+                this.AssociatedObject.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new Action(() => this.SetOpacityTo(1)));
             }
             else
             {
