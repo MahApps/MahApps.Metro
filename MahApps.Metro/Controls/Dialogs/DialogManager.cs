@@ -289,37 +289,38 @@ namespace MahApps.Metro.Controls.Dialogs
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible.
-        /// <para>Note that this method returns as soon as the dialog is loaded and won't wait on a call of <see cref="HideMetroDialogAsync"/>.</para>
-        /// <para>You can still close the resulting dialog with <see cref="HideMetroDialogAsync"/>.</para>
+        /// You can await until this dialog is removed/hidden by awaiting the returned task.
+        /// <para>You have to close the resulting dialog yourself with <see cref="HideMetroDialogAsync"/>.</para>
         /// </summary>
         /// <param name="window">The owning window of the dialog.</param>
         /// <param name="dialog">The dialog instance itself.</param>
         /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
-        public static Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog, MetroDialogSettings settings = null)
+        public static async Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog,
+            MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
             if (window.metroDialogContainer.Children.Contains(dialog))
                 throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
 
-            return HandleOverlayOnShow(settings,window).ContinueWith(z =>
-            {
-                dialog.Dispatcher.Invoke(new Action(() =>
-                {
-                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                    dialog.SizeChangedHandler = sizeHandler;
-                }));
-            }).ContinueWith(y =>
-                ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync().ContinueWith(x =>
-                {
-                    dialog.OnShown();
+            await HandleOverlayOnShow(settings, window);
 
-                    if (DialogOpened != null)
-                    {
-                        DialogOpened(window, new DialogStateChangedEventArgs());
-                    }
-                })))));
+            dialog.Dispatcher.Invoke(() =>
+            {
+                SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                dialog.SizeChangedHandler = sizeHandler;
+            });
+
+            await dialog.WaitForLoadAsync();
+
+            dialog.OnShown();
+            if (DialogOpened != null)
+            {
+                DialogOpened(window, new DialogStateChangedEventArgs());
+            }
+
+            await dialog.WaitUnitlClosed();
         }
 
         /// <summary>

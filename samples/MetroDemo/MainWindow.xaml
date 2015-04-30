@@ -70,6 +70,19 @@
                 <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentBrush}" />
             </Dialog:CustomDialog>
 
+            <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
+                                 Title="Custom Dialog which is awaitable"
+                                 x:Name="CustomCloseDialogTest">
+                
+                <StackPanel>
+                    <TextBlock Height="30" Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below." 
+                               Foreground="{DynamicResource AccentBrush}" />
+                    <Button Content="Close Me!" Click="CloseCustomDialog"/>
+                </StackPanel>
+
+                
+            </Dialog:CustomDialog>
+
         </ResourceDictionary>
     </Window.Resources>
 
@@ -162,6 +175,8 @@
                               Header="Show CustomDialog" />
                     <MenuItem Click="ShowDialogOutside"
                               Header="Show CustomDialog Externally" />
+                    <MenuItem Click="ShowAwaitCustomDialog"
+                              Header="Await CustomDialog" />
                 </MenuItem>
                 <MenuItem Header="Window">
                     <MenuItem IsCheckable="True" Header="Topmost"

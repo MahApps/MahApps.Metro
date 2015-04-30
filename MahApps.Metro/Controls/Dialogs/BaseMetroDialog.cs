@@ -249,6 +249,20 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         protected internal MetroWindow OwningWindow { get; internal set; }
 
+
+        public Task WaitUnitlClosed()
+        {
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+
+            Unloaded += (s,e) =>
+            {
+                tcs.TrySetResult(null);
+            };
+
+            return tcs.Task;
+        }
+
+
         public Task _WaitForCloseAsync()
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
