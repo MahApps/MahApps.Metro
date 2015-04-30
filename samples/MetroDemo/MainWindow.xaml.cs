@@ -180,7 +180,7 @@ namespace MetroDemo
 
             var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
 
-            await this.ShowMetroDialogAsync(dialog);
+            this.ShowMetroDialogAsync(dialog);
 
             await TaskEx.Delay(5000);
 
@@ -205,8 +205,6 @@ namespace MetroDemo
             await this.HideMetroDialogAsync(dialog);
         }
 
-        
-
          private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
         {
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
@@ -220,7 +218,6 @@ namespace MetroDemo
                 MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
             }
         }
-
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
             this.MetroDialogOptions.ColorScheme = UseAccentForDialogsMenuItem.IsChecked ? MetroDialogColorScheme.Accented : MetroDialogColorScheme.Theme;
