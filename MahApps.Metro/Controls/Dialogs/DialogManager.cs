@@ -297,6 +297,24 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A task representing the life-time of this dialog.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
+        public static async Task ShowMetroDialogAsyncAwaitable(this MetroWindow window, BaseMetroDialog dialog,
+            MetroDialogSettings settings = null)
+        {
+            await ShowMetroDialogAsync(window, dialog, settings);
+
+            await dialog.WaitUnitlUnloaded();
+        }
+
+        /// <summary>
+        /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.
+        /// If you want to wait until the user has closed the dialog, use <see cref="ShowMetroDialogAsyncAwaitable"/>
+        /// <para>You have to close the resulting dialog yourself with <see cref="HideMetroDialogAsync"/>.</para>
+        /// </summary>
+        /// <param name="window">The owning window of the dialog.</param>
+        /// <param name="dialog">The dialog instance itself.</param>
+        /// <param name="settings">An optional pre-defined settings instance.</param>
+        /// <returns>A task representing the operation.</returns>
+        /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
         public static async Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog,
             MetroDialogSettings settings = null)
         {
@@ -319,9 +337,9 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 DialogOpened(window, new DialogStateChangedEventArgs());
             }
-
-            await dialog.WaitUnitlUnloaded();
         }
+
+
 
         /// <summary>
         /// Hides a visible Metro Dialog instance.

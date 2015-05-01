@@ -180,7 +180,7 @@ namespace MetroDemo
 
             var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
 
-            this.ShowMetroDialogAsync(dialog);
+            await this.ShowMetroDialogAsync(dialog);
 
             await TaskEx.Delay(5000);
 
@@ -193,7 +193,7 @@ namespace MetroDemo
 
             var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
 
-            await this.ShowMetroDialogAsync(dialog);
+            await this.ShowMetroDialogAsyncAwaitable(dialog);
 
             await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
         }
