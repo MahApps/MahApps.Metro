@@ -253,7 +253,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Waits until this dialog gets unloaded.
         /// </summary>
         /// <returns></returns>
-        public Task WaitUnitlUnloaded()
+        public Task WaitUntilUnloadedAsync()
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
