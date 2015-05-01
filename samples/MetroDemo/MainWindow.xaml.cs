@@ -193,7 +193,8 @@ namespace MetroDemo
 
             var dialog = (BaseMetroDialog)this.Resources["CustomCloseDialogTest"];
 
-            await this.ShowMetroDialogAsyncAwaitable(dialog);
+            await this.ShowMetroDialogAsync(dialog);
+            await dialog.WaitUnitlUnloaded();
 
             await this.ShowMessageAsync("Dialog gone", "The custom dialog has closed");
         }

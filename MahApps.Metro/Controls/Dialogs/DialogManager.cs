@@ -287,23 +287,6 @@ namespace MahApps.Metro.Controls.Dialogs
             return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
         }
 
-        /// <summary>
-        /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.
-        /// You can wait until this dialog is closed (unloaded) by awaiting the returned task.
-        /// <para>You have to close the resulting dialog yourself with <see cref="HideMetroDialogAsync"/>.</para>
-        /// </summary>
-        /// <param name="window">The owning window of the dialog.</param>
-        /// <param name="dialog">The dialog instance itself.</param>
-        /// <param name="settings">An optional pre-defined settings instance.</param>
-        /// <returns>A task representing the life-time of this dialog.</returns>
-        /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
-        public static async Task ShowMetroDialogAsyncAwaitable(this MetroWindow window, BaseMetroDialog dialog,
-            MetroDialogSettings settings = null)
-        {
-            await ShowMetroDialogAsync(window, dialog, settings);
-
-            await dialog.WaitUnitlUnloaded();
-        }
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.
@@ -315,28 +298,30 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="settings">An optional pre-defined settings instance.</param>
         /// <returns>A task representing the operation.</returns>
         /// <exception cref="InvalidOperationException">The <paramref name="dialog"/> is already visible in the window.</exception>
-        public static async Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog,
+        public static Task ShowMetroDialogAsync(this MetroWindow window, BaseMetroDialog dialog,
             MetroDialogSettings settings = null)
         {
             window.Dispatcher.VerifyAccess();
             if (window.metroDialogContainer.Children.Contains(dialog))
                 throw new InvalidOperationException("The provided dialog is already visible in the specified window.");
 
-            await HandleOverlayOnShow(settings, window);
-
-            dialog.Dispatcher.Invoke(() =>
+            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
             {
-                SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
-                dialog.SizeChangedHandler = sizeHandler;
-            });
+                dialog.Dispatcher.Invoke(new Action(() =>
+                {
+                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                    dialog.SizeChangedHandler = sizeHandler;
+                }));
+            }).ContinueWith(y =>
+                ((Task)dialog.Dispatcher.Invoke(new Func<Task>(() => dialog.WaitForLoadAsync().ContinueWith(x =>
+                {
+                    dialog.OnShown();
 
-            await dialog.WaitForLoadAsync();
-
-            dialog.OnShown();
-            if (DialogOpened != null)
-            {
-                DialogOpened(window, new DialogStateChangedEventArgs());
-            }
+                    if (DialogOpened != null)
+                    {
+                        DialogOpened(window, new DialogStateChangedEventArgs());
+                    }
+                })))));
         }
 
 
