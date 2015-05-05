@@ -93,13 +93,28 @@ namespace MahApps.Metro.Controls
             new FrameworkPropertyMetadata(default(bool)));
 
         public static readonly DependencyProperty HideUpDownButtonsProperty = DependencyProperty.Register(
-                                                        "HideUpDownButtons", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(default(bool)));
+            "HideUpDownButtons",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(default(bool)));
 
         public static readonly DependencyProperty InterceptManualEnterProperty = DependencyProperty.Register(
-                                                        "InterceptManualEnter", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(true));
+            "InterceptManualEnter",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(true));
 
         public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
-                                                        "Culture", typeof(CultureInfo), typeof(NumericUpDown));
+            "Culture",
+            typeof(CultureInfo),
+            typeof(NumericUpDown),
+            new PropertyMetadata(null, (o, e) => {
+                                            if (e.NewValue != e.OldValue && e.NewValue != null)
+                                            {
+                                                var numUpDown = (NumericUpDown) o;
+                                                numUpDown.OnValueChanged(numUpDown.Value, numUpDown.Value);
+                                            }
+                                        }));
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -359,7 +374,7 @@ namespace MahApps.Metro.Controls
 
         private CultureInfo SpecificCultureInfo
         {
-            get { return Culture != null ? Culture : Language.GetSpecificCulture(); }
+            get { return Culture ?? Language.GetSpecificCulture(); }
         }
 
         /// <summary>
