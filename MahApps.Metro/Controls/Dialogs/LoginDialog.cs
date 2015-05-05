@@ -23,6 +23,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string InitialUsername { get; set; }
 
+        public string InitialPassword { get; set; }
+
         public string UsernameWatermark { get; set; }
 
         public string PasswordWatermark { get; set; }
@@ -50,6 +52,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             InitializeComponent();
             Username = settings.InitialUsername;
+            Password = settings.InitialPassword;
             UsernameWatermark = settings.UsernameWatermark;
             PasswordWatermark = settings.PasswordWatermark;
             NegativeButtonButtonVisibility = settings.NegativeButtonVisibility;
