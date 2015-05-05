@@ -98,6 +98,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty InterceptManualEnterProperty = DependencyProperty.Register(
                                                         "InterceptManualEnter", typeof(bool), typeof(NumericUpDown), new PropertyMetadata(true));
 
+        public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
+                                                        "Culture", typeof(CultureInfo), typeof(NumericUpDown));
+
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -231,6 +234,17 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        ///     Gets or sets a value indicating the culture to be used in string formatting operations.
+        /// </summary>
+        [Category("Behavior")]
+        [DefaultValue(null)]
+        public CultureInfo Culture
+        {
+            get { return (CultureInfo)GetValue(CultureProperty); }
+            set { SetValue(CultureProperty, value); }
+        }
+
+        /// <summary>
         ///     Gets or sets a value indicating whether the +/- button of the control is visible.
         /// </summary>
         /// <remarks>
@@ -345,7 +359,7 @@ namespace MahApps.Metro.Controls
 
         private CultureInfo SpecificCultureInfo
         {
-            get { return Language.GetSpecificCulture(); }
+            get { return Culture != null ? Culture : Language.GetSpecificCulture(); }
         }
 
         /// <summary>
