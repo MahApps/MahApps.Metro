@@ -335,7 +335,7 @@
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="IsTabStop"
                 Value="False" />
-        <Setter Property="VerticalAlignment"
+        <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
