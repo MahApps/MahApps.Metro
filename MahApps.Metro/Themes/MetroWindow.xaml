@@ -490,7 +490,7 @@
                             </Style>
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
-                    <ItemsPresenter />
+                    <ItemsPresenter Height="{Binding TitlebarHeight, RelativeSource={RelativeSource AncestorType=Controls:MetroWindow}}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
