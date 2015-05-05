@@ -249,6 +249,23 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         protected internal MetroWindow OwningWindow { get; internal set; }
 
+        /// <summary>
+        /// Waits until this dialog gets unloaded.
+        /// </summary>
+        /// <returns></returns>
+        public Task WaitUntilUnloadedAsync()
+        {
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+
+            Unloaded += (s,e) =>
+            {
+                tcs.TrySetResult(null);
+            };
+
+            return tcs.Task;
+        }
+
+
         public Task _WaitForCloseAsync()
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
