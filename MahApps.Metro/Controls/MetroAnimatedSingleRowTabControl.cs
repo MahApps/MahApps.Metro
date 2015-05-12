@@ -1,6 +1,4 @@
-﻿using System.Windows;
-
-namespace MahApps.Metro.Controls
+﻿namespace MahApps.Metro.Controls
 {
     /// <summary>
     /// A MetroTabControl (Pivot) that wraps TabItem/MetroTabItem headers on a single row.

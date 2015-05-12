@@ -6,9 +6,9 @@ namespace MahApps.Metro.Controls
 {
     public class Tile : Button
     {
-        public Tile()
+        static Tile()
         {
-            DefaultStyleKey = typeof (Tile);
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Tile), new FrameworkPropertyMetadata(typeof(Tile)));
         }
 
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(Tile), new PropertyMetadata(default(string)));
@@ -42,6 +42,24 @@ namespace MahApps.Metro.Controls
         {
             get { return (Int32)GetValue(TiltFactorProperty); }
             set { SetValue(TiltFactorProperty, value); }
+        }
+
+        public static readonly DependencyProperty TitleFontSizeProperty =
+            DependencyProperty.Register("TitleFontSize", typeof(int), typeof(Tile), new PropertyMetadata(16));
+
+        public int TitleFontSize
+        {
+            get { return (int) GetValue(TitleFontSizeProperty); }
+            set { SetValue(TitleFontSizeProperty, value); }
+        }
+
+        public static readonly DependencyProperty CountFontSizeProperty =
+            DependencyProperty.Register("CountFontSize", typeof(int), typeof(Tile), new PropertyMetadata(28));
+
+        public int CountFontSize
+        {
+            get { return (int) GetValue(CountFontSizeProperty); }
+            set { SetValue(CountFontSizeProperty, value); }
         }
     }
 }

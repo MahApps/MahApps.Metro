@@ -30,26 +30,6 @@ namespace MahApps.Metro.Controls
         public BaseMetroTabControl()
         {
             InternalCloseTabCommand = new DefaultCloseTabCommand(this);
-
-            this.Loaded += BaseMetroTabControl_Loaded;
-            this.Unloaded += BaseMetroTabControl_Unloaded;
-        }
-
-        void BaseMetroTabControl_Unloaded(object sender, RoutedEventArgs e)
-        {
-            this.Loaded -= BaseMetroTabControl_Loaded;
-            this.Unloaded -= BaseMetroTabControl_Unloaded;
-        }
-
-        void BaseMetroTabControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Ensure each tabitem knows what the owning tab is.
-
-            if (ItemsSource == null)
-                foreach (TabItem item in Items)
-                    if (item is MetroTabItem)
-                        ((MetroTabItem)item).OwningTabControl = this;
-
         }
 
         public Thickness TabStripMargin
@@ -69,7 +49,7 @@ namespace MahApps.Metro.Controls
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new MetroTabItem { OwningTabControl = this }; //Overrides the TabControl's default behavior and returns a MetroTabItem instead of a regular one.
+            return new MetroTabItem(); //Overrides the TabControl's default behavior and returns a MetroTabItem instead of a regular one.
         }
 
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
@@ -153,7 +133,9 @@ namespace MahApps.Metro.Controls
                 return true;
             }
 
-            public event System.EventHandler CanExecuteChanged;
+#pragma warning disable 67
+            public event EventHandler CanExecuteChanged;
+#pragma warning restore 67
 
             public void Execute(object parameter)
             {
@@ -189,7 +171,7 @@ namespace MahApps.Metro.Controls
                                 if (collection == null) return;
 
                                 // find the item and kill it (I mean, remove it)
-                                foreach (var item in owner.ItemsSource.Cast<object>().Where(item => tabItem.DataContext == item))
+                                foreach (var item in owner.ItemsSource.Cast<object>().Where(item => tabItem == item || tabItem.DataContext == item))
                                 {
                                     collection.Remove(item);
                                     break;

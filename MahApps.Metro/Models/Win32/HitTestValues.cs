@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MahApps.Metro.Models.Win32
 {
-	public enum HitTestValues : int
+    internal enum HitTestValues : int
 	{
 		HTERROR = -2,
 		HTTRANSPARENT = -1,

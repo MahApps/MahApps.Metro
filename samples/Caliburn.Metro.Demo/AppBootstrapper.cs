@@ -10,9 +10,14 @@ using Caliburn.Micro;
 
 namespace Caliburn.Metro.Demo
 {
-    public class AppBootstrapper : Bootstrapper<IShell>
+    public class AppBootstrapper : BootstrapperBase
     {
         private CompositionContainer container;
+
+        public AppBootstrapper()
+        {
+            Initialize();
+        }
 
         protected override void BuildUp(object instance)
         {
@@ -61,11 +66,13 @@ namespace Caliburn.Metro.Demo
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             var startupTasks =
-                this.GetAllInstances(typeof(StartupTask))
-                    .Cast<ExportedDelegate>()
-                    .Select(exportedDelegate => (StartupTask)exportedDelegate.CreateDelegate(typeof(StartupTask)));
+                GetAllInstances(typeof(StartupTask))
+                .Cast<ExportedDelegate>()
+                .Select(exportedDelegate => (StartupTask)exportedDelegate.CreateDelegate(typeof(StartupTask)));
+            
             startupTasks.Apply(s => s());
-            base.OnStartup(sender, e);
+
+            DisplayRootViewFor<IShell>();
         }
     }
 }

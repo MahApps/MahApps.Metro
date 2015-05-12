@@ -1,7 +1,3 @@
-/**************************************************************************\
-    Copyright Microsoft Corporation. All Rights Reserved.
-\**************************************************************************/
-
 // This file contains general utilities to aid in development.
 // Classes here generally shouldn't be exposed publicly since
 // they're not particular to any library functionality.
@@ -40,6 +36,7 @@ namespace Standard
         {
             if (Thread.CurrentThread.GetApartmentState() != requiredState)
             {
+                Assert.Fail();
                 throw new InvalidOperationException(message);
             }
         }
@@ -61,10 +58,12 @@ namespace Standard
             const string errorMessage = "The parameter can not be either null or empty.";
             if (null == value)
             {
+                Assert.Fail();
                 throw new ArgumentNullException(name, errorMessage);
             }
             if ("" == value)
             {
+                Assert.Fail();
                 throw new ArgumentException(errorMessage, name);
             }
         }
@@ -86,10 +85,12 @@ namespace Standard
             const string errorMessage = "The parameter can not be either null or empty or consist only of white space characters.";
             if (null == value)
             {
+                Assert.Fail();
                 throw new ArgumentNullException(name, errorMessage);
             }
             if ("" == value.Trim())
             {
+                Assert.Fail();
                 throw new ArgumentException(errorMessage, name);
             }
         }
@@ -104,6 +105,7 @@ namespace Standard
         {
             if (default(T).Equals(obj))
             {
+                Assert.Fail();
                 throw new ArgumentException("The parameter must not be the default value.", name);
             }
         }
@@ -118,6 +120,7 @@ namespace Standard
         {
             if (null == obj)
             {
+                Assert.Fail();
                 throw new ArgumentNullException(name);
             }
         }
@@ -132,6 +135,7 @@ namespace Standard
         {
             if (null != obj)
             {
+                Assert.Fail();
                 throw new ArgumentException("The parameter must be null.", name);
             }
         }
@@ -142,6 +146,7 @@ namespace Standard
         {
             if (null == obj)
             {
+                Assert.Fail();
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "The property {0} cannot be null at this time.", name));
             }
         }
@@ -152,22 +157,8 @@ namespace Standard
         {
             if (null != obj)
             {
+                Assert.Fail();
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "The property {0} must be null at this time.", name));
-            }
-        }
-
-        /// <summary>
-        /// Verifies the specified statement is true.  Throws an ArgumentException if it's not.
-        /// </summary>
-        /// <param name="statement">The statement to be verified as true.</param>
-        /// <param name="name">Name of the parameter to include in the ArgumentException.</param>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [DebuggerStepThrough]
-        public static void IsTrue(bool statement, string name)
-        {
-            if (!statement)
-            {
-                throw new ArgumentException("", name);
             }
         }
 
@@ -179,11 +170,23 @@ namespace Standard
         /// <param name="message">The message to include in the ArgumentException.</param>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DebuggerStepThrough]
-        public static void IsTrue(bool statement, string name, string message)
+        public static void IsTrue(bool statement, string name, string message = null)
         {
             if (!statement)
             {
-                throw new ArgumentException(message, name);
+                Assert.Fail();
+                throw new ArgumentException(message ?? "", name);
+            }
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        [DebuggerStepThrough]
+        public static void IsFalse(bool statement, string name, string message = null)
+        {
+            if (statement)
+            {
+                Assert.Fail();
+                throw new ArgumentException(message ?? "", name);
             }
         }
 
@@ -196,11 +199,13 @@ namespace Standard
                 // Two nulls are considered equal, regardless of type semantics.
                 if (null != actual && !actual.Equals(expected))
                 {
+                    Assert.Fail();
                     throw new ArgumentException(message, parameterName);
                 }
             }
             else if (!expected.Equals(actual))
             {
+                Assert.Fail();
                 throw new ArgumentException(message, parameterName);
             }
         }
@@ -214,11 +219,13 @@ namespace Standard
                 // Two nulls are considered equal, regardless of type semantics.
                 if (null == actual || actual.Equals(notExpected))
                 {
+                    Assert.Fail();
                     throw new ArgumentException(message, parameterName);
                 }
             }
             else if (notExpected.Equals(actual))
             {
+                Assert.Fail();
                 throw new ArgumentException(message, parameterName);
             }
         }
@@ -230,6 +237,7 @@ namespace Standard
             Verify.IsNotNull(uri, parameterName);
             if (!uri.IsAbsoluteUri)
             {
+                Assert.Fail();
                 throw new ArgumentException("The URI must be absolute.", parameterName);
             }
         }
@@ -240,13 +248,14 @@ namespace Standard
         /// <param name="lowerBoundInclusive">The lower bound inclusive value.</param>
         /// <param name="value">The value to verify.</param>
         /// <param name="upperBoundExclusive">The upper bound exclusive value.</param>
-        /// <param name="parameterName">The paramater name value.</param>
+        /// <param name="parameterName">The name of the parameter that caused the current exception.</param>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         [DebuggerStepThrough]
         public static void BoundedInteger(int lowerBoundInclusive, int value, int upperBoundExclusive, string parameterName)
         {
             if (value < lowerBoundInclusive || value >= upperBoundExclusive)
             {
+                Assert.Fail();
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The integer value must be bounded with [{0}, {1})", lowerBoundInclusive, upperBoundExclusive), parameterName);
             }
         }
@@ -257,6 +266,7 @@ namespace Standard
         {
             if (value < lowerBoundInclusive || value > upperBoundInclusive)
             {
+                Assert.Fail();
                 throw new ArgumentException(message, parameter);
             }
         }
@@ -271,6 +281,7 @@ namespace Standard
 
             if (type.GetInterface(interfaceType.Name) == null)
             {
+                Assert.Fail();
                 throw new ArgumentException("The type of this parameter does not support a required interface", parameterName);
             }
         }
@@ -282,6 +293,7 @@ namespace Standard
             Verify.IsNeitherNullNorEmpty(filePath, parameterName);
             if (!File.Exists(filePath))
             {
+                Assert.Fail();
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "No file exists at \"{0}\"", filePath), parameterName);
             }
         }
@@ -306,6 +318,7 @@ namespace Standard
 
             if (!isImplemented)
             {
+                Assert.Fail();
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, "The parameter must implement interface {0}.", interfaceType.ToString()), parameterName);
             }
         }

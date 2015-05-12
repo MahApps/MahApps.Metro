@@ -1,0 +1,40 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="{x:Type Controls:MetroWindow}"
+           BasedOn="{StaticResource {x:Type Controls:MetroWindow}}"
+           x:Key="VSWindowStyleKey">
+        <Setter Property="ShowTitleBar"
+                Value="True" />
+        <Setter Property="GlowBrush"
+                Value="{DynamicResource WindowGlowBrush}" />
+        <Setter Property="TitleForeground"
+                Value="{DynamicResource WindowTitleForeground}" />
+        <Setter Property="WindowMinButtonStyle"
+                Value="{DynamicResource VSWindowButtonStyle}" />
+        <Setter Property="WindowMaxButtonStyle"
+                Value="{DynamicResource VSWindowButtonStyle}" />
+        <Setter Property="WindowCloseButtonStyle"
+                Value="{DynamicResource VSWindowButtonStyle}" />
+    </Style>
+
+    <Style x:Key="VSWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroWindowButtonStyle}">
+
+        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
+
+        <Style.Triggers>
+
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

@@ -135,8 +135,6 @@
                 Value="{x:Null}" />
         <Setter Property="IsTabStop"
                 Value="False" />
-        <Setter Property="BorderThickness"
-                Value="1" />
         <Setter Property="Padding"
                 Value="6,2,6,2" />
         <Setter Property="HorizontalContentAlignment"
@@ -163,40 +161,114 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
-                    <Border x:Name="Border"
-                            Margin="{TemplateBinding Padding}"
+                    <Border x:Name="Border" HorizontalAlignment="Stretch"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ContentPresenter x:Name="ContentSite"
-                                          Margin="2,1,2,1"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                          TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                          TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                          TextElement.Foreground="{TemplateBinding Foreground}"
-                                          ContentSource="Header"
-                                          RecognizesAccessKey="True" />
+                        <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <DockPanel.Resources>
+                                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                            </DockPanel.Resources>
+                            <ContentPresenter x:Name="ContentSite"
+                                              Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                              TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                              TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              ContentSource="Header"
+                                              RecognizesAccessKey="True"
+                                              DockPanel.Dock="Top"/>
+                            <Rectangle x:Name="Underline" 
+                                       Margin="0, 1, 0, 0" 
+                                       Height="2" 
+                                       HorizontalAlignment="Stretch" 
+                                       Visibility="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabControl}}, 
+                                           Path=(Controls:TabControlHelper.IsUnderlined), Converter={StaticResource BooleanToVisibilityConverter}}"
+                                       DockPanel.Dock="Bottom"/>
+                        </DockPanel>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="TabStripPlacement" Value="Left">
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="ContentSite" Value="Left"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Right"/>
+                            <Setter Property="Width" TargetName="Underline" Value="2"/>
+                            <Setter Property="Height" TargetName="Underline" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="Underline" Value="1,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Top">
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="ContentSite" Value="Top"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Bottom"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Right"/>
+                            <Setter Property="Height" TargetName="Underline" Value="2"/>
+                            <Setter Property="Width" TargetName="Underline" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="Underline" Value="0,1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Right">
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="ContentSite" Value="Right"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Left"/>
+                            <Setter Property="Width" TargetName="Underline" Value="2"/>
+                            <Setter Property="Height" TargetName="Underline" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="Underline" Value="0,0,1,0"/>
+                        </Trigger>
+                        <Trigger Property="TabStripPlacement" Value="Bottom">
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="ContentSite" Value="Bottom"/>
+                            <Setter Property="DockPanel.Dock" 
+                             TargetName="Underline" Value="Top"/>
+                            <Setter Property="Height" TargetName="Underline" Value="2"/>
+                            <Setter Property="Width" TargetName="Underline" Value="Auto"/>
+                            <Setter Property="Margin" TargetName="Underline" Value="0,0,0,1"/>
+                        </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="true">
-                            <Setter Property="Foreground"
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="false">
-                            <Setter Property="Foreground"
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
+                                    Value="{DynamicResource GrayNormalBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
                                     Value="{DynamicResource GrayNormalBrush}" />
                         </Trigger>
                         <Trigger SourceName="ContentSite"
                                  Property="IsMouseOver"
                                  Value="True">
-                            <Setter Property="Foreground"
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
+                                    Value="{DynamicResource GrayHoverBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
                                     Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="ContentSite" Value="True" />
+                                <Condition Property="IsSelected" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="TextElement.Foreground"
+                                    TargetName="ContentSite"
+                                    Value="{DynamicResource HighlightBrush}" />
+                            <Setter Property="Fill"
+                                    TargetName="Underline"
+                                    Value="{DynamicResource HighlightBrush}" />
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

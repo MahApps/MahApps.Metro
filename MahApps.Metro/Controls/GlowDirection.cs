@@ -1,5 +1,4 @@
-﻿
-namespace MahApps.Metro.Controls
+﻿namespace MahApps.Metro.Controls
 {
 	public enum GlowDirection
 	{

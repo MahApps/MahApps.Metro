@@ -16,15 +16,6 @@ namespace MahApps.Metro.Controls
             this.Unloaded += MetroTabItem_Unloaded;
             this.Loaded += MetroTabItem_Loaded;
         }
-        
-         public MetroTabItem(BaseMetroTabControl OwningTabControl)
-        {
-            DefaultStyleKey = typeof(MetroTabItem);
-            this.Unloaded += MetroTabItem_Unloaded;
-            this.Loaded += MetroTabItem_Loaded;
-            this.OwningTabControl = OwningTabControl;
-        }
-
 
         void MetroTabItem_Loaded(object sender, RoutedEventArgs e)
         {
@@ -45,18 +36,6 @@ namespace MahApps.Metro.Controls
             }
 
             closeButtonClickUnloaded = true;
-        }
-
-        private delegate void EmptyDelegate();
-        ~MetroTabItem()
-        {
-            if (Application.Current != null)
-            {
-                Application.Current.Dispatcher.Invoke(new EmptyDelegate(() =>
-                {
-                    this.Loaded -= MetroTabItem_Loaded;
-                }));
-            }
         }
 
         /// <summary>
@@ -88,10 +67,10 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal Button closeButton = null;
+        internal Button closeButton;
         internal Thickness newButtonMargin;
-        internal ContentPresenter contentSite = null;
-        private bool closeButtonClickUnloaded = false;
+        internal ContentPresenter contentSite;
+        private bool closeButtonClickUnloaded;
 
         public override void OnApplyTemplate()
         {
@@ -126,30 +105,31 @@ namespace MahApps.Metro.Controls
                 CloseTabCommandParameter = null;
             }
 
-            if (OwningTabControl == null) // see #555
+            var owningTabControl = this.TryFindParent<BaseMetroTabControl>();
+            if (owningTabControl == null) // see #555
                 throw new InvalidOperationException();
 
             // run the command handler for the TabControl
-            var itemFromContainer = OwningTabControl.ItemContainerGenerator.ItemFromContainer(this);
+            var itemFromContainer = owningTabControl.ItemContainerGenerator.ItemFromContainer(this);
 
             var data = itemFromContainer == DependencyProperty.UnsetValue ? this.Content : itemFromContainer;
-            OwningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(data, this));
+            owningTabControl.InternalCloseTabCommand.Execute(new Tuple<object, MetroTabItem>(data, this));
         }
 
         /// <summary>
         /// Gets/sets the command that is executed when the Close Button is clicked.
         /// </summary>
-        public ICommand CloseTabCommand { get { return (ICommand)GetValue(CloseTabCommandProperty); } set { SetValue(CloseTabCommandProperty, value); } }
+        public ICommand CloseTabCommand 
+        { 
+            get { return (ICommand)GetValue(CloseTabCommandProperty); } 
+            set { SetValue(CloseTabCommandProperty, value); } 
+        }
+
         public static readonly DependencyProperty CloseTabCommandProperty = DependencyProperty.Register("CloseTabCommand", typeof(ICommand), typeof(MetroTabItem));
 
         public object CloseTabCommandParameter { get { return GetValue(CloseTabCommandParameterProperty); } set { SetValue(CloseTabCommandParameterProperty, value); } }
         public static readonly DependencyProperty CloseTabCommandParameterProperty =
             DependencyProperty.Register("CloseTabCommandParameter", typeof(object), typeof(MetroTabItem), new PropertyMetadata(null));
-
-        /// <summary>
-        /// Gets the owning MetroTabControl of this MetroTabItem.
-        /// </summary>
-        public BaseMetroTabControl OwningTabControl { get; internal set; }
 
         protected override void OnSelected(RoutedEventArgs e)
         {
@@ -169,9 +149,8 @@ namespace MahApps.Metro.Controls
 
         protected override void OnMouseEnter(MouseEventArgs e)
         {
-            if (closeButton != null)
-                if (CloseButtonEnabled)
-                    closeButton.Visibility = Visibility.Visible;
+            if (closeButton != null && CloseButtonEnabled) 
+                closeButton.Visibility = Visibility.Visible;
 
             base.OnMouseEnter(e);
         }

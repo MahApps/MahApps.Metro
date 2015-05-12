@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Media;
 using MahApps.Metro;
+using MahApps.Metro.Tests.TestHelpers;
 using Xunit;
 
-namespace Mahapps.Metro.Tests
+namespace MahApps.Metro.Tests
 {
     public class CleanWindowTest : AutomationTestBase
     {
@@ -12,9 +13,9 @@ namespace Mahapps.Metro.Tests
         {
             await TestHost.SwitchToAppThread();
 
-            var window = await TestHelpers.CreateInvisibleWindowAsync<CleanWindow>();
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<CleanWindow>();
 
-            var blackBrushColor = ((SolidColorBrush)ThemeManager.LightResource["BlackBrush"]).Color;
+            var blackBrushColor = ((SolidColorBrush)ThemeManager.GetAppTheme("BaseLight").Resources["BlackBrush"]).Color;
 
             window.AssertWindowCommandsColor(blackBrushColor);
         }

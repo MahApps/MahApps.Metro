@@ -1,7 +1,3 @@
-/**************************************************************************\
-    Copyright Microsoft Corporation. All Rights Reserved.
-\**************************************************************************/
-
 // This file contains general utilities to aid in development.
 // Classes here generally shouldn't be exposed publicly since
 // they're not particular to any library functionality.
@@ -11,22 +7,25 @@ namespace Standard
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Security.Cryptography;
     using System.Text;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
+
+    internal enum SafeCopyFileOptions
+    {
+        PreserveOriginal,
+        Overwrite,
+        FindBetterName,
+    }
 
     internal static partial class Utility
     {
-        private static readonly Version _osVersion = Environment.OSVersion.Version;
-        private static readonly Version _presentationFrameworkVersion = Assembly.GetAssembly(typeof(Window)).GetName().Version;
+        private static readonly Random _randomNumberGenerator = new Random();
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         private static bool _MemCmp(IntPtr left, IntPtr right, long cb)
@@ -58,27 +57,74 @@ namespace Standard
             return true;
         }
 
-        /// <summary>The native RGB macro.</summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static int RGB(Color c)
+        public static Exception FailableFunction<T>(Func<T> function, out T result)
         {
-            return c.R | (c.G << 8) | (c.B << 16);
+            return FailableFunction(5, function, out result);
         }
 
-        /// <summary>Convert a native integer that represent a color with an alpha channel into a Color struct.</summary>
-        /// <param name="color">The integer that represents the color.  Its bits are of the format 0xAARRGGBB.</param>
-        /// <returns>A Color representation of the parameter.</returns>
-        public static Color ColorFromArgbDword(uint color)
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static T FailableFunction<T>(Func<T> function)
         {
-            return Color.FromArgb(
-                (byte)((color & 0xFF000000) >> 24),
-                (byte)((color & 0x00FF0000) >> 16),
-                (byte)((color & 0x0000FF00) >> 8),
-                (byte)((color & 0x000000FF) >> 0));
+            T result;
+            Exception e = FailableFunction(function, out result);
+            if (e != null)
+            {
+                throw e;
+            }
+            return result;
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static T FailableFunction<T>(int maxRetries, Func<T> function)
+        {
+            T result;
+            Exception e = FailableFunction(maxRetries, function, out result);
+            if (e != null)
+            {
+                throw e;
+            }
+            return result;
+        }
+
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static Exception FailableFunction<T>(int maxRetries, Func<T> function, out T result)
+        {
+            Assert.IsNotNull(function);
+            Assert.BoundedInteger(1, maxRetries, 100);
+            int i = 0;
+            while (true)
+            {
+                try
+                {
+                    result = function();
+                    return null;
+                }
+                catch (Exception e)
+                {
+                    if (i == maxRetries)
+                    {
+                        result = default(T);
+                        return e;
+                    }
+                }
+                ++i;
+            }
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static string GetHashString(string value)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] signatureHash = md5.ComputeHash(Encoding.UTF8.GetBytes(value));
+                string signature = signatureHash.Aggregate(
+                    new StringBuilder(),
+                    (sb, b) => sb.Append(b.ToString("x2", CultureInfo.InvariantCulture))).ToString();
+                return signature;
+            }
+        }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static int GET_X_LPARAM(IntPtr lParam)
@@ -236,200 +282,49 @@ namespace Standard
         }
 
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static bool IsOSVistaOrNewer
+        public static bool IsInterfaceImplemented(Type objectType, Type interfaceType)
         {
-            get { return _osVersion >= new Version(6, 0); }
-        }
+            Assert.IsNotNull(objectType);
+            Assert.IsNotNull(interfaceType);
+            Assert.IsTrue(interfaceType.IsInterface);
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static bool IsOSWindows7OrNewer
-        {
-            get { return _osVersion >= new Version(6, 1); }
+            return objectType.GetInterfaces().Any(type => type == interfaceType);
         }
 
         /// <summary>
-        /// Is this using WPF4?
+        /// Wrapper around File.Copy to provide feedback as to whether the file wasn't copied because it didn't exist.
         /// </summary>
-        /// <remarks>
-        /// There are a few specific bugs in Window in 3.5SP1 and below that require workarounds
-        /// when handling WM_NCCALCSIZE on the HWND.
-        /// </remarks>
-        public static bool IsPresentationFrameworkVersionLessThan4
-        {
-            get { return _presentationFrameworkVersion < new Version(4, 0); }
-        }
-
-        // Caller is responsible for destroying the HICON
-        // Caller is responsible to ensure that GDI+ has been initialized.
-        [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+        /// <returns></returns>
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static IntPtr GenerateHICON(ImageSource image, Size dimensions)
+        public static string SafeCopyFile(string sourceFileName, string destFileName, SafeCopyFileOptions options)
         {
-            if (image == null)
+            switch (options)
             {
-                return IntPtr.Zero;
-            }
-
-            // If we're getting this from a ".ico" resource, then it comes through as a BitmapFrame.
-            // We can use leverage this as a shortcut to get the right 16x16 representation
-            // because DrawImage doesn't do that for us.
-            var bf = image as BitmapFrame;
-            if (bf != null)
-            {
-                bf = GetBestMatch(bf.Decoder.Frames, (int)dimensions.Width, (int)dimensions.Height);
-            }
-            else
-            {
-                // Constrain the dimensions based on the aspect ratio.
-                var drawingDimensions = new Rect(0, 0, dimensions.Width, dimensions.Height);
-
-                // There's no reason to assume that the requested image dimensions are square.
-                double renderRatio = dimensions.Width / dimensions.Height;
-                double aspectRatio = image.Width / image.Height;
-
-                // If it's smaller than the requested size, then place it in the middle and pad the image.
-                if (image.Width <= dimensions.Width && image.Height <= dimensions.Height)
-                {
-                    drawingDimensions = new Rect((dimensions.Width - image.Width) / 2, (dimensions.Height - image.Height) / 2, image.Width, image.Height);
-                }
-                else if (renderRatio > aspectRatio)
-                {
-                    double scaledRenderWidth = (image.Width / image.Height) * dimensions.Width;
-                    drawingDimensions = new Rect((dimensions.Width - scaledRenderWidth) / 2, 0, scaledRenderWidth, dimensions.Height);
-                }
-                else if (renderRatio < aspectRatio)
-                {
-                    double scaledRenderHeight = (image.Height / image.Width) * dimensions.Height;
-                    drawingDimensions = new Rect(0, (dimensions.Height - scaledRenderHeight) / 2, dimensions.Width, scaledRenderHeight);
-                }
-
-                var dv = new DrawingVisual();
-                DrawingContext dc = dv.RenderOpen();
-                dc.DrawImage(image, drawingDimensions);
-                dc.Close();
-
-                var bmp = new RenderTargetBitmap((int)dimensions.Width, (int)dimensions.Height, 96, 96, PixelFormats.Pbgra32);
-                bmp.Render(dv);
-                bf = BitmapFrame.Create(bmp);
-            }
-
-            // Using GDI+ to convert to an HICON.
-            // I'd rather not duplicate their code.
-            using (MemoryStream memstm = new MemoryStream())
-            {
-                BitmapEncoder enc = new PngBitmapEncoder();
-                enc.Frames.Add(bf);
-                enc.Save(memstm);
-
-                using (var istm = new ManagedIStream(memstm))
-                {
-                    // We are not bubbling out GDI+ errors when creating the native image fails.
-                    IntPtr bitmap = IntPtr.Zero;
-                    try
+                case SafeCopyFileOptions.PreserveOriginal:
+                    if (!File.Exists(destFileName))
                     {
-                        Status gpStatus = NativeMethods.GdipCreateBitmapFromStream(istm, out bitmap);
-                        if (Status.Ok != gpStatus)
+                        File.Copy(sourceFileName, destFileName);
+                        return destFileName;
+                    }
+                    return null;
+                case SafeCopyFileOptions.Overwrite:
+                    File.Copy(sourceFileName, destFileName, true);
+                    return destFileName;
+                case SafeCopyFileOptions.FindBetterName:
+                    string directoryPart = Path.GetDirectoryName(destFileName);
+                    string fileNamePart = Path.GetFileNameWithoutExtension(destFileName);
+                    string extensionPart = Path.GetExtension(destFileName);
+                    foreach (string path in GenerateFileNames(directoryPart, fileNamePart, extensionPart))
+                    {
+                        if (!File.Exists(path))
                         {
-                            return IntPtr.Zero;
+                            File.Copy(sourceFileName, path);
+                            return path;
                         }
-
-                        IntPtr hicon;
-                        gpStatus = NativeMethods.GdipCreateHICONFromBitmap(bitmap, out hicon);
-                        if (Status.Ok != gpStatus)
-                        {
-                            return IntPtr.Zero;
-                        }
-
-                        // Caller is responsible for freeing this.
-                        return hicon;
                     }
-                    finally
-                    {
-                        Utility.SafeDisposeImage(ref bitmap);
-                    }
-                }
+                    return null;
             }
-        }
-
-        public static BitmapFrame GetBestMatch(IList<BitmapFrame> frames, int width, int height)
-        {
-            return _GetBestMatch(frames, _GetBitDepth(), width, height);
-        }
-
-        private static int _MatchImage(BitmapFrame frame, int bitDepth, int width, int height, int bpp)
-        {
-            int score = 2 * _WeightedAbs(bpp, bitDepth, false) +
-                    _WeightedAbs(frame.PixelWidth, width, true) +
-                    _WeightedAbs(frame.PixelHeight, height, true);
-
-            return score;
-        }
-
-        private static int _WeightedAbs(int valueHave, int valueWant, bool fPunish)
-        {
-            int diff = (valueHave - valueWant);
-
-            if (diff < 0)
-            {
-                diff = (fPunish ? -2 : -1) * diff;
-            }
-
-            return diff;
-        }
-
-        /// From a list of BitmapFrames find the one that best matches the requested dimensions.
-        /// The methods used here are copied from Win32 sources.  We want to be consistent with
-        /// system behaviors.
-        private static BitmapFrame _GetBestMatch(IList<BitmapFrame> frames, int bitDepth, int width, int height)
-        {
-            int bestScore = int.MaxValue;
-            int bestBpp = 0;
-            int bestIndex = 0;
-
-            bool isBitmapIconDecoder = frames[0].Decoder is IconBitmapDecoder;
-
-            for (int i = 0; i < frames.Count && bestScore != 0; ++i)
-            {
-                int currentIconBitDepth = isBitmapIconDecoder ? frames[i].Thumbnail.Format.BitsPerPixel : frames[i].Format.BitsPerPixel;
-
-                if (currentIconBitDepth == 0)
-                {
-                    currentIconBitDepth = 8;
-                }
-
-                int score = _MatchImage(frames[i], bitDepth, width, height, currentIconBitDepth);
-                if (score < bestScore)
-                {
-                    bestIndex = i;
-                    bestBpp = currentIconBitDepth;
-                    bestScore = score;
-                }
-                else if (score == bestScore)
-                {
-                    // Tie breaker: choose the higher color depth.  If that fails, choose first one.
-                    if (bestBpp < currentIconBitDepth)
-                    {
-                        bestIndex = i;
-                        bestBpp = currentIconBitDepth;
-                    }
-                }
-            }
-
-            return frames[bestIndex];
-        }
-
-        // This can be cached.  It's not going to change under reasonable circumstances.
-        private static int s_bitDepth; // = 0;
-        private static int _GetBitDepth()
-        {
-            if (s_bitDepth == 0)
-            {
-                using (SafeDC dc = SafeDC.GetDesktop())
-                {
-                    s_bitDepth = NativeMethods.GetDeviceCaps(dc, DeviceCap.BITSPIXEL) * NativeMethods.GetDeviceCaps(dc, DeviceCap.PLANES);
-                }
-            }
-            return s_bitDepth;
+            throw new ArgumentException("Invalid enumeration value", "options");
         }
 
         /// <summary>
@@ -445,42 +340,7 @@ namespace Standard
         {
             if (!string.IsNullOrEmpty(path))
             {
-
                 File.Delete(path);
-            }
-        }
-
-        /// <summary>GDI's DeleteObject</summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static void SafeDeleteObject(ref IntPtr gdiObject)
-        {
-            IntPtr p = gdiObject;
-            gdiObject = IntPtr.Zero;
-            if (IntPtr.Zero != p)
-            {
-                NativeMethods.DeleteObject(p);
-            }
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static void SafeDestroyIcon(ref IntPtr hicon)
-        {
-            IntPtr p = hicon;
-            hicon = IntPtr.Zero;
-            if (IntPtr.Zero != p)
-            {
-                NativeMethods.DestroyIcon(p);
-            }
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static void SafeDestroyWindow(ref IntPtr hwnd)
-        {
-            IntPtr p = hwnd;
-            hwnd = IntPtr.Zero;
-            if (NativeMethods.IsWindow(p))
-            {
-                NativeMethods.DestroyWindow(p);
             }
         }
 
@@ -494,56 +354,6 @@ namespace Standard
             if (null != t)
             {
                 t.Dispose();
-            }
-        }
-
-        /// <summary>GDI+'s DisposeImage</summary>
-        /// <param name="gdipImage"></param>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public static void SafeDisposeImage(ref IntPtr gdipImage)
-        {
-            IntPtr p = gdipImage;
-            gdipImage = IntPtr.Zero;
-            if (IntPtr.Zero != p)
-            {
-                NativeMethods.GdipDisposeImage(p);
-            }
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-        public static void SafeCoTaskMemFree(ref IntPtr ptr)
-        {
-            IntPtr p = ptr;
-            ptr = IntPtr.Zero;
-            if (IntPtr.Zero != p)
-            {
-                Marshal.FreeCoTaskMem(p);
-            }
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-        public static void SafeFreeHGlobal(ref IntPtr hglobal)
-        {
-            IntPtr p = hglobal;
-            hglobal = IntPtr.Zero;
-            if (IntPtr.Zero != p)
-            {
-                Marshal.FreeHGlobal(p);
-            }
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-        public static void SafeRelease<T>(ref T comObject) where T : class
-        {
-            T t = comObject;
-            comObject = default(T);
-            if (null != t)
-            {
-                Assert.IsTrue(Marshal.IsComObject(t));
-                Marshal.ReleaseComObject(t);
             }
         }
 
@@ -660,9 +470,16 @@ namespace Standard
         [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static void EnsureDirectory(string path)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            if (!path.EndsWith(@"\", StringComparison.Ordinal))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(path));
+                path += @"\";
+            }
+
+            path = Path.GetDirectoryName(path);
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
             }
         }
 
@@ -944,94 +761,64 @@ namespace Standard
             return -1;
         }
 
-        public static void AddDependencyPropertyChangeListener(object component, DependencyProperty property, EventHandler listener)
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static string MakeValidFileName(string invalidPath)
         {
-            if (component == null)
-            {
-                return;
-            }
-            Assert.IsNotNull(property);
-            Assert.IsNotNull(listener);
-
-            DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor.FromProperty(property, component.GetType());
-            dpd.AddValueChanged(component, listener);
+            return invalidPath
+                .Replace('\\', '_')
+                .Replace('/', '_')
+                .Replace(':', '_')
+                .Replace('*', '_')
+                .Replace('?', '_')
+                .Replace('\"', '_')
+                .Replace('<', '_')
+                .Replace('>', '_')
+                .Replace('|', '_');
         }
 
-        public static void RemoveDependencyPropertyChangeListener(object component, DependencyProperty property, EventHandler listener)
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static IEnumerable<string> GenerateFileNames(string directory, string primaryFileName, string extension)
         {
-            if (component == null)
-            {
-                return;
-            }
-            Assert.IsNotNull(property);
-            Assert.IsNotNull(listener);
+            Verify.IsNeitherNullNorEmpty(directory, "directory");
+            Verify.IsNeitherNullNorEmpty(primaryFileName, "primaryFileName");
 
-            DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor.FromProperty(property, component.GetType());
-            dpd.RemoveValueChanged(component, listener);
+            primaryFileName = MakeValidFileName(primaryFileName);
+
+            for (int i = 0; i <= 50; ++i)
+            {
+                if (0 == i)
+                {
+                    yield return Path.Combine(directory, primaryFileName) + extension;
+                }
+                else if (40 >= i)
+                {
+                    yield return Path.Combine(directory, primaryFileName) + " (" + i.ToString((IFormatProvider)null) + ")" + extension;
+                }
+                else
+                {
+                    // At this point we're hitting pathological cases.  This should stir things up enough that it works.
+                    // If this fails because of naming conflicts after an extra 10 tries, then I don't care.
+                    yield return Path.Combine(directory, primaryFileName) + " (" + _randomNumberGenerator.Next(41, 9999) + ")" + extension;
+                }
+            }
         }
 
-        #region Extension Methods
-
-        public static bool IsThicknessNonNegative(Thickness thickness)
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static bool TryFileMove(string sourceFileName, string destFileName)
         {
-            if (!IsDoubleFiniteAndNonNegative(thickness.Top))
+            if (!File.Exists(destFileName))
             {
-                return false;
+                try
+                {
+                    File.Move(sourceFileName, destFileName);
+                }
+                catch (IOException)
+                {
+                    return false;
+                }
+                return true;
             }
-
-            if (!IsDoubleFiniteAndNonNegative(thickness.Left))
-            {
-                return false;
-            }
-
-            if (!IsDoubleFiniteAndNonNegative(thickness.Bottom))
-            {
-                return false;
-            }
-
-            if (!IsDoubleFiniteAndNonNegative(thickness.Right))
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
-
-        public static bool IsCornerRadiusValid(CornerRadius cornerRadius)
-        {
-            if (!IsDoubleFiniteAndNonNegative(cornerRadius.TopLeft))
-            {
-                return false;
-            }
-
-            if (!IsDoubleFiniteAndNonNegative(cornerRadius.TopRight))
-            {
-                return false;
-            }
-
-            if (!IsDoubleFiniteAndNonNegative(cornerRadius.BottomLeft))
-            {
-                return false;
-            }
-
-            if (!IsDoubleFiniteAndNonNegative(cornerRadius.BottomRight))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public static bool IsDoubleFiniteAndNonNegative(double d)
-        {
-            if (double.IsNaN(d) || double.IsInfinity(d) || d < 0)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        #endregion
     }
 }

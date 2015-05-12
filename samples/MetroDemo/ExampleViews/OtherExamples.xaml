@@ -1,0 +1,206 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.OtherExamples"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Label Content="Transitions"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Controls:TransitioningContentControl x:Name="transitioning"
+                                                  Width="250"
+                                                  Height="50"
+                                                  Margin="0, 10, 0, 0"
+                                                  Transition="Down" />
+            <Controls:TransitioningContentControl x:Name="customTransitioning"
+                                                  Width="250"
+                                                  Height="50"
+                                                  Margin="0, 10, 0, 0"
+                                                  Transition="Custom">
+                <Controls:TransitioningContentControl.CustomVisualStates>
+                    <VisualState x:Name="CustomTransition">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="CurrentContentPresentationSite"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                      Value="0" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.700"
+                                                      Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="PreviousContentPresentationSite"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                      Value="1" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.700"
+                                                      Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </Controls:TransitioningContentControl.CustomVisualStates>
+            </Controls:TransitioningContentControl>
+            <Controls:TransitioningContentControl x:Name="SecondcustomTransitioning"
+                                                  Width="250"
+                                                  Height="50"
+                                                  Margin="0, 10, 0, 0"
+                                                  Transition="Custom"
+                                                  CustomVisualStatesName="SecondCustomTransition">
+                <Controls:TransitioningContentControl.CustomVisualStates>
+                    <VisualState x:Name="SecondCustomTransition">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="CurrentContentPresentationSite"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                      Value="0" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.5"
+                                                      Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="00:00:01"
+                                                      Value="1">
+                                    <EasingDoubleKeyFrame.EasingFunction>
+                                        <SineEase />
+                                    </EasingDoubleKeyFrame.EasingFunction>
+                                </EasingDoubleKeyFrame>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                           Storyboard.TargetName="PreviousContentPresentationSite"
+                                                           Storyboard.TargetProperty="(UIElement.Opacity)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00"
+                                                      Value="1" />
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.5"
+                                                      Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </Controls:TransitioningContentControl.CustomVisualStates>
+            </Controls:TransitioningContentControl>
+        </StackPanel>
+        <Grid Grid.Row="1"
+              Grid.ColumnSpan="2"
+              Grid.Column="0">
+            <Label Content="Context menu"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   HorizontalContentAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   Content="Right click here to open a context menu">
+                <Label.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Menu 1">
+                            <MenuItem Header="Submenu 1"
+                                      IsChecked="True" />
+                            <MenuItem Header="Submenu 1"
+                                      IsChecked="True"
+                                      IsEnabled="False" />
+                            <MenuItem Header="Submenu 2" />
+                            <MenuItem Header="Submenu 3"
+                                      IsEnabled="False" />
+                        </MenuItem>
+                        <MenuItem Header="Menu 2" />
+                        <MenuItem Header="Menu 3"
+                                  IsChecked="True" />
+                        <MenuItem Header="Menu 4"
+                                  IsChecked="True"
+                                  IsEnabled="False" />
+                        <MenuItem Header="Menu 5" />
+                        <MenuItem Header="Menu 6"
+                                  IsEnabled="False" />
+                    </ContextMenu>
+                </Label.ContextMenu>
+            </Label>
+        </Grid>
+        <StackPanel Grid.Column="2"
+                    Grid.Row="0"
+                    Grid.RowSpan="2">
+            <Label Content="FlipView"
+                   Style="{DynamicResource DescriptionHeaderStyle}" />
+            <StackPanel Orientation="Horizontal"
+                        Height="20"
+                        Margin="0 0 0 5">
+                <CheckBox Height="20"
+                          Content="Show Banner?"
+                          x:Name="ShowBannerCheckBox"
+                          HorizontalAlignment="Right"
+                          Margin="5 0 5 0" />
+                <CheckBox Height="20"
+                          Content="Show MouseOver Glow?"
+                          x:Name="ShowMouseOverCheckBox"
+                          HorizontalAlignment="Right"
+                          IsChecked="True"
+                          Margin="5 0 5 0" />
+            </StackPanel>
+            <Controls:FlipView Height="200"
+                               IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                               MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
+                               SelectionChanged="FlipView_SelectionChanged"
+                               Margin="0, 0, 10, 0">
+                <Controls:FlipView.Items>
+                    <Grid Background="#2E8DEF">
+                        <Rectangle Margin="0, 0, 10, 0"
+                                   Width="50"
+                                   Height="50">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_cupcake}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Grid>
+                    <Grid Background="#00A600">
+                        <Rectangle Margin="0, 0, 10, 0"
+                                   Width="50"
+                                   Height="50">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_xbox}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Grid>
+                    <Grid Background="#BF1E4B">
+                        <Rectangle Margin="0, 0, 10, 0"
+                                   Width="50"
+                                   Height="50">
+                            <Rectangle.Fill>
+                                <VisualBrush Visual="{StaticResource appbar_chess_horse}" />
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </Grid>
+                </Controls:FlipView.Items>
+            </Controls:FlipView>
+
+            <Separator Margin="0,5" />
+
+            <Controls:FlipView Height="400"
+                               IsBannerEnabled="True"
+                               BannerText="Databound Items"
+                               ItemTemplateSelector="{Binding FlipViewTemplateSelector, UpdateSourceTrigger=PropertyChanged}"
+                               ItemsSource="{Binding FlipViewImages, UpdateSourceTrigger=PropertyChanged}"
+                               Margin="0, 0, 10, 0">
+            </Controls:FlipView>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

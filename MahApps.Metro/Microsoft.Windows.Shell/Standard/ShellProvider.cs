@@ -1,17 +1,81 @@
-﻿/**************************************************************************\
-    Copyright Microsoft Corporation. All Rights Reserved.
-\**************************************************************************/
-
-namespace Standard
+﻿namespace Standard
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
     using System.Text;
-
     using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
     #region Enums and Static Property Classes
+
+    /// <summary>ASSOCIATIONLEVEL, AL_*</summary>
+    internal enum AL
+    {
+        MACHINE,
+        EFFECTIVE,
+        USER,
+    }
+
+    /// <summary>ASSOCIATIONTYPE, AT_*</summary>
+    internal enum AT
+    {
+        FILEEXTENSION,
+        URLPROTOCOL,
+        STARTMENUCLIENT,
+        MIMETYPE,
+    }
+
+    /// <summary>FileDialog AddPlace options.  FDAP_*</summary>
+    internal enum FDAP : uint
+    {
+        BOTTOM = 0x00000000,
+        TOP = 0x00000001,
+    }
+
+    /// <summary>IFileDialog options.  FOS_*</summary>
+    [Flags]
+    internal enum FOS : uint
+    {
+        OVERWRITEPROMPT = 0x00000002,
+        STRICTFILETYPES = 0x00000004,
+        NOCHANGEDIR = 0x00000008,
+        PICKFOLDERS = 0x00000020,
+        FORCEFILESYSTEM = 0x00000040,
+        ALLNONSTORAGEITEMS = 0x00000080,
+        NOVALIDATE = 0x00000100,
+        ALLOWMULTISELECT = 0x00000200,
+        PATHMUSTEXIST = 0x00000800,
+        FILEMUSTEXIST = 0x00001000,
+        CREATEPROMPT = 0x00002000,
+        SHAREAWARE = 0x00004000,
+        NOREADONLYRETURN = 0x00008000,
+        NOTESTFILECREATE = 0x00010000,
+        HIDEMRUPLACES = 0x00020000,
+        HIDEPINNEDPLACES = 0x00040000,
+        NODEREFERENCELINKS = 0x00100000,
+        DONTADDTORECENT = 0x02000000,
+        FORCESHOWHIDDEN = 0x10000000,
+        DEFAULTNOMINIMODE = 0x20000000,
+        FORCEPREVIEWPANEON = 0x40000000,
+    }
+
+    /// <summary>FDE_OVERWRITE_RESPONSE.  FDEOR_*</summary>
+    internal enum FDEOR
+    {
+        DEFAULT = 0x00000000,
+        ACCEPT = 0x00000001,
+        REFUSE = 0x00000002,
+    }
+
+    /// <summary>FDE_SHAREVIOLATION_RESPONSE.  FDESVR_*</summary>
+    internal enum FDESVR
+    {
+        DEFAULT = 0x00000000,
+        ACCEPT = 0x00000001,
+        REFUSE = 0x00000002,
+    }
 
     /// <summary>ShellItem attribute flags.  SIATTRIBFLAGS_*</summary>
     internal enum SIATTRIBFLAGS
@@ -316,6 +380,16 @@ namespace Standard
 
     #region Structs
 
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    internal struct COMDLG_FILTERSPEC
+    {
+        [MarshalAs(UnmanagedType.LPWStr)]
+        public string pszName;
+        [MarshalAs(UnmanagedType.LPWStr)]
+        public string pszSpec;
+    }
+
+
     [StructLayout(LayoutKind.Sequential, Pack = 8, CharSet = CharSet.Unicode)]
     internal struct THUMBBUTTON
     {
@@ -365,6 +439,42 @@ namespace Standard
     #endregion
 
     #region Interfaces
+
+    // Application File Extension and URL Protocol Registration
+    [
+        ComImport,
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+        Guid(IID.ApplicationAssociationRegistration),
+    ]
+    internal interface IApplicationAssociationRegistration
+    {
+        [return: MarshalAs(UnmanagedType.LPWStr)]
+        string QueryCurrentDefault(
+            [MarshalAs(UnmanagedType.LPWStr)] string pszQuery,
+            AT atQueryType,
+            AL alQueryLevel);
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        bool QueryAppIsDefault(
+            [MarshalAs(UnmanagedType.LPWStr)] string pszQuery,
+            AT atQueryType,
+            AL alQueryLevel,
+            [MarshalAs(UnmanagedType.LPWStr)] string pszAppRegistryName);
+
+        [return: MarshalAs(UnmanagedType.Bool)]
+        bool QueryAppIsDefaultAll(
+            AL alQueryLevel,
+            [MarshalAs(UnmanagedType.LPWStr)] string pszAppRegistryName);
+
+        void SetAppAsDefault(
+            [MarshalAs(UnmanagedType.LPWStr)] string pszAppRegistryName,
+            [MarshalAs(UnmanagedType.LPWStr)] string pszSet,
+            AT atSetType);
+
+        void SetAppAsDefaultAll([MarshalAs(UnmanagedType.LPWStr)] string pszAppRegistryName);
+
+        void ClearUserAssociations();
+    }
 
     [
         ComImport,
@@ -796,9 +906,6 @@ namespace Standard
         /// Retrieve an IEnumObjects or IObjectArray for IShellItems and/or IShellLinks. 
         /// Items may appear in both the frequent and recent lists.  
         /// </summary>
-        /// <param name="cItemsDesired"></param>
-        /// <param name="listtype"></param>
-        /// <param name="riid"></param>
         /// <returns></returns>
         [return: MarshalAs(UnmanagedType.IUnknown)]
         object GetList([In] APPDOCLISTTYPE listtype, [In] uint cItemsDesired, [In] ref Guid riid);
@@ -963,6 +1070,240 @@ namespace Standard
         #endregion
 
         void SetTabProperties(IntPtr hwndTab, STPF stpFlags);
+    }
+
+    [
+    ComImport,
+    InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+    Guid(IID.FileDialogEvents),
+]
+    internal interface IFileDialogEvents
+    {
+        [PreserveSig]
+        HRESULT OnFileOk(IFileDialog pfd);
+
+        [PreserveSig]
+        HRESULT OnFolderChanging(IFileDialog pfd, IShellItem psiFolder);
+
+        [PreserveSig]
+        HRESULT OnFolderChange(IFileDialog pfd);
+
+        [PreserveSig]
+        HRESULT OnSelectionChange(IFileDialog pfd);
+
+        [PreserveSig]
+        HRESULT OnShareViolation(IFileDialog pfd, IShellItem psi, out FDESVR pResponse);
+
+        [PreserveSig]
+        HRESULT OnTypeChange(IFileDialog pfd);
+
+        [PreserveSig]
+        HRESULT OnOverwrite(IFileDialog pfd, IShellItem psi, out FDEOR pResponse);
+    }
+
+    [
+        ComImport,
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+        Guid(IID.ModalWindow),
+    ]
+    internal interface IModalWindow
+    {
+        [PreserveSig]
+        HRESULT Show(IntPtr parent);
+    }
+
+    [
+        ComImport,
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+        Guid(IID.FileDialog),
+    ]
+    internal interface IFileDialog : IModalWindow
+    {
+        #region IModalWindow redeclarations
+        [PreserveSig]
+        new HRESULT Show(IntPtr parent);
+        #endregion
+
+        void SetFileTypes(uint cFileTypes, [In] ref COMDLG_FILTERSPEC rgFilterSpec);
+
+        void SetFileTypeIndex(uint iFileType);
+
+        uint GetFileTypeIndex();
+
+        uint Advise(IFileDialogEvents pfde);
+
+        void Unadvise(uint dwCookie);
+
+        void SetOptions(FOS fos);
+
+        FOS GetOptions();
+
+        void SetDefaultFolder(IShellItem psi);
+
+        void SetFolder(IShellItem psi);
+
+        IShellItem GetFolder();
+
+        IShellItem GetCurrentSelection();
+
+        void SetFileName([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+
+        [return: MarshalAs(UnmanagedType.LPWStr)]
+        string GetFileName();
+
+        void SetTitle([MarshalAs(UnmanagedType.LPWStr)] string pszTitle);
+
+        void SetOkButtonLabel([MarshalAs(UnmanagedType.LPWStr)] string pszText);
+
+        void SetFileNameLabel([MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+
+        IShellItem GetResult();
+
+        void AddPlace(IShellItem psi, FDAP alignment);
+
+        void SetDefaultExtension([MarshalAs(UnmanagedType.LPWStr)] string pszDefaultExtension);
+
+        void Close([MarshalAs(UnmanagedType.Error)] int hr);
+
+        void SetClientGuid([In] ref Guid guid);
+
+        void ClearClientData();
+
+        void SetFilter([MarshalAs(UnmanagedType.Interface)] object pFilter);
+    }
+
+    [
+        ComImport,
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+        Guid(IID.FileOpenDialog),
+    ]
+    internal interface IFileOpenDialog : IFileDialog
+    {
+        #region IFileDialog redeclarations
+
+        #region IModalDialog redeclarations
+        [PreserveSig]
+        new HRESULT Show(IntPtr parent);
+        #endregion
+
+        new void SetFileTypes(uint cFileTypes, [In] ref COMDLG_FILTERSPEC rgFilterSpec);
+        new void SetFileTypeIndex(uint iFileType);
+        new uint GetFileTypeIndex();
+        new uint Advise(IFileDialogEvents pfde);
+        new void Unadvise(uint dwCookie);
+        new void SetOptions(FOS fos);
+        new FOS GetOptions();
+        new void SetDefaultFolder(IShellItem psi);
+        new void SetFolder(IShellItem psi);
+        new IShellItem GetFolder();
+        new IShellItem GetCurrentSelection();
+        new void SetFileName([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+        [return: MarshalAs(UnmanagedType.LPWStr)]
+        new string GetFileName();
+        new void SetTitle([MarshalAs(UnmanagedType.LPWStr)] string pszTitle);
+        new void SetOkButtonLabel([MarshalAs(UnmanagedType.LPWStr)] string pszText);
+        new void SetFileNameLabel([MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+        new IShellItem GetResult();
+        new void AddPlace(IShellItem psi, FDAP fdcp);
+        new void SetDefaultExtension([MarshalAs(UnmanagedType.LPWStr)] string pszDefaultExtension);
+        new void Close([MarshalAs(UnmanagedType.Error)] int hr);
+        new void SetClientGuid([In] ref Guid guid);
+        new void ClearClientData();
+        new void SetFilter([MarshalAs(UnmanagedType.Interface)] object pFilter);
+
+        #endregion
+
+        IShellItemArray GetResults();
+
+        IShellItemArray GetSelectedItems();
+    }
+
+    [
+        ComImport,
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
+        Guid(IID.FileSaveDialog),
+    ]
+    internal interface IFileSaveDialog : IFileDialog
+    {
+        #region IFileDialog redeclarations
+
+        #region IModalDialog redeclarations
+        [PreserveSig]
+        new HRESULT Show(IntPtr parent);
+        #endregion
+
+        new void SetFileTypes(uint cFileTypes, [In] ref COMDLG_FILTERSPEC rgFilterSpec);
+        new void SetFileTypeIndex(uint iFileType);
+        new uint GetFileTypeIndex();
+        new uint Advise(IFileDialogEvents pfde);
+        new void Unadvise(uint dwCookie);
+        new void SetOptions(FOS fos);
+        new FOS GetOptions();
+        new void SetDefaultFolder(IShellItem psi);
+        new void SetFolder(IShellItem psi);
+        new IShellItem GetFolder();
+        new IShellItem GetCurrentSelection();
+        new void SetFileName([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+        [return: MarshalAs(UnmanagedType.LPWStr)]
+        new string GetFileName();
+        new void SetTitle([MarshalAs(UnmanagedType.LPWStr)] string pszTitle);
+        new void SetOkButtonLabel([MarshalAs(UnmanagedType.LPWStr)] string pszText);
+        new void SetFileNameLabel([MarshalAs(UnmanagedType.LPWStr)] string pszLabel);
+        new IShellItem GetResult();
+        new void AddPlace(IShellItem psi, FDAP fdcp);
+        new void SetDefaultExtension([MarshalAs(UnmanagedType.LPWStr)] string pszDefaultExtension);
+        new void Close([MarshalAs(UnmanagedType.Error)] int hr);
+        new void SetClientGuid([In] ref Guid guid);
+        new void ClearClientData();
+        new void SetFilter([MarshalAs(UnmanagedType.Interface)] object pFilter);
+
+        #endregion
+
+        void SetSaveAsItem(IShellItem psi);
+
+        void SetProperties([In, MarshalAs(UnmanagedType.Interface)] object pStore);
+
+        void SetCollectedProperties([In, MarshalAs(UnmanagedType.Interface)] object pList, [In] int fAppendDefault);
+
+        [return: MarshalAs(UnmanagedType.Interface)]
+        object GetProperties();
+
+        void ApplyProperties(IShellItem psi, [MarshalAs(UnmanagedType.Interface)] object pStore, [In] ref IntPtr hwnd, [MarshalAs(UnmanagedType.Interface)] object pSink);
+    }
+
+    internal static class ShellUtil
+    {
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static string GetPathFromShellItem(IShellItem item)
+        {
+            return item.GetDisplayName(SIGDN.DESKTOPABSOLUTEPARSING);
+        }
+
+        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        public static IShellItem2 GetShellItemForPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                // Internal function.  Should have verified this before calling if we cared.
+                return null;
+            }
+
+            Guid iidShellItem2 = new Guid(IID.ShellItem2);
+            object unk;
+            HRESULT hr = NativeMethods.SHCreateItemFromParsingName(path, null, ref iidShellItem2, out unk);
+
+            // Silently absorb errors such as ERROR_FILE_NOT_FOUND, ERROR_PATH_NOT_FOUND.
+            // Let others pass through
+            if (hr == (HRESULT)Win32Error.ERROR_FILE_NOT_FOUND || hr == (HRESULT)Win32Error.ERROR_PATH_NOT_FOUND)
+            {
+                hr = HRESULT.S_OK;
+                unk = null;
+            }
+
+            hr.ThrowIfFailed();
+
+            return (IShellItem2)unk;
+        }
     }
 
     #endregion

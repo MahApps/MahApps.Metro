@@ -1,6 +1,9 @@
-﻿namespace MahApps.Metro.Native
+﻿using System;
+
+namespace MahApps.Metro.Native
 {
-    public enum ABMsg
+    [Obsolete("Use Standard.ABMsg instead.")]
+    internal enum ABMsg
     {
         ABM_NEW = 0,
         ABM_REMOVE = 1,

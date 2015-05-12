@@ -1,53 +1,88 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro;
-using MahApps.Metro.Controls;
 using MetroDemo.Models;
 using System.Windows.Input;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace MetroDemo
 {
     public class AccentColorMenuData
     {
         public string Name { get; set; }
+        public Brush BorderColorBrush { get; set; }
         public Brush ColorBrush { get; set; }
 
         private ICommand changeAccentCommand;
 
         public ICommand ChangeAccentCommand
         {
-            get { return this.changeAccentCommand ?? (changeAccentCommand = new SimpleCommand { CanExecuteDelegate = x => true, ExecuteDelegate = x => ChangeAccent(x) }); }
+            get { return this.changeAccentCommand ?? (changeAccentCommand = new SimpleCommand { CanExecuteDelegate = x => true, ExecuteDelegate = x => this.DoChangeTheme(x) }); }
         }
 
-        private void ChangeAccent(object sender)
+        protected virtual void DoChangeTheme(object sender)
         {
-            var theme = ThemeManager.DetectTheme(Application.Current);
-            var accent = ThemeManager.DefaultAccents.First(x => x.Name == this.Name);
-            ThemeManager.ChangeTheme(Application.Current, accent, theme.Item1);
+            var theme = ThemeManager.DetectAppStyle(Application.Current);
+            var accent = ThemeManager.GetAccent(this.Name);
+            ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+        }
+    }
+
+    public class AppThemeMenuData : AccentColorMenuData
+    {
+        protected override void DoChangeTheme(object sender)
+        {
+            var theme = ThemeManager.DetectAppStyle(Application.Current);
+            var appTheme = ThemeManager.GetAppTheme(this.Name);
+            ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, appTheme);
         }
     }
 
     public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         int? _integerGreater10Property;
+        private bool _animateOnPositionChange = true;
 
         public MainWindowViewModel()
         {
             SampleData.Seed();
 
             // create accent color menu items for the demo
-            this.AccentColors = ThemeManager.DefaultAccents
+            this.AccentColors = ThemeManager.Accents
                                             .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
                                             .ToList();
+
+            // create metro theme color menu items for the demo
+            this.AppThemes = ThemeManager.AppThemes
+                                           .Select(a => new AppThemeMenuData() { Name = a.Name, BorderColorBrush = a.Resources["BlackColorBrush"] as Brush, ColorBrush = a.Resources["WhiteColorBrush"] as Brush })
+                                           .ToList();
             
+
             Albums = SampleData.Albums;
             Artists = SampleData.Artists;
+
+            FlipViewTemplateSelector = new RandomDataTemplateSelector();
+
+            FrameworkElementFactory spFactory = new FrameworkElementFactory(typeof(Image));
+            spFactory.SetBinding(Image.SourceProperty, new System.Windows.Data.Binding("."));
+            spFactory.SetValue(Image.HorizontalAlignmentProperty, HorizontalAlignment.Stretch);
+            spFactory.SetValue(Image.StretchProperty, Stretch.Fill);
+            FlipViewTemplateSelector.TemplateOne = new DataTemplate()
+            {
+                VisualTree = spFactory
+            };
+            FlipViewImages = new string[] { "http://trinities.org/blog/wp-content/uploads/red-ball.jpg", "http://savingwithsisters.files.wordpress.com/2012/05/ball.gif" };
+
+            RaisePropertyChanged("FlipViewTemplateSelector");
+
+
+            BrushResources = FindBrushResources();
         }
 
         public string Title { get; set; }
@@ -55,6 +90,7 @@ namespace MetroDemo
         public List<Album> Albums { get; set; }
         public List<Artist> Artists { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
+        public List<AppThemeMenuData> AppThemes { get; set; }
 
         public int? IntegerGreater10Property
         {
@@ -87,34 +123,78 @@ namespace MetroDemo
             }
         }
 
+        bool _magicToggleButtonIsChecked = true;
+        public bool MagicToggleButtonIsChecked
+        {
+            get { return this._magicToggleButtonIsChecked; }
+            set
+            {
+                if (Equals(value, _magicToggleButtonIsChecked))
+                {
+                    return;
+                }
+
+                _magicToggleButtonIsChecked = value;
+                RaisePropertyChanged("MagicToggleButtonIsChecked");
+            }
+        }
+
+        private bool _quitConfirmationEnabled;
+        public bool QuitConfirmationEnabled
+        {
+            get { return _quitConfirmationEnabled; }
+            set
+            {
+                if (value.Equals(_quitConfirmationEnabled)) return;
+                _quitConfirmationEnabled = value;
+                RaisePropertyChanged("QuitConfirmationEnabled");
+            }
+        }
+
         private ICommand textBoxButtonCmd;
 
         public ICommand TextBoxButtonCmd
         {
             get
             {
-                return this.textBoxButtonCmd ?? (this.textBoxButtonCmd = new TextBoxButtonCommand());
+                return this.textBoxButtonCmd ?? (this.textBoxButtonCmd = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = async x =>
+                    {
+                        if (x is TextBox)
+                        {
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button was clicked!",
+                                                                                                    string.Format("Text: {0}", ((TextBox) x).Text));
+                        }
+                        else if (x is PasswordBox)
+                        {
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("PasswordBox Button was clicked!",
+                                                                                                    string.Format("Password: {0}", ((PasswordBox) x).Password));
+                        }
+                    }
+                });
             }
         }
 
-        public class TextBoxButtonCommand : ICommand
+        private ICommand textBoxButtonCmdWithParameter;
+
+        public ICommand TextBoxButtonCmdWithParameter
         {
-            public bool CanExecute(object parameter) {
-                return true;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
+            get
             {
-                if (parameter is TextBox)
+                return this.textBoxButtonCmdWithParameter ?? (this.textBoxButtonCmdWithParameter = new SimpleCommand
                 {
-                    MessageBox.Show("TextBox Button was clicked!" + Environment.NewLine + "Text: " + ((TextBox)parameter).Text);
-                }
-                else if (parameter is PasswordBox)
-                {
-                    MessageBox.Show("PasswordBox Button was clicked!" + Environment.NewLine + "Text: " + ((PasswordBox)parameter).Password);
-                }
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = async x =>
+                    {
+                        if (x is String)
+                        {
+                            await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("TextBox Button with parameter was clicked!",
+                                                                                                  string.Format("Parameter: {0}", x));
+                        }
+                    }
+                });
             }
         }
 
@@ -152,37 +232,82 @@ namespace MetroDemo
 
         public string Error { get { return string.Empty; } }
 
-        public ICommand SingleCloseTabCommand { get { return new ExampleSingleTabCloseCommand(); } }
+        private ICommand singleCloseTabCommand;
 
-        public class ExampleSingleTabCloseCommand : ICommand
+        public ICommand SingleCloseTabCommand
         {
-            public bool CanExecute(object parameter)
+            get
             {
-                return true;
-            }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
-            {
-                System.Windows.MessageBox.Show("You are now closing the '" + parameter + "' tab!");
+                return this.singleCloseTabCommand ?? (this.singleCloseTabCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = async x =>
+                    {
+                        await ((MetroWindow) Application.Current.MainWindow).ShowMessageAsync("Closing tab!", string.Format("You are now closing the '{0}' tab", x));
+                    }
+                });
             }
         }
 
-        public ICommand NeverCloseTabCommand { get { return new AlwaysInvalidCloseCommand(); } }
+        private ICommand neverCloseTabCommand;
 
-        public class AlwaysInvalidCloseCommand : ICommand
+        public ICommand NeverCloseTabCommand
         {
-            public bool CanExecute(object parameter)
+            get { return this.neverCloseTabCommand ?? (this.neverCloseTabCommand = new SimpleCommand { CanExecuteDelegate = x => false }); }
+        }
+
+        public IEnumerable<string> BrushResources { get; private set; }
+
+        public bool AnimateOnPositionChange
+        {
+            get
             {
-                return false;
+                return _animateOnPositionChange;
             }
-
-            public event EventHandler CanExecuteChanged;
-
-            public void Execute(object parameter)
+            set
             {
+                if (Equals(_animateOnPositionChange, value)) return;
+                _animateOnPositionChange = value;
+                RaisePropertyChanged("AnimateOnPositionChange");
+            }
+        }
 
+        private IEnumerable<string> FindBrushResources()
+        {
+            var rd = new ResourceDictionary
+                {
+                    Source = new Uri(@"/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
+                };
+
+            var resources = rd.Keys.Cast<object>()
+                    .Where(key => rd[key] is Brush)
+                    .Select(key => key.ToString())
+                    .OrderBy(s => s)
+                    .ToList();
+
+            return resources;
+        }
+
+        public RandomDataTemplateSelector FlipViewTemplateSelector
+        {
+            get;
+            set;
+        }
+
+        public string[] FlipViewImages
+        {
+            get;
+            set;
+        }
+
+
+        public class RandomDataTemplateSelector : DataTemplateSelector
+        {
+            public DataTemplate TemplateOne { get; set; }
+
+            public override DataTemplate SelectTemplate(object item, DependencyObject container)
+            {
+                return TemplateOne;
             }
         }
     }

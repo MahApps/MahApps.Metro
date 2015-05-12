@@ -1,6 +1,9 @@
-﻿namespace MahApps.Metro.Native
+﻿using System;
+
+namespace MahApps.Metro.Native
 {
-    public enum ABEdge
+    [Obsolete("Use Standard.ABEdge instead.")]
+    internal enum ABEdge
     {
         ABE_LEFT = 0,
         ABE_TOP = 1,

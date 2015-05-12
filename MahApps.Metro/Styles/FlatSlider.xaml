@@ -94,7 +94,8 @@
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"
                                   Command="Slider.DecreaseLarge"
-                                  Background="{TemplateBinding Slider.Foreground}" />
+                                  Background="{TemplateBinding Slider.Foreground}"
+                                  Height="{TemplateBinding Slider.Height}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Thumb Height="{TemplateBinding Slider.Height}"
@@ -105,7 +106,8 @@
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"
                                   Command="Slider.IncreaseLarge"
-                                  Background="{TemplateBinding Slider.Background}" />
+                                  Background="{TemplateBinding Slider.Background}"
+                                  Height="{TemplateBinding Slider.Height}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <TickBar x:Name="BottomTick"
@@ -154,7 +156,8 @@
                 <Track.DecreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"
                                   Command="Slider.DecreaseLarge"
-                                  Background="{TemplateBinding Slider.Foreground}" />
+                                  Background="{TemplateBinding Slider.Foreground}" 
+                                  Height="{TemplateBinding Slider.Height}"/>
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
                     <Thumb Height="{TemplateBinding Slider.Width}"
@@ -165,7 +168,8 @@
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"
                                   Command="Slider.IncreaseLarge"
-                                  Background="{TemplateBinding Slider.Background}" />
+                                  Background="{TemplateBinding Slider.Background}"
+                                  Height="{TemplateBinding Slider.Height}" />
                 </Track.IncreaseRepeatButton>
             </Track>
             <TickBar x:Name="BottomTick"

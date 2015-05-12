@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 namespace MahApps.Metro.Native
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct MINMAXINFO
+    internal struct MINMAXINFO
     {
         public POINT ptReserved;
         public POINT ptMaxSize;

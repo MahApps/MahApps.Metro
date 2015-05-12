@@ -1,4 +1,4 @@
-﻿namespace Mahapps.Metro.Tests
+﻿namespace MahApps.Metro.Tests
 {
     public partial class TestApp
     {

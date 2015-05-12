@@ -6,53 +6,61 @@
                      TargetType="{x:Type Controls:Glow}">
         <Grid Margin="{TemplateBinding Padding}"
               Background="Transparent">
-            <Border Grid.Row="1"
-                    Grid.Column="1"
-                    Background="{TemplateBinding Background}" />
-            <Border x:Name="glowSource"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Margin="-1,0"
-                    Opacity="0.6"
-                    Background="{TemplateBinding Background}">
-                <Border.Effect>
+            <Grid x:Name="glowBorder"
+                  Background="{TemplateBinding Background}" />
+            <Grid x:Name="glowSource"
+                  Margin="-1,0"
+                  Opacity="0.6"
+                  Background="{TemplateBinding Background}">
+                <Grid.Effect>
                     <BlurEffect Radius="8" />
-                </Border.Effect>
-            </Border>
+                </Grid.Effect>
+            </Grid>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="Orientation"
                      Value="Horizontal">
+                <Setter TargetName="glowBorder"
+                        Property="Margin"
+                        Value="1,0" />
                 <Setter TargetName="glowSource"
                         Property="Margin"
                         Value="0,-1" />
+            </Trigger>
+            <Trigger Property="BorderThickness"
+                     Value="0">
+                <Setter TargetName="glowSource"
+                        Property="Opacity"
+                        Value="1" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:Glow}">
+        <Setter Property="BorderThickness"
+                Value="1" />
         <Setter Property="Background"
                 Value="{Binding RelativeSource={RelativeSource Self}, Path=GlowBrush}" />
+        <Setter Property="Height"
+                Value="Auto" />
         <Setter Property="Width"
-                Value="1" />
+                Value="{Binding RelativeSource={RelativeSource Self}, Path=BorderThickness.Left, Mode=OneWay}" />
         <Setter Property="Padding"
-                Value="0,8" />
+                Value="0" />
         <Setter Property="Template"
                 Value="{StaticResource GlowTemplate}" />
         <Style.Triggers>
             <Trigger Property="IsGlow"
                      Value="False">
                 <Setter Property="Background"
-                        Value="#999999" />
+                        Value="{Binding RelativeSource={RelativeSource Self}, Path=NonActiveGlowBrush}" />
             </Trigger>
             <Trigger Property="Orientation"
                      Value="Horizontal">
                 <Setter Property="Width"
                         Value="Auto" />
                 <Setter Property="Height"
-                        Value="1" />
-                <Setter Property="Padding"
-                        Value="0" />
+                        Value="{Binding RelativeSource={RelativeSource Self}, Path=BorderThickness.Top, Mode=OneWay}" />
             </Trigger>
         </Style.Triggers>
     </Style>

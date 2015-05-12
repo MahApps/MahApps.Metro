@@ -222,7 +222,7 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type TabControl}">
-        <Setter Property="Controls:ControlsHelper.Transition"
+        <Setter Property="Controls:TabControlHelper.Transition"
                 Value="Left" />
         <Setter Property="Template">
             <Setter.Value>
@@ -251,7 +251,7 @@
                                       KeyboardNavigation.TabIndex="1" />
                         </ScrollViewer>
                         <Controls:TransitioningContentControl x:Name="ContentPanel"
-                                                              Transition="{TemplateBinding Controls:ControlsHelper.Transition}"
+                                                              Transition="{TemplateBinding Controls:TabControlHelper.Transition}"
                                                               Behaviours:ReloadBehavior.OnSelectedTabChanged="True"
                                                               RestartTransitionOnContentChange="True"
                                                               Grid.Column="0"
@@ -286,7 +286,7 @@
                         </Trigger>
                         <Trigger Property="TabStripPlacement"
                                  Value="Left">
-                            <Setter Property="Controls:ControlsHelper.Transition"
+                            <Setter Property="Controls:TabControlHelper.Transition"
                                     Value="Right" />
                             <Setter Property="Grid.Row"
                                     TargetName="HeaderPanelScroll"

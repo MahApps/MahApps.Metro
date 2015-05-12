@@ -35,13 +35,13 @@
                                          Height="19"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Stroke="{DynamicResource WhiteColorBrush}" />
+                                         Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
-                                      Stroke="{DynamicResource WhiteColorBrush}"
+                                      Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
                                       StrokeThickness="2" />
                             </Grid>
                             <ContentPresenter Grid.Row="1"
@@ -53,17 +53,32 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        <Trigger Property="IsChecked"
+                                 Value="true">
+                            <Setter TargetName="Arrow"
+                                    Property="Data"
+                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="Circle"
+                                    Property="Stroke"
+                                    Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Arrow"
+                                    Property="Stroke"
+                                    Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
-                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="Circle"
+                                    Property="Stroke"
+                                    Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle"
+                                    Property="StrokeThickness"
+                                    Value="2" />
+                            <Setter TargetName="Arrow"
+                                    Property="Stroke"
+                                    Value="{DynamicResource BlackColorBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -101,13 +116,13 @@
                                          Height="19"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Stroke="{DynamicResource WhiteColorBrush}" />
+                                         Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
-                                      Stroke="{DynamicResource WhiteColorBrush}"
+                                      Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
                                       StrokeThickness="2" />
                             </Grid>
                             <ContentPresenter Grid.Column="1"
@@ -119,17 +134,32 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        <Trigger Property="IsChecked"
+                                 Value="true">
+                            <Setter TargetName="Arrow"
+                                    Property="Data"
+                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="Circle"
+                                    Property="Stroke"
+                                    Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Arrow"
+                                    Property="Stroke"
+                                    Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
-                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="Circle"
+                                    Property="Stroke"
+                                    Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle"
+                                    Property="StrokeThickness"
+                                    Value="2" />
+                            <Setter TargetName="Arrow"
+                                    Property="Stroke"
+                                    Value="{DynamicResource BlackColorBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -167,13 +197,13 @@
                                          Height="19"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Stroke="{DynamicResource WhiteColorBrush}" />
+                                         Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
-                                      Stroke="{DynamicResource WhiteColorBrush}"
+                                      Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
                                       StrokeThickness="2" />
                             </Grid>
                             <ContentPresenter Grid.Row="1"
@@ -185,17 +215,32 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        <Trigger Property="IsChecked"
+                                 Value="true">
+                            <Setter TargetName="Arrow"
+                                    Property="Data"
+                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="Circle"
+                                    Property="Stroke"
+                                    Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Arrow"
+                                    Property="Stroke"
+                                    Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
-                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="Circle"
+                                    Property="Stroke"
+                                    Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle"
+                                    Property="StrokeThickness"
+                                    Value="2" />
+                            <Setter TargetName="Arrow"
+                                    Property="Stroke"
+                                    Value="{DynamicResource BlackColorBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -223,13 +268,13 @@
                                      Height="19"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
-                                     Stroke="{DynamicResource WhiteColorBrush}" />
+                                     Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
                             <Path x:Name="Arrow"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                   SnapsToDevicePixels="false"
-                                  Stroke="{DynamicResource WhiteColorBrush}"
+                                  Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
                                   StrokeThickness="2" />
                             <ContentPresenter Grid.Column="1"
                                               Margin="4,0,0,0"
@@ -240,17 +285,32 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter TargetName="Arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        <Trigger Property="IsChecked"
+                                 Value="true">
+                            <Setter TargetName="Arrow"
+                                    Property="Data"
+                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter TargetName="Circle"
+                                    Property="Stroke"
+                                    Value="{DynamicResource GrayBrush2}" />
+                            <Setter TargetName="Arrow"
+                                    Property="Stroke"
+                                    Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Circle" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
-                            <Setter TargetName="Circle" Property="StrokeThickness" Value="2" />
-                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource WhiteColorBrush}" />
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="Circle"
+                                    Property="Stroke"
+                                    Value="{DynamicResource BlackColorBrush}" />
+                            <Setter TargetName="Circle"
+                                    Property="StrokeThickness"
+                                    Value="2" />
+                            <Setter TargetName="Arrow"
+                                    Property="Stroke"
+                                    Value="{DynamicResource BlackColorBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -260,12 +320,20 @@
 
     <Style x:Key="MetroExpander"
            TargetType="{x:Type Expander}">
-        <Setter Property="Margin" Value="5" />
-        <Setter Property="Padding" Value="5" />
-        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Background" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Controls:ControlsHelper.HeaderFontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Margin"
+                Value="5" />
+        <Setter Property="Padding"
+                Value="5" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background"
+                Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="Controls:ControlsHelper.HeaderFontSize"
+                Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="Controls:GroupBoxHelper.HeaderForeground"
+                Value="{x:Null}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -280,7 +348,7 @@
                                          RelativeSource="{RelativeSource FindAncestor,
                                                                          AncestorType={x:Type Expander}}" />
                                 <Binding Mode="OneWay"
-                                         Path="(Controls:ControlsHelper.GroupBoxHeaderForeground)"
+                                         Path="(Controls:GroupBoxHelper.HeaderForeground)"
                                          RelativeSource="{RelativeSource FindAncestor,
                                                                          AncestorType={x:Type Expander}}" />
                             </MultiBinding>
@@ -292,55 +360,83 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Expander}">
-                    <DockPanel x:Name="ExpanderRoot">
-                        <Border x:Name="HeaderSite"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="1"
-                                DockPanel.Dock="Top">
-                            <DockPanel>
-
-                                <ToggleButton x:Name="ToggleSite"
-                                              Margin="2"
-                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              Background="Transparent"
-                                              BorderBrush="Transparent"
-                                              DockPanel.Dock="Left"
-                                              FocusVisualStyle="{x:Null}"
-                                              IsChecked="{Binding IsExpanded,
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity"
+                                                                       Storyboard.TargetName="DisabledVisualElement">
+                                            <SplineDoubleKeyFrame KeyTime="0"
+                                                                  Value="0.7" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                                       Storyboard.TargetName="ExpanderRoot">
+                                            <EasingDoubleKeyFrame KeyTime="0"
+                                                                  Value="0.3" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Rectangle x:Name="DisabledVisualElement"
+                                   Fill="{DynamicResource ControlsDisabledBrush}"
+                                   IsHitTestVisible="false"
+                                   Opacity="0" />
+                        <DockPanel x:Name="ExpanderRoot">
+                            <Border x:Name="HeaderSite"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1"
+                                    DockPanel.Dock="Top">
+                                <DockPanel>
+                                    <ToggleButton x:Name="ToggleSite"
+                                                  Margin="2"
+                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Background="Transparent"
+                                                  BorderBrush="Transparent"
+                                                  DockPanel.Dock="Left"
+                                                  FocusVisualStyle="{x:Null}"
+                                                  IsChecked="{Binding IsExpanded,
                                                                   Mode=TwoWay,
                                                                   RelativeSource={RelativeSource TemplatedParent}}"
-                                              Style="{StaticResource ExpanderDownHeaderStyle}" />
+                                                  Style="{StaticResource ExpanderDownHeaderStyle}" />
+                                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                                      Content="{TemplateBinding Header}"
+                                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                      ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                      RecognizesAccessKey="True"
+                                                      TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                      TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                      TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}" />
+                                </DockPanel>
+                            </Border>
+                            <Border x:Name="ExpandSite"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Background="Transparent"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="1,0,1,1"
+                                    DockPanel.Dock="Bottom"
+                                    Focusable="false"
+                                    Opacity="0"
+                                    Visibility="Collapsed">
                                 <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                  Content="{TemplateBinding Header}"
-                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                  ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                  RecognizesAccessKey="True"
-                                                  TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                  TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                  TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}" />
-                            </DockPanel>
-                        </Border>
-                        <Border x:Name="ExpandSite"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Background="Transparent"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="1,0,1,1"
-                                DockPanel.Dock="Bottom"
-                                Focusable="false"
-                                Opacity="0"
-                                Visibility="Collapsed">
-                            <ContentPresenter Margin="{TemplateBinding Padding}"
-                                              Content="{TemplateBinding Content}"
-                                              ContentTemplate="{TemplateBinding ContentTemplate}"
-                                              Cursor="{TemplateBinding Cursor}" />
-                        </Border>
-                    </DockPanel>
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  Cursor="{TemplateBinding Cursor}" />
+                            </Border>
+                        </DockPanel>
+                    </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsExpanded" Value="true">
-                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
+                        <Trigger Property="IsExpanded"
+                                 Value="true">
+                            <Setter TargetName="ExpandSite"
+                                    Property="Visibility"
+                                    Value="Visible" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -362,28 +458,61 @@
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
-                        <Trigger Property="ExpandDirection" Value="Right">
-                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />
-                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="0,1,1,1" />
-                            <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Left" />
-                            <Setter TargetName="ToggleSite" Property="Style" Value="{StaticResource ExpanderRightHeaderStyle}" />
-                            <Setter TargetName="ToggleSite" Property="DockPanel.Dock" Value="Top" />
+                        <Trigger Property="ExpandDirection"
+                                 Value="Right">
+                            <Setter TargetName="ExpandSite"
+                                    Property="DockPanel.Dock"
+                                    Value="Right" />
+                            <Setter TargetName="ExpandSite"
+                                    Property="BorderThickness"
+                                    Value="0,1,1,1" />
+                            <Setter TargetName="HeaderSite"
+                                    Property="DockPanel.Dock"
+                                    Value="Left" />
+                            <Setter TargetName="ToggleSite"
+                                    Property="Style"
+                                    Value="{StaticResource ExpanderRightHeaderStyle}" />
+                            <Setter TargetName="ToggleSite"
+                                    Property="DockPanel.Dock"
+                                    Value="Top" />
                         </Trigger>
-                        <Trigger Property="ExpandDirection" Value="Up">
-                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Top" />
-                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="1,1,1,0" />
-                            <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Bottom" />
-                            <Setter TargetName="ToggleSite" Property="Style" Value="{StaticResource ExpanderUpHeaderStyle}" />
+                        <Trigger Property="ExpandDirection"
+                                 Value="Up">
+                            <Setter TargetName="ExpandSite"
+                                    Property="DockPanel.Dock"
+                                    Value="Top" />
+                            <Setter TargetName="ExpandSite"
+                                    Property="BorderThickness"
+                                    Value="1,1,1,0" />
+                            <Setter TargetName="HeaderSite"
+                                    Property="DockPanel.Dock"
+                                    Value="Bottom" />
+                            <Setter TargetName="ToggleSite"
+                                    Property="Style"
+                                    Value="{StaticResource ExpanderUpHeaderStyle}" />
                         </Trigger>
-                        <Trigger Property="ExpandDirection" Value="Left">
-                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Left" />
-                            <Setter TargetName="ExpandSite" Property="BorderThickness" Value="1,1,0,1" />
-                            <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Right" />
-                            <Setter TargetName="ToggleSite" Property="Style" Value="{StaticResource ExpanderLeftHeaderStyle}" />
-                            <Setter TargetName="ToggleSite" Property="DockPanel.Dock" Value="Top" />
+                        <Trigger Property="ExpandDirection"
+                                 Value="Left">
+                            <Setter TargetName="ExpandSite"
+                                    Property="DockPanel.Dock"
+                                    Value="Left" />
+                            <Setter TargetName="ExpandSite"
+                                    Property="BorderThickness"
+                                    Value="1,1,0,1" />
+                            <Setter TargetName="HeaderSite"
+                                    Property="DockPanel.Dock"
+                                    Value="Right" />
+                            <Setter TargetName="ToggleSite"
+                                    Property="Style"
+                                    Value="{StaticResource ExpanderLeftHeaderStyle}" />
+                            <Setter TargetName="ToggleSite"
+                                    Property="DockPanel.Dock"
+                                    Value="Top" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

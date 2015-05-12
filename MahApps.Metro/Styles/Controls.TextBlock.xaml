@@ -6,8 +6,9 @@
     <!-- never ever make a default style for TextBlock in App.xaml !!!  -->
     <Style TargetType="{x:Type TextBlock}"
            x:Key="MetroTextBlock">
-        <Setter Property="Foreground"
-                Value="{DynamicResource LabelTextBrush}" />
+        <!-- doesn't need this anymore... -->
+        <!--<Setter Property="Foreground"
+                Value="{DynamicResource LabelTextBrush}" />-->
     </Style>
 
 </ResourceDictionary>

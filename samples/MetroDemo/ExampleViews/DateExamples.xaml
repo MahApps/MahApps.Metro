@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="MetroDemo.ExampleViews.DateExamples"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:MetroDemo="clr-namespace:MetroDemo"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="800"
+             d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <AdornerDecorator>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel VerticalAlignment="Top">
+                <Label Content="Date picker"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+
+                <DatePicker Margin="0, 10, 0, 0"
+                            Width="150"
+                            HorizontalAlignment="Center"
+                            Controls:TextBoxHelper.Watermark="Select a date" />
+                <DatePicker Margin="0, 10, 0, 0"
+                            Width="150"
+                            HorizontalAlignment="Center"
+                            IsEnabled="False" />
+                <DatePicker Margin="0, 10, 0, 0"
+                            Width="300"
+                            FontSize="24"
+                            HorizontalAlignment="Center"
+                            SelectedDate="{Binding DatePickerDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                            Controls:TextBoxHelper.Watermark="Select a date" />
+            </StackPanel>
+
+            <StackPanel VerticalAlignment="Top"
+                        Grid.Row="0"
+                        Grid.Column="1">
+                <Label Content="Calendar"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+
+                <Calendar Margin="5" />
+                <Calendar Margin="5"
+                          IsEnabled="False" />
+            </StackPanel>
+        </Grid>
+    </AdornerDecorator>
+
+</UserControl>

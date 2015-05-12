@@ -7,7 +7,7 @@ namespace Microsoft.Windows.Shell
     using System.Windows.Interop;
     using Standard;
 
-    public static class SystemCommands
+    internal static class SystemCommands
     {
         public static RoutedCommand CloseWindowCommand { get; private set; }
         public static RoutedCommand MaximizeWindowCommand { get; private set; }
@@ -60,7 +60,7 @@ namespace Microsoft.Windows.Shell
         }
 
         /// <summary>Display the system menu at a specified location.</summary>
-        /// <param name="window">The window to display the menu on.</param>
+        /// <param name="window">The MetroWindow</param>
         /// <param name="screenLocation">The location to display the system menu, in logical screen coordinates.</param>
         public static void ShowSystemMenu(Window window, Point screenLocation)
         {

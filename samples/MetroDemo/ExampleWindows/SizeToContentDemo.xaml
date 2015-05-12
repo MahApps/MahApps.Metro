@@ -1,0 +1,28 @@
+﻿<controls:MetroWindow x:Class="MetroDemo.ExampleWindows.SizeToContentDemo"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      Title="SizeToContent Demo"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      WindowStartupLocation="CenterOwner"
+                      SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Width="50"
+          Height="50"
+          Background="Firebrick">
+        <Grid Width="40"
+              Height="40"
+              Background="White">
+            <Grid.OpacityMask>
+                <VisualBrush Stretch="Uniform"
+                             Visual="{DynamicResource appbar_smiley_happy}" />
+            </Grid.OpacityMask>
+        </Grid>
+    </Grid>
+</controls:MetroWindow>
