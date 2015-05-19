@@ -1134,14 +1134,21 @@ namespace Microsoft.Windows.Shell
             NativeMethods.SetWindowRgn(_hwnd, IntPtr.Zero, NativeMethods.IsWindowVisible(_hwnd));
         }
 
-        private static RECT _GetClientRectRelativeToWindowRect(IntPtr hWnd)
+        private RECT _GetClientRectRelativeToWindowRect(IntPtr hWnd)
         {
             RECT windowRect = NativeMethods.GetWindowRect(hWnd);
             RECT clientRect = NativeMethods.GetClientRect(hWnd);
 
             POINT test = new POINT() { x = 0, y = 0 };
             NativeMethods.ClientToScreen(hWnd, ref test);
-            clientRect.Offset(test.x - windowRect.Left, test.y - windowRect.Top);
+            if (_window.FlowDirection == FlowDirection.RightToLeft)
+            {
+                clientRect.Offset(windowRect.Right - test.x, test.y - windowRect.Top);
+            }
+            else
+            {
+                clientRect.Offset(test.x - windowRect.Left, test.y - windowRect.Top);
+            }
             return clientRect;
         }
 
