@@ -82,10 +82,9 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void Initialize()
         {
+            this.Loaded += (sender, args) => HandleTheme();
             ThemeManager.IsThemeChanged += ThemeManager_IsThemeChanged;
             this.Unloaded += BaseMetroDialog_Unloaded;
-
-            HandleTheme();
 
             this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
         }
