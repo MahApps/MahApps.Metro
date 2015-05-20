@@ -29,30 +29,37 @@
                     </Grid>
                 </Border>
 
-                <controls:CustomValidationPopup AllowsTransparency="True"
+                <controls:CustomValidationPopup x:Name="ValidationPopup"
+                                                AllowsTransparency="True"
                                                 HorizontalAlignment="Right"
                                                 HorizontalOffset="0"
                                                 VerticalOffset="0"
                                                 PopupAnimation="Fade"
                                                 Placement="Right"
-                                                PlacementTarget="{Binding ElementName=PopupTargetElement}"
-                                                IsOpen="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}">
-                    <Grid x:Name="Root" Margin="4">
+                                                PlacementTarget="{Binding ElementName=PopupTargetElement, Mode=OneWay}"
+                                                IsOpen="False">
+                    <Grid x:Name="Root"
+                          Margin="4">
                         <Grid.Resources>
                             <Style TargetType="Border">
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver, Mode=OneWay}" Value="True">
+                                    <DataTrigger Binding="{Binding ElementName=Root, Path=IsMouseOver, Mode=OneWay}"
+                                                 Value="True">
                                         <DataTrigger.EnterActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.15" Duration="0:0:0.1" />
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                     To="0.15"
+                                                                     Duration="0:0:0.1" />
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </DataTrigger.EnterActions>
                                         <DataTrigger.ExitActions>
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1" />
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                     To="1"
+                                                                     Duration="0:0:0.1" />
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </DataTrigger.ExitActions>
@@ -100,7 +107,7 @@
                                                Margin="8,4,8,4"
                                                TextWrapping="Wrap"
                                                Text="{Binding ErrorContent}"
-                                               UseLayoutRounding="false" />
+                                               UseLayoutRounding="False" />
                                 </DataTemplate>
                             </Border.Resources>
                             <ContentPresenter Content="{Binding CurrentItem}" />
@@ -110,6 +117,21 @@
             </Grid>
         </AdornedElementPlaceholder>
 
+        <ControlTemplate.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.IsKeyboardFocusWithin, Mode=OneWay}"
+                               Value="True">
+                    </Condition>
+                    <Condition Binding="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.HasError), Mode=OneWay}"
+                               Value="True">
+                    </Condition>
+                </MultiDataTrigger.Conditions>
+                <Setter TargetName="ValidationPopup"
+                        Property="IsOpen"
+                        Value="True" />
+            </MultiDataTrigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
 </ResourceDictionary>
