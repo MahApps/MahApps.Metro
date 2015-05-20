@@ -680,12 +680,6 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="MahApps.Metro.NET45.csproj">
-      <Project>{942D11C4-29F5-46C4-8C14-4B976D56C637}</Project>
-      <Name>MahApps.Metro.NET45</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
