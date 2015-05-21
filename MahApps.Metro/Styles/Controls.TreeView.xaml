@@ -6,6 +6,9 @@
     <!-- Metro styled TreeView                                                           -->
     <!-- =============================================================================== -->
 
+    <PathGeometry x:Key="TreeArrow"
+                  Figures="M0,0 L0,6 L6,0 z" />
+
     <Style x:Key="ExpandCollapseToggleStyle"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Focusable"
@@ -23,10 +26,15 @@
                         <Path x:Name="ExpandPath"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              Data="M 4 0 L 8 4 L 4 8 Z"
+                              Data="{StaticResource TreeArrow}"
                               Fill="Transparent"
-                              StrokeThickness="1"
-                              Stroke="{DynamicResource BlackBrush}" />
+                              Stroke="{DynamicResource BlackBrush}">
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="135"
+                                                 CenterY="3"
+                                                 CenterX="3" />
+                            </Path.RenderTransform>
+                        </Path>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked"
@@ -34,14 +42,14 @@
                             <Setter Property="RenderTransform"
                                     TargetName="ExpandPath">
                                 <Setter.Value>
-                                    <RotateTransform Angle="45"
-                                                     CenterY="4"
-                                                     CenterX="4" />
+                                    <RotateTransform Angle="180"
+                                                     CenterY="3"
+                                                     CenterX="3" />
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="Fill"
                                     TargetName="ExpandPath"
-                                    Value="{DynamicResource BlackBrush}" />
+                                    Value="{DynamicResource GrayBrush1}" />
                             <Setter Property="Stroke"
                                     TargetName="ExpandPath"
                                     Value="{DynamicResource BlackBrush}" />
@@ -124,9 +132,10 @@
                                 MinHeight="{TemplateBinding MinHeight}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <Grid Margin="{Binding Converter={StaticResource LengthConverter}, RelativeSource={x:Static RelativeSource.TemplatedParent}}"
+                                  Background="Transparent"
                                   VerticalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="19" />
+                                    <ColumnDefinition MinWidth="19" Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <ToggleButton x:Name="Expander"
