@@ -256,8 +256,6 @@
                 Value="1" />
         <Setter Property="BorderBrush"
                 Value="Transparent" />
-        <Setter Property="UseLayoutRounding"
-                Value="True" />
         <Setter Property="WindowTitleBrush"
                 Value="{DynamicResource WindowTitleColorBrush}" />
         <Setter Property="TextElement.FontSize"

@@ -295,10 +295,13 @@ namespace MahApps.Metro.Behaviours
             // handle size to content (thanks @lynnx)
             var sizeToContent = AssociatedObject.SizeToContent;
             var snapsToDevicePixels = AssociatedObject.SnapsToDevicePixels;
+            var useLayoutRounding = AssociatedObject.UseLayoutRounding;
             AssociatedObject.SnapsToDevicePixels = true;
+            AssociatedObject.UseLayoutRounding = true;
             AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
             AssociatedObject.SizeToContent = sizeToContent;
             AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
+            AssociatedObject.UseLayoutRounding = useLayoutRounding;
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)
