@@ -124,12 +124,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
                     <StackPanel>
-                        <Border x:Name="Border"
+                        <Border x:Name="Bd"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Padding="{TemplateBinding Padding}"
                                 MinHeight="{TemplateBinding MinHeight}"
+                                UseLayoutRounding="True"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <Grid Margin="{Binding Converter={StaticResource LengthConverter}, RelativeSource={x:Static RelativeSource.TemplatedParent}}"
                                   Background="Transparent"
@@ -142,7 +143,6 @@
                                               Style="{StaticResource ExpandCollapseToggleStyle}"
                                               IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}"
                                               ClickMode="Press" />
-
                                 <ContentPresenter x:Name="PART_Header"
                                                   Grid.Column="1"
                                                   ContentSource="Header"
@@ -151,11 +151,8 @@
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                         </Border>
-                        <ItemsPresenter x:Name="ItemsHost">
-                            <ItemsPresenter.LayoutTransform>
-                                <ScaleTransform ScaleY="1" />
-                            </ItemsPresenter.LayoutTransform>
-                        </ItemsPresenter>
+                        <ItemsPresenter x:Name="ItemsHost"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded"
@@ -172,10 +169,10 @@
                                     Value="Hidden" />
                         </Trigger>
 
-                        <Trigger SourceName="Border"
+                        <Trigger SourceName="Bd"
                                  Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="Border"
+                            <Setter TargetName="Bd"
                                     Property="Background"
                                     Value="{DynamicResource AccentColorBrush3}" />
                             <Setter Property="Foreground"
@@ -183,7 +180,7 @@
                         </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="True">
-                            <Setter TargetName="Border"
+                            <Setter TargetName="Bd"
                                     Property="Background"
                                     Value="{DynamicResource AccentColorBrush}" />
                             <Setter Property="Foreground"
@@ -202,7 +199,7 @@
                                            Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="Border"
+                                <Setter TargetName="Bd"
                                         Property="Background"
                                         Value="{DynamicResource GrayBrush7}" />
                                 <Setter Property="Foreground"
@@ -216,7 +213,7 @@
                                 <Condition Property="Selector.IsSelectionActive"
                                            Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border"
+                            <Setter TargetName="Bd"
                                     Property="Background"
                                     Value="{DynamicResource AccentColorBrush2}" />
                         </MultiTrigger>
@@ -243,9 +240,10 @@
                     <Border Name="Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ScrollViewer>
-                            <ItemsPresenter />
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>
