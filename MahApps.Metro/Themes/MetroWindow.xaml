@@ -36,6 +36,7 @@
 
                     <Rectangle x:Name="PART_WindowTitleBackground"
                                Focusable="False"
+                               UseLayoutRounding="True"
                                Fill="{TemplateBinding WindowTitleBrush}"
                                Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
@@ -112,6 +113,7 @@
                                                    Grid.Column="4"
                                                    Grid.RowSpan="2"
                                                    VerticalAlignment="Top"
+                                                   UseLayoutRounding="True"
                                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
                     <!-- the main window content -->
@@ -170,6 +172,7 @@
             </AdornerDecorator>
 
             <Border x:Name="PART_Border"
+                    Background="{x:Null}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     HorizontalAlignment="Stretch"
