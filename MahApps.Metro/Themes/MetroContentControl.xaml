@@ -10,6 +10,8 @@
                 Value="Stretch" />
         <Setter Property="Focusable"
                 Value="False" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:MetroContentControl">
@@ -119,7 +121,8 @@
                                               Content="{TemplateBinding Content}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               Margin="{TemplateBinding Padding}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </AdornerDecorator>
                     </Grid>
                 </ControlTemplate>

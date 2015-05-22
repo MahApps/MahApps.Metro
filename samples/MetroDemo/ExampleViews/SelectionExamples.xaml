@@ -18,149 +18,105 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Margin="1"
-          RenderOptions.ClearTypeHint="Enabled"
-          TextOptions.TextFormattingMode="Display">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.RowSpan="2"
-                    Grid.Column="0"
-                    Width="300">
-            <Label Content="List/GridView"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
-            <ListView Height="200"
-                      Margin="0, 10, 0, 0"
-                      BorderThickness="0"
-                      ItemsSource="{Binding Artists}"
-                      SelectedIndex="0">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding ArtistId}"
-                                        Header="ID" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}"
-                                        Header="artist" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <ListView Height="200"
-                      Margin="0, 10, 0, 0"
-                      BorderThickness="0"
-                      IsEnabled="False"
-                      ItemsSource="{Binding Artists}"
-                      SelectedIndex="0">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding ArtistId}"
-                                        Header="ID" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}"
-                                        Header="artist" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
-        <Grid Grid.Column="1"
-              Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-
-            <Label Content="TreeView"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
-
-            <TreeView Grid.Row="1">
-                <TreeViewItem Header="Item 1">
-                    <TreeViewItem Header="Item 1.1">
-                        <TreeViewItem Header="Item 1.1.1" />
-                        <TreeViewItem Header="Item 1.1.2" />
+    <TabControl TabStripPlacement="Left"
+                Margin="10">
+        <TabItem Header="List/GridView">
+            <UniformGrid Rows="2">
+                <ListView Margin="5"
+                          BorderThickness="0"
+                          ItemsSource="{Binding Artists}"
+                          SelectedIndex="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding ArtistId}"
+                                            Header="ID" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}"
+                                            Header="artist" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <ListView Margin="5"
+                          BorderThickness="0"
+                          IsEnabled="False"
+                          ItemsSource="{Binding Artists}"
+                          SelectedIndex="0">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding ArtistId}"
+                                            Header="ID" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}"
+                                            Header="artist" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </UniformGrid>
+        </TabItem>
+        <TabItem Header="TreeView">
+            <UniformGrid Rows="2">
+                <TreeView>
+                    <TreeViewItem Header="Item 1">
+                        <TreeViewItem Header="Item 1.1">
+                            <TreeViewItem Header="Item 1.1.1" />
+                            <TreeViewItem Header="Item 1.1.2" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 1.2" />
+                        <TreeViewItem Header="Item 1.3" />
                     </TreeViewItem>
-                    <TreeViewItem Header="Item 1.2" />
-                    <TreeViewItem Header="Item 1.3" />
-                </TreeViewItem>
-                <TreeViewItem Header="Item 22" />
-                <TreeViewItem Header="Item 3">
-                    <TreeViewItem Header="Item 3.1">
-                        <TreeViewItem Header="Item 3.1.1" />
-                        <TreeViewItem Header="Item 3.1.2" />
+                    <TreeViewItem Header="Item 22" />
+                    <TreeViewItem Header="Item 3">
+                        <TreeViewItem Header="Item 3.1">
+                            <TreeViewItem Header="Item 3.1.1" />
+                            <TreeViewItem Header="Item 3.1.2" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 3.2" />
+                        <TreeViewItem Header="Item 3.3" />
                     </TreeViewItem>
-                    <TreeViewItem Header="Item 3.2" />
-                    <TreeViewItem Header="Item 3.3" />
-                </TreeViewItem>
-            </TreeView>
-            <TreeView IsEnabled="False"
-                      Grid.Row="2">
-                <TreeViewItem Header="Item 1">
-                    <TreeViewItem Header="Item 1.1">
-                        <TreeViewItem Header="Item 1.1.1" />
-                        <TreeViewItem Header="Item 1.1.2" />
+                </TreeView>
+                <TreeView IsEnabled="False">
+                    <TreeViewItem Header="Item 1">
+                        <TreeViewItem Header="Item 1.1">
+                            <TreeViewItem Header="Item 1.1.1" />
+                            <TreeViewItem Header="Item 1.1.2" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 1.2" />
+                        <TreeViewItem Header="Item 1.3" />
                     </TreeViewItem>
-                    <TreeViewItem Header="Item 1.2" />
-                    <TreeViewItem Header="Item 1.3" />
-                </TreeViewItem>
-                <TreeViewItem Header="Item 22" />
-                <TreeViewItem Header="Item 3"
-                              IsExpanded="True"
-                              IsSelected="True">
-                    <TreeViewItem Header="Item 3.1"
-                                  IsExpanded="True">
-                        <TreeViewItem Header="Item 3.1.1"
-                                      IsExpanded="True" />
-                        <TreeViewItem Header="Item 3.1.2" />
+                    <TreeViewItem Header="Item 22" />
+                    <TreeViewItem Header="Item 3"
+                                  IsExpanded="True"
+                                  IsSelected="True">
+                        <TreeViewItem Header="Item 3.1"
+                                      IsExpanded="True">
+                            <TreeViewItem Header="Item 3.1.1"
+                                          IsExpanded="True" />
+                            <TreeViewItem Header="Item 3.1.2" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Item 3.2" />
+                        <TreeViewItem Header="Item 3.3" />
                     </TreeViewItem>
-                    <TreeViewItem Header="Item 3.2" />
-                    <TreeViewItem Header="Item 3.3" />
-                </TreeViewItem>
-            </TreeView>
-        </Grid>
-        <StackPanel Grid.Column="2"
-                    Width="300">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Label Grid.ColumnSpan="2"
-                       Content="ListBox"
-                       Style="{DynamicResource DescriptionHeaderStyle}" />
-                <ListBox Grid.Row="1"
-                         Grid.Column="0"
-                         Height="100"
-                         ItemsSource="{Binding Artists}"
+                </TreeView>
+            </UniformGrid>
+        </TabItem>
+        <TabItem Header="ListBox">
+            <UniformGrid Columns="2"
+                         Rows="2">
+                <ListBox ItemsSource="{Binding Artists}"
                          DisplayMemberPath="Name"
                          Margin="1"
                          SelectedIndex="0" />
-                <ListBox Grid.Row="2"
-                         Grid.Column="0"
-                         ItemsSource="{Binding Albums}"
+                <ListBox ItemsSource="{Binding Albums}"
                          DisplayMemberPath="Title"
                          Margin="1"
                          IsEnabled="False"
                          SelectedIndex="0" />
-                <ListBox Grid.Row="1"
-                         Grid.Column="1"
-                         BorderThickness="1"
+                <ListBox BorderThickness="1"
                          Margin="1"
                          SelectedIndex="0">
                     <ListBoxItem Content="Item 1" />
                     <ListBoxItem Content="Item 2" />
                     <ListBoxItem Content="Item 3" />
                 </ListBox>
-                <ListBox Grid.Row="2"
-                         Grid.Column="1"
-                         BorderThickness="1"
+                <ListBox BorderThickness="1"
                          Margin="1"
                          IsEnabled="False"
                          SelectedIndex="0">
@@ -168,79 +124,79 @@
                     <ListBoxItem Content="Item 2" />
                     <ListBoxItem Content="Item 3" />
                 </ListBox>
-            </Grid>
-        </StackPanel>
-        <StackPanel Grid.Row="1"
-                    Grid.Column="2">
-            <Label Content="ComboBox"
-                   Style="{DynamicResource DescriptionHeaderStyle}" />
-            <ComboBox Width="200"
-                      Controls:TextBoxHelper.ClearTextButton="True"
-                      Margin="0, 10, 0, 0"
-                      SelectedIndex="0">
-                <ComboBoxItem Content="Item 1" />
-                <ComboBoxItem Content="Item 2" />
-                <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
-                <ComboBoxItem Content="Item 4" />
-            </ComboBox>
-            <ComboBox Width="200"
-                      Controls:TextBoxHelper.ClearTextButton="True"
-                      Margin="0, 10, 0, 0"
-                      SelectedIndex="0"
-                      IsEditable="True">
-                <ComboBoxItem Content="Item 1" />
-                <ComboBoxItem Content="Item 2" />
-                <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
-                <ComboBoxItem Content="Item 4" />
-            </ComboBox>
-            <ComboBox Width="200"
-                      Margin="0, 10, 0, 0"
-                      Style="{DynamicResource VirtualisedMetroComboBox}"
-                      Controls:TextBoxHelper.Watermark="Autocompletion"
-                      DisplayMemberPath="Title"
-                      IsEditable="True"
-                      ItemsSource="{Binding Albums}"
-                      MaxDropDownHeight="125"
-                      Text="{Binding Path=Title}" />
-            <ComboBox Width="200"
-                      Margin="0, 10, 0, 0"
-                      Controls:TextBoxHelper.Watermark="Autocompletion with grouping/virtualization"
-                      ToolTip="grouping/virtualization works only with .NET 4.5"
-                      DisplayMemberPath="Title"
-                      IsEditable="True"
-                      IsEnabled="True"
-                      ItemsSource="{Binding Albums}"
-                      Text="{Binding Path=Title}"
-                      Controls:ComboBoxHelper.EnableVirtualizationWithGrouping="True"
-                      x:Name="groupingComboBox">
-                <ComboBox.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Path=Name.Name}" />
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </ComboBox.GroupStyle>
-            </ComboBox>
-            <ComboBox Width="200"
-                      Margin="0, 10, 0, 0"
-                      IsEnabled="False"
-                      SelectedIndex="0">
-                <ComboBoxItem Content="Item 1" />
-                <ComboBoxItem Content="Item 2" />
-                <ComboBoxItem Content="Item 3" />
-                <ComboBoxItem Content="Item 4" />
-            </ComboBox>
-            <ComboBox Width="200"
-                      Margin="0, 10, 0, 0"
-                      Controls:TextBoxHelper.Watermark="Autocompletion"
-                      DisplayMemberPath="Title"
-                      IsEditable="True"
-                      IsEnabled="False"
-                      ItemsSource="{Binding Albums}"
-                      Text="{Binding Path=Title, Mode=TwoWay}" />
-        </StackPanel>
-    </Grid>
+            </UniformGrid>
+        </TabItem>
+        <TabItem Header="ComboBox">
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Left">
+                <ComboBox Width="200"
+                          Controls:TextBoxHelper.ClearTextButton="True"
+                          Margin="0, 10, 0, 0"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="Item 1" />
+                    <ComboBoxItem Content="Item 2" />
+                    <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                    <ComboBoxItem Content="Item 4" />
+                </ComboBox>
+                <ComboBox Width="200"
+                          Controls:TextBoxHelper.ClearTextButton="True"
+                          Margin="0, 10, 0, 0"
+                          SelectedIndex="0"
+                          IsEditable="True">
+                    <ComboBoxItem Content="Item 1" />
+                    <ComboBoxItem Content="Item 2" />
+                    <ComboBoxItem Content="Very long Item 3 for MahApps.Metro" />
+                    <ComboBoxItem Content="Item 4" />
+                </ComboBox>
+                <ComboBox Width="200"
+                          Margin="0, 10, 0, 0"
+                          Style="{DynamicResource VirtualisedMetroComboBox}"
+                          Controls:TextBoxHelper.Watermark="Autocompletion"
+                          DisplayMemberPath="Title"
+                          IsEditable="True"
+                          ItemsSource="{Binding Albums}"
+                          MaxDropDownHeight="125"
+                          Text="{Binding Path=Title}" />
+                <ComboBox Width="200"
+                          Margin="0, 10, 0, 0"
+                          Controls:TextBoxHelper.Watermark="Autocompletion with grouping/virtualization"
+                          ToolTip="grouping/virtualization works only with .NET 4.5"
+                          DisplayMemberPath="Title"
+                          IsEditable="True"
+                          IsEnabled="True"
+                          ItemsSource="{Binding Albums}"
+                          Text="{Binding Path=Title}"
+                          Controls:ComboBoxHelper.EnableVirtualizationWithGrouping="True"
+                          x:Name="groupingComboBox">
+                    <ComboBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Name.Name}" />
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ComboBox.GroupStyle>
+                </ComboBox>
+                <ComboBox Width="200"
+                          Margin="0, 10, 0, 0"
+                          IsEnabled="False"
+                          SelectedIndex="0">
+                    <ComboBoxItem Content="Item 1" />
+                    <ComboBoxItem Content="Item 2" />
+                    <ComboBoxItem Content="Item 3" />
+                    <ComboBoxItem Content="Item 4" />
+                </ComboBox>
+                <ComboBox Width="200"
+                          Margin="0, 10, 0, 0"
+                          Controls:TextBoxHelper.Watermark="Autocompletion"
+                          DisplayMemberPath="Title"
+                          IsEditable="True"
+                          IsEnabled="False"
+                          ItemsSource="{Binding Albums}"
+                          Text="{Binding Path=Title, Mode=TwoWay}" />
+            </StackPanel>
+        </TabItem>
+    </TabControl>
 
 </UserControl>

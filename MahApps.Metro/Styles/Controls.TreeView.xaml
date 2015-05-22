@@ -6,6 +6,9 @@
     <!-- Metro styled TreeView                                                           -->
     <!-- =============================================================================== -->
 
+    <PathGeometry x:Key="TreeArrow"
+                  Figures="M0,0 L0,6 L6,0 z" />
+
     <Style x:Key="ExpandCollapseToggleStyle"
            TargetType="{x:Type ToggleButton}">
         <Setter Property="Focusable"
@@ -23,10 +26,15 @@
                         <Path x:Name="ExpandPath"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              Data="M 4 0 L 8 4 L 4 8 Z"
+                              Data="{StaticResource TreeArrow}"
                               Fill="Transparent"
-                              StrokeThickness="1"
-                              Stroke="{DynamicResource BlackBrush}" />
+                              Stroke="{DynamicResource BlackBrush}">
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="135"
+                                                 CenterY="3"
+                                                 CenterX="3" />
+                            </Path.RenderTransform>
+                        </Path>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked"
@@ -34,14 +42,14 @@
                             <Setter Property="RenderTransform"
                                     TargetName="ExpandPath">
                                 <Setter.Value>
-                                    <RotateTransform Angle="45"
-                                                     CenterY="4"
-                                                     CenterX="4" />
+                                    <RotateTransform Angle="180"
+                                                     CenterY="3"
+                                                     CenterX="3" />
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="Fill"
                                     TargetName="ExpandPath"
-                                    Value="{DynamicResource BlackBrush}" />
+                                    Value="{DynamicResource GrayBrush1}" />
                             <Setter Property="Stroke"
                                     TargetName="ExpandPath"
                                     Value="{DynamicResource BlackBrush}" />
@@ -116,24 +124,25 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
                     <StackPanel>
-                        <Border x:Name="Border"
+                        <Border x:Name="Bd"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Padding="{TemplateBinding Padding}"
                                 MinHeight="{TemplateBinding MinHeight}"
+                                UseLayoutRounding="True"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                             <Grid Margin="{Binding Converter={StaticResource LengthConverter}, RelativeSource={x:Static RelativeSource.TemplatedParent}}"
+                                  Background="Transparent"
                                   VerticalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="19" />
+                                    <ColumnDefinition MinWidth="19" Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <ToggleButton x:Name="Expander"
                                               Style="{StaticResource ExpandCollapseToggleStyle}"
                                               IsChecked="{Binding Path=IsExpanded, RelativeSource={x:Static RelativeSource.TemplatedParent}, Mode=TwoWay}"
                                               ClickMode="Press" />
-
                                 <ContentPresenter x:Name="PART_Header"
                                                   Grid.Column="1"
                                                   ContentSource="Header"
@@ -142,11 +151,8 @@
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                         </Border>
-                        <ItemsPresenter x:Name="ItemsHost">
-                            <ItemsPresenter.LayoutTransform>
-                                <ScaleTransform ScaleY="1" />
-                            </ItemsPresenter.LayoutTransform>
-                        </ItemsPresenter>
+                        <ItemsPresenter x:Name="ItemsHost"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded"
@@ -163,10 +169,10 @@
                                     Value="Hidden" />
                         </Trigger>
 
-                        <Trigger SourceName="Border"
+                        <Trigger SourceName="Bd"
                                  Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="Border"
+                            <Setter TargetName="Bd"
                                     Property="Background"
                                     Value="{DynamicResource AccentColorBrush3}" />
                             <Setter Property="Foreground"
@@ -174,7 +180,7 @@
                         </Trigger>
                         <Trigger Property="IsSelected"
                                  Value="True">
-                            <Setter TargetName="Border"
+                            <Setter TargetName="Bd"
                                     Property="Background"
                                     Value="{DynamicResource AccentColorBrush}" />
                             <Setter Property="Foreground"
@@ -193,7 +199,7 @@
                                            Value="True" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="Border"
+                                <Setter TargetName="Bd"
                                         Property="Background"
                                         Value="{DynamicResource GrayBrush7}" />
                                 <Setter Property="Foreground"
@@ -207,7 +213,7 @@
                                 <Condition Property="Selector.IsSelectionActive"
                                            Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border"
+                            <Setter TargetName="Bd"
                                     Property="Background"
                                     Value="{DynamicResource AccentColorBrush2}" />
                         </MultiTrigger>
@@ -234,9 +240,10 @@
                     <Border Name="Border"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                         <ScrollViewer>
-                            <ItemsPresenter />
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>
