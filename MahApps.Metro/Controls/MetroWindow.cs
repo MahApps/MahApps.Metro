@@ -977,9 +977,23 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the template child with the given name.
+        /// </summary>
+        /// <typeparam name="T">The interface type inheirted from DependencyObject.</typeparam>
+        /// <param name="name">The name of the template child.</param>
         internal T GetPart<T>(string name) where T : DependencyObject
         {
             return GetTemplateChild(name) as T;
+        }
+
+        /// <summary>
+        /// Gets the template child with the given name.
+        /// </summary>
+        /// <param name="name">The name of the template child.</param>
+        internal DependencyObject GetPart(string name)
+        {
+            return GetTemplateChild(name);
         }
 
         private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
