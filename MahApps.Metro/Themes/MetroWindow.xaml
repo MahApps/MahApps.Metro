@@ -121,6 +121,7 @@
                                                   Grid.Column="0"
                                                   Grid.ColumnSpan="5"
                                                   IsTabStop="False"
+                                                  UseLayoutRounding="True"
                                                   FocusVisualStyle="{x:Null}"
                                                   OnlyLoadTransition="True"
                                                   TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
@@ -175,11 +176,13 @@
                     Background="{x:Null}"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
+                    UseLayoutRounding="True"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch" />
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
                         IsTabStop="false"
+                        UseLayoutRounding="True"
                         Visibility="Collapsed"
                         VerticalAlignment="Bottom" />
         </Grid>

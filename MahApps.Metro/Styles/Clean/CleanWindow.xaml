@@ -117,6 +117,7 @@
                                                    Grid.Column="4"
                                                    Grid.RowSpan="2"
                                                    VerticalAlignment="Top"
+                                                   UseLayoutRounding="True"
                                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
                     <!-- the main window content -->
@@ -124,6 +125,7 @@
                                                   Grid.Column="0"
                                                   Grid.ColumnSpan="5"
                                                   IsTabStop="False"
+                                                  UseLayoutRounding="True"
                                                   FocusVisualStyle="{x:Null}"
                                                   OnlyLoadTransition="True"
                                                   TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
@@ -176,11 +178,13 @@
             <Border x:Name="PART_Border"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
+                    UseLayoutRounding="True"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch" />
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
                         IsTabStop="false"
+                        UseLayoutRounding="True"
                         Visibility="Collapsed"
                         VerticalAlignment="Bottom" />
         </Grid>
