@@ -73,6 +73,7 @@ namespace Microsoft.Windows.Shell
         {
             _messageTable = new List<HANDLE_MESSAGE>
             {
+                new HANDLE_MESSAGE(WM.NCUAHDRAWCAPTION,      _HandleNCUAHDrawCaption),
                 new HANDLE_MESSAGE(WM.SETTEXT,               _HandleSetTextOrIcon),
                 new HANDLE_MESSAGE(WM.SETICON,               _HandleSetTextOrIcon),
                 new HANDLE_MESSAGE(WM.SYSCOMMAND,            _HandleRestoreWindow),
@@ -462,6 +463,32 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
+        private IntPtr _HandleNCUAHDrawCaption(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            if (false == _window.ShowInTaskbar && _GetHwndState() == WindowState.Minimized)
+            {
+                bool modified = _ModifyStyle(WS.VISIBLE, 0);
+
+                // Minimize the window with ShowInTaskbar == false cause Windows to redraw the caption.
+                // Letting the default WndProc handle the message without the WS_VISIBLE
+                // style applied bypasses the redraw.
+                IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, uMsg, wParam, lParam);
+
+                // Put back the style we removed.
+                if (modified)
+                {
+                    _ModifyStyle(0, WS.VISIBLE);
+                }
+                handled = true;
+                return lRet;
+            }
+            else
+            {
+                handled = false;
+                return IntPtr.Zero;
+            }
+        }
+
         private IntPtr _HandleSetTextOrIcon(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             bool modified = _ModifyStyle(WS.VISIBLE, 0);
@@ -780,13 +807,13 @@ namespace Microsoft.Windows.Shell
                     _previousWP = wp;
                     _SetRoundingRegion(wp);
                 }
+                _previousWP = wp;
 
 //                if (wp.Equals(_previousWP) && wp.flags.Equals(_previousWP.flags))
 //                {
 //                    handled = true;
 //                    return IntPtr.Zero;
 //                }
-                _previousWP = wp;
             }
 
             // Still want to pass this to DefWndProc
@@ -1090,7 +1117,7 @@ namespace Microsoft.Windows.Shell
 
         private void _UpdateFrameState(bool force)
         {
-            if (IntPtr.Zero == _hwnd)
+            if (IntPtr.Zero == _hwnd || _hwndSource.IsDisposed)
             {
                 return;
             }
