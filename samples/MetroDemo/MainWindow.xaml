@@ -179,6 +179,8 @@
                               Header="Await CustomDialog" />
                 </MenuItem>
                 <MenuItem Header="Window">
+                    <MenuItem IsCheckable="True" Header="ShowInTaskbar"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />
                     <MenuItem IsCheckable="True" Header="Topmost"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Topmost}" />
                     <MenuItem IsCheckable="True" Header="Ignore taskbar on maximize"
