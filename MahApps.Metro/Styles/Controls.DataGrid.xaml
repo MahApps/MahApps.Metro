@@ -307,6 +307,8 @@
            TargetType="{x:Type DataGridCell}">
         <Setter Property="Controls:DataGridCellHelper.SaveDataGrid"
                 Value="True" />
+        <Setter Property="OverridesDefaultStyle" 
+                Value="True" />
         <Setter Property="BorderBrush"
                 Value="Transparent" />
         <Setter Property="HorizontalContentAlignment"
