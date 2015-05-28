@@ -3,8 +3,13 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="Icons"
-                      Width="700"
-                      Height="500">
+                      WindowStartupLocation="CenterScreen"
+                      BorderThickness="1"
+                      BorderBrush="{DynamicResource AccentColorBrush}"
+                      ResizeMode="CanResizeWithGrip"
+                      SizeToContent="Width"
+                      Height="500"
+                      x:Name="View">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -16,21 +21,20 @@
 
     <Grid>
         <ListBox x:Name="IconsListBox"
-                 Grid.IsSharedSizeScope="True">
+                 ItemsSource="{Binding ElementName=View, Path=AllIcons, IsAsync=True}"
+                 HorizontalAlignment="Center"
+                 Style="{DynamicResource VirtualisedMetroListBox}">
 
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ScrollContentPresenter}}}"
-                               IsItemsHost="True" />
+                    <UniformGrid Columns="4"
+                                 IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition SharedSizeGroup="Content" />
-                        </Grid.ColumnDefinitions>
                         <StackPanel Orientation="Vertical">
                             <Rectangle Width="32"
                                        Height="32"
