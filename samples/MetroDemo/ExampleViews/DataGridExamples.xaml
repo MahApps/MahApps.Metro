@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:shared="http://metro.mahapps.com/winfx/xaml/shared"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -140,7 +141,8 @@
                   Margin="5"
                   SelectionUnit="FullRow"
                   ItemsSource="{Binding Path=Albums}"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  shared:DataGridColumnSelector.CanUserHideColumns="True">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
