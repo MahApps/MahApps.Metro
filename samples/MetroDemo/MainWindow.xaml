@@ -67,7 +67,7 @@
             <Dialog:CustomDialog x:Key="CustomDialogTest"
                                  Title="This dialog allows arbitrary content. It will close in 5 seconds."
                                  x:Name="CustomTestDialog">
-                <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentBrush}" />
+                <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentColorBrush}" />
             </Dialog:CustomDialog>
 
             <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
@@ -76,7 +76,8 @@
                 
                 <StackPanel>
                     <TextBlock Height="30" Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below." 
-                               Foreground="{DynamicResource AccentBrush}" />
+                               TextWrapping="Wrap"
+                               Foreground="{DynamicResource AccentColorBrush}" />
                     <Button Content="Close Me!" Click="CloseCustomDialog"/>
                 </StackPanel>
 
