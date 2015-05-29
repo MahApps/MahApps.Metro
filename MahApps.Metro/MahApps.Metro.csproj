@@ -85,6 +85,8 @@
     <Compile Include="Actions\SetFlyoutOpenAction.cs" />
     <Compile Include="Behaviours\BindableResourceBehavior.cs" />
     <Compile Include="Behaviours\BorderlessWindowBehavior.cs" />
+    <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
+    <Compile Include="Controls\Dialogs\DialogParticipation.cs" />
     <Compile Include="Behaviours\GlowWindowBehavior.cs" />
     <Compile Include="Behaviours\PasswordBoxBindingBehavior.cs" />
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Controls\Dialogs\BaseMetroDialog.cs" />
     <Compile Include="Controls\Dialogs\DialogManager.cs" />
     <Compile Include="Controls\Dialogs\DialogStateChangedEventArgs.cs" />
+    <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\InputDialog.cs" />
     <Compile Include="Controls\Dialogs\LoginDialog.cs" />
     <Compile Include="Controls\Dialogs\ProgressDialog.cs" />

@@ -20,7 +20,9 @@
                       d:DesignHeight="600"
                       d:DesignWidth="800"
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
-                      Closing="MetroWindow_Closing">
+                      Closing="MetroWindow_Closing"
+                      Dialog:DialogParticipation.Register="{Binding}"
+                      >
 
     <Window.Resources>
         <ResourceDictionary>
@@ -178,6 +180,17 @@
                               Header="Show CustomDialog Externally" />
                     <MenuItem Click="ShowAwaitCustomDialog"
                               Header="Await CustomDialog" />
+                    <Separator />
+                    <MenuItem Command="{Binding ShowInputDialogCommand}"
+                              Header="Show InputDialog via VM" />
+                    <MenuItem Command="{Binding ShowLoginDialogCommand}"
+                              Header="Show LoginDialog via VM" />
+                    <MenuItem Command="{Binding ShowMessageDialogCommand}"
+                              Header="Show MessageDialog via VM" />
+                    <MenuItem Command="{Binding ShowProgressDialogCommand}"
+                              Header="Show ProgressDialog via VM" />
+                    <MenuItem Command="{Binding ShowCustomDialogCommand}"
+                              Header="Show CustomDialog via VM" />
                 </MenuItem>
                 <MenuItem Header="Window">
                     <MenuItem IsCheckable="True" Header="ShowInTaskbar"
