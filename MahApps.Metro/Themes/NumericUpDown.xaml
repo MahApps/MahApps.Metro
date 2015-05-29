@@ -119,6 +119,12 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
+                            <Setter TargetName="PART_NumericUp"
+                                    Property="IsEnabled"
+                                    Value="False" />
+                            <Setter TargetName="PART_NumericDown"
+                                    Property="IsEnabled"
+                                    Value="False" />
                             <Setter Property="InterceptArrowKeys"
                                     Value="False" />
                             <Setter Property="InterceptMouseWheel"
