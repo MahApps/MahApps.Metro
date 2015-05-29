@@ -160,6 +160,7 @@
                 <MenuItem Header="Dialogs">
                     <MenuItem Header="Use Accent?"
                               x:Name="UseAccentForDialogsMenuItem"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=UseAccentForDialogs}"
                               IsCheckable="True" />
                     <Separator />
                     <MenuItem Click="ShowInputDialog"
