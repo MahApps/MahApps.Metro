@@ -42,7 +42,15 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty IsReadOnlyProperty = TextBoxBase.IsReadOnlyProperty.AddOwner(
             typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, IsReadOnlyPropertyChangedCallback));
+
+        private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue != null) {
+                var numUpDown = (NumericUpDown)dependencyObject;
+                numUpDown.ToggleReadOnlyMode((bool)e.NewValue);
+            }
+        }
 
         public static readonly DependencyProperty StringFormatProperty = DependencyProperty.Register(
             "StringFormat",
@@ -397,21 +405,43 @@ namespace MahApps.Metro.Controls
                 throw new InvalidOperationException(string.Format("You have missed to specify {0}, {1} or {2} in your template", ElementNumericUp, ElementNumericDown, ElementTextBox));
             }
 
-            _valueTextBox.LostFocus += OnTextBoxLostFocus;
-            _valueTextBox.GotFocus += OnTextBoxGotFocus;
-            _valueTextBox.PreviewTextInput += OnPreviewTextInput;
-            _valueTextBox.IsReadOnly = IsReadOnly;
-            _valueTextBox.PreviewKeyDown += OnTextBoxKeyDown;
-            _valueTextBox.TextChanged += OnTextChanged;
-            DataObject.AddPastingHandler(_valueTextBox, OnValueTextBoxPaste);
+            this.ToggleReadOnlyMode(this.IsReadOnly);
 
             _repeatUp.Click += (o, e) => ChangeValueWithSpeedUp(true);
             _repeatDown.Click += (o, e) => ChangeValueWithSpeedUp(false);
 
             _repeatUp.PreviewMouseUp += (o, e) => ResetInternal();
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
+            
             OnValueChanged(Value, Value);
             _scrollViewer = TryFindScrollViewer();
+        }
+
+        private void ToggleReadOnlyMode(bool isReadOnly)
+        {
+            if (_repeatUp == null || _repeatDown == null || _valueTextBox == null)
+            {
+                return;
+            }
+            
+            if (isReadOnly)
+            {
+                _valueTextBox.LostFocus -= OnTextBoxLostFocus;
+                _valueTextBox.GotFocus -= OnTextBoxGotFocus;
+                _valueTextBox.PreviewTextInput -= OnPreviewTextInput;
+                _valueTextBox.PreviewKeyDown -= OnTextBoxKeyDown;
+                _valueTextBox.TextChanged -= OnTextChanged;
+                DataObject.RemovePastingHandler(_valueTextBox, OnValueTextBoxPaste);
+            }
+            else
+            {
+                _valueTextBox.LostFocus += OnTextBoxLostFocus;
+                _valueTextBox.GotFocus += OnTextBoxGotFocus;
+                _valueTextBox.PreviewTextInput += OnPreviewTextInput;
+                _valueTextBox.PreviewKeyDown += OnTextBoxKeyDown;
+                _valueTextBox.TextChanged += OnTextChanged;
+                DataObject.AddPastingHandler(_valueTextBox, OnValueTextBoxPaste);
+            }
         }
 
         private void OnTextBoxGotFocus(object sender, RoutedEventArgs e)
@@ -813,10 +843,11 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueWithSpeedUp(bool toPositive)
         {
-            if(IsReadOnly)
+            if (IsReadOnly)
             {
                 return;
             }
+            
             double direction = toPositive ? 1 : -1;
             if (Speedup)
             {
@@ -842,7 +873,7 @@ namespace MahApps.Metro.Controls
 
         private void ChangeValueInternal(double interval)
         {
-            if(IsReadOnly)
+            if (IsReadOnly)
             {
                 return;
             }
@@ -988,6 +1019,11 @@ namespace MahApps.Metro.Controls
 
         private void ResetInternal()
         {
+            if (IsReadOnly)
+            {
+                return;
+            }
+            
             _internalLargeChange = 100 * Interval;
             _internalIntervalMultiplierForCalculation = Interval;
             _intervalValueSinceReset = 0;
