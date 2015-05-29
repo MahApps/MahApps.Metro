@@ -17,7 +17,7 @@ namespace MetroDemo
 
         public MainWindow()
         {
-            _viewModel = new MainWindowViewModel();
+            _viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
             DataContext = _viewModel;
             
             InitializeComponent();

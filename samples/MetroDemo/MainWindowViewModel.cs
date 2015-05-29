@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -46,11 +47,13 @@ namespace MetroDemo
 
     public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
         private bool _animateOnPositionChange = true;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IDialogCoordinator dialogCoordinator)
         {
+            _dialogCoordinator = dialogCoordinator;
             SampleData.Seed();
 
             // create accent color menu items for the demo
@@ -254,6 +257,24 @@ namespace MetroDemo
         public ICommand NeverCloseTabCommand
         {
             get { return this.neverCloseTabCommand ?? (this.neverCloseTabCommand = new SimpleCommand { CanExecuteDelegate = x => false }); }
+        }
+
+
+        private ICommand showInputDialogCommand;
+
+        public ICommand ShowInputDialogCommand
+        {
+            get
+            {
+                return this.showInputDialogCommand ?? (this.showInputDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x =>
+                    {
+                        _dialogCoordinator.ShowInput(this).ContinueWith(t => Console.WriteLine(t.Result));
+                    }
+                });
+            }
         }
 
         public IEnumerable<string> BrushResources { get; private set; }
