@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -271,10 +272,93 @@ namespace MetroDemo
                     CanExecuteDelegate = x => true,
                     ExecuteDelegate = x =>
                     {
-                        _dialogCoordinator.ShowInput(this).ContinueWith(t => Console.WriteLine(t.Result));
+                        _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result));
                     }
                 });
             }
+        }
+
+        private ICommand showLoginDialogCommand;
+
+        public ICommand ShowLoginDialogCommand
+        {
+            get
+            {
+                return this.showLoginDialogCommand ?? (this.showLoginDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x =>
+                    {
+                        _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result));
+                    }
+                });
+            }
+        }
+
+        private ICommand showMessageDialogCommand;
+
+        public ICommand ShowMessageDialogCommand
+        {
+            get
+            {
+                return this.showMessageDialogCommand ?? (this.showMessageDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x =>
+                    {
+                        _dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result));
+                    }
+                });
+            }
+        }
+
+        private ICommand showProgressDialogCommand;
+
+        public ICommand ShowProgressDialogCommand
+        {
+            get
+            {
+                return this.showProgressDialogCommand ?? (this.showProgressDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x => RunProgressFromVm()
+                });
+            }
+        }
+
+        private async void RunProgressFromVm()
+        {
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
+
+            await TaskEx.Delay(3000);
+
+            await controller.CloseAsync();
+        }
+        
+
+        private ICommand showCustomDialogCommand;
+
+        public ICommand ShowCustomDialogCommand
+        {
+            get
+            {
+                return this.showCustomDialogCommand ?? (this.showCustomDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x => RunCustomFromVm()                    
+                });
+            }
+        }
+
+        private async void RunCustomFromVm()
+        {
+            var customDialog = new CustomDialog() { Title = "Custom, wait 3 seconds" };
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+
+            await TaskEx.Delay(3000);
+
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
         }
 
         public IEnumerable<string> BrushResources { get; private set; }

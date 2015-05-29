@@ -13,9 +13,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static void RegisterPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            //TODO tidy up old val?
+            if (dependencyPropertyChangedEventArgs.OldValue != null)
+                ContextRegistrationIndex.Remove(dependencyPropertyChangedEventArgs.OldValue);
 
-            ContextRegistrationIndex[dependencyPropertyChangedEventArgs.NewValue] = dependencyObject;
+            if (dependencyPropertyChangedEventArgs.NewValue != null)
+                ContextRegistrationIndex[dependencyPropertyChangedEventArgs.NewValue] = dependencyObject;
         }
 
         public static void SetRegister(DependencyObject element, object context)

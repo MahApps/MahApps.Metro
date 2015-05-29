@@ -132,6 +132,7 @@
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\DialogParticipation.cs" />
+    <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />
     <Compile Include="Controls\Helper\ButtonHelper.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="Controls\Helper\ComboBoxHelper.cs" />

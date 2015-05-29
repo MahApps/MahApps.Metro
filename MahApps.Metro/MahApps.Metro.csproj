@@ -97,6 +97,7 @@
     <Compile Include="Controls\Dialogs\BaseMetroDialog.cs" />
     <Compile Include="Controls\Dialogs\DialogManager.cs" />
     <Compile Include="Controls\Dialogs\DialogStateChangedEventArgs.cs" />
+    <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\InputDialog.cs" />
     <Compile Include="Controls\Dialogs\LoginDialog.cs" />
     <Compile Include="Controls\Dialogs\ProgressDialog.cs" />
