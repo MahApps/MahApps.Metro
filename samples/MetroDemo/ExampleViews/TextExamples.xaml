@@ -209,25 +209,33 @@
                        Style="{DynamicResource DescriptionHeaderStyle}" />
 
                 <Label Content='Minimum="0", Maximum="10" TextAlignment="Left"' />
+                
+                <CheckBox x:Name="ReadOnlyCheck" Content="IsReadOnly" Margin="2" />
+                
                 <Controls:NumericUpDown Value="5"
+                                        x:Name="Test"
                                         TextAlignment="Left"
                                         Minimum="0"
-                                        IsReadOnly="True"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Maximum="10" />
 
                 <Label Content='Interval="2"' />
                 <Controls:NumericUpDown Value="5"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Interval="2" />
                 <Label Content='Interval="5"' />
                 <Controls:NumericUpDown Value="5"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
                                         Interval="5" />
 
                 <Label Content="No Speedup when long pressed" />
                 <Controls:NumericUpDown Value="5"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Speedup="false" />
                 <Label Content="Speedup when long pressed but after 500ms" />
                 <Controls:NumericUpDown Controls:TextBoxHelper.Watermark="Test"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Delay="500"
                                         Speedup="true" />
 
@@ -235,9 +243,11 @@
                 <Label Content="{Binding ElementName=test, Path=Value}" />
                 <Controls:NumericUpDown Value="5"
                                         x:Name="test"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         StringFormat="pcs. {0:N2} pcs."
                                         Maximum="100" />
                 <Controls:NumericUpDown Value="5"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Interval=".1"
                                         StringFormat="0,000.00" />
             </StackPanel>

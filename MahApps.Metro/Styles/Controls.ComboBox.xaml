@@ -187,6 +187,9 @@
                         </Trigger>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
+                            <Setter TargetName="PART_ClearText"
+                                    Property="IsEnabled"
+                                    Value="False" />
                             <Setter TargetName="ReadOnlyVisualElement"
                                     Property="Opacity"
                                     Value="1" />
