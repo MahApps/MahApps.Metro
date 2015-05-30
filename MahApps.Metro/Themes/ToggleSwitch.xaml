@@ -14,6 +14,10 @@
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="ThumbIndicatorWidth"
                 Value="13" />
+        <Setter Property="BorderThickness"
+                Value="2" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource GrayBrush4}" />
         <Setter Property="Width"
                 Value="70" />
         <Setter Property="Height"
@@ -61,8 +65,8 @@
                         </VisualStateManager.VisualStateGroups>
                         <Grid x:Name="PART_SwitchTrack"
                               Margin="5">
-                            <Border BorderThickness="2"
-                                    BorderBrush="{DynamicResource GrayBrush4}">
+                            <Border BorderThickness="{TemplateBinding BorderThickness}"
+                                    BorderBrush="{TemplateBinding BorderBrush}">
                                 <Grid Margin="2"
                                       ClipToBounds="True">
                                     <Rectangle Fill="{TemplateBinding OnSwitchBrush}" />
