@@ -31,20 +31,37 @@ namespace MahApps.Metro.Controls
         private Rectangle _ThumbIndicator;
         private TranslateTransform _ThumbTranslate;
 
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null));
+        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
+        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null, (o, e) => ((ToggleSwitchButton)o).OnSwitchBrush = e.NewValue as Brush));
+        public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+
         /// <summary>
         /// Gets/sets the brush used for the control's foreground.
         /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
         public Brush SwitchForeground
         {
-            get
-            {
-                return (Brush)GetValue(SwitchForegroundProperty);
-            }
-            set
-            {
-                SetValue(SwitchForegroundProperty, value);
-            }
+            get { return (Brush)GetValue(SwitchForegroundProperty); }
+            set { SetValue(SwitchForegroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the on-switch's foreground.
+        /// </summary>
+        public Brush OnSwitchBrush
+        {
+            get { return (Brush)GetValue(OnSwitchBrushProperty); }
+            set { SetValue(OnSwitchBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the off-switch's foreground.
+        /// </summary>
+        public Brush OffSwitchBrush
+        {
+            get { return (Brush)GetValue(OffSwitchBrushProperty); }
+            set { SetValue(OffSwitchBrushProperty, value); }
         }
 
         public ToggleSwitchButton()
@@ -74,12 +91,12 @@ namespace MahApps.Metro.Controls
 
                 AnimationTimeline currentAnimation = _thumbAnimation;
                 _thumbAnimation.Completed += (sender, e) => {
-                        if (_thumbAnimation != null && currentAnimation == _thumbAnimation)
-                        {
-                            _ThumbTranslate.X = destination;
-                            _thumbAnimation = null;
-                        }
-                    };
+                    if (_thumbAnimation != null && currentAnimation == _thumbAnimation)
+                    {
+                        _ThumbTranslate.X = destination;
+                        _thumbAnimation = null;
+                    }
+                };
                 _ThumbTranslate.BeginAnimation(TranslateTransform.XProperty, _thumbAnimation);
             }
         }

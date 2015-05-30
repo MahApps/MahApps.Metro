@@ -35,7 +35,12 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), null);
+
+        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
+        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(null, (o, e) => ((ToggleSwitch)o).OnSwitchBrush = e.NewValue as Brush));
+        public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
+
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
         // LeftToRight means content left and button right and RightToLeft vise versa
         public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
@@ -85,13 +90,29 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the brush used for the switch's foreground.
         /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
         public Brush SwitchForeground
         {
             get { return (Brush)GetValue(SwitchForegroundProperty); }
-            set
-            {
-                SetValue(SwitchForegroundProperty, value);
-            }
+            set { SetValue(SwitchForegroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the on-switch's foreground.
+        /// </summary>
+        public Brush OnSwitchBrush
+        {
+            get { return (Brush)GetValue(OnSwitchBrushProperty); }
+            set { SetValue(OnSwitchBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the off-switch's foreground.
+        /// </summary>
+        public Brush OffSwitchBrush
+        {
+            get { return (Brush)GetValue(OffSwitchBrushProperty); }
+            set { SetValue(OffSwitchBrushProperty, value); }
         }
 
         /// <summary>
