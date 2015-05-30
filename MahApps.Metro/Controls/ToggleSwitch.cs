@@ -97,7 +97,8 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the control's content flow direction.
         /// </summary>
-        public FlowDirection ContentDirection {
+        public FlowDirection ContentDirection
+        {
             get { return (FlowDirection)GetValue(ContentDirectionProperty); }
             set { SetValue(ContentDirectionProperty, value); }
         }
@@ -151,7 +152,7 @@ namespace MahApps.Metro.Controls
         void ToggleSwitch_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Space && e.OriginalSource == sender)
-                IsChecked = !IsChecked;       
+                IsChecked = !IsChecked;
         }
 
         private void SetDefaultContent()

@@ -73,8 +73,7 @@ namespace MahApps.Metro.Controls
                 _thumbAnimation.FillBehavior = FillBehavior.Stop;
 
                 AnimationTimeline currentAnimation = _thumbAnimation;
-                _thumbAnimation.Completed += (sender, e) =>
-                    {
+                _thumbAnimation.Completed += (sender, e) => {
                         if (_thumbAnimation != null && currentAnimation == _thumbAnimation)
                         {
                             _ThumbTranslate.X = destination;

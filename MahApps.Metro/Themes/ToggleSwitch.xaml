@@ -9,9 +9,9 @@
         <Setter Property="SwitchForeground"
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="Width"
-                Value="70"/>
+                Value="70" />
         <Setter Property="Height"
-                Value="35"/>
+                Value="35" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:ToggleSwitchButton}">
@@ -24,7 +24,7 @@
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
                                                                        Storyboard.TargetName="PART_BackgroundOverlay">
                                             <DiscreteDoubleKeyFrame KeyTime="0"
-                                                                    Value="0.5"/>
+                                                                    Value="0.5" />
                                         </DoubleAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Rectangle.Fill)"
                                                                        Storyboard.TargetName="PART_ThumbIndicator">
@@ -53,28 +53,37 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid x:Name="PART_SwitchTrack" Margin="5">
-                            <Border BorderThickness="2" BorderBrush="{DynamicResource GrayBrush4}">
-                                <Grid Margin="2" ClipToBounds="True">
-                                    <Rectangle Fill="{Binding SwitchForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                    <Rectangle Fill="{DynamicResource GrayBrush4}" RenderTransformOrigin="0.5,0.5">
+                        <Grid x:Name="PART_SwitchTrack"
+                              Margin="5">
+                            <Border BorderThickness="2"
+                                    BorderBrush="{DynamicResource GrayBrush4}">
+                                <Grid Margin="2"
+                                      ClipToBounds="True">
+                                    <Rectangle Fill="{Binding SwitchForeground, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Rectangle Fill="{DynamicResource GrayBrush4}"
+                                               RenderTransformOrigin="0.5,0.5">
                                         <Rectangle.RenderTransform>
-                                            <TranslateTransform x:Name="PART_BackgroundTranslate"/>
+                                            <TranslateTransform x:Name="PART_BackgroundTranslate" />
                                         </Rectangle.RenderTransform>
                                     </Rectangle>
-                                    <Rectangle x:Name="PART_BackgroundOverlay" Fill="{DynamicResource WhiteBrush}" Opacity="0"/>
+                                    <Rectangle x:Name="PART_BackgroundOverlay"
+                                               Fill="{DynamicResource WhiteBrush}"
+                                               Opacity="0" />
                                 </Grid>
                             </Border>
-                            <Rectangle x:Name="PART_ThumbIndicator" Fill="{DynamicResource BlackBrush}" Width="13" HorizontalAlignment="Left">
+                            <Rectangle x:Name="PART_ThumbIndicator"
+                                       Fill="{DynamicResource BlackBrush}"
+                                       Width="13"
+                                       HorizontalAlignment="Left">
                                 <Rectangle.RenderTransform>
-                                    <TranslateTransform x:Name="PART_ThumbTranslate"/>
+                                    <TranslateTransform x:Name="PART_ThumbTranslate" />
                                 </Rectangle.RenderTransform>
                             </Rectangle>
                         </Grid>
                         <Thumb x:Name="PART_DraggingThumb">
                             <Thumb.Template>
                                 <ControlTemplate>
-                                    <Rectangle Fill="Transparent"/>
+                                    <Rectangle Fill="Transparent" />
                                 </ControlTemplate>
                             </Thumb.Template>
                         </Thumb>
