@@ -42,6 +42,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
 
         public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register("ThumbIndicatorDisabledBrush", typeof(Brush), typeof(ToggleSwitch), null);
         public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitch), new PropertyMetadata(13d));
 
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
@@ -125,6 +126,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (Brush)GetValue(ThumbIndicatorBrushProperty); }
             set { SetValue(ThumbIndicatorBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator.
+        /// </summary>
+        public Brush ThumbIndicatorDisabledBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorDisabledBrushProperty); }
+            set { SetValue(ThumbIndicatorDisabledBrushProperty, value); }
         }
 
         /// <summary>

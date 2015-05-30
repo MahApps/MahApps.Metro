@@ -13,6 +13,8 @@
                 Value="{DynamicResource GrayBrush4}" />
         <Setter Property="ThumbIndicatorBrush"
                 Value="{DynamicResource BlackBrush}" />
+        <Setter Property="ThumbIndicatorDisabledBrush"
+                Value="{DynamicResource GrayBrush4}" />
         <Setter Property="ThumbIndicatorWidth"
                 Value="13" />
         <Setter Property="HorizontalContentAlignment"
@@ -101,6 +103,7 @@
                                                          OnSwitchBrush="{TemplateBinding OnSwitchBrush}"
                                                          OffSwitchBrush="{TemplateBinding OffSwitchBrush}"
                                                          ThumbIndicatorBrush="{TemplateBinding ThumbIndicatorBrush}"
+                                                         ThumbIndicatorDisabledBrush="{TemplateBinding ThumbIndicatorDisabledBrush}"
                                                          ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}"
                                                          VerticalAlignment="Center" />
                         </Grid>

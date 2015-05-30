@@ -813,6 +813,8 @@
                 Value="{DynamicResource GrayBrush4}" />
         <Setter Property="ThumbIndicatorBrush"
                 Value="{DynamicResource BlackBrush}" />
+        <Setter Property="ThumbIndicatorDisabledBrush"
+                Value="{DynamicResource GrayBrush4}" />
         <Setter Property="ThumbIndicatorWidth"
                 Value="13" />
         <Setter Property="BorderThickness"
@@ -839,11 +841,6 @@
                                             <DiscreteDoubleKeyFrame KeyTime="0"
                                                                     Value="0.5" />
                                         </DoubleAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Rectangle.Fill)"
-                                                                       Storyboard.TargetName="PART_ThumbIndicator">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="{DynamicResource GrayBrush4}" />
-                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="MouseOver">
@@ -902,6 +899,14 @@
                             </Thumb.Template>
                         </Thumb>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="PART_ThumbIndicator"
+                                    Property="Fill"
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ThumbIndicatorDisabledBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
