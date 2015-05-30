@@ -41,6 +41,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
         public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
 
+        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitch), new PropertyMetadata(13d));
+
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
         // LeftToRight means content left and button right and RightToLeft vise versa
         public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
@@ -113,6 +116,24 @@ namespace MahApps.Metro.Controls
         {
             get { return (Brush)GetValue(OffSwitchBrushProperty); }
             set { SetValue(OffSwitchBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator.
+        /// </summary>
+        public Brush ThumbIndicatorBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorBrushProperty); }
+            set { SetValue(ThumbIndicatorBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the width of the thumb indicator.
+        /// </summary>
+        public double ThumbIndicatorWidth
+        {
+            get { return (double)GetValue(ThumbIndicatorWidthProperty); }
+            set { SetValue(ThumbIndicatorWidthProperty, value); }
         }
 
         /// <summary>

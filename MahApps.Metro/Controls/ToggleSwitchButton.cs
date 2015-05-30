@@ -36,6 +36,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
         public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
 
+        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitchButton), new PropertyMetadata(13d));
+
         /// <summary>
         /// Gets/sets the brush used for the control's foreground.
         /// </summary>
@@ -62,6 +65,24 @@ namespace MahApps.Metro.Controls
         {
             get { return (Brush)GetValue(OffSwitchBrushProperty); }
             set { SetValue(OffSwitchBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator.
+        /// </summary>
+        public Brush ThumbIndicatorBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorBrushProperty); }
+            set { SetValue(ThumbIndicatorBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the width of the thumb indicator.
+        /// </summary>
+        public double ThumbIndicatorWidth
+        {
+            get { return (double)GetValue(ThumbIndicatorWidthProperty); }
+            set { SetValue(ThumbIndicatorWidthProperty, value); }
         }
 
         public ToggleSwitchButton()

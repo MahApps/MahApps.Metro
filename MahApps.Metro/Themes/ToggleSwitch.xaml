@@ -10,6 +10,10 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="OffSwitchBrush"
                 Value="{DynamicResource GrayBrush4}" />
+        <Setter Property="ThumbIndicatorBrush"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="ThumbIndicatorWidth"
+                Value="13" />
         <Setter Property="Width"
                 Value="70" />
         <Setter Property="Height"
@@ -74,8 +78,8 @@
                                 </Grid>
                             </Border>
                             <Rectangle x:Name="PART_ThumbIndicator"
-                                       Fill="{DynamicResource BlackBrush}"
-                                       Width="13"
+                                       Fill="{TemplateBinding ThumbIndicatorBrush}"
+                                       Width="{TemplateBinding ThumbIndicatorWidth}"
                                        HorizontalAlignment="Left">
                                 <Rectangle.RenderTransform>
                                     <TranslateTransform x:Name="PART_ThumbTranslate" />
@@ -104,6 +108,10 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="OffSwitchBrush"
                 Value="{DynamicResource GrayBrush4}" />
+        <Setter Property="ThumbIndicatorBrush"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="ThumbIndicatorWidth"
+                Value="13" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
@@ -189,6 +197,8 @@
                                                          IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                          OnSwitchBrush="{TemplateBinding OnSwitchBrush}"
                                                          OffSwitchBrush="{TemplateBinding OffSwitchBrush}"
+                                                         ThumbIndicatorBrush="{TemplateBinding ThumbIndicatorBrush}"
+                                                         ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}"
                                                          VerticalAlignment="Center" />
                         </Grid>
                     </Border>
