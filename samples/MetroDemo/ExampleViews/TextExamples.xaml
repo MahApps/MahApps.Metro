@@ -31,6 +31,7 @@
                 <Label Content="TextBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <TextBox Margin="0, 10, 0, 0"
+                         Controls:ControlsHelper.Header="Really Cool Header"
                          Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                          Text="Enabled" />
                 <TextBox Margin="0, 10, 0, 0"

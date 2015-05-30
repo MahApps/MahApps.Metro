@@ -5,6 +5,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -76,89 +77,96 @@
                                              Storyboard.TargetName="Message" />
                         </Storyboard>
                     </ControlTemplate.Resources>
-                    <Grid>
-                        <Border x:Name="Base"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}" />
-                        <Grid x:Name="PART_InnerGrid"
-                              Margin="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition x:Name="ButtonColumn"
-                                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition x:Name="ButtonRow"
-                                               Height="*" />
-                            </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical">
+                        <ContentPresenter TextBlock.Foreground="{DynamicResource BlackBrush}"
+                                          TextBlock.FontSize="{StaticResource CommonHeaderFontSize}"
+                                          Margin="0, 0, 0, 2"
+                                          Content="{TemplateBinding Controls:ControlsHelper.Header}" />
+                        <Grid>
+                            <Border x:Name="Base"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}" />
+                        
+                            <Grid x:Name="PART_InnerGrid"
+                                  Margin="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition x:Name="ButtonColumn"
+                                                      Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition x:Name="ButtonRow"
+                                                   Height="*" />
+                                </Grid.RowDefinitions>
 
-                            <Border x:Name="ReadOnlyVisualElement"
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="2"
-                                    Background="{x:Null}"
-                                    Opacity="0" />
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Grid.Column="0"
-                                          Grid.Row="1"
-                                          BorderThickness="0"
-                                          IsTabStop="False"
-                                          Margin="2"
-                                          VerticalAlignment="Stretch"
-                                          Background="{x:Null}" />
-                            <TextBlock x:Name="Message"
-                                       Grid.Column="0"
-                                       Grid.Row="1"
-                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                       Padding="{TemplateBinding Padding}"
-                                       Visibility="Collapsed"
-                                       Foreground="{TemplateBinding Foreground}"
-                                       IsHitTestVisible="False"
-                                       Opacity="0.6"
-                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Margin="6,2,6,2" />
-                            <Grid x:Name="FloatingMessageContainer"
-                                  Grid.Column="0"
-                                  Grid.ColumnSpan="2"
-                                  Height="0"
-                                  IsHitTestVisible="False"
-                                  Margin="5,0"
-                                  Visibility="Visible">
-                                <TextBlock x:Name="FloatingMessage"
+                                <Border x:Name="ReadOnlyVisualElement"
+                                        Grid.Row="1"
+                                        Grid.ColumnSpan="2"
+                                        Background="{x:Null}"
+                                        Opacity="0" />
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Grid.Column="0"
+                                              Grid.Row="1"
+                                              BorderThickness="0"
+                                              IsTabStop="False"
+                                              Margin="2"
+                                              VerticalAlignment="Stretch"
+                                              Background="{x:Null}" />
+                                <TextBlock x:Name="Message"
+                                           Grid.Column="0"
+                                           Grid.Row="1"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                           FontSize="{DynamicResource FloatingWatermarkFontSize}"
+                                           Padding="{TemplateBinding Padding}"
+                                           Visibility="Collapsed"
                                            Foreground="{TemplateBinding Foreground}"
+                                           IsHitTestVisible="False"
                                            Opacity="0.6"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform />
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Margin="6,2,6,2" />
+                                <Grid x:Name="FloatingMessageContainer"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="2"
+                                      Height="0"
+                                      IsHitTestVisible="False"
+                                      Margin="5,0"
+                                      Visibility="Visible">
+                                    <TextBlock x:Name="FloatingMessage"
+                                               Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                               FontSize="{DynamicResource FloatingWatermarkFontSize}"
+                                               Foreground="{TemplateBinding Foreground}"
+                                               Opacity="0.6"
+                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </Grid>
+                                <Button x:Name="PART_ClearText"
+                                        Grid.Column="1"
+                                        Grid.RowSpan="2"
+                                        Style="{DynamicResource ChromelessButtonStyle}"
+                                        FontSize="16"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonFontFamily), Mode=OneWay}"
+                                        Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                        Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                        IsTabStop="False" />
                             </Grid>
-                            <Button x:Name="PART_ClearText"
-                                    Grid.Column="1"
-                                    Grid.RowSpan="2"
-                                    Style="{DynamicResource ChromelessButtonStyle}"
-                                    FontSize="16"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonFontFamily), Mode=OneWay}"
-                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                    Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
-                                    IsTabStop="False" />
+                            <Border x:Name="DisabledVisualElement"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{DynamicResource ControlsDisabledBrush}"
+                                    IsHitTestVisible="False"
+                                    Opacity="0" />
                         </Grid>
-                        <Border x:Name="DisabledVisualElement"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                BorderBrush="{DynamicResource ControlsDisabledBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{DynamicResource ControlsDisabledBrush}"
-                                IsHitTestVisible="False"
-                                Opacity="0" />
-                    </Grid>
+                    </StackPanel>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
                                      Value="">

@@ -10,6 +10,20 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public static class ControlsHelper
     {
+        public static readonly DependencyProperty HeaderProperty =
+            DependencyProperty.RegisterAttached("Header", typeof(object), typeof(ControlsHelper), new FrameworkPropertyMetadata(null));
+
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        public static object GetHeader(UIElement element)
+        {
+            return (object)element.GetValue(HeaderProperty);
+        }
+
+        public static void SetHeader(UIElement element, object value)
+        {
+            element.SetValue(HeaderProperty, value);
+        }
+
         public static readonly DependencyProperty HeaderFontSizeProperty =
             DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(26.67, HeaderFontSizePropertyChangedCallback){ Inherits = true});
 
