@@ -46,6 +46,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitch), new PropertyMetadata(13d));
 
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
+
+        public static readonly DependencyProperty CheckedCommandProperty = DependencyProperty.Register("CheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
+
         // LeftToRight means content left and button right and RightToLeft vise versa
         public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
         public static readonly DependencyProperty ToggleSwitchButtonStyleProperty = DependencyProperty.Register("ToggleSwitchButtonStyle", typeof(Style), typeof(ToggleSwitch), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -175,6 +178,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets/sets the commands which will be executed if the control is Checked (On) or not (Off).
+        /// </summary>
+        public ICommand CheckedCommand
+        {
+            get { return (ICommand)GetValue(CheckedCommandProperty); }
+            set { SetValue(CheckedCommandProperty, value); }
+        }
+
+        /// <summary>
         /// An event that is raised when the value of IsChecked changes.
         /// </summary>
         public event EventHandler IsCheckedChanged;
@@ -187,9 +199,19 @@ namespace MahApps.Metro.Controls
                 var oldValue = (bool?)e.OldValue;
                 var newValue = (bool?)e.NewValue;
 
-                if (oldValue != newValue && toggleSwitch.IsCheckedChanged != null)
+                if (oldValue != newValue)
                 {
-                    toggleSwitch.IsCheckedChanged(toggleSwitch, EventArgs.Empty);
+                    var command = toggleSwitch.CheckedCommand;
+                    if (command != null && command.CanExecute(toggleSwitch))
+                    {
+                        command.Execute(toggleSwitch);
+                    }
+
+                    var eh = toggleSwitch.IsCheckedChanged;
+                    if (eh != null)
+                    {
+                        eh(toggleSwitch, EventArgs.Empty);
+                    }
                 }
             }
         }
