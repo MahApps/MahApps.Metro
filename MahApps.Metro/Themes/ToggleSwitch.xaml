@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type Controls:ToggleSwitchButton}">
+    <Style x:Key="ToggleSwitchButtonStyle"
+           TargetType="{x:Type Controls:ToggleSwitchButton}">
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="SwitchForeground"
@@ -86,6 +87,8 @@
     <Style TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="IsTabStop"
                 Value="True" />
+        <Setter Property="ToggleSwitchButtonStyle"
+                Value="{StaticResource ToggleSwitchButtonStyle}" />
         <Setter Property="SwitchForeground"
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="HorizontalContentAlignment"
@@ -167,6 +170,7 @@
                             <Controls:ToggleSwitchButton x:Name="Switch"
                                                          Grid.Column="1"
                                                          Grid.Row="1"
+                                                         Style="{TemplateBinding ToggleSwitchButtonStyle}"
                                                          Background="{TemplateBinding Background}"
                                                          IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                          SwitchForeground="{TemplateBinding SwitchForeground}"

@@ -39,6 +39,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
         // LeftToRight means content left and button right and RightToLeft vise versa
         public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
+        public static readonly DependencyProperty ToggleSwitchButtonStyleProperty = DependencyProperty.Register("ToggleSwitchButtonStyle", typeof(Style), typeof(ToggleSwitch), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public event EventHandler<RoutedEventArgs> Checked;
         public event EventHandler<RoutedEventArgs> Unchecked;
@@ -99,6 +100,15 @@ namespace MahApps.Metro.Controls
         public FlowDirection ContentDirection {
             get { return (FlowDirection)GetValue(ContentDirectionProperty); }
             set { SetValue(ContentDirectionProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the control's toggle switch button style.
+        /// </summary>
+        public Style ToggleSwitchButtonStyle
+        {
+            get { return (Style)GetValue(ToggleSwitchButtonStyleProperty); }
+            set { SetValue(ToggleSwitchButtonStyleProperty, value); }
         }
 
         /// <summary>
