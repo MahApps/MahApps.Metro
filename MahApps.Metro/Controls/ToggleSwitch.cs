@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.Converters;
 
@@ -199,6 +200,7 @@ namespace MahApps.Metro.Controls
             DefaultStyleKey = typeof(ToggleSwitch);
 
             PreviewKeyUp += ToggleSwitch_PreviewKeyUp;
+            MouseUp += (sender, args) => Keyboard.Focus(this);
         }
 
         void ToggleSwitch_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -242,6 +244,8 @@ namespace MahApps.Metro.Controls
                 BindingOperations.ClearBinding(_toggleButton, ToggleButton.IsCheckedProperty);
 
                 _toggleButton.IsEnabledChanged -= IsEnabledHandler;
+
+                _toggleButton.PreviewMouseUp -= this.ToggleButtonPreviewMouseUp;
             }
             _toggleButton = GetTemplateChild(SwitchPart) as ToggleButton;
             if (_toggleButton != null)
@@ -254,8 +258,15 @@ namespace MahApps.Metro.Controls
                 _toggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
 
                 _toggleButton.IsEnabledChanged += IsEnabledHandler;
+
+                _toggleButton.PreviewMouseUp += this.ToggleButtonPreviewMouseUp;
             }
             ChangeVisualState(false);
+        }
+
+        private void ToggleButtonPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.Focus(this);
         }
 
         private void IsEnabledHandler(object sender, DependencyPropertyChangedEventArgs e)

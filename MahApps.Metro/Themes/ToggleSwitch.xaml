@@ -27,6 +27,10 @@
                 Value="{DynamicResource ToggleSwitchFontFamily}" />
         <Setter Property="FontSize"
                 Value="{DynamicResource ToggleSwitchFontSize}" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="Validation.ErrorTemplate"
+                Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -69,7 +73,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid>
+                        <Grid Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -97,6 +101,8 @@
                             <Controls:ToggleSwitchButton x:Name="Switch"
                                                          Grid.Column="1"
                                                          Grid.Row="1"
+                                                         FocusVisualStyle="{x:Null}"
+                                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                          Style="{TemplateBinding ToggleSwitchButtonStyle}"
                                                          Background="{TemplateBinding Background}"
                                                          IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
