@@ -115,6 +115,28 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="Content" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Content" Property="Content">
+                                <Setter.Value>
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="OnLabel" Mode="TwoWay" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="Content" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Content" Property="Content">
+                                <Setter.Value>
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="OffLabel" Mode="TwoWay" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
                                      Value="{x:Null}">
                             <Setter TargetName="Header"

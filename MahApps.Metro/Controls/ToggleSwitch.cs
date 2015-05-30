@@ -30,7 +30,6 @@ namespace MahApps.Metro.Controls
         private const string SwitchPart = "Switch";
 
         private ToggleButton _toggleButton;
-        private bool _wasContentSet;
 
         public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
         public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
@@ -209,31 +208,14 @@ namespace MahApps.Metro.Controls
                 IsChecked = !IsChecked;
         }
 
-        private void SetDefaultContent()
-        {
-            Binding binding = new Binding("IsChecked") { Source = this, Converter = new OffOnConverter(), ConverterParameter = this };
-            SetBinding(ContentProperty, binding);
-        }
-
         private void ChangeVisualState(bool useTransitions)
         {
             VisualStateManager.GoToState(this, IsEnabled ? NormalState : DisabledState, useTransitions);
         }
 
-        protected override void OnContentChanged(object oldContent, object newContent)
-        {
-            base.OnContentChanged(oldContent, newContent);
-            _wasContentSet = true;
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            if (!_wasContentSet && GetBindingExpression(ContentProperty) == null)
-            {
-                SetDefaultContent();
-            }
 
             if (_toggleButton != null)
             {
