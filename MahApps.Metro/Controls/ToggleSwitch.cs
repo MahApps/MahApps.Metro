@@ -51,6 +51,10 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CheckedCommandProperty = DependencyProperty.Register("CheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
         public static readonly DependencyProperty UnCheckedCommandProperty = DependencyProperty.Register("UnCheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
 
+        public static readonly DependencyProperty CheckChangedCommandParameterProperty = DependencyProperty.Register("CheckChangedCommandParameter", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty CheckedCommandParameterProperty = DependencyProperty.Register("CheckedCommandParameter", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty UnCheckedCommandParameterProperty = DependencyProperty.Register("UnCheckedCommandParameter", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+
         // LeftToRight means content left and button right and RightToLeft vise versa
         public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
         public static readonly DependencyProperty ToggleSwitchButtonStyleProperty = DependencyProperty.Register("ToggleSwitchButtonStyle", typeof(Style), typeof(ToggleSwitch), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -207,6 +211,33 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets/sets the command parameter which will be passed by the CheckChangedCommand.
+        /// </summary>
+        public object CheckChangedCommandParameter
+        {
+            get { return (object)GetValue(CheckChangedCommandParameterProperty); }
+            set { SetValue(CheckChangedCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command parameter which will be passed by the CheckedCommand.
+        /// </summary>
+        public object CheckedCommandParameter
+        {
+            get { return (object)GetValue(CheckedCommandParameterProperty); }
+            set { SetValue(CheckedCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command parameter which will be passed by the UnCheckedCommand.
+        /// </summary>
+        public object UnCheckedCommandParameter
+        {
+            get { return (object)GetValue(UnCheckedCommandParameterProperty); }
+            set { SetValue(UnCheckedCommandParameterProperty, value); }
+        }
+
+        /// <summary>
         /// An event that is raised when the value of IsChecked changes.
         /// </summary>
         public event EventHandler IsCheckedChanged;
@@ -222,9 +253,10 @@ namespace MahApps.Metro.Controls
                 if (oldValue != newValue)
                 {
                     var command = toggleSwitch.CheckChangedCommand;
-                    if (command != null && command.CanExecute(toggleSwitch))
+                    var commandParameter = toggleSwitch.CheckChangedCommandParameter ?? toggleSwitch;
+                    if (command != null && command.CanExecute(commandParameter))
                     {
-                        command.Execute(toggleSwitch);
+                        command.Execute(commandParameter);
                     }
 
                     var eh = toggleSwitch.IsCheckedChanged;
@@ -301,9 +333,10 @@ namespace MahApps.Metro.Controls
         private void CheckedHandler(object sender, RoutedEventArgs e)
         {
             var command = this.CheckedCommand;
-            if (command != null && command.CanExecute(this))
+            var commandParameter = this.CheckedCommandParameter ?? this;
+            if (command != null && command.CanExecute(commandParameter))
             {
-                command.Execute(this);
+                command.Execute(commandParameter);
             }
             
             SafeRaise.Raise(Checked, this, e);
@@ -312,9 +345,10 @@ namespace MahApps.Metro.Controls
         private void UncheckedHandler(object sender, RoutedEventArgs e)
         {
             var command = this.UnCheckedCommand;
-            if (command != null && command.CanExecute(this))
+            var commandParameter = this.UnCheckedCommandParameter ?? this;
+            if (command != null && command.CanExecute(commandParameter))
             {
-                command.Execute(this);
+                command.Execute(commandParameter);
             }
 
             SafeRaise.Raise(Unchecked, this, e);
