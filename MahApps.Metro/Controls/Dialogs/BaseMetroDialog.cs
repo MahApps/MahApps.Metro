@@ -315,6 +315,7 @@ namespace MahApps.Metro.Controls.Dialogs
             MaximumBodyHeight = Double.NaN;
 
             DefaultText = "";
+            DefaultButtonFocus = MessageDialogResult.Negative;
         }
 
         /// <summary>
@@ -356,6 +357,11 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the maximum height. (Default is unlimited height, <a href="http://msdn.microsoft.com/de-de/library/system.double.nan">Double.NaN</a>)
         /// </summary>
         public double MaximumBodyHeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets which button should be focused by default
+        /// </summary>
+        public MessageDialogResult DefaultButtonFocus { get; set; }
     }
 
     /// <summary>
