@@ -47,7 +47,9 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
 
+        public static readonly DependencyProperty CheckChangedCommandProperty = DependencyProperty.Register("CheckChangedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
         public static readonly DependencyProperty CheckedCommandProperty = DependencyProperty.Register("CheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty UnCheckedCommandProperty = DependencyProperty.Register("UnCheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
 
         // LeftToRight means content left and button right and RightToLeft vise versa
         public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
@@ -178,12 +180,30 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Gets/sets the commands which will be executed if the control is Checked (On) or not (Off).
+        /// Gets/sets the command which will be executed if the IsChecked property was changed.
+        /// </summary>
+        public ICommand CheckChangedCommand
+        {
+            get { return (ICommand)GetValue(CheckChangedCommandProperty); }
+            set { SetValue(CheckChangedCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command which will be executed if the checked event of the control is fired.
         /// </summary>
         public ICommand CheckedCommand
         {
             get { return (ICommand)GetValue(CheckedCommandProperty); }
             set { SetValue(CheckedCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command which will be executed if the checked event of the control is fired.
+        /// </summary>
+        public ICommand UnCheckedCommand
+        {
+            get { return (ICommand)GetValue(UnCheckedCommandProperty); }
+            set { SetValue(UnCheckedCommandProperty, value); }
         }
 
         /// <summary>
@@ -201,7 +221,7 @@ namespace MahApps.Metro.Controls
 
                 if (oldValue != newValue)
                 {
-                    var command = toggleSwitch.CheckedCommand;
+                    var command = toggleSwitch.CheckChangedCommand;
                     if (command != null && command.CanExecute(toggleSwitch))
                     {
                         command.Execute(toggleSwitch);
@@ -280,11 +300,23 @@ namespace MahApps.Metro.Controls
 
         private void CheckedHandler(object sender, RoutedEventArgs e)
         {
+            var command = this.CheckedCommand;
+            if (command != null && command.CanExecute(this))
+            {
+                command.Execute(this);
+            }
+            
             SafeRaise.Raise(Checked, this, e);
         }
 
         private void UncheckedHandler(object sender, RoutedEventArgs e)
         {
+            var command = this.UnCheckedCommand;
+            if (command != null && command.CanExecute(this))
+            {
+                command.Execute(this);
+            }
+
             SafeRaise.Raise(Unchecked, this, e);
         }
 
