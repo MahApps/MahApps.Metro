@@ -451,6 +451,8 @@
                                          Background="{x:Null}"
                                          Margin="0,0,0,-2"
                                          Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                         MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.MaxLength), Mode=OneWay}"
+                                         CharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.CharacterCasing), Mode=OneWay}"
                                          Foreground="{TemplateBinding Foreground}"
                                          Focusable="True"
                                          IsReadOnly="{TemplateBinding IsReadOnly}"
