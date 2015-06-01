@@ -31,20 +31,68 @@ namespace MahApps.Metro.Controls
         private Rectangle _ThumbIndicator;
         private TranslateTransform _ThumbTranslate;
 
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null));
+        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
+        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitchButton), new PropertyMetadata(null, (o, e) => ((ToggleSwitchButton)o).OnSwitchBrush = e.NewValue as Brush));
+        public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+
+        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register("ThumbIndicatorDisabledBrush", typeof(Brush), typeof(ToggleSwitchButton), null);
+        public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitchButton), new PropertyMetadata(13d));
+
         /// <summary>
         /// Gets/sets the brush used for the control's foreground.
         /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
         public Brush SwitchForeground
         {
-            get
-            {
-                return (Brush)GetValue(SwitchForegroundProperty);
-            }
-            set
-            {
-                SetValue(SwitchForegroundProperty, value);
-            }
+            get { return (Brush)GetValue(SwitchForegroundProperty); }
+            set { SetValue(SwitchForegroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the on-switch's foreground.
+        /// </summary>
+        public Brush OnSwitchBrush
+        {
+            get { return (Brush)GetValue(OnSwitchBrushProperty); }
+            set { SetValue(OnSwitchBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the off-switch's foreground.
+        /// </summary>
+        public Brush OffSwitchBrush
+        {
+            get { return (Brush)GetValue(OffSwitchBrushProperty); }
+            set { SetValue(OffSwitchBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator.
+        /// </summary>
+        public Brush ThumbIndicatorBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorBrushProperty); }
+            set { SetValue(ThumbIndicatorBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator.
+        /// </summary>
+        public Brush ThumbIndicatorDisabledBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorDisabledBrushProperty); }
+            set { SetValue(ThumbIndicatorDisabledBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the width of the thumb indicator.
+        /// </summary>
+        public double ThumbIndicatorWidth
+        {
+            get { return (double)GetValue(ThumbIndicatorWidthProperty); }
+            set { SetValue(ThumbIndicatorWidthProperty, value); }
         }
 
         public ToggleSwitchButton()
@@ -73,14 +121,13 @@ namespace MahApps.Metro.Controls
                 _thumbAnimation.FillBehavior = FillBehavior.Stop;
 
                 AnimationTimeline currentAnimation = _thumbAnimation;
-                _thumbAnimation.Completed += (sender, e) =>
+                _thumbAnimation.Completed += (sender, e) => {
+                    if (_thumbAnimation != null && currentAnimation == _thumbAnimation)
                     {
-                        if (_thumbAnimation != null && currentAnimation == _thumbAnimation)
-                        {
-                            _ThumbTranslate.X = destination;
-                            _thumbAnimation = null;
-                        }
-                    };
+                        _ThumbTranslate.X = destination;
+                        _thumbAnimation = null;
+                    }
+                };
                 _ThumbTranslate.BeginAnimation(TranslateTransform.XProperty, _thumbAnimation);
             }
         }

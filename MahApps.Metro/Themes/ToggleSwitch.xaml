@@ -2,92 +2,21 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type Controls:ToggleSwitchButton}">
-        <Setter Property="IsTabStop"
-                Value="False" />
-        <Setter Property="SwitchForeground"
-                Value="{DynamicResource AccentColorBrush}" />
-        <Setter Property="Width"
-                Value="70"/>
-        <Setter Property="Height"
-                Value="35"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Controls:ToggleSwitchButton}">
-                    <Grid>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="PART_BackgroundOverlay">
-                                            <DiscreteDoubleKeyFrame KeyTime="0"
-                                                                    Value="0.5"/>
-                                        </DoubleAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Rectangle.Fill)"
-                                                                       Storyboard.TargetName="PART_ThumbIndicator">
-                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                    Value="{DynamicResource GrayBrush4}" />
-                                        </ObjectAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="PART_BackgroundOverlay">
-                                            <DiscreteDoubleKeyFrame KeyTime="0"
-                                                                    Value="0.2" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="PART_BackgroundOverlay">
-                                            <DiscreteDoubleKeyFrame KeyTime="0"
-                                                                    Value="0.4" />
-                                        </DoubleAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <Grid x:Name="PART_SwitchTrack" Margin="5">
-                            <Border BorderThickness="2" BorderBrush="{DynamicResource GrayBrush4}">
-                                <Grid Margin="2" ClipToBounds="True">
-                                    <Rectangle Fill="{Binding SwitchForeground, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                    <Rectangle Fill="{DynamicResource GrayBrush4}" RenderTransformOrigin="0.5,0.5">
-                                        <Rectangle.RenderTransform>
-                                            <TranslateTransform x:Name="PART_BackgroundTranslate"/>
-                                        </Rectangle.RenderTransform>
-                                    </Rectangle>
-                                    <Rectangle x:Name="PART_BackgroundOverlay" Fill="{DynamicResource WhiteBrush}" Opacity="0"/>
-                                </Grid>
-                            </Border>
-                            <Rectangle x:Name="PART_ThumbIndicator" Fill="{DynamicResource BlackBrush}" Width="13" HorizontalAlignment="Left">
-                                <Rectangle.RenderTransform>
-                                    <TranslateTransform x:Name="PART_ThumbTranslate"/>
-                                </Rectangle.RenderTransform>
-                            </Rectangle>
-                        </Grid>
-                        <Thumb x:Name="PART_DraggingThumb">
-                            <Thumb.Template>
-                                <ControlTemplate>
-                                    <Rectangle Fill="Transparent"/>
-                                </ControlTemplate>
-                            </Thumb.Template>
-                        </Thumb>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="{x:Type Controls:ToggleSwitch}">
         <Setter Property="IsTabStop"
                 Value="True" />
-        <Setter Property="SwitchForeground"
+        <Setter Property="ToggleSwitchButtonStyle"
+                Value="{DynamicResource ToggleSwitchButtonStyle}" />
+        <Setter Property="OnSwitchBrush"
                 Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="OffSwitchBrush"
+                Value="{DynamicResource GrayBrush4}" />
+        <Setter Property="ThumbIndicatorBrush"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="ThumbIndicatorDisabledBrush"
+                Value="{DynamicResource GrayBrush4}" />
+        <Setter Property="ThumbIndicatorWidth"
+                Value="13" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Left" />
         <Setter Property="VerticalContentAlignment"
@@ -95,9 +24,13 @@
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="FontFamily"
-                Value="Segoe UI Semibold" />
+                Value="{DynamicResource ToggleSwitchFontFamily}" />
         <Setter Property="FontSize"
-                Value="14.667" />
+                Value="{DynamicResource ToggleSwitchFontSize}" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="Validation.ErrorTemplate"
+                Value="{DynamicResource ValidationErrorTemplate}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -108,7 +41,8 @@
                                VerticalAlignment="Top"
                                Margin="0,0,0,5"
                                Opacity="0.65"
-                               FontSize="16" />
+                               FontFamily="{DynamicResource ToggleSwitchHeaderFontFamily}"
+                               FontSize="{DynamicResource ToggleSwitchHeaderFontSize}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
@@ -139,7 +73,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Grid>
+                        <Grid Background="Transparent">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -167,13 +101,42 @@
                             <Controls:ToggleSwitchButton x:Name="Switch"
                                                          Grid.Column="1"
                                                          Grid.Row="1"
+                                                         FocusVisualStyle="{x:Null}"
+                                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                         Style="{TemplateBinding ToggleSwitchButtonStyle}"
                                                          Background="{TemplateBinding Background}"
                                                          IsChecked="{Binding IsChecked, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                         SwitchForeground="{TemplateBinding SwitchForeground}"
+                                                         OnSwitchBrush="{TemplateBinding OnSwitchBrush}"
+                                                         OffSwitchBrush="{TemplateBinding OffSwitchBrush}"
+                                                         ThumbIndicatorBrush="{TemplateBinding ThumbIndicatorBrush}"
+                                                         ThumbIndicatorDisabledBrush="{TemplateBinding ThumbIndicatorDisabledBrush}"
+                                                         ThumbIndicatorWidth="{TemplateBinding ThumbIndicatorWidth}"
                                                          VerticalAlignment="Center" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="Content" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Content" Property="Content">
+                                <Setter.Value>
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="OnLabel" Mode="TwoWay" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="Content" Value="{x:Null}" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Content" Property="Content">
+                                <Setter.Value>
+                                    <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="OffLabel" Mode="TwoWay" />
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Header}"
                                      Value="{x:Null}">
                             <Setter TargetName="Header"
