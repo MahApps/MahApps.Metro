@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
@@ -60,6 +61,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("Content", typeof(Object), typeof(DropDownButton));
 
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
         
         public Object Content
         {
@@ -116,6 +118,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (Style)GetValue(ButtonStyleProperty); }
             set { SetValue(ButtonStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush of the button arrow icon.
+        /// </summary>
+        public Brush ArrowBrush
+        {
+            get { return (Brush)GetValue(ArrowBrushProperty); }
+            set { SetValue(ArrowBrushProperty, value); }
         }
 
         private Button clickButton;
