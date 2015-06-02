@@ -29,7 +29,7 @@ namespace MahApps.Metro.Controls
 
         private static void Target(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
-            DropDownButton button = (DropDownButton) dependencyObject;
+            DropDownButton button = (DropDownButton)dependencyObject;
             if (button.clickButton != null)
             {
                 button.menu.Placement = PlacementMode.Bottom;
