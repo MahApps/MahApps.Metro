@@ -150,6 +150,20 @@
         </Border>
     </ControlTemplate>
 
+    <Style x:Key="ButtonDropDownFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1"
+                               SnapsToDevicePixels="true"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeThickness="1"
+                               StrokeDashArray="1 2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type local:DropDownButton}">
         <Setter Property="ButtonStyle"
                 Value="{DynamicResource ButtonDropDownStyle}" />
@@ -171,15 +185,21 @@
                 Value="{DynamicResource ContentFontSize}" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
+        <Setter Property="Focusable"
+                Value="False" />
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource ButtonDropDownFocusVisual}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:DropDownButton}">
                     <Border x:Name="PART_Border"
+                            UseLayoutRounding="True"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             BorderBrush="{TemplateBinding BorderBrush}">
                         <Button x:Name="PART_Button"
                                 Style="{TemplateBinding ButtonStyle}"
+                                FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -189,14 +209,17 @@
                                 CommandParameter="{TemplateBinding CommandParameter}"
                                 CommandTarget="{TemplateBinding CommandTarget}">
                             <StackPanel x:Name="PART_Orientation"
+                                        Focusable="False"
                                         Orientation="Horizontal"
                                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                 <ContentPresenter RecognizesAccessKey="True"
+                                                  Focusable="False"
                                                   Content="{TemplateBinding Icon}" />
-                                <ContentControl MinWidth="20"
+                                <ContentControl x:Name="PART_ButtonContent"
+                                                Focusable="False"
+                                                MinWidth="20"
                                                 Margin="3"
-                                                x:Name="PART_ButtonContent"
                                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                 ContentStringFormat="{TemplateBinding ItemStringFormat}"
