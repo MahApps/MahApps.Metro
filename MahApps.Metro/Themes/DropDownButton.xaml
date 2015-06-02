@@ -2,67 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type Button}"
-           BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-        <Setter Property="Background"
-                Value="{DynamicResource WhiteColorBrush}" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="BorderThickness"
-                Value="0" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="Border"
-                            CornerRadius="0"
-                            BorderThickness="0"
-                            Background="{DynamicResource WhiteColorBrush}"
-                            BorderBrush="{DynamicResource WhiteColorBrush}">
-                        <ContentPresenter Margin="2"
-                                          HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                          VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="Transparent" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush8}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush6}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush10}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <ControlTemplate TargetType="{x:Type local:DropDownButton}"
                      x:Key="SplitButtonHorizontal">
         <Border Name="PART_Border"
                 BorderThickness="1"
                 BorderBrush="{DynamicResource BlackColorBrush}">
             <Button x:Name="PART_Button"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Stretch"
-                    Style="{StaticResource {x:Type Button}}"
+                    Style="{TemplateBinding ButtonStyle}"
                     Command="{TemplateBinding Command}"
                     CommandParameter="{TemplateBinding CommandParameter}"
                     CommandTarget="{TemplateBinding CommandTarget}">
@@ -146,11 +92,9 @@
         <Border Name="PART_Border"
                 BorderThickness="1"
                 BorderBrush="{DynamicResource BlackColorBrush}">
-            <Button Width="{TemplateBinding Width}"
-                    Style="{StaticResource {x:Type Button}}"
-                    x:Name="PART_Button"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Stretch"
+            <Button x:Name="PART_Button"
+                    Width="{TemplateBinding Width}"
+                    Style="{TemplateBinding ButtonStyle}"
                     Command="{TemplateBinding Command}"
                     CommandParameter="{TemplateBinding CommandParameter}"
                     CommandTarget="{TemplateBinding CommandTarget}">
@@ -232,6 +176,8 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type local:DropDownButton}">
+        <Setter Property="ButtonStyle"
+                Value="{DynamicResource ButtonDropDownStyle}" />
         <Setter Property="MinHeight"
                 Value="26" />
         <Setter Property="BorderThickness"

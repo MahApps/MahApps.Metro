@@ -59,6 +59,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register("Content", typeof(Object), typeof(DropDownButton));
 
+        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        
         public Object Content
         {
             get { return (Object)GetValue(ContentProperty); }
@@ -105,6 +107,15 @@ namespace MahApps.Metro.Controls
         {
             get { return GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the button style.
+        /// </summary>
+        public Style ButtonStyle
+        {
+            get { return (Style)GetValue(ButtonStyleProperty); }
+            set { SetValue(ButtonStyleProperty, value); }
         }
 
         private Button clickButton;
