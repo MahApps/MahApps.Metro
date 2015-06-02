@@ -25,9 +25,9 @@ namespace MahApps.Metro.Controls
         }
 
         public static readonly DependencyProperty IsExpandedProperty =
-            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(DropDownButton), new FrameworkPropertyMetadata(new PropertyChangedCallback(Target)));
+            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(DropDownButton), new FrameworkPropertyMetadata(new PropertyChangedCallback(IsExpandedPropertyChangedCallback)));
 
-        private static void Target(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void IsExpandedPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
             DropDownButton button = (DropDownButton)dependencyObject;
             if (button.clickButton != null)
@@ -117,15 +117,9 @@ namespace MahApps.Metro.Controls
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
+            IsExpanded = true;
             e.RoutedEvent = ClickEvent;
             RaiseEvent(e);
-        }
-
-        private void ExpanderClick(object sender, RoutedEventArgs e)
-        {
-            menu.Placement = PlacementMode.Bottom;
-            menu.PlacementTarget = clickButton;
-            IsExpanded = true;
         }
 
         public override void OnApplyTemplate()
@@ -145,8 +139,9 @@ namespace MahApps.Metro.Controls
 
         private void InitializeVisualElementsContainer()
         {
+            MouseRightButtonUp -= DropDownButton_MouseRightButtonUp;
+            clickButton.Click -= ButtonClick;
             MouseRightButtonUp += DropDownButton_MouseRightButtonUp;
-            clickButton.Click += ExpanderClick;
             clickButton.Click += ButtonClick;
         }
 
