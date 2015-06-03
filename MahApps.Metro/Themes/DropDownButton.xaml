@@ -216,7 +216,7 @@
                                 Command="{TemplateBinding Command}"
                                 CommandParameter="{TemplateBinding CommandParameter}"
                                 CommandTarget="{TemplateBinding CommandTarget}">
-                            <DockPanel x:Name="PART_Orientation"
+                            <DockPanel x:Name="PART_Content"
                                        Focusable="False"
                                        LastChildFill="True">
                                 <Rectangle x:Name="PART_Rectangle"
@@ -246,7 +246,7 @@
                                         </VisualBrush>
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                                <StackPanel x:Name="PART_Content"
+                                <StackPanel x:Name="PART_ContentOrientation"
                                             Focusable="False"
                                             Orientation="Horizontal"
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -292,7 +292,7 @@
                             <Setter TargetName="PART_Rectangle"
                                     Property="Margin"
                                     Value="0,0,0,3" />
-                            <Setter TargetName="PART_Content"
+                            <Setter TargetName="PART_ContentOrientation"
                                     Property="Orientation"
                                     Value="Vertical" />
                         </Trigger>
