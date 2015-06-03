@@ -167,6 +167,8 @@
     <Style TargetType="{x:Type local:DropDownButton}">
         <Setter Property="ButtonStyle"
                 Value="{DynamicResource ButtonDropDownStyle}" />
+        <Setter Property="MenuStyle"
+                Value="{DynamicResource MetroContextMenu}" />
         <Setter Property="Background"
                 Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="Foreground"
@@ -255,6 +257,7 @@
                             </StackPanel>
                             <Button.ContextMenu>
                                 <ContextMenu x:Name="PART_Menu"
+                                             Style="{TemplateBinding MenuStyle}"
                                              StaysOpen="False"
                                              MinWidth="{TemplateBinding ActualWidth}"
                                              IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
