@@ -259,8 +259,7 @@
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
             <Controls:DropDownButton Name="DownButton"
-                                     VerticalContentAlignment="Center"
-                                     Width="200"
+                                     Width="130"
                                      Content="The Content"
                                      DisplayMemberPath="Title"
                                      ItemsSource="{Binding Albums}">
@@ -273,9 +272,8 @@
 
             <Controls:DropDownButton Name="DownButton1"
                                      Orientation="Vertical"
-                                     HorizontalContentAlignment="Center"
                                      Margin="0,10,0,0"
-                                     Width="120"
+                                     Width="130"
                                      Content="The Content"
                                      DisplayMemberPath="Title"
                                      ItemsSource="{Binding ElementName=DownButton, Mode=TwoWay, Path=ItemsSource}">
@@ -293,14 +291,14 @@
                                 HorizontalContentAlignment="Left"
                                 HorizontalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                Width="120"
+                                Width="130"
                                 SelectedIndex="2"
                                 ItemsSource="{Binding Albums}"
                                 DisplayMemberPath="Title"
                                 VerticalAlignment="Center"  />
 
             <Controls:SplitButton Margin="20,10,20,0" Name="SplitButton1" Icon="{DynamicResource appbar_book_side}"
-                                  Width="120"
+                                  Width="130"
                                   HorizontalAlignment="Center"
                                   HorizontalContentAlignment="Center"
                                   VerticalContentAlignment="Center"

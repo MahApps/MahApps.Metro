@@ -191,6 +191,10 @@
                 Value="False" />
         <Setter Property="FocusVisualStyle"
                 Value="{StaticResource ButtonDropDownFocusVisual}" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:DropDownButton}">
@@ -204,31 +208,19 @@
                                 FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Background="{TemplateBinding Background}"
                                 Foreground="{TemplateBinding Foreground}"
                                 Command="{TemplateBinding Command}"
                                 CommandParameter="{TemplateBinding CommandParameter}"
                                 CommandTarget="{TemplateBinding CommandTarget}">
-                            <StackPanel x:Name="PART_Orientation"
-                                        Focusable="False"
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                <ContentPresenter RecognizesAccessKey="True"
-                                                  Focusable="False"
-                                                  Content="{TemplateBinding Icon}" />
-                                <ContentControl x:Name="PART_ButtonContent"
-                                                Focusable="False"
-                                                MinWidth="20"
-                                                Margin="3"
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                                Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                ContentTemplate="{TemplateBinding ItemTemplate}">
-                                </ContentControl>
+                            <DockPanel x:Name="PART_Orientation"
+                                       Focusable="False"
+                                       LastChildFill="True">
                                 <Rectangle x:Name="PART_Rectangle"
+                                           DockPanel.Dock="Right"
                                            Height="6"
                                            Width="10"
                                            Margin="0,0,3,0"
@@ -254,7 +246,27 @@
                                         </VisualBrush>
                                     </Rectangle.OpacityMask>
                                 </Rectangle>
-                            </StackPanel>
+                                <StackPanel x:Name="PART_Content"
+                                            Focusable="False"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <ContentPresenter RecognizesAccessKey="True"
+                                                      Focusable="False"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      Content="{TemplateBinding Icon}" />
+                                    <ContentControl x:Name="PART_ButtonContent"
+                                                    Focusable="False"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    MinWidth="20"
+                                                    Margin="3"
+                                                    ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                    Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    ContentTemplate="{TemplateBinding ItemTemplate}" />
+                                </StackPanel>
+                            </DockPanel>
                             <Button.ContextMenu>
                                 <ContextMenu x:Name="PART_Menu"
                                              Style="{TemplateBinding MenuStyle}"
@@ -274,7 +286,13 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="Orientation"
                                  Value="Vertical">
-                            <Setter TargetName="PART_Orientation"
+                            <Setter TargetName="PART_Rectangle"
+                                    Property="DockPanel.Dock"
+                                    Value="Bottom" />
+                            <Setter TargetName="PART_Rectangle"
+                                    Property="Margin"
+                                    Value="0,0,0,3" />
+                            <Setter TargetName="PART_Content"
                                     Property="Orientation"
                                     Value="Vertical" />
                         </Trigger>
