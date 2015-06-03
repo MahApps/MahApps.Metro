@@ -260,25 +260,32 @@
 
             <Controls:DropDownButton Name="DownButton"
                                      VerticalContentAlignment="Center"
-                                     Width="120"
-                                     Content="Test"
+                                     Width="200"
+                                     Content="The Content"
                                      DisplayMemberPath="Title"
-                                     Icon="{DynamicResource appbar_music}"
                                      ItemsSource="{Binding Albums}">
+                <Controls:DropDownButton.Icon>
+                    <Viewbox Width="32" Height="32" Stretch="Uniform">
+                        <ContentControl Content="{DynamicResource appbar_music}" />
+                    </Viewbox>
+                </Controls:DropDownButton.Icon>
             </Controls:DropDownButton>
 
             <Controls:DropDownButton Name="DownButton1"
                                      Orientation="Vertical"
-                                     Icon="{DynamicResource appbar_journal}"
                                      HorizontalContentAlignment="Center"
                                      Margin="0,10,0,0"
                                      Width="120"
-                                     Content="Test"
+                                     Content="The Content"
                                      DisplayMemberPath="Title"
                                      ItemsSource="{Binding ElementName=DownButton, Mode=TwoWay, Path=ItemsSource}">
+                <Controls:DropDownButton.Icon>
+                    <Viewbox Width="32" Height="32" Stretch="Uniform">
+                        <ContentControl Content="{DynamicResource appbar_journal}" />
+                    </Viewbox>
+                </Controls:DropDownButton.Icon>
             </Controls:DropDownButton>
-            <!--<CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
+
             <Label Content="SplitButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
@@ -300,9 +307,6 @@
                                   Orientation="Vertical" DisplayMemberPath="{Binding ElementName=SplitButton0, Path=DisplayMemberPath}"
                                   SelectedIndex="{Binding SelectedIndex, ElementName=SplitButton0, Mode=TwoWay}"
                                   ItemsSource="{Binding ItemsSource, ElementName=SplitButton0, Mode=TwoWay}" />
-
-            <!--<CheckBox IsChecked="{Binding ElementName=SplitButton0, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox IsChecked="{Binding ElementName=SplitButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
 
         </StackPanel>
     </Grid>
