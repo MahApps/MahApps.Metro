@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -45,8 +46,8 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("Orientation", typeof(Orientation), typeof(DropDownButton),
                 new FrameworkPropertyMetadata(Orientation.Horizontal));
 
-        public static readonly DependencyProperty IconProperty =
-            DependencyProperty.Register("Icon", typeof(Object), typeof(DropDownButton));
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(Object), typeof(DropDownButton));
+        public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(DropDownButton));
 
         public static readonly DependencyProperty CommandProperty =
             DependencyProperty.Register("Command", typeof(ICommand), typeof(DropDownButton));
@@ -106,10 +107,24 @@ namespace MahApps.Metro.Controls
             set { SetValue(OrientationProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets the Content used to generate the icon part.
+        /// </summary>
+        [Bindable(true)]
         public Object Icon
         {
             get { return GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
+        }
+
+        /// <summary> 
+        /// Gets or sets the ContentTemplate used to display the content of the icon part. 
+        /// </summary>
+        [Bindable(true)]
+        public DataTemplate IconTemplate
+        {
+            get { return (DataTemplate)GetValue(IconTemplateProperty); }
+            set { SetValue(IconTemplateProperty, value); }
         }
 
         /// <summary>
