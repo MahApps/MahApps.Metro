@@ -26,8 +26,7 @@ namespace MahApps.Metro.Controls
             remove { RemoveHandler(ClickEvent, value); }
         }
 
-        public static readonly DependencyProperty IsExpandedProperty =
-            DependencyProperty.Register("IsExpanded", typeof(bool), typeof(DropDownButton), new FrameworkPropertyMetadata(new PropertyChangedCallback(IsExpandedPropertyChangedCallback)));
+        public static readonly DependencyProperty IsExpandedProperty = DependencyProperty.Register("IsExpanded", typeof(bool), typeof(DropDownButton), new FrameworkPropertyMetadata(new PropertyChangedCallback(IsExpandedPropertyChangedCallback)));
 
         private static void IsExpandedPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
         {
@@ -39,50 +38,53 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        public static readonly DependencyProperty ExtraTagProperty =
-            DependencyProperty.Register("ExtraTag", typeof(Object), typeof(DropDownButton));
+        public static readonly DependencyProperty ExtraTagProperty = DependencyProperty.Register("ExtraTag", typeof(Object), typeof(DropDownButton));
 
-        public static readonly DependencyProperty OrientationProperty =
-            DependencyProperty.Register("Orientation", typeof(Orientation), typeof(DropDownButton),
-                new FrameworkPropertyMetadata(Orientation.Horizontal));
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(DropDownButton), new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(Object), typeof(DropDownButton));
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(DropDownButton));
 
-        public static readonly DependencyProperty CommandProperty =
-            DependencyProperty.Register("Command", typeof(ICommand), typeof(DropDownButton));
+        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(DropDownButton));
+        public static readonly DependencyProperty CommandTargetProperty = DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(DropDownButton));
+        public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(Object), typeof(DropDownButton));
 
-        public static readonly DependencyProperty CommandTargetProperty =
-            DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(DropDownButton));
-
-        public static readonly DependencyProperty CommandParameterProperty =
-            DependencyProperty.Register("CommandParameter", typeof(Object), typeof(DropDownButton));
-
-        public static readonly DependencyProperty ContentProperty =
-            DependencyProperty.Register("Content", typeof(Object), typeof(DropDownButton));
+        public static readonly DependencyProperty ContentProperty = DependencyProperty.Register("Content", typeof(Object), typeof(DropDownButton));
 
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty MenuStyleProperty = DependencyProperty.Register("MenuStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
-        
+
+        /// <summary>
+        /// Gets or sets the Content of this control..
+        /// </summary>
         public Object Content
         {
             get { return (Object)GetValue(ContentProperty); }
             set { SetValue(ContentProperty, value); }
         }
 
+        /// <summary>
+        /// Reflects the parameter to pass to the CommandProperty upon execution. 
+        /// </summary>
         public Object CommandParameter
         {
             get { return (Object)GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the target element on which to fire the command.
+        /// </summary>
         public IInputElement CommandTarget
         {
             get { return (IInputElement)GetValue(CommandTargetProperty); }
             set { SetValue(CommandTargetProperty, value); }
         }
 
+        /// <summary>
+        /// Get or sets the Command property. 
+        /// </summary>
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -95,12 +97,18 @@ namespace MahApps.Metro.Controls
             set { SetValue(IsExpandedProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets an extra tag.
+        /// </summary>
         public Object ExtraTag
         {
             get { return GetValue(ExtraTagProperty); }
             set { SetValue(ExtraTagProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the dimension of children stacking.
+        /// </summary>
         public Orientation Orientation
         {
             get { return (Orientation)GetValue(OrientationProperty); }
