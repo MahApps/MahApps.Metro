@@ -124,6 +124,12 @@ namespace MahApps.Metro.Controls
                                             }
                                         }));
 
+        public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
+            "SelectAllOnFocus",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(true));
+
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -304,6 +310,15 @@ namespace MahApps.Metro.Controls
             set { SetValue(IntervalProperty, value); }
         }
 
+        [Bindable(true)]
+        [Category("Behavior")]
+        [DefaultValue(true)]
+        public bool SelectAllOnFocus
+        {
+            get { return (bool)GetValue(SelectAllOnFocusProperty); }
+            set { SetValue(SelectAllOnFocusProperty, value); }
+        }
+
         /// <summary>
         ///     Gets or sets a value indicating whether the text can be changed by the use of the up or down buttons only.
         /// </summary>
@@ -405,7 +420,7 @@ namespace MahApps.Metro.Controls
                         numericUpDown._valueTextBox.Focus();
                         e.Handled = true;
                     }
-                    else if (e.OriginalSource == numericUpDown._valueTextBox)
+                    else if (e.OriginalSource == numericUpDown._valueTextBox && numericUpDown.SelectAllOnFocus)
                     {
                         numericUpDown._valueTextBox.SelectAll();
                     }
