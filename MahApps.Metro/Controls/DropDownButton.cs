@@ -54,6 +54,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty MenuStyleProperty = DependencyProperty.Register("MenuStyle", typeof(Style), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(DropDownButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty ArrowVisibilityProperty = DependencyProperty.Register("ArrowVisibility", typeof(Visibility), typeof(DropDownButton), new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets or sets the Content of this control..
@@ -160,6 +161,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (Brush)GetValue(ArrowBrushProperty); }
             set { SetValue(ArrowBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the visibility of the button arrow icon.
+        /// </summary>
+        public Visibility ArrowVisibility
+        {
+            get { return (Visibility)GetValue(ArrowVisibilityProperty); }
+            set { SetValue(ArrowVisibilityProperty, value); }
         }
 
         private Button clickButton;

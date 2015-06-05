@@ -226,6 +226,7 @@
                                            Margin="0,0,3,0"
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
+                                           Visibility="{TemplateBinding ArrowVisibility}"
                                            Fill="{TemplateBinding ArrowBrush}">
                                     <Rectangle.OpacityMask>
                                         <VisualBrush Stretch="Fill">
@@ -261,7 +262,6 @@
                                                     Focusable="False"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
-                                                    MinWidth="20"
                                                     Margin="3"
                                                     ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -285,6 +285,12 @@
                         </Button>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Content"
+                                 Value="{x:Null}">
+                            <Setter TargetName="PART_ButtonContent"
+                                    Property="Margin"
+                                    Value="0" />
+                        </Trigger>
                         <Trigger Property="Orientation"
                                  Value="Vertical">
                             <Setter TargetName="PART_Rectangle"
