@@ -2,258 +2,326 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:MahApps.Metro.Controls">
 
-    <Style TargetType="{x:Type Button}"
-           BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-        <Setter Property="Background"
-                Value="{DynamicResource WhiteColorBrush}" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="BorderThickness"
-                Value="0" />
-        <Setter Property="Template">
+    <!-- obsolete -->
+    <ControlTemplate TargetType="{x:Type local:DropDownButton}"
+                     x:Key="SplitButtonHorizontal">
+        <Border x:Name="PART_Border"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                BorderBrush="{TemplateBinding BorderBrush}">
+            <Button x:Name="PART_Button"
+                    Style="{TemplateBinding ButtonStyle}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                    Background="{TemplateBinding Background}"
+                    Foreground="{TemplateBinding Foreground}"
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"
+                    CommandTarget="{TemplateBinding CommandTarget}">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                    <ContentPresenter RecognizesAccessKey="True"
+                                      Content="{TemplateBinding Icon}" />
+                    <ContentControl MinWidth="20"
+                                    Margin="3"
+                                    x:Name="PART_ButtonContent"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                    Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ContentTemplate="{TemplateBinding ItemTemplate}">
+                    </ContentControl>
+                    <Rectangle x:Name="PART_Rectangle"
+                               Height="6"
+                               Width="10"
+                               Margin="0,0,3,0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Fill="{TemplateBinding ArrowBrush}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill">
+                                <VisualBrush.Visual>
+                                    <Canvas Width="18"
+                                            Height="18"
+                                            Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                                            UseLayoutRounding="False">
+                                        <Path Width="18"
+                                              Height="16"
+                                              Canvas.Left="14.9063"
+                                              Canvas.Top="15.75"
+                                              Stretch="Fill"
+                                              Fill="{DynamicResource BlackColorBrush}"
+                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                    </Canvas>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+                <Button.ContextMenu>
+                    <ContextMenu x:Name="PART_Menu"
+                                 StaysOpen="False"
+                                 MinWidth="{TemplateBinding ActualWidth}"
+                                 IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                 DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                                 ItemTemplate="{TemplateBinding ItemTemplate}"
+                                 ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                 ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                 ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                 ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
+                                 ItemsSource="{TemplateBinding ItemsSource}" />
+                </Button.ContextMenu>
+            </Button>
+        </Border>
+    </ControlTemplate>
+
+    <!-- obsolete -->
+    <ControlTemplate TargetType="{x:Type local:DropDownButton}"
+                     x:Key="SplitButtonVertical">
+        <Border x:Name="PART_Border"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                BorderBrush="{TemplateBinding BorderBrush}">
+            <Button x:Name="PART_Button"
+                    Width="{TemplateBinding Width}"
+                    Style="{TemplateBinding ButtonStyle}"
+                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                    Background="{TemplateBinding Background}"
+                    Foreground="{TemplateBinding Foreground}"
+                    Command="{TemplateBinding Command}"
+                    CommandParameter="{TemplateBinding CommandParameter}"
+                    CommandTarget="{TemplateBinding CommandTarget}">
+                <StackPanel Orientation="Vertical"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                    <ContentPresenter RecognizesAccessKey="True"
+                                      Content="{TemplateBinding Icon}" />
+                    <ContentControl MinHeight="20"
+                                    Margin="3"
+                                    x:Name="PART_ButtonContent"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                    Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ContentTemplate="{TemplateBinding ItemTemplate}">
+                    </ContentControl>
+                    <Rectangle Margin="0,0,0,3"
+                               x:Name="PART_Rectangle"
+                               Height="6"
+                               Width="10"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Fill="{TemplateBinding ArrowBrush}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill">
+                                <VisualBrush.Visual>
+                                    <Canvas Width="18"
+                                            Height="18"
+                                            Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                                            UseLayoutRounding="False">
+                                        <Path Width="18"
+                                              Height="16"
+                                              Canvas.Left="14.9063"
+                                              Canvas.Top="15.75"
+                                              Stretch="Fill"
+                                              Fill="{DynamicResource BlackColorBrush}"
+                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                    </Canvas>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
+                </StackPanel>
+                <Button.ContextMenu>
+                    <ContextMenu x:Name="PART_Menu"
+                                 StaysOpen="False"
+                                 MinWidth="{TemplateBinding ActualWidth}"
+                                 IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                 DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                                 ItemTemplate="{TemplateBinding ItemTemplate}"
+                                 ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                 ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                 ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                 ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
+                                 ItemsSource="{TemplateBinding ItemsSource}" />
+                </Button.ContextMenu>
+            </Button>
+        </Border>
+    </ControlTemplate>
+
+    <Style x:Key="ButtonDropDownFocusVisual">
+        <Setter Property="Control.Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="Border"
-                            CornerRadius="0"
-                            BorderThickness="0"
-                            Background="{DynamicResource WhiteColorBrush}"
-                            BorderBrush="{DynamicResource WhiteColorBrush}">
-                        <ContentPresenter Margin="2"
-                                          HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                          VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="Transparent" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush8}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush6}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush10}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
+                <ControlTemplate>
+                    <Rectangle Margin="1"
+                               SnapsToDevicePixels="true"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeThickness="1"
+                               StrokeDashArray="1 2" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    
-    
-    <ControlTemplate TargetType="{x:Type local:DropDownButton}"
-                     x:Key="SplitButtonHorizontal">
-        <Border Name="PART_Border"
-                BorderThickness="1"
-                BorderBrush="{DynamicResource BlackColorBrush}">
-                <Button 
-                        x:Name="PART_Button"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        Style="{StaticResource {x:Type Button}}"
-                        Command="{TemplateBinding Command}"
-                        CommandParameter="{TemplateBinding CommandParameter}"
-                        CommandTarget="{TemplateBinding CommandTarget}">
-                    <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
-                                VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
-                        <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
-                        <ContentControl MinWidth="20"
-                                        Margin="3"
-                                        x:Name="PART_ButtonContent"
-                                        VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                        HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
-                                        VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                        ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                        Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                        ContentTemplate="{TemplateBinding ItemTemplate}">
-                        </ContentControl>
-                        <Rectangle Name="PART_Rectangle"
-                                   Height="6"
-                                   Width="10"
-                                   Margin="0,0,3,0"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Fill="{DynamicResource BlackColorBrush}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <Canvas Width="18"
-                                                Height="18"
-                                                Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                                UseLayoutRounding="False">
-                                            <Path Width="18"
-                                                  Height="16"
-                                                  Canvas.Left="14.9063"
-                                                  Canvas.Top="15.75"
-                                                  Stretch="Fill"
-                                                  Fill="{DynamicResource BlackColorBrush}"
-                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
-                                        </Canvas>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                    </StackPanel>
-                    <Button.ContextMenu>
-                        <ContextMenu Name="PART_Menu"
-                                     StaysOpen="False"
-                                     MinWidth="{TemplateBinding ActualWidth}"
-                                     IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                     DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                                     ItemTemplate="{TemplateBinding ItemTemplate}"
-                                     ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                     ItemStringFormat="{TemplateBinding ItemStringFormat}"
-                                     ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                                     ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                                     ItemsSource="{TemplateBinding ItemsSource}">
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                </Button>
-        </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsFocused"
-                     Value="True"
-                     SourceName="PART_Button">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}"
-                        TargetName="PART_Border" />
-            </Trigger>
-            <Trigger Property="IsMouseOver"
-                     Value="True">
-                <Setter TargetName="PART_Rectangle"
-                        Property="Fill"
-                        Value="{DynamicResource AccentColorBrush}" />
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    
-    
-    <ControlTemplate TargetType="{x:Type local:DropDownButton}"
-                     x:Key="SplitButtonVertical">
-        <Border Name="PART_Border"
-                BorderThickness="1"
-                BorderBrush="{DynamicResource BlackColorBrush}">
-                <Button Width="{TemplateBinding Width}"
-                        Style="{StaticResource {x:Type Button}}"
-                        x:Name="PART_Button"
-                        VerticalAlignment="Stretch"
-                        HorizontalAlignment="Stretch"
-                        Command="{TemplateBinding Command}"
-                        CommandParameter="{TemplateBinding CommandParameter}"
-                        CommandTarget="{TemplateBinding CommandTarget}">
-                    <Button.Content>
-                        <StackPanel Orientation="Vertical"
-                                    HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
-                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
-                            <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
-                            <ContentControl MinHeight="20"
-                                            Margin="3"
-                                            x:Name="PART_ButtonContent"
-                                            VerticalAlignment="Stretch"
-                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
-                                            VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                            Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ContentTemplate="{TemplateBinding ItemTemplate}">
-                            </ContentControl>
-                        <Rectangle Margin="0,0,0,3"
-                                    Name="PART_Rectangle"
-                                    Height="6"
-                                    Width="10"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Fill="{DynamicResource BlackColorBrush}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <Canvas Width="18"
-                                                Height="18"
-                                                Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                                UseLayoutRounding="False">
-                                            <Path Width="18"
-                                                  Height="16"
-                                                  Canvas.Left="14.9063"
-                                                  Canvas.Top="15.75"
-                                                  Stretch="Fill"
-                                                  Fill="{DynamicResource BlackColorBrush}"
-                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
-                                        </Canvas>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                    </StackPanel>
-                    </Button.Content>
-                    <Button.ContextMenu>
-                        <ContextMenu Name="PART_Menu"
-                                     StaysOpen="False"
-                                     MinWidth="{TemplateBinding ActualWidth}"
-                                     IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                     DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
-                                     ItemTemplate="{TemplateBinding ItemTemplate}"
-                                     ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                     ItemStringFormat="{TemplateBinding ItemStringFormat}"
-                                     ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
-                                     ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
-                                     ItemsSource="{TemplateBinding ItemsSource}">
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                </Button>
-        </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsFocused"
-                     Value="True"
-                     SourceName="PART_Button">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}"
-                        TargetName="PART_Border" />
-            </Trigger>
-            <Trigger Property="IsMouseOver"
-                     Value="True">
-                <Setter TargetName="PART_Rectangle"
-                        Property="Fill"
-                        Value="{DynamicResource AccentColorBrush}" />
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    
-    
     <Style TargetType="{x:Type local:DropDownButton}">
+        <Setter Property="ButtonStyle"
+                Value="{DynamicResource ButtonDropDownStyle}" />
+        <Setter Property="MenuStyle"
+                Value="{DynamicResource MetroContextMenu}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="ArrowBrush"
+                Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="MinHeight"
                 Value="26" />
         <Setter Property="BorderThickness"
                 Value="1" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="FontFamily"
                 Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize"
                 Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource BlackColorBrush}" />
-        <Setter Property="Template"
-                Value="{StaticResource SplitButtonHorizontal}" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="Focusable"
+                Value="False" />
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource ButtonDropDownFocusVisual}" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:DropDownButton}">
+                    <Border x:Name="PART_Border"
+                            UseLayoutRounding="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <Button x:Name="PART_Button"
+                                Style="{TemplateBinding ButtonStyle}"
+                                FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                Background="{TemplateBinding Background}"
+                                Foreground="{TemplateBinding Foreground}"
+                                Command="{TemplateBinding Command}"
+                                CommandParameter="{TemplateBinding CommandParameter}"
+                                CommandTarget="{TemplateBinding CommandTarget}">
+                            <DockPanel x:Name="PART_Content"
+                                       Focusable="False"
+                                       LastChildFill="True">
+                                <Rectangle x:Name="PART_Rectangle"
+                                           DockPanel.Dock="Right"
+                                           Height="6"
+                                           Width="10"
+                                           Margin="0,0,3,0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Visibility="{TemplateBinding ArrowVisibility}"
+                                           Fill="{TemplateBinding ArrowBrush}">
+                                    <Rectangle.OpacityMask>
+                                        <VisualBrush Stretch="Fill">
+                                            <VisualBrush.Visual>
+                                                <Canvas Width="18"
+                                                        Height="18"
+                                                        Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                                                        UseLayoutRounding="False">
+                                                    <Path Width="18"
+                                                          Height="16"
+                                                          Canvas.Left="14.9063"
+                                                          Canvas.Top="15.75"
+                                                          Stretch="Fill"
+                                                          Fill="{DynamicResource BlackColorBrush}"
+                                                          Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                                </Canvas>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Rectangle.OpacityMask>
+                                </Rectangle>
+                                <StackPanel x:Name="PART_ContentOrientation"
+                                            Focusable="False"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <ContentPresenter RecognizesAccessKey="True"
+                                                      Focusable="False"
+                                                      HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"
+                                                      Content="{TemplateBinding Icon}"
+                                                      ContentTemplate="{TemplateBinding IconTemplate}" />
+                                    <ContentControl x:Name="PART_ButtonContent"
+                                                    Focusable="False"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Margin="3"
+                                                    ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                    Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    ContentTemplate="{TemplateBinding ItemTemplate}" />
+                                </StackPanel>
+                            </DockPanel>
+                            <Button.ContextMenu>
+                                <ContextMenu x:Name="PART_Menu"
+                                             Style="{TemplateBinding MenuStyle}"
+                                             StaysOpen="False"
+                                             MinWidth="{TemplateBinding ActualWidth}"
+                                             IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                             DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
+                                             ItemTemplate="{TemplateBinding ItemTemplate}"
+                                             ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                             ItemStringFormat="{TemplateBinding ItemStringFormat}"
+                                             ItemContainerStyle="{TemplateBinding ItemContainerStyle}"
+                                             ItemContainerStyleSelector="{TemplateBinding ItemContainerStyleSelector}"
+                                             ItemsSource="{TemplateBinding ItemsSource}" />
+                            </Button.ContextMenu>
+                        </Button>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Content"
+                                 Value="{x:Null}">
+                            <Setter TargetName="PART_ButtonContent"
+                                    Property="Margin"
+                                    Value="0" />
+                        </Trigger>
+                        <Trigger Property="Orientation"
+                                 Value="Vertical">
+                            <Setter TargetName="PART_Rectangle"
+                                    Property="DockPanel.Dock"
+                                    Value="Bottom" />
+                            <Setter TargetName="PART_Rectangle"
+                                    Property="Margin"
+                                    Value="0,0,0,3" />
+                            <Setter TargetName="PART_ContentOrientation"
+                                    Property="Orientation"
+                                    Value="Vertical" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
-            <Trigger Property="Orientation"
-                     Value="Vertical">
-                <Setter Property="Template"
-                        Value="{StaticResource SplitButtonVertical}" />
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="ArrowBrush"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </Trigger>
+            <Trigger Property="IsFocused"
+                     Value="True">
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin"
+                     Value="True">
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>

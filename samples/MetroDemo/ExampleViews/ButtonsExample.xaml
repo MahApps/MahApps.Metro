@@ -255,30 +255,47 @@
         <StackPanel Grid.Row="1"
                     Grid.Column="4"
                     HorizontalAlignment="Stretch">
+            <StackPanel.Resources>
+                <Style x:Key="CircleDropDownButton"
+                       TargetType="Controls:DropDownButton"
+                       BasedOn="{StaticResource {x:Type Controls:DropDownButton}}">
+                    <Setter Property="Width" Value="48" />
+                    <Setter Property="Height" Value="48" />
+                    <Setter Property="ArrowVisibility" Value="Collapsed" />
+                    <Setter Property="ButtonStyle" Value="{DynamicResource MetroCircleButtonStyle}" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="FocusVisualStyle" Value="{DynamicResource MetroCircleButtonFocusVisual}" />
+                </Style>
+            </StackPanel.Resources>
+            
             <Label Content="DropDownButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
             <Controls:DropDownButton Name="DownButton"
-                                     VerticalContentAlignment="Center"
-                                     Width="120"
-                                     Content="Test"
+                                     Style="{StaticResource CircleDropDownButton}"
                                      DisplayMemberPath="Title"
-                                     Icon="{DynamicResource appbar_music}"
                                      ItemsSource="{Binding Albums}">
+                <Controls:DropDownButton.Icon>
+                    <Viewbox Width="32" Height="32" Stretch="Uniform">
+                        <ContentControl Focusable="False" Content="{DynamicResource appbar_music}" />
+                    </Viewbox>
+                </Controls:DropDownButton.Icon>
             </Controls:DropDownButton>
 
             <Controls:DropDownButton Name="DownButton1"
                                      Orientation="Vertical"
-                                     Icon="{DynamicResource appbar_journal}"
-                                     HorizontalContentAlignment="Center"
                                      Margin="0,10,0,0"
-                                     Width="120"
-                                     Content="Test"
+                                     Width="130"
+                                     Content="The Content"
                                      DisplayMemberPath="Title"
                                      ItemsSource="{Binding ElementName=DownButton, Mode=TwoWay, Path=ItemsSource}">
+                <Controls:DropDownButton.Icon>
+                    <Viewbox Width="32" Height="32" Stretch="Uniform">
+                        <ContentControl Focusable="False" Content="{DynamicResource appbar_journal}" />
+                    </Viewbox>
+                </Controls:DropDownButton.Icon>
             </Controls:DropDownButton>
-            <!--<CheckBox IsChecked="{Binding ElementName=DownButton, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox IsChecked="{Binding ElementName=DownButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
+
             <Label Content="SplitButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
@@ -286,23 +303,20 @@
                                 HorizontalContentAlignment="Left"
                                 HorizontalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                Width="120"
+                                Width="130"
                                 SelectedIndex="2"
                                 ItemsSource="{Binding Albums}"
                                 DisplayMemberPath="Title"
                                 VerticalAlignment="Center"  />
 
             <Controls:SplitButton Margin="20,10,20,0" Name="SplitButton1" Icon="{DynamicResource appbar_book_side}"
-                                  Width="120"
+                                  Width="130"
                                   HorizontalAlignment="Center"
                                   HorizontalContentAlignment="Center"
                                   VerticalContentAlignment="Center"
                                   Orientation="Vertical" DisplayMemberPath="{Binding ElementName=SplitButton0, Path=DisplayMemberPath}"
                                   SelectedIndex="{Binding SelectedIndex, ElementName=SplitButton0, Mode=TwoWay}"
                                   ItemsSource="{Binding ItemsSource, ElementName=SplitButton0, Mode=TwoWay}" />
-
-            <!--<CheckBox IsChecked="{Binding ElementName=SplitButton0, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-            <CheckBox IsChecked="{Binding ElementName=SplitButton1, Path=IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />-->
 
         </StackPanel>
     </Grid>
