@@ -149,6 +149,8 @@ namespace MahApps.Metro.Controls
 
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
+
+            EventManager.RegisterClassHandler(typeof(NumericUpDown), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
         }
 
         public event RoutedPropertyChangedEventHandler<double?> ValueChanged
@@ -383,6 +385,32 @@ namespace MahApps.Metro.Controls
         private CultureInfo SpecificCultureInfo
         {
             get { return Culture ?? Language.GetSpecificCulture(); }
+        }
+
+        /// <summary> 
+        ///     Called when this element or any below gets focus.
+        /// </summary>
+        private static void OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            // When NumericUpDown gets logical focus, select the text inside us.
+            NumericUpDown numericUpDown = (NumericUpDown)sender;
+
+            // If we're an editable NumericUpDown, forward focus to the TextBox element
+            if (!e.Handled)
+            {
+                if ((numericUpDown.InterceptManualEnter || numericUpDown.IsReadOnly) && numericUpDown._valueTextBox != null)
+                {
+                    if (e.OriginalSource == numericUpDown)
+                    {
+                        numericUpDown._valueTextBox.Focus();
+                        e.Handled = true;
+                    }
+                    else if (e.OriginalSource == numericUpDown._valueTextBox)
+                    {
+                        numericUpDown._valueTextBox.SelectAll();
+                    }
+                }
+            }
         }
 
         /// <summary>

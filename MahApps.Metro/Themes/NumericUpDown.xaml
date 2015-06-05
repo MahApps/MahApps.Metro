@@ -42,8 +42,8 @@
                 Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="Validation.ErrorTemplate"
                 Value="{DynamicResource ValidationErrorTemplate}" />
-        <Setter Property="Focusable"
-                Value="False" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">
@@ -77,7 +77,7 @@
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      BorderThickness="0"
                                      Background="{x:Null}"
-                                     Focusable="True"
+                                     Focusable="{TemplateBinding Focusable}"
                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
