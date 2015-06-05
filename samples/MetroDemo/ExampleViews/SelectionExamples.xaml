@@ -131,6 +131,7 @@
                         HorizontalAlignment="Left">
                 <ComboBox Width="200"
                           Controls:TextBoxHelper.ClearTextButton="True"
+                          Controls:TextBoxHelper.Watermark="Please select an item..."
                           Margin="0, 10, 0, 0"
                           SelectedIndex="0">
                     <ComboBoxItem Content="Item 1" />

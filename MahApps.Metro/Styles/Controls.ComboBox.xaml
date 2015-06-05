@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
@@ -300,6 +301,32 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="enterGotFocus">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             To=".2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="PART_WatermarkMessage" />
+                        </Storyboard>
+                        <Storyboard x:Key="exitGotFocus">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="PART_WatermarkMessage" />
+                        </Storyboard>
+
+                        <Storyboard x:Key="enterHasText">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             From=".2"
+                                             To="0"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="PART_WatermarkMessage" />
+                        </Storyboard>
+                        <Storyboard x:Key="exitHasText">
+                            <DoubleAnimation Duration="0:0:0.2"
+                                             Storyboard.TargetProperty="Opacity"
+                                             Storyboard.TargetName="PART_WatermarkMessage" />
+                        </Storyboard>
+                    </ControlTemplate.Resources>
                     <Grid>
                         <Grid.Resources>
                             <Style x:Key="comboToggleStyle"
@@ -459,6 +486,18 @@
                                          FontFamily="{TemplateBinding FontFamily}"
                                          FontSize="{TemplateBinding FontSize}" />
                             </Border>
+                            <TextBlock x:Name="PART_WatermarkMessage"
+                                       Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                       Padding="{TemplateBinding Padding}"
+                                       Visibility="Collapsed"
+                                       Foreground="{TemplateBinding Foreground}"
+                                       IsHitTestVisible="False"
+                                       Opacity="0.6"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       Margin="8,2,4,2" />
                             <Grid x:Name="ContentSite"
                                   Margin="7 0 0 0">
                                 <ContentPresenter ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
@@ -472,7 +511,7 @@
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                         </Grid>
-                        
+
                         <Border x:Name="FocusBorder"
                                 Grid.ColumnSpan="3"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -489,7 +528,7 @@
                                 Opacity="0.6"
                                 IsHitTestVisible="False"
                                 Visibility="Collapsed" />
-                        
+
                         <!-- AllowsTransparency="true" fixes the redraw problem under windows vista/7 with a selected non aero theme -->
                         <Popup x:Name="PART_Popup"
                                AllowsTransparency="True"
@@ -518,6 +557,48 @@
                         </Popup>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}"
+                                           Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem}"
+                                           Value="{x:Null}" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter TargetName="PART_WatermarkMessage"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static converters:IsNullConverter.Instance}}"
+                                           Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsKeyboardFocusWithin}"
+                                           Value="True" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}"
+                                           Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource enterGotFocus}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource exitGotFocus}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem, Mode=OneWay, Converter={x:Static converters:IsNullConverter.Instance}}"
+                                           Value="False" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsEditable}"
+                                           Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource enterHasText}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource exitHasText}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}"
                                      Value="False">
                             <Setter TargetName="EditableTextBoxBorder"
@@ -584,7 +665,7 @@
                                     Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
                         </Trigger>
-                        
+
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter TargetName="DisabledVisualElement"
@@ -613,7 +694,8 @@
         <Setter Property="ScrollViewer.CanContentScroll"
                 Value="True" />
         <Style.Triggers>
-            <Trigger Property="IsGrouping" Value="True">
+            <Trigger Property="IsGrouping"
+                     Value="True">
                 <Setter Property="ScrollViewer.CanContentScroll"
                         Value="False" />
             </Trigger>
