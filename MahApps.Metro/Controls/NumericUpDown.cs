@@ -124,6 +124,12 @@ namespace MahApps.Metro.Controls
                                             }
                                         }));
 
+        public static readonly DependencyProperty SelectAllOnFocusProperty = DependencyProperty.Register(
+            "SelectAllOnFocus",
+            typeof(bool),
+            typeof(NumericUpDown),
+            new PropertyMetadata(true));
+
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -149,6 +155,8 @@ namespace MahApps.Metro.Controls
 
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
+
+            EventManager.RegisterClassHandler(typeof(NumericUpDown), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
         }
 
         public event RoutedPropertyChangedEventHandler<double?> ValueChanged
@@ -302,6 +310,15 @@ namespace MahApps.Metro.Controls
             set { SetValue(IntervalProperty, value); }
         }
 
+        [Bindable(true)]
+        [Category("Behavior")]
+        [DefaultValue(true)]
+        public bool SelectAllOnFocus
+        {
+            get { return (bool)GetValue(SelectAllOnFocusProperty); }
+            set { SetValue(SelectAllOnFocusProperty, value); }
+        }
+
         /// <summary>
         ///     Gets or sets a value indicating whether the text can be changed by the use of the up or down buttons only.
         /// </summary>
@@ -383,6 +400,32 @@ namespace MahApps.Metro.Controls
         private CultureInfo SpecificCultureInfo
         {
             get { return Culture ?? Language.GetSpecificCulture(); }
+        }
+
+        /// <summary> 
+        ///     Called when this element or any below gets focus.
+        /// </summary>
+        private static void OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            // When NumericUpDown gets logical focus, select the text inside us.
+            NumericUpDown numericUpDown = (NumericUpDown)sender;
+
+            // If we're an editable NumericUpDown, forward focus to the TextBox element
+            if (!e.Handled)
+            {
+                if ((numericUpDown.InterceptManualEnter || numericUpDown.IsReadOnly) && numericUpDown._valueTextBox != null)
+                {
+                    if (e.OriginalSource == numericUpDown)
+                    {
+                        numericUpDown._valueTextBox.Focus();
+                        e.Handled = true;
+                    }
+                    else if (e.OriginalSource == numericUpDown._valueTextBox && numericUpDown.SelectAllOnFocus)
+                    {
+                        numericUpDown._valueTextBox.SelectAll();
+                    }
+                }
+            }
         }
 
         /// <summary>
