@@ -33,8 +33,10 @@
                                     Property="Background"
                                     Value="{DynamicResource GrayBrush8}" />
                         </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Border" Property="Background"
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter TargetName="Border"
+                                    Property="Background"
                                     Value="{DynamicResource GrayBrush6}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
@@ -70,10 +72,11 @@
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}">
                     <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
                                 VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
-                        <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
-                        <ContentControl MinWidth="20" 
+                        <ContentPresenter RecognizesAccessKey="True"
+                                          Content="{TemplateBinding Icon}"></ContentPresenter>
+                        <ContentControl MinWidth="20"
                                         Margin="2"
                                         x:Name="PART_ButtonContent"
                                         HorizontalAlignment="Stretch"
@@ -180,7 +183,8 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" MinHeight="20"
+                <Button Grid.Row="0"
+                        MinHeight="20"
                         Width="{TemplateBinding Width}"
                         Style="{StaticResource {x:Type Button}}"
                         x:Name="PART_Button"
@@ -189,15 +193,16 @@
                         Command="{TemplateBinding Command}"
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}">
-                    <Button.Content >
+                    <Button.Content>
                         <StackPanel Orientation="Vertical"
-                                    HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                    HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
                                     VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
-                            <ContentPresenter RecognizesAccessKey="True" Content="{TemplateBinding Icon}"></ContentPresenter>
+                            <ContentPresenter RecognizesAccessKey="True"
+                                              Content="{TemplateBinding Icon}"></ContentPresenter>
                             <ContentControl x:Name="PART_ButtonContent"
                                             Margin="2"
                                             VerticalAlignment="Stretch"
-                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}" 
+                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
                                             VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
                                             ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
@@ -242,11 +247,11 @@
                     </Button.Content>
                 </Button>
                 <Popup Name="PART_Popup"
-                    IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                    PlacementTarget="{Binding ElementName=PART_Expander}"
-                    PopupAnimation="Fade"
-                    MinWidth="{TemplateBinding ActualWidth}"
-                    StaysOpen="True">
+                       IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                       PlacementTarget="{Binding ElementName=PART_Expander}"
+                       PopupAnimation="Fade"
+                       MinWidth="{TemplateBinding ActualWidth}"
+                       StaysOpen="True">
                     <ListBox x:Name="PART_ListBox"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
