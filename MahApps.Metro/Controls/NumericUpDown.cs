@@ -310,7 +310,7 @@ namespace MahApps.Metro.Controls
 
         [Bindable(true)]
         [Category("Appearance")]
-        [DefaultValue(10)]
+        [DefaultValue(20d)]
         public double UpDownButtonsWidth
         {
             get { return (double)GetValue(UpDownButtonsWidthProperty); }
