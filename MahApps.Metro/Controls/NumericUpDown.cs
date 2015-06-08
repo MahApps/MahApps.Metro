@@ -106,6 +106,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(default(bool)));
 
+        public static readonly DependencyProperty UpDownButtonsWidthProperty = DependencyProperty.Register(
+            "UpDownButtonsWidth",
+            typeof(double),
+            typeof(NumericUpDown),
+            new PropertyMetadata(20d));
+
         public static readonly DependencyProperty InterceptManualEnterProperty = DependencyProperty.Register(
             "InterceptManualEnter",
             typeof(bool),
@@ -157,6 +163,7 @@ namespace MahApps.Metro.Controls
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
 
             EventManager.RegisterClassHandler(typeof(NumericUpDown), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
+            
         }
 
         public event RoutedPropertyChangedEventHandler<double?> ValueChanged
@@ -302,6 +309,15 @@ namespace MahApps.Metro.Controls
         }
 
         [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue(10)]
+        public double UpDownButtonsWidth
+        {
+            get { return (double)GetValue(UpDownButtonsWidthProperty); }
+            set { SetValue(UpDownButtonsWidthProperty, value); }
+        }
+
+        [Bindable(true)]
         [Category("Behavior")]
         [DefaultValue(DefaultInterval)]
         public double Interval
@@ -426,6 +442,7 @@ namespace MahApps.Metro.Controls
                     }
                 }
             }
+            
         }
 
         /// <summary>
@@ -438,7 +455,7 @@ namespace MahApps.Metro.Controls
 
             _repeatUp = GetTemplateChild(ElementNumericUp) as RepeatButton;
             _repeatDown = GetTemplateChild(ElementNumericDown) as RepeatButton;
-
+            
             _valueTextBox = GetTemplateChild(ElementTextBox) as TextBox;
 
             if (_repeatUp == null ||

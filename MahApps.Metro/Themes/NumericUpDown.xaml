@@ -62,9 +62,9 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition x:Name="PART_NumericUpColumn"
-                                                  Width="20" />
+                                                  Width="{TemplateBinding UpDownButtonsWidth}" />
                                 <ColumnDefinition x:Name="PART_NumericDownColumn"
-                                                  Width="20" />
+                                                  Width="{TemplateBinding UpDownButtonsWidth}" />
                             </Grid.ColumnDefinitions>
 
                             <TextBox x:Name="PART_TextBox"
@@ -91,7 +91,8 @@
                                           Delay="{TemplateBinding Delay}"
                                           Foreground="{TemplateBinding Foreground}"
                                           Style="{DynamicResource ChromelessButtonStyle}"
-                                          IsTabStop="False">
+                                          IsTabStop="False"
+                                          Width="{TemplateBinding UpDownButtonsWidth}">
                                 <Path x:Name="PolygonUp"
                                       Width="14"
                                       Height="14"
@@ -106,7 +107,8 @@
                                           Delay="{TemplateBinding Delay}"
                                           Style="{DynamicResource ChromelessButtonStyle}"
                                           Foreground="{TemplateBinding Foreground}"
-                                          IsTabStop="False">
+                                          IsTabStop="False"
+                                          Width="{TemplateBinding UpDownButtonsWidth}">
                                 <Path x:Name="PolygonDown"
                                       Width="14"
                                       Height="3"
@@ -201,6 +203,7 @@
                                     Property="Width"
                                     Value="0" />
                         </Trigger>
+                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

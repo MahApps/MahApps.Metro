@@ -14,6 +14,7 @@ namespace MahApps.Metro.Controls
         private double interval = (double)NumericUpDown.IntervalProperty.DefaultMetadata.DefaultValue;
         private string stringFormat = (string)NumericUpDown.StringFormatProperty.DefaultMetadata.DefaultValue;
         private bool hideUpDownButtons = (bool)NumericUpDown.HideUpDownButtonsProperty.DefaultMetadata.DefaultValue;
+        private double upDownButtonsWidth = (double)NumericUpDown.UpDownButtonsWidthProperty.DefaultMetadata.DefaultValue;
         private Binding foregroundBinding;
 
         static DataGridNumericUpDownColumn()
@@ -55,6 +56,7 @@ namespace MahApps.Metro.Controls
                     style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
                     style.Setters.Add(new Setter(UIElement.FocusableProperty, false));
                     style.Setters.Add(new Setter(NumericUpDown.HideUpDownButtonsProperty, true));
+                    style.Setters.Add(new Setter(NumericUpDown.UpDownButtonsWidthProperty, 20d));
                     style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0d)));
                     style.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.Transparent));
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
@@ -113,6 +115,7 @@ namespace MahApps.Metro.Controls
         {
             NumericUpDown generateNumericUpDown = GenerateNumericUpDown(false, cell);
             generateNumericUpDown.HideUpDownButtons = true;
+            generateNumericUpDown.UpDownButtonsWidth = 20d;
             return generateNumericUpDown;
         }
         
@@ -148,6 +151,7 @@ namespace MahApps.Metro.Controls
             numericUpDown.InterceptMouseWheel = true;
             numericUpDown.Speedup = true;
             numericUpDown.HideUpDownButtons = HideUpDownButtons;
+            numericUpDown.UpDownButtonsWidth = UpDownButtonsWidth;
 
             return numericUpDown;
         }
@@ -191,6 +195,12 @@ namespace MahApps.Metro.Controls
         {
             get { return hideUpDownButtons; }
             set { hideUpDownButtons = value; }
+        }
+
+        public double UpDownButtonsWidth
+        {
+            get { return upDownButtonsWidth; }
+            set { upDownButtonsWidth = value;  }
         }
     }
 }
