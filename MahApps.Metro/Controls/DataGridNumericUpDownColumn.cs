@@ -14,6 +14,7 @@ namespace MahApps.Metro.Controls
         private double interval = (double)NumericUpDown.IntervalProperty.DefaultMetadata.DefaultValue;
         private string stringFormat = (string)NumericUpDown.StringFormatProperty.DefaultMetadata.DefaultValue;
         private bool hideUpDownButtons = (bool)NumericUpDown.HideUpDownButtonsProperty.DefaultMetadata.DefaultValue;
+        private double upDownButtonsWidth = (double)NumericUpDown.UpDownButtonsWidthProperty.DefaultMetadata.DefaultValue;
         private Binding foregroundBinding;
 
         static DataGridNumericUpDownColumn()
@@ -148,6 +149,7 @@ namespace MahApps.Metro.Controls
             numericUpDown.InterceptMouseWheel = true;
             numericUpDown.Speedup = true;
             numericUpDown.HideUpDownButtons = HideUpDownButtons;
+            numericUpDown.UpDownButtonsWidth = UpDownButtonsWidth;
 
             return numericUpDown;
         }
@@ -191,6 +193,12 @@ namespace MahApps.Metro.Controls
         {
             get { return hideUpDownButtons; }
             set { hideUpDownButtons = value; }
+        }
+
+        public double UpDownButtonsWidth
+        {
+            get { return upDownButtonsWidth; }
+            set { upDownButtonsWidth = value;  }
         }
     }
 }
