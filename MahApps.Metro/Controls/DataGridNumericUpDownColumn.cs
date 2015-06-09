@@ -56,7 +56,6 @@ namespace MahApps.Metro.Controls
                     style.Setters.Add(new Setter(UIElement.IsHitTestVisibleProperty, false));
                     style.Setters.Add(new Setter(UIElement.FocusableProperty, false));
                     style.Setters.Add(new Setter(NumericUpDown.HideUpDownButtonsProperty, true));
-                    style.Setters.Add(new Setter(NumericUpDown.UpDownButtonsWidthProperty, 20d));
                     style.Setters.Add(new Setter(Control.BorderThicknessProperty, new Thickness(0d)));
                     style.Setters.Add(new Setter(Control.BackgroundProperty, Brushes.Transparent));
                     style.Setters.Add(new Setter(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
@@ -115,7 +114,6 @@ namespace MahApps.Metro.Controls
         {
             NumericUpDown generateNumericUpDown = GenerateNumericUpDown(false, cell);
             generateNumericUpDown.HideUpDownButtons = true;
-            generateNumericUpDown.UpDownButtonsWidth = 20d;
             return generateNumericUpDown;
         }
         
