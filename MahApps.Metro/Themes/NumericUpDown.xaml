@@ -62,9 +62,9 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                                 <ColumnDefinition x:Name="PART_NumericUpColumn"
-                                                  Width="{TemplateBinding UpDownButtonsWidth}" />
+                                                  Width="Auto" />
                                 <ColumnDefinition x:Name="PART_NumericDownColumn"
-                                                  Width="{TemplateBinding UpDownButtonsWidth}" />
+                                                  Width="Auto" />
                             </Grid.ColumnDefinitions>
 
                             <TextBox x:Name="PART_TextBox"
