@@ -18,6 +18,17 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        public async Task WindowCommandsShouldHaveTheParentWindow()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+
+            Assert.Equal(window, window.LeftWindowCommands.ParentWindow);
+            Assert.Equal(window, window.RightWindowCommands.ParentWindow);
+        }
+
+        [Fact]
         public async Task ShowsRightWindowCommandsOnTopByDefault()
         {
             await TestHost.SwitchToAppThread();
