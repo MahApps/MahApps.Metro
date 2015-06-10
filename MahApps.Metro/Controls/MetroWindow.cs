@@ -838,6 +838,9 @@ namespace MahApps.Metro.Controls
             if (RightWindowCommands == null)
                 RightWindowCommands = new WindowCommands();
 
+            LeftWindowCommands.ParentWindow = this;
+            RightWindowCommands.ParentWindow = this;
+
             LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
             RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
             WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
