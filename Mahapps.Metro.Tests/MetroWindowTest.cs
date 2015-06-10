@@ -26,6 +26,7 @@ namespace MahApps.Metro.Tests
 
             Assert.Equal(window, window.LeftWindowCommands.ParentWindow);
             Assert.Equal(window, window.RightWindowCommands.ParentWindow);
+            Assert.Equal(window, window.WindowButtonCommands.ParentWindow);
         }
 
         [Fact]

@@ -845,6 +845,11 @@ namespace MahApps.Metro.Controls
             RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
             WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
 
+            if (WindowButtonCommands != null)
+            {
+                WindowButtonCommands.ParentWindow = this;
+            }
+
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
             metroDialogContainer = GetTemplateChild(PART_MetroDialogContainer) as Grid;
             flyoutModal = (Rectangle) GetTemplateChild(PART_FlyoutModal);
