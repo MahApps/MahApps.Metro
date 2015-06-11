@@ -28,10 +28,19 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowCommands), new FrameworkPropertyMetadata(typeof(WindowCommands)));
         }
 
-        public override void OnApplyTemplate()
+        public WindowCommands()
         {
-            base.OnApplyTemplate();
-            this.ParentWindow = this.TryFindParent<Window>();
+            this.Loaded += WindowCommands_Loaded;
+        }
+
+        private void WindowCommands_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= WindowCommands_Loaded;
+            var parentWindow = this.ParentWindow;
+            if (null == parentWindow)
+            {
+                this.ParentWindow = this.TryFindParent<Window>();
+            }
         }
 
         private Window _parentWindow;
