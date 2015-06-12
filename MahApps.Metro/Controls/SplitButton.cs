@@ -54,6 +54,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CommandTargetProperty = DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(SplitButton));
         public static readonly DependencyProperty CommandParameterProperty = DependencyProperty.Register("CommandParameter", typeof(Object), typeof(SplitButton));
 
+        public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty ButtonArrowStyleProperty = DependencyProperty.Register("ButtonArrowStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         public Object CommandParameter
         {
             get { return (Object)GetValue(CommandParameterProperty); }
@@ -106,6 +109,24 @@ namespace MahApps.Metro.Controls
         {
             get { return GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the button style.
+        /// </summary>
+        public Style ButtonStyle
+        {
+            get { return (Style)GetValue(ButtonStyleProperty); }
+            set { SetValue(ButtonStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the button arrow style.
+        /// </summary>
+        public Style ButtonArrowStyle
+        {
+            get { return (Style)GetValue(ButtonArrowStyleProperty); }
+            set { SetValue(ButtonArrowStyleProperty, value); }
         }
 
         private Button _clickButton;
