@@ -35,6 +35,11 @@
         
     </ResourceDictionary.MergedDictionaries>
 
+    <Style x:Key="MetroToggleSwitchButton"
+           TargetType="{x:Type Controls:ToggleSwitchButton}"
+           BasedOn="{StaticResource {x:Type Controls:ToggleSwitchButton}}">
+        <Setter Property="ThumbIndicatorBrush" Value="GreenYellow"/>
+    </Style>
     <Style x:Key="MetroToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}" />
 
     <!-- note: default style for textblock is now in MetroWindow !!! -->

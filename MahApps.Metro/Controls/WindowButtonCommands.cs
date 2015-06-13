@@ -77,6 +77,21 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowButtonCommands), new FrameworkPropertyMetadata(typeof(WindowButtonCommands)));
         }
 
+        public WindowButtonCommands()
+        {
+            this.Loaded += WindowButtonCommands_Loaded;
+        }
+
+        private void WindowButtonCommands_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= WindowButtonCommands_Loaded;
+            var parentWindow = this.ParentWindow;
+            if (null == parentWindow)
+            {
+                this.ParentWindow = this.TryFindParent<MetroWindow>();
+            }
+        }
+
         private string GetCaption(int id)
         {
             if (user32 == null)
@@ -93,26 +108,22 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            this.ParentWindow = this.TryFindParent<MetroWindow>();
-            if (this.ParentWindow != null)
+            close = Template.FindName("PART_Close", this) as Button;
+            if (close != null)
             {
-                close = Template.FindName("PART_Close", this) as Button;
-                if (close != null)
-                {
-                    close.Click += CloseClick;
-                }
+                close.Click += CloseClick;
+            }
 
-                max = Template.FindName("PART_Max", this) as Button;
-                if (max != null)
-                {
-                    max.Click += MaximizeClick;
-                }
+            max = Template.FindName("PART_Max", this) as Button;
+            if (max != null)
+            {
+                max.Click += MaximizeClick;
+            }
 
-                min = Template.FindName("PART_Min", this) as Button;
-                if (min != null)
-                {
-                    min.Click += MinimizeClick;
-                }
+            min = Template.FindName("PART_Min", this) as Button;
+            if (min != null)
+            {
+                min.Click += MinimizeClick;
             }
         }
 
@@ -127,11 +138,13 @@ namespace MahApps.Metro.Controls
 
         private void MinimizeClick(object sender, RoutedEventArgs e)
         {
+            if (null == this.ParentWindow) return;
             Microsoft.Windows.Shell.SystemCommands.MinimizeWindow(this.ParentWindow);
         }
 
         private void MaximizeClick(object sender, RoutedEventArgs e)
         {
+            if (null == this.ParentWindow) return;
             if (this.ParentWindow.WindowState == WindowState.Maximized)
             {
                 Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this.ParentWindow);
@@ -152,6 +165,7 @@ namespace MahApps.Metro.Controls
                 return;
             }
 
+            if (null == this.ParentWindow) return;
             this.ParentWindow.Close();
         }
 
