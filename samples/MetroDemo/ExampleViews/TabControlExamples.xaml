@@ -20,44 +20,44 @@
 
     <ScrollViewer>
         <StackPanel Margin="5, 10, 5, 0">
-            <GroupBox Header="Default TabControl"
+            <GroupBox Header="_Default TabControl"
                       Margin="0">
                 <StackPanel Margin="15, 5, 15, 5">
                     <Label Content="Default TabControl normal style"
                            Style="{DynamicResource DescriptionHeaderStyle}" />
                     <TabControl>
-                        <TabItem Header="item 1"
+                        <TabItem Header="item _1"
                                  Controls:ControlsHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="Content" />
                         </TabItem>
-                        <TabItem Header="item 2"
+                        <TabItem Header="item _2"
                                  Controls:ControlsHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="More content" />
                         </TabItem>
-                        <TabItem Header="item 3"
+                        <TabItem Header="item _3"
                                  Controls:ControlsHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="More more content" />
                         </TabItem>
-                        <TabItem Header="item 4"
+                        <TabItem Header="item _4"
                                  Controls:ControlsHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="So much content!" />
                         </TabItem>
-                        <TabItem Header="item 5"
+                        <TabItem Header="item _5"
                                  Controls:ControlsHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="Content!" />
                         </TabItem>
-                        <TabItem Header="item 6"
+                        <TabItem Header="item _6"
                                  Controls:ControlsHelper.HeaderFontSize="18">
                             <TextBlock FontSize="30"
                                        Text="This is not content (it is)" />
                         </TabItem>
                     </TabControl>
-                    <Label Content="Default TabControl with underline"
+                    <Label Content="Default _TabControl with underline"
                            Style="{DynamicResource DescriptionHeaderStyle}" />
                     <TabControl Controls:TabControlHelper.IsUnderlined="True">
                         <TabItem Header="item 1"
@@ -92,7 +92,7 @@
                         </TabItem>
                     </TabControl>
                     <Label Margin="0, 5, 0, 0"
-                           Content="Default TabControl with AnimatedTabControl style"
+                           Content="Default TabControl with _AnimatedTabControl style"
                            Style="{DynamicResource DescriptionHeaderStyle}" />
                     <Grid>
                         <Grid.Resources>
@@ -114,7 +114,7 @@
                         </TabControl>
                     </Grid>
                     <Label Margin="0, 5, 0, 0"
-                           Content="Default TabControl with AnimatedSingleRowTabControl style"
+                           Content="Default TabControl with Animated_SingleRowTabControl style"
                            Style="{DynamicResource DescriptionHeaderStyle}" />
                     <Grid>
                         <Grid.Resources>
@@ -140,7 +140,7 @@
                         </TabControl>
                     </Grid>
                     <Label Margin="0, 5, 0, 0"
-                           Content="Default TabControl left style"
+                           Content="Default TabControl _left style"
                            Style="{DynamicResource DescriptionHeaderStyle}" />
                     <Grid>
                         <Grid.Resources>
@@ -186,7 +186,7 @@
                                     -->
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Generic theme TabControls"
+            <GroupBox Header="_Generic theme TabControls"
                       Margin="0, 10, 0, 0">
                 <StackPanel Margin="15, 5, 15, 5">
                     <Label Content="MetroAnimatedTabControl"

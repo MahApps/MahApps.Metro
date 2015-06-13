@@ -209,7 +209,7 @@
             <Label Content="Checkbox"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
             <CheckBox Margin="0, 10, 0, 0"
-                      Content="Enabled" />
+                      Content="_Enabled" />
             <CheckBox Margin="0, 10, 0, 0"
                       Content="Enabled"
                       IsChecked="True" />
@@ -236,7 +236,7 @@
             <Label Content="Radio button"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
             <RadioButton Margin="0, 10, 0, 0"
-                         Content="Enabled"
+                         Content="E_nabled"
                          GroupName="1" />
             <RadioButton Margin="0, 10, 0, 0"
                          Content="Enabled"
