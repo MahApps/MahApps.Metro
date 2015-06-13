@@ -147,6 +147,12 @@ namespace MahApps.Metro.Controls.Dialogs
 
                     tcs.TrySetResult(ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
                 }
+                else if (e.Key == Key.Enter)
+                {
+                    cleanUpHandlers();
+
+                    tcs.TrySetResult(MessageDialogResult.Affirmative);
+                }
             };
 
             PART_NegativeButton.KeyDown += negativeKeyHandler;
