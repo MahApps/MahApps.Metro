@@ -299,24 +299,40 @@
             <Label Content="SplitButton"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
 
-            <Controls:SplitButton Name="SplitButton0" Icon="{DynamicResource appbar_alert}"
-                                HorizontalContentAlignment="Left"
-                                HorizontalAlignment="Center"
-                                VerticalContentAlignment="Center"
-                                Width="130"
-                                SelectedIndex="2"
-                                ItemsSource="{Binding Albums}"
-                                DisplayMemberPath="Title"
-                                VerticalAlignment="Center"  />
+            <Controls:SplitButton Name="SplitButton0"
+                                  HorizontalContentAlignment="Left"
+                                  HorizontalAlignment="Center"
+                                  Width="130"
+                                  SelectedIndex="2"
+                                  ItemsSource="{Binding Albums}"
+                                  DisplayMemberPath="Title">
+                <Controls:SplitButton.Icon>
+                    <Viewbox Width="32"
+                             Height="32"
+                             Stretch="Uniform">
+                        <ContentControl Focusable="False"
+                                        Content="{DynamicResource appbar_alert}" />
+                    </Viewbox>
+                </Controls:SplitButton.Icon>
+            </Controls:SplitButton>
 
-            <Controls:SplitButton Margin="20,10,20,0" Name="SplitButton1" Icon="{DynamicResource appbar_book_side}"
+            <Controls:SplitButton Margin="0,10,0,0"
+                                  Name="SplitButton1"
                                   Width="130"
                                   HorizontalAlignment="Center"
-                                  HorizontalContentAlignment="Center"
-                                  VerticalContentAlignment="Center"
-                                  Orientation="Vertical" DisplayMemberPath="{Binding ElementName=SplitButton0, Path=DisplayMemberPath}"
+                                  Orientation="Vertical"
+                                  DisplayMemberPath="{Binding ElementName=SplitButton0, Path=DisplayMemberPath}"
                                   SelectedIndex="{Binding SelectedIndex, ElementName=SplitButton0, Mode=TwoWay}"
-                                  ItemsSource="{Binding ItemsSource, ElementName=SplitButton0, Mode=TwoWay}" />
+                                  ItemsSource="{Binding ItemsSource, ElementName=SplitButton0, Mode=TwoWay}">
+                <Controls:SplitButton.Icon>
+                    <Viewbox Width="32"
+                             Height="32"
+                             Stretch="Uniform">
+                        <ContentControl Focusable="False"
+                                        Content="{DynamicResource appbar_book_side}" />
+                    </Viewbox>
+                </Controls:SplitButton.Icon>
+            </Controls:SplitButton>
 
         </StackPanel>
     </Grid>
