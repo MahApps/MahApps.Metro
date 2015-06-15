@@ -220,6 +220,7 @@
                                        Focusable="False"
                                        LastChildFill="True">
                                 <Rectangle x:Name="PART_Rectangle"
+                                           UseLayoutRounding="False"
                                            DockPanel.Dock="Right"
                                            Height="6"
                                            Width="10"
@@ -252,13 +253,15 @@
                                             Orientation="Horizontal"
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                                    <ContentPresenter RecognizesAccessKey="True"
+                                    <ContentPresenter UseLayoutRounding="False"
+                                                      RecognizesAccessKey="True"
                                                       Focusable="False"
                                                       HorizontalAlignment="Center"
                                                       VerticalAlignment="Center"
                                                       Content="{TemplateBinding Icon}"
                                                       ContentTemplate="{TemplateBinding IconTemplate}" />
                                     <ContentControl x:Name="PART_ButtonContent"
+                                                    UseLayoutRounding="False"
                                                     Focusable="False"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"

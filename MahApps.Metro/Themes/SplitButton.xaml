@@ -5,6 +5,8 @@
     <ControlTemplate TargetType="{x:Type local:SplitButton}"
                      x:Key="SplitButtonHorizontal">
         <Border Name="PART_Border"
+                UseLayoutRounding="True"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                 BorderThickness="{TemplateBinding BorderThickness}"
                 BorderBrush="{TemplateBinding BorderBrush}">
             <Grid x:Name="PART_Container"
@@ -17,57 +19,73 @@
                 <Button Grid.Column="0"
                         x:Name="PART_Button"
                         Style="{TemplateBinding ButtonStyle}"
+                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        Background="{TemplateBinding Background}"
+                        Foreground="{TemplateBinding Foreground}"
                         Command="{TemplateBinding Command}"
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}">
                     <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
-                        <ContentPresenter RecognizesAccessKey="True"
-                                          Content="{TemplateBinding Icon}"></ContentPresenter>
-                        <ContentControl MinWidth="20"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <ContentPresenter UseLayoutRounding="False"
+                                          RecognizesAccessKey="True"
+                                          Focusable="False"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Content="{TemplateBinding Icon}" />
+                        <ContentControl x:Name="PART_ButtonContent"
+                                        UseLayoutRounding="False"
+                                        Focusable="False"
                                         Margin="2"
-                                        x:Name="PART_ButtonContent"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                        VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
                                         ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                         ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                         Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                         ContentTemplate="{TemplateBinding ItemTemplate}" />
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="1"
-                        x:Name="PART_Expander"
+                <Button x:Name="PART_Expander"
+                        Grid.Column="1"
                         Style="{TemplateBinding ButtonArrowStyle}"
-                        Width="25">
-                    <Button.Content>
-                        <Rectangle Name="PART_Rectangle"
-                                   Height="6"
-                                   Width="10"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Fill="{DynamicResource BlackColorBrush}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <Canvas Width="18"
-                                                Height="18"
-                                                Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                                UseLayoutRounding="False">
-                                            <Path Width="18"
-                                                  Height="16"
-                                                  Canvas.Left="14.9063"
-                                                  Canvas.Top="15.75"
-                                                  Stretch="Fill"
-                                                  Fill="{DynamicResource BlackColorBrush}"
-                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
-                                        </Canvas>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                    </Button.Content>
+                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        Background="{TemplateBinding Background}"
+                        Foreground="{TemplateBinding Foreground}"
+                        Width="20">
+                    <Rectangle Name="PART_Rectangle"
+                               UseLayoutRounding="False"
+                               Margin="0 0 1 0"
+                               Height="6"
+                               Width="10"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Fill="{DynamicResource BlackColorBrush}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill">
+                                <VisualBrush.Visual>
+                                    <Canvas Width="18"
+                                            Height="18"
+                                            Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                                            UseLayoutRounding="False">
+                                        <Path Width="18"
+                                              Height="16"
+                                              Canvas.Left="14.9063"
+                                              Canvas.Top="15.75"
+                                              Stretch="Fill"
+                                              Fill="{DynamicResource BlackColorBrush}"
+                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                    </Canvas>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
                 </Button>
                 <Popup Name="PART_Popup"
                        IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -119,6 +137,8 @@
     <ControlTemplate TargetType="{x:Type local:SplitButton}"
                      x:Key="SplitButtonVertical">
         <Border Name="PART_Border"
+                UseLayoutRounding="True"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                 BorderThickness="{TemplateBinding BorderThickness}"
                 BorderBrush="{TemplateBinding BorderBrush}">
             <Grid x:Name="PART_Container"
@@ -129,60 +149,74 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Button Grid.Row="0"
-                        Style="{TemplateBinding ButtonStyle}"
                         x:Name="PART_Button"
+                        Style="{TemplateBinding ButtonStyle}"
+                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        Background="{TemplateBinding Background}"
+                        Foreground="{TemplateBinding Foreground}"
                         Command="{TemplateBinding Command}"
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}">
-                    <Button.Content>
-                        <StackPanel Orientation="Vertical"
-                                    HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                    VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}">
-                            <ContentPresenter RecognizesAccessKey="True"
-                                              Content="{TemplateBinding Icon}"></ContentPresenter>
-                            <ContentControl x:Name="PART_ButtonContent"
-                                            Margin="2"
-                                            VerticalAlignment="Stretch"
-                                            HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                            VerticalContentAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                            Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                            ContentTemplate="{TemplateBinding ItemTemplate}" />
-                        </StackPanel>
-                    </Button.Content>
+                    <StackPanel Orientation="Vertical"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <ContentPresenter UseLayoutRounding="False"
+                                          RecognizesAccessKey="True"
+                                          Focusable="False"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Content="{TemplateBinding Icon}" />
+                        <ContentControl x:Name="PART_ButtonContent"
+                                        UseLayoutRounding="False"
+                                        Focusable="False"
+                                        Margin="2"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                        ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                        Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ContentTemplate="{TemplateBinding ItemTemplate}" />
+                    </StackPanel>
                 </Button>
                 <Button x:Name="PART_Expander"
                         Grid.Row="1"
                         Style="{TemplateBinding ButtonArrowStyle}"
-                        Height="25">
-                    <Button.Content>
-                        <Rectangle Name="PART_Rectangle"
-                                   Height="6"
-                                   Width="10"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Fill="{DynamicResource BlackColorBrush}">
-                            <Rectangle.OpacityMask>
-                                <VisualBrush Stretch="Fill">
-                                    <VisualBrush.Visual>
-                                        <Canvas Width="18"
-                                                Height="18"
-                                                Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
-                                                UseLayoutRounding="False">
-                                            <Path Width="18"
-                                                  Height="16"
-                                                  Canvas.Left="14.9063"
-                                                  Canvas.Top="15.75"
-                                                  Stretch="Fill"
-                                                  Fill="{DynamicResource BlackColorBrush}"
-                                                  Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
-                                        </Canvas>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Rectangle.OpacityMask>
-                        </Rectangle>
-                    </Button.Content>
+                        FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                        Background="{TemplateBinding Background}"
+                        Foreground="{TemplateBinding Foreground}"
+                        Height="20">
+                    <Rectangle Name="PART_Rectangle"
+                               UseLayoutRounding="False"
+                               Height="6"
+                               Width="10"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Fill="{DynamicResource BlackColorBrush}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill">
+                                <VisualBrush.Visual>
+                                    <Canvas Width="18"
+                                            Height="18"
+                                            Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+                                            UseLayoutRounding="False">
+                                        <Path Width="18"
+                                              Height="16"
+                                              Canvas.Left="14.9063"
+                                              Canvas.Top="15.75"
+                                              Stretch="Fill"
+                                              Fill="{DynamicResource BlackColorBrush}"
+                                              Data="F1 M 23.9063,25L 25.9063,23L 32.9063,15.75L 32.9063,22.25L 23.9062,31.75L 14.9063,22.25L 14.9063,15.75L 21.9063,23L 23.9063,25 Z " />
+                                    </Canvas>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Rectangle.OpacityMask>
+                    </Rectangle>
                 </Button>
                 <Popup Name="PART_Popup"
                        IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -193,6 +227,7 @@
                     <ListBox x:Name="PART_ListBox"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
+                             Style="{DynamicResource VirtualisedMetroListBox}"
                              SelectionMode="Single"
                              SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -230,21 +265,49 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <Style x:Key="ButtonSplitFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="1"
+                               SnapsToDevicePixels="true"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeThickness="1"
+                               StrokeDashArray="1 2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type local:SplitButton}">
         <Setter Property="ButtonStyle"
                 Value="{DynamicResource ButtonSplitStyle}" />
         <Setter Property="ButtonArrowStyle"
                 Value="{DynamicResource ButtonSplitArrowStyle}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="MinHeight"
                 Value="26" />
         <Setter Property="BorderThickness"
                 Value="1" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="FontFamily"
                 Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize"
                 Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="Focusable"
+                Value="False" />
+        <Setter Property="FocusVisualStyle"
+                Value="{StaticResource ButtonSplitFocusVisual}" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
         <Setter Property="Template"
                 Value="{StaticResource SplitButtonHorizontal}" />
         <Style.Triggers>
