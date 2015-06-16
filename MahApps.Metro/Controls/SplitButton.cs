@@ -58,6 +58,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ButtonArrowStyleProperty = DependencyProperty.Register("ButtonArrowStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty ListBoxStyleProperty = DependencyProperty.Register("ListBoxStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Object CommandParameter
@@ -140,6 +141,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (Style)GetValue(ButtonArrowStyleProperty); }
             set { SetValue(ButtonArrowStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the popup listbox style.
+        /// </summary>
+        public Style ListBoxStyle
+        {
+            get { return (Style)GetValue(ListBoxStyleProperty); }
+            set { SetValue(ListBoxStyleProperty, value); }
         }
 
         /// <summary>

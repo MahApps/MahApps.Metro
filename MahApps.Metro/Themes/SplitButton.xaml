@@ -98,7 +98,7 @@
                     <ListBox x:Name="PART_ListBox"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
-                             Style="{DynamicResource VirtualisedMetroListBox}"
+                             Style="{TemplateBinding ListBoxStyle}"
                              SelectionMode="Single"
                              SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -210,7 +210,7 @@
                     <ListBox x:Name="PART_ListBox"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
-                             Style="{DynamicResource VirtualisedMetroListBox}"
+                             Style="{TemplateBinding ListBoxStyle}"
                              SelectionMode="Single"
                              SelectedItem="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                              SelectedIndex="{Binding SelectedIndex, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -245,6 +245,8 @@
                 Value="{DynamicResource ButtonSplitStyle}" />
         <Setter Property="ButtonArrowStyle"
                 Value="{DynamicResource ButtonSplitArrowStyle}" />
+        <Setter Property="ListBoxStyle"
+                Value="{DynamicResource VirtualisedMetroListBox}" />
         <Setter Property="Background"
                 Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="Foreground"
