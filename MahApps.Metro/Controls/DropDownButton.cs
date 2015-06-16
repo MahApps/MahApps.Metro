@@ -92,6 +92,9 @@ namespace MahApps.Metro.Controls
             set { SetValue(CommandProperty, value); }
         }
 
+        /// <summary> 
+        /// Indicates whether the Menu is visible. 
+        /// </summary>
         public Boolean IsExpanded
         {
             get { return (bool)GetValue(IsExpandedProperty); }
