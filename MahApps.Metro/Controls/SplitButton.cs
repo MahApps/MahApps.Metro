@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
@@ -56,6 +57,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty ButtonStyleProperty = DependencyProperty.Register("ButtonStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ButtonArrowStyleProperty = DependencyProperty.Register("ButtonArrowStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
         public Object CommandParameter
         {
@@ -127,6 +129,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (Style)GetValue(ButtonArrowStyleProperty); }
             set { SetValue(ButtonArrowStyleProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush of the button arrow icon.
+        /// </summary>
+        public Brush ArrowBrush
+        {
+            get { return (Brush)GetValue(ArrowBrushProperty); }
+            set { SetValue(ArrowBrushProperty, value); }
         }
 
         private Button _clickButton;
@@ -209,6 +220,10 @@ namespace MahApps.Metro.Controls
         void PopupClosed(object sender, EventArgs e)
         {
             this.ReleaseMouseCapture();
+            if (this._expander != null)
+            {
+                this._expander.Focus();
+            }
         }
 
         void PopupOpened(object sender, EventArgs e)

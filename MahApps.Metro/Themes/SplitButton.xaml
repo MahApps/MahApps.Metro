@@ -4,14 +4,14 @@
 
     <ControlTemplate TargetType="{x:Type local:SplitButton}"
                      x:Key="SplitButtonHorizontal">
-        <Border Name="PART_Border"
+        <Border x:Name="PART_Border"
                 UseLayoutRounding="True"
                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                 BorderThickness="{TemplateBinding BorderThickness}"
                 BorderBrush="{TemplateBinding BorderBrush}">
             <Grid x:Name="PART_Container"
-                  Width="{TemplateBinding Width}"
-                  Height="{TemplateBinding Height}">
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
@@ -27,6 +27,7 @@
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Background="{TemplateBinding Background}"
                         Foreground="{TemplateBinding Foreground}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
                         Command="{TemplateBinding Command}"
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}">
@@ -58,15 +59,15 @@
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Background="{TemplateBinding Background}"
                         Foreground="{TemplateBinding Foreground}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
                         Width="20">
-                    <Rectangle Name="PART_Rectangle"
+                    <Rectangle x:Name="PART_Rectangle"
                                UseLayoutRounding="False"
-                               Margin="0 0 1 0"
                                Height="6"
                                Width="10"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Fill="{DynamicResource BlackColorBrush}">
+                               Fill="{TemplateBinding ArrowBrush}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill">
                                 <VisualBrush.Visual>
@@ -87,7 +88,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-                <Popup Name="PART_Popup"
+                <Popup x:Name="PART_Popup"
                        IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                        PlacementTarget="{Binding ElementName=PART_Button}"
                        PopupAnimation="Fade"
@@ -110,40 +111,18 @@
                 </Popup>
             </Grid>
         </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsFocused"
-                     Value="True"
-                     SourceName="PART_Button">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}"
-                        TargetName="PART_Border" />
-            </Trigger>
-            <Trigger Property="IsFocused"
-                     Value="True"
-                     SourceName="PART_Expander">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}"
-                        TargetName="PART_Border" />
-            </Trigger>
-            <Trigger Property="IsMouseOver"
-                     Value="True">
-                <Setter TargetName="PART_Rectangle"
-                        Property="Fill"
-                        Value="{DynamicResource AccentColorBrush}" />
-            </Trigger>
-        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:SplitButton}"
                      x:Key="SplitButtonVertical">
-        <Border Name="PART_Border"
+        <Border x:Name="PART_Border"
                 UseLayoutRounding="True"
                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                 BorderThickness="{TemplateBinding BorderThickness}"
                 BorderBrush="{TemplateBinding BorderBrush}">
             <Grid x:Name="PART_Container"
-                  Width="{TemplateBinding Width}"
-                  Height="{TemplateBinding Height}">
+                  HorizontalAlignment="Stretch"
+                  VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
@@ -159,6 +138,7 @@
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Background="{TemplateBinding Background}"
                         Foreground="{TemplateBinding Foreground}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
                         Command="{TemplateBinding Command}"
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}">
@@ -190,14 +170,15 @@
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                         Background="{TemplateBinding Background}"
                         Foreground="{TemplateBinding Foreground}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
                         Height="20">
-                    <Rectangle Name="PART_Rectangle"
+                    <Rectangle x:Name="PART_Rectangle"
                                UseLayoutRounding="False"
                                Height="6"
                                Width="10"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
-                               Fill="{DynamicResource BlackColorBrush}">
+                               Fill="{TemplateBinding ArrowBrush}">
                         <Rectangle.OpacityMask>
                             <VisualBrush Stretch="Fill">
                                 <VisualBrush.Visual>
@@ -218,7 +199,7 @@
                         </Rectangle.OpacityMask>
                     </Rectangle>
                 </Button>
-                <Popup Name="PART_Popup"
+                <Popup x:Name="PART_Popup"
                        IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                        PlacementTarget="{Binding ElementName=PART_Expander}"
                        PopupAnimation="Fade"
@@ -241,28 +222,6 @@
                 </Popup>
             </Grid>
         </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsFocused"
-                     Value="True"
-                     SourceName="PART_Button">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}"
-                        TargetName="PART_Border" />
-            </Trigger>
-            <Trigger Property="IsFocused"
-                     Value="True"
-                     SourceName="PART_Expander">
-                <Setter Property="BorderBrush"
-                        Value="{DynamicResource AccentColorBrush}"
-                        TargetName="PART_Border" />
-            </Trigger>
-            <Trigger Property="IsMouseOver"
-                     Value="True">
-                <Setter TargetName="PART_Rectangle"
-                        Property="Fill"
-                        Value="{DynamicResource AccentColorBrush}" />
-            </Trigger>
-        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style x:Key="ButtonSplitFocusVisual">
@@ -287,6 +246,8 @@
         <Setter Property="Background"
                 Value="{DynamicResource WhiteColorBrush}" />
         <Setter Property="Foreground"
+                Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="ArrowBrush"
                 Value="{DynamicResource BlackColorBrush}" />
         <Setter Property="MinHeight"
                 Value="26" />
@@ -315,6 +276,21 @@
                      Value="Vertical">
                 <Setter Property="Template"
                         Value="{StaticResource SplitButtonVertical}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="ArrowBrush"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </Trigger>
+            <Trigger Property="IsFocused"
+                     Value="True">
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin"
+                     Value="True">
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
