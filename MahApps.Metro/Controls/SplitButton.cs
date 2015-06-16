@@ -50,6 +50,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register("Orientation", typeof(Orientation), typeof(SplitButton), new FrameworkPropertyMetadata(Orientation.Horizontal, FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(Object), typeof(SplitButton));
+        public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(SplitButton));
 
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(SplitButton));
         public static readonly DependencyProperty CommandTargetProperty = DependencyProperty.Register("CommandTarget", typeof(IInputElement), typeof(SplitButton));
@@ -111,6 +112,16 @@ namespace MahApps.Metro.Controls
         {
             get { return GetValue(IconProperty); }
             set { SetValue(IconProperty, value); }
+        }
+
+        /// <summary> 
+        /// Gets or sets the ContentTemplate used to display the content of the icon part. 
+        /// </summary>
+        [Bindable(true)]
+        public DataTemplate IconTemplate
+        {
+            get { return (DataTemplate)GetValue(IconTemplateProperty); }
+            set { SetValue(IconTemplateProperty, value); }
         }
 
         /// <summary>

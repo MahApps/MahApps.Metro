@@ -39,7 +39,8 @@
                                           Focusable="False"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
-                                          Content="{TemplateBinding Icon}" />
+                                          Content="{TemplateBinding Icon}"
+                                          ContentTemplate="{TemplateBinding IconTemplate}" />
                         <ContentControl x:Name="PART_ButtonContent"
                                         UseLayoutRounding="False"
                                         Focusable="False"
@@ -150,7 +151,8 @@
                                           Focusable="False"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
-                                          Content="{TemplateBinding Icon}" />
+                                          Content="{TemplateBinding Icon}"
+                                          ContentTemplate="{TemplateBinding IconTemplate}" />
                         <ContentControl x:Name="PART_ButtonContent"
                                         UseLayoutRounding="False"
                                         Focusable="False"
