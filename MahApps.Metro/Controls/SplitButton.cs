@@ -61,54 +61,82 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ListBoxStyleProperty = DependencyProperty.Register("ListBoxStyle", typeof(Style), typeof(SplitButton), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         public static readonly DependencyProperty ArrowBrushProperty = DependencyProperty.Register("ArrowBrush", typeof(Brush), typeof(SplitButton), new FrameworkPropertyMetadata(default(Brush), FrameworkPropertyMetadataOptions.AffectsRender));
 
+        /// <summary>
+        /// Reflects the parameter to pass to the CommandProperty upon execution. 
+        /// </summary>
         public Object CommandParameter
         {
             get { return (Object)GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the target element on which to fire the command.
+        /// </summary>
         public IInputElement CommandTarget
         {
             get { return (IInputElement)GetValue(CommandTargetProperty); }
             set { SetValue(CommandTargetProperty, value); }
         }
 
+        /// <summary>
+        /// Get or sets the Command property. 
+        /// </summary>
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
 
+        /// <summary> 
+        ///  The index of the first item in the current selection or -1 if the selection is empty. 
+        /// </summary>
         public Int32 SelectedIndex
         {
             get { return (Int32)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
         }
 
+        /// <summary>
+        ///  The first item in the current selection, or null if the selection is empty. 
+        /// </summary>
         public Object SelectedItem
         {
             get { return GetValue(SelectedItemProperty); }
             set { SetValue(SelectedItemProperty, value); }
         }
 
+        /// <summary> 
+        /// Indicates whether the Popup is visible. 
+        /// </summary>
         public Boolean IsExpanded
         {
             get { return (bool)GetValue(IsExpandedProperty); }
             set { SetValue(IsExpandedProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets an extra tag.
+        /// </summary>
         public Object ExtraTag
         {
             get { return GetValue(ExtraTagProperty); }
             set { SetValue(ExtraTagProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the dimension of children stacking.
+        /// </summary>
         public Orientation Orientation
         {
             get { return (Orientation)GetValue(OrientationProperty); }
             set { SetValue(OrientationProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets the Content used to generate the icon part.
+        /// </summary>
+        [Bindable(true)]
         public Object Icon
         {
             get { return GetValue(IconProperty); }
