@@ -5,14 +5,37 @@
 
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
 
-    <Style x:Key="ExpanderRightHeaderStyle"
+    <Style x:Key="ExpanderBaseHeaderStyle"
            TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Margin"
+                Value="2" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+    </Style>
+
+    <Style x:Key="ExpanderRightHeaderStyle"
+           TargetType="{x:Type ToggleButton}"
+           BasedOn="{StaticResource ExpanderBaseHeaderStyle}">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Top" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -46,10 +69,10 @@
                             </Grid>
                             <ContentPresenter Grid.Row="1"
                                               Margin="0,4,0,0"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Top"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="True" />
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -87,13 +110,18 @@
     </Style>
 
     <Style x:Key="ExpanderUpHeaderStyle"
-           TargetType="{x:Type ToggleButton}">
+           TargetType="{x:Type ToggleButton}"
+           BasedOn="{StaticResource ExpanderBaseHeaderStyle}">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Left" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -127,10 +155,10 @@
                             </Grid>
                             <ContentPresenter Grid.Column="1"
                                               Margin="4,0,0,0"
-                                              HorizontalAlignment="Left"
-                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="True" />
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -168,13 +196,14 @@
     </Style>
 
     <Style x:Key="ExpanderLeftHeaderStyle"
-           TargetType="{x:Type ToggleButton}">
+           TargetType="{x:Type ToggleButton}"
+           BasedOn="{StaticResource ExpanderRightHeaderStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -208,10 +237,10 @@
                             </Grid>
                             <ContentPresenter Grid.Row="1"
                                               Margin="0,4,0,0"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Top"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="True" />
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -249,13 +278,14 @@
     </Style>
 
     <Style x:Key="ExpanderDownHeaderStyle"
-           TargetType="{x:Type ToggleButton}">
+           TargetType="{x:Type ToggleButton}"
+           BasedOn="{StaticResource ExpanderUpHeaderStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -278,10 +308,10 @@
                                   StrokeThickness="2" />
                             <ContentPresenter Grid.Column="1"
                                               Margin="4,0,0,0"
-                                              HorizontalAlignment="Left"
-                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="True" />
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -393,16 +423,10 @@
                                     DockPanel.Dock="Top">
                                 <DockPanel>
                                     <ToggleButton x:Name="ToggleSite"
-                                                  Margin="2"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Background="Transparent"
-                                                  BorderBrush="Transparent"
                                                   DockPanel.Dock="Left"
-                                                  FocusVisualStyle="{x:Null}"
-                                                  IsChecked="{Binding IsExpanded,
-                                                                  Mode=TwoWay,
-                                                                  RelativeSource={RelativeSource TemplatedParent}}"
+                                                  IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                                   Style="{StaticResource ExpanderDownHeaderStyle}" />
                                     <ContentPresenter Margin="{TemplateBinding Padding}"
                                                       Content="{TemplateBinding Header}"
