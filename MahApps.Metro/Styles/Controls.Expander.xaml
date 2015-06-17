@@ -364,6 +364,14 @@
                 Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground"
                 Value="{x:Null}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle"
+                Value="{StaticResource ExpanderUpHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle"
+                Value="{StaticResource ExpanderDownHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle"
+                Value="{StaticResource ExpanderLeftHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle"
+                Value="{StaticResource ExpanderRightHeaderStyle}" />
         <Setter Property="HeaderTemplate">
             <Setter.Value>
                 <DataTemplate>
@@ -427,7 +435,7 @@
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                   DockPanel.Dock="Left"
                                                   IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                  Style="{StaticResource ExpanderDownHeaderStyle}" />
+                                                  Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}" />
                                     <ContentPresenter Margin="{TemplateBinding Padding}"
                                                       Content="{TemplateBinding Header}"
                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
@@ -495,7 +503,7 @@
                                     Value="Left" />
                             <Setter TargetName="ToggleSite"
                                     Property="Style"
-                                    Value="{StaticResource ExpanderRightHeaderStyle}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderRightStyle)}" />
                             <Setter TargetName="ToggleSite"
                                     Property="DockPanel.Dock"
                                     Value="Top" />
@@ -513,7 +521,7 @@
                                     Value="Bottom" />
                             <Setter TargetName="ToggleSite"
                                     Property="Style"
-                                    Value="{StaticResource ExpanderUpHeaderStyle}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderUpStyle)}" />
                         </Trigger>
                         <Trigger Property="ExpandDirection"
                                  Value="Left">
@@ -528,7 +536,7 @@
                                     Value="Right" />
                             <Setter TargetName="ToggleSite"
                                     Property="Style"
-                                    Value="{StaticResource ExpanderLeftHeaderStyle}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderLeftStyle)}" />
                             <Setter TargetName="ToggleSite"
                                     Property="DockPanel.Dock"
                                     Value="Top" />
