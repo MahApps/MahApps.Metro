@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
+    <Compile Include="Converters\ThicknessBindingConverter.cs" />
     <Compile Include="Converters\IsNullConverter.cs" />
     <Compile Include="Converters\FontSizeOffsetConverter.cs" />
     <Compile Include="Converters\MetroTabItemCloseButtonWidthConverter.cs" />
