@@ -13,7 +13,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty PreserveTextCaseProperty = DependencyProperty.RegisterAttached("PreserveTextCase", typeof(bool), typeof(ExpanderHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
-        /// Gets the value to uverride the text case behavior for the header content.
+        /// Gets the value to override the text case behavior for the header content.
         /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(Expander))]
@@ -23,10 +23,29 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// Sets the value to uverride the text case behavior for the header content.
+        /// Sets the value to override the text case behavior for the header content.
         /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
         /// </summary>
         public static void SetPreserveTextCase(UIElement element, bool value)
+        {
+            element.SetValue(PreserveTextCaseProperty, value);
+        }
+
+        public static readonly DependencyProperty HeaderTogglePartProperty = DependencyProperty.RegisterAttached("HeaderTogglePart", typeof(HeaderTogglePartType), typeof(ExpanderHelper), new FrameworkPropertyMetadata(HeaderTogglePartType.ToggleSite, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets the value which part toggles the Expander.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        public static HeaderTogglePartType GetHeaderTogglePart(UIElement element)
+        {
+            return (HeaderTogglePartType)element.GetValue(PreserveTextCaseProperty);
+        }
+
+        /// <summary>
+        /// Sets the value which part should toggle the Expander.
+        /// </summary>
+        public static void SetHeaderTogglePart(UIElement element, HeaderTogglePartType value)
         {
             element.SetValue(PreserveTextCaseProperty, value);
         }
@@ -106,5 +125,20 @@ namespace MahApps.Metro.Controls
         {
             element.SetValue(HeaderRightStyleProperty, value);
         }
+    }
+
+    /// <summary>
+    /// Enumeration to set which part should toggle the Expander.
+    /// </summary>
+    public enum HeaderTogglePartType
+    {
+        /// <summary>
+        /// Only the toggle button itself toggles the Expander.
+        /// </summary>
+        ToggleSite,
+        /// <summary>
+        /// The complete Header toggles the Expander.
+        /// </summary>
+        HeaderSite
     }
 }
