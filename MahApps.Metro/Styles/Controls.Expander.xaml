@@ -36,6 +36,7 @@
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -354,6 +355,8 @@
                 Value="5" />
         <Setter Property="Padding"
                 Value="5" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
@@ -427,16 +430,20 @@
                             <Border x:Name="HeaderSite"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    UseLayoutRounding="True"
                                     BorderThickness="1"
                                     DockPanel.Dock="Top">
                                 <DockPanel>
                                     <ToggleButton x:Name="ToggleSite"
                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  UseLayoutRounding="False"
                                                   DockPanel.Dock="Left"
                                                   IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                                   Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}" />
-                                    <ContentPresenter Margin="{TemplateBinding Padding}"
+                                    <ContentPresenter UseLayoutRounding="False"
+                                                      Margin="{TemplateBinding Padding}"
                                                       Content="{TemplateBinding Header}"
                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
@@ -449,6 +456,8 @@
                             <Border x:Name="ExpandSite"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    UseLayoutRounding="True"
                                     Background="Transparent"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="1,0,1,1"
@@ -456,7 +465,8 @@
                                     Focusable="false"
                                     Opacity="0"
                                     Visibility="Collapsed">
-                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                <ContentPresenter UseLayoutRounding="False"
+                                                  Margin="{TemplateBinding Padding}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   Cursor="{TemplateBinding Cursor}" />
