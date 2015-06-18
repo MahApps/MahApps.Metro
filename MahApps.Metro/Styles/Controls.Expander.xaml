@@ -4,6 +4,7 @@
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
+    <Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
 
     <Style x:Key="ExpanderBaseHeaderStyle"
            TargetType="{x:Type ToggleButton}">
@@ -363,6 +364,8 @@
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize"
                 Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground"
@@ -432,7 +435,7 @@
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                     UseLayoutRounding="True"
-                                    BorderThickness="1"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
                                     DockPanel.Dock="Top">
                                 <DockPanel>
                                     <ToggleButton x:Name="ToggleSite"
@@ -460,7 +463,7 @@
                                     UseLayoutRounding="True"
                                     Background="Transparent"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="1,0,1,1"
+                                    BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Top}}"
                                     DockPanel.Dock="Bottom"
                                     Focusable="false"
                                     Opacity="0"
@@ -507,7 +510,7 @@
                                     Value="Right" />
                             <Setter TargetName="ExpandSite"
                                     Property="BorderThickness"
-                                    Value="0,1,1,1" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Left}}" />
                             <Setter TargetName="HeaderSite"
                                     Property="DockPanel.Dock"
                                     Value="Left" />
@@ -525,7 +528,7 @@
                                     Value="Top" />
                             <Setter TargetName="ExpandSite"
                                     Property="BorderThickness"
-                                    Value="1,1,1,0" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Bottom}}" />
                             <Setter TargetName="HeaderSite"
                                     Property="DockPanel.Dock"
                                     Value="Bottom" />
@@ -540,7 +543,7 @@
                                     Value="Left" />
                             <Setter TargetName="ExpandSite"
                                     Property="BorderThickness"
-                                    Value="1,1,0,1" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Right}}" />
                             <Setter TargetName="HeaderSite"
                                     Property="DockPanel.Dock"
                                     Value="Right" />
