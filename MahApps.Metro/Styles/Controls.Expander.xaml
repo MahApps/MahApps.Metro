@@ -30,7 +30,7 @@
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
-                Value="Top" />
+                Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -115,7 +115,7 @@
            TargetType="{x:Type ToggleButton}"
            BasedOn="{StaticResource ExpanderBaseHeaderStyle}">
         <Setter Property="HorizontalContentAlignment"
-                Value="Left" />
+                Value="Stretch" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="Template">
@@ -414,47 +414,27 @@
                                     UseLayoutRounding="True"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     DockPanel.Dock="Top">
-                                <DockPanel>
-                                    <ToggleButton x:Name="ToggleSite"
-                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  UseLayoutRounding="False"
-                                                  DockPanel.Dock="Left"
-                                                  IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                                  Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}">
-                                        <ToggleButton.Foreground>
-                                            <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                                <Binding Mode="OneWay"
-                                                         Path="Background"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Mode="OneWay"
-                                                         Path="(Controls:GroupBoxHelper.HeaderForeground)"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                            </MultiBinding>
-                                        </ToggleButton.Foreground>
-                                    </ToggleButton>
-                                    <ContentPresenter x:Name="HeaderContent"
-                                                      UseLayoutRounding="False"
-                                                      Margin="{TemplateBinding Padding}"
-                                                      Content="{TemplateBinding Header}"
-                                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                      ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                      RecognizesAccessKey="True"
-                                                      TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                      TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                      TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}">
-                                        <TextElement.Foreground>
-                                            <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                                <Binding Mode="OneWay"
-                                                         Path="Background"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                                <Binding Mode="OneWay"
-                                                         Path="(Controls:GroupBoxHelper.HeaderForeground)"
-                                                         RelativeSource="{RelativeSource TemplatedParent}" />
-                                            </MultiBinding>
-                                        </TextElement.Foreground>
-                                    </ContentPresenter>
-                                </DockPanel>
+                                <ToggleButton x:Name="ToggleSite"
+                                              UseLayoutRounding="False"
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              Content="{TemplateBinding Header}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                              FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                              FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                              FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                              Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}">
+                                    <ToggleButton.Foreground>
+                                        <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                            <Binding Mode="OneWay"
+                                                     Path="Background"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Mode="OneWay"
+                                                     Path="(Controls:GroupBoxHelper.HeaderForeground)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </ToggleButton.Foreground>
+                                </ToggleButton>
                             </Border>
                             <Border x:Name="ExpandSite"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -479,7 +459,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="Controls:ExpanderHelper.PreserveTextCase"
                                  Value="False">
-                            <Setter TargetName="HeaderContent"
+                            <Setter TargetName="ToggleSite"
                                     Property="Content"
                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Mode=OneWay, Converter={StaticResource ToUpperConverter}}" />
                         </Trigger>
@@ -523,9 +503,6 @@
                             <Setter TargetName="ToggleSite"
                                     Property="Style"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderRightStyle)}" />
-                            <Setter TargetName="ToggleSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Top" />
                         </Trigger>
                         <Trigger Property="ExpandDirection"
                                  Value="Up">
@@ -556,9 +533,6 @@
                             <Setter TargetName="ToggleSite"
                                     Property="Style"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderLeftStyle)}" />
-                            <Setter TargetName="ToggleSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Top" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
