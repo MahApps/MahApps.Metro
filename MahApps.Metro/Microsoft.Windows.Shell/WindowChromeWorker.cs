@@ -1025,7 +1025,6 @@ namespace Microsoft.Windows.Shell
             Assert.IsNotDefault(_hwnd);
             var intPtr = NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
             var dwStyle = (WS)(uint)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
-            Console.WriteLine("Environment.Is64BitProcess: " + Environment.Is64BitProcess);
             var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
             if (dwStyle == dwNewStyle)
             {
