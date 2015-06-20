@@ -133,7 +133,8 @@ namespace MahApps.Metro.Behaviours
             {
                 return false;
             }
-            var dwStyle = (Standard.WS)Standard.NativeMethods.GetWindowLongPtr(this.handle, Standard.GWL.STYLE).ToInt32();
+            var intPtr = Standard.NativeMethods.GetWindowLongPtr(this.handle, Standard.GWL.STYLE);
+            var dwStyle = (Standard.WS)(uint)(IntPtr.Size == 8 ? intPtr.ToInt64() : intPtr.ToInt32());
             var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
             if (dwStyle == dwNewStyle) {
                 return false;
