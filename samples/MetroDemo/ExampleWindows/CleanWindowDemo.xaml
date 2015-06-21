@@ -4,6 +4,7 @@
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                       xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
+                      xmlns:models="clr-namespace:MetroDemo.Models"
                       Icon="..\mahapps.metro.logo2.ico"
                       ShowIconOnTitleBar="True"
                       GlowBrush="{DynamicResource AccentColorBrush}"
@@ -125,7 +126,20 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox Grid.Column="0" Header="artists" Padding="5" Controls:ControlsHelper.HeaderFontSize="30">
-                <ListBox Height="900"/>
+                <ListBox ItemsSource="{x:Static models:SampleData.Artists}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} - {1}">
+                                        <Binding Path="ArtistId" Mode="OneWay" />
+                                        <Binding Path="Name" Mode="OneWay" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </GroupBox>
 
             <Controls:MetroTabControl x:Name="TC" Grid.Column="1">

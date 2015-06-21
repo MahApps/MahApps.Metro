@@ -4,15 +4,40 @@
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
+    <Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
+
+    <Style x:Key="ExpanderBaseHeaderStyle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Margin"
+                Value="2" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+    </Style>
 
     <Style x:Key="ExpanderRightHeaderStyle"
-           TargetType="{x:Type ToggleButton}">
+           TargetType="{x:Type ToggleButton}"
+           BasedOn="{StaticResource ExpanderBaseHeaderStyle}">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -35,21 +60,21 @@
                                          Height="19"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+                                         Stroke="{TemplateBinding Foreground}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
-                                      Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
+                                      Stroke="{TemplateBinding Foreground}"
                                       StrokeThickness="2" />
                             </Grid>
                             <ContentPresenter Grid.Row="1"
                                               Margin="0,4,0,0"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Top"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="True" />
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -87,13 +112,18 @@
     </Style>
 
     <Style x:Key="ExpanderUpHeaderStyle"
-           TargetType="{x:Type ToggleButton}">
+           TargetType="{x:Type ToggleButton}"
+           BasedOn="{StaticResource ExpanderBaseHeaderStyle}">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -116,21 +146,21 @@
                                          Height="19"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+                                         Stroke="{TemplateBinding Foreground}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
-                                      Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
+                                      Stroke="{TemplateBinding Foreground}"
                                       StrokeThickness="2" />
                             </Grid>
                             <ContentPresenter Grid.Column="1"
                                               Margin="4,0,0,0"
-                                              HorizontalAlignment="Left"
-                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="True" />
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -168,13 +198,14 @@
     </Style>
 
     <Style x:Key="ExpanderLeftHeaderStyle"
-           TargetType="{x:Type ToggleButton}">
+           TargetType="{x:Type ToggleButton}"
+           BasedOn="{StaticResource ExpanderRightHeaderStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -197,21 +228,21 @@
                                          Height="19"
                                          HorizontalAlignment="Center"
                                          VerticalAlignment="Center"
-                                         Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+                                         Stroke="{TemplateBinding Foreground}" />
                                 <Path x:Name="Arrow"
                                       HorizontalAlignment="Center"
                                       VerticalAlignment="Center"
                                       Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                       SnapsToDevicePixels="false"
-                                      Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
+                                      Stroke="{TemplateBinding Foreground}"
                                       StrokeThickness="2" />
                             </Grid>
                             <ContentPresenter Grid.Row="1"
                                               Margin="0,4,0,0"
-                                              HorizontalAlignment="Center"
-                                              VerticalAlignment="Top"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="True" />
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -249,13 +280,14 @@
     </Style>
 
     <Style x:Key="ExpanderDownHeaderStyle"
-           TargetType="{x:Type ToggleButton}">
+           TargetType="{x:Type ToggleButton}"
+           BasedOn="{StaticResource ExpanderUpHeaderStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}">
                         <Grid Background="Transparent"
                               SnapsToDevicePixels="False">
@@ -268,20 +300,20 @@
                                      Height="19"
                                      HorizontalAlignment="Center"
                                      VerticalAlignment="Center"
-                                     Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}" />
+                                     Stroke="{TemplateBinding Foreground}" />
                             <Path x:Name="Arrow"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   Data="M 1,1.5 L 4.5,5 L 8,1.5"
                                   SnapsToDevicePixels="false"
-                                  Stroke="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}, Path=Background, Converter={x:Static Converters:BackgroundToForegroundConverter.Instance}}"
+                                  Stroke="{TemplateBinding Foreground}"
                                   StrokeThickness="2" />
                             <ContentPresenter Grid.Column="1"
                                               Margin="4,0,0,0"
-                                              HorizontalAlignment="Left"
-                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                               RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="True" />
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -324,39 +356,28 @@
                 Value="5" />
         <Setter Property="Padding"
                 Value="5" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource AccentColorBrush}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
         <Setter Property="Controls:ControlsHelper.HeaderFontSize"
                 Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Controls:GroupBoxHelper.HeaderForeground"
                 Value="{x:Null}" />
-        <Setter Property="HeaderTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <ContentPresenter Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type Expander}},
-                                              Path=Header,
-                                              Mode=OneWay,
-                                              Converter={StaticResource ToUpperConverter}}">
-                        <TextElement.Foreground>
-                            <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
-                                <Binding Mode="OneWay"
-                                         Path="Background"
-                                         RelativeSource="{RelativeSource FindAncestor,
-                                                                         AncestorType={x:Type Expander}}" />
-                                <Binding Mode="OneWay"
-                                         Path="(Controls:GroupBoxHelper.HeaderForeground)"
-                                         RelativeSource="{RelativeSource FindAncestor,
-                                                                         AncestorType={x:Type Expander}}" />
-                            </MultiBinding>
-                        </TextElement.Foreground>
-                    </ContentPresenter>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Controls:ExpanderHelper.HeaderUpStyle"
+                Value="{StaticResource ExpanderUpHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderDownStyle"
+                Value="{StaticResource ExpanderDownHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderLeftStyle"
+                Value="{StaticResource ExpanderLeftHeaderStyle}" />
+        <Setter Property="Controls:ExpanderHelper.HeaderRightStyle"
+                Value="{StaticResource ExpanderRightHeaderStyle}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Expander}">
@@ -389,42 +410,47 @@
                             <Border x:Name="HeaderSite"
                                     Background="{TemplateBinding Background}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="1"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    UseLayoutRounding="True"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
                                     DockPanel.Dock="Top">
-                                <DockPanel>
-                                    <ToggleButton x:Name="ToggleSite"
-                                                  Margin="2"
-                                                  HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Background="Transparent"
-                                                  BorderBrush="Transparent"
-                                                  DockPanel.Dock="Left"
-                                                  FocusVisualStyle="{x:Null}"
-                                                  IsChecked="{Binding IsExpanded,
-                                                                  Mode=TwoWay,
-                                                                  RelativeSource={RelativeSource TemplatedParent}}"
-                                                  Style="{StaticResource ExpanderDownHeaderStyle}" />
-                                    <ContentPresenter Margin="{TemplateBinding Padding}"
-                                                      Content="{TemplateBinding Header}"
-                                                      ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                      ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                                      RecognizesAccessKey="True"
-                                                      TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                                      TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                                      TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}" />
-                                </DockPanel>
+                                <ToggleButton x:Name="ToggleSite"
+                                              UseLayoutRounding="False"
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              Content="{TemplateBinding Header}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                              FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                              FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                              FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                              Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}">
+                                    <ToggleButton.Foreground>
+                                        <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
+                                            <Binding Mode="OneWay"
+                                                     Path="Background"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                            <Binding Mode="OneWay"
+                                                     Path="(Controls:GroupBoxHelper.HeaderForeground)"
+                                                     RelativeSource="{RelativeSource TemplatedParent}" />
+                                        </MultiBinding>
+                                    </ToggleButton.Foreground>
+                                </ToggleButton>
                             </Border>
                             <Border x:Name="ExpandSite"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                    UseLayoutRounding="True"
                                     Background="Transparent"
                                     BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="1,0,1,1"
+                                    BorderThickness="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Top}}"
                                     DockPanel.Dock="Bottom"
                                     Focusable="false"
                                     Opacity="0"
                                     Visibility="Collapsed">
-                                <ContentPresenter Margin="{TemplateBinding Padding}"
+                                <ContentPresenter UseLayoutRounding="False"
+                                                  Margin="{TemplateBinding Padding}"
                                                   Content="{TemplateBinding Content}"
                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
                                                   Cursor="{TemplateBinding Cursor}" />
@@ -432,6 +458,12 @@
                         </DockPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="Controls:ControlsHelper.PreserveTextCase"
+                                 Value="False">
+                            <Setter TargetName="ToggleSite"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Mode=OneWay, Converter={StaticResource ToUpperConverter}}" />
+                        </Trigger>
                         <Trigger Property="IsExpanded"
                                  Value="true">
                             <Setter TargetName="ExpandSite"
@@ -465,16 +497,13 @@
                                     Value="Right" />
                             <Setter TargetName="ExpandSite"
                                     Property="BorderThickness"
-                                    Value="0,1,1,1" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Left}}" />
                             <Setter TargetName="HeaderSite"
                                     Property="DockPanel.Dock"
                                     Value="Left" />
                             <Setter TargetName="ToggleSite"
                                     Property="Style"
-                                    Value="{StaticResource ExpanderRightHeaderStyle}" />
-                            <Setter TargetName="ToggleSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Top" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderRightStyle)}" />
                         </Trigger>
                         <Trigger Property="ExpandDirection"
                                  Value="Up">
@@ -483,13 +512,13 @@
                                     Value="Top" />
                             <Setter TargetName="ExpandSite"
                                     Property="BorderThickness"
-                                    Value="1,1,1,0" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Bottom}}" />
                             <Setter TargetName="HeaderSite"
                                     Property="DockPanel.Dock"
                                     Value="Bottom" />
                             <Setter TargetName="ToggleSite"
                                     Property="Style"
-                                    Value="{StaticResource ExpanderUpHeaderStyle}" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderUpStyle)}" />
                         </Trigger>
                         <Trigger Property="ExpandDirection"
                                  Value="Left">
@@ -498,16 +527,13 @@
                                     Value="Left" />
                             <Setter TargetName="ExpandSite"
                                     Property="BorderThickness"
-                                    Value="1,1,0,1" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness, Converter={StaticResource ThicknessBindingConverter}, ConverterParameter={x:Static Converters:IgnoreThicknessSideType.Right}}" />
                             <Setter TargetName="HeaderSite"
                                     Property="DockPanel.Dock"
                                     Value="Right" />
                             <Setter TargetName="ToggleSite"
                                     Property="Style"
-                                    Value="{StaticResource ExpanderLeftHeaderStyle}" />
-                            <Setter TargetName="ToggleSite"
-                                    Property="DockPanel.Dock"
-                                    Value="Top" />
+                                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderLeftStyle)}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">

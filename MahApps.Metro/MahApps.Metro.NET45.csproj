@@ -159,6 +159,7 @@
       <DependentUpon>GlowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Helper\DataGridCellHelper.cs" />
+    <Compile Include="Controls\Helper\ExpanderHelper.cs" />
     <Compile Include="Controls\Helper\GroupBoxHelper.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Controls\WindowCommands.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="Converters\ThicknessBindingConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converters\TreeViewMarginConverter.cs" />
     <Compile Include="Microsoft.Windows.Shell\Standard\ComGuids.cs" />
