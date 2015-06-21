@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
@@ -127,6 +128,14 @@ namespace MahApps.Metro.Behaviours
             }
         }
 
+        /// <summary>Add and remove a native WindowStyle from the HWND.</summary>
+        /// <param name="removeStyle">The styles to be removed.  These can be bitwise combined.</param>
+        /// <param name="addStyle">The styles to be added.  These can be bitwise combined.</param>
+        /// <returns>Whether the styles of the HWND were modified as a result of this call.</returns>
+        /// <SecurityNote>
+        ///   Critical : Calls critical methods
+        /// </SecurityNote>
+        [SecurityCritical]
         private bool _ModifyStyle(Standard.WS removeStyle, Standard.WS addStyle)
         {
             if (this.handle == IntPtr.Zero)
@@ -136,9 +145,11 @@ namespace MahApps.Metro.Behaviours
             var intPtr = Standard.NativeMethods.GetWindowLongPtr(this.handle, Standard.GWL.STYLE);
             var dwStyle = (Standard.WS)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
             var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
-            if (dwStyle == dwNewStyle) {
+            if (dwStyle == dwNewStyle)
+            {
                 return false;
             }
+
             Standard.NativeMethods.SetWindowLongPtr(this.handle, Standard.GWL.STYLE, new IntPtr((int)dwNewStyle));
             return true;
         }

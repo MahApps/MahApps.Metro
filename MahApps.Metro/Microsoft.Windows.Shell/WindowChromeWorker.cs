@@ -2,6 +2,8 @@
     Copyright Microsoft Corporation. All Rights Reserved.
 \**************************************************************************/
 
+using System.Security;
+
 namespace Microsoft.Windows.Shell
 {
     using System;
@@ -1020,6 +1022,10 @@ namespace Microsoft.Windows.Shell
         /// <param name="removeStyle">The styles to be removed.  These can be bitwise combined.</param>
         /// <param name="addStyle">The styles to be added.  These can be bitwise combined.</param>
         /// <returns>Whether the styles of the HWND were modified as a result of this call.</returns>
+        /// <SecurityNote>
+        ///   Critical : Calls critical methods
+        /// </SecurityNote>
+        [SecurityCritical]
         private bool _ModifyStyle(WS removeStyle, WS addStyle)
         {
             Assert.IsNotDefault(_hwnd);
