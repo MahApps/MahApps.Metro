@@ -420,6 +420,7 @@
                                               Content="{TemplateBinding Header}"
                                               ContentTemplate="{TemplateBinding HeaderTemplate}"
                                               ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}"
                                               FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                               FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                               FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
