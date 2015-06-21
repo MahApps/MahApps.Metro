@@ -1024,7 +1024,7 @@ namespace Microsoft.Windows.Shell
         {
             Assert.IsNotDefault(_hwnd);
             var intPtr = NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
-            var dwStyle = (WS)(uint)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
+            var dwStyle = (WS)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
             var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
             if (dwStyle == dwNewStyle)
             {
@@ -1084,7 +1084,7 @@ namespace Microsoft.Windows.Shell
                 if (IntPtr.Zero != hmenu)
                 {
                     var intPtr = NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
-                    var dwStyle = (WS)(uint)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
+                    var dwStyle = (WS)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
 
                     bool canMinimize = Utility.IsFlagSet((int)dwStyle, (int)WS.MINIMIZEBOX);
                     bool canMaximize = Utility.IsFlagSet((int)dwStyle, (int)WS.MAXIMIZEBOX);

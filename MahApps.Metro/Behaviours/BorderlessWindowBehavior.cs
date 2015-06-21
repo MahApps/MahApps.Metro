@@ -134,7 +134,7 @@ namespace MahApps.Metro.Behaviours
                 return false;
             }
             var intPtr = Standard.NativeMethods.GetWindowLongPtr(this.handle, Standard.GWL.STYLE);
-            var dwStyle = (Standard.WS)(uint)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
+            var dwStyle = (Standard.WS)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
             var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
             if (dwStyle == dwNewStyle) {
                 return false;
