@@ -33,7 +33,7 @@ namespace MahApps.Metro.Controls.Dialogs
                     //create the dialog control
                     LoginDialog dialog = new LoginDialog(window, settings)
                     {
-                        Title = title, 
+                        Title = title,
                         Message = message
                     };
 
@@ -98,8 +98,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     //create the dialog control
                     var dialog = new InputDialog(window, settings)
                     {
-                        Title = title, 
-                        Message = message, 
+                        Title = title,
+                        Message = message,
                         Input = settings.DefaultText
                     };
 
@@ -165,8 +165,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     //create the dialog control
                     var dialog = new MessageDialog(window, settings)
                     {
-                        Message = message, 
-                        Title = title, 
+                        Message = message,
+                        Title = title,
                         ButtonStyle = style
                     };
 
@@ -228,8 +228,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     var dialog = new ProgressDialog(window)
                     {
-                        Message = message, 
-                        Title = title, 
+                        Message = message,
+                        Title = title,
                         IsCancelable = isCancelable
                     };
 
@@ -279,14 +279,31 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static Task HandleOverlayOnHide(MetroDialogSettings settings, MetroWindow window)
         {
-            return (settings == null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.HideOverlay))));
-        }
-        
-        private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
-        {
-            return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
+            if (window.metroDialogContainer.Children.Count == 0)
+            {
+                return (settings == null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.HideOverlay))));
+            }
+            else
+            {
+                var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+                tcs.SetResult(null);
+                return tcs.Task;
+            }
         }
 
+        private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
+        {
+            if (window.metroDialogContainer.Children.Count == 0)
+            {
+                return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
+            }
+            else
+            {
+                var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+                tcs.SetResult(null);
+                return tcs.Task;
+            }
+        }
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.
@@ -425,15 +442,15 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             var win = new MetroWindow
             {
-                ShowInTaskbar = false, 
-                ShowActivated = true, 
-                Topmost = true, 
-                ResizeMode = ResizeMode.NoResize, 
-                WindowStyle = WindowStyle.None, 
-                WindowStartupLocation = WindowStartupLocation.CenterScreen, 
-                ShowTitleBar = false, 
-                ShowCloseButton = false, 
-                WindowTransitionsEnabled = false, 
+                ShowInTaskbar = false,
+                ShowActivated = true,
+                Topmost = true,
+                ResizeMode = ResizeMode.NoResize,
+                WindowStyle = WindowStyle.None,
+                WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                ShowTitleBar = false,
+                ShowCloseButton = false,
+                WindowTransitionsEnabled = false,
                 Background = dialog.Background
             };
 
@@ -452,7 +469,7 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Content = dialog;
 
             EventHandler closedHandler = null;
-            closedHandler = (sender, args) => 
+            closedHandler = (sender, args) =>
             {
                 win.Closed -= closedHandler;
                 dialog.ParentDialogWindow = null;
