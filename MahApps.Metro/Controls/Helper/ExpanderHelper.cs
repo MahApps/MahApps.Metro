@@ -9,27 +9,6 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public static class ExpanderHelper
     {
-        public static readonly DependencyProperty PreserveTextCaseProperty = DependencyProperty.RegisterAttached("PreserveTextCase", typeof(bool), typeof(ExpanderHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
-
-        /// <summary>
-        /// Gets the value to override the text case behavior for the header content.
-        /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
-        /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(Expander))]
-        public static bool GetPreserveTextCase(UIElement element)
-        {
-            return (bool)element.GetValue(PreserveTextCaseProperty);
-        }
-
-        /// <summary>
-        /// Sets the value to override the text case behavior for the header content.
-        /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
-        /// </summary>
-        public static void SetPreserveTextCase(UIElement element, bool value)
-        {
-            element.SetValue(PreserveTextCaseProperty, value);
-        }
-
         public static readonly DependencyProperty HeaderUpStyleProperty = DependencyProperty.RegisterAttached("HeaderUpStyle", typeof(Style), typeof(ExpanderHelper), new FrameworkPropertyMetadata((Style)null, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>

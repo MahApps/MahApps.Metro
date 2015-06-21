@@ -457,7 +457,7 @@
                         </DockPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ExpanderHelper.PreserveTextCase"
+                        <Trigger Property="Controls:ControlsHelper.PreserveTextCase"
                                  Value="False">
                             <Setter TargetName="ToggleSite"
                                     Property="Content"
