@@ -604,14 +604,18 @@ namespace MahApps.Metro.Controls
         {
             if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
 
+            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
             if (IsOverlayVisible() && overlayStoryboard == null)
-                return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
+            {
+                //No Task.FromResult in .NET 4.
+                tcs.SetResult(null);
+                return tcs.Task;
+            }
 
             Dispatcher.VerifyAccess();
 
             overlayBox.Visibility = Visibility.Visible;
-
-            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
             var sb = (Storyboard) this.Template.Resources["OverlayFastSemiFadeIn"];
 
@@ -646,12 +650,16 @@ namespace MahApps.Metro.Controls
         {
             if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
 
+            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
             if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity == 0.0)
-                return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
+            {
+                //No Task.FromResult in .NET 4.
+                tcs.SetResult(null);
+                return tcs.Task;
+            }
 
             Dispatcher.VerifyAccess();
-
-            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
             var sb = (Storyboard) this.Template.Resources["OverlayFastSemiFadeOut"];
 
