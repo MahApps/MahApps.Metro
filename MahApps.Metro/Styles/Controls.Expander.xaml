@@ -15,7 +15,7 @@
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="Margin"
-                Value="2" />
+                Value="4" />
         <Setter Property="Padding"
                 Value="0" />
         <Setter Property="FocusVisualStyle"
