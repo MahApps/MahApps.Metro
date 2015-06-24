@@ -123,7 +123,7 @@ namespace MahApps.Metro.Controls
             typeof(CultureInfo),
             typeof(NumericUpDown),
             new PropertyMetadata(null, (o, e) => {
-                                            if (e.NewValue != e.OldValue && e.NewValue != null)
+                                            if (e.NewValue != e.OldValue)
                                             {
                                                 var numUpDown = (NumericUpDown) o;
                                                 numUpDown.OnValueChanged(numUpDown.Value, numUpDown.Value);
@@ -843,7 +843,7 @@ namespace MahApps.Metro.Controls
             if (nud._valueTextBox != null &&
                 nud.Value.HasValue)
             {
-                nud._valueTextBox.Text = nud.Value.Value.ToString((string)e.NewValue);
+                nud.InternalSetText(nud.Value);
             }
         }
 
