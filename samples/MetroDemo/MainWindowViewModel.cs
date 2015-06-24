@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -87,6 +88,8 @@ namespace MetroDemo
 
 
             BrushResources = FindBrushResources();
+
+            CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).ToList();
         }
 
         public string Title { get; set; }
@@ -95,6 +98,7 @@ namespace MetroDemo
         public List<Artist> Artists { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
         public List<AppThemeMenuData> AppThemes { get; set; }
+        public List<CultureInfo> CultureInfos { get; set; }
 
         public int? IntegerGreater10Property
         {
