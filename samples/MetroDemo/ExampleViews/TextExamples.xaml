@@ -265,7 +265,7 @@
                     <TextBox Grid.Column="1"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              VerticalAlignment="Center"
-                             Text="{Binding ElementName=StringFormatNumUpDown, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True}" />
+                             Text="{Binding ElementName=StringFormatNumUpDown, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                 </Grid>
                 <Grid Margin="{StaticResource ControlMargin}">
                     <Grid.ColumnDefinitions>
@@ -280,7 +280,7 @@
                               ItemsSource="{Binding CultureInfos, Mode=OneWay}"
                               DisplayMemberPath="DisplayName"
                               VerticalAlignment="Center"
-                              SelectedItem="{Binding ElementName=StringFormatNumUpDown, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnNotifyDataErrors=True}" />
+                              SelectedItem="{Binding ElementName=StringFormatNumUpDown, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                 </Grid>
                 <Controls:NumericUpDown x:Name="StringFormatNumUpDown"
                                         Margin="{StaticResource ControlMargin}"
