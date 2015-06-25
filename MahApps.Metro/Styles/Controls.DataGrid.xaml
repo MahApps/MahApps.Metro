@@ -307,8 +307,6 @@
            TargetType="{x:Type DataGridCell}">
         <Setter Property="Controls:DataGridCellHelper.SaveDataGrid"
                 Value="True" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
