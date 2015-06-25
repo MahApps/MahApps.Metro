@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:ValueConverter="clr-namespace:MetroDemo.ValueConverter"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -105,6 +106,8 @@
                 </Grid>
             </ControlTemplate>
 
+            <ValueConverter:AlbumPriceIsTooMuchConverter x:Key="AlbumPriceIsTooMuchConverter" />
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -157,6 +160,24 @@
                                                       StringFormat="C"
                                                       Minimum="0" />
             </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource MetroDataGridRow}"
+                       TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}"
+                                     Value="True">
+                            <Setter Property="Background"
+                                    Value="#FFE2E2" />
+                            <Setter Property="Foreground"
+                                    Value="Red" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                    <Setter Property="Control.Foreground"
+                            Value="{DynamicResource BlackBrush}" />
+                    <Setter Property="FrameworkElement.Margin"
+                            Value="0" />
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
 
         <ContentControl Grid.Column="0"
