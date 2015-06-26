@@ -78,6 +78,7 @@
                                     Content="{TemplateBinding Title}"
                                     ContentTemplate="{TemplateBinding TitleTemplate}"
                                     HorizontalContentAlignment="Stretch"
+                                    HorizontalAlignment="{TemplateBinding TitleAlignment}"
                                     VerticalContentAlignment="Stretch"
                                     Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                     Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
