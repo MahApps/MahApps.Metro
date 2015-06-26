@@ -2025,17 +2025,15 @@ namespace MahApps.Metro.Controls
             if (!IsMoveToPointEnabled)
             {
                 //Check if current value is exactly Tick value or it situated between Ticks
-                if (!IsDoubleCloseToInt((chekingValue - Minimum) / TickFrequency))
+                if (!IsDoubleCloseToInt((chekingValue + distance - Minimum) / TickFrequency))
                 {
-                    double x = (chekingValue - Minimum) / TickFrequency;
+                    double x = (chekingValue + distance - Minimum) / TickFrequency;
                     distance = TickFrequency * (int)x;
                     if (dir == Direction.Increase)
                     {
                         distance += TickFrequency;
                     }
                     distance = (distance - Math.Abs(chekingValue - Minimum));
-                    _currenValue = 0;
-                    return Math.Abs(distance);
                 }
             }
             //If we need move directly to next tick without calculating the difference between ticks
