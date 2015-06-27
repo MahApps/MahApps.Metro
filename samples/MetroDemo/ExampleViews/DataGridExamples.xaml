@@ -160,6 +160,13 @@
                                                       StringFormat="C"
                                                       Minimum="0" />
             </DataGrid.Columns>
+            <DataGrid.Style>
+                <Style BasedOn="{StaticResource MetroDataGrid}"
+                       TargetType="{x:Type DataGrid}">
+                    <Setter Property="AlternatingRowBackground"
+                            Value="{DynamicResource GrayBrush10}" />
+                </Style>
+            </DataGrid.Style>
             <DataGrid.RowStyle>
                 <Style BasedOn="{StaticResource MetroDataGridRow}"
                        TargetType="{x:Type DataGridRow}">
@@ -172,10 +179,6 @@
                                     Value="Red" />
                         </DataTrigger>
                     </Style.Triggers>
-                    <Setter Property="Control.Foreground"
-                            Value="{DynamicResource BlackBrush}" />
-                    <Setter Property="FrameworkElement.Margin"
-                            Value="0" />
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
