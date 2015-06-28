@@ -174,10 +174,21 @@
                         <DataTrigger Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}"
                                      Value="True">
                             <Setter Property="Background"
-                                    Value="#FFE2E2" />
+                                    Value="#FF8B8B" />
                             <Setter Property="Foreground"
                                     Value="Red" />
                         </DataTrigger>
+                        <!-- IsMouseOver -->
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}"
+                                           Value="True" />
+                                <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
+                                           Value="true" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="Background"
+                                    Value="#FFBDBD" />
+                        </MultiDataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>

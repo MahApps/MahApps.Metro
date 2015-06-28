@@ -83,4 +83,6 @@
 
     <Color x:Key="MenuShadowColor">#FF000000</Color>
 
+    <!-- DataGrid brushes -->
+    <SolidColorBrush x:Key="MetroDataGrid.DisabledHighlightBrush" Color="{StaticResource Gray7}" options:Freeze="True" />
 </ResourceDictionary>
