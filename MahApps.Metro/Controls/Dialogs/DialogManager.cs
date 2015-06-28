@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using MahApps.Metro.Behaviours;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -418,10 +417,12 @@ namespace MahApps.Metro.Controls.Dialogs
             return sizeHandler;
         }
 
-        private static void AddDialog(this MetroWindow window, BaseMetroDialog dialog) {
+        private static void AddDialog(this MetroWindow window, BaseMetroDialog dialog)
+        {
             // if there's already an active dialog, move to the background
             var activeDialog = window.metroActiveDialogContainer.Children.Cast<UIElement>().SingleOrDefault();
-            if (activeDialog != null) {
+            if (activeDialog != null)
+            {
                 window.metroActiveDialogContainer.Children.Remove(activeDialog);
                 window.metroInactiveDialogContainer.Children.Add(activeDialog);
             }
@@ -429,17 +430,22 @@ namespace MahApps.Metro.Controls.Dialogs
             window.metroActiveDialogContainer.Children.Add(dialog); //add the dialog to the container}
         }
 
-        private static void RemoveDialog(this MetroWindow window, BaseMetroDialog dialog) {
-            if (window.metroActiveDialogContainer.Children.Contains(dialog)) {
+        private static void RemoveDialog(this MetroWindow window, BaseMetroDialog dialog)
+        {
+            if (window.metroActiveDialogContainer.Children.Contains(dialog))
+            {
                 window.metroActiveDialogContainer.Children.Remove(dialog); //remove the dialog from the container
 
                 // if there's an inactive dialog, bring it to the front
                 var dlg = window.metroInactiveDialogContainer.Children.Cast<UIElement>().LastOrDefault();
-                if (dlg != null) {
+                if (dlg != null)
+                {
                     window.metroInactiveDialogContainer.Children.Remove(dlg);
                     window.metroActiveDialogContainer.Children.Add(dlg);
                 }
-            } else {
+            }
+            else
+            {
                 window.metroInactiveDialogContainer.Children.Remove(dialog);
             }
         }
