@@ -526,6 +526,8 @@
     <!-- Don't set the MinHeight or Height property, use the MinRowHeight or RowHeight property on DataGrid style! -->
     <Style x:Key="MetroDataGridRow"
            TargetType="{x:Type DataGridRow}">
+        <Setter Property="Controls:DataGridRowHelper.SelectionUnit"
+                Value="{Binding Path=SelectionUnit, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="Margin"
@@ -535,7 +537,7 @@
             <!-- IsSelected -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
                                Value="FullRow" />
                     <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
                                Value="true" />
@@ -551,7 +553,7 @@
             <!-- IsSelected and Selector.IsSelectionActive -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
                                Value="FullRow" />
                     <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
                                Value="true" />
@@ -569,7 +571,7 @@
             <!-- IsMouseOver -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
                                Value="FullRow" />
                     <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
                                Value="true" />
@@ -583,7 +585,7 @@
             <!-- IsEnabled -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
                                Value="FullRow" />
                     <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}"
                                Value="false" />
@@ -595,7 +597,7 @@
             <!-- IsEnabled and IsSelected -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
                                Value="FullRow" />
                     <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}"
                                Value="false" />
