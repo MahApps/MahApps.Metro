@@ -194,7 +194,8 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.RowValidationRules>
-                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidationStep="RawProposedValue" />
+                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="CommittedValue" />
+                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
             </DataGrid.RowValidationRules>
         </DataGrid>
 
