@@ -474,6 +474,7 @@ namespace MahApps.Metro.Controls
             _repeatDown.PreviewMouseUp += (o, e) => ResetInternal();
             
             OnValueChanged(Value, Value);
+
             _scrollViewer = TryFindScrollViewer();
         }
 
@@ -891,14 +892,12 @@ namespace MahApps.Metro.Controls
         private ScrollViewer TryFindScrollViewer()
         {
             _valueTextBox.ApplyTemplate();
-            var style = _valueTextBox.Template.FindName("PART_ContentHost", _valueTextBox) as ScrollViewer;
-
-            if (style != null)
+            var scrollViewer = _valueTextBox.Template.FindName("PART_ContentHost", _valueTextBox) as ScrollViewer;
+            if (scrollViewer != null)
             {
                 _handlesMouseWheelScrolling = new Lazy<PropertyInfo>(() => _scrollViewer.GetType().GetProperties(BindingFlags.NonPublic | BindingFlags.Instance).SingleOrDefault(i => i.Name == "HandlesMouseWheelScrolling"));
             }
-
-            return style;
+            return scrollViewer;
         }
 
         private void ChangeValueWithSpeedUp(bool toPositive)
