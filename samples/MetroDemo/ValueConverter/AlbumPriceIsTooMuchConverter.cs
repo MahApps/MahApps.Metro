@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using MetroDemo.Models;
 
 namespace MetroDemo.ValueConverter
 {
@@ -12,7 +14,7 @@ namespace MetroDemo.ValueConverter
             if (value is decimal)
             {
                 var price = (decimal)value;
-                if (price > 15)
+                if (price > 15 && price < 18)
                 {
                     return true;
                 }
@@ -25,4 +27,22 @@ namespace MetroDemo.ValueConverter
             return DependencyProperty.UnsetValue;
         }
     }
+
+    public class AlbumPriceIsReallyTooMuchValidation : ValidationRule
+    {
+        public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
+        {
+            var bindingGroup = value as BindingGroup;
+            if (bindingGroup != null)
+            {
+                var album = (Album)bindingGroup.Items[0];
+                if (album.Price >= 18)
+                {
+                    return new ValidationResult(false, string.Format("The price {0} of the album '{1}' by '{2}' is too much!", album.Price, album.Title, album.Artist.Name));
+                }
+            }
+            return ValidationResult.ValidResult;
+        }
+    }
+
 }

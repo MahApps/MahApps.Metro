@@ -140,6 +140,7 @@
                   Grid.Row="1"
                   RenderOptions.ClearTypeHint="Enabled"
                   TextOptions.TextFormattingMode="Display"
+                  HeadersVisibility="All"
                   Margin="5"
                   SelectionUnit="FullRow"
                   ItemsSource="{Binding Path=Albums}"
@@ -192,6 +193,9 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
+            <DataGrid.RowValidationRules>
+                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidationStep="RawProposedValue" />
+            </DataGrid.RowValidationRules>
         </DataGrid>
 
         <ContentControl Grid.Column="0"
