@@ -2020,20 +2020,22 @@ namespace MahApps.Metro.Controls
         }
 
         //Calculating next value for Tick
-        private Double CalculateNextTick(Direction dir, double chekingValue, double distance, bool moveDirectlyToNextTick)
+        private Double CalculateNextTick(Direction dir, double checkingValue, double distance, bool moveDirectlyToNextTick)
         {
+            double checkingValuePos = checkingValue - Minimum;
             if (!IsMoveToPointEnabled)
             {
                 //Check if current value is exactly Tick value or it situated between Ticks
-                if (!IsDoubleCloseToInt((chekingValue + distance - Minimum) / TickFrequency))
+                double checkingValueChanged = checkingValuePos + distance;
+                double x = checkingValueChanged / TickFrequency;
+                if (!IsDoubleCloseToInt(x))
                 {
-                    double x = (chekingValue + distance - Minimum) / TickFrequency;
                     distance = TickFrequency * (int)x;
                     if (dir == Direction.Increase)
                     {
                         distance += TickFrequency;
                     }
-                    distance = (distance - Math.Abs(chekingValue - Minimum));
+                    distance = (distance - Math.Abs(checkingValuePos));
                 }
             }
             //If we need move directly to next tick without calculating the difference between ticks
@@ -2046,7 +2048,7 @@ namespace MahApps.Metro.Controls
             else
             {
                 //current value in units (exactly in the place under cursor)
-                double currentValue = chekingValue - Minimum + (distance / _density); 
+                double currentValue = checkingValuePos + (distance / _density); 
                 double x = currentValue / TickFrequency;
                 if (dir == Direction.Increase)
                 {
@@ -2054,14 +2056,14 @@ namespace MahApps.Metro.Controls
                         ? (x * TickFrequency) + TickFrequency
                         : ((int)x * TickFrequency) + TickFrequency;
 
-                    distance = (nextvalue - Math.Abs(chekingValue - Minimum));
+                    distance = (nextvalue - Math.Abs(checkingValuePos));
                 }
                 else
                 {
                     double previousValue = x.ToString(CultureInfo.InvariantCulture).ToLower().Contains("e+")
                         ? x * TickFrequency
                         : (int)x * TickFrequency;
-                    distance = (Math.Abs(chekingValue - Minimum) - previousValue);
+                    distance = (Math.Abs(checkingValuePos) - previousValue);
                 }
             }
             //return absolute value without sign not to depend on it if value is negative 
