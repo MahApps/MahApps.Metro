@@ -140,7 +140,14 @@ namespace MahApps.Metro.Controls
                 return;
 
             if (p.internalIndex != p.SelectedIndex)
-                p.GoToItem((PivotItem)p.Items[(int)dependencyPropertyChangedEventArgs.NewValue]);
+            {
++                var pivotItem = (PivotItem) p.Items[(int) dependencyPropertyChangedEventArgs.NewValue];
++                if (p.headers.SelectedItem != pivotItem)
++                {
++                    p.headers.SelectedItem = pivotItem;
++                    p.GoToItem(pivotItem);
++                }
++            }
         }
     }
 }
