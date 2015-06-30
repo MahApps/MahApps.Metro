@@ -67,9 +67,9 @@
             </Style>
 
             <Dialog:CustomDialog x:Key="CustomDialogTest"
-                                 Title="This dialog allows arbitrary content. It will close in 5 seconds."
+                                 Title="This dialog allows arbitrary content."
                                  x:Name="CustomTestDialog">
-                <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentColorBrush}" />
+                <TextBlock Height="200" x:Name="MessageTextBlock" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentColorBrush}" />
             </Dialog:CustomDialog>
 
             <Dialog:CustomDialog x:Key="CustomCloseDialogTest"

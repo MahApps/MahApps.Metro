@@ -19,7 +19,7 @@ namespace MetroDemo
         {
             _viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
             DataContext = _viewModel;
-            
+
             InitializeComponent();
 
             flyoutDemo = new FlyoutDemo();
@@ -200,7 +200,15 @@ namespace MetroDemo
 
             await this.ShowMetroDialogAsync(dialog);
 
+            var textBlock = dialog.FindChild<TextBlock>("MessageTextBlock");
+            textBlock.Text = "A message box will appear in 5 seconds.";
+
             await TaskEx.Delay(5000);
+
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.");
+
+            textBlock.Text = "The dialog will close in 2 seconds.";
+            await TaskEx.Delay(2000);
 
             await this.HideMetroDialogAsync(dialog);
         }
