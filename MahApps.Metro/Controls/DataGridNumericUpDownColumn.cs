@@ -62,6 +62,7 @@ namespace MahApps.Metro.Controls
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
                     style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
+                    style.Setters.Add(new Setter(ControlsHelper.DisabledVisualElementVisibilityProperty, Visibility.Collapsed));
 
                     style.Seal();
                     _defaultElementStyle = style;
@@ -116,7 +117,7 @@ namespace MahApps.Metro.Controls
             generateNumericUpDown.HideUpDownButtons = true;
             return generateNumericUpDown;
         }
-        
+
         private NumericUpDown GenerateNumericUpDown(bool isEditing, DataGridCell cell)
         {
             NumericUpDown numericUpDown = (cell != null) ? (cell.Content as NumericUpDown) : null;
@@ -187,8 +188,8 @@ namespace MahApps.Metro.Controls
         {
             get { return stringFormat; }
             set { stringFormat = value; }
-        } 
-        
+        }
+
         public bool HideUpDownButtons
         {
             get { return hideUpDownButtons; }
@@ -198,7 +199,7 @@ namespace MahApps.Metro.Controls
         public double UpDownButtonsWidth
         {
             get { return upDownButtonsWidth; }
-            set { upDownButtonsWidth = value;  }
+            set { upDownButtonsWidth = value; }
         }
     }
 }

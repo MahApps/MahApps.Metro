@@ -218,7 +218,7 @@
                           Margin="1" />
 
                 <Label Content='Min="0", Max="10", TextAlignment="Left"' />
-                <Controls:NumericUpDown Value="5"
+                <Controls:NumericUpDown Value="5" IsEnabled="False"
                                         x:Name="Test"
                                         TextAlignment="Left"
                                         Minimum="0"

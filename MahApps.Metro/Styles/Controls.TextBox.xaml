@@ -152,6 +152,7 @@
                                     IsTabStop="False" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -447,6 +448,7 @@
                                     IsTabStop="False" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -687,13 +689,13 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <Border x:Name="DisabledVisualElement"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{DynamicResource ControlsDisabledBrush}"
-                                Opacity="0.6"
                                 IsHitTestVisible="False"
-                                Visibility="Collapsed" />
+                                Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
@@ -711,8 +713,8 @@
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter TargetName="DisabledVisualElement"
-                                    Property="Visibility"
-                                    Value="Visible" />
+                                    Property="Opacity"
+                                    Value="0.6" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -68,6 +68,7 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBox x:Name="PART_TextBox"
+                                     Controls:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
                                      MinWidth="20"
                                      MinHeight="{TemplateBinding MinHeight}"
                                      Foreground="{TemplateBinding Foreground}"
@@ -117,8 +118,22 @@
                                       Data="F1 M 19,38L 57,38L 57,44L 19,44L 19,38 Z " />
                             </RepeatButton>
                         </Grid>
+                        <Border x:Name="DisabledVisualElement"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                BorderBrush="{DynamicResource ControlsDisabledBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{DynamicResource ControlsDisabledBrush}"
+                                IsHitTestVisible="False"
+                                Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="DisabledVisualElement"
+                                    Property="Opacity"
+                                    Value="0.6" />
+                        </Trigger>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
                             <Setter TargetName="PART_NumericUp"
@@ -203,7 +218,6 @@
                                     Property="Width"
                                     Value="0" />
                         </Trigger>
-                        
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

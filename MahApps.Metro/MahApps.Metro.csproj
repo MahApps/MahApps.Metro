@@ -118,6 +118,7 @@
     <Compile Include="Controls\Helper\ComboBoxHelper.cs" />
     <Compile Include="Controls\Helper\ControlsHelper.cs" />
     <Compile Include="Controls\Helper\DataGridCellHelper.cs" />
+    <Compile Include="Controls\Helper\DataGridRowHelper.cs" />
     <Compile Include="Controls\Helper\ExpanderHelper.cs" />
     <Compile Include="Controls\Helper\GroupBoxHelper.cs" />
     <Compile Include="Controls\Helper\PasswordBoxHelper.cs" />

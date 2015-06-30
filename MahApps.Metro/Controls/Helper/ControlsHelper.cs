@@ -10,6 +10,28 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public static class ControlsHelper
     {
+        public static readonly DependencyProperty DisabledVisualElementVisibilityProperty = DependencyProperty.RegisterAttached("DisabledVisualElementVisibility", typeof(Visibility), typeof(ControlsHelper), new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets the value to handle the visibility of the DisabledVisualElement in the template.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(RichTextBox))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        public static Visibility GetDisabledVisualElementVisibility(UIElement element)
+        {
+            return (Visibility)element.GetValue(DisabledVisualElementVisibilityProperty);
+        }
+
+        /// <summary>
+        /// Sets the value to handle the visibility of the DisabledVisualElement in the template.
+        /// </summary>
+        public static void SetDisabledVisualElementVisibility(UIElement element, Visibility value)
+        {
+            element.SetValue(DisabledVisualElementVisibilityProperty, value);
+        }
+
         public static readonly DependencyProperty PreserveTextCaseProperty = DependencyProperty.RegisterAttached("PreserveTextCase", typeof(bool), typeof(ControlsHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
