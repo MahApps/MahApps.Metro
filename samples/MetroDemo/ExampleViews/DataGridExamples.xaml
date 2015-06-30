@@ -194,8 +194,10 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.RowValidationRules>
-                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="CommittedValue" />
-                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
+                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True"
+                                                                    ValidationStep="CommittedValue" />
+                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True"
+                                                                    ValidationStep="UpdatedValue" />
             </DataGrid.RowValidationRules>
         </DataGrid>
 
@@ -226,10 +228,21 @@
                                     Binding="{Binding Artist.Name}" />
                 <DataGridTextColumn Header="Genre"
                                     Binding="{Binding Genre.Name}" />
-                <controls:DataGridNumericUpDownColumn Header="Price"
-                                                      Binding="{Binding Price}"
-                                                      StringFormat="C"
-                                                      Minimum="0" />
+                <DataGridTemplateColumn Header="Price">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <controls:MetroProgressBar x:Name="PriceProgressBar"
+                                                       Value="{Binding Price}"
+                                                       Minimum="0"
+                                                       Maximum="20"
+                                                       Foreground="{DynamicResource AccentColorBrush}"
+                                                       Background="Transparent"
+                                                       VerticalAlignment="Center"
+                                                       Height="20"
+                                                       Margin="5 2" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
