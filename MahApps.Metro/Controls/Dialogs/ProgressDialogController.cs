@@ -24,27 +24,19 @@ namespace MahApps.Metro.Controls.Dialogs
 
             IsOpen = dialog.IsVisible;
 
-            WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() =>
-            {
+            WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() => {
                 WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
             }));
         }
 
-        void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
+        private void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (WrappedDialog.Dispatcher.CheckAccess())
-            {
+            Action action = () => {
                 IsCanceled = true;
-
                 WrappedDialog.PART_NegativeButton.IsEnabled = false;
-            }
+            };
 
-            WrappedDialog.Dispatcher.Invoke(new Action(() =>
-            {
-                IsCanceled = true;
-
-                WrappedDialog.PART_NegativeButton.IsEnabled = false;
-            }));
+            this.InvokeAction(action);
         }
 
         /// <summary>
@@ -52,18 +44,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public void SetIndeterminate()
         {
-            if (WrappedDialog.Dispatcher.CheckAccess())
-            {
-                WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
-            }
-
-            else
-            {
-                WrappedDialog.Dispatcher.Invoke(new Action(() =>
-                {
-                    WrappedDialog.PART_ProgressBar.IsIndeterminate = true;
-                }));
-            }
+            this.InvokeAction(() => WrappedDialog.PART_ProgressBar.IsIndeterminate = true);
         }
 
         /// <summary>
@@ -72,17 +53,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="value"></param>
         public void SetCancelable(bool value)
         {
-            if (WrappedDialog.Dispatcher.CheckAccess())
-            {
-                WrappedDialog.IsCancelable = value;
-            }
-            else
-            {
-                WrappedDialog.Dispatcher.Invoke(new Action(() =>
-                {
-                    WrappedDialog.IsCancelable = value;
-                }));
-            }
+            this.InvokeAction(() => WrappedDialog.IsCancelable = value);
         }
 
         /// <summary>
@@ -91,26 +62,36 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="value">The percentage to set as the value.</param>
         public void SetProgress(double value)
         {
-            if (value < 0.0 || value > 1.0) 
-                throw new ArgumentOutOfRangeException("value");
+            Action action = () => {
+                if (value < WrappedDialog.PART_ProgressBar.Minimum || value > WrappedDialog.PART_ProgressBar.Maximum)
+                {
+                    throw new ArgumentOutOfRangeException("value");
+                }
 
-            Action action = () =>
-            {
                 WrappedDialog.PART_ProgressBar.IsIndeterminate = false;
                 WrappedDialog.PART_ProgressBar.Value = value;
-                WrappedDialog.PART_ProgressBar.Maximum = 1.0;
                 WrappedDialog.PART_ProgressBar.ApplyTemplate();
             };
 
-            if (WrappedDialog.Dispatcher.CheckAccess())
-            {
-                action();
-            }
+            this.InvokeAction(action);
+        }
 
-            else
-            {
-                WrappedDialog.Dispatcher.Invoke(action);
-            }
+        /// <summary> 
+        ///  Gets/Sets the minimum restriction of the progress Value property
+        /// </summary> 
+        public double Minimum
+        {
+            get { return this.InvokeFunc(() => WrappedDialog.PART_ProgressBar.Minimum); }
+            set { this.InvokeAction(() => WrappedDialog.PART_ProgressBar.Minimum = value); }
+        }
+
+        /// <summary> 
+        ///  Gets/Sets the maximum restriction of the progress Value property
+        /// </summary> 
+        public double Maximum
+        {
+            get { return this.InvokeFunc(() => WrappedDialog.PART_ProgressBar.Maximum); }
+            set { this.InvokeAction(() => WrappedDialog.PART_ProgressBar.Maximum = value); }
         }
 
         /// <summary>
@@ -119,14 +100,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message to be set.</param>
         public void SetMessage(string message)
         {
-            if (WrappedDialog.Dispatcher.CheckAccess())
-            {
-                WrappedDialog.Message = message;
-            }
-            else
-            {
-                WrappedDialog.Dispatcher.Invoke(new Action(() => { WrappedDialog.Message = message; }));
-            }
+            this.InvokeAction(() => WrappedDialog.Message = message);
         }
 
         /// <summary>
@@ -135,14 +109,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title to be set.</param>
         public void SetTitle(string title)
         {
-            if (WrappedDialog.Dispatcher.CheckAccess())
-            {
-                WrappedDialog.Title = title;
-            }
-            else
-            {
-                WrappedDialog.Dispatcher.Invoke(new Action(() => { WrappedDialog.Title = title; }));
-            }
+            this.InvokeAction(() => WrappedDialog.Title = title);
         }
 
         /// <summary>
@@ -156,27 +123,44 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <returns>A task representing the operation.</returns>
         public Task CloseAsync()
         {
-            Action action = () =>
-            {
-                if (!IsOpen) throw new InvalidOperationException();
+            Action action = () => {
+                if (!IsOpen)
+                {
+                    throw new InvalidOperationException();
+                }
                 WrappedDialog.Dispatcher.VerifyAccess();
                 WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
             };
 
+            this.InvokeAction(action);
+
+            return CloseCallback().ContinueWith(x => WrappedDialog.Dispatcher.Invoke(new Action(() => {
+                IsOpen = false;
+            })));
+        }
+
+        private double InvokeFunc(Func<double> getValueFunc)
+        {
             if (WrappedDialog.Dispatcher.CheckAccess())
             {
-                action();
+                return getValueFunc();
             }
             else
             {
-                WrappedDialog.Dispatcher.Invoke(action);
-              
+                return (double)this.WrappedDialog.Dispatcher.Invoke(new Func<double>(getValueFunc));
             }
+        }
 
-            return CloseCallback().ContinueWith(x => WrappedDialog.Dispatcher.Invoke(new Action(() =>
+        private void InvokeAction(Action setValueAction)
+        {
+            if (WrappedDialog.Dispatcher.CheckAccess())
             {
-                IsOpen = false;
-            })));
+                setValueAction();
+            }
+            else
+            {
+                WrappedDialog.Dispatcher.Invoke(new Action(setValueAction));
+            }
         }
     }
 }
