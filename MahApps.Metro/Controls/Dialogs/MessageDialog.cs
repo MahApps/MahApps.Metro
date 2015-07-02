@@ -27,17 +27,30 @@ namespace MahApps.Metro.Controls.Dialogs
             Dispatcher.BeginInvoke(new Action(() => {
                 this.Focus();
 
-                //kind of acts like a selective 'IsDefault' mechanism.
-                switch (this.ButtonStyle)
+                var defaultButtonFocus = DialogSettings.DefaultButtonFocus;
+
+                //Ensure it's a valid option
+                if (!IsApplicable(defaultButtonFocus))
                 {
-                    case MessageDialogStyle.Affirmative:
+                    defaultButtonFocus = ButtonStyle == MessageDialogStyle.Affirmative
+                        ? MessageDialogResult.Affirmative
+                        : MessageDialogResult.Negative;
+                }
+
+                //kind of acts like a selective 'IsDefault' mechanism.
+                switch (defaultButtonFocus)
+                {
+                    case MessageDialogResult.Affirmative:
                         PART_AffirmativeButton.Focus();
                         break;
-
-                    case MessageDialogStyle.AffirmativeAndNegative:
-                    case MessageDialogStyle.AffirmativeAndNegativeAndDoubleAuxiliary:
-                    case MessageDialogStyle.AffirmativeAndNegativeAndSingleAuxiliary:
+                    case MessageDialogResult.Negative:
                         PART_NegativeButton.Focus();
+                        break;
+                    case MessageDialogResult.FirstAuxiliary:
+                        PART_FirstAuxiliaryButton.Focus();
+                        break;
+                    case MessageDialogResult.SecondAuxiliary:
+                        PART_SecondAuxiliaryButton.Focus();
                         break;
                 }
             }));
@@ -270,6 +283,23 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (string)GetValue(SecondAuxiliaryButtonTextProperty); }
             set { SetValue(SecondAuxiliaryButtonTextProperty, value); }
+        }
+
+        private bool IsApplicable(MessageDialogResult value)
+        {
+            switch (value)
+            {
+                case MessageDialogResult.Affirmative:
+                    return PART_AffirmativeButton.IsVisible;
+                case MessageDialogResult.Negative:
+                    return PART_NegativeButton.IsVisible;
+                case MessageDialogResult.FirstAuxiliary:
+                    return PART_FirstAuxiliaryButton.IsVisible;
+                case MessageDialogResult.SecondAuxiliary:
+                    return PART_SecondAuxiliaryButton.IsVisible;
+            }
+
+            return false;
         }
     }
 
