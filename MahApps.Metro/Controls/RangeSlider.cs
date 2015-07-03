@@ -2036,7 +2036,8 @@ namespace MahApps.Metro.Controls
                         distance += TickFrequency;
                     }
                     distance = (distance - Math.Abs(checkingValuePos));
-                }
+                    _currenValue = 0;
+                    return Math.Abs(distance);                }
             }
             //If we need move directly to next tick without calculating the difference between ticks
             //Use when MoveToPoint disabled
