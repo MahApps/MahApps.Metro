@@ -172,7 +172,7 @@
             <StackPanel.Resources>
                 <Style x:Key="CustomMetroToggleSwitch"
                        TargetType="{x:Type Controls:ToggleSwitch}"
-                       BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}">
+                       BasedOn="{StaticResource MetroToggleSwitch}">
                     <Setter Property="SwitchForeground"
                             Value="Red" />
                     <Setter Property="OnLabel"
@@ -180,10 +180,17 @@
                     <Setter Property="OffLabel"
                             Value="False" />
                 </Style>
+                <Style x:Key="CustomMetroToggleSwitchButton"
+                       TargetType="{x:Type Controls:ToggleSwitchButton}"
+                       BasedOn="{StaticResource MetroToggleSwitchButton}">
+                    <Setter Property="SwitchForeground"
+                            Value="YellowGreen" />
+                </Style>
             </StackPanel.Resources>
             <Label Content="Toggle switch"
                    Style="{DynamicResource DescriptionHeaderStyle}" />
             <Controls:ToggleSwitch IsChecked="True"
+                                   ToggleSwitchButtonStyle="{StaticResource CustomMetroToggleSwitchButton}"
                                    Margin="{StaticResource ControlMargin}"
                                    Header="ToggleSwitch Header" />
             <Controls:ToggleSwitch Style="{DynamicResource CustomMetroToggleSwitch}"

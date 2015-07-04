@@ -114,7 +114,7 @@
         <Setter Property="IsTabStop"
                 Value="True" />
         <Setter Property="ToggleSwitchButtonStyle"
-                Value="{DynamicResource MetroToggleSwitchButton}" />
+                Value="{StaticResource {x:Type Controls:ToggleSwitchButton}}" />
         <Setter Property="OnSwitchBrush"
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="OffSwitchBrush"
