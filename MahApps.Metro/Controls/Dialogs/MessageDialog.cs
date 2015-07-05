@@ -19,7 +19,13 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             InitializeComponent();
         }
-
+        Action cleanUpHandlers;
+        TaskCompletionSource<MessageDialogResult> tcs = new TaskCompletionSource<MessageDialogResult>();
+        public void OnHide()
+        {
+            cleanUpHandlers();
+            tcs.TrySetResult(MessageDialogResult.None);
+        }
         internal Task<MessageDialogResult> WaitForButtonPressAsync()
         {
             Dispatcher.BeginInvoke(new Action(() =>
@@ -40,8 +46,8 @@ namespace MahApps.Metro.Controls.Dialogs
                         break;
                 }
             }));
-
-            TaskCompletionSource<MessageDialogResult> tcs = new TaskCompletionSource<MessageDialogResult>();
+       
+            
 
             RoutedEventHandler negativeHandler = null;
             KeyEventHandler negativeKeyHandler = null;
@@ -55,7 +61,7 @@ namespace MahApps.Metro.Controls.Dialogs
             RoutedEventHandler secondAuxHandler = null;
             KeyEventHandler secondAuxKeyHandler = null;
 
-            Action cleanUpHandlers = () =>
+            cleanUpHandlers = () =>
             {
                 PART_NegativeButton.Click -= negativeHandler;
                 PART_AffirmativeButton.Click -= affirmativeHandler;
@@ -67,13 +73,13 @@ namespace MahApps.Metro.Controls.Dialogs
                 PART_FirstAuxiliaryButton.KeyDown -= firstAuxKeyHandler;
                 PART_SecondAuxiliaryButton.KeyDown -= secondAuxKeyHandler;
             };
-
+            tcs == new TaskCompletionSource<MessageDialogResult>()
             negativeKeyHandler = (sender, e) =>
             {
                 if (e.Key == Key.Enter)
                 {
                     cleanUpHandlers();
-
+                    
                     tcs.TrySetResult(MessageDialogResult.Negative);
                 }
             };
@@ -266,6 +272,7 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public enum MessageDialogResult
     {
+        None = -1
         Negative = 0,
         Affirmative = 1,
         FirstAuxiliary,
