@@ -27,6 +27,11 @@ namespace MahApps.Metro.Controls.Dialogs
             WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() => {
                 WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
             }));
+
+            dialog.CancellationToken.Register(() =>
+            {
+                PART_NegativeButton_Click(null, new RoutedEventArgs());
+            });
         }
 
         private void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
@@ -76,18 +81,18 @@ namespace MahApps.Metro.Controls.Dialogs
             this.InvokeAction(action);
         }
 
-        /// <summary> 
+        /// <summary>
         ///  Gets/Sets the minimum restriction of the progress Value property
-        /// </summary> 
+        /// </summary>
         public double Minimum
         {
             get { return this.InvokeFunc(() => WrappedDialog.PART_ProgressBar.Minimum); }
             set { this.InvokeAction(() => WrappedDialog.PART_ProgressBar.Minimum = value); }
         }
 
-        /// <summary> 
+        /// <summary>
         ///  Gets/Sets the maximum restriction of the progress Value property
-        /// </summary> 
+        /// </summary>
         public double Maximum
         {
             get { return this.InvokeFunc(() => WrappedDialog.PART_ProgressBar.Maximum); }

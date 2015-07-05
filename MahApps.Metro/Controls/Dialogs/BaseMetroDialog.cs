@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +10,7 @@ namespace MahApps.Metro.Controls.Dialogs
     /// <summary>
     /// The base class for dialogs.
     ///
-    /// You probably don't want to use this class, if you want to add arbitrary content to your dialog, 
+    /// You probably don't want to use this class, if you want to add arbitrary content to your dialog,
     /// use the <see cref="CustomDialog"/> class.
     /// </summary>
     public abstract class BaseMetroDialog : ContentControl
@@ -105,12 +106,12 @@ namespace MahApps.Metro.Controls.Dialogs
             if (DialogSettings != null)
             {
                 var windowTheme = DetectTheme(this);
-                
+
                 if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && windowTheme == null)
                 {
                     return;
                 }
-                
+
                 var theme = windowTheme.Item1;
                 var windowAccent = windowTheme.Item2;
 
@@ -315,6 +316,8 @@ namespace MahApps.Metro.Controls.Dialogs
             MaximumBodyHeight = Double.NaN;
 
             DefaultText = "";
+
+            CancellationToken = CancellationToken.None;
         }
 
         /// <summary>
@@ -356,6 +359,11 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the maximum height. (Default is unlimited height, <a href="http://msdn.microsoft.com/de-de/library/system.double.nan">Double.NaN</a>)
         /// </summary>
         public double MaximumBodyHeight { get; set; }
+
+        /// <summary>
+        /// Gets/sets the token to cancel the dialog.
+        /// </summary>
+        public CancellationToken CancellationToken { get; set; }
     }
 
     /// <summary>
