@@ -73,7 +73,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 PART_FirstAuxiliaryButton.KeyDown -= firstAuxKeyHandler;
                 PART_SecondAuxiliaryButton.KeyDown -= secondAuxKeyHandler;
             };
-            tcs == new TaskCompletionSource<MessageDialogResult>()
+            tcs == new TaskCompletionSource<MessageDialogResult>();
             negativeKeyHandler = (sender, e) =>
             {
                 if (e.Key == Key.Enter)
