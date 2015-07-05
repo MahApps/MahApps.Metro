@@ -272,7 +272,7 @@ namespace MahApps.Metro.Controls.Dialogs
     /// </summary>
     public enum MessageDialogResult
     {
-        None = -1
+        None = -1,
         Negative = 0,
         Affirmative = 1,
         FirstAuxiliary,
