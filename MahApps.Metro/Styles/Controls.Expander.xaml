@@ -352,8 +352,6 @@
 
     <Style x:Key="MetroExpander"
            TargetType="{x:Type Expander}">
-        <Setter Property="Margin"
-                Value="5" />
         <Setter Property="Padding"
                 Value="5" />
         <Setter Property="SnapsToDevicePixels"
