@@ -226,7 +226,7 @@
                                         Maximum="10" />
 
                 <Label Content='Interval="2"' />
-                <Controls:NumericUpDown Value="5"
+                <Controls:NumericUpDown Value="5" ButtonsPlacement="Left"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Interval="2" />
 

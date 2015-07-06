@@ -60,7 +60,7 @@
                                 Background="{TemplateBinding Background}" />
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
+                                <ColumnDefinition x:Name="PART_TextBoxColumn" Width="*"/>
                                 <ColumnDefinition x:Name="PART_NumericUpColumn"
                                                   Width="Auto" />
                                 <ColumnDefinition x:Name="PART_NumericDownColumn"
@@ -128,6 +128,16 @@
                                 Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                       <Trigger Property="ButtonsPlacement" Value="Left">
+                          <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2"/>
+                          <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="0"/>
+                          <Setter TargetName="PART_NumericDown" Property="Margin" Value="2,2,0,2"/>
+                          <Setter TargetName="PART_NumericUp" Property="Margin" Value="0,2,2,2"/>
+                          <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="1"/>
+                          <Setter TargetName="PART_NumericDownColumn" Property="Width" Value="*"/>
+                          <Setter TargetName="PART_NumericUpColumn" Property="Width" Value="Auto"/>
+                          <Setter TargetName="PART_TextBoxColumn" Property="Width" Value="Auto"/>
+                       </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter TargetName="DisabledVisualElement"
