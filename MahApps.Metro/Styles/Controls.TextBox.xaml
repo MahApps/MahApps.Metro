@@ -167,6 +167,7 @@
                            <Setter TargetName="Message" Property="Grid.Column" Value="1"/>
                            <Setter TargetName="TextColumn" Property="Width" Value="Auto"/>
                            <Setter TargetName="ButtonColumn" Property="Width" Value="*"/>
+                           <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1"/>
                         </DataTrigger>
                        
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
