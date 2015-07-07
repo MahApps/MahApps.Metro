@@ -233,7 +233,7 @@
                 <Label Content='Interval="5"' />
                 <Controls:NumericUpDown Value="5"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        Controls:TextBoxHelper.ClearTextButton="True"
+                                        Controls:TextBoxHelper.ClearTextButton="True" ButtonsPlacement="Left"
                                         Interval="5" />
 
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"

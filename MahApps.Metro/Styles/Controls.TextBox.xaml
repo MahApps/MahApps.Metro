@@ -85,7 +85,7 @@
                         <Grid x:Name="PART_InnerGrid"
                               Margin="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" x:Name="TextColumn"/>
                                 <ColumnDefinition x:Name="ButtonColumn"
                                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
@@ -161,6 +161,14 @@
                                 Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsPlacement)}"
+                                     Value="Left">
+                           <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0"/>
+                           <Setter TargetName="Message" Property="Grid.Column" Value="1"/>
+                           <Setter TargetName="TextColumn" Property="Width" Value="Auto"/>
+                           <Setter TargetName="ButtonColumn" Property="Width" Value="*"/>
+                        </DataTrigger>
+                       
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
                                      Value="">
                             <Setter TargetName="Message"
@@ -381,7 +389,7 @@
                         <Grid x:Name="PART_InnerGrid"
                               Margin="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" x:Name="TextColumn" />
                                 <ColumnDefinition x:Name="ButtonColumn"
                                                   Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
@@ -457,8 +465,16 @@
                                 Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsPlacement)}"
+                                           Value="Left">
+                           <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0"/>
+                           <Setter TargetName="Message" Property="Grid.Column" Value="1"/>
+                           <Setter TargetName="TextColumn" Property="Width" Value="Auto"/>
+                           <Setter TargetName="ButtonColumn" Property="Width" Value="*"/>
+                        </DataTrigger>
+
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
-                                     Value="">
+                                           Value="">
                             <Setter TargetName="Message"
                                     Property="Visibility"
                                     Value="Visible" />
