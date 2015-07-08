@@ -88,7 +88,6 @@
                         HorizontalAlignment="Left">
                 <Controls:RangeSlider Orientation="Vertical"
                                       MinRangeWidth="20"
-                                      Height="200"
                                       x:Name="RangeSlider"
                                       AutoToolTipPlacement="BottomRight"
                                       AutoToolTipPrecision="2"
