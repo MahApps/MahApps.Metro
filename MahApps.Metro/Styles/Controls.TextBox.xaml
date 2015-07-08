@@ -220,6 +220,19 @@
                             </DataTrigger.ExitActions>
                         </DataTrigger>
 
+                        <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="TextWrapping"
+                                           Value="NoWrap" />
+                                <Condition Property="AcceptsReturn"
+                                           Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Width"
+                                    Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Mode=OneWay}" />
+                        </MultiTrigger>
+
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsPlacement)}"
@@ -529,6 +542,19 @@
                                 <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
                             </DataTrigger.ExitActions>
                         </DataTrigger>
+
+                        <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="TextWrapping"
+                                           Value="NoWrap" />
+                                <Condition Property="AcceptsReturn"
+                                           Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Width"
+                                    Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Mode=OneWay}" />
+                        </MultiTrigger>
 
                         <Trigger Property="IsMouseOver"
                                  Value="True">
