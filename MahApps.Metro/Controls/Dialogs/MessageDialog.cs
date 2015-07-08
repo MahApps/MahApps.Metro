@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -58,7 +59,15 @@ namespace MahApps.Metro.Controls.Dialogs
 
             KeyEventHandler escapeKeyHandler = null;
 
-            Action cleanUpHandlers = () => {
+            Action cleanUpHandlers = null;
+
+            var cancellationTokenRegistration = DialogSettings.CancellationToken.Register(() =>
+            {
+                cleanUpHandlers();
+                tcs.TrySetResult(ButtonStyle == MessageDialogStyle.Affirmative ? MessageDialogResult.Affirmative : MessageDialogResult.Negative);
+            });
+
+            cleanUpHandlers = () => {
                 PART_NegativeButton.Click -= negativeHandler;
                 PART_AffirmativeButton.Click -= affirmativeHandler;
                 PART_FirstAuxiliaryButton.Click -= firstAuxHandler;
@@ -70,6 +79,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 PART_SecondAuxiliaryButton.KeyDown -= secondAuxKeyHandler;
 
                 KeyDown -= escapeKeyHandler;
+
+                cancellationTokenRegistration.Dispose();
             };
 
             negativeKeyHandler = (sender, e) => {

@@ -35,7 +35,15 @@ namespace MahApps.Metro.Controls.Dialogs
 
             KeyEventHandler escapeKeyHandler = null;
 
-            Action cleanUpHandlers = () =>
+            Action cleanUpHandlers = null;
+
+            var cancellationTokenRegistration = DialogSettings.CancellationToken.Register(() =>
+            {
+                cleanUpHandlers();
+                tcs.TrySetResult(null);
+            });
+
+            cleanUpHandlers = () =>
             {
                 PART_TextBox.KeyDown -= affirmativeKeyHandler;
 
@@ -46,6 +54,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
                 PART_NegativeButton.KeyDown -= negativeKeyHandler;
                 PART_AffirmativeButton.KeyDown -= affirmativeKeyHandler;
+
+                cancellationTokenRegistration.Dispose();
             };
 
             escapeKeyHandler = (sender, e) =>
