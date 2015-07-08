@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
-
     <ControlTemplate x:Key="RangeSliderHorizontal"
                      TargetType="controls:RangeSlider">
         <StackPanel Name="PART_Container"
@@ -17,7 +16,7 @@
                      Maximum="{TemplateBinding Maximum}"
                      Height="4"
                      Margin="5,0,5,2"
-                     Visibility="Collapsed"></TickBar>
+                     Visibility="Collapsed" />
             <StackPanel Name="PART_RangeSliderContainer"
                         Background="Transparent"
                         Orientation="Horizontal"
@@ -63,7 +62,7 @@
                      Maximum="{TemplateBinding Maximum}"
                      Height="4"
                      Margin="5,2,5,0"
-                     Visibility="Collapsed"></TickBar>
+                     Visibility="Collapsed" />
         </StackPanel>
         <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement"
@@ -104,7 +103,7 @@
                      Maximum="{TemplateBinding Maximum}"
                      Width="4"
                      Margin="0,5,2,5"
-                     Visibility="Collapsed"></TickBar>
+                     Visibility="Collapsed" />
             <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Stretch"
@@ -154,7 +153,7 @@
                      Placement="Right"
                      Width="4"
                      Margin="2,5,0,5"
-                     Visibility="Collapsed"></TickBar>
+                     Visibility="Collapsed" />
         </StackPanel>
         <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement"
