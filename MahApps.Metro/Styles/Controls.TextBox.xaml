@@ -85,9 +85,10 @@
                         <Grid x:Name="PART_InnerGrid"
                               Margin="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" x:Name="TextColumn"/>
+                                <ColumnDefinition Width="*"
+                                                  x:Name="TextColumn" />
                                 <ColumnDefinition x:Name="ButtonColumn"
-                                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                                  Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -149,6 +150,7 @@
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
                                     IsTabStop="False" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
@@ -163,13 +165,23 @@
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsPlacement)}"
                                      Value="Left">
-                           <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0"/>
-                           <Setter TargetName="Message" Property="Grid.Column" Value="1"/>
-                           <Setter TargetName="TextColumn" Property="Width" Value="Auto"/>
-                           <Setter TargetName="ButtonColumn" Property="Width" Value="*"/>
-                           <Setter TargetName="PART_ContentHost" Property="Grid.Column" Value="1"/>
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Grid.Column"
+                                    Value="0" />
+                            <Setter TargetName="Message"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                            <Setter TargetName="TextColumn"
+                                    Property="Width"
+                                    Value="Auto" />
+                            <Setter TargetName="ButtonColumn"
+                                    Property="Width"
+                                    Value="*" />
+                            <Setter TargetName="PART_ContentHost"
+                                    Property="Grid.Column"
+                                    Value="1" />
                         </DataTrigger>
-                       
+
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
                                      Value="">
                             <Setter TargetName="Message"
@@ -208,28 +220,21 @@
                             </DataTrigger.ExitActions>
                         </DataTrigger>
 
-                        <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="TextWrapping"
-                                           Value="NoWrap" />
-                                <Condition Property="AcceptsReturn"
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsPlacement)}"
+                                           Value="Right" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}"
                                            Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="ButtonColumn"
-                                    Property="Width"
-                                    Value="{Binding ElementName=ButtonRow, Path=ActualHeight, Mode=OneWay}" />
-                        </MultiTrigger>
-
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}"
-                                     Value="False">
+                            </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_ContentHost"
                                     Property="Grid.ColumnSpan"
                                     Value="2" />
                             <Setter TargetName="Message"
                                     Property="Grid.ColumnSpan"
                                     Value="2" />
-                        </DataTrigger>
+                        </MultiDataTrigger>
+
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="Base"
@@ -390,9 +395,10 @@
                         <Grid x:Name="PART_InnerGrid"
                               Margin="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" x:Name="TextColumn" />
+                                <ColumnDefinition Width="*"
+                                                  x:Name="TextColumn" />
                                 <ColumnDefinition x:Name="ButtonColumn"
-                                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                                  Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -454,6 +460,7 @@
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
                                     Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonTemplate), Mode=OneWay}"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="True"
+                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
                                     IsTabStop="False" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
@@ -467,15 +474,26 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsPlacement)}"
-                                           Value="Left">
-                           <Setter TargetName="PART_ClearText" Property="Grid.Column" Value="0"/>
-                           <Setter TargetName="Message" Property="Grid.Column" Value="1"/>
-                           <Setter TargetName="TextColumn" Property="Width" Value="Auto"/>
-                           <Setter TargetName="ButtonColumn" Property="Width" Value="*"/>
+                                     Value="Left">
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Grid.Column"
+                                    Value="0" />
+                            <Setter TargetName="Message"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                            <Setter TargetName="TextColumn"
+                                    Property="Width"
+                                    Value="Auto" />
+                            <Setter TargetName="ButtonColumn"
+                                    Property="Width"
+                                    Value="*" />
+                            <Setter TargetName="PART_ContentHost"
+                                    Property="Grid.Column"
+                                    Value="1" />
                         </DataTrigger>
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
-                                           Value="">
+                                     Value="">
                             <Setter TargetName="Message"
                                     Property="Visibility"
                                     Value="Visible" />
@@ -511,19 +529,6 @@
                                 <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
                             </DataTrigger.ExitActions>
                         </DataTrigger>
-
-                        <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="TextWrapping"
-                                           Value="NoWrap" />
-                                <Condition Property="AcceptsReturn"
-                                           Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="ButtonColumn"
-                                    Property="Width"
-                                    Value="{Binding ElementName=ButtonRow, Path=ActualHeight, Mode=OneWay}" />
-                        </MultiTrigger>
 
                         <Trigger Property="IsMouseOver"
                                  Value="True">
