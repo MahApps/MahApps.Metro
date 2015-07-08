@@ -1,6 +1,6 @@
 ﻿namespace MahApps.Metro.Controls
 {
-   public enum ButtonsPlacementVariant
+   public enum ButtonsAlignment
    {
       Left,
       Right

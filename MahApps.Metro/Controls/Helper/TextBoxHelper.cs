@@ -22,7 +22,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
-        public static readonly DependencyProperty ButtonsPlacementProperty = DependencyProperty.RegisterAttached("ButtonsPlacement", typeof(ButtonsPlacementVariant), typeof(TextBoxHelper), new FrameworkPropertyMetadata(ButtonsPlacementVariant.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty ButtonsAlignmentProperty = DependencyProperty.RegisterAttached("ButtonsAlignment", typeof(ButtonsAlignment), typeof(TextBoxHelper), new FrameworkPropertyMetadata(ButtonsAlignment.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         /// <summary>
         /// The clear text button behavior property. It sets a click event to the button if the value is true.
         /// </summary>
@@ -304,17 +304,17 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the buttons placement variant.
         /// </summary>
-        public static ButtonsPlacementVariant GetButtonsPlacement(DependencyObject d)
+        public static ButtonsAlignment GetButtonsAlignment(DependencyObject d)
         {
-           return (ButtonsPlacementVariant)d.GetValue(ButtonsPlacementProperty);
+            return (ButtonsAlignment)d.GetValue(ButtonsAlignmentProperty);
         }
 
         /// <summary>
         /// Sets the buttons placement variant.
         /// </summary>
-        public static void SetButtonsPlacement(DependencyObject obj, ButtonsPlacementVariant value)
+        public static void SetButtonsAlignment(DependencyObject obj, ButtonsAlignment value)
         {
-           obj.SetValue(ButtonsPlacementProperty, value);
+            obj.SetValue(ButtonsAlignmentProperty, value);
         }
 
         /// <summary>

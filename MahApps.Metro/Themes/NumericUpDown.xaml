@@ -87,7 +87,7 @@
                                      FontSize="{TemplateBinding FontSize}"
                                      Controls:TextBoxHelper.ClearTextButton="{TemplateBinding Controls:TextBoxHelper.ClearTextButton}"
                                      Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                     Controls:TextBoxHelper.ButtonsPlacement="{TemplateBinding ButtonsPlacement}" />
+                                     Controls:TextBoxHelper.ButtonsAlignment="{TemplateBinding ButtonsAlignment}" />
                             <RepeatButton x:Name="PART_NumericUp"
                                           Grid.Column="1"
                                           Margin="2,2,0,2"
@@ -130,7 +130,7 @@
                                 Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="ButtonsPlacement"
+                        <Trigger Property="ButtonsAlignment"
                                  Value="Left">
                             <Setter TargetName="PART_TextBox"
                                     Property="Grid.Column"

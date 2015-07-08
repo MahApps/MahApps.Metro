@@ -70,11 +70,11 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(default(double?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged, CoerceValue));
 
-        public static readonly DependencyProperty ButtonsPlacementProperty = DependencyProperty.Register(
-           "ButtonsPlacement",
-           typeof(ButtonsPlacementVariant),
+        public static readonly DependencyProperty ButtonsAlignmentProperty = DependencyProperty.Register(
+           "ButtonsAlignment",
+           typeof(ButtonsAlignment),
            typeof(NumericUpDown),
-           new FrameworkPropertyMetadata(ButtonsPlacementVariant.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+           new FrameworkPropertyMetadata(ButtonsAlignment.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
             "Minimum",
@@ -325,11 +325,11 @@ namespace MahApps.Metro.Controls
 
         [Bindable(true)]
         [Category("Appearance")]
-        [DefaultValue(ButtonsPlacementVariant.Right)]
-        public Controls.ButtonsPlacementVariant ButtonsPlacement
+        [DefaultValue(ButtonsAlignment.Right)]
+        public Controls.ButtonsAlignment ButtonsAlignment
         {
-            get { return (ButtonsPlacementVariant)GetValue(ButtonsPlacementProperty); }
-            set { SetValue(ButtonsPlacementProperty, value); }
+            get { return (ButtonsAlignment)GetValue(ButtonsAlignmentProperty); }
+            set { SetValue(ButtonsAlignmentProperty, value); }
         }
 
         [Bindable(true)]

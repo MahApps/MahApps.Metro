@@ -226,14 +226,16 @@
                                         Maximum="10" />
 
                 <Label Content='Interval="2"' />
-                <Controls:NumericUpDown Value="5" ButtonsPlacement="Left"
+                <Controls:NumericUpDown Value="5"
+                                        ButtonsAlignment="Left"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Interval="2" />
 
                 <Label Content='Interval="5"' />
                 <Controls:NumericUpDown Value="5"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        Controls:TextBoxHelper.ClearTextButton="True" ButtonsPlacement="Left"
+                                        Controls:TextBoxHelper.ClearTextButton="True"
+                                        ButtonsAlignment="Left"
                                         Interval="5" />
 
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
