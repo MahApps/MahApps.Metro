@@ -70,6 +70,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(default(double?), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnValueChanged, CoerceValue));
 
+        public static readonly DependencyProperty ButtonsPlacementProperty = DependencyProperty.Register(
+           "ButtonsPlacement",
+           typeof(ButtonsPlacementVariant),
+           typeof(NumericUpDown),
+           new FrameworkPropertyMetadata(ButtonsPlacementVariant.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
             "Minimum",
             typeof(double),
@@ -315,6 +321,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (double)GetValue(UpDownButtonsWidthProperty); }
             set { SetValue(UpDownButtonsWidthProperty, value); }
+        }
+
+        [Bindable(true)]
+        [Category("Appearance")]
+        [DefaultValue(ButtonsPlacementVariant.Right)]
+        public Controls.ButtonsPlacementVariant ButtonsPlacement
+        {
+            get { return (ButtonsPlacementVariant)GetValue(ButtonsPlacementProperty); }
+            set { SetValue(ButtonsPlacementProperty, value); }
         }
 
         [Bindable(true)]
@@ -855,7 +870,7 @@ namespace MahApps.Metro.Controls
             numericUpDown.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
         }
 
-        private static bool ValidateDelay(object value)
+      private static bool ValidateDelay(object value)
         {
             return Convert.ToInt32(value) >= 0;
         }

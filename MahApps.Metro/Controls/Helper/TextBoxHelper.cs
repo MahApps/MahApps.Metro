@@ -22,6 +22,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty UseFloatingWatermarkProperty = DependencyProperty.RegisterAttached("UseFloatingWatermark", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty TextLengthProperty = DependencyProperty.RegisterAttached("TextLength", typeof(int), typeof(TextBoxHelper), new UIPropertyMetadata(0));
         public static readonly DependencyProperty ClearTextButtonProperty = DependencyProperty.RegisterAttached("ClearTextButton", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, ButtonCommandOrClearTextChanged));
+        public static readonly DependencyProperty ButtonsPlacementProperty = DependencyProperty.RegisterAttached("ButtonsPlacement", typeof(ButtonsPlacementVariant), typeof(TextBoxHelper), new FrameworkPropertyMetadata(ButtonsPlacementVariant.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         /// <summary>
         /// The clear text button behavior property. It sets a click event to the button if the value is true.
         /// </summary>
@@ -301,6 +302,22 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets the buttons placement variant.
+        /// </summary>
+        public static ButtonsPlacementVariant GetButtonsPlacement(DependencyObject d)
+        {
+           return (ButtonsPlacementVariant)d.GetValue(ButtonsPlacementProperty);
+        }
+
+        /// <summary>
+        /// Sets the buttons placement variant.
+        /// </summary>
+        public static void SetButtonsPlacement(DependencyObject obj, ButtonsPlacementVariant value)
+        {
+           obj.SetValue(ButtonsPlacementProperty, value);
+        }
+
+        /// <summary>
         /// Gets the clear text button behavior.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(Button))]
@@ -317,6 +334,8 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(IsClearTextButtonBehaviorEnabledProperty, value);
         }
+
+        
 
         public static ICommand GetButtonCommand(DependencyObject d)
         {
