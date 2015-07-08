@@ -74,7 +74,7 @@ namespace MahApps.Metro.Controls
            "ButtonsPlacement",
            typeof(ButtonsPlacementVariant),
            typeof(NumericUpDown),
-           new FrameworkPropertyMetadata(ButtonsPlacementVariant.Right, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+           new FrameworkPropertyMetadata(ButtonsPlacementVariant.Right, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public static readonly DependencyProperty MinimumProperty = DependencyProperty.Register(
             "Minimum",
