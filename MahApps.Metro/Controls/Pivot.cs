@@ -47,7 +47,9 @@ namespace MahApps.Metro.Controls
         public void GoToItem(PivotItem item)
         {
             if (item == null || item == selectedItem)
+            {
                 return;
+            }
 
             var widthToScroll = 0.0;
             int index;
@@ -70,10 +72,9 @@ namespace MahApps.Metro.Controls
             sb.Begin();
 
             RaiseEvent(new RoutedEventArgs(SelectionChangedEvent));
-
         }
 
-        void sb_Completed(object sender, EventArgs e)
+        private void sb_Completed(object sender, EventArgs e)
         {
             SelectedIndex = internalIndex;
         }
@@ -96,23 +97,25 @@ namespace MahApps.Metro.Controls
                 scroller.PreviewMouseWheel += scroller_MouseWheel;
             }
             if (headers != null)
+            {
                 headers.SelectionChanged += headers_SelectionChanged;
+            }
         }
 
-        void scroller_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
+        private void scroller_MouseWheel(object sender, System.Windows.Input.MouseWheelEventArgs e)
         {
             scroller.ScrollToHorizontalOffset(scroller.HorizontalOffset + -e.Delta);
         }
 
-        void headers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void headers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             GoToItem((PivotItem)headers.SelectedItem);
         }
 
-        void scroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        private void scroller_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             var position = 0.0;
-            for (int i = 0; i < Items.Count; i++)
+            for (var i = 0; i < Items.Count; i++)
             {
                 var pivotItem = ((PivotItem)Items[i]);
                 var widthOfItem = pivotItem.ActualWidth;
@@ -133,14 +136,20 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void SelectedItemChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        private static void SelectedItemChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var p = (Pivot)dependencyObject;
-            if (p == null)
-                return;
-
-            if (p.internalIndex != p.SelectedIndex)
-                p.GoToItem((PivotItem)p.Items[(int)dependencyPropertyChangedEventArgs.NewValue]);
+            if (e.NewValue != e.OldValue)
+            {
+                var pivot = (Pivot)dependencyObject;
+                var newSelectedIndex = (int)e.NewValue;
+                if (pivot.internalIndex != pivot.SelectedIndex && newSelectedIndex >= 0 && newSelectedIndex < pivot.Items.Count)
+                {
+                    var pivotItem = (PivotItem)pivot.Items[newSelectedIndex];
+                    // set headers selected item too
+                    pivot.headers.SelectedItem = pivotItem;
+                    pivot.GoToItem(pivotItem);
+                }
+            }
         }
     }
 }
