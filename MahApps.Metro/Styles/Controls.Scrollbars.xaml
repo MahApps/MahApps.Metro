@@ -387,7 +387,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-            <Path Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
+                        <Path Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
                               Height="6"
                               Stretch="Uniform"
                               Width="10"
@@ -628,8 +628,11 @@
                                     Value="Auto" />
                             <Setter TargetName="rightColumn"
                                     Property="Width"
-                                    Value="Auto" />
+                                    Value="*" />
                             <Setter TargetName="PART_ScrollContentPresenter"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                            <Setter TargetName="PART_HorizontalScrollBar"
                                     Property="Grid.Column"
                                     Value="1" />
                             <Setter TargetName="PART_VerticalScrollBar"
