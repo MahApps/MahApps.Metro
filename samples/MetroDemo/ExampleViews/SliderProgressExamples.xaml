@@ -214,14 +214,11 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Controls:ProgressRing Grid.Column="0"
-                                       IsActive="True"
                                        Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
                 <Controls:ProgressRing Grid.Column="1"
-                                       IsActive="True"
                                        Width="40"
                                        Height="40" />
                 <Controls:ProgressRing Grid.Column="2"
-                                       IsActive="True"
                                        Width="20"
                                        Height="20" />
             </Grid>
