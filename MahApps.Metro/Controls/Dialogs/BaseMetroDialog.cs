@@ -156,6 +156,11 @@ namespace MahApps.Metro.Controls.Dialogs
             if (this.ParentDialogWindow != null)
             {
                 this.ParentDialogWindow.SetValue(BackgroundProperty, this.Background);
+                var glowBrush = ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "AccentColorBrush");
+                if (glowBrush != null)
+                {
+                    this.ParentDialogWindow.SetValue(MetroWindow.GlowBrushProperty, glowBrush);
+                }
             }
         }
 
