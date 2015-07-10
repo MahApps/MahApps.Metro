@@ -3,8 +3,7 @@
                          xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                          xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                          xmlns:Behaviors="clr-namespace:MahApps.Metro.Behaviours"
-                         x:Class="MahApps.Metro.Controls.Dialogs.LoginDialog"
-                         Loaded="Dialog_Loaded">
+                         x:Class="MahApps.Metro.Controls.Dialogs.LoginDialog">
     <Grid Margin="0 10 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"

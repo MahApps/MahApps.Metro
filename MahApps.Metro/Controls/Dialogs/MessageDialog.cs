@@ -242,7 +242,7 @@ namespace MahApps.Metro.Controls.Dialogs
             }
         }
 
-        private void Dialog_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnLoaded()
         {
             SetButtonState(this);
         }

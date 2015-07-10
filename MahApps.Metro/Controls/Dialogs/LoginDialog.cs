@@ -56,14 +56,6 @@ namespace MahApps.Metro.Controls.Dialogs
             UsernameWatermark = settings.UsernameWatermark;
             PasswordWatermark = settings.PasswordWatermark;
             NegativeButtonButtonVisibility = settings.NegativeButtonVisibility;
-            if (settings.EnablePasswordPreview)
-            {
-                object resource = Application.Current.FindResource("Win8MetroPasswordBox");
-                if (resource != null && resource.GetType() == typeof(Style))
-                {
-                    PART_TextBox2.Style = (Style)resource;
-                }
-            }
         }
 
         internal Task<LoginDialogData> WaitForButtonPressAsync()
@@ -175,8 +167,18 @@ namespace MahApps.Metro.Controls.Dialogs
             return tcs.Task;
         }
 
-        private void Dialog_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnLoaded()
         {
+            var settings = this.DialogSettings as LoginDialogSettings;
+            if (settings != null && settings.EnablePasswordPreview)
+            {
+                var win8MetroPasswordStyle = this.FindResource("Win8MetroPasswordBox") as Style;
+                if (win8MetroPasswordStyle != null)
+                {
+                    PART_TextBox2.Style = win8MetroPasswordStyle;
+                }
+            }
+
             this.AffirmativeButtonText = this.DialogSettings.AffirmativeButtonText;
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
 
