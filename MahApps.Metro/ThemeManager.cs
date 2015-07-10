@@ -422,6 +422,28 @@ namespace MahApps.Metro
         }
 
         /// <summary>
+        /// Copies all resource keys from one resource to another.
+        /// </summary>
+        /// <param name="fromRD">The source resource dictionary.</param>
+        /// <param name="toRD">The destination resource dictionary.</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// fromRD
+        /// or
+        /// toRD
+        /// </exception>
+        internal static void CopyResource(ResourceDictionary fromRD, ResourceDictionary toRD)
+        {
+            if (fromRD == null) throw new ArgumentNullException("fromRD");
+            if (toRD == null) throw new ArgumentNullException("toRD");
+
+            ApplyResourceDictionary(fromRD, toRD);
+            foreach (var rd in fromRD.MergedDictionaries)
+            {
+                CopyResource(rd, toRD);
+            }
+        }
+
+        /// <summary>
         /// Scans the window resources and returns it's accent and theme.
         /// </summary>
         public static Tuple<AppTheme, Accent> DetectAppStyle()
