@@ -119,7 +119,7 @@ namespace MahApps.Metro.Controls.Dialogs
             return tcs.Task;
         }
 
-        private void Dialog_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnLoaded()
         {
             this.AffirmativeButtonText = this.DialogSettings.AffirmativeButtonText;
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
@@ -129,6 +129,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 case MetroDialogColorScheme.Accented:
                     this.PART_NegativeButton.Style = this.FindResource("AccentedDialogHighlightedSquareButton") as Style;
                     PART_TextBox.SetResourceReference(ForegroundProperty, "BlackColorBrush");
+                    PART_TextBox.SetResourceReference(ControlsHelper.FocusBorderBrushProperty, "TextBoxFocusBorderBrush");
                     break;
             }
         }

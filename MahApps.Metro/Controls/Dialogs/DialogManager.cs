@@ -482,13 +482,15 @@ namespace MahApps.Metro.Controls.Dialogs
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
                 ShowTitleBar = false,
                 ShowCloseButton = false,
-                WindowTransitionsEnabled = false,
-                Background = dialog.Background
+                WindowTransitionsEnabled = false
             };
 
             try
             {
-                win.GlowBrush = win.TryFindResource("AccentColorBrush") as SolidColorBrush;
+                win.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") });
+                win.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") });
+                win.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
+                win.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
             }
             catch (Exception) { }
 

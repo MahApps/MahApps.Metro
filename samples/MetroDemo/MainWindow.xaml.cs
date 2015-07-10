@@ -147,6 +147,7 @@ namespace MetroDemo
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
             var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
+            dialog.DialogSettings.ColorScheme = MetroDialogOptions.ColorScheme;
             dialog = dialog.ShowDialogExternally();
 
             await TaskEx.Delay(5000);
