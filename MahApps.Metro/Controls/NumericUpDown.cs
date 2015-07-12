@@ -720,17 +720,19 @@ namespace MahApps.Metro.Controls
                     {
                         _valueTextBox.Text = null;
                     }
+                    if (oldValue != newValue)
+                    {
+                        this.RaiseEvent(new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent));
+                    }
                     return;
                 }
 
-                if (_repeatUp != null &&
-                    !_repeatUp.IsEnabled)
+                if (_repeatUp != null && !_repeatUp.IsEnabled)
                 {
                     _repeatUp.IsEnabled = true;
                 }
 
-                if (_repeatDown != null &&
-                    !_repeatDown.IsEnabled)
+                if (_repeatDown != null && !_repeatDown.IsEnabled)
                 {
                     _repeatDown.IsEnabled = true;
                 }
@@ -772,8 +774,7 @@ namespace MahApps.Metro.Controls
 
             if (oldValue != newValue)
             {
-                var eventArgs = new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent);
-                RaiseEvent(eventArgs);
+                this.RaiseEvent(new RoutedPropertyChangedEventArgs<double?>(oldValue, newValue, ValueChangedEvent));
             }
         }
 
