@@ -96,7 +96,7 @@
                 <ControlTemplate>
                     <Rectangle Margin="0"
                                Opacity="0"
-                               SnapsToDevicePixels="true"
+                               SnapsToDevicePixels="True"
                                Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
                                StrokeThickness="5"
                                StrokeDashArray="1 2" />
@@ -112,6 +112,10 @@
            TargetType="{x:Type TreeViewItem}">
         <Setter Property="MinHeight"
                 Value="25" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="VerticalContentAlignment"
+                Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
@@ -136,7 +140,8 @@
                                   Background="Transparent"
                                   VerticalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition MinWidth="19" Width="Auto" />
+                                    <ColumnDefinition MinWidth="19"
+                                                      Width="Auto" />
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <ToggleButton x:Name="Expander"
@@ -221,10 +226,28 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="VirtualizingStackPanel.IsVirtualizing"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="LightGreen" />
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="MetroTreeView"
            TargetType="{x:Type TreeView}">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
@@ -232,6 +255,8 @@
         <!-- default to 0 -->
         <Setter Property="BorderThickness"
                 Value="0" />
+        <Setter Property="Padding"
+                Value="1" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="Template">
@@ -242,21 +267,41 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                        <ScrollViewer>
-                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <ScrollViewer x:Name="TreeViewScrollViewer"
+                                      Focusable="False"
+                                      Padding="{TemplateBinding Padding}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
+                                      CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}">
+                            <ItemsPresenter />
                         </ScrollViewer>
                     </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource GrayBrush9}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="VirtualizingStackPanel.IsVirtualizing"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="LightGreen" />
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ScrollViewer.CanContentScroll"
+                        Value="True" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource GrayBrush9}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style TargetType="{x:Type TreeView}"
