@@ -89,17 +89,17 @@
         </Setter>
     </Style>
 
+    <!-- obsolete -->
     <Style x:Key="TreeViewItemFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Border>
-                        <Rectangle Margin="0,0,0,0"
-                                   StrokeThickness="5"
-                                   Stroke="Black"
-                                   StrokeDashArray="1 2"
-                                   Opacity="0" />
-                    </Border>
+                    <Rectangle Margin="0"
+                               Opacity="0"
+                               SnapsToDevicePixels="true"
+                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                               StrokeThickness="5"
+                               StrokeDashArray="1 2" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -117,7 +117,7 @@
         <Setter Property="Background"
                 Value="{DynamicResource WhiteBrush}" />
         <Setter Property="FocusVisualStyle"
-                Value="{StaticResource TreeViewItemFocusVisual}" />
+                Value="{x:Null}" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="Template">
