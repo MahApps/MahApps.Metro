@@ -257,8 +257,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ItemContainerStyle"
-                Value="{StaticResource MetroTreeViewItem}" />
     </Style>
 
     <Style TargetType="{x:Type TreeView}"
