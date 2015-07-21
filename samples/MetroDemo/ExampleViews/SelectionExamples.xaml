@@ -54,7 +54,8 @@
         </TabItem>
         <TabItem Header="TreeView">
             <UniformGrid Rows="2">
-                <TreeView ItemsSource="{Binding Artists}" VirtualizingStackPanel.IsVirtualizing="True">
+                <TreeView ItemsSource="{Binding Artists}"
+                          Style="{DynamicResource VirtualisedMetroTreeView}">
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
                             <TextBlock Text="{Binding Name}" />
