@@ -229,8 +229,6 @@
         <Style.Triggers>
             <Trigger Property="VirtualizingStackPanel.IsVirtualizing"
                      Value="True">
-                <Setter Property="Background"
-                        Value="LightGreen" />
                 <Setter Property="ItemsPanel">
                     <Setter.Value>
                         <ItemsPanelTemplate>
@@ -283,8 +281,6 @@
         <Style.Triggers>
             <Trigger Property="VirtualizingStackPanel.IsVirtualizing"
                      Value="True">
-                <Setter Property="Background"
-                        Value="LightGreen" />
                 <Setter Property="ItemsPanel">
                     <Setter.Value>
                         <ItemsPanelTemplate>
