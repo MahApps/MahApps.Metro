@@ -75,7 +75,7 @@
 
                         <!--This (empty) element is used so everything still responds to drag-->
                         <Label VerticalContentAlignment="Center"
-                               HorizontalContentAlignment="Center">
+                               HorizontalContentAlignment="{TemplateBinding TitleHorizontalAlignment}">
                             <ContentControl x:Name="TitleControl"
                                             Focusable="False"
                                             Content="{TemplateBinding Title}"
