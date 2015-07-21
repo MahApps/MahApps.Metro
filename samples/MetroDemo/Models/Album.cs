@@ -459,6 +459,12 @@ namespace MetroDemo.Models
 
             var r = new Random(Environment.TickCount);
             Albums.ForEach(x => x.Price = Convert.ToDecimal(r.NextDouble() * 20d));
+
+            var albumsGroupedByArtist = Albums.GroupBy(a => a.Artist);
+            foreach (var grouping in albumsGroupedByArtist)
+            {
+                grouping.Key.Albums = grouping.ToList();
+            }
         }
     }
 }
