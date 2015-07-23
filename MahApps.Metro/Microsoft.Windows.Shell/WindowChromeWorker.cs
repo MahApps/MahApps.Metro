@@ -343,19 +343,35 @@ namespace Microsoft.Windows.Shell
             {
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Top))
                 {
+#if NET4_5
+                    templateFixupMargin.Top -= SystemParameters.WindowResizeBorderThickness.Top;
+#else
                     templateFixupMargin.Top -= SystemParameters2.Current.WindowResizeBorderThickness.Top;
+#endif
                 }
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Left))
                 {
+#if NET4_5
+                    templateFixupMargin.Left -= SystemParameters.WindowResizeBorderThickness.Left;
+#else
                     templateFixupMargin.Left -= SystemParameters2.Current.WindowResizeBorderThickness.Left;
+#endif
                 }
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Bottom))
                 {
+#if NET4_5
+                    templateFixupMargin.Bottom -= SystemParameters.WindowResizeBorderThickness.Bottom;
+#else
                     templateFixupMargin.Bottom -= SystemParameters2.Current.WindowResizeBorderThickness.Bottom;
+#endif
                 }
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Right))
                 {
+#if NET4_5
+                    templateFixupMargin.Right -= SystemParameters.WindowResizeBorderThickness.Right;
+#else
                     templateFixupMargin.Right -= SystemParameters2.Current.WindowResizeBorderThickness.Right;
+#endif
                 }
             }
 
@@ -630,7 +646,11 @@ namespace Microsoft.Windows.Shell
 
             if (_chromeInfo.SacrificialEdge != SacrificialEdge.None)
             {
+#if NET4_5
+                Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters.WindowResizeBorderThickness);
+#else
                 Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters2.Current.WindowResizeBorderThickness);
+#endif
                 var rcClientArea = (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Top))
                 {
@@ -1427,7 +1447,11 @@ namespace Microsoft.Windows.Shell
 
                 if (_chromeInfo.SacrificialEdge != SacrificialEdge.None)
                 {
+#if NET4_5
+                    Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters.WindowResizeBorderThickness);
+#else
                     Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters2.Current.WindowResizeBorderThickness);
+#endif
                     if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Top))
                     {
                         deviceGlassThickness.Top -= windowResizeBorderThicknessDevice.Top;

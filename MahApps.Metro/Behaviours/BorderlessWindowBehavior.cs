@@ -27,7 +27,11 @@ namespace MahApps.Metro.Behaviours
         {
             windowChrome = new WindowChrome
             {
-                ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness, 
+#if NET4_5
+                ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness, 
+#else
+                ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness,
+#endif
                 CaptionHeight = 0, 
                 CornerRadius = new CornerRadius(0), 
                 GlassFrameThickness = new Thickness(0), 
@@ -267,7 +271,11 @@ namespace MahApps.Metro.Behaviours
             else
             {
                 // note (punker76): check this, maybe we doesn't need this anymore
+#if NET4_5
+                windowChrome.ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+#else
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
+#endif
                 if (!enableDWMDropShadow)
                 {
                     AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
