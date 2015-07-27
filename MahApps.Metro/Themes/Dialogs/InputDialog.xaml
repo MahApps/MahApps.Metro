@@ -20,6 +20,7 @@
                  Margin="0 5 0 0"
                  FontSize="{DynamicResource DialogMessageFontSize}"
                  controls:ControlsHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
+                 controls:TextBoxHelper.SelectAllOnFocus="True"
                  x:Name="PART_TextBox"
                  Text="{Binding Input, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  TextWrapping="Wrap"

@@ -23,6 +23,7 @@
                  FontSize="{DynamicResource DialogMessageFontSize}"
                  x:Name="PART_TextBox"
                  Controls:TextBoxHelper.Watermark="{Binding UsernameWatermark, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 Controls:TextBoxHelper.SelectAllOnFocus="True"
                  Text="{Binding Username, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  TextWrapping="Wrap"
                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
@@ -32,6 +33,7 @@
                      x:Name="PART_TextBox2"
                      Behaviors:PasswordBoxBindingBehavior.Password="{Binding Password, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                      Controls:TextBoxHelper.Watermark="{Binding PasswordWatermark, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                     Controls:TextBoxHelper.SelectAllOnFocus="True"
                      Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
         <StackPanel Grid.Row="3"
                     Orientation="Horizontal"
