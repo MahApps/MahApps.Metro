@@ -89,7 +89,7 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\NET45\</OutputPath>
     <IntermediateOutputPath>obj\NET45\Release\</IntermediateOutputPath>
@@ -98,6 +98,7 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\NET45\MahApps.Metro.XML</DocumentationFile>
     <NoWarn>1572,1573,1591</NoWarn>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition="'$(StrongName)'=='True'">
     <SignAssembly>true</SignAssembly>
