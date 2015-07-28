@@ -17,6 +17,8 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public class CustomValidationPopup : Popup
     {
+        public static readonly DependencyProperty CloseOnMouseLeftButtonDownProperty = DependencyProperty.Register("CloseOnMouseLeftButtonDown", typeof(bool), typeof(CustomValidationPopup), new PropertyMetadata(true));
+
         private Window hostWindow;
 
         public CustomValidationPopup()
@@ -25,9 +27,21 @@ namespace MahApps.Metro.Controls
             this.Opened += this.CustomValidationPopup_Opened;
         }
 
+        /// <summary>
+        /// Gets/sets if the popup can be closed by left mouse button down.
+        /// </summary>
+        public bool CloseOnMouseLeftButtonDown
+        {
+            get { return (bool)GetValue(CloseOnMouseLeftButtonDownProperty); }
+            set { SetValue(CloseOnMouseLeftButtonDownProperty, value); }
+        }
+
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            this.IsOpen = false;
+            if (CloseOnMouseLeftButtonDown)
+            {
+                this.IsOpen = false;
+            }
         }
 
         private void CustomValidationPopup_Loaded(object sender, RoutedEventArgs e)

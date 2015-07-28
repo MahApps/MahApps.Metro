@@ -2,6 +2,20 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
+    <Style x:Key="MetroValidationPopup"
+           TargetType="{x:Type controls:CustomValidationPopup}">
+        <Setter Property="HorizontalAlignment"
+                Value="Right" />
+        <Setter Property="HorizontalOffset"
+                Value="0" />
+        <Setter Property="VerticalOffset"
+                Value="0" />
+        <Setter Property="PopupAnimation"
+                Value="Fade" />
+        <Setter Property="Placement"
+                Value="Right" />
+    </Style>
+
     <ControlTemplate x:Key="ValidationErrorTemplate">
         <AdornedElementPlaceholder x:Name="placeholder">
             <Grid SnapsToDevicePixels="True">
@@ -31,11 +45,6 @@
 
                 <controls:CustomValidationPopup x:Name="ValidationPopup"
                                                 AllowsTransparency="True"
-                                                HorizontalAlignment="Right"
-                                                HorizontalOffset="0"
-                                                VerticalOffset="0"
-                                                PopupAnimation="Fade"
-                                                Placement="Right"
                                                 PlacementTarget="{Binding ElementName=PopupTargetElement, Mode=OneWay}"
                                                 IsOpen="False">
                     <Grid x:Name="Root"
@@ -133,5 +142,8 @@
             </MultiDataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+
+    <Style TargetType="{x:Type controls:CustomValidationPopup}"
+           BasedOn="{StaticResource MetroValidationPopup}" />
 
 </ResourceDictionary>
