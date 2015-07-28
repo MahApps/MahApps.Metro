@@ -55,12 +55,12 @@
                             <DoubleAnimation Duration="0:0:0.2"
                                              To=".2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="exitGotFocus">
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
 
                         <Storyboard x:Key="enterHasText">
@@ -68,12 +68,12 @@
                                              From=".2"
                                              To="0"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="exitHasText">
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
@@ -109,7 +109,7 @@
                                           Margin="2"
                                           VerticalAlignment="Stretch"
                                           Background="{x:Null}" />
-                            <TextBlock x:Name="Message"
+                            <TextBlock x:Name="PART_Message"
                                        Grid.Column="0"
                                        Grid.Row="1"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
@@ -121,14 +121,14 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
-                            <Grid x:Name="FloatingMessageContainer"
+                            <Grid x:Name="PART_FloatingMessageContainer"
                                   Grid.Column="0"
                                   Grid.ColumnSpan="2"
                                   Height="0"
                                   IsHitTestVisible="False"
                                   Margin="5,0"
                                   Visibility="Visible">
-                                <TextBlock x:Name="FloatingMessage"
+                                <TextBlock x:Name="PART_FloatingMessage"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            FontSize="{DynamicResource FloatingWatermarkFontSize}"
                                            Foreground="{TemplateBinding Foreground}"
@@ -168,7 +168,7 @@
                             <Setter TargetName="PART_ClearText"
                                     Property="Grid.Column"
                                     Value="0" />
-                            <Setter TargetName="Message"
+                            <Setter TargetName="PART_Message"
                                     Property="Grid.Column"
                                     Value="1" />
                             <Setter TargetName="TextColumn"
@@ -184,7 +184,7 @@
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
                                      Value="">
-                            <Setter TargetName="Message"
+                            <Setter TargetName="PART_Message"
                                     Property="Visibility"
                                     Value="Visible" />
                         </DataTrigger>
@@ -243,7 +243,7 @@
                             <Setter TargetName="PART_ContentHost"
                                     Property="Grid.ColumnSpan"
                                     Value="2" />
-                            <Setter TargetName="Message"
+                            <Setter TargetName="PART_Message"
                                     Property="Grid.ColumnSpan"
                                     Value="2" />
                         </MultiDataTrigger>
@@ -274,10 +274,10 @@
                             <Setter TargetName="Base"
                                     Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
-                            <Setter TargetName="FloatingMessage"
+                            <Setter TargetName="PART_FloatingMessage"
                                     Property="Foreground"
                                     Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="FloatingMessage"
+                            <Setter TargetName="PART_FloatingMessage"
                                     Property="Opacity"
                                     Value="1" />
                         </Trigger>
@@ -378,12 +378,12 @@
                             <DoubleAnimation Duration="0:0:0.2"
                                              To=".2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="exitGotFocus">
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
 
                         <Storyboard x:Key="enterHasText">
@@ -391,12 +391,12 @@
                                              From=".2"
                                              To="0"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="exitHasText">
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
@@ -432,7 +432,7 @@
                                           Margin="2"
                                           VerticalAlignment="Stretch"
                                           Background="{x:Null}" />
-                            <TextBlock x:Name="Message"
+                            <TextBlock x:Name="PART_Message"
                                        Grid.Column="0"
                                        Grid.Row="1"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
@@ -444,14 +444,14 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
-                            <Grid x:Name="FloatingMessageContainer"
+                            <Grid x:Name="PART_FloatingMessageContainer"
                                   Grid.Column="0"
                                   Grid.ColumnSpan="2"
                                   Height="0"
                                   IsHitTestVisible="False"
                                   Margin="5,0"
                                   Visibility="Visible">
-                                <TextBlock x:Name="FloatingMessage"
+                                <TextBlock x:Name="PART_FloatingMessage"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            FontSize="{DynamicResource FloatingWatermarkFontSize}"
                                            Foreground="{TemplateBinding Foreground}"
@@ -491,7 +491,7 @@
                             <Setter TargetName="PART_ClearText"
                                     Property="Grid.Column"
                                     Value="0" />
-                            <Setter TargetName="Message"
+                            <Setter TargetName="PART_Message"
                                     Property="Grid.Column"
                                     Value="1" />
                             <Setter TargetName="TextColumn"
@@ -507,7 +507,7 @@
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
                                      Value="">
-                            <Setter TargetName="Message"
+                            <Setter TargetName="PART_Message"
                                     Property="Visibility"
                                     Value="Visible" />
                         </DataTrigger>
@@ -579,10 +579,10 @@
                             <Setter TargetName="Base"
                                     Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
-                            <Setter TargetName="FloatingMessage"
+                            <Setter TargetName="PART_FloatingMessage"
                                     Property="Foreground"
                                     Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="FloatingMessage"
+                            <Setter TargetName="PART_FloatingMessage"
                                     Property="Opacity"
                                     Value="1" />
                         </Trigger>

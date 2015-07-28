@@ -195,7 +195,7 @@
                             <DoubleAnimation Duration="0:0:0.2"
                                              To=".2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="ExitGotFocus">
                             <DoubleAnimation Duration="0:0:0.2"
@@ -203,7 +203,7 @@
                                              Storyboard.TargetName="PART_Watermark" />
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
 
                         <Storyboard x:Key="EnterHasText">
@@ -216,7 +216,7 @@
                                              From=".2"
                                              To="0"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="ExitHasText">
                             <DoubleAnimation Duration="0:0:0.2"
@@ -224,7 +224,7 @@
                                              Storyboard.TargetName="PART_Watermark" />
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
@@ -247,7 +247,7 @@
                                         VerticalContentAlignment="Center"
                                         Foreground="{TemplateBinding Foreground}"
                                         Visibility="Hidden" />
-                        <TextBlock x:Name="Message"
+                        <TextBlock x:Name="PART_Message"
                                    Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                    Foreground="{TemplateBinding Foreground}"
                                    IsHitTestVisible="False"
