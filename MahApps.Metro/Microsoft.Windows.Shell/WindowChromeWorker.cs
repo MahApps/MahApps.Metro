@@ -795,14 +795,18 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleWindowPosChanging(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            var wp = (WINDOWPOS)Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
-            
-            // we don't do bitwise operations cuz we're checking for this flag being the only one there
-            // I have no clue why this works, I tried this because VS2013 has this flag removed on fullscreen window movws
-            if (_chromeInfo.IgnoreTaskbarOnMaximize && _GetHwndState() == WindowState.Maximized && wp.flags == (int)SWP.FRAMECHANGED)
+            if (!_isGlassEnabled)
             {
-                wp.flags = 0;
-                Marshal.StructureToPtr(wp, lParam, true);
+                Assert.IsNotDefault(lParam);
+                var wp = (WINDOWPOS) Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
+
+                // we don't do bitwise operations cuz we're checking for this flag being the only one there
+                // I have no clue why this works, I tried this because VS2013 has this flag removed on fullscreen window movws
+                if (_chromeInfo.IgnoreTaskbarOnMaximize && _GetHwndState() == WindowState.Maximized && wp.flags == (int) SWP.FRAMECHANGED)
+                {
+                    wp.flags = 0;
+                    Marshal.StructureToPtr(wp, lParam, true);
+                }
             }
 
             handled = false;
