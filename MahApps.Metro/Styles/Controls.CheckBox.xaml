@@ -21,6 +21,8 @@
                 Value="6,0,0,0" />
         <Setter Property="BorderThickness"
                 Value="1" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource CheckBoxBrush}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush"
                 Value="{DynamicResource HighlightBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
@@ -75,9 +77,9 @@
                             <Rectangle Fill="{DynamicResource TransparentWhiteBrush}"
                                        Margin="-6, 0" />
                             <Border x:Name="normal"
-                                    BorderBrush="{DynamicResource CheckBoxBrush}"
-                                    BorderThickness="1"
-                                    Background="{DynamicResource WhiteBrush}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Background="{TemplateBinding Background}"
                                     Width="18"
                                     Height="18" />
                             <Path x:Name="checkBox"
@@ -95,7 +97,7 @@
                                        Opacity="0" />
                             <Border x:Name="disabled"
                                     Opacity="0"
-                                    BorderThickness="1"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
                                     Background="{DynamicResource SemiTransparentWhiteBrush}"
                                     Width="18"
                                     Height="18" />
