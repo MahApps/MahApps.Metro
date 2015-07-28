@@ -119,7 +119,7 @@
                                                UseLayoutRounding="False" />
                                 </DataTemplate>
                             </Border.Resources>
-                            <ContentPresenter Content="{Binding CurrentItem}" />
+                            <ItemsControl ItemsSource="{Binding }" />
                         </Border>
                     </Grid>
                 </controls:CustomValidationPopup>
