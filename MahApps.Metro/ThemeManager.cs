@@ -33,9 +33,17 @@ namespace MahApps.Metro
 
                 _accents = new List<Accent>(colors.Length);
 
-                foreach (var color in colors)
+                try
                 {
-                    _accents.Add(new Accent(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color))));
+                    foreach (var color in colors)
+                    {
+                        var resourceAddress = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color));
+                        _accents.Add(new Accent(color, resourceAddress));
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new MahAppsException("This exception happens because you are maybe running that code out of the scope of a WPF application. Most likely because you are testing your configuration inside a unit test.", e);
                 }
 
                 return _accents;
@@ -56,11 +64,17 @@ namespace MahApps.Metro
 
                 _appThemes = new List<AppTheme>(themes.Length);
 
-                foreach (var color in themes)
+                try
                 {
-                    var appTheme = new AppTheme(color, new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color)));
-
-                    _appThemes.Add(appTheme);
+                    foreach (var color in themes)
+                    {
+                        var resourceAddress = new Uri(string.Format("pack://application:,,,/MahApps.Metro;component/Styles/Accents/{0}.xaml", color));
+                        _appThemes.Add(new AppTheme(color, resourceAddress));
+                    }
+                }
+                catch (Exception e)
+                {
+                    throw new MahAppsException("This exception happens because you are maybe running that code out of the scope of a WPF application. Most likely because you are testing your configuration inside a unit test.", e);
                 }
 
                 return _appThemes;
