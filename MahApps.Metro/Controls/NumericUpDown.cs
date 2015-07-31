@@ -142,6 +142,12 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(true));
 
+        public static readonly DependencyProperty IsIntegerOnlyProperty = DependencyProperty.Register(
+            "IsIntegerOnly",
+            typeof(bool), 
+            typeof(NumericUpDown),
+            new FrameworkPropertyMetadata(false, OnIsIntegerOnlyChanged));
+        
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -433,6 +439,18 @@ namespace MahApps.Metro.Controls
             get { return Culture ?? Language.GetSpecificCulture(); }
         }
 
+        /// <summary>
+        ///     Indicates if the NumericUpDown should show the decimal separator or not.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Common")]
+        [DefaultValue(false)]
+        public bool IsIntegerOnly
+        {
+            get { return (bool)GetValue(IsIntegerOnlyProperty); }
+            set { SetValue(IsIntegerOnlyProperty, value); }
+        }
+
         /// <summary> 
         ///     Called when this element or any below gets focus.
         /// </summary>
@@ -653,7 +671,10 @@ namespace MahApps.Metro.Controls
                 {
                     if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator) || allTextSelected)
                     {
-                        e.Handled = false;
+                        if (!IsIntegerOnly)
+                        {
+                            e.Handled = false;
+                        }
                     }
                 }
                 else
@@ -869,6 +890,19 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
+        }
+
+        private static void OnIsIntegerOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var numericUpDown = (NumericUpDown)d;
+            double? oldValue = numericUpDown.Value;
+
+            if ((bool)e.NewValue == true)
+            {
+                numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
+            }
+
+            numericUpDown.OnValueChanged(oldValue, numericUpDown.Value);
         }
 
       private static bool ValidateDelay(object value)
