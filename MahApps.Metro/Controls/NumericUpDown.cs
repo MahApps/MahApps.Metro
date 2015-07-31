@@ -142,11 +142,11 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new PropertyMetadata(true));
 
-        public static readonly DependencyProperty IsIntegerOnlyProperty = DependencyProperty.Register(
-            "IsIntegerOnly",
+        public static readonly DependencyProperty HasDecimalsProperty = DependencyProperty.Register(
+            "HasDecimals",
             typeof(bool), 
             typeof(NumericUpDown),
-            new FrameworkPropertyMetadata(false, OnIsIntegerOnlyChanged));
+            new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
         
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -444,11 +444,11 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [Bindable(true)]
         [Category("Common")]
-        [DefaultValue(false)]
-        public bool IsIntegerOnly
+        [DefaultValue(true)]
+        public bool HasDecimals
         {
-            get { return (bool)GetValue(IsIntegerOnlyProperty); }
-            set { SetValue(IsIntegerOnlyProperty, value); }
+            get { return (bool)GetValue(HasDecimalsProperty); }
+            set { SetValue(HasDecimalsProperty, value); }
         }
 
         /// <summary> 
@@ -671,7 +671,7 @@ namespace MahApps.Metro.Controls
                 {
                     if (textBox.Text.All(i => i.ToString(equivalentCulture) != numberFormatInfo.NumberDecimalSeparator) || allTextSelected)
                     {
-                        if (!IsIntegerOnly)
+                        if (HasDecimals)
                         {
                             e.Handled = false;
                         }
@@ -821,6 +821,10 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
             double val = ((double?)value).Value;
 
+            if (numericUpDown.HasDecimals == false)
+            {
+                val = Math.Truncate(val);
+            }
             if (val < numericUpDown.Minimum)
             {
                 return numericUpDown.Minimum;
@@ -892,17 +896,15 @@ namespace MahApps.Metro.Controls
             numericUpDown.OnValueChanged((double?)e.OldValue, (double?)e.NewValue);
         }
 
-        private static void OnIsIntegerOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnHasDecimalsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var numericUpDown = (NumericUpDown)d;
             double? oldValue = numericUpDown.Value;
 
-            if ((bool)e.NewValue == true)
+            if ((bool)e.NewValue == false && numericUpDown.Value != null)
             {
                 numericUpDown.Value = Math.Truncate(numericUpDown.Value.GetValueOrDefault());
             }
-
-            numericUpDown.OnValueChanged(oldValue, numericUpDown.Value);
         }
 
       private static bool ValidateDelay(object value)
