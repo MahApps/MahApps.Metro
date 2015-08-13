@@ -531,18 +531,14 @@ namespace Microsoft.Windows.Shell
             var sc = (SC)(Environment.Is64BitProcess ? wParam.ToInt64() : wParam.ToInt32());
             if (SC.RESTORE == sc && wpl.showCmd == SW.SHOWMAXIMIZED && _MinimizeAnimation)
             {
-                bool modified = _ModifyStyle(WS.DLGFRAME, 0);
+                var modified = _ModifyStyle(WS.SYSMENU, 0);
 
                 IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, uMsg, wParam, lParam);
 
                 // Put back the style we removed.
                 if (modified)
                 {
-                    // allow animation
-                    if (_ModifyStyle(0, WS.DLGFRAME))
-                    {
-                        _UpdateFrameState(true);
-                    }
+                    modified = _ModifyStyle(0, WS.SYSMENU);
                 }
                 
                 handled = true;
