@@ -23,6 +23,8 @@
                 Value="1" />
         <Setter Property="BorderBrush"
                 Value="{DynamicResource CheckBoxBrush}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush"
                 Value="{DynamicResource HighlightBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
