@@ -118,7 +118,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 var windowTheme = DetectTheme(this);
 
-                if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && windowTheme == null)
+                if (windowTheme == null)
                 {
                     return;
                 }
