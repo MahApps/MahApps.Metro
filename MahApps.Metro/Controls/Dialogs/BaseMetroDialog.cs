@@ -84,10 +84,13 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void Initialize()
         {
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") });
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") });
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
+            if (DialogSettings == null || !DialogSettings.SuppressDefaultResources)
+            { 
+                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") });
+                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") });
+                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
+                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
+            }
             if (DialogSettings != null && DialogSettings.CustomResourceDictionary != null)
             {
                 this.Resources.MergedDictionaries.Add(DialogSettings.CustomResourceDictionary);
@@ -393,6 +396,11 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the token to cancel the dialog.
         /// </summary>
         public CancellationToken CancellationToken { get; set; }
+
+        /// <summary>
+        /// If set, stops standard resource dictionaries being applied to the dialog.
+        /// </summary>
+        public bool SuppressDefaultResources { get; set; }
 
         /// <summary>
         /// Gets/sets a custom resource dictionary which can contains custom styles, brushes or something else.
