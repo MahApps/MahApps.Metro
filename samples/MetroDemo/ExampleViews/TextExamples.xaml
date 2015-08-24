@@ -15,6 +15,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <Thickness x:Key="ColumnMargin">10 5 10 5</Thickness>
+            <Thickness x:Key="ControlMargin">0 5 0 0</Thickness>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -22,29 +25,31 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
+                <ColumnDefinition Width="1.5*" />
                 <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
+
             <StackPanel Grid.Column="0"
-                        Width="150">
+                        Margin="{StaticResource ColumnMargin}">
                 <Label Content="TextBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                          Text="Enabled" />
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Watermark"
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.IsWaitingForData="True"
                          ToolTip="Default alignment" />
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                          Text="Clear button">
                     <TextBox.Style>
                         <Style TargetType="{x:Type TextBox}"
                                BasedOn="{StaticResource MetroTextBox}">
-                            <Setter Property="Controls:TextBoxHelper.ClearTextButton" Value="True"></Setter>
+                            <Setter Property="Controls:TextBoxHelper.ClearTextButton"
+                                    Value="True"></Setter>
                             <Style.Triggers>
                                 <Trigger Property="Controls:TextBoxHelper.HasText"
                                          Value="False">
@@ -62,7 +67,7 @@
                         </Style>
                     </TextBox.Style>
                 </TextBox>
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Search..."
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.ClearTextButton="True"
@@ -80,51 +85,46 @@
                         </Style>
                     </TextBox.Style>
                 </TextBox>
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Name="test2"
                          Controls:TextBoxHelper.Watermark="Enter parameter"
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmdWithParameter, Mode=OneWay}"
                          Controls:TextBoxHelper.ButtonCommandParameter="{Binding ElementName=test2, Path=Text}"
                          Style="{DynamicResource SearchMetroTextBox}" />
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Custom icon style"
                          Controls:TextBoxHelper.ButtonContent="s"
                          Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                          Style="{DynamicResource MetroButtonTextBox}" />
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
-                         Text="{Binding IntegerGreater10Property,
-                                                    ValidatesOnDataErrors=True,
-                                                    UpdateSourceTrigger=PropertyChanged,
-                                                    NotifyOnValidationError=True}" />
-                <TextBox Margin="0, 10, 0, 0"
+                         Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                <TextBox Margin="{StaticResource ControlMargin}"
                          IsEnabled="False"
                          Text="Disabled" />
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Watermark"
                          IsEnabled="False" />
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.ClearTextButton="True"
                          Controls:TextBoxHelper.Watermark="Watermark"
                          IsEnabled="False"
                          Text="Clear button" />
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Search style"
                          IsEnabled="False"
                          Style="{DynamicResource SearchMetroTextBox}" />
-                <TextBox Margin="0, 10, 0, 0"
+                <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          IsEnabled="False"
-                         Text="{Binding IntegerGreater10Property,
-                                                    ValidatesOnDataErrors=True,
-                                                    UpdateSourceTrigger=PropertyChanged,
-                                                    NotifyOnValidationError=True}" />
+                         Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
             </StackPanel>
+
             <StackPanel Grid.Column="1"
-                        Width="150">
+                        Margin="{StaticResource ColumnMargin}">
                 <Label Content="RichTextBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
-                <RichTextBox Margin="0, 10, 0, 0"
+                <RichTextBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
                              Padding="5"
                              IsDocumentEnabled="True">
@@ -138,7 +138,7 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <RichTextBox Margin="0, 10, 0, 0"
+                <RichTextBox Margin="{StaticResource ControlMargin}"
                              IsReadOnly="True"
                              Padding="5"
                              IsDocumentEnabled="True">
@@ -152,7 +152,7 @@
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <RichTextBox Margin="0, 10, 0, 0"
+                <RichTextBox Margin="{StaticResource ControlMargin}"
                              IsEnabled="False"
                              Padding="5"
                              IsDocumentEnabled="True">
@@ -167,20 +167,21 @@
                     </FlowDocument>
                 </RichTextBox>
             </StackPanel>
+
             <StackPanel Grid.Column="2"
-                        Width="150">
+                        Margin="{StaticResource ColumnMargin}">
                 <Label Content="PasswordBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
-                <PasswordBox Margin="0, 10, 0, 0"
+                <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.Watermark="Password"
                              Password="Password" />
-                <PasswordBox Margin="0, 10, 0, 0"
+                <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.Watermark="Password"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Password="Password" />
-                <PasswordBox Margin="0, 10, 0, 0"
+                <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.Watermark="Custom icon style"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.ButtonContent="4"
@@ -190,54 +191,103 @@
                     <Controls:PasswordBoxHelper.CapsLockWarningToolTip>
                         <TextBlock>
                             <Run Text="This is a custom Warning to show you that" />
-                            <Run Text="CAPS LOCK" TextDecorations="Underline" Foreground="Red" />
+                            <Run Text="CAPS LOCK"
+                                 TextDecorations="Underline"
+                                 Foreground="Red" />
                             <Run Text=" is on" />
                         </TextBlock>
                     </Controls:PasswordBoxHelper.CapsLockWarningToolTip>
                 </PasswordBox>
-                <PasswordBox Margin="0, 10, 0, 0"
+                <PasswordBox Margin="{StaticResource ControlMargin}"
                              IsEnabled="False"
                              Password="Password" />
-                <PasswordBox Margin="0, 10, 0, 0"
+                <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              IsEnabled="False"
                              Password="Password" />
             </StackPanel>
+
             <StackPanel Grid.Column="3"
-                        Width="200">
+                        Grid.IsSharedSizeScope="True"
+                        Margin="{StaticResource ColumnMargin}">
                 <Label Content="NumericUpDown"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
 
-                <Label Content='Minimum="0", Maximum="10" TextAlignment="Left"' />
-                <Controls:NumericUpDown Value="5"
+                <CheckBox x:Name="ReadOnlyCheck"
+                          Content="IsReadOnly"
+                          Margin="1" />
+
+                <Label Content='Min="0", Max="10", TextAlignment="Left"' />
+                <Controls:NumericUpDown Value="5" IsEnabled="False"
+                                        x:Name="Test"
                                         TextAlignment="Left"
                                         Minimum="0"
-                                        IsReadOnly="True"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Maximum="10" />
 
                 <Label Content='Interval="2"' />
                 <Controls:NumericUpDown Value="5"
+                                        ButtonsAlignment="Left"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Interval="2" />
+
                 <Label Content='Interval="5"' />
                 <Controls:NumericUpDown Value="5"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
+                                        ButtonsAlignment="Left"
                                         Interval="5" />
 
-                <Label Content="No Speedup when long pressed" />
-                <Controls:NumericUpDown Value="5"
+                <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                        Controls:TextBoxHelper.Watermark="No Speedup when long pressed"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Speedup="false" />
-                <Label Content="Speedup when long pressed but after 500ms" />
-                <Controls:NumericUpDown Controls:TextBoxHelper.Watermark="Test"
+                <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
+                                        Controls:TextBoxHelper.Watermark="Speedup when long pressed after 500ms"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Delay="500"
                                         Speedup="true" />
 
-                <Label Content="StringFormat" />
-                <Label Content="{Binding ElementName=test, Path=Value}" />
+                <Label Margin="{StaticResource ControlMargin}"
+                       Content="{Binding ElementName=test, Path=Value, Mode=OneWay}"
+                       ContentStringFormat="StringFormat, Real Value = {0}" />
                 <Controls:NumericUpDown Value="5"
                                         x:Name="test"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         StringFormat="pcs. {0:N2} pcs."
                                         Maximum="100" />
-                <Controls:NumericUpDown Value="5"
+                <Grid Margin="{StaticResource ControlMargin}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"
+                                          SharedSizeGroup="LabelCol" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Content="StringFormat" />
+                    <TextBox Grid.Column="1"
+                             Controls:TextBoxHelper.ClearTextButton="True"
+                             VerticalAlignment="Center"
+                             Text="{Binding ElementName=StringFormatNumUpDown, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                </Grid>
+                <Grid Margin="{StaticResource ControlMargin}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"
+                                          SharedSizeGroup="LabelCol" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0"
+                           Content="CultureInfo" />
+                    <ComboBox Grid.Column="1"
+                              Controls:TextBoxHelper.ClearTextButton="True"
+                              ItemsSource="{Binding CultureInfos, Mode=OneWay}"
+                              DisplayMemberPath="DisplayName"
+                              VerticalAlignment="Center"
+                              SelectedItem="{Binding ElementName=StringFormatNumUpDown, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                </Grid>
+                <Controls:NumericUpDown x:Name="StringFormatNumUpDown"
+                                        Margin="{StaticResource ControlMargin}"
+                                        Value="{Binding ElementName=test, Path=Value, Mode=TwoWay}"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Interval=".1"
                                         StringFormat="0,000.00" />
             </StackPanel>

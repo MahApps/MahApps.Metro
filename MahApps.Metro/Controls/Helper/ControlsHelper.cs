@@ -10,6 +10,50 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public static class ControlsHelper
     {
+        public static readonly DependencyProperty DisabledVisualElementVisibilityProperty = DependencyProperty.RegisterAttached("DisabledVisualElementVisibility", typeof(Visibility), typeof(ControlsHelper), new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets the value to handle the visibility of the DisabledVisualElement in the template.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(RichTextBox))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        public static Visibility GetDisabledVisualElementVisibility(UIElement element)
+        {
+            return (Visibility)element.GetValue(DisabledVisualElementVisibilityProperty);
+        }
+
+        /// <summary>
+        /// Sets the value to handle the visibility of the DisabledVisualElement in the template.
+        /// </summary>
+        public static void SetDisabledVisualElementVisibility(UIElement element, Visibility value)
+        {
+            element.SetValue(DisabledVisualElementVisibilityProperty, value);
+        }
+
+        public static readonly DependencyProperty PreserveTextCaseProperty = DependencyProperty.RegisterAttached("PreserveTextCase", typeof(bool), typeof(ControlsHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets the value to override the text case behavior for the header content.
+        /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
+        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        public static bool GetPreserveTextCase(UIElement element)
+        {
+            return (bool)element.GetValue(PreserveTextCaseProperty);
+        }
+
+        /// <summary>
+        /// Sets the value to override the text case behavior for the header content.
+        /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
+        /// </summary>
+        public static void SetPreserveTextCase(UIElement element, bool value)
+        {
+            element.SetValue(PreserveTextCaseProperty, value);
+        }
+
         public static readonly DependencyProperty HeaderFontSizeProperty =
             DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(26.67, HeaderFontSizePropertyChangedCallback){ Inherits = true});
 

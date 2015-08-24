@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +11,7 @@ namespace MahApps.Metro.Controls.Dialogs
     /// <summary>
     /// The base class for dialogs.
     ///
-    /// You probably don't want to use this class, if you want to add arbitrary content to your dialog, 
+    /// You probably don't want to use this class, if you want to add arbitrary content to your dialog,
     /// use the <see cref="CustomDialog"/> class.
     /// </summary>
     public abstract class BaseMetroDialog : ContentControl
@@ -18,7 +20,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
 
-        protected MetroDialogSettings DialogSettings { get; private set; }
+        public MetroDialogSettings DialogSettings { get; private set; }
 
         /// <summary>
         /// Gets/sets the dialog's title.
@@ -82,12 +84,21 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void Initialize()
         {
+            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") });
+            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") });
+            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
+            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
+            if (DialogSettings != null && DialogSettings.CustomResourceDictionary != null)
+            {
+                this.Resources.MergedDictionaries.Add(DialogSettings.CustomResourceDictionary);
+            }
+
+            this.Loaded += (sender, args) => {
+                               OnLoaded();
+                               HandleTheme();
+                           };
             ThemeManager.IsThemeChanged += ThemeManager_IsThemeChanged;
             this.Unloaded += BaseMetroDialog_Unloaded;
-
-            HandleTheme();
-
-            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
         }
 
         void BaseMetroDialog_Unloaded(object sender, RoutedEventArgs e)
@@ -106,6 +117,12 @@ namespace MahApps.Metro.Controls.Dialogs
             if (DialogSettings != null)
             {
                 var windowTheme = DetectTheme(this);
+
+                if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && windowTheme == null)
+                {
+                    return;
+                }
+
                 var theme = windowTheme.Item1;
                 var windowAccent = windowTheme.Item2;
 
@@ -113,8 +130,8 @@ namespace MahApps.Metro.Controls.Dialogs
                 {
                     case MetroDialogColorScheme.Theme:
                         ThemeManager.ChangeAppStyle(this.Resources, windowAccent, theme);
-                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
-                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "BlackBrush"));
+                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
+                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "BlackBrush"));
                         break;
                     case MetroDialogColorScheme.Inverted:
                         var inverseTheme = ThemeManager.GetInverseAppTheme(theme);
@@ -125,16 +142,34 @@ namespace MahApps.Metro.Controls.Dialogs
                         }
 
                         ThemeManager.ChangeAppStyle(this.Resources, windowAccent, inverseTheme);
-                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "BlackColorBrush"));
-                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
+                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "BlackColorBrush"));
+                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "WhiteColorBrush"));
                         break;
                     case MetroDialogColorScheme.Accented:
                         ThemeManager.ChangeAppStyle(this.Resources, windowAccent, theme);
-                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "HighlightBrush"));
-                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(OwningWindow ?? Application.Current.MainWindow, "IdealForegroundColorBrush"));
+                        this.SetValue(BackgroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "HighlightBrush"));
+                        this.SetValue(ForegroundProperty, ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "IdealForegroundColorBrush"));
                         break;
                 }
             }
+
+            if (this.ParentDialogWindow != null)
+            {
+                this.ParentDialogWindow.SetValue(BackgroundProperty, this.Background);
+                var glowBrush = ThemeManager.GetResourceFromAppStyle(this.OwningWindow ?? Application.Current.MainWindow, "AccentColorBrush");
+                if (glowBrush != null)
+                {
+                    this.ParentDialogWindow.SetValue(MetroWindow.GlowBrushProperty, glowBrush);
+                }
+            }
+        }
+
+        /// <summary>
+        /// This is called in the loaded event.
+        /// </summary>
+        protected virtual void OnLoaded()
+        {
+            // nothing here
         }
 
         private static Tuple<AppTheme, Accent> DetectTheme(BaseMetroDialog dialog)
@@ -243,6 +278,23 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         protected internal MetroWindow OwningWindow { get; internal set; }
 
+        /// <summary>
+        /// Waits until this dialog gets unloaded.
+        /// </summary>
+        /// <returns></returns>
+        public Task WaitUntilUnloadedAsync()
+        {
+            TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
+
+            Unloaded += (s,e) =>
+            {
+                tcs.TrySetResult(null);
+            };
+
+            return tcs.Task;
+        }
+
+
         public Task _WaitForCloseAsync()
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
@@ -293,6 +345,8 @@ namespace MahApps.Metro.Controls.Dialogs
             MaximumBodyHeight = Double.NaN;
 
             DefaultText = "";
+
+            CancellationToken = CancellationToken.None;
         }
 
         /// <summary>
@@ -334,6 +388,16 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets/sets the maximum height. (Default is unlimited height, <a href="http://msdn.microsoft.com/de-de/library/system.double.nan">Double.NaN</a>)
         /// </summary>
         public double MaximumBodyHeight { get; set; }
+
+        /// <summary>
+        /// Gets/sets the token to cancel the dialog.
+        /// </summary>
+        public CancellationToken CancellationToken { get; set; }
+
+        /// <summary>
+        /// Gets/sets a custom resource dictionary which can contains custom styles, brushes or something else.
+        /// </summary>
+        public ResourceDictionary CustomResourceDictionary { get; set; }
     }
 
     /// <summary>

@@ -55,12 +55,12 @@
                             <DoubleAnimation Duration="0:0:0.2"
                                              To=".2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="exitGotFocus">
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
 
                         <Storyboard x:Key="enterHasText">
@@ -68,12 +68,12 @@
                                              From=".2"
                                              To="0"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="exitHasText">
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
@@ -85,9 +85,10 @@
                         <Grid x:Name="PART_InnerGrid"
                               Margin="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*"
+                                                  x:Name="TextColumn" />
                                 <ColumnDefinition x:Name="ButtonColumn"
-                                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                                  Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -108,7 +109,7 @@
                                           Margin="2"
                                           VerticalAlignment="Stretch"
                                           Background="{x:Null}" />
-                            <TextBlock x:Name="Message"
+                            <TextBlock x:Name="PART_Message"
                                        Grid.Column="0"
                                        Grid.Row="1"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
@@ -120,14 +121,14 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
-                            <Grid x:Name="FloatingMessageContainer"
+                            <Grid x:Name="PART_FloatingMessageContainer"
                                   Grid.Column="0"
                                   Grid.ColumnSpan="2"
                                   Height="0"
                                   IsHitTestVisible="False"
                                   Margin="5,0"
                                   Visibility="Visible">
-                                <TextBlock x:Name="FloatingMessage"
+                                <TextBlock x:Name="PART_FloatingMessage"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            FontSize="{DynamicResource FloatingWatermarkFontSize}"
                                            Foreground="{TemplateBinding Foreground}"
@@ -149,9 +150,11 @@
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
+                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
                                     IsTabStop="False" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -160,9 +163,28 @@
                                 Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsAlignment)}"
+                                     Value="Left">
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Grid.Column"
+                                    Value="0" />
+                            <Setter TargetName="PART_Message"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                            <Setter TargetName="TextColumn"
+                                    Property="Width"
+                                    Value="Auto" />
+                            <Setter TargetName="ButtonColumn"
+                                    Property="Width"
+                                    Value="*" />
+                            <Setter TargetName="PART_ContentHost"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                        </DataTrigger>
+
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
                                      Value="">
-                            <Setter TargetName="Message"
+                            <Setter TargetName="PART_Message"
                                     Property="Visibility"
                                     Value="Visible" />
                         </DataTrigger>
@@ -206,20 +228,26 @@
                                 <Condition Property="AcceptsReturn"
                                            Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="ButtonColumn"
+                            <Setter TargetName="PART_ClearText"
                                     Property="Width"
-                                    Value="{Binding ElementName=ButtonRow, Path=ActualHeight, Mode=OneWay}" />
+                                    Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Mode=OneWay}" />
                         </MultiTrigger>
 
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}"
-                                     Value="False">
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsAlignment)}"
+                                           Value="Right" />
+                                <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}"
+                                           Value="False" />
+                            </MultiDataTrigger.Conditions>
                             <Setter TargetName="PART_ContentHost"
                                     Property="Grid.ColumnSpan"
                                     Value="2" />
-                            <Setter TargetName="Message"
+                            <Setter TargetName="PART_Message"
                                     Property="Grid.ColumnSpan"
                                     Value="2" />
-                        </DataTrigger>
+                        </MultiDataTrigger>
+
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="Base"
@@ -234,6 +262,9 @@
                         </Trigger>
                         <Trigger Property="IsReadOnly"
                                  Value="True">
+                            <Setter TargetName="PART_ClearText"
+                                    Property="IsEnabled"
+                                    Value="False" />
                             <Setter TargetName="ReadOnlyVisualElement"
                                     Property="Opacity"
                                     Value="1" />
@@ -243,10 +274,10 @@
                             <Setter TargetName="Base"
                                     Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
-                            <Setter TargetName="FloatingMessage"
+                            <Setter TargetName="PART_FloatingMessage"
                                     Property="Foreground"
                                     Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="FloatingMessage"
+                            <Setter TargetName="PART_FloatingMessage"
                                     Property="Opacity"
                                     Value="1" />
                         </Trigger>
@@ -347,12 +378,12 @@
                             <DoubleAnimation Duration="0:0:0.2"
                                              To=".2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="exitGotFocus">
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
 
                         <Storyboard x:Key="enterHasText">
@@ -360,12 +391,12 @@
                                              From=".2"
                                              To="0"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                         <Storyboard x:Key="exitHasText">
                             <DoubleAnimation Duration="0:0:0.2"
                                              Storyboard.TargetProperty="Opacity"
-                                             Storyboard.TargetName="Message" />
+                                             Storyboard.TargetName="PART_Message" />
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
@@ -377,9 +408,10 @@
                         <Grid x:Name="PART_InnerGrid"
                               Margin="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*"
+                                                  x:Name="TextColumn" />
                                 <ColumnDefinition x:Name="ButtonColumn"
-                                                  Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                                  Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -400,7 +432,7 @@
                                           Margin="2"
                                           VerticalAlignment="Stretch"
                                           Background="{x:Null}" />
-                            <TextBlock x:Name="Message"
+                            <TextBlock x:Name="PART_Message"
                                        Grid.Column="0"
                                        Grid.Row="1"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
@@ -412,14 +444,14 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
-                            <Grid x:Name="FloatingMessageContainer"
+                            <Grid x:Name="PART_FloatingMessageContainer"
                                   Grid.Column="0"
                                   Grid.ColumnSpan="2"
                                   Height="0"
                                   IsHitTestVisible="False"
                                   Margin="5,0"
                                   Visibility="Visible">
-                                <TextBlock x:Name="FloatingMessage"
+                                <TextBlock x:Name="PART_FloatingMessage"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                            FontSize="{DynamicResource FloatingWatermarkFontSize}"
                                            Foreground="{TemplateBinding Foreground}"
@@ -441,9 +473,11 @@
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
                                     Template="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonTemplate), Mode=OneWay}"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="True"
+                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
                                     IsTabStop="False" />
                         </Grid>
                         <Border x:Name="DisabledVisualElement"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
@@ -452,9 +486,28 @@
                                 Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ButtonsAlignment)}"
+                                     Value="Left">
+                            <Setter TargetName="PART_ClearText"
+                                    Property="Grid.Column"
+                                    Value="0" />
+                            <Setter TargetName="PART_Message"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                            <Setter TargetName="TextColumn"
+                                    Property="Width"
+                                    Value="Auto" />
+                            <Setter TargetName="ButtonColumn"
+                                    Property="Width"
+                                    Value="*" />
+                            <Setter TargetName="PART_ContentHost"
+                                    Property="Grid.Column"
+                                    Value="1" />
+                        </DataTrigger>
+
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Text}"
                                      Value="">
-                            <Setter TargetName="Message"
+                            <Setter TargetName="PART_Message"
                                     Property="Visibility"
                                     Value="Visible" />
                         </DataTrigger>
@@ -498,9 +551,9 @@
                                 <Condition Property="AcceptsReturn"
                                            Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="ButtonColumn"
+                            <Setter TargetName="PART_ClearText"
                                     Property="Width"
-                                    Value="{Binding ElementName=ButtonRow, Path=ActualHeight, Mode=OneWay}" />
+                                    Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Mode=OneWay}" />
                         </MultiTrigger>
 
                         <Trigger Property="IsMouseOver"
@@ -526,10 +579,10 @@
                             <Setter TargetName="Base"
                                     Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
-                            <Setter TargetName="FloatingMessage"
+                            <Setter TargetName="PART_FloatingMessage"
                                     Property="Foreground"
                                     Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="FloatingMessage"
+                            <Setter TargetName="PART_FloatingMessage"
                                     Property="Opacity"
                                     Value="1" />
                         </Trigger>
@@ -684,13 +737,13 @@
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <Border x:Name="DisabledVisualElement"
+                                Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.DisabledVisualElementVisibility), Mode=OneWay}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{DynamicResource ControlsDisabledBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{DynamicResource ControlsDisabledBrush}"
-                                Opacity="0.6"
                                 IsHitTestVisible="False"
-                                Visibility="Collapsed" />
+                                Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
@@ -708,8 +761,8 @@
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter TargetName="DisabledVisualElement"
-                                    Property="Visibility"
-                                    Value="Visible" />
+                                    Property="Opacity"
+                                    Value="0.6" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

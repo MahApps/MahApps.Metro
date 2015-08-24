@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 
@@ -62,6 +63,11 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (Brush)GetValue(ProgressBarForegroundProperty); }
             set { SetValue(ProgressBarForegroundProperty, value); }
+        }
+
+        internal CancellationToken CancellationToken
+        {
+            get { return DialogSettings.CancellationToken; }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -454,6 +455,16 @@ namespace MetroDemo.Models
                     new Album {Title = "Bach: The Cello Suites", Genre = Genres.First(g => g.Name == "Classical"), Price = 8.99M, Artist = Artists.First(a => a.Name == "Yo-Yo Ma"), AlbumArtUrl = "/Content/Images/placeholder.gif"},
                     new Album {Title = "Ao Vivo [IMPORT]", Genre = Genres.First(g => g.Name == "Latin"), Price = 8.99M, Artist = Artists.First(a => a.Name == "Zeca Pagodinho"), AlbumArtUrl = "/Content/Images/placeholder.gif"},
                 };
+
+
+            var r = new Random(Environment.TickCount);
+            Albums.ForEach(x => x.Price = Convert.ToDecimal(r.NextDouble() * 20d));
+
+            var albumsGroupedByArtist = Albums.GroupBy(a => a.Artist);
+            foreach (var grouping in albumsGroupedByArtist)
+            {
+                grouping.Key.Albums = grouping.ToList();
+            }
         }
     }
 }

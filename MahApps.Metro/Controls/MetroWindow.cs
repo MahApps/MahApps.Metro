@@ -23,7 +23,8 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
     [TemplatePart(Name = PART_OverlayBox, Type = typeof(Grid))]
-    [TemplatePart(Name = PART_MetroDialogContainer, Type = typeof(Grid))]
+    [TemplatePart(Name = PART_MetroActiveDialogContainer, Type = typeof(Grid))]
+    [TemplatePart(Name = PART_MetroInactiveDialogsContainer, Type = typeof(Grid))]
     [TemplatePart(Name = PART_FlyoutModal, Type = typeof(Rectangle))]
     public class MetroWindow : Window
     {
@@ -34,7 +35,8 @@ namespace MahApps.Metro.Controls
         private const string PART_RightWindowCommands = "PART_RightWindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
         private const string PART_OverlayBox = "PART_OverlayBox";
-        private const string PART_MetroDialogContainer = "PART_MetroDialogContainer";
+        private const string PART_MetroActiveDialogContainer = "PART_MetroActiveDialogContainer";
+        private const string PART_MetroInactiveDialogsContainer = "PART_MetroInactiveDialogsContainer";
         private const string PART_FlyoutModal = "PART_FlyoutModal";
 
         public static readonly DependencyProperty ShowIconOnTitleBarProperty = DependencyProperty.Register("ShowIconOnTitleBar", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true, OnShowIconOnTitleBarPropertyChangedCallback));
@@ -70,7 +72,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleTemplateProperty = DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(MetroWindow), new PropertyMetadata(null));
-        
+
         public static readonly DependencyProperty LeftWindowCommandsProperty = DependencyProperty.Register("LeftWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty RightWindowCommandsProperty = DependencyProperty.Register("RightWindowCommands", typeof(WindowCommands), typeof(MetroWindow), new PropertyMetadata(null));
 
@@ -82,7 +84,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowMinButtonStyleProperty = DependencyProperty.Register("WindowMinButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowMaxButtonStyleProperty = DependencyProperty.Register("WindowMaxButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty WindowCloseButtonStyleProperty = DependencyProperty.Register("WindowCloseButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
-        
+
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
 
@@ -96,16 +98,17 @@ namespace MahApps.Metro.Controls
         internal ContentPresenter LeftWindowCommandsPresenter;
         internal ContentPresenter RightWindowCommandsPresenter;
         internal WindowButtonCommands WindowButtonCommands;
-        
+
         internal Grid overlayBox;
-        internal Grid metroDialogContainer;
+        internal Grid metroActiveDialogContainer;
+        internal Grid metroInactiveDialogContainer;
         private Storyboard overlayStoryboard;
         Rectangle flyoutModal;
 
         public static readonly RoutedEvent FlyoutsStatusChangedEvent = EventManager.RegisterRoutedEvent(
             "FlyoutsStatusChanged", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MetroWindow));
 
-        // Provide CLR accessors for the event 
+        // Provide CLR accessors for the event
         public event RoutedEventHandler FlyoutsStatusChanged
         {
             add { AddHandler(FlyoutsStatusChangedEvent, value); }
@@ -446,7 +449,7 @@ namespace MahApps.Metro.Controls
             get { return (bool)GetValue(IsMinButtonEnabledProperty); }
             set { SetValue(IsMinButtonEnabledProperty, value); }
         }
-        
+
         /// <summary>
         /// Gets/sets if the max/restore button is enabled.
         /// </summary>
@@ -502,7 +505,7 @@ namespace MahApps.Metro.Controls
                 this.icon.Visibility = iconVisibility;
             }
         }
-        
+
         private void SetVisibiltyForAllTitleElements(bool visible)
         {
             this.SetVisibiltyForIcon();
@@ -527,7 +530,7 @@ namespace MahApps.Metro.Controls
             }
             if (this.WindowButtonCommands != null)
             {
-                this.WindowButtonCommands.Visibility = this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ? 
+                this.WindowButtonCommands.Visibility = this.WindowButtonCommandsOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.HiddenTitleBar) ?
                     Visibility.Visible : newVisibility;
             }
 
@@ -604,14 +607,18 @@ namespace MahApps.Metro.Controls
         {
             if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
 
+            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
             if (IsOverlayVisible() && overlayStoryboard == null)
-                return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
+            {
+                //No Task.FromResult in .NET 4.
+                tcs.SetResult(null);
+                return tcs.Task;
+            }
 
             Dispatcher.VerifyAccess();
 
             overlayBox.Visibility = Visibility.Visible;
-
-            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
             var sb = (Storyboard) this.Template.Resources["OverlayFastSemiFadeIn"];
 
@@ -646,12 +653,16 @@ namespace MahApps.Metro.Controls
         {
             if (overlayBox == null) throw new InvalidOperationException("OverlayBox can not be founded in this MetroWindow's template. Are you calling this before the window has loaded?");
 
+            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
+
             if (overlayBox.Visibility == Visibility.Visible && overlayBox.Opacity == 0.0)
-                return new System.Threading.Tasks.Task(() => { }); //No Task.FromResult in .NET 4.
+            {
+                //No Task.FromResult in .NET 4.
+                tcs.SetResult(null);
+                return tcs.Task;
+            }
 
             Dispatcher.VerifyAccess();
-
-            var tcs = new System.Threading.Tasks.TaskCompletionSource<object>();
 
             var sb = (Storyboard) this.Template.Resources["OverlayFastSemiFadeOut"];
 
@@ -790,7 +801,7 @@ namespace MahApps.Metro.Controls
                 this.HandleWindowCommandsForFlyouts(flyouts);
             }
         }
-        
+
         private void FlyoutsPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             var element = (e.OriginalSource as DependencyObject);
@@ -805,7 +816,7 @@ namespace MahApps.Metro.Controls
                     return;
                 }
             }
-            
+
             if (Flyouts.OverrideExternalCloseButton == null)
             {
                 foreach (var flyout in Flyouts.GetFlyouts().Where(x => x.IsOpen && x.ExternalCloseButton == e.ChangedButton && (!x.IsPinned || Flyouts.OverrideIsPinned)))
@@ -838,13 +849,22 @@ namespace MahApps.Metro.Controls
             if (RightWindowCommands == null)
                 RightWindowCommands = new WindowCommands();
 
+            LeftWindowCommands.ParentWindow = this;
+            RightWindowCommands.ParentWindow = this;
+
             LeftWindowCommandsPresenter = GetTemplateChild(PART_LeftWindowCommands) as ContentPresenter;
             RightWindowCommandsPresenter = GetTemplateChild(PART_RightWindowCommands) as ContentPresenter;
             WindowButtonCommands = GetTemplateChild(PART_WindowButtonCommands) as WindowButtonCommands;
 
+            if (WindowButtonCommands != null)
+            {
+                WindowButtonCommands.ParentWindow = this;
+            }
+
             overlayBox = GetTemplateChild(PART_OverlayBox) as Grid;
-            metroDialogContainer = GetTemplateChild(PART_MetroDialogContainer) as Grid;
-            flyoutModal = (Rectangle) GetTemplateChild(PART_FlyoutModal);
+            metroActiveDialogContainer = GetTemplateChild(PART_MetroActiveDialogContainer) as Grid;
+            metroInactiveDialogContainer = GetTemplateChild(PART_MetroInactiveDialogsContainer) as Grid;
+            flyoutModal = (Rectangle)GetTemplateChild(PART_FlyoutModal);
             flyoutModal.PreviewMouseDown += FlyoutsPreviewMouseDown;
             this.PreviewMouseDown += FlyoutsPreviewMouseDown;
 
@@ -936,7 +956,7 @@ namespace MahApps.Metro.Controls
             if (e.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
             {
                 var mPoint = Mouse.GetPosition(this);
-                
+
                 if (IsWindowDraggable)
                 {
                     IntPtr windowHandle = new WindowInteropHelper(this).Handle;
@@ -977,9 +997,23 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the template child with the given name.
+        /// </summary>
+        /// <typeparam name="T">The interface type inheirted from DependencyObject.</typeparam>
+        /// <param name="name">The name of the template child.</param>
         internal T GetPart<T>(string name) where T : DependencyObject
         {
             return GetTemplateChild(name) as T;
+        }
+
+        /// <summary>
+        /// Gets the template child with the given name.
+        /// </summary>
+        /// <param name="name">The name of the template child.</param>
+        internal DependencyObject GetPart(string name)
+        {
+            return GetTemplateChild(name);
         }
 
         private static void ShowSystemMenuPhysicalCoordinates(Window window, Point physicalScreenLocation)
@@ -992,7 +1026,7 @@ namespace MahApps.Metro.Controls
 
             var hmenu = UnsafeNativeMethods.GetSystemMenu(hwnd, false);
 
-            var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD, 
+            var cmd = UnsafeNativeMethods.TrackPopupMenuEx(hmenu, Constants.TPM_LEFTBUTTON | Constants.TPM_RETURNCMD,
                 (int)physicalScreenLocation.X, (int)physicalScreenLocation.Y, hwnd, IntPtr.Zero);
             if (0 != cmd)
                 UnsafeNativeMethods.PostMessage(hwnd, Constants.SYSCOMMAND, new IntPtr(cmd), IntPtr.Zero);
@@ -1007,10 +1041,10 @@ namespace MahApps.Metro.Controls
                 var zIndex = flyout.IsOpen ? Panel.GetZIndex(flyout) + 3 : visibleFlyouts.Count() + 2;
 
                 // Note: ShowWindowCommandsOnTop is here for backwards compatibility reasons
-                //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the flyout's. 
+                //if the the corresponding behavior has the right flag, set the window commands' and icon zIndex to a number that is higher than the flyout's.
                 if (icon != null)
                 {
-                    icon.SetValue(Panel.ZIndexProperty, 
+                    icon.SetValue(Panel.ZIndexProperty,
                         this.IconOverlayBehavior.HasFlag(WindowCommandsOverlayBehavior.Flyouts) ? zIndex : 1);
                 }
 

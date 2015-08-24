@@ -88,7 +88,6 @@
                         HorizontalAlignment="Left">
                 <Controls:RangeSlider Orientation="Vertical"
                                       MinRangeWidth="20"
-                                      Height="200"
                                       x:Name="RangeSlider"
                                       AutoToolTipPlacement="BottomRight"
                                       AutoToolTipPrecision="2"
@@ -108,7 +107,9 @@
                                       SmallChange="0.1"
                                       LowerValue="-70"
                                       UpperValue="60" />
-                <StackPanel Orientation="Vertical" Margin="5, 0, 0, 0" Width="228">
+                <StackPanel Orientation="Vertical"
+                            Margin="5, 0, 0, 0"
+                            Width="228">
 
                     <Controls:RangeSlider Orientation="Horizontal"
                                           MinRangeWidth="20"
@@ -149,12 +150,10 @@
                                           Maximum="610"
                                           Margin="0,0,0,20" />
 
-                    <Controls:RangeSlider
-                                          TickPlacement="Both"
+                    <Controls:RangeSlider TickPlacement="Both"
                                           IsEnabled="False"
                                           Margin="0,0,0,20" />
-                    <Controls:RangeSlider
-                                          Height="20"
+                    <Controls:RangeSlider Height="20"
                                           IsEnabled="False"
                                           LowerValue="20"
                                           UpperValue="60"
@@ -189,8 +188,15 @@
                                        Width="200"
                                        Foreground="{DynamicResource AccentColorBrush}"
                                        Margin="0, 10, 0, 0" />
-            <Controls:MetroProgressBar IsIndeterminate="True"
+            <CheckBox Margin="0, 10, 0, 0"
+                      Width="200"
+                      Content="IsIndeterminate"
+                      Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                      IsChecked="{Binding ElementName=IsIndeterminatePB, Path=IsIndeterminate, UpdateSourceTrigger=PropertyChanged}" />
+            <Controls:MetroProgressBar x:Name="IsIndeterminatePB"
+                                       IsIndeterminate="True"
                                        Value="{Binding ElementName=horizSlider, Path=Value}"
+                                       Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                                        Minimum="0"
                                        Maximum="100"
                                        Width="200"
@@ -208,14 +214,11 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Controls:ProgressRing Grid.Column="0"
-                                       IsActive="True"
                                        Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
                 <Controls:ProgressRing Grid.Column="1"
-                                       IsActive="True"
                                        Width="40"
                                        Height="40" />
                 <Controls:ProgressRing Grid.Column="2"
-                                       IsActive="True"
                                        Width="20"
                                        Height="20" />
             </Grid>

@@ -1,9 +1,10 @@
 ﻿<Application x:Class="MetroDemo.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              x:Name="App"
              StartupUri="MainWindow.xaml">
-    
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,6 +21,12 @@
                         Value="22" />
                 <Setter Property="HorizontalAlignment"
                         Value="Center" />
+            </Style>
+
+            <Style TargetType="{x:Type controls:CustomValidationPopup}"
+                   BasedOn="{StaticResource MetroValidationPopup}">
+                <Setter Property="CloseOnMouseLeftButtonDown"
+                        Value="False" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

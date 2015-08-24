@@ -6,6 +6,7 @@ using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Converters
 {
+    [Obsolete(@"This converter will be deleted in the next release.")]
     public class OffOnConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

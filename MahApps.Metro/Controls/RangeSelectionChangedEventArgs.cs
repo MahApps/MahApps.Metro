@@ -12,6 +12,7 @@ namespace MahApps.Metro.Controls
         /// The value of the new range's beginning.
         /// </summary>
         public double NewLowerValue { get; set; }
+
         /// <summary>
         /// The value of the new range's ending.
         /// </summary>
@@ -28,9 +29,5 @@ namespace MahApps.Metro.Controls
             OldLowerValue = oldLowerValue;
             OldUpperValue = oldUpperValue;
         }
-
-        //internal RangeSelectionChangedEventArgs(RangeSlider slider)
-        //    : this(slider.LowerValue, slider.UpperValue)
-        //{ }
     }
 }

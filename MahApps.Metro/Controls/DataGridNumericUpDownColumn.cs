@@ -14,6 +14,7 @@ namespace MahApps.Metro.Controls
         private double interval = (double)NumericUpDown.IntervalProperty.DefaultMetadata.DefaultValue;
         private string stringFormat = (string)NumericUpDown.StringFormatProperty.DefaultMetadata.DefaultValue;
         private bool hideUpDownButtons = (bool)NumericUpDown.HideUpDownButtonsProperty.DefaultMetadata.DefaultValue;
+        private double upDownButtonsWidth = (double)NumericUpDown.UpDownButtonsWidthProperty.DefaultMetadata.DefaultValue;
         private Binding foregroundBinding;
 
         static DataGridNumericUpDownColumn()
@@ -61,6 +62,7 @@ namespace MahApps.Metro.Controls
                     style.Setters.Add(new Setter(ScrollViewer.VerticalScrollBarVisibilityProperty, ScrollBarVisibility.Disabled));
                     style.Setters.Add(new Setter(Control.VerticalContentAlignmentProperty, VerticalAlignment.Center));
                     style.Setters.Add(new Setter(FrameworkElement.MinHeightProperty, 0d));
+                    style.Setters.Add(new Setter(ControlsHelper.DisabledVisualElementVisibilityProperty, Visibility.Collapsed));
 
                     style.Seal();
                     _defaultElementStyle = style;
@@ -115,7 +117,7 @@ namespace MahApps.Metro.Controls
             generateNumericUpDown.HideUpDownButtons = true;
             return generateNumericUpDown;
         }
-        
+
         private NumericUpDown GenerateNumericUpDown(bool isEditing, DataGridCell cell)
         {
             NumericUpDown numericUpDown = (cell != null) ? (cell.Content as NumericUpDown) : null;
@@ -148,6 +150,7 @@ namespace MahApps.Metro.Controls
             numericUpDown.InterceptMouseWheel = true;
             numericUpDown.Speedup = true;
             numericUpDown.HideUpDownButtons = HideUpDownButtons;
+            numericUpDown.UpDownButtonsWidth = UpDownButtonsWidth;
 
             return numericUpDown;
         }
@@ -185,12 +188,18 @@ namespace MahApps.Metro.Controls
         {
             get { return stringFormat; }
             set { stringFormat = value; }
-        } 
-        
+        }
+
         public bool HideUpDownButtons
         {
             get { return hideUpDownButtons; }
             set { hideUpDownButtons = value; }
+        }
+
+        public double UpDownButtonsWidth
+        {
+            get { return upDownButtonsWidth; }
+            set { upDownButtonsWidth = value; }
         }
     }
 }

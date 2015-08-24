@@ -5,7 +5,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <Style BasedOn="{StaticResource SquareButtonStyle}"
@@ -71,7 +70,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
-                                       FontSize="{StaticResource DialogTitleFontSize}"
+                                       FontSize="{DynamicResource DialogTitleFontSize}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Text="{TemplateBinding Title}"
                                        TextWrapping="Wrap" />

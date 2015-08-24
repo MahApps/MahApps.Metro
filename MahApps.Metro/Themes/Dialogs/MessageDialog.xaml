@@ -1,8 +1,7 @@
 ﻿<Dialogs:BaseMetroDialog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
-                         x:Class="MahApps.Metro.Controls.Dialogs.MessageDialog"
-                         Loaded="Dialog_Loaded">
+                         x:Class="MahApps.Metro.Controls.Dialogs.MessageDialog">
     <Grid Margin="0 10 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -14,7 +13,7 @@
             <TextBlock x:Name="PART_MessageTextBlock"
                        Margin="0 5 0 0"
                        TextWrapping="Wrap"
-                       FontSize="{StaticResource DialogMessageFontSize}"
+                       FontSize="{DynamicResource DialogMessageFontSize}"
                        Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                        Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:MessageDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
         </ScrollViewer>

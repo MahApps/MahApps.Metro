@@ -2,6 +2,8 @@
     Copyright Microsoft Corporation. All Rights Reserved.
 \**************************************************************************/
 
+using System.Security;
+
 namespace Microsoft.Windows.Shell
 {
     using System;
@@ -73,6 +75,7 @@ namespace Microsoft.Windows.Shell
         {
             _messageTable = new List<HANDLE_MESSAGE>
             {
+                new HANDLE_MESSAGE(WM.NCUAHDRAWCAPTION,      _HandleNCUAHDrawCaption),
                 new HANDLE_MESSAGE(WM.SETTEXT,               _HandleSetTextOrIcon),
                 new HANDLE_MESSAGE(WM.SETICON,               _HandleSetTextOrIcon),
                 new HANDLE_MESSAGE(WM.SYSCOMMAND,            _HandleRestoreWindow),
@@ -340,19 +343,35 @@ namespace Microsoft.Windows.Shell
             {
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Top))
                 {
+#if NET4_5
+                    templateFixupMargin.Top -= SystemParameters.WindowResizeBorderThickness.Top;
+#else
                     templateFixupMargin.Top -= SystemParameters2.Current.WindowResizeBorderThickness.Top;
+#endif
                 }
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Left))
                 {
+#if NET4_5
+                    templateFixupMargin.Left -= SystemParameters.WindowResizeBorderThickness.Left;
+#else
                     templateFixupMargin.Left -= SystemParameters2.Current.WindowResizeBorderThickness.Left;
+#endif
                 }
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Bottom))
                 {
+#if NET4_5
+                    templateFixupMargin.Bottom -= SystemParameters.WindowResizeBorderThickness.Bottom;
+#else
                     templateFixupMargin.Bottom -= SystemParameters2.Current.WindowResizeBorderThickness.Bottom;
+#endif
                 }
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Right))
                 {
+#if NET4_5
+                    templateFixupMargin.Right -= SystemParameters.WindowResizeBorderThickness.Right;
+#else
                     templateFixupMargin.Right -= SystemParameters2.Current.WindowResizeBorderThickness.Right;
+#endif
                 }
             }
 
@@ -462,6 +481,32 @@ namespace Microsoft.Windows.Shell
             return IntPtr.Zero;
         }
 
+        private IntPtr _HandleNCUAHDrawCaption(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
+        {
+            if (false == _window.ShowInTaskbar && _GetHwndState() == WindowState.Minimized)
+            {
+                bool modified = _ModifyStyle(WS.VISIBLE, 0);
+
+                // Minimize the window with ShowInTaskbar == false cause Windows to redraw the caption.
+                // Letting the default WndProc handle the message without the WS_VISIBLE
+                // style applied bypasses the redraw.
+                IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, uMsg, wParam, lParam);
+
+                // Put back the style we removed.
+                if (modified)
+                {
+                    _ModifyStyle(0, WS.VISIBLE);
+                }
+                handled = true;
+                return lRet;
+            }
+            else
+            {
+                handled = false;
+                return IntPtr.Zero;
+            }
+        }
+
         private IntPtr _HandleSetTextOrIcon(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             bool modified = _ModifyStyle(WS.VISIBLE, 0);
@@ -483,20 +528,17 @@ namespace Microsoft.Windows.Shell
         private IntPtr _HandleRestoreWindow(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
             WINDOWPLACEMENT wpl = NativeMethods.GetWindowPlacement(_hwnd);
-            if (SC.RESTORE == (SC)wParam.ToInt32() && wpl.showCmd == SW.SHOWMAXIMIZED && _MinimizeAnimation)
+            var sc = (SC)(Environment.Is64BitProcess ? wParam.ToInt64() : wParam.ToInt32());
+            if (SC.RESTORE == sc && wpl.showCmd == SW.SHOWMAXIMIZED && _MinimizeAnimation)
             {
-                bool modified = _ModifyStyle(WS.DLGFRAME, 0);
+                var modified = _ModifyStyle(WS.SYSMENU, 0);
 
                 IntPtr lRet = NativeMethods.DefWindowProc(_hwnd, uMsg, wParam, lParam);
 
                 // Put back the style we removed.
                 if (modified)
                 {
-                    // allow animation
-                    if (_ModifyStyle(0, WS.DLGFRAME))
-                    {
-                        _UpdateFrameState(true);
-                    }
+                    modified = _ModifyStyle(0, WS.SYSMENU);
                 }
                 
                 handled = true;
@@ -600,7 +642,11 @@ namespace Microsoft.Windows.Shell
 
             if (_chromeInfo.SacrificialEdge != SacrificialEdge.None)
             {
+#if NET4_5
+                Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters.WindowResizeBorderThickness);
+#else
                 Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters2.Current.WindowResizeBorderThickness);
+#endif
                 var rcClientArea = (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
                 if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Top))
                 {
@@ -715,7 +761,7 @@ namespace Microsoft.Windows.Shell
         {
             // Emulate the system behavior of clicking the right mouse button over the caption area
             // to bring up the system menu.
-            if (HT.CAPTION == (HT)wParam.ToInt32())
+            if (HT.CAPTION == (HT)(Environment.Is64BitProcess ? wParam.ToInt64() : wParam.ToInt32()))
             {
                 SystemCommands.ShowSystemMenuPhysicalCoordinates(_window, new Point(Utility.GET_X_LPARAM(lParam), Utility.GET_Y_LPARAM(lParam)));
             }
@@ -732,7 +778,7 @@ namespace Microsoft.Windows.Shell
             // maximized.  Not forcing this update will eventually cause the
             // default caption to be drawn.
             WindowState? state = null;
-            if (wParam.ToInt32() == SIZE_MAXIMIZED)
+            if ((Environment.Is64BitProcess ? wParam.ToInt64() : wParam.ToInt32()) == SIZE_MAXIMIZED)
             {
                 state = WindowState.Maximized;
             }
@@ -745,14 +791,18 @@ namespace Microsoft.Windows.Shell
 
         private IntPtr _HandleWindowPosChanging(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled)
         {
-            var wp = (WINDOWPOS)Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
-            
-            // we don't do bitwise operations cuz we're checking for this flag being the only one there
-            // I have no clue why this works, I tried this because VS2013 has this flag removed on fullscreen window movws
-            if (_chromeInfo.IgnoreTaskbarOnMaximize && _GetHwndState() == WindowState.Maximized && wp.flags == (int)SWP.FRAMECHANGED)
+            if (!_isGlassEnabled)
             {
-                wp.flags = 0;
-                Marshal.StructureToPtr(wp, lParam, true);
+                Assert.IsNotDefault(lParam);
+                var wp = (WINDOWPOS) Marshal.PtrToStructure(lParam, typeof(WINDOWPOS));
+
+                // we don't do bitwise operations cuz we're checking for this flag being the only one there
+                // I have no clue why this works, I tried this because VS2013 has this flag removed on fullscreen window movws
+                if (_chromeInfo.IgnoreTaskbarOnMaximize && _GetHwndState() == WindowState.Maximized && wp.flags == (int) SWP.FRAMECHANGED)
+                {
+                    wp.flags = 0;
+                    Marshal.StructureToPtr(wp, lParam, true);
+                }
             }
 
             handled = false;
@@ -780,13 +830,13 @@ namespace Microsoft.Windows.Shell
                     _previousWP = wp;
                     _SetRoundingRegion(wp);
                 }
+                _previousWP = wp;
 
 //                if (wp.Equals(_previousWP) && wp.flags.Equals(_previousWP.flags))
 //                {
 //                    handled = true;
 //                    return IntPtr.Zero;
 //                }
-                _previousWP = wp;
             }
 
             // Still want to pass this to DefWndProc
@@ -992,10 +1042,15 @@ namespace Microsoft.Windows.Shell
         /// <param name="removeStyle">The styles to be removed.  These can be bitwise combined.</param>
         /// <param name="addStyle">The styles to be added.  These can be bitwise combined.</param>
         /// <returns>Whether the styles of the HWND were modified as a result of this call.</returns>
+        /// <SecurityNote>
+        ///   Critical : Calls critical methods
+        /// </SecurityNote>
+        [SecurityCritical]
         private bool _ModifyStyle(WS removeStyle, WS addStyle)
         {
             Assert.IsNotDefault(_hwnd);
-            var dwStyle = (WS)NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE).ToInt32();
+            var intPtr = NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
+            var dwStyle = (WS)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
             var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
             if (dwStyle == dwNewStyle)
             {
@@ -1054,7 +1109,8 @@ namespace Microsoft.Windows.Shell
                 IntPtr hmenu = NativeMethods.GetSystemMenu(_hwnd, false);
                 if (IntPtr.Zero != hmenu)
                 {
-                    var dwStyle = (WS)NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE).ToInt32();
+                    var intPtr = NativeMethods.GetWindowLongPtr(_hwnd, GWL.STYLE);
+                    var dwStyle = (WS)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
 
                     bool canMinimize = Utility.IsFlagSet((int)dwStyle, (int)WS.MINIMIZEBOX);
                     bool canMaximize = Utility.IsFlagSet((int)dwStyle, (int)WS.MAXIMIZEBOX);
@@ -1090,7 +1146,7 @@ namespace Microsoft.Windows.Shell
 
         private void _UpdateFrameState(bool force)
         {
-            if (IntPtr.Zero == _hwnd)
+            if (IntPtr.Zero == _hwnd || _hwndSource.IsDisposed)
             {
                 return;
             }
@@ -1134,14 +1190,21 @@ namespace Microsoft.Windows.Shell
             NativeMethods.SetWindowRgn(_hwnd, IntPtr.Zero, NativeMethods.IsWindowVisible(_hwnd));
         }
 
-        private static RECT _GetClientRectRelativeToWindowRect(IntPtr hWnd)
+        private RECT _GetClientRectRelativeToWindowRect(IntPtr hWnd)
         {
             RECT windowRect = NativeMethods.GetWindowRect(hWnd);
             RECT clientRect = NativeMethods.GetClientRect(hWnd);
 
             POINT test = new POINT() { x = 0, y = 0 };
             NativeMethods.ClientToScreen(hWnd, ref test);
-            clientRect.Offset(test.x - windowRect.Left, test.y - windowRect.Top);
+            if (_window.FlowDirection == FlowDirection.RightToLeft)
+            {
+                clientRect.Offset(windowRect.Right - test.x, test.y - windowRect.Top);
+            }
+            else
+            {
+                clientRect.Offset(test.x - windowRect.Left, test.y - windowRect.Top);
+            }
             return clientRect;
         }
 
@@ -1384,7 +1447,11 @@ namespace Microsoft.Windows.Shell
 
                 if (_chromeInfo.SacrificialEdge != SacrificialEdge.None)
                 {
+#if NET4_5
+                    Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters.WindowResizeBorderThickness);
+#else
                     Thickness windowResizeBorderThicknessDevice = DpiHelper.LogicalThicknessToDevice(SystemParameters2.Current.WindowResizeBorderThickness);
+#endif
                     if (Utility.IsFlagSet((int)_chromeInfo.SacrificialEdge, (int)SacrificialEdge.Top))
                     {
                         deviceGlassThickness.Top -= windowResizeBorderThicknessDevice.Top;

@@ -361,8 +361,12 @@ namespace Microsoft.Windows.Shell
                     bp.DependencyProperty,
                     new Binding
                     {
+#if NET4_5
+                        Path = new PropertyPath("(SystemParameters." + bp.SystemParameterPropertyName + ")"),
+#else
                         Source = SystemParameters2.Current,
                         Path = new PropertyPath(bp.SystemParameterPropertyName),
+#endif
                         Mode = BindingMode.OneWay,
                         UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                     });

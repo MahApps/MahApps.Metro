@@ -117,6 +117,7 @@
                                                    Grid.Column="4"
                                                    Grid.RowSpan="2"
                                                    VerticalAlignment="Top"
+                                                   UseLayoutRounding="True"
                                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
                     <!-- the main window content -->
@@ -124,6 +125,7 @@
                                                   Grid.Column="0"
                                                   Grid.ColumnSpan="5"
                                                   IsTabStop="False"
+                                                  UseLayoutRounding="True"
                                                   FocusVisualStyle="{x:Null}"
                                                   OnlyLoadTransition="True"
                                                   TransitionsEnabled="{TemplateBinding WindowTransitionsEnabled}">
@@ -151,12 +153,21 @@
                                     Content="{Binding Flyouts, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                     VerticalAlignment="Stretch" />
 
-                    <!-- Used to create that overlay effect. Can be used for anything. -->
+                    <!-- Container for inactive dialogs. -->
                     <Grid Grid.Row="0"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
                           Grid.RowSpan="2"
                           Panel.ZIndex="3"
+                          FocusVisualStyle="{x:Null}"
+                          x:Name="PART_MetroInactiveDialogsContainer" />
+
+                    <!-- Used to create that overlay effect. Can be used for anything. -->
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="5"
+                          Grid.RowSpan="2"
+                          Panel.ZIndex="4"
                           Focusable="False"
                           FocusVisualStyle="{x:Null}"
                           x:Name="PART_OverlayBox"
@@ -164,23 +175,26 @@
                           Opacity="0"
                           Visibility="Hidden" />
 
+                    <!-- Container for the active dialog. -->
                     <Grid Grid.Row="0"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
                           Grid.RowSpan="2"
-                          Panel.ZIndex="4"
+                          Panel.ZIndex="5"
                           FocusVisualStyle="{x:Null}"
-                          x:Name="PART_MetroDialogContainer" />
+                          x:Name="PART_MetroActiveDialogContainer" />
                 </Grid>
             </AdornerDecorator>
             <Border x:Name="PART_Border"
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
+                    UseLayoutRounding="True"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch" />
             <ResizeGrip x:Name="WindowResizeGrip"
                         HorizontalAlignment="Right"
                         IsTabStop="false"
+                        UseLayoutRounding="True"
                         Visibility="Collapsed"
                         VerticalAlignment="Bottom" />
         </Grid>
@@ -258,7 +272,7 @@
     <Style TargetType="{x:Type Controls:MetroWindow}"
            BasedOn="{StaticResource {x:Type Controls:MetroWindow}}"
            x:Key="CleanWindowStyleKey">
-        
+
         <Setter Property="ShowTitleBar"
                 Value="True" />
         <Setter Property="MinWidth"
@@ -275,7 +289,7 @@
                 Value="{DynamicResource CleanWindowButtonStyle}" />
         <Setter Property="WindowCloseButtonStyle"
                 Value="{DynamicResource CleanCloseWindowButtonStyle}" />
-        
+
     </Style>
 
     <Style x:Key="CleanWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroWindowButtonStyle}">
@@ -308,5 +322,5 @@
 
         </Style.Triggers>
     </Style>
-    
+
 </ResourceDictionary>

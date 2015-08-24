@@ -21,6 +21,10 @@
                 Value="6,0,0,0" />
         <Setter Property="BorderThickness"
                 Value="1" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource CheckBoxBrush}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush"
                 Value="{DynamicResource HighlightBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
@@ -66,9 +70,9 @@
                             <Rectangle Fill="{DynamicResource TransparentWhiteBrush}"
                                        Margin="-6,0" />
                             <Ellipse x:Name="normal"
-                                     Stroke="{DynamicResource CheckBoxBrush}"
-                                     StrokeThickness="1"
-                                     Fill="{DynamicResource WhiteBrush}"
+                                     Stroke="{TemplateBinding BorderBrush}"
+                                     StrokeThickness="{TemplateBinding BorderThickness}"
+                                     Fill="{TemplateBinding Background}"
                                      Width="18"
                                      Height="18" />
                             <Ellipse x:Name="Checked1"
@@ -78,7 +82,7 @@
                                      Height="10" />
                             <Ellipse x:Name="disabled"
                                      Opacity="0"
-                                     StrokeThickness="1"
+                                     StrokeThickness="{TemplateBinding BorderThickness}"
                                      Fill="{DynamicResource SemiTransparentWhiteBrush}"
                                      Width="18"
                                      Height="18" />
@@ -86,6 +90,7 @@
                         <ContentPresenter x:Name="contentPresenter"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
                                           Content="{TemplateBinding Content}"
+                                          RecognizesAccessKey="True"
                                           Grid.Column="1"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"

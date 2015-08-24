@@ -20,7 +20,9 @@
                       d:DesignHeight="600"
                       d:DesignWidth="800"
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
-                      Closing="MetroWindow_Closing">
+                      Closing="MetroWindow_Closing"
+                      Dialog:DialogParticipation.Register="{Binding}"
+                      >
 
     <Window.Resources>
         <ResourceDictionary>
@@ -65,9 +67,23 @@
             </Style>
 
             <Dialog:CustomDialog x:Key="CustomDialogTest"
-                                 Title="This dialog allows arbitrary content. It will close in 5 seconds."
+                                 Title="This dialog allows arbitrary content."
                                  x:Name="CustomTestDialog">
-                <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentBrush}" />
+                <TextBlock Height="200" x:Name="MessageTextBlock" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentColorBrush}" />
+            </Dialog:CustomDialog>
+
+            <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
+                                 Title="Custom Dialog which is awaitable"
+                                 x:Name="CustomCloseDialogTest">
+                
+                <StackPanel>
+                    <TextBlock Height="30" Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below." 
+                               TextWrapping="Wrap"
+                               Foreground="{DynamicResource AccentColorBrush}" />
+                    <Button Content="Close Me!" Click="CloseCustomDialog"/>
+                </StackPanel>
+
+                
             </Dialog:CustomDialog>
 
         </ResourceDictionary>
@@ -144,12 +160,15 @@
                 <MenuItem Header="Dialogs">
                     <MenuItem Header="Use Accent?"
                               x:Name="UseAccentForDialogsMenuItem"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=UseAccentForDialogs}"
                               IsCheckable="True" />
                     <Separator />
                     <MenuItem Click="ShowInputDialog"
                               Header="Show InputDialog" />
                     <MenuItem Click="ShowLoginDialog"
                               Header="Show LoginDialog" />
+                    <MenuItem Click="ShowLoginDialogPasswordPreview"
+                              Header="Show Password Preview LoginDialog" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
                     <MenuItem Click="ShowLimitedMessageDialog"
@@ -160,8 +179,23 @@
                               Header="Show CustomDialog" />
                     <MenuItem Click="ShowDialogOutside"
                               Header="Show CustomDialog Externally" />
+                    <MenuItem Click="ShowAwaitCustomDialog"
+                              Header="Await CustomDialog" />
+                    <Separator />
+                    <MenuItem Command="{Binding ShowInputDialogCommand}"
+                              Header="Show InputDialog via VM" />
+                    <MenuItem Command="{Binding ShowLoginDialogCommand}"
+                              Header="Show LoginDialog via VM" />
+                    <MenuItem Command="{Binding ShowMessageDialogCommand}"
+                              Header="Show MessageDialog via VM" />
+                    <MenuItem Command="{Binding ShowProgressDialogCommand}"
+                              Header="Show ProgressDialog via VM" />
+                    <MenuItem Command="{Binding ShowCustomDialogCommand}"
+                              Header="Show CustomDialog via VM" />
                 </MenuItem>
                 <MenuItem Header="Window">
+                    <MenuItem IsCheckable="True" Header="ShowInTaskbar"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />
                     <MenuItem IsCheckable="True" Header="Topmost"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Topmost}" />
                     <MenuItem IsCheckable="True" Header="Ignore taskbar on maximize"
