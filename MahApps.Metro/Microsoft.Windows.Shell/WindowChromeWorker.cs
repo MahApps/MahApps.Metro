@@ -161,12 +161,6 @@ namespace Microsoft.Windows.Shell
 
             _window = window;
 
-            // There are potentially a couple funny states here.
-            // The window may have been shown and closed, in which case it's no longer usable.
-            // We shouldn't add any hooks in that case, just exit early.
-            // If the window hasn't yet been shown, then we need to make sure to remove hooks after it's closed.
-            _hwnd = new WindowInteropHelper(_window).Handle;
-
             // On older versions of the framework the client size of the window is incorrectly calculated.
             // We need to modify the template to fix this on behalf of the user.
 
@@ -176,6 +170,30 @@ namespace Microsoft.Windows.Shell
             Utility.AddDependencyPropertyChangeListener(_window, Window.FlowDirectionProperty, _OnWindowPropertyChangedThatRequiresTemplateFixup);
 
             _window.Closed += _UnsetWindow;
+
+            _InitializationAfterHandleSet();
+            _window.SourceInitialized += WindowOnSourceInitialized;
+
+        }
+
+        private void WindowOnSourceInitialized(object sender, EventArgs eventArgs)
+        {
+            _InitializationAfterHandleSet();
+        }
+
+        private void _InitializationAfterHandleSet()
+        {
+            // I wanna call those method once
+            if (IntPtr.Zero != _hwnd)
+            {
+                return;
+            }
+
+            // There are potentially a couple funny states here.
+            // The window may have been shown and closed, in which case it's no longer usable.
+            // We shouldn't add any hooks in that case, just exit early.
+            // If the window hasn't yet been shown, then we need to make sure to remove hooks after it's closed.
+            _hwnd = new WindowInteropHelper(_window).Handle;
 
             // Use whether we can get an HWND to determine if the Window has been loaded.
             if (IntPtr.Zero != _hwnd)
@@ -190,21 +208,6 @@ namespace Microsoft.Windows.Shell
                 {
                     _ApplyNewCustomChrome();
                 }
-            }
-            else
-            {
-                _window.SourceInitialized += (sender, e) =>
-                {
-                    _hwnd = new WindowInteropHelper(_window).Handle;
-                    Assert.IsNotDefault(_hwnd);
-                    _hwndSource = HwndSource.FromHwnd(_hwnd);
-                    Assert.IsNotNull(_hwndSource);
-
-                    if (_chromeInfo != null)
-                    {
-                        _ApplyNewCustomChrome();
-                    }
-                };
             }
         }
 
