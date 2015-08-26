@@ -62,7 +62,7 @@ namespace MahApps.Metro.Behaviours
             {
                 makeGlowVisibleTimer.Stop();
             }
-            if(AssociatedObject.WindowState != WindowState.Minimized)
+            if(AssociatedObject.WindowState == WindowState.Normal)
             {
                 var metroWindow = this.AssociatedObject as MetroWindow;
                 var ignoreTaskBar = metroWindow != null && metroWindow.IgnoreTaskbarOnMaximize;
