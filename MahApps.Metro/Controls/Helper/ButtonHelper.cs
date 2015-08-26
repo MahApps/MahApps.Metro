@@ -9,14 +9,16 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty PreserveTextCaseProperty =
             DependencyProperty.RegisterAttached("PreserveTextCase", typeof(bool), typeof(ButtonHelper),
                                                 new FrameworkPropertyMetadata(
-                                                    false,
-                                                    FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
+													false,
+													FrameworkPropertyMetadataOptions.Inherits |
+													FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Overrides the text case behavior for certain buttons.
         /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
         public static bool GetPreserveTextCase(UIElement element)
         {
             return (bool)element.GetValue(PreserveTextCaseProperty);
@@ -27,14 +29,38 @@ namespace MahApps.Metro.Controls
             element.SetValue(PreserveTextCaseProperty, value);
         }
 
+		public static readonly DependencyProperty ShowSeparatorProperty =
+            DependencyProperty.RegisterAttached("ShowSeparator", typeof(bool), typeof(ButtonHelper),
+                                                new FrameworkPropertyMetadata(
+													true,
+													FrameworkPropertyMetadataOptions.AffectsMeasure |
+													FrameworkPropertyMetadataOptions.AffectsRender));
+		
+        /// <summary>
+        /// Overrides separator visibility for WindowCommands' Buttons/ToggleButtons.
+        /// When set to <c>false</c>, the separator will become invisible.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(Button))]
+        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        public static bool GetShowSeparator(UIElement element)
+        {
+            return (bool)element.GetValue(ShowSeparatorProperty);
+        }
+
+        public static void SetShowSeparator(UIElement element, bool value)
+        {
+            element.SetValue(ShowSeparatorProperty, value);
+        }
+
         /// <summary>
         /// DependencyProperty for <see cref="CornerRadius" /> property.
         /// </summary>
-        public static readonly DependencyProperty CornerRadiusProperty
-            = DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(ButtonHelper),
-                                                  new FrameworkPropertyMetadata(
-                                                      new CornerRadius(),
-                                                      FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+        public static readonly DependencyProperty CornerRadiusProperty =
+            DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(ButtonHelper),
+                                                new FrameworkPropertyMetadata(
+													new CornerRadius(),
+													FrameworkPropertyMetadataOptions.AffectsMeasure |
+													FrameworkPropertyMetadataOptions.AffectsRender));
         
         /// <summary> 
         /// The CornerRadius property allows users to control the roundness of the button corners independently by 

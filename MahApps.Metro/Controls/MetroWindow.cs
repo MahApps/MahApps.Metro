@@ -56,6 +56,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch));
         public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
@@ -547,6 +548,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets/sets Title horizontal alignment.
+        /// </summary>
+        public HorizontalAlignment TitleAlignment
+        {
+            get { return (HorizontalAlignment) GetValue(TitleAlignmentProperty); }
+            set { SetValue(TitleAlignmentProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets the brush used for the Window's title bar.
         /// </summary>
         public Brush WindowTitleBrush
@@ -744,7 +754,7 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
         {
-            // this all works only for CleanWindow style
+            // this all works only for centered title
 
             var titleBarGrid = (Grid)titleBar;
             var titleBarLabel = (Label)titleBarGrid.Children[0];
@@ -915,13 +925,13 @@ namespace MahApps.Metro.Controls
                 titleBarBackground.MouseUp += TitleBarMouseUp;
             }
 
-            // handle mouse events for PART_TitleBar -> MetroWindow and CleanWindow
+            // handle mouse events for PART_TitleBar -> MetroWindow
             if (titleBar != null && titleBar.Visibility == Visibility.Visible)
             {
                 titleBar.MouseDown += TitleBarMouseDown;
                 titleBar.MouseUp += TitleBarMouseUp;
 
-                // special title resizing for CleanWindow title
+                // special title resizing for centered title
                 if (titleBar.GetType() == typeof(Grid))
                 {
                     SizeChanged += MetroWindow_SizeChanged;

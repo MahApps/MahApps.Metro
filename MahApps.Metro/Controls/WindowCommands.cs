@@ -6,13 +6,13 @@ namespace MahApps.Metro.Controls
 {
     public class WindowCommands : ItemsControl, INotifyPropertyChanged
     {
-        public static readonly DependencyProperty ShowSeparatorsProperty
-            = DependencyProperty.Register("ShowSeparators",
-                                          typeof(bool),
-                                          typeof(WindowCommands),
-                                          new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsRender |
-                                                                              FrameworkPropertyMetadataOptions.AffectsArrange |
-                                                                              FrameworkPropertyMetadataOptions.AffectsMeasure));
+        public static readonly DependencyProperty ShowSeparatorsProperty =
+            DependencyProperty.Register("ShowSeparators", typeof(bool), typeof(WindowCommands),
+                                        new FrameworkPropertyMetadata(
+											true,
+											FrameworkPropertyMetadataOptions.AffectsRender |
+											FrameworkPropertyMetadataOptions.AffectsArrange |
+											FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Gets or sets the value indicating whether to show the separators.
@@ -21,6 +21,23 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)this.GetValue(ShowSeparatorsProperty); }
             set { this.SetValue(ShowSeparatorsProperty, value); }
+        }
+		
+		public static readonly DependencyProperty SeparatorHeightProperty =
+            DependencyProperty.Register("SeparatorHeight", typeof(int), typeof(WindowCommands),
+                                        new FrameworkPropertyMetadata(
+											11,
+											FrameworkPropertyMetadataOptions.AffectsRender |
+											FrameworkPropertyMetadataOptions.AffectsArrange |
+											FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets or sets the value indicating separator height.
+        /// </summary>
+        public int SeparatorHeight
+        {
+            get { return (int)this.GetValue(SeparatorHeightProperty); }
+            set { this.SetValue(SeparatorHeightProperty, value); }
         }
 
         static WindowCommands()
