@@ -84,22 +84,24 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private void Initialize()
         {
-            if (DialogSettings == null || !DialogSettings.SuppressDefaultResources)
-            { 
+            if (DialogSettings != null && !DialogSettings.SuppressDefaultResources)
+            {
                 this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml") });
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") });
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
             }
+
+            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml") });
+            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml") });
+            this.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri("pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml") });
             if (DialogSettings != null && DialogSettings.CustomResourceDictionary != null)
             {
                 this.Resources.MergedDictionaries.Add(DialogSettings.CustomResourceDictionary);
             }
 
-            this.Loaded += (sender, args) => {
-                               OnLoaded();
-                               HandleTheme();
-                           };
+            this.Loaded += (sender, args) =>
+            {
+                OnLoaded();
+                HandleTheme();
+            };
             ThemeManager.IsThemeChanged += ThemeManager_IsThemeChanged;
             this.Unloaded += BaseMetroDialog_Unloaded;
         }
@@ -121,7 +123,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 var windowTheme = DetectTheme(this);
 
-                if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) && windowTheme == null)
+                if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(this) || windowTheme == null)
                 {
                     return;
                 }
@@ -218,7 +220,8 @@ namespace MahApps.Metro.Controls.Dialogs
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
             RoutedEventHandler handler = null;
-            handler = (sender, args) => {
+            handler = (sender, args) =>
+            {
                 this.Loaded -= handler;
 
                 this.Focus();
@@ -247,8 +250,10 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
 
                 //This is from a MetroWindow created by the external dialog APIs.
-                return _WaitForCloseAsync().ContinueWith(x => {
-                    ParentDialogWindow.Dispatcher.Invoke(new Action(() => {
+                return _WaitForCloseAsync().ContinueWith(x =>
+                {
+                    ParentDialogWindow.Dispatcher.Invoke(new Action(() =>
+                    {
                         ParentDialogWindow.Close();
                     }));
                 });
@@ -289,7 +294,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             TaskCompletionSource<object> tcs = new TaskCompletionSource<object>();
 
-            Unloaded += (s,e) =>
+            Unloaded += (s, e) =>
             {
                 tcs.TrySetResult(null);
             };
@@ -310,7 +315,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     throw new InvalidOperationException("Unable to find the dialog closing storyboard. Did you forget to add BaseMetroDialog.xaml to your merged dictionaries?");
 
                 EventHandler handler = null;
-                handler = (sender, args) => {
+                handler = (sender, args) =>
+                {
                     closingStoryboard.Completed -= handler;
 
                     tcs.TrySetResult(null);
@@ -398,14 +404,14 @@ namespace MahApps.Metro.Controls.Dialogs
         public CancellationToken CancellationToken { get; set; }
 
         /// <summary>
-        /// If set, stops standard resource dictionaries being applied to the dialog.
-        /// </summary>
-        public bool SuppressDefaultResources { get; set; }
-
-        /// <summary>
         /// Gets/sets a custom resource dictionary which can contains custom styles, brushes or something else.
         /// </summary>
         public ResourceDictionary CustomResourceDictionary { get; set; }
+
+        /// <summary>
+        /// If set, stops standard resource dictionaries being applied to the dialog.
+        /// </summary>
+        public bool SuppressDefaultResources { get; set; }
     }
 
     /// <summary>
