@@ -17,9 +17,9 @@ namespace MahApps.Metro.Controls.Dialogs
             WrappedDialog = dialog;
             CloseCallback = closeCallBack;
 
-            WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() => {
+            InvokeAction(() => {
                 WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
-            }));
+            });
 
             dialog.CancellationToken.Register(() =>
             {
@@ -42,7 +42,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public void SetIndeterminate()
         {
-            InvokeAction(() => WrappedDialog.PART_ProgressBar.IsIndeterminate = true);
+            InvokeAction(() => WrappedDialog.SetIndeterminate());
         }
 
         /// <summary>
@@ -61,14 +61,12 @@ namespace MahApps.Metro.Controls.Dialogs
         public void SetProgress(double value)
         {
             Action action = () => {
-                if (value < WrappedDialog.PART_ProgressBar.Minimum || value > WrappedDialog.PART_ProgressBar.Maximum)
+                if (value < WrappedDialog.Minimum || value > WrappedDialog.Maximum)
                 {
                     throw new ArgumentOutOfRangeException("value");
                 }
 
-                WrappedDialog.PART_ProgressBar.IsIndeterminate = false;
-                WrappedDialog.PART_ProgressBar.Value = value;
-                WrappedDialog.PART_ProgressBar.ApplyTemplate();
+                WrappedDialog.ProgressValue = value;
             };
 
             InvokeAction(action);
@@ -79,8 +77,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Minimum
         {
-            get { return InvokeFunc(() => WrappedDialog.PART_ProgressBar.Minimum); }
-            set { InvokeAction(() => WrappedDialog.PART_ProgressBar.Minimum = value); }
+            get { return InvokeFunc(() => WrappedDialog.Minimum); }
+            set { InvokeAction(() => WrappedDialog.Minimum = value); }
         }
 
         /// <summary>
@@ -88,8 +86,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Maximum
         {
-            get { return InvokeFunc(() => WrappedDialog.PART_ProgressBar.Maximum); }
-            set { InvokeAction(() => WrappedDialog.PART_ProgressBar.Maximum = value); }
+            get { return InvokeFunc(() => WrappedDialog.Maximum); }
+            set { InvokeAction(() => WrappedDialog.Maximum = value); }
         }
 
         /// <summary>

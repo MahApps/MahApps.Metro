@@ -29,6 +29,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 ProgressBarForeground = Brushes.White;
             }
         }
+
         internal ProgressDialog(MetroWindow parentWindow)
             : this(parentWindow, null)
         { }
@@ -68,6 +69,34 @@ namespace MahApps.Metro.Controls.Dialogs
         internal CancellationToken CancellationToken
         {
             get { return DialogSettings.CancellationToken; }
+        }
+
+        internal double Minimum
+        {
+            get { return PART_ProgressBar.Minimum; }
+            set { PART_ProgressBar.Minimum = value; }
+        }
+
+        internal double Maximum
+        {
+            get { return PART_ProgressBar.Maximum; }
+            set { PART_ProgressBar.Maximum = value; }
+        }
+
+        internal double ProgressValue
+        {
+            get { return PART_ProgressBar.Value; }
+            set
+            {
+                PART_ProgressBar.IsIndeterminate = false;
+                PART_ProgressBar.Value = value;
+                PART_ProgressBar.ApplyTemplate();
+            }
+        }
+
+        internal void SetIndeterminate()
+        {
+            PART_ProgressBar.IsIndeterminate = true;
         }
     }
 }
