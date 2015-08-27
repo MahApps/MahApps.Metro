@@ -10,7 +10,7 @@
                       Height="400"
                       Width="800"
                       ResizeMode="CanResizeWithGrip"
-                      Style="{DynamicResource CleanMetroWindowStyle}">
+                      Style="{DynamicResource CleanWindowStyleKey}">
 
     <Window.Resources>
         <ResourceDictionary>

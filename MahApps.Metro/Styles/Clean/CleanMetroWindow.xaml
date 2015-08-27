@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="CleanMetroWindowStyle"
+    <!-- TODO: Change the key to CleanMetroWindowStyle in version 2.0. -->
+    <Style x:Key="CleanWindowStyleKey"
            TargetType="{x:Type Controls:MetroWindow}"
            BasedOn="{StaticResource {x:Type Controls:MetroWindow}}">
 		   

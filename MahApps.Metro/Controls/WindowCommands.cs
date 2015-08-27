@@ -39,24 +39,7 @@ namespace MahApps.Metro.Controls
             get { return (int)this.GetValue(SeparatorHeightProperty); }
             set { this.SetValue(SeparatorHeightProperty, value); }
         }
-
-        public static readonly DependencyProperty PreserveTextCaseProperty =
-            DependencyProperty.Register("PreserveTextCase", typeof(bool), typeof(WindowCommands),
-                                        new FrameworkPropertyMetadata(
-                                            true,
-                                            FrameworkPropertyMetadataOptions.AffectsRender |
-                                            FrameworkPropertyMetadataOptions.AffectsArrange |
-                                            FrameworkPropertyMetadataOptions.AffectsMeasure));
-
-        /// <summary>
-        /// Gets or sets the value indicating whether to preserve content text case.
-        /// </summary>
-        public bool PreserveTextCase
-        {
-            get { return (bool)this.GetValue(ShowSeparatorsProperty); }
-            set { this.SetValue(ShowSeparatorsProperty, value); }
-        }
-
+        
         static WindowCommands()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowCommands), new FrameworkPropertyMetadata(typeof(WindowCommands)));
@@ -65,6 +48,7 @@ namespace MahApps.Metro.Controls
         public WindowCommands()
         {
             this.Loaded += WindowCommands_Loaded;
+            this.SetValue(ControlsHelper.PreserveTextCaseProperty, true);
         }
 
         private void WindowCommands_Loaded(object sender, RoutedEventArgs e)

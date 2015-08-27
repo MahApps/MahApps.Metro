@@ -105,7 +105,7 @@
     </Controls:MetroWindow.LeftWindowCommands>
 
     <Controls:MetroWindow.RightWindowCommands>
-        <Controls:WindowCommands PreserveTextCase="False">
+        <Controls:WindowCommands Controls:ControlsHelper.PreserveTextCase="False">
             <Button Click="LaunchSizeToContentDemo"
                     ToolTip="SizeToContent demo"
                     Content="STC" />

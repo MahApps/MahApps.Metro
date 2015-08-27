@@ -18,7 +18,6 @@ namespace MahApps.Metro.Controls
         /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(Button))]
-        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
         public static bool GetPreserveTextCase(UIElement element)
         {
             return (bool)element.GetValue(PreserveTextCaseProperty);

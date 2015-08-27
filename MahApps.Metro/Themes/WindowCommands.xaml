@@ -31,13 +31,13 @@
         </Grid>
 		
         <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding PreserveTextCase, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+            <DataTrigger Binding="{Binding (Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                          Value="False">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding PreserveTextCase, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+            <DataTrigger Binding="{Binding (Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                          Value="True">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
@@ -84,13 +84,13 @@
         </Grid>
 		
         <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding PreserveTextCase, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+            <DataTrigger Binding="{Binding (Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                          Value="False">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding PreserveTextCase, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+            <DataTrigger Binding="{Binding (Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                          Value="True">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
