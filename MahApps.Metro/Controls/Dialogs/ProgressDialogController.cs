@@ -41,7 +41,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 WrappedDialog.PART_NegativeButton.IsEnabled = false;
             };
 
-            this.InvokeAction(action);
+            InvokeAction(action);
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public void SetIndeterminate()
         {
-            this.InvokeAction(() => WrappedDialog.PART_ProgressBar.IsIndeterminate = true);
+            InvokeAction(() => WrappedDialog.PART_ProgressBar.IsIndeterminate = true);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="value"></param>
         public void SetCancelable(bool value)
         {
-            this.InvokeAction(() => WrappedDialog.IsCancelable = value);
+            InvokeAction(() => WrappedDialog.IsCancelable = value);
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 WrappedDialog.PART_ProgressBar.ApplyTemplate();
             };
 
-            this.InvokeAction(action);
+            InvokeAction(action);
         }
 
         /// <summary>
@@ -86,8 +86,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Minimum
         {
-            get { return this.InvokeFunc(() => WrappedDialog.PART_ProgressBar.Minimum); }
-            set { this.InvokeAction(() => WrappedDialog.PART_ProgressBar.Minimum = value); }
+            get { return InvokeFunc(() => WrappedDialog.PART_ProgressBar.Minimum); }
+            set { InvokeAction(() => WrappedDialog.PART_ProgressBar.Minimum = value); }
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double Maximum
         {
-            get { return this.InvokeFunc(() => WrappedDialog.PART_ProgressBar.Maximum); }
-            set { this.InvokeAction(() => WrappedDialog.PART_ProgressBar.Maximum = value); }
+            get { return InvokeFunc(() => WrappedDialog.PART_ProgressBar.Maximum); }
+            set { InvokeAction(() => WrappedDialog.PART_ProgressBar.Maximum = value); }
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message to be set.</param>
         public void SetMessage(string message)
         {
-            this.InvokeAction(() => WrappedDialog.Message = message);
+            InvokeAction(() => WrappedDialog.Message = message);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="title">The title to be set.</param>
         public void SetTitle(string title)
         {
-            this.InvokeAction(() => WrappedDialog.Title = title);
+            InvokeAction(() => WrappedDialog.Title = title);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
             };
 
-            this.InvokeAction(action);
+            InvokeAction(action);
 
             return CloseCallback().ContinueWith(x => WrappedDialog.Dispatcher.Invoke(new Action(() => {
                 IsOpen = false;
@@ -152,7 +152,7 @@ namespace MahApps.Metro.Controls.Dialogs
             }
             else
             {
-                return (double)this.WrappedDialog.Dispatcher.Invoke(new Func<double>(getValueFunc));
+                return (double)WrappedDialog.Dispatcher.Invoke(new Func<double>(getValueFunc));
             }
         }
 
@@ -164,7 +164,7 @@ namespace MahApps.Metro.Controls.Dialogs
             }
             else
             {
-                WrappedDialog.Dispatcher.Invoke(new Action(setValueAction));
+                WrappedDialog.Dispatcher.Invoke(setValueAction);
             }
         }
     }
