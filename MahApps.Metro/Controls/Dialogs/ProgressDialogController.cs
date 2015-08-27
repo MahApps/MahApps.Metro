@@ -12,17 +12,10 @@ namespace MahApps.Metro.Controls.Dialogs
         private ProgressDialog WrappedDialog { get; set; }
         private Func<Task> CloseCallback { get; set; }
 
-        /// <summary>
-        /// Gets if the wrapped ProgressDialog is open.
-        /// </summary>
-        public bool IsOpen { get; private set; }
-
         internal ProgressDialogController(ProgressDialog dialog, Func<Task> closeCallBack)
         {
             WrappedDialog = dialog;
             CloseCallback = closeCallBack;
-
-            IsOpen = dialog.IsVisible;
 
             WrappedDialog.PART_NegativeButton.Dispatcher.Invoke(new Action(() => {
                 WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
@@ -129,7 +122,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public Task CloseAsync()
         {
             Action action = () => {
-                if (!IsOpen)
+                if (!WrappedDialog.IsVisible)
                 {
                     throw new InvalidOperationException();
                 }
@@ -139,9 +132,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
             InvokeAction(action);
 
-            return CloseCallback().ContinueWith(x => WrappedDialog.Dispatcher.Invoke(new Action(() => {
-                IsOpen = false;
-            })));
+            return CloseCallback();
         }
 
         private double InvokeFunc(Func<double> getValueFunc)
