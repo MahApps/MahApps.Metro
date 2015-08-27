@@ -31,18 +31,18 @@
         </Grid>
 		
         <ControlTemplate.Triggers>
-            <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                     Value="False">
+            <DataTrigger Binding="{Binding PreserveTextCase, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                         Value="False">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
-            </Trigger>
-            <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                     Value="True">
+            </DataTrigger>
+            <DataTrigger Binding="{Binding PreserveTextCase, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                         Value="True">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-            </Trigger>
+            </DataTrigger>
             <Trigger Property="Controls:ButtonHelper.ShowSeparator"
                      Value="False">
                 <Setter TargetName="separator"
@@ -84,18 +84,18 @@
         </Grid>
 		
         <ControlTemplate.Triggers>
-            <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                     Value="False">
+            <DataTrigger Binding="{Binding PreserveTextCase, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                         Value="False">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
-            </Trigger>
-            <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                     Value="True">
+            </DataTrigger>
+            <DataTrigger Binding="{Binding PreserveTextCase, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                         Value="True">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-            </Trigger>
+            </DataTrigger>
             <Trigger Property="Controls:ButtonHelper.ShowSeparator"
                      Value="False">
                 <Setter TargetName="separator"

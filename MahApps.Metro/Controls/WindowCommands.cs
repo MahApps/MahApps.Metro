@@ -26,7 +26,7 @@ namespace MahApps.Metro.Controls
 		public static readonly DependencyProperty SeparatorHeightProperty =
             DependencyProperty.Register("SeparatorHeight", typeof(int), typeof(WindowCommands),
                                         new FrameworkPropertyMetadata(
-											11,
+											15,
 											FrameworkPropertyMetadataOptions.AffectsRender |
 											FrameworkPropertyMetadataOptions.AffectsArrange |
 											FrameworkPropertyMetadataOptions.AffectsMeasure));
@@ -38,6 +38,23 @@ namespace MahApps.Metro.Controls
         {
             get { return (int)this.GetValue(SeparatorHeightProperty); }
             set { this.SetValue(SeparatorHeightProperty, value); }
+        }
+
+        public static readonly DependencyProperty PreserveTextCaseProperty =
+            DependencyProperty.Register("PreserveTextCase", typeof(bool), typeof(WindowCommands),
+                                        new FrameworkPropertyMetadata(
+                                            true,
+                                            FrameworkPropertyMetadataOptions.AffectsRender |
+                                            FrameworkPropertyMetadataOptions.AffectsArrange |
+                                            FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets or sets the value indicating whether to preserve content text case.
+        /// </summary>
+        public bool PreserveTextCase
+        {
+            get { return (bool)this.GetValue(ShowSeparatorsProperty); }
+            set { this.SetValue(ShowSeparatorsProperty, value); }
         }
 
         static WindowCommands()
