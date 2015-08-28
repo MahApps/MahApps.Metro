@@ -246,6 +246,7 @@ namespace MetroDemo
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
             var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");
+            controller.SetIndeterminate();
 
             await TaskEx.Delay(5000);
 

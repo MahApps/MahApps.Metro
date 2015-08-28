@@ -39,7 +39,6 @@
                                    Height="6"
                                    EllipseDiameter="5"
                                    Panel.ZIndex="5"
-                                   IsIndeterminate="True"
                                    Minimum="0.0"
                                    Maximum="1.0"
                                    Foreground="{Binding ProgressBarForeground, RelativeSource={RelativeSource AncestorType=Dialogs:ProgressDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
