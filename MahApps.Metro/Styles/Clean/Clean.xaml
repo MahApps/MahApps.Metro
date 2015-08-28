@@ -10,5 +10,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="GroupBox" BasedOn="{StaticResource CleanGroupBoxStyleKey}" />
+    <Style TargetType="{x:Type Controls:MetroWindow}" BasedOn="{StaticResource CleanWindowStyleKey}" />
+    <Style TargetType="{x:Type Controls:WindowCommands}" BasedOn="{StaticResource CleanWindowCommandsStyle}" />
     
 </ResourceDictionary>

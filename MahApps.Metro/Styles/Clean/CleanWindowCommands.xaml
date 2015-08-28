@@ -190,7 +190,8 @@
 				
     </ControlTemplate>
 
-    <Style TargetType="{x:Type Controls:WindowCommands}"
+    <Style x:Key="CleanWindowCommandsStyle"
+           TargetType="{x:Type Controls:WindowCommands}"
            BasedOn="{StaticResource {x:Type Controls:WindowCommands}}">
 		   
         <Setter Property="Template"
