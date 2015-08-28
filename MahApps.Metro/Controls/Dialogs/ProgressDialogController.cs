@@ -15,7 +15,13 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets if the wrapped ProgressDialog is open.
         /// </summary>
+        [Obsolete("Use the Closed event instead")]
         public bool IsOpen { get; private set; }
+
+        /// <summary>
+        /// This event is raised when the associated <see cref="ProgressDialog"/> was closed.
+        /// </summary>
+        public event EventHandler Closed;
 
         internal ProgressDialogController(ProgressDialog dialog, Func<Task> closeCallBack)
         {
@@ -139,6 +145,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
             return CloseCallback().ContinueWith(_ => InvokeAction(new Action(() => {
                 IsOpen = false;
+
+                var handler = Closed;
+                if (handler != null) {
+                    handler(this, EventArgs.Empty);
+                }
             })));
         }
 
