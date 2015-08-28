@@ -333,6 +333,7 @@ namespace MetroDemo
         private async void RunProgressFromVm()
         {
             var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
+            controller.SetIndeterminate();
 
             await TaskEx.Delay(3000);
 
