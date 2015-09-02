@@ -26,27 +26,31 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:Tile">
-                    <Grid Background="{TemplateBinding Background}">
-                        <StackPanel VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                       <Grid Background="{TemplateBinding Background}">
+                         <StackPanel VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     Orientation="Horizontal">
                             <ContentPresenter RecognizesAccessKey="True" />
                             <TextBlock Text="{TemplateBinding Count}"
                                        FontSize="{Binding CountFontSize, RelativeSource={RelativeSource TemplatedParent}}"
                                        VerticalAlignment="Center" />
-                        </StackPanel>
+                          </StackPanel>
 
-                        <Label Grid.ColumnSpan="2"
+                          <Label Grid.ColumnSpan="2"
                                HorizontalAlignment="Left"
                                VerticalAlignment="Bottom"
                                Foreground="{TemplateBinding Foreground}">
-                            <AccessText Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                              <AccessText Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
                                         Foreground="{TemplateBinding Foreground}"
                                         TextWrapping="Wrap"
                                         FontSize="{Binding TitleFontSize, RelativeSource={RelativeSource TemplatedParent}}"
                                         Margin="3" />
-                        </Label>
-                    </Grid>
+                         </Label>
+                       </Grid>  
+                    </Border>
+                    
+                    
                     <ControlTemplate.Triggers>
                         <Trigger Property="Button.IsPressed"
                                  Value="True">
