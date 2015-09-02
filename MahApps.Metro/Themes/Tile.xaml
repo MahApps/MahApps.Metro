@@ -10,7 +10,7 @@
         <Setter Property="Margin"
                 Value="3" />
         <Setter Property="Foreground"
-                Value="White" />
+                Value="{DynamicResource IdealForegroundColorBrush}" />
         <Setter Property="Background"
                 Value="{DynamicResource AccentColorBrush}" />
         <Setter Property="HorizontalContentAlignment"
@@ -20,37 +20,36 @@
         <Setter Property="RenderTransformOrigin"
                 Value="0.5,0.5" />
         <Setter Property="TitleFontSize"
-                Value="16"/>
+                Value="16" />
         <Setter Property="CountFontSize"
-                Value="28"/>
+                Value="28" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Controls:Tile">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                       <Grid Background="{TemplateBinding Background}">
-                         <StackPanel VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    Orientation="Horizontal">
-                            <ContentPresenter RecognizesAccessKey="True" />
-                            <TextBlock Text="{TemplateBinding Count}"
-                                       FontSize="{Binding CountFontSize, RelativeSource={RelativeSource TemplatedParent}}"
-                                       VerticalAlignment="Center" />
-                          </StackPanel>
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid Background="{TemplateBinding Background}">
+                            <StackPanel VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        Orientation="Horizontal">
+                                <ContentPresenter RecognizesAccessKey="True" />
+                                <TextBlock Text="{TemplateBinding Count}"
+                                           FontSize="{Binding CountFontSize, RelativeSource={RelativeSource TemplatedParent}}"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
 
-                          <Label Grid.ColumnSpan="2"
-                               HorizontalAlignment="Left"
-                               VerticalAlignment="Bottom"
-                               Foreground="{TemplateBinding Foreground}">
-                              <AccessText Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        TextWrapping="Wrap"
-                                        FontSize="{Binding TitleFontSize, RelativeSource={RelativeSource TemplatedParent}}"
-                                        Margin="3" />
-                         </Label>
-                       </Grid>  
+                            <Label HorizontalAlignment="Left"
+                                   VerticalAlignment="Bottom"
+                                   Foreground="{TemplateBinding Foreground}">
+                                <AccessText Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Foreground="{TemplateBinding Foreground}"
+                                            TextWrapping="Wrap"
+                                            FontSize="{Binding TitleFontSize, RelativeSource={RelativeSource TemplatedParent}}"
+                                            Margin="3" />
+                            </Label>
+                        </Grid>
                     </Border>
-                    
-                    
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="Button.IsPressed"
                                  Value="True">
