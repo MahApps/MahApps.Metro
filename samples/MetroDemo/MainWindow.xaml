@@ -231,6 +231,9 @@
                 <TabItem Header="datagrid">
                     <exampleViews:DataGridExamples DataContext="{Binding}" />
                 </TabItem>
+                <TabItem Header="tiles">
+                    <exampleViews:TilesExample DataContext="{Binding}" />
+                </TabItem>
                 <TabItem Header="colors">
                     <exampleViews:ColorExample DataContext="{Binding}" />
                 </TabItem>

@@ -104,6 +104,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExampleViews\TilesExample.xaml.cs">
+      <DependentUpon>TilesExample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleWindows\CleanWindowDemo.xaml.cs">
       <DependentUpon>CleanWindowDemo.xaml</DependentUpon>
     </Compile>
@@ -167,6 +170,10 @@
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
+    <Page Include="ExampleViews\TilesExample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ExampleWindows\CleanWindowDemo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
