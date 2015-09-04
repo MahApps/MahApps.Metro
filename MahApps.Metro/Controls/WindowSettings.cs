@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -64,9 +65,20 @@ namespace MahApps.Metro.Controls
         {
             get
             {
-                if (this["UpgradeSettings"] != null)
+                try
                 {
-                    return (bool)this["UpgradeSettings"];
+                    if (this["UpgradeSettings"] != null)
+                    {
+                        return (bool)this["UpgradeSettings"];
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Failed to load settings file:\r\n{0}", ex);
+                    var filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
+                    File.Delete(filename);
+                    Process.Start(Application.ResourceAssembly.Location);
+                    Application.Current.Shutdown();
                 }
                 return true;
             }
