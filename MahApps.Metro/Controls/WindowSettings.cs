@@ -72,13 +72,10 @@ namespace MahApps.Metro.Controls
                         return (bool)this["UpgradeSettings"];
                     }
                 }
-                catch (Exception ex)
+                catch (ConfigurationErrorsException ex)
                 {
-                    Debug.WriteLine("Failed to load settings file:\r\n{0}", ex);
                     var filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
-                    File.Delete(filename);
-                    Process.Start(Application.ResourceAssembly.Location);
-                    Application.Current.Shutdown();
+                    throw new MahAppsException(string.Format("The settings file {0} seems to be corrupted", filename), ex);
                 }
                 return true;
             }
