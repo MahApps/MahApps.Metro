@@ -64,9 +64,17 @@ namespace MahApps.Metro.Controls
         {
             get
             {
-                if (this["UpgradeSettings"] != null)
+                try
                 {
-                    return (bool)this["UpgradeSettings"];
+                    if (this["UpgradeSettings"] != null)
+                    {
+                        return (bool)this["UpgradeSettings"];
+                    }
+                }
+                catch (ConfigurationErrorsException ex)
+                {
+                    var filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
+                    throw new MahAppsException(string.Format("The settings file {0} seems to be corrupted", filename), ex);
                 }
                 return true;
             }
