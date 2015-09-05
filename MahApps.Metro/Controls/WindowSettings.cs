@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Configuration;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -40,20 +39,22 @@ namespace MahApps.Metro.Controls
     internal class WindowApplicationSettings : ApplicationSettingsBase, IWindowPlacementSettings
     {
         public WindowApplicationSettings(Window window)
-            : base(window.GetType().FullName) {
+            : base(window.GetType().FullName)
+        {
         }
 
         [UserScopedSetting]
-        public WINDOWPLACEMENT? Placement {
-            get {
-                if (this["Placement"] != null) {
+        public WINDOWPLACEMENT? Placement
+        {
+            get
+            {
+                if (this["Placement"] != null)
+                {
                     return ((WINDOWPLACEMENT)this["Placement"]);
                 }
                 return null;
             }
-            set {
-                this["Placement"] = value;
-            }
+            set { this["Placement"] = value; }
         }
 
         /// <summary>
@@ -73,15 +74,19 @@ namespace MahApps.Metro.Controls
                 }
                 catch (ConfigurationErrorsException ex)
                 {
-                    var filename = ((ConfigurationErrorsException)ex.InnerException).Filename;
-                    throw new MahAppsException(string.Format("The settings file {0} seems to be corrupted", filename), ex);
+                    string filename = null;
+                    while (ex != null && (filename = ex.Filename) == null)
+                    {
+                        ex = ex.InnerException as ConfigurationErrorsException;
+                    }
+                    throw new MahAppsException(string.Format("The settings file '{0}' seems to be corrupted", filename ?? "<unknown>"), ex);
                 }
                 return true;
             }
             set { this["UpgradeSettings"] = value; }
         }
     }
-    
+
     public class WindowSettings
     {
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.RegisterAttached("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(WindowSettings), new FrameworkPropertyMetadata(OnWindowPlacementSettingsInvalidated));
@@ -91,10 +96,13 @@ namespace MahApps.Metro.Controls
             dependencyObject.SetValue(WindowPlacementSettingsProperty, windowPlacementSettings);
         }
 
-        private static void OnWindowPlacementSettingsInvalidated(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e) {
+        private static void OnWindowPlacementSettingsInvalidated(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
             var window = dependencyObject as Window;
             if (window == null || !(e.NewValue is IWindowPlacementSettings))
+            {
                 return;
+            }
 
             var windowSettings = new WindowSettings(window, (IWindowPlacementSettings)e.NewValue);
             windowSettings.Attach();
@@ -111,7 +119,10 @@ namespace MahApps.Metro.Controls
 
         protected virtual void LoadWindowState()
         {
-            if (_settings == null) return;
+            if (_settings == null)
+            {
+                return;
+            }
             _settings.Reload();
 
             // check for existing placement and prevent empty bounds
@@ -120,7 +131,6 @@ namespace MahApps.Metro.Controls
             try
             {
                 var wp = _settings.Placement.Value;
-
                 wp.length = Marshal.SizeOf(typeof(WINDOWPLACEMENT));
                 wp.flags = 0;
                 wp.showCmd = (wp.showCmd == (int)Constants.ShowWindowCommands.SW_SHOWMINIMIZED ? (int)Constants.ShowWindowCommands.SW_SHOWNORMAL : wp.showCmd);
@@ -129,13 +139,16 @@ namespace MahApps.Metro.Controls
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to load window state:\r\n{0}", ex);
+                throw new MahAppsException("Failed to set the window state from the settings file", ex);
             }
         }
 
         protected virtual void SaveWindowState()
         {
-            if (_settings == null) return;
+            if (_settings == null)
+            {
+                return;
+            }
             var hwnd = new WindowInteropHelper(_window).Handle;
             var wp = new WINDOWPLACEMENT();
             wp.length = Marshal.SizeOf(wp);
