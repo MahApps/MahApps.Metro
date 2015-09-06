@@ -22,6 +22,7 @@
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
                       Closing="MetroWindow_Closing"
                       Dialog:DialogParticipation.Register="{Binding}"
+                      SaveWindowPosition="True"
                       >
 
     <Window.Resources>
