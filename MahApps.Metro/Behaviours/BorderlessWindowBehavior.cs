@@ -312,13 +312,18 @@ namespace MahApps.Metro.Behaviours
                 hwndSource.AddHook(WindowProc);
             }
 
-            // handle size to content (thanks @lynnx)
-            var sizeToContent = AssociatedObject.SizeToContent;
-            var snapsToDevicePixels = AssociatedObject.SnapsToDevicePixels;
-            AssociatedObject.SnapsToDevicePixels = true;
-            AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
-            AssociatedObject.SizeToContent = sizeToContent;
-            AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
+            if (AssociatedObject.ResizeMode != ResizeMode.NoResize)
+            {
+                // handle size to content (thanks @lynnx).
+                // This is necessary when ResizeMode != NoResize. Without this workaround,
+                // black bars appear at the right and bottom edge of the window.
+                var sizeToContent = AssociatedObject.SizeToContent;
+                var snapsToDevicePixels = AssociatedObject.SnapsToDevicePixels;
+                AssociatedObject.SnapsToDevicePixels = true;
+                AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
+                AssociatedObject.SizeToContent = sizeToContent;
+                AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
+            }
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)
