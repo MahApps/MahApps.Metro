@@ -312,8 +312,4 @@
                 Value="Recycling" />
     </Style>
 
-    <Style TargetType="{x:Type TreeView}"
-           BasedOn="{StaticResource MetroTreeView}" />
-    <Style TargetType="{x:Type TreeViewItem}"
-           BasedOn="{StaticResource MetroTreeViewItem}" />
 </ResourceDictionary>
