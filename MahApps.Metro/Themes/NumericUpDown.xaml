@@ -22,8 +22,8 @@
                 Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush"
                 Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
-        <Setter Property="VerticalAlignment"
-                Value="Center" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Right" />
         <Setter Property="FontFamily"
                 Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize"
@@ -53,7 +53,6 @@
                           MinHeight="{TemplateBinding MinHeight}"
                           MaxHeight="{TemplateBinding MaxHeight}"
                           Margin="{TemplateBinding Padding}"
-                          VerticalAlignment="{TemplateBinding VerticalAlignment}"
                           Background="{TemplateBinding Background}">
                         <Border x:Name="Base"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -71,13 +70,13 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBox x:Name="PART_TextBox"
+                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      Controls:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
                                      MinWidth="20"
                                      MinHeight="{TemplateBinding MinHeight}"
                                      Foreground="{TemplateBinding Foreground}"
                                      HorizontalAlignment="Stretch"
-                                     HorizontalContentAlignment="Right"
-                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      BorderThickness="0"
                                      Background="{x:Null}"
