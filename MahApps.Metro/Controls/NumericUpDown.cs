@@ -46,9 +46,10 @@ namespace MahApps.Metro.Controls
 
         private static void IsReadOnlyPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            if (e.OldValue != e.NewValue && e.NewValue != null) {
+            if (e.OldValue != e.NewValue && e.NewValue != null)
+            {
                 var numUpDown = (NumericUpDown)dependencyObject;
-                numUpDown.ToggleReadOnlyMode((bool)e.NewValue);
+                numUpDown.ToggleReadOnlyMode((bool)e.NewValue | !numUpDown.InterceptManualEnter);
             }
         }
 
@@ -122,7 +123,16 @@ namespace MahApps.Metro.Controls
             "InterceptManualEnter",
             typeof(bool),
             typeof(NumericUpDown),
-            new PropertyMetadata(true));
+            new PropertyMetadata(true, InterceptManualEnterChangedCallback));
+
+        private static void InterceptManualEnterChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue != e.NewValue && e.NewValue != null)
+            {
+                var numUpDown = (NumericUpDown)dependencyObject;
+                numUpDown.ToggleReadOnlyMode(!(bool)e.NewValue | numUpDown.IsReadOnly);
+            }
+        }
 
         public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
             "Culture",
@@ -169,7 +179,6 @@ namespace MahApps.Metro.Controls
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(NumericUpDown), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
 
             EventManager.RegisterClassHandler(typeof(NumericUpDown), UIElement.GotFocusEvent, new RoutedEventHandler(OnGotFocus));
-            
         }
 
         public event RoutedPropertyChangedEventHandler<double?> ValueChanged
@@ -480,7 +489,7 @@ namespace MahApps.Metro.Controls
                 throw new InvalidOperationException(string.Format("You have missed to specify {0}, {1} or {2} in your template", ElementNumericUp, ElementNumericDown, ElementTextBox));
             }
 
-            this.ToggleReadOnlyMode(this.IsReadOnly);
+            this.ToggleReadOnlyMode(this.IsReadOnly | !this.InterceptManualEnter);
 
             _repeatUp.Click += (o, e) => ChangeValueWithSpeedUp(true);
             _repeatDown.Click += (o, e) => ChangeValueWithSpeedUp(false);
@@ -503,7 +512,6 @@ namespace MahApps.Metro.Controls
             if (isReadOnly)
             {
                 _valueTextBox.LostFocus -= OnTextBoxLostFocus;
-                _valueTextBox.GotFocus -= OnTextBoxGotFocus;
                 _valueTextBox.PreviewTextInput -= OnPreviewTextInput;
                 _valueTextBox.PreviewKeyDown -= OnTextBoxKeyDown;
                 _valueTextBox.TextChanged -= OnTextChanged;
@@ -512,19 +520,10 @@ namespace MahApps.Metro.Controls
             else
             {
                 _valueTextBox.LostFocus += OnTextBoxLostFocus;
-                _valueTextBox.GotFocus += OnTextBoxGotFocus;
                 _valueTextBox.PreviewTextInput += OnPreviewTextInput;
                 _valueTextBox.PreviewKeyDown += OnTextBoxKeyDown;
                 _valueTextBox.TextChanged += OnTextChanged;
                 DataObject.AddPastingHandler(_valueTextBox, OnValueTextBoxPaste);
-            }
-        }
-
-        private void OnTextBoxGotFocus(object sender, RoutedEventArgs e)
-        {
-            if (!InterceptManualEnter)
-            {
-                Focus();
             }
         }
 

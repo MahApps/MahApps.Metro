@@ -232,7 +232,7 @@
                                         Interval="2" />
 
                 <Label Content='Interval="5"' />
-                <Controls:NumericUpDown Value="5"
+                <Controls:NumericUpDown Value="5" IsTabStop="False"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
                                         ButtonsAlignment="Left"

@@ -42,6 +42,8 @@
                 Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="Validation.ErrorTemplate"
                 Value="{DynamicResource ValidationErrorTemplate}" />
+        <Setter Property="Focusable"
+                Value="False" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="Template">
@@ -79,7 +81,10 @@
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      BorderThickness="0"
                                      Background="{x:Null}"
-                                     Focusable="{TemplateBinding Focusable}"
+                                     IsTabStop="{TemplateBinding IsTabStop}"
+                                     TabIndex="{TemplateBinding TabIndex}"
+                                     Focusable="True"
+                                     FocusVisualStyle="{x:Null}"
                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}"
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
