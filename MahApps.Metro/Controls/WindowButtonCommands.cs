@@ -12,8 +12,6 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = "PART_Close", Type = typeof(Button))]
     public class WindowButtonCommands : ContentControl, INotifyPropertyChanged
     {
-        #region Fields
-
         private static string _minimize;
         private static string _maximize;
         private static string _closeText;
@@ -22,11 +20,7 @@ namespace MahApps.Metro.Controls
         private Button _max;
         private Button _close;
         private SafeLibraryHandle _user32;
-
-        #endregion
-
-        #region Properties
-
+        
         public string Minimize
         {
             get
@@ -207,15 +201,10 @@ namespace MahApps.Metro.Controls
         
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var obj = d as WindowButtonCommands;
-            if (obj != null)
-                obj.ApplyTheme();
+            if (e.NewValue == e.OldValue) return;
+            ((WindowButtonCommands)d).ApplyTheme();
         }
         
-        #endregion
-
-        #region Constructors
-
         static WindowButtonCommands()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowButtonCommands), new FrameworkPropertyMetadata(typeof(WindowButtonCommands)));
@@ -225,11 +214,7 @@ namespace MahApps.Metro.Controls
         {
             Loaded += WindowButtonCommands_Loaded;
         }
-
-        #endregion
-
-        #region Helpers
-
+        
         private string GetCaption(int id)
         {
             if (_user32 == null)
@@ -240,14 +225,27 @@ namespace MahApps.Metro.Controls
             return sb.ToString().Replace("&", "");
         }
 
-        private void ApplyTheme()
+        // todo: change back to private once Window(Close/Max/Min)ButtonStyle are removed from MetroWindow
+        public void ApplyTheme()
         {
             if (_close != null)
-                _close.Style = Theme == Theme.Light ? LightCloseButtonStyle : DarkCloseButtonStyle;
+                // todo: delete this if statement once WindowCloseButtonStyle is removed from MetroWindow
+                if ((ParentWindow != null) && (ParentWindow.WindowCloseButtonStyle != null))
+                    _close.Style = ParentWindow.WindowCloseButtonStyle;
+                else
+                    _close.Style = Theme == Theme.Light ? LightCloseButtonStyle : DarkCloseButtonStyle;
             if (_max != null)
-                _max.Style = Theme == Theme.Light ? LightMaxButtonStyle : DarkMaxButtonStyle;
+                // todo: delete this if statement once WindowMaxButtonStyle is removed from MetroWindow
+                if ((ParentWindow != null) && (ParentWindow.WindowMaxButtonStyle != null))
+                    _max.Style = ParentWindow.WindowMaxButtonStyle;
+                else
+                    _max.Style = Theme == Theme.Light ? LightMaxButtonStyle : DarkMaxButtonStyle;
             if (_min != null)
-                _min.Style = Theme == Theme.Light ? LightMinButtonStyle : DarkMinButtonStyle;
+                // todo: delete this if statement once WindowMinButtonStyle is removed from MetroWindow
+                if ((ParentWindow != null) && (ParentWindow.WindowMinButtonStyle != null))
+                    _min.Style = ParentWindow.WindowMinButtonStyle;
+                else
+                    _min.Style = Theme == Theme.Light ? LightMinButtonStyle : DarkMinButtonStyle;
         }
 
         public override void OnApplyTemplate()
@@ -268,11 +266,7 @@ namespace MahApps.Metro.Controls
 
             ApplyTheme();
         }
-
-        #endregion
-
-        #region Events
-
+        
         public event ClosingWindowEventHandler ClosingWindow;
         public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
 
@@ -308,11 +302,7 @@ namespace MahApps.Metro.Controls
             if (ParentWindow != null)
                 ParentWindow.Close();
         }
-
-        #endregion
-
-        #region ParentWindow Handling
-
+        
         private void WindowButtonCommands_Loaded(object sender, RoutedEventArgs e)
         {
             Loaded -= WindowButtonCommands_Loaded;
@@ -332,11 +322,7 @@ namespace MahApps.Metro.Controls
                 RaisePropertyChanged("ParentWindow");
             }
         }
-
-        #endregion
-
-        #region INotifyPropertyChanged Implementation
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void RaisePropertyChanged(string propertyName = null)
@@ -345,7 +331,5 @@ namespace MahApps.Metro.Controls
             if (handler != null)
                 handler.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        #endregion
     }
 }

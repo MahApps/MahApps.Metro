@@ -7,8 +7,6 @@ namespace MahApps.Metro.Controls
 {
     public class WindowCommands : ItemsControl, INotifyPropertyChanged
     {
-		#region Properties
-        
         public static readonly DependencyProperty ThemeProperty =
             DependencyProperty.Register("Theme", typeof(Theme), typeof(WindowCommands),
                                         new PropertyMetadata(
@@ -105,17 +103,20 @@ namespace MahApps.Metro.Controls
 
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+            // only apply theme if value is changed
+            if (e.NewValue == e.OldValue) return;
+
             // get object
             var obj = d as WindowCommands;
             if (obj == null) return;
-            
+
             // apply control template
-            if ((Theme) e.NewValue == Theme.Light)
+            if ((Theme)e.NewValue == Theme.Light)
             {
                 if (obj.LightTemplate != null)
                     obj.SetValue(TemplateProperty, obj.LightTemplate);
             }
-            else if ((Theme) e.NewValue == Theme.Dark)
+            else if ((Theme)e.NewValue == Theme.Dark)
             {
                 if (obj.DarkTemplate != null)
                     obj.SetValue(TemplateProperty, obj.DarkTemplate);
@@ -124,22 +125,16 @@ namespace MahApps.Metro.Controls
 
         private static void OnShowSeparatorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var obj = d as WindowCommands;
-            if (obj != null)
-                obj.ResetSeparators();
+            if (e.NewValue == e.OldValue) return;
+            ((WindowCommands)d).ResetSeparators();
         }
 
         private static void OnShowLastSeparatorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var obj = d as WindowCommands;
-            if (obj != null)
-                obj.ResetSeparators(false);
+            if (e.NewValue == e.OldValue) return;
+            ((WindowCommands)d).ResetSeparators(false);
         }
         
-        #endregion
-
-        #region Constructors
-
         static WindowCommands()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowCommands), new FrameworkPropertyMetadata(typeof(WindowCommands)));
@@ -149,10 +144,6 @@ namespace MahApps.Metro.Controls
         {
             Loaded += WindowCommands_Loaded;
         }
-		
-		#endregion
-		
-		#region Item Handling
 		
 		protected override DependencyObject GetContainerForItemOverride()
         {
@@ -193,10 +184,6 @@ namespace MahApps.Metro.Controls
                 lastContainer.IsSeparatorVisible = ShowSeparators && ShowLastSeparator;
         }
 		
-		#endregion
-		
-		#region ParentWindow Handling
-		
         private void WindowCommands_Loaded(object sender, RoutedEventArgs e)
         {
             Loaded -= WindowCommands_Loaded;
@@ -217,11 +204,7 @@ namespace MahApps.Metro.Controls
                 RaisePropertyChanged("ParentWindow");
             }
         }
-
-        #endregion
-
-        #region INotifyPropertyChanged Implementation
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void RaisePropertyChanged(string propertyName = null)
@@ -230,9 +213,7 @@ namespace MahApps.Metro.Controls
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
-		
-		#endregion
-    }
+	}
 	
 	[TemplatePart(Name = PART_ContentPresenter, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_Separator, Type = typeof(UIElement))]

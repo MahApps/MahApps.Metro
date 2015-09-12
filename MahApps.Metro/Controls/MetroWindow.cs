@@ -81,7 +81,14 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty RightWindowCommandsOverlayBehaviorProperty = DependencyProperty.Register("RightWindowCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
         public static readonly DependencyProperty WindowButtonCommandsOverlayBehaviorProperty = DependencyProperty.Register("WindowButtonCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
         public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register("IconOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never));
-
+        
+        [Obsolete(@"This property will be deleted in the next release. You should use LightMinButtonStyle or DarkMinButtonStyle in WindowButtonCommands to override the style.")]
+        public static readonly DependencyProperty WindowMinButtonStyleProperty = DependencyProperty.Register("WindowMinButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null, OnWindowButtonStyleChanged));
+        [Obsolete(@"This property will be deleted in the next release. You should use LightMaxButtonStyle or DarkMaxButtonStyle in WindowButtonCommands to override the style.")]
+        public static readonly DependencyProperty WindowMaxButtonStyleProperty = DependencyProperty.Register("WindowMaxButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null, OnWindowButtonStyleChanged));
+        [Obsolete(@"This property will be deleted in the next release. You should use LightCloseButtonStyle or DarkCloseButtonStyle in WindowButtonCommands to override the style.")]
+        public static readonly DependencyProperty WindowCloseButtonStyleProperty = DependencyProperty.Register("WindowCloseButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null, OnWindowButtonStyleChanged));
+        
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
 
@@ -178,6 +185,37 @@ namespace MahApps.Metro.Controls
         {
             get { return (WindowCommandsOverlayBehavior)this.GetValue(IconOverlayBehaviorProperty); }
             set { SetValue(IconOverlayBehaviorProperty, value); }
+        }
+
+
+        [Obsolete(@"This property will be deleted in the next release. You should use LightMinButtonStyle or DarkMinButtonStyle in WindowButtonCommands to override the style.")]
+        public Style WindowMinButtonStyle
+        {
+            get { return (Style)this.GetValue(WindowMinButtonStyleProperty); }
+            set { SetValue(WindowMinButtonStyleProperty, value); }
+        }
+
+        [Obsolete(@"This property will be deleted in the next release. You should use LightMaxButtonStyle or DarkMaxButtonStyle in WindowButtonCommands to override the style.")]
+        public Style WindowMaxButtonStyle
+        {
+            get { return (Style)this.GetValue(WindowMaxButtonStyleProperty); }
+            set { SetValue(WindowMaxButtonStyleProperty, value); }
+        }
+
+        [Obsolete(@"This property will be deleted in the next release. You should use LightCloseButtonStyle or DarkCloseButtonStyle in WindowButtonCommands to override the style.")]
+        public Style WindowCloseButtonStyle
+        {
+            get { return (Style)this.GetValue(WindowCloseButtonStyleProperty); }
+            set { SetValue(WindowCloseButtonStyleProperty, value); }
+        }
+
+        private static void OnWindowButtonStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue == e.OldValue) return;
+
+            var window = (MetroWindow) d;
+            if (window.WindowButtonCommands != null)
+                window.WindowButtonCommands.ApplyTheme();
         }
 
         /// <summary>
