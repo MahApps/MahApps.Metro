@@ -207,7 +207,9 @@ namespace MahApps.Metro.Controls
         
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as WindowButtonCommands)?.ApplyTheme();
+            var obj = d as WindowButtonCommands;
+            if (obj != null)
+                obj.ApplyTheme();
         }
         
         #endregion
@@ -277,7 +279,8 @@ namespace MahApps.Metro.Controls
         protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
         {
             var handler = ClosingWindow;
-            handler?.Invoke(this, args);
+            if (handler != null)
+                handler(this, args);
         }
 
         private void MinimizeClick(object sender, RoutedEventArgs e)
@@ -302,7 +305,8 @@ namespace MahApps.Metro.Controls
 
             if (closingWindowEventHandlerArgs.Cancelled) return;
 
-            ParentWindow?.Close();
+            if (ParentWindow != null)
+                ParentWindow.Close();
         }
 
         #endregion
@@ -338,7 +342,8 @@ namespace MahApps.Metro.Controls
         protected virtual void RaisePropertyChanged(string propertyName = null)
         {
             var handler = PropertyChanged;
-            handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (handler != null)
+                handler.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

@@ -20,8 +20,10 @@ namespace MahApps.Metro.Controls
         /// <param name="name">The name of the template child.</param>
         public static void SetIsHitTestVisibleInChromeProperty<T>(this MetroWindow window, string name) where T : DependencyObject
         {
-            var elementPart = window?.GetPart<T>(name);
-            elementPart?.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+            if (window == null) return;
+            var elementPart = window.GetPart<T>(name);
+            if (elementPart != null)
+                elementPart.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
         }
 
         /// <summary>
@@ -32,7 +34,8 @@ namespace MahApps.Metro.Controls
         /// <param name="direction">The direction.</param>
         public static void SetWindowChromeResizeGripDirection(this MetroWindow window, string name, ResizeGripDirection direction)
         {
-            var inputElement = window?.GetPart(name) as IInputElement;
+            if (window == null) return;
+            var inputElement = window.GetPart(name) as IInputElement;
             if (inputElement != null)
                 WindowChrome.SetResizeGripDirection(inputElement, direction);
         }

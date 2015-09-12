@@ -124,12 +124,16 @@ namespace MahApps.Metro.Controls
 
         private static void OnShowSeparatorsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as WindowCommands)?.ResetSeparators();
+            var obj = d as WindowCommands;
+            if (obj != null)
+                obj.ResetSeparators();
         }
 
         private static void OnShowLastSeparatorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            (d as WindowCommands)?.ResetSeparators(false);
+            var obj = d as WindowCommands;
+            if (obj != null)
+                obj.ResetSeparators(false);
         }
         
         #endregion
@@ -222,7 +226,9 @@ namespace MahApps.Metro.Controls
 
         protected virtual void RaisePropertyChanged(string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 		
 		#endregion
