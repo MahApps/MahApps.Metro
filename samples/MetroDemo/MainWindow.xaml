@@ -105,7 +105,8 @@
     </Controls:MetroWindow.LeftWindowCommands>
 
     <Controls:MetroWindow.RightWindowCommands>
-        <Controls:WindowCommands Controls:ControlsHelper.PreserveTextCase="False">
+        <Controls:WindowCommands ShowLastSeparator="False"
+                                 Controls:ControlsHelper.PreserveTextCase="False">
             <Button Click="LaunchSizeToContentDemo"
                     ToolTip="SizeToContent demo"
                     Content="STC" />
@@ -134,8 +135,7 @@
                           IsChecked="{Binding MagicToggleButtonIsChecked}" />
             <ToggleButton Content="Confirm quit"
                           ToolTip="Enable quit confirmation dialog on exit"
-                          IsChecked="{Binding QuitConfirmationEnabled}"
-                          Controls:ButtonHelper.ShowSeparator="False" />
+                          IsChecked="{Binding QuitConfirmationEnabled}" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 

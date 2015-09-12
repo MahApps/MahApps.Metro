@@ -187,6 +187,7 @@
     <Compile Include="Controls\SplitButton.cs" />
     <Compile Include="Controls\Helper\TabControlHelper.cs" />
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
+    <Compile Include="Controls\Theme.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
     <Compile Include="Controls\WindowCommandsOverlayBehavior.cs" />
     <Compile Include="Converters\BackgroundToForegroundConverter.cs" />
@@ -371,7 +372,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Clean\CleanMetroWindow.xaml">
+    <Page Include="Styles\Clean\CleanWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -639,7 +640,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-	<Page Include="Themes\WindowButtonCommands.xaml">
+    <Page Include="Themes\WindowButtonCommands.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

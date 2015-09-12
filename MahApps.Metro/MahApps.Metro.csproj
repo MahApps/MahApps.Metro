@@ -149,6 +149,7 @@
     <Compile Include="Controls\SafeRaise.cs" />
     <Compile Include="Controls\ScrollViewerOffsetMediator.cs" />
     <Compile Include="Controls\SplitButton.cs" />
+    <Compile Include="Controls\Theme.cs" />
     <Compile Include="Controls\WindowButtonCommands.cs" />
     <Compile Include="Controls\WindowCommands.cs">
       <SubType>Code</SubType>
@@ -312,15 +313,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\Clean\CleanMetroWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Styles\Clean\CleanWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-	<Page Include="Styles\Clean\CleanWindowButtonCommands.xaml">
       <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
-	<Page Include="Styles\Clean\CleanWindowCommands.xaml">
+    <Page Include="Styles\Clean\CleanWindowButtonCommands.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Clean\CleanWindowCommands.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -590,7 +591,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-	<Page Include="Themes\WindowButtonCommands.xaml">
+    <Page Include="Themes\WindowButtonCommands.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,13 +4,14 @@
     
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanGroupBox.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanMetroWindow.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindow.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindowButtonCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Clean/CleanWindowCommands.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="GroupBox" BasedOn="{StaticResource CleanGroupBoxStyleKey}" />
+    <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource CleanGroupBoxStyleKey}" />
     <Style TargetType="{x:Type Controls:MetroWindow}" BasedOn="{StaticResource CleanWindowStyleKey}" />
-    <Style TargetType="{x:Type Controls:WindowCommands}" BasedOn="{StaticResource CleanWindowCommandsStyle}" />
+    <Style TargetType="{x:Type Controls:WindowButtonCommands}" BasedOn="{StaticResource CleanWindowButtonCommandsStyleKey}" />
+    <Style TargetType="{x:Type Controls:WindowCommands}" BasedOn="{StaticResource CleanWindowCommandsStyleKey}" />
     
 </ResourceDictionary>

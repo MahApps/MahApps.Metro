@@ -543,16 +543,10 @@
                 Value="{DynamicResource WindowTitleColorBrush}" />
         <Setter Property="TextElement.FontSize"
                 Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="Background"
-                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="Foreground"
                 Value="{DynamicResource BlackBrush}" />
-        <Setter Property="WindowMinButtonStyle"
-                Value="{DynamicResource MetroWindowButtonStyle}" />
-        <Setter Property="WindowMaxButtonStyle"
-                Value="{DynamicResource MetroWindowButtonStyle}" />
-        <Setter Property="WindowCloseButtonStyle"
-                Value="{DynamicResource MetroWindowButtonStyle}" />
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteBrush}" />
         <Setter Property="Behaviours:StylizedBehaviors.Behaviors">
             <Setter.Value>
                 <Behaviours:StylizedBehaviorCollection>

@@ -28,29 +28,6 @@ namespace MahApps.Metro.Controls
             element.SetValue(PreserveTextCaseProperty, value);
         }
 
-		public static readonly DependencyProperty ShowSeparatorProperty =
-            DependencyProperty.RegisterAttached("ShowSeparator", typeof(bool), typeof(ButtonHelper),
-                                                new FrameworkPropertyMetadata(
-													true,
-													FrameworkPropertyMetadataOptions.AffectsMeasure |
-													FrameworkPropertyMetadataOptions.AffectsRender));
-		
-        /// <summary>
-        /// Overrides separator visibility for WindowCommands' Buttons/ToggleButtons.
-        /// When set to <c>false</c>, the separator will become invisible.
-        /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(Button))]
-        [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
-        public static bool GetShowSeparator(UIElement element)
-        {
-            return (bool)element.GetValue(ShowSeparatorProperty);
-        }
-
-        public static void SetShowSeparator(UIElement element, bool value)
-        {
-            element.SetValue(ShowSeparatorProperty, value);
-        }
-
         /// <summary>
         /// DependencyProperty for <see cref="CornerRadius" /> property.
         /// </summary>

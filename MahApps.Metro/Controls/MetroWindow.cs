@@ -82,10 +82,6 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowButtonCommandsOverlayBehaviorProperty = DependencyProperty.Register("WindowButtonCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
         public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register("IconOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never));
 
-        public static readonly DependencyProperty WindowMinButtonStyleProperty = DependencyProperty.Register("WindowMinButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty WindowMaxButtonStyleProperty = DependencyProperty.Register("WindowMaxButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty WindowCloseButtonStyleProperty = DependencyProperty.Register("WindowCloseButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
-
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
 
@@ -182,33 +178,6 @@ namespace MahApps.Metro.Controls
         {
             get { return (WindowCommandsOverlayBehavior)this.GetValue(IconOverlayBehaviorProperty); }
             set { SetValue(IconOverlayBehaviorProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the style for the MIN button style.
-        /// </summary>
-        public Style WindowMinButtonStyle
-        {
-            get { return (Style)this.GetValue(WindowMinButtonStyleProperty); }
-            set { SetValue(WindowMinButtonStyleProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the style for the MAX button style.
-        /// </summary>
-        public Style WindowMaxButtonStyle
-        {
-            get { return (Style)this.GetValue(WindowMaxButtonStyleProperty); }
-            set { SetValue(WindowMaxButtonStyleProperty, value); }
-        }
-
-        /// <summary>
-        /// Gets/sets the style for the CLOSE button style.
-        /// </summary>
-        public Style WindowCloseButtonStyle
-        {
-            get { return (Style)this.GetValue(WindowCloseButtonStyleProperty); }
-            set { SetValue(WindowCloseButtonStyleProperty, value); }
         }
 
         /// <summary>

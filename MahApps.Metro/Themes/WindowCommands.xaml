@@ -3,7 +3,6 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
 
     <ControlTemplate x:Key="WindowCommandsButtonTemplate"
@@ -11,44 +10,26 @@
 					 
         <Grid Background="{TemplateBinding Background}">
             <ContentPresenter x:Name="contentPresenter"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                              RecognizesAccessKey="True"
-                              Opacity="0.5"
-                              Margin="9,1,9,1" />
-            <Rectangle x:Name="separator"
-                       Opacity="0.25"
-                       Width="1"
-                       Height="{Binding SeparatorHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
-                       Margin="8,0,0,0"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       IsHitTestVisible="False"
-                       SnapsToDevicePixels="True"
-                       Fill="{TemplateBinding Foreground}"
-                       Visibility="{Binding ShowSeparators, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"/>
+						      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+						      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+						      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+						      RecognizesAccessKey="True"
+						      Opacity="0.5" />
         </Grid>
 		
         <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding (Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+            <DataTrigger Binding="{Binding Path=(Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                          Value="False">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding (Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+            <DataTrigger Binding="{Binding Path=(Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                          Value="True">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
             </DataTrigger>
-            <Trigger Property="Controls:ButtonHelper.ShowSeparator"
-                     Value="False">
-                <Setter TargetName="separator"
-                        Property="Visibility"
-                        Value="Hidden" />
-            </Trigger>
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter TargetName="contentPresenter"
@@ -61,46 +42,34 @@
 
     <ControlTemplate x:Key="WindowCommandsToggleButtonTemplate"
                      TargetType="{x:Type ToggleButton}">
-					 
+
         <Grid Background="{TemplateBinding Background}">
             <ContentPresenter x:Name="contentPresenter"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                              RecognizesAccessKey="True"
-                              Opacity="0.5"
-                              Margin="9,1,9,1" />
-            <Rectangle x:Name="separator"
-                       Opacity="0.25"
-                       Width="1"
-                       Height="{Binding SeparatorHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
-                       Margin="8,0,0,0"
-                       HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       IsHitTestVisible="False"
-                       SnapsToDevicePixels="True"
-                       Fill="{TemplateBinding Foreground}"
-                       Visibility="{Binding ShowSeparators, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"/>
+						      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+						      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+						      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+						      RecognizesAccessKey="True"
+						      Opacity="0.5" />
         </Grid>
-		
+
         <ControlTemplate.Triggers>
-            <DataTrigger Binding="{Binding (Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+            <DataTrigger Binding="{Binding Path=(Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                          Value="False">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
             </DataTrigger>
-            <DataTrigger Binding="{Binding (Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+            <DataTrigger Binding="{Binding Path=(Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                          Value="True">
                 <Setter TargetName="contentPresenter"
                         Property="Content"
                         Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
             </DataTrigger>
-            <Trigger Property="Controls:ButtonHelper.ShowSeparator"
-                     Value="False">
-                <Setter TargetName="separator"
-                        Property="Visibility"
-                        Value="Hidden" />
+            <Trigger Property="IsChecked"
+                     Value="True">
+                <Setter TargetName="contentPresenter"
+                        Property="Opacity"
+                        Value="0.8" />
             </Trigger>
             <Trigger Property="IsMouseOver"
                      Value="True">
@@ -108,102 +77,138 @@
                         Property="Opacity"
                         Value="1" />
             </Trigger>
-            <Trigger Property="IsChecked"
-                     Value="True">
-                <Setter TargetName="contentPresenter"
-                        Property="Opacity"
-                        Value="1" />
-            </Trigger>
         </ControlTemplate.Triggers>
-		
+
     </ControlTemplate>
 
-    <ControlTemplate x:Key="WindowCommandsTemplate"
+    <Style x:Key="WindowCommandsControlStyle"
+           TargetType="{x:Type Control}">
+        
+        <Setter Property="Foreground"
+				Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}" />
+        <Setter Property="Background"
+				Value="{DynamicResource TransparentWhiteBrush}" />
+        <Setter Property="HorizontalContentAlignment"
+				Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+				Value="Center" />
+        <Setter Property="Padding"
+				Value="1" />
+        <Setter Property="Focusable"
+				Value="False" />
+        <Setter Property="FocusVisualStyle"
+				Value="{x:Null}" />
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled"
+					 Value="False">
+                <Setter Property="Foreground"
+						Value="{DynamicResource GrayBrush4}" />
+            </Trigger>
+        </Style.Triggers>
+        
+    </Style>
+    
+    <ControlTemplate x:Key="LightWindowCommandsTemplate"
                      TargetType="Controls:WindowCommands">
-					 
         <ItemsPresenter />
-		
         <ControlTemplate.Resources>
             <ResourceDictionary>
-                <Style TargetType="{x:Type Button}">
-				
-                    <Setter Property="Foreground"
-                            Value="{DynamicResource BlackBrush}" />
-                    <Setter Property="Background"
-                            Value="{DynamicResource TransparentWhiteBrush}" />
-                    <Setter Property="HorizontalContentAlignment"
-                            Value="Center" />
-                    <Setter Property="VerticalContentAlignment"
-                            Value="Center" />
-                    <Setter Property="Padding"
-                            Value="1" />
-                    <Setter Property="Focusable"
-                            Value="False" />
-                    <Setter Property="FocusVisualStyle"
-                            Value="{x:Null}" />
+                <Style TargetType="{x:Type Button}"
+                       BasedOn="{StaticResource WindowCommandsControlStyle}">
                     <Setter Property="Template"
                             Value="{StaticResource WindowCommandsButtonTemplate}" />
-							
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
-                                     Value="True">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource IdealForegroundColorBrush}" />
-                        </DataTrigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource GrayBrush4}" />
-                        </Trigger>
-                    </Style.Triggers>
-					
-                </Style>				
-                <Style TargetType="{x:Type ToggleButton}">
-				
-                    <Setter Property="Foreground"
-                            Value="{DynamicResource BlackBrush}" />
-                    <Setter Property="Background"
-                            Value="{DynamicResource TransparentWhiteBrush}" />
-                    <Setter Property="HorizontalContentAlignment"
-                            Value="Center" />
-                    <Setter Property="VerticalContentAlignment"
-                            Value="Center" />
-                    <Setter Property="Padding"
-                            Value="1" />
-                    <Setter Property="Focusable"
-                            Value="False" />
-                    <Setter Property="FocusVisualStyle"
-                            Value="{x:Null}" />
+                </Style>
+                <Style TargetType="{x:Type ToggleButton}"
+                       BasedOn="{StaticResource WindowCommandsControlStyle}">
                     <Setter Property="Template"
-                            Value="{StaticResource WindowCommandsToggleButtonTemplate}"/>
-							
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:WindowCommands}}}"
-                                     Value="True">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource IdealForegroundColorBrush}" />
-                        </DataTrigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource GrayBrush4}" />
-                        </Trigger>
-                    </Style.Triggers>
-					
-                </Style>				
+                            Value="{StaticResource WindowCommandsToggleButtonTemplate}" />
+                </Style>
             </ResourceDictionary>
         </ControlTemplate.Resources>
-		
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="DarkWindowCommandsTemplate"
+                     TargetType="Controls:WindowCommands">
+        <ItemsPresenter />
+        <ControlTemplate.Resources>
+            <ResourceDictionary>
+                <Style TargetType="{x:Type Button}"
+                       BasedOn="{StaticResource WindowCommandsControlStyle}">
+                    <Setter Property="Template"
+                            Value="{StaticResource WindowCommandsButtonTemplate}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsPressed"
+					             Value="True">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+                <Style TargetType="{x:Type ToggleButton}"
+                       BasedOn="{StaticResource WindowCommandsControlStyle}">
+                    <Setter Property="Template"
+                            Value="{StaticResource WindowCommandsToggleButtonTemplate}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsPressed"
+					             Value="True">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ResourceDictionary>
+        </ControlTemplate.Resources>
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:WindowCommands}">
 	
+		<Setter Property="Controls:ControlsHelper.PreserveTextCase"
+                Value="True" />
+        <Setter Property="Template"
+                Value="{StaticResource LightWindowCommandsTemplate}" />
+        <Setter Property="LightTemplate"
+                Value="{StaticResource LightWindowCommandsTemplate}" />
+        <Setter Property="DarkTemplate"
+                Value="{StaticResource DarkWindowCommandsTemplate}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background"
+                Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="IsTabStop"
                 Value="False" />
         <Setter Property="VerticalContentAlignment"
                 Value="Center" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
+		<Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type Controls:WindowCommandsItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Controls:WindowCommandsItem}">
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="{Binding HorizontalContentAlignment, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                                            VerticalAlignment="{Binding VerticalContentAlignment, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}">
+                                    <ContentPresenter x:Name="PART_ContentPresenter"
+                                                      Content="{TemplateBinding Content}"
+                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                      Margin="8,0,8,0" />
+                                    <Rectangle x:Name="PART_Separator"
+                                               Width="1"
+                                               Height="{Binding SeparatorHeight, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                                               Fill="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
+                                               IsHitTestVisible="False"
+                                               SnapsToDevicePixels="True"
+                                               Opacity="0.25" />
+                                </StackPanel>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -211,9 +216,15 @@
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Template"
-                Value="{StaticResource WindowCommandsTemplate}" />
-				
+		
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}"
+                         Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource IdealForegroundColorBrush}" />
+            </DataTrigger>
+        </Style.Triggers>
+        
     </Style>
     
 </ResourceDictionary>

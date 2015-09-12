@@ -58,6 +58,7 @@
 
     <SolidColorBrush x:Key="TransparentWhiteBrush" Color="#00FFFFFF"/>
     <SolidColorBrush x:Key="SemiTransparentWhiteBrush" Color="#55FFFFFF"/>
+    <SolidColorBrush x:Key="SemiTransparentGreyBrush" Color="#40808080"/>
     <SolidColorBrush x:Key="ControlsDisabledBrush" Color="#A5FFFFFF" />
 
     <SolidColorBrush x:Key="AccentColorBrush" Color="{DynamicResource AccentColor}"/>
