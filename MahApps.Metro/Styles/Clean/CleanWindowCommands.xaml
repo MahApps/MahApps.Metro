@@ -4,14 +4,12 @@
 
     <Style x:Key="CleanWindowCommandsStyleKey"
            TargetType="{x:Type Controls:WindowCommands}">
-		
-		<Setter Property="Controls:ControlsHelper.PreserveTextCase"
+        <Setter Property="Controls:ControlsHelper.PreserveTextCase"
                 Value="False" />
         <Setter Property="ShowLastSeparator"
                 Value="False" />
         <Setter Property="SeparatorHeight"
                 Value="11" />
-        
     </Style>
 
 </ResourceDictionary>

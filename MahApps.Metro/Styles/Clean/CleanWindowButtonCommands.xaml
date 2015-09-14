@@ -5,7 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
+
     <Style x:Key="CleanWindowButtonCommandsStyleKey"
            TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="LightCloseButtonStyle"
@@ -13,5 +13,5 @@
         <Setter Property="DarkCloseButtonStyle"
                 Value="{StaticResource DarkMetroWindowCloseButtonStyle}" />
     </Style>
-    
+
 </ResourceDictionary>

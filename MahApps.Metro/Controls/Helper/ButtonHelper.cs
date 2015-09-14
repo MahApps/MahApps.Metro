@@ -9,9 +9,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty PreserveTextCaseProperty =
             DependencyProperty.RegisterAttached("PreserveTextCase", typeof(bool), typeof(ButtonHelper),
                                                 new FrameworkPropertyMetadata(
-													false,
-													FrameworkPropertyMetadataOptions.Inherits |
-													FrameworkPropertyMetadataOptions.AffectsMeasure));
+                                                    false,
+                                                    FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// Overrides the text case behavior for certain buttons.
@@ -34,10 +33,9 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty CornerRadiusProperty =
             DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(ButtonHelper),
                                                 new FrameworkPropertyMetadata(
-													new CornerRadius(),
-													FrameworkPropertyMetadataOptions.AffectsMeasure |
-													FrameworkPropertyMetadataOptions.AffectsRender));
-        
+                                                    new CornerRadius(),
+                                                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
         /// <summary> 
         /// The CornerRadius property allows users to control the roundness of the button corners independently by 
         /// setting a radius value for each corner. Radius values that are too large are scaled so that they
