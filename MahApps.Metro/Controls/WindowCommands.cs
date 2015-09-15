@@ -239,29 +239,29 @@ namespace MahApps.Metro.Controls
         private const string PART_ContentPresenter = "PART_ContentPresenter";
         private const string PART_Separator = "PART_Separator";
 
-        private UIElement _separator;
-        private bool _isSeparatorVisible = true;
+        private UIElement separator;
+        private bool isSeparatorVisible = true;
 
         public bool IsSeparatorVisible
         {
-            get { return _isSeparatorVisible; }
+            get { return isSeparatorVisible; }
             set
             {
-                if (_isSeparatorVisible == value)
+                if (isSeparatorVisible == value)
                 {
                     return;
                 }
 
-                _isSeparatorVisible = value;
+                isSeparatorVisible = value;
                 SetSeparatorVisibility();
             }
         }
 
         private void SetSeparatorVisibility()
         {
-            if (_separator != null)
+            if (separator != null)
             {
-                _separator.Visibility = IsSeparatorVisible ? Visibility.Visible : Visibility.Hidden;
+                separator.Visibility = IsSeparatorVisible ? Visibility.Visible : Visibility.Hidden;
             }
         }
 
@@ -269,7 +269,7 @@ namespace MahApps.Metro.Controls
         {
             base.OnApplyTemplate();
 
-            _separator = Template.FindName(PART_Separator, this) as UIElement;
+            separator = Template.FindName(PART_Separator, this) as UIElement;
             SetSeparatorVisibility();
         }
     }
