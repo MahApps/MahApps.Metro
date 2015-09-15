@@ -118,6 +118,9 @@
     <SolidColorBrush x:Key="FlatButtonPressedBackgroundBrush" Color="#222222" options:Freeze="True" />
     <SolidColorBrush x:Key="FlatButtonPressedForegroundBrush" Color="White" options:Freeze="True" />
 
+    <SolidColorBrush x:Key="DarkIdealForegroundDisabledBrush" Color="#ADADAD" options:Freeze="True" />
+    <SolidColorBrush x:Key="CloseButtonBackgroundBrush" Color="#E81123" options:Freeze="True" />
+
     <!-- CONTROL VALIDATION BRUSHES -->
     <SolidColorBrush x:Key="ControlsValidationBrush" Color="#FFDB000C" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationBrush1" Color="#052A2E31" options:Freeze="True" />

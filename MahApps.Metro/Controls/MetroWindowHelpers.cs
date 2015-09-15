@@ -20,10 +20,15 @@ namespace MahApps.Metro.Controls
         /// <param name="name">The name of the template child.</param>
         public static void SetIsHitTestVisibleInChromeProperty<T>(this MetroWindow window, string name) where T : DependencyObject
         {
-            if (window == null) return;
+            if (window == null)
+            {
+                return;
+            }
             var elementPart = window.GetPart<T>(name);
             if (elementPart != null)
+            {
                 elementPart.SetValue(WindowChrome.IsHitTestVisibleInChromeProperty, true);
+            }
         }
 
         /// <summary>
@@ -34,10 +39,15 @@ namespace MahApps.Metro.Controls
         /// <param name="direction">The direction.</param>
         public static void SetWindowChromeResizeGripDirection(this MetroWindow window, string name, ResizeGripDirection direction)
         {
-            if (window == null) return;
+            if (window == null)
+            {
+                return;
+            }
             var inputElement = window.GetPart(name) as IInputElement;
             if (inputElement != null)
+            {
                 WindowChrome.SetResizeGripDirection(inputElement, direction);
+            }
         }
 
         /// <summary>
@@ -49,20 +59,28 @@ namespace MahApps.Metro.Controls
         public static void HandleWindowCommandsForFlyouts(this MetroWindow window, IEnumerable<Flyout> flyouts, Brush resetBrush = null)
         {
             var allOpenFlyouts = flyouts.Where(x => x.IsOpen);
-            
+
             var anyFlyoutOpen = allOpenFlyouts.Any(x => x.Position != Position.Bottom);
             if (!anyFlyoutOpen)
+            {
                 if (resetBrush == null)
+                {
                     window.ResetAllWindowCommandsBrush();
+                }
                 else
+                {
                     window.ChangeAllWindowCommandsBrush(resetBrush);
+                }
+            }
 
             var topFlyout = allOpenFlyouts
                 .Where(x => x.Position == Position.Top)
                 .OrderByDescending(Panel.GetZIndex)
                 .FirstOrDefault();
             if (topFlyout != null)
+            {
                 window.UpdateWindowCommandsForFlyout(topFlyout);
+            }
             else
             {
                 var leftFlyout = allOpenFlyouts
@@ -71,7 +89,9 @@ namespace MahApps.Metro.Controls
                     .FirstOrDefault();
 
                 if (leftFlyout != null)
+                {
                     window.UpdateWindowCommandsForFlyout(leftFlyout);
+                }
 
                 var rightFlyout = allOpenFlyouts
                     .Where(x => x.Position == Position.Right)
@@ -79,7 +99,9 @@ namespace MahApps.Metro.Controls
                     .FirstOrDefault();
 
                 if (rightFlyout != null)
+                {
                     window.UpdateWindowCommandsForFlyout(rightFlyout);
+                }
             }
         }
 
@@ -96,21 +118,29 @@ namespace MahApps.Metro.Controls
         private static void InvokeActionOnWindowCommands(this MetroWindow window, Action<Control> action1, Action<Control> action2 = null, Position position = Position.Top)
         {
             if (window.LeftWindowCommandsPresenter == null || window.RightWindowCommandsPresenter == null || window.WindowButtonCommands == null)
+            {
                 return;
+            }
 
             if (position == Position.Left || position == Position.Top)
+            {
                 action1(window.LeftWindowCommands);
+            }
 
             if (position == Position.Right || position == Position.Top)
             {
                 action1(window.RightWindowCommands);
                 if (action2 == null)
+                {
                     action1(window.WindowButtonCommands);
+                }
                 else
+                {
                     action2(window.WindowButtonCommands);
+                }
             }
         }
-        
+
         private static void ChangeAllWindowCommandsBrush(this MetroWindow window, Brush brush, Position position = Position.Top)
         {
             if (brush == null)
@@ -126,11 +156,15 @@ namespace MahApps.Metro.Controls
             {
                 // set the theme based on brush color
                 if (((SolidColorBrush)brush).Color == Colors.White)
+                {
                     window.InvokeActionOnWindowCommands(x => x.SetValue(WindowCommands.ThemeProperty, Theme.Light),
                                                         x => x.SetValue(WindowButtonCommands.ThemeProperty, Theme.Light), position);
+                }
                 else
+                {
                     window.InvokeActionOnWindowCommands(x => x.SetValue(WindowCommands.ThemeProperty, Theme.Dark),
                                                         x => x.SetValue(WindowButtonCommands.ThemeProperty, Theme.Dark), position);
+                }
 
                 // set the foreground property
                 window.InvokeActionOnWindowCommands(x => x.SetValue(Control.ForegroundProperty, brush), null, position);

@@ -4,7 +4,6 @@
 
     <Style x:Key="CleanWindowStyleKey"
            TargetType="{x:Type Controls:MetroWindow}">
-		
         <Setter Property="TitleAlignment"
                 Value="Center" />
         <Setter Property="TitleForeground"
@@ -15,7 +14,6 @@
                 Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="NonActiveWindowTitleBrush"
                 Value="{DynamicResource TransparentWhiteBrush}" />
-        
     </Style>
 
 </ResourceDictionary>

@@ -92,7 +92,7 @@
                             </MultiBinding>
                         </ContentControl.Foreground>
                     </ContentControl>
-                    
+
                     <!-- the right window commands -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
                                       Focusable="False"
@@ -213,7 +213,7 @@
                 <DoubleAnimation To="0.0" />
             </Storyboard>
         </ControlTemplate.Resources>
-		
+
         <ControlTemplate.Triggers>
             <!-- handle active/inactive state -->
             <MultiTrigger>
@@ -266,7 +266,7 @@
                         Value="Visible" />
             </MultiTrigger>
         </ControlTemplate.Triggers>
-		
+
     </ControlTemplate>
 
     <ControlTemplate x:Key="CenterMetroWindowTemplate"
@@ -342,7 +342,7 @@
                                             Focusable="False"
                                             Content="{TemplateBinding Title}"
                                             ContentTemplate="{TemplateBinding TitleTemplate}"
-                                            HorizontalAlignment="Center">           
+                                            HorizontalAlignment="Center">
                                 <ContentControl.Foreground>
                                     <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                         <Binding ElementName="PART_WindowTitleBackground"
@@ -477,7 +477,7 @@
                 <DoubleAnimation To="0.0" />
             </Storyboard>
         </ControlTemplate.Resources>
-		
+
         <ControlTemplate.Triggers>
             <!-- handle active/inactive state -->
             <MultiTrigger>
@@ -530,11 +530,11 @@
                         Value="Visible" />
             </MultiTrigger>
         </ControlTemplate.Triggers>
-		
+
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:MetroWindow}">
-	
+
         <Setter Property="BorderThickness"
                 Value="1" />
         <Setter Property="BorderBrush"
@@ -572,7 +572,7 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
-		
+
         <Style.Triggers>
             <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=TitleCaps, Mode=OneWay, Converter={StaticResource ToUpperConverter}}"
                          Value="True">
@@ -619,11 +619,11 @@
                 </MultiTrigger.Conditions>
                 <MultiTrigger.Setters>
                     <Setter Property="Template"
-							Value="{StaticResource MetroWindowTemplate}" />
+                            Value="{StaticResource MetroWindowTemplate}" />
                 </MultiTrigger.Setters>
             </MultiTrigger>
         </Style.Triggers>
-		
+
     </Style>
 
 </ResourceDictionary>

@@ -15,7 +15,7 @@
         <Setter Property="TitleForeground"
                 Value="{DynamicResource WindowTitleForeground}" />
     </Style>
-    
+
     <Style x:Key="VSWindowButtonStyle"
            TargetType="{x:Type Button}"
            BasedOn="{StaticResource LightMetroWindowButtonStyle}">
@@ -44,5 +44,5 @@
         <Setter Property="DarkCloseButtonStyle"
                 Value="{StaticResource VSWindowButtonStyle}" />
     </Style>
-    
+
 </ResourceDictionary>

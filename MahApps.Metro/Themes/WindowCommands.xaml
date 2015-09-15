@@ -7,16 +7,16 @@
 
     <ControlTemplate x:Key="WindowCommandsButtonTemplate"
                      TargetType="{x:Type Button}">
-					 
+
         <Grid Background="{TemplateBinding Background}">
             <ContentPresenter x:Name="contentPresenter"
-						      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-						      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-						      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-						      RecognizesAccessKey="True"
-						      Opacity="0.5" />
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              RecognizesAccessKey="True"
+                              Opacity="0.5" />
         </Grid>
-		
+
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding Path=(Controls:ControlsHelper.PreserveTextCase), Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                          Value="False">
@@ -37,7 +37,7 @@
                         Value="1" />
             </Trigger>
         </ControlTemplate.Triggers>
-		
+
     </ControlTemplate>
 
     <ControlTemplate x:Key="WindowCommandsToggleButtonTemplate"
@@ -45,11 +45,11 @@
 
         <Grid Background="{TemplateBinding Background}">
             <ContentPresenter x:Name="contentPresenter"
-						      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-						      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-						      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-						      RecognizesAccessKey="True"
-						      Opacity="0.5" />
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              RecognizesAccessKey="True"
+                              Opacity="0.5" />
         </Grid>
 
         <ControlTemplate.Triggers>
@@ -83,32 +83,32 @@
 
     <Style x:Key="WindowCommandsControlStyle"
            TargetType="{x:Type Control}">
-        
+
         <Setter Property="Foreground"
-				Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}" />
+                Value="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}" />
         <Setter Property="Background"
-				Value="{DynamicResource TransparentWhiteBrush}" />
+                Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="HorizontalContentAlignment"
-				Value="Center" />
+                Value="Center" />
         <Setter Property="VerticalContentAlignment"
-				Value="Center" />
+                Value="Center" />
         <Setter Property="Padding"
-				Value="1" />
+                Value="1" />
         <Setter Property="Focusable"
-				Value="False" />
+                Value="False" />
         <Setter Property="FocusVisualStyle"
-				Value="{x:Null}" />
+                Value="{x:Null}" />
 
         <Style.Triggers>
             <Trigger Property="IsEnabled"
-					 Value="False">
+                     Value="False">
                 <Setter Property="Foreground"
-						Value="{DynamicResource GrayBrush4}" />
+                        Value="{DynamicResource GrayBrush4}" />
             </Trigger>
         </Style.Triggers>
-        
+
     </Style>
-    
+
     <ControlTemplate x:Key="LightWindowCommandsTemplate"
                      TargetType="Controls:WindowCommands">
         <ItemsPresenter />
@@ -139,7 +139,7 @@
                             Value="{StaticResource WindowCommandsButtonTemplate}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed"
-					             Value="True">
+                                 Value="True">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
@@ -151,7 +151,7 @@
                             Value="{StaticResource WindowCommandsToggleButtonTemplate}" />
                     <Style.Triggers>
                         <Trigger Property="IsPressed"
-					             Value="True">
+                                 Value="True">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
@@ -162,8 +162,8 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type Controls:WindowCommands}">
-	
-		<Setter Property="Controls:ControlsHelper.PreserveTextCase"
+
+        <Setter Property="Controls:ControlsHelper.PreserveTextCase"
                 Value="True" />
         <Setter Property="Template"
                 Value="{StaticResource LightWindowCommandsTemplate}" />
@@ -181,7 +181,7 @@
                 Value="Center" />
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
-		<Setter Property="ItemContainerStyle">
+        <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="{x:Type Controls:WindowCommandsItem}">
                     <Setter Property="Template">
@@ -216,7 +216,7 @@
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
-		
+
         <Style.Triggers>
             <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}"
                          Value="True">
@@ -224,7 +224,7 @@
                         Value="{DynamicResource IdealForegroundColorBrush}" />
             </DataTrigger>
         </Style.Triggers>
-        
+
     </Style>
-    
+
 </ResourceDictionary>

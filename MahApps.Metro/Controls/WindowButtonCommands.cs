@@ -20,7 +20,7 @@ namespace MahApps.Metro.Controls
         private Button _max;
         private Button _close;
         private SafeLibraryHandle _user32;
-        
+
         public string Minimize
         {
             get
@@ -69,45 +69,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        //public static readonly DependencyProperty MinButtonStyleProperty =
-        //    DependencyProperty.Register("MinButtonStyle", typeof(Style), typeof(WindowButtonCommands),
-        //                                new PropertyMetadata(null));
-
-        ///// <summary>
-        ///// Gets or sets the value indicating current MinButton style.
-        ///// </summary>
-        //public Style MinButtonStyle
-        //{
-        //    get { return (Style) GetValue(MinButtonStyleProperty); }
-        //    set { SetValue(MinButtonStyleProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty MaxButtonStyleProperty =
-        //    DependencyProperty.Register("MaxButtonStyle", typeof(Style), typeof(WindowButtonCommands),
-        //                                new PropertyMetadata(null));
-
-        ///// <summary>
-        ///// Gets or sets the value indicating current MaxButton style.
-        ///// </summary>
-        //public Style MaxButtonStyle
-        //{
-        //    get { return (Style) GetValue(MaxButtonStyleProperty); }
-        //    set { SetValue(MaxButtonStyleProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty CloseButtonStyleProperty =
-        //    DependencyProperty.Register("CloseButtonStyle", typeof(Style), typeof(WindowButtonCommands),
-        //                                new PropertyMetadata(default(Style)));
-
-        ///// <summary>
-        ///// Gets or sets the value indicating current CloseButton style.
-        ///// </summary>
-        //public Style CloseButtonStyle
-        //{
-        //    get { return (Style)GetValue(CloseButtonStyleProperty); }
-        //    set { SetValue(CloseButtonStyleProperty, value); }
-        //}
-
         public static readonly DependencyProperty LightMinButtonStyleProperty =
             DependencyProperty.Register("LightMinButtonStyle", typeof(Style), typeof(WindowButtonCommands),
                                         new PropertyMetadata(null, OnThemeChanged));
@@ -117,7 +78,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Style LightMinButtonStyle
         {
-            get { return (Style) GetValue(LightMinButtonStyleProperty); }
+            get { return (Style)GetValue(LightMinButtonStyleProperty); }
             set { SetValue(LightMinButtonStyleProperty, value); }
         }
 
@@ -130,7 +91,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Style LightMaxButtonStyle
         {
-            get { return (Style) GetValue(LightMaxButtonStyleProperty); }
+            get { return (Style)GetValue(LightMaxButtonStyleProperty); }
             set { SetValue(LightMaxButtonStyleProperty, value); }
         }
 
@@ -143,7 +104,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Style LightCloseButtonStyle
         {
-            get { return (Style) GetValue(LightCloseButtonStyleProperty); }
+            get { return (Style)GetValue(LightCloseButtonStyleProperty); }
             set { SetValue(LightCloseButtonStyleProperty, value); }
         }
 
@@ -156,7 +117,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Style DarkMinButtonStyle
         {
-            get { return (Style) GetValue(DarkMinButtonStyleProperty); }
+            get { return (Style)GetValue(DarkMinButtonStyleProperty); }
             set { SetValue(DarkMinButtonStyleProperty, value); }
         }
 
@@ -169,7 +130,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Style DarkMaxButtonStyle
         {
-            get { return (Style) GetValue(DarkMaxButtonStyleProperty); }
+            get { return (Style)GetValue(DarkMaxButtonStyleProperty); }
             set { SetValue(DarkMaxButtonStyleProperty, value); }
         }
 
@@ -182,7 +143,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Style DarkCloseButtonStyle
         {
-            get { return (Style) GetValue(DarkCloseButtonStyleProperty); }
+            get { return (Style)GetValue(DarkCloseButtonStyleProperty); }
             set { SetValue(DarkCloseButtonStyleProperty, value); }
         }
 
@@ -195,16 +156,19 @@ namespace MahApps.Metro.Controls
         /// </summary>
         public Theme Theme
         {
-            get { return (Theme) GetValue(ThemeProperty); }
+            get { return (Theme)GetValue(ThemeProperty); }
             set { SetValue(ThemeProperty, value); }
         }
-        
+
         private static void OnThemeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue == e.OldValue) return;
+            if (e.NewValue == e.OldValue)
+            {
+                return;
+            }
             ((WindowButtonCommands)d).ApplyTheme();
         }
-        
+
         static WindowButtonCommands()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(WindowButtonCommands), new FrameworkPropertyMetadata(typeof(WindowButtonCommands)));
@@ -214,11 +178,13 @@ namespace MahApps.Metro.Controls
         {
             Loaded += WindowButtonCommands_Loaded;
         }
-        
+
         private string GetCaption(int id)
         {
             if (_user32 == null)
+            {
                 _user32 = UnsafeNativeMethods.LoadLibrary(Environment.SystemDirectory + "\\User32.dll");
+            }
 
             var sb = new StringBuilder(256);
             UnsafeNativeMethods.LoadString(_user32, (uint)id, sb, sb.Capacity);
@@ -229,23 +195,41 @@ namespace MahApps.Metro.Controls
         public void ApplyTheme()
         {
             if (_close != null)
+            {
                 // todo: delete this if statement once WindowCloseButtonStyle is removed from MetroWindow
                 if ((ParentWindow != null) && (ParentWindow.WindowCloseButtonStyle != null))
+                {
                     _close.Style = ParentWindow.WindowCloseButtonStyle;
+                }
                 else
+                {
                     _close.Style = Theme == Theme.Light ? LightCloseButtonStyle : DarkCloseButtonStyle;
+                }
+            }
             if (_max != null)
+            {
                 // todo: delete this if statement once WindowMaxButtonStyle is removed from MetroWindow
                 if ((ParentWindow != null) && (ParentWindow.WindowMaxButtonStyle != null))
+                {
                     _max.Style = ParentWindow.WindowMaxButtonStyle;
+                }
                 else
+                {
                     _max.Style = Theme == Theme.Light ? LightMaxButtonStyle : DarkMaxButtonStyle;
+                }
+            }
             if (_min != null)
+            {
                 // todo: delete this if statement once WindowMinButtonStyle is removed from MetroWindow
                 if ((ParentWindow != null) && (ParentWindow.WindowMinButtonStyle != null))
+                {
                     _min.Style = ParentWindow.WindowMinButtonStyle;
+                }
                 else
+                {
                     _min.Style = Theme == Theme.Light ? LightMinButtonStyle : DarkMinButtonStyle;
+                }
+            }
         }
 
         public override void OnApplyTemplate()
@@ -254,42 +238,61 @@ namespace MahApps.Metro.Controls
 
             _close = Template.FindName("PART_Close", this) as Button;
             if (_close != null)
+            {
                 _close.Click += CloseClick;
+            }
 
             _max = Template.FindName("PART_Max", this) as Button;
             if (_max != null)
+            {
                 _max.Click += MaximizeClick;
+            }
 
             _min = Template.FindName("PART_Min", this) as Button;
             if (_min != null)
+            {
                 _min.Click += MinimizeClick;
+            }
 
             ApplyTheme();
         }
-        
+
         public event ClosingWindowEventHandler ClosingWindow;
+
         public delegate void ClosingWindowEventHandler(object sender, ClosingWindowEventHandlerArgs args);
 
         protected void OnClosingWindow(ClosingWindowEventHandlerArgs args)
         {
             var handler = ClosingWindow;
             if (handler != null)
+            {
                 handler(this, args);
+            }
         }
 
         private void MinimizeClick(object sender, RoutedEventArgs e)
         {
-            if (ParentWindow == null) return;
+            if (ParentWindow == null)
+            {
+                return;
+            }
             Microsoft.Windows.Shell.SystemCommands.MinimizeWindow(ParentWindow);
         }
 
         private void MaximizeClick(object sender, RoutedEventArgs e)
         {
-            if (ParentWindow == null) return;
+            if (ParentWindow == null)
+            {
+                return;
+            }
             if (ParentWindow.WindowState == WindowState.Maximized)
+            {
                 Microsoft.Windows.Shell.SystemCommands.RestoreWindow(ParentWindow);
+            }
             else
+            {
                 Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(ParentWindow);
+            }
         }
 
         private void CloseClick(object sender, RoutedEventArgs e)
@@ -297,17 +300,24 @@ namespace MahApps.Metro.Controls
             var closingWindowEventHandlerArgs = new ClosingWindowEventHandlerArgs();
             OnClosingWindow(closingWindowEventHandlerArgs);
 
-            if (closingWindowEventHandlerArgs.Cancelled) return;
+            if (closingWindowEventHandlerArgs.Cancelled)
+            {
+                return;
+            }
 
             if (ParentWindow != null)
+            {
                 ParentWindow.Close();
+            }
         }
-        
+
         private void WindowButtonCommands_Loaded(object sender, RoutedEventArgs e)
         {
             Loaded -= WindowButtonCommands_Loaded;
             if (ParentWindow == null)
+            {
                 ParentWindow = this.TryFindParent<MetroWindow>();
+            }
         }
 
         private MetroWindow _parentWindow;
@@ -317,19 +327,24 @@ namespace MahApps.Metro.Controls
             get { return _parentWindow; }
             set
             {
-                if (Equals(_parentWindow, value)) return;
+                if (Equals(_parentWindow, value))
+                {
+                    return;
+                }
                 _parentWindow = value;
                 RaisePropertyChanged("ParentWindow");
             }
         }
-        
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void RaisePropertyChanged(string propertyName = null)
         {
             var handler = PropertyChanged;
             if (handler != null)
+            {
                 handler.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

@@ -1,16 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    mc:Ignorable="options"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Converters:ToUpperConverter x:Key="ToUpperConverter" />
     <Converters:ToLowerConverter x:Key="ToLowerConverter" />
-
-    <SolidColorBrush x:Key="DarkIdealForegroundDisabledBrush" Color="#ADADAD" options:Freeze="True" />
-    <SolidColorBrush x:Key="CloseButtonBackgroundBrush" Color="#E81123" options:Freeze="True" />
     
     <Style x:Key="MetroFlatButton"
            TargetType="{x:Type Button}">
@@ -273,6 +267,11 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <!-- obsolete -->
+    <Style x:Key="MetroBaseWindowButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource BaseMetroWindowButtonStyle}" />
 
     <!-- light button style for min, max and close window buttons -->
     <Style x:Key="LightMetroWindowButtonStyle"
