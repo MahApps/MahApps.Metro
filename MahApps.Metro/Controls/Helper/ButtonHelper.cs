@@ -30,12 +30,12 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// DependencyProperty for <see cref="CornerRadius" /> property.
         /// </summary>
-        public static readonly DependencyProperty CornerRadiusProperty
-            = DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(ButtonHelper),
-                                                  new FrameworkPropertyMetadata(
-                                                      new CornerRadius(),
-                                                      FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
-        
+        public static readonly DependencyProperty CornerRadiusProperty =
+            DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(ButtonHelper),
+                                                new FrameworkPropertyMetadata(
+                                                    new CornerRadius(),
+                                                    FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
         /// <summary> 
         /// The CornerRadius property allows users to control the roundness of the button corners independently by 
         /// setting a radius value for each corner. Radius values that are too large are scaled so that they

@@ -40,6 +40,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(Expander))]
         [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        [AttachedPropertyBrowsableForType(typeof(WindowCommands))]
         public static bool GetPreserveTextCase(UIElement element)
         {
             return (bool)element.GetValue(PreserveTextCaseProperty);
