@@ -154,8 +154,26 @@ namespace MahApps.Metro.Controls
             }
             else
             {
-                // set the theme based on brush color
-                if (((SolidColorBrush)brush).Color == Colors.White)
+                // get brush color brightness
+                var color = ((SolidColorBrush)brush).Color;
+
+                var r = color.R / 255.0f;
+                var g = color.G / 255.0f;
+                var b = color.B / 255.0f;
+
+                var max = r;
+                var min = r;
+
+                if (g > max) max = g;
+                if (b > max) max = b;
+
+                if (g < min) min = g;
+                if (b < min) min = b;
+
+                var brightness = (max + min) / 2;
+
+                // set the theme based on color brightness
+                if (brightness > 0.1)
                 {
                     window.InvokeActionOnWindowCommands(x => x.SetValue(WindowCommands.ThemeProperty, Theme.Light),
                                                         x => x.SetValue(WindowButtonCommands.ThemeProperty, Theme.Light), position);
