@@ -29,8 +29,6 @@
                 Value="{DynamicResource TextBrush}" />
         <Setter Property="MinHeight"
                 Value="26" />
-        <Setter Property="HorizontalContentAlignment"
-                Value="Stretch" />
         <Setter Property="IsTodayHighlighted"
                 Value="True" />
         <Setter Property="Padding"
@@ -96,8 +94,8 @@
                                                Foreground="{TemplateBinding Foreground}"
                                                Focusable="{TemplateBinding Focusable}"
                                                FontSize="{TemplateBinding FontSize}"
-                                               HorizontalContentAlignment="Stretch"
-                                               VerticalContentAlignment="Stretch" />
+                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
 
                             <Popup x:Name="PART_Popup"
                                    AllowsTransparency="True"
