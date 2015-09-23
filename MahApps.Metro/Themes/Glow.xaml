@@ -22,10 +22,10 @@
                      Value="Horizontal">
                 <Setter TargetName="glowBorder"
                         Property="Margin"
-                        Value="1,0" />
+                        Value="8,0" />
                 <Setter TargetName="glowSource"
                         Property="Margin"
-                        Value="0,-1" />
+                        Value="7,-1" />
             </Trigger>
             <Trigger Property="BorderThickness"
                      Value="0">
