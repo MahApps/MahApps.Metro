@@ -22,5 +22,7 @@
         </Storyboard>
     </Window.Resources>
     <metro:Glow x:Name="glow"
+                Width="{Binding ElementName=glowWindow, Path=ActualWidth, Mode=OneWay}"
+                Height="{Binding ElementName=glowWindow, Path=ActualHeight, Mode=OneWay}"
                 x:FieldModifier="private" />
 </Window>

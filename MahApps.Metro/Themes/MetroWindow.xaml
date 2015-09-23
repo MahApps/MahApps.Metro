@@ -184,7 +184,7 @@
 
             <Border x:Name="PART_Border"
                     Background="{x:Null}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderBrush="{TemplateBinding GlowBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     UseLayoutRounding="True"
                     HorizontalAlignment="Stretch"
@@ -232,11 +232,14 @@
                         Property="Fill"
                         Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
             </Trigger>
-            <Trigger Property="BorderBrush"
+            <Trigger Property="GlowBrush"
                      Value="{x:Null}">
                 <Setter TargetName="PART_Border"
-                        Property="Visibility"
-                        Value="Collapsed" />
+                        Property="BorderBrush"
+                        Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+<!--                <Setter TargetName="PART_Border"-->
+<!--                        Property="Visibility"-->
+<!--                        Value="Collapsed" />-->
             </Trigger>
             <!-- no icon and no icon content template -> collapse the icon content control -->
             <MultiTrigger>

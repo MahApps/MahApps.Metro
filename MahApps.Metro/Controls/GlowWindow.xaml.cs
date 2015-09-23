@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,7 +25,7 @@ namespace MahApps.Metro.Controls
         private readonly Func<RECT, double> getWidth;
         private readonly Func<RECT, double> getHeight;
         private const double edgeSize = 20.0;
-        private const double glowSize = 9.0;
+        private const double glowSize = 4.0;
         private IntPtr handle;
         private IntPtr ownerHandle;
         private bool closing = false;
@@ -52,15 +53,17 @@ namespace MahApps.Metro.Controls
             b.Source = owner;
             glow.SetBinding(Glow.BorderThicknessProperty, b);
 
+            glow.Direction = direction;
+
             switch (direction)
             {
                 case GlowDirection.Left:
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Right;
                     getLeft = (rect) => rect.left - glowSize;
-                    getTop = (rect) => rect.top - owner.BorderThickness.Top;
+                    getTop = (rect) => rect.top - glowSize + 1;
                     getWidth = (rect) => glowSize;
-                    getHeight = (rect) => rect.Height + owner.BorderThickness.Top + owner.BorderThickness.Bottom;
+                    getHeight = (rect) => rect.Height + glowSize + glowSize - 2;
                     getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                                ? HitTestValues.HTTOPLEFT
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
@@ -81,9 +84,9 @@ namespace MahApps.Metro.Controls
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Left;
                     getLeft = (rect) => rect.right;
-                    getTop = (rect) => rect.top - owner.BorderThickness.Top;
+                    getTop = (rect) => rect.top - glowSize + 1;
                     getWidth = (rect) => glowSize;
-                    getHeight = (rect) => rect.Height + owner.BorderThickness.Top + owner.BorderThickness.Bottom;
+                    getHeight = (rect) => rect.Height + glowSize + glowSize - 2;
                     getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                                ? HitTestValues.HTTOPRIGHT
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
@@ -103,9 +106,9 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Top:
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Bottom;
-                    getLeft = (rect) => rect.left - owner.BorderThickness.Left;
+                    getLeft = (rect) => rect.left - glowSize + 2;
                     getTop = (rect) => rect.top - glowSize;
-                    getWidth = (rect) => rect.Width + owner.BorderThickness.Left + owner.BorderThickness.Right;
+                    getWidth = (rect) => rect.Width + glowSize + glowSize - 4;
                     getHeight = (rect) => glowSize;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                                ? HitTestValues.HTTOPLEFT
@@ -128,9 +131,9 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Bottom:
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Top;
-                    getLeft = (rect) => rect.left - owner.BorderThickness.Left;
+                    getLeft = (rect) => rect.left - glowSize + 2;
                     getTop = (rect) => rect.bottom;
-                    getWidth = (rect) => rect.Width + owner.BorderThickness.Left + owner.BorderThickness.Right;
+                    getWidth = (rect) => rect.Width + glowSize + glowSize - 4;
                     getHeight = (rect) => glowSize;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                                ? HitTestValues.HTBOTTOMLEFT
