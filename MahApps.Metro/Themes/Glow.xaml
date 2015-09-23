@@ -4,14 +4,17 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:Double x:Key="GlowOpacity">0.3</system:Double>
-    <system:Double x:Key="ShadowOpacity">0.5</system:Double>
+    <system:Double x:Key="ShadowOpacity">0.3</system:Double>
 
     <ControlTemplate x:Key="TopGlowTemplate">
         <Border x:Name="GlowBorder"
                 SnapsToDevicePixels="True"
-                CornerRadius="0 0 4 4"
+                CornerRadius="6 6 6 6"
                 Opacity="{StaticResource GlowOpacity}"
                 Background="{TemplateBinding Background}">
+            <Border.Effect>
+                <BlurEffect Radius="3" />
+            </Border.Effect>
             <Border.OpacityMask>
                 <LinearGradientBrush StartPoint="0.5,0"
                                      EndPoint="0.5,1">
@@ -35,9 +38,12 @@
     <ControlTemplate x:Key="BottomGlowTemplate">
         <Border x:Name="GlowBorder"
                 SnapsToDevicePixels="True"
-                CornerRadius="4 4 0 0"
+                CornerRadius="6 6 6 6"
                 Opacity="{StaticResource GlowOpacity}"
                 Background="{TemplateBinding Background}">
+            <Border.Effect>
+                <BlurEffect Radius="3" />
+            </Border.Effect>
             <Border.OpacityMask>
                 <LinearGradientBrush StartPoint="0.5,0"
                                      EndPoint="0.5,1">
@@ -61,9 +67,12 @@
     <ControlTemplate x:Key="LeftGlowTemplate">
         <Border x:Name="GlowBorder"
                 SnapsToDevicePixels="True"
-                CornerRadius="0 4 4 0"
+                CornerRadius="6 6 6 6"
                 Opacity="{StaticResource GlowOpacity}"
                 Background="{TemplateBinding Background}">
+            <Border.Effect>
+                <BlurEffect Radius="3" />
+            </Border.Effect>
             <Border.OpacityMask>
                 <LinearGradientBrush StartPoint="0,0.5"
                                      EndPoint="1,0.5">
@@ -87,9 +96,12 @@
     <ControlTemplate x:Key="RightGlowTemplate">
         <Border x:Name="GlowBorder"
                 SnapsToDevicePixels="True"
-                CornerRadius="4 0 0 4"
+                CornerRadius="6 6 6 6"
                 Opacity="{StaticResource GlowOpacity}"
                 Background="{TemplateBinding Background}">
+            <Border.Effect>
+                <BlurEffect Radius="3" />
+            </Border.Effect>
             <Border.OpacityMask>
                 <LinearGradientBrush StartPoint="0,0.5"
                                      EndPoint="1,0.5">
