@@ -1038,8 +1038,7 @@ namespace Microsoft.Windows.Shell
              * MonitorFromWindow gives us the wrong (old) monitor! This is fixed in _HandleMoveForRealSize.
              */
             var ignoreTaskBar = _chromeInfo.IgnoreTaskbarOnMaximize;// || _chromeInfo.UseNoneWindowStyle;
-            WindowState state = _GetHwndState();
-            if (ignoreTaskBar && state == WindowState.Maximized)
+            if (ignoreTaskBar && NativeMethods.IsZoomed(_hwnd))
             {
                 MINMAXINFO mmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
                 IntPtr monitor = NativeMethods.MonitorFromWindow(_hwnd, (uint)MonitorOptions.MONITOR_DEFAULTTONEAREST);
