@@ -236,12 +236,17 @@
                         Property="BorderBrush"
                         Value="{Binding Path=NonActiveBorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
             </MultiTrigger>
-            <Trigger Property="GlowBrush"
-                     Value="{x:Null}">
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsActive"
+                               Value="True" />
+                    <Condition Property="GlowBrush"
+                               Value="{x:Null}" />
+                </MultiTrigger.Conditions>
                 <Setter TargetName="PART_Border"
                         Property="BorderBrush"
                         Value="{Binding Path=BorderBrush, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
-            </Trigger>
+            </MultiTrigger>
             <!-- no icon and no icon content template -> collapse the icon content control -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
