@@ -65,8 +65,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty MetroDialogOptionsProperty = DependencyProperty.Register("MetroDialogOptions", typeof(MetroDialogSettings), typeof(MetroWindow), new PropertyMetadata(new MetroDialogSettings()));
 
         public static readonly DependencyProperty WindowTitleBrushProperty = DependencyProperty.Register("WindowTitleBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Transparent));
-        public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register("NonActiveGlowBrush", typeof(SolidColorBrush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(153, 153, 153)))); // #999999
+        public static readonly DependencyProperty GlowBrushProperty = DependencyProperty.Register("GlowBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty NonActiveGlowBrushProperty = DependencyProperty.Register("NonActiveGlowBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(new SolidColorBrush(Color.FromRgb(153, 153, 153)))); // #999999
         public static readonly DependencyProperty NonActiveBorderBrushProperty = DependencyProperty.Register("NonActiveBorderBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
         public static readonly DependencyProperty NonActiveWindowTitleBrushProperty = DependencyProperty.Register("NonActiveWindowTitleBrush", typeof(Brush), typeof(MetroWindow), new PropertyMetadata(Brushes.Gray));
 
@@ -558,18 +558,18 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the brush used for the Window's glow.
         /// </summary>
-        public SolidColorBrush GlowBrush
+        public Brush GlowBrush
         {
-            get { return (SolidColorBrush)GetValue(GlowBrushProperty); }
+            get { return (Brush)GetValue(GlowBrushProperty); }
             set { SetValue(GlowBrushProperty, value); }
         }
 
         /// <summary>
         /// Gets/sets the brush used for the Window's non-active glow.
         /// </summary>
-        public SolidColorBrush NonActiveGlowBrush
+        public Brush NonActiveGlowBrush
         {
-            get { return (SolidColorBrush)GetValue(NonActiveGlowBrushProperty); }
+            get { return (Brush)GetValue(NonActiveGlowBrushProperty); }
             set { SetValue(NonActiveGlowBrushProperty, value); }
         }
 
