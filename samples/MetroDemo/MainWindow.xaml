@@ -15,7 +15,7 @@
                       ShowTitleBar="True"
                       WindowStartupLocation="CenterScreen"
                       GlowBrush="{DynamicResource AccentColorBrush}"
-                      NonActiveGlowBrush="Red"
+                      NonActiveGlowBrush="#CDFF0000"
                       mc:Ignorable="d"
                       d:DesignHeight="600"
                       d:DesignWidth="800"

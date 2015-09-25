@@ -362,7 +362,7 @@ namespace MetroDemo
             w.Content = new TextBlock() { Text = "MetroWindow with a Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.GlowBrush = null;
-            w.BorderBrush = this.FindResource("AccentColorBrush") as Brush;
+            w.SetResourceReference(MetroWindow.BorderBrushProperty, "AccentColorBrush");
             w.Show();
         }
 
@@ -372,7 +372,7 @@ namespace MetroDemo
             w.Content = new TextBlock() { Text = "MetroWindow with a Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.BorderBrush = null;
-            w.GlowBrush = this.FindResource("AccentColorBrush") as SolidColorBrush;
+            w.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
             w.Show();
         }
 
@@ -384,7 +384,5 @@ namespace MetroDemo
             w.EnableDWMDropShadow = true;
             w.Show();
         }
-
-
     }
 }
