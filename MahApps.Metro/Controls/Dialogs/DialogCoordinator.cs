@@ -18,7 +18,7 @@ namespace MahApps.Metro.Controls.Dialogs
             return metroWindow.ShowInputAsync(title, message, metroDialogSettings);
         }
 
-        public Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, LoginDialogSettings settings = null)
+        public Task<LoginDialogData> ShowLoginAsync(object context, string title, string message, LoginDialogSettings settings = null)
         {
             var metroWindow = GetMetroWindow(context);
 
