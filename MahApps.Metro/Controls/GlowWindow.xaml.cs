@@ -29,6 +29,8 @@ namespace MahApps.Metro.Controls
         private IntPtr handle;
         private IntPtr ownerHandle;
         private bool closing = false;
+        private HwndSource hwndSource;
+        private PropertyChangeNotifier resizeModeChangeNotifier;
 
         public GlowWindow(Window owner, GlowDirection direction)
         {
@@ -184,21 +186,43 @@ namespace MahApps.Metro.Controls
         {
             base.OnSourceInitialized(e);
 
-            var source = (HwndSource)PresentationSource.FromVisual(this);
-            WS ws = source.Handle.GetWindowLong();
-            WSEX wsex = source.Handle.GetWindowLongEx();
+            this.hwndSource = (HwndSource)PresentationSource.FromVisual(this);
+            if (hwndSource == null) return;
+            
+            var ws = hwndSource.Handle.GetWindowLong();
+            var wsex = hwndSource.Handle.GetWindowLongEx();
 
             //ws |= WS.POPUP;
             wsex ^= WSEX.APPWINDOW;
             wsex |= WSEX.NOACTIVATE;
-            wsex |= WSEX.TRANSPARENT;
+            if (this.Owner.ResizeMode == ResizeMode.NoResize || this.Owner.ResizeMode == ResizeMode.CanMinimize)
+            {
+                wsex |= WSEX.TRANSPARENT;
+            }
 
-            source.Handle.SetWindowLong(ws);
-            source.Handle.SetWindowLongEx(wsex);
-            source.AddHook(WndProc);
+            hwndSource.Handle.SetWindowLong(ws);
+            hwndSource.Handle.SetWindowLongEx(wsex);
+            hwndSource.AddHook(WndProc);
 
-            handle = source.Handle;
+            handle = hwndSource.Handle;
             ownerHandle = new WindowInteropHelper(Owner).Handle;
+
+            this.resizeModeChangeNotifier = new PropertyChangeNotifier(this.Owner, Window.ResizeModeProperty);
+            this.resizeModeChangeNotifier.ValueChanged += ResizeModeChanged;
+        }
+
+        private void ResizeModeChanged(object sender, EventArgs e)
+        {
+            var wsex = hwndSource.Handle.GetWindowLongEx();
+            if (this.Owner.ResizeMode == ResizeMode.NoResize || this.Owner.ResizeMode == ResizeMode.CanMinimize)
+            {
+                wsex |= WSEX.TRANSPARENT;
+            }
+            else
+            {
+                wsex ^= WSEX.TRANSPARENT;
+            }
+            hwndSource.Handle.SetWindowLongEx(wsex);
         }
 
         public void Update()
