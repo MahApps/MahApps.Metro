@@ -169,6 +169,7 @@
     <Compile Include="ExampleWindows\VSDemo.xaml.cs">
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
     <Page Include="ExampleViews\TilesExample.xaml">
       <Generator>MSBuild:Compile</Generator>

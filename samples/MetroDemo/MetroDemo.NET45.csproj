@@ -156,6 +156,7 @@
     <Compile Include="Navigation\InterestingPage.xaml.cs">
       <DependentUpon>InterestingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
     <Page Include="ExampleViews\ButtonsExample.xaml">
       <Generator>MSBuild:Compile</Generator>
