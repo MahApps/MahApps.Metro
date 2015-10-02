@@ -411,6 +411,8 @@ namespace MahApps.Metro.Controls
         private Boolean _isMoved;
         private Boolean _roundToPrecision;
         private Int32 _precision;
+        private readonly PropertyChangeNotifier actualWidthPropertyChangeNotifier;
+        private readonly PropertyChangeNotifier actualHeightPropertyChangeNotifier;
 
         #endregion
 
@@ -426,8 +428,11 @@ namespace MahApps.Metro.Controls
             CommandBindings.Add(new CommandBinding(MoveAllForward, MoveAllForwardHandler));
             CommandBindings.Add(new CommandBinding(MoveAllBack, MoveAllBackHandler));
 
-            DependencyPropertyDescriptor.FromProperty(ActualWidthProperty, typeof(RangeSlider)).AddValueChanged(this, delegate { ReCalculateSize(); });
-            DependencyPropertyDescriptor.FromProperty(ActualHeightProperty, typeof(RangeSlider)).AddValueChanged(this, delegate { ReCalculateSize(); });
+            this.actualWidthPropertyChangeNotifier = new PropertyChangeNotifier(this, RangeSlider.ActualWidthProperty);
+            this.actualWidthPropertyChangeNotifier.ValueChanged += (s, e) => ReCalculateSize();
+            this.actualHeightPropertyChangeNotifier = new PropertyChangeNotifier(this, RangeSlider.ActualHeightProperty);
+            this.actualHeightPropertyChangeNotifier.ValueChanged += (s, e) => ReCalculateSize();
+
             _timer = new DispatcherTimer();
             _timer.Tick += MoveToNextValue;
             _timer.Interval = TimeSpan.FromMilliseconds(Interval);
