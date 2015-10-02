@@ -259,7 +259,7 @@ namespace MetroDemo
                 controller.SetProgress(val);
                 controller.SetMessage("Baking cupcake: " + i + "...");
 
-                if (controller.IsCanceled)
+                if (controller.IsCancelled)
                     break; //canceled progressdialog auto closes.
 
                 i += 1.0;
@@ -269,7 +269,7 @@ namespace MetroDemo
 
             await controller.CloseAsync();
 
-            if (controller.IsCanceled)
+            if (controller.IsCancelled)
             {
                 await this.ShowMessageAsync("No cupcakes!", "You stopped baking!");
             }
