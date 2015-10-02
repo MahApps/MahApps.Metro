@@ -27,21 +27,19 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// Gets if the Cancel button has been pressed.
         /// </summary>        
-        public bool IsCancelled {get{ return m_iscanceled;}}
-        private bool m_iscanceled;
+        public bool IsCanceled { get; private set; }        
 
         /// <summary>
         /// Gets if the wrapped ProgressDialog is open.
         /// </summary>        
-        public bool IsOpen { get { return m_isopen; } }
-        private bool m_isopen;
+        public bool IsOpen { get; private set;}
 
         internal ProgressDialogController(ProgressDialog dialog, Func<Task> closeCallBack)
         {
             WrappedDialog = dialog;
             CloseCallback = closeCallBack;
 
-            m_isopen = dialog.IsVisible;
+            IsOpen = dialog.IsVisible;
 
             InvokeAction(() => {
                 WrappedDialog.PART_NegativeButton.Click += PART_NegativeButton_Click;
@@ -56,7 +54,7 @@ namespace MahApps.Metro.Controls.Dialogs
         private void PART_NegativeButton_Click(object sender, RoutedEventArgs e)
         {
             Action action = () => {
-                m_iscanceled = true;
+                IsCanceled = true;
                 var handler = Cancelled;
                 if (handler != null)
                 {
@@ -159,7 +157,7 @@ namespace MahApps.Metro.Controls.Dialogs
             InvokeAction(action);
 
             return CloseCallback().ContinueWith(_ => InvokeAction(new Action(() => {
-                m_isopen = false;
+                IsOpen = false;
 
                 var handler = Closed;
                 if (handler != null) {
