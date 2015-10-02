@@ -22,7 +22,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <summary>
         /// This event is raised when the associated <see cref="ProgressDialog"/> was cancelled by the user.
         /// </summary>
-        public event EventHandler Cancelled;
+        public event EventHandler Canceled;
 
         /// <summary>
         /// Gets if the Cancel button has been pressed.
@@ -55,7 +55,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             Action action = () => {
                 IsCanceled = true;
-                var handler = Cancelled;
+                var handler = Canceled;
                 if (handler != null)
                 {
                     handler(this, EventArgs.Empty);
