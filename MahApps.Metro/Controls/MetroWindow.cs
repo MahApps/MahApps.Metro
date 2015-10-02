@@ -53,6 +53,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty IsCloseButtonEnabledProperty = DependencyProperty.Register("IsCloseButtonEnabled", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty ShowSystemMenuOnRightClickProperty = DependencyProperty.Register("ShowSystemMenuOnRightClick", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowSystemMenuOnWindowIconProperty = DependencyProperty.Register("ShowSystemMenuOnWindowIcon", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
@@ -91,7 +92,7 @@ namespace MahApps.Metro.Controls
         [Obsolete(@"This property will be deleted in the next release. You should use BorderThickness=""0"" and a GlowBrush=""Black"" to get a drop shadow around the Window.")]
         public static readonly DependencyProperty EnableDWMDropShadowProperty = DependencyProperty.Register("EnableDWMDropShadow", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnEnableDWMDropShadowPropertyChangedCallback));
         public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
-
+        
         UIElement icon;
         UIElement titleBar;
         UIElement titleBarBackground;
@@ -457,6 +458,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool)GetValue(IsMaxRestoreButtonEnabledProperty); }
             set { SetValue(IsMaxRestoreButtonEnabledProperty, value); }
+        }
+        
+        /// <summary>
+        /// Gets/sets if the system menu should popup when the window icon is clicked.
+        /// </summary>
+        public bool ShowSystemMenuOnWindowIcon
+        {
+            get { return (bool)GetValue(ShowSystemMenuOnWindowIconProperty); }
+            set { SetValue(ShowSystemMenuOnWindowIconProperty, value); }
         }
 
         /// <summary>
@@ -945,6 +955,7 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
+                    if (!this.ShowSystemMenuOnWindowIcon) return;
                     ShowSystemMenuPhysicalCoordinates(this, PointToScreen(new Point(0, TitlebarHeight)));
                 }
             }
