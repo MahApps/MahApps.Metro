@@ -12,16 +12,27 @@ namespace MahApps.Metro.Controls.Dialogs
         private ProgressDialog WrappedDialog { get; set; }
         private Func<Task> CloseCallback { get; set; }
 
-        /// <summary>
-        /// Gets if the wrapped ProgressDialog is open.
-        /// </summary>
-        [Obsolete("Use the Closed event instead")]
-        public bool IsOpen { get; private set; }
+       
 
         /// <summary>
-        /// This event is raised when the associated <see cref="ProgressDialog"/> was closed.
+        /// This event is raised when the associated <see cref="ProgressDialog"/> was closed programmatically.
         /// </summary>
         public event EventHandler Closed;
+   
+        /// <summary>
+        /// This event is raised when the associated <see cref="ProgressDialog"/> was cancelled by the user.
+        /// </summary>
+        public event EventHandler Canceled;
+
+        /// <summary>
+        /// Gets if the Cancel button has been pressed.
+        /// </summary>        
+        public bool IsCanceled { get; private set; }        
+
+        /// <summary>
+        /// Gets if the wrapped ProgressDialog is open.
+        /// </summary>        
+        public bool IsOpen { get; private set;}
 
         internal ProgressDialogController(ProgressDialog dialog, Func<Task> closeCallBack)
         {
@@ -44,6 +55,11 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             Action action = () => {
                 IsCanceled = true;
+                var handler = Canceled;
+                if (handler != null)
+                {
+                    handler(this, EventArgs.Empty);
+                }
                 WrappedDialog.PART_NegativeButton.IsEnabled = false;
             };
 
@@ -121,10 +137,7 @@ namespace MahApps.Metro.Controls.Dialogs
             InvokeAction(() => WrappedDialog.Title = title);
         }
 
-        /// <summary>
-        /// Gets if the Cancel button has been pressed.
-        /// </summary>
-        public bool IsCanceled { get; private set; }
+       
 
         /// <summary>
         /// Begins an operation to close the ProgressDialog.
@@ -135,7 +148,7 @@ namespace MahApps.Metro.Controls.Dialogs
             Action action = () => {
                 if (!WrappedDialog.IsVisible)
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException("Dialog isn't visible to close");
                 }
                 WrappedDialog.Dispatcher.VerifyAccess();
                 WrappedDialog.PART_NegativeButton.Click -= PART_NegativeButton_Click;
