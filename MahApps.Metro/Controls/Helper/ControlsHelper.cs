@@ -54,6 +54,37 @@ namespace MahApps.Metro.Controls
             element.SetValue(PreserveTextCaseProperty, value);
         }
 
+        /// <summary>
+        /// The DependencyProperty for the CharacterCasing property.
+        /// Controls whether or not content is converted to upper or lower case
+        /// This will be used later for all controls which are using the PreserveTextCase property (> v1.2.0).
+        /// </summary>
+        public static readonly DependencyProperty ContentCharacterCasingProperty =
+            DependencyProperty.RegisterAttached(
+                "ContentCharacterCasing",
+                typeof (CharacterCasing),
+                typeof (ControlsHelper),
+                new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure),
+                new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing) value && (CharacterCasing) value <= CharacterCasing.Upper));
+
+        /// <summary>
+        /// Gets the character casing of the control
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(ContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
+        public static CharacterCasing GetContentCharacterCasing(UIElement element)
+        {
+            return (CharacterCasing)element.GetValue(ContentCharacterCasingProperty);
+        }
+
+        /// <summary>
+        /// Sets the character casing of the control
+        /// </summary>
+        public static void SetContentCharacterCasing(UIElement element, CharacterCasing value)
+        {
+            element.SetValue(ContentCharacterCasingProperty, value);
+        }
+
         public static readonly DependencyProperty HeaderFontSizeProperty =
             DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(26.67, HeaderFontSizePropertyChangedCallback){ Inherits = true});
 
