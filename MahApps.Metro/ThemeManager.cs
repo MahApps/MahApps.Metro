@@ -414,6 +414,8 @@ namespace MahApps.Metro
         public static void ChangeAppStyle(ResourceDictionary resources, Accent newAccent, AppTheme newTheme)
         {
             if (resources == null) throw new ArgumentNullException("resources");
+            if (newAccent == null) throw new ArgumentNullException("newAccent");
+            if (newTheme == null) throw new ArgumentNullException("newTheme");
 
             ApplyResourceDictionary(newAccent.Resources, resources);
             ApplyResourceDictionary(newTheme.Resources, resources);
