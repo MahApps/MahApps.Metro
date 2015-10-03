@@ -297,6 +297,8 @@
     <!-- style for default button -->
     <Style TargetType="{x:Type Button}"
            x:Key="MetroButton">
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
+                Value="Upper" />
         <Setter Property="Controls:ButtonHelper.CornerRadius"
                 Value="3" />
         <Setter Property="MinHeight"
@@ -345,18 +347,25 @@
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="False">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="True">
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Normal">
                             <Setter TargetName="contentPresenter"
                                     Property="Content"
                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
                         </Trigger >
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Upper">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
+                        </Trigger>
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Lower">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToLowerConverter}}" />
+                        </Trigger>
+
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="Background"
@@ -395,6 +404,8 @@
 
     <Style x:Key="SquareButtonStyle"
            TargetType="{x:Type Button}">
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
+                Value="Lower" />
         <Setter Property="MinHeight"
                 Value="25" />
         <Setter Property="FontFamily"
@@ -465,18 +476,25 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="False">
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Normal">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
+                        </Trigger >
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Upper">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
+                        </Trigger>
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Lower">
                             <Setter TargetName="contentPresenter"
                                     Property="Content"
                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToLowerConverter}}" />
                         </Trigger>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="True">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger>
+
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
@@ -565,18 +583,25 @@
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="False">
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Normal">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
+                        </Trigger >
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Upper">
+                            <Setter TargetName="contentPresenter"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
+                        </Trigger>
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Lower">
                             <Setter TargetName="contentPresenter"
                                     Property="Content"
                                     Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToLowerConverter}}" />
                         </Trigger>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="True">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger>
+
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
