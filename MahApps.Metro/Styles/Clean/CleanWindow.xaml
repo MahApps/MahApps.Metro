@@ -13,7 +13,6 @@
     <SolidColorBrush x:Key="IdealForegroundDisabledBrush" Color="#ADADAD" options:Freeze="True" />
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
 
     <ControlTemplate x:Key="CleanWindowTemplate"
                      TargetType="{x:Type Controls:MetroWindow}">
@@ -277,7 +276,7 @@
                      Value="True">
                 <Setter TargetName="TitleControl"
                         Property="Content"
-                        Value="{Binding Path=Title, Converter={StaticResource ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
+                        Value="{Binding Path=Title, Converter={Converters:ToUpperConverter}, RelativeSource={RelativeSource TemplatedParent}}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

@@ -7,7 +7,6 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
     <BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />
 
     <Style x:Key="MetroDataGridCheckBox"
@@ -246,7 +245,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <TextBlock FontWeight="SemiBold"
-                               Text="{Binding Converter={StaticResource ToUpperConverter}}" />
+                               Text="{Binding Converter={Converters:ToUpperConverter}}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>

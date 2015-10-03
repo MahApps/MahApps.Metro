@@ -10,7 +10,6 @@
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <conv:ToUpperConverter x:Key="ToUpperConverter" />
 
     <ControlTemplate x:Key="WindowTemplateKey"
                      TargetType="{x:Type Controls:MetroWindow}">
@@ -320,12 +319,12 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=TitleCaps, Mode=OneWay, Converter={StaticResource ToUpperConverter}}"
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=TitleCaps, Mode=OneWay}"
                          Value="True">
                 <Setter Property="TitleTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}"
+                            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={conv:ToUpperConverter}}"
                                        TextTrimming="CharacterEllipsis"
                                        VerticalAlignment="Center"
                                        Margin="8 -1 0 0"

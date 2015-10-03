@@ -3,8 +3,6 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
-    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
-    <Converters:ToLowerConverter x:Key="ToLowerConverter" />
     <Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
 
     <Style x:Key="ExpanderBaseHeaderStyle"
@@ -469,13 +467,13 @@
                                  Value="Upper">
                             <Setter TargetName="ToggleSite"
                                     Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={StaticResource ToUpperConverter}}" />
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={Converters:ToUpperConverter}}" />
                         </Trigger>
                         <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
                                  Value="Lower">
                             <Setter TargetName="ToggleSite"
                                     Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={StaticResource ToLowerConverter}}" />
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={Converters:ToLowerConverter}}" />
                         </Trigger>
 
                         <Trigger Property="IsExpanded"

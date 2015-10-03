@@ -2,8 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
-    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
-
     <Style x:Key="MetroGridViewScrollViewerStyle"
            TargetType="{x:Type ScrollViewer}"
            BasedOn="{StaticResource {x:Static GridView.GridViewScrollViewerStyleKey}}">
@@ -404,7 +402,7 @@
             <Setter.Value>
                 <DataTemplate>
                     <TextBlock TextBlock.FontWeight="SemiBold"
-                               Text="{Binding Converter={StaticResource ToUpperConverter}}" />
+                               Text="{Binding Converter={Converters:ToUpperConverter}}" />
                 </DataTemplate>
             </Setter.Value>
         </Setter>
