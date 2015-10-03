@@ -24,6 +24,7 @@
         <TabItem Header="List/GridView">
             <UniformGrid Rows="2">
                 <ListView Margin="5"
+                          Style="{StaticResource VirtualisedMetroListView}"
                           BorderThickness="0"
                           ItemsSource="{Binding Artists}"
                           SelectedIndex="0">
@@ -37,6 +38,7 @@
                     </ListView.View>
                 </ListView>
                 <ListView Margin="5"
+                          Style="{StaticResource VirtualisedMetroListView}"
                           BorderThickness="0"
                           IsEnabled="False"
                           ItemsSource="{Binding Artists}"
@@ -55,7 +57,7 @@
         <TabItem Header="TreeView">
             <UniformGrid Rows="2">
                 <TreeView ItemsSource="{Binding Artists}"
-                          Style="{DynamicResource VirtualisedMetroTreeView}">
+                          Style="{StaticResource VirtualisedMetroTreeView}">
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
                             <TextBlock Text="{Binding Name}" />
@@ -95,11 +97,13 @@
         <TabItem Header="ListBox">
             <UniformGrid Columns="2"
                          Rows="2">
-                <ListBox ItemsSource="{Binding Artists}"
+                <ListBox Style="{StaticResource VirtualisedMetroListBox}"
+                         ItemsSource="{Binding Artists}"
                          DisplayMemberPath="Name"
                          Margin="1"
                          SelectedIndex="0" />
-                <ListBox ItemsSource="{Binding Albums}"
+                <ListBox Style="{StaticResource VirtualisedMetroListBox}"
+                         ItemsSource="{Binding Albums}"
                          DisplayMemberPath="Title"
                          Margin="1"
                          IsEnabled="False"

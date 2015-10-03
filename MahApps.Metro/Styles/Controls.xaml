@@ -62,6 +62,7 @@
     <Style TargetType="GroupBox" BasedOn="{StaticResource MetroGroupBox}" />
     <Style TargetType="ListBox" BasedOn="{StaticResource MetroListBox}" />
     <Style TargetType="ListBoxItem" BasedOn="{StaticResource MetroListBoxItem}" />
+    <Style TargetType="GridViewColumnHeader" BasedOn="{StaticResource MetroGridViewColumnHeader}" />
     <Style TargetType="ListView" BasedOn="{StaticResource MetroListView}" />
     <Style TargetType="ListViewItem" BasedOn="{StaticResource MetroListViewItem}" />
     <Style TargetType="TreeView" BasedOn="{StaticResource MetroTreeView}" />

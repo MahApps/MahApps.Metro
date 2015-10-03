@@ -151,9 +151,6 @@
         </Border>
     </ControlTemplate>
 
-    <converters:ToUpperConverter x:Key="ToUpperConverter" />
-    <converters:ToLowerConverter x:Key="ToLowerConverter" />
-
     <Style x:Key="ButtonDropDownFocusVisual">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -303,13 +300,13 @@
                                  Value="Upper">
                             <Setter TargetName="PART_ButtonContent"
                                     Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={converters:ToUpperConverter}}" />
                         </Trigger>
                         <Trigger Property="local:ControlsHelper.ContentCharacterCasing"
                                  Value="Lower">
                             <Setter TargetName="PART_ButtonContent"
                                     Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToLowerConverter}}" />
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={converters:ToLowerConverter}}" />
                         </Trigger>
 
                         <Trigger Property="Content"

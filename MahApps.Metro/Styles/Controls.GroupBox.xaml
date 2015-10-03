@@ -3,11 +3,12 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
 
-    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
     <Converters:ThicknessBindingConverter x:Key="ThicknessBindingConverter" />
 
     <Style x:Key="MetroGroupBox"
            TargetType="{x:Type GroupBox}">
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
+                Value="Upper" />
         <Setter Property="Margin"
                 Value="5" />
         <Setter Property="Padding"
@@ -78,11 +79,23 @@
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.PreserveTextCase"
-                                 Value="False">
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Normal">
                             <Setter TargetName="HeaderContent"
                                     Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Mode=OneWay, Converter={StaticResource ToUpperConverter}}" />
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header}" />
+                        </Trigger >
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Upper">
+                            <Setter TargetName="HeaderContent"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={Converters:ToUpperConverter}}" />
+                        </Trigger>
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
+                                 Value="Lower">
+                            <Setter TargetName="HeaderContent"
+                                    Property="Content"
+                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={Converters:ToLowerConverter}}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

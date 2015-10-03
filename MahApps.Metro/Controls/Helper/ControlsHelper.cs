@@ -32,32 +32,9 @@ namespace MahApps.Metro.Controls
             element.SetValue(DisabledVisualElementVisibilityProperty, value);
         }
 
-        public static readonly DependencyProperty PreserveTextCaseProperty = DependencyProperty.RegisterAttached("PreserveTextCase", typeof(bool), typeof(ControlsHelper), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
-
-        /// <summary>
-        /// Gets the value to override the text case behavior for the header content.
-        /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
-        /// </summary>
-        [AttachedPropertyBrowsableForType(typeof(Expander))]
-        [AttachedPropertyBrowsableForType(typeof(GroupBox))]
-        public static bool GetPreserveTextCase(UIElement element)
-        {
-            return (bool)element.GetValue(PreserveTextCaseProperty);
-        }
-
-        /// <summary>
-        /// Sets the value to override the text case behavior for the header content.
-        /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
-        /// </summary>
-        public static void SetPreserveTextCase(UIElement element, bool value)
-        {
-            element.SetValue(PreserveTextCaseProperty, value);
-        }
-
         /// <summary>
         /// The DependencyProperty for the CharacterCasing property.
         /// Controls whether or not content is converted to upper or lower case
-        /// This will be used later for all controls which are using the PreserveTextCase property (> v1.2.0).
         /// </summary>
         public static readonly DependencyProperty ContentCharacterCasingProperty =
             DependencyProperty.RegisterAttached(
@@ -72,6 +49,7 @@ namespace MahApps.Metro.Controls
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(ContentControl))]
         [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
+        [AttachedPropertyBrowsableForType(typeof(WindowCommands))]
         public static CharacterCasing GetContentCharacterCasing(UIElement element)
         {
             return (CharacterCasing)element.GetValue(ContentCharacterCasingProperty);
