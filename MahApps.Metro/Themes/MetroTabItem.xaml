@@ -38,6 +38,7 @@
                                                   ContentSource="Header"
                                                   RecognizesAccessKey="True" />
                                 <Button x:Name="PART_CloseButton"
+                                        Visibility="Collapsed"
                                         Style="{DynamicResource ChromelessButtonStyle}"
                                         Background="{DynamicResource GrayNormalBrush}"
                                         Width="{TemplateBinding Controls:ControlsHelper.HeaderFontSize, Converter={StaticResource MetroTabItemCloseButtonWidthConverter}}"
@@ -77,6 +78,35 @@
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="CloseButtonEnabled"
+                                 Value="True">
+                            <Setter TargetName="PART_CloseButton"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                           Value="True" />
+                                <Condition Property="CloseButtonEnabled"
+                                           Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_CloseButton"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver"
+                                           Value="True" />
+                                <Condition Property="CloseButtonEnabled"
+                                           Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_CloseButton"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                        </MultiTrigger>
+
                         <Trigger Property="IsSelected"
                                  Value="true">
                             <Setter Property="TextElement.Foreground"
@@ -108,6 +138,7 @@
                                     Property="Background"
                                     Value="{DynamicResource GrayHoverBrush}" />
                         </Trigger>
+
                         <Trigger SourceName="PART_CloseButton"
                                  Property="IsMouseOver"
                                  Value="True">
@@ -115,6 +146,7 @@
                                     Property="Background"
                                     Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
+
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsMouseOver"
