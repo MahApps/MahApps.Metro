@@ -300,19 +300,6 @@
                 Value="0" />
     </Style>
 
-    <!-- light button style for close window button (clean style) -->
-    <Style x:Key="LightMetroWindowCloseButtonStyle"
-           TargetType="{x:Type Button}"
-           BasedOn="{StaticResource LightMetroWindowButtonStyle}">
-        <Style.Triggers>
-            <Trigger Property="IsPressed"
-                     Value="True">
-                <Setter Property="Background"
-                        Value="{DynamicResource CloseButtonBackgroundBrush}" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <!-- dark button style for min, max and close window buttons -->
     <Style x:Key="DarkMetroWindowButtonStyle"
            TargetType="{x:Type Button}"
@@ -334,19 +321,6 @@
                      Value="False">
                 <Setter Property="Foreground"
                         Value="{DynamicResource DarkIdealForegroundDisabledBrush}" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <!-- dark button style for close window button (clean style) -->
-    <Style x:Key="DarkMetroWindowCloseButtonStyle"
-           TargetType="{x:Type Button}"
-           BasedOn="{StaticResource DarkMetroWindowButtonStyle}">
-        <Style.Triggers>
-            <Trigger Property="IsPressed"
-                     Value="True">
-                <Setter Property="Background"
-                        Value="{DynamicResource CloseButtonBackgroundBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
