@@ -56,6 +56,7 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(MetroWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
         public static readonly DependencyProperty TitleCapsProperty = DependencyProperty.Register("TitleCaps", typeof(bool), typeof(MetroWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty TitleAlignmentProperty = DependencyProperty.Register("TitleAlignment", typeof(HorizontalAlignment), typeof(MetroWindow), new PropertyMetadata(HorizontalAlignment.Stretch));
         public static readonly DependencyProperty SaveWindowPositionProperty = DependencyProperty.Register("SaveWindowPosition", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false));
         public static readonly DependencyProperty WindowPlacementSettingsProperty = DependencyProperty.Register("WindowPlacementSettings", typeof(IWindowPlacementSettings), typeof(MetroWindow), new PropertyMetadata(null));
         public static readonly DependencyProperty TitleForegroundProperty = DependencyProperty.Register("TitleForeground", typeof(Brush), typeof(MetroWindow));
@@ -81,9 +82,12 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty WindowButtonCommandsOverlayBehaviorProperty = DependencyProperty.Register("WindowButtonCommandsOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Always));
         public static readonly DependencyProperty IconOverlayBehaviorProperty = DependencyProperty.Register("IconOverlayBehavior", typeof(WindowCommandsOverlayBehavior), typeof(MetroWindow), new PropertyMetadata(WindowCommandsOverlayBehavior.Never));
 
-        public static readonly DependencyProperty WindowMinButtonStyleProperty = DependencyProperty.Register("WindowMinButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty WindowMaxButtonStyleProperty = DependencyProperty.Register("WindowMaxButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
-        public static readonly DependencyProperty WindowCloseButtonStyleProperty = DependencyProperty.Register("WindowCloseButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null));
+        [Obsolete(@"This property will be deleted in the next release. You should use LightMinButtonStyle or DarkMinButtonStyle in WindowButtonCommands to override the style.")]
+        public static readonly DependencyProperty WindowMinButtonStyleProperty = DependencyProperty.Register("WindowMinButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null, OnWindowButtonStyleChanged));
+        [Obsolete(@"This property will be deleted in the next release. You should use LightMaxButtonStyle or DarkMaxButtonStyle in WindowButtonCommands to override the style.")]
+        public static readonly DependencyProperty WindowMaxButtonStyleProperty = DependencyProperty.Register("WindowMaxButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null, OnWindowButtonStyleChanged));
+        [Obsolete(@"This property will be deleted in the next release. You should use LightCloseButtonStyle or DarkCloseButtonStyle in WindowButtonCommands to override the style.")]
+        public static readonly DependencyProperty WindowCloseButtonStyleProperty = DependencyProperty.Register("WindowCloseButtonStyle", typeof(Style), typeof(MetroWindow), new PropertyMetadata(null, OnWindowButtonStyleChanged));
 
         public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(MetroWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
         public static readonly DependencyProperty OverrideDefaultWindowCommandsBrushProperty = DependencyProperty.Register("OverrideDefaultWindowCommandsBrush", typeof(SolidColorBrush), typeof(MetroWindow));
@@ -116,7 +120,7 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
-        /// CleanWindow sets this so it has the correct default window commands brush
+        /// Allows easy handling of window commands brush. Theme is also applied based on this brush.
         /// </summary>
         public SolidColorBrush OverrideDefaultWindowCommandsBrush
         {
@@ -183,31 +187,37 @@ namespace MahApps.Metro.Controls
             set { SetValue(IconOverlayBehaviorProperty, value); }
         }
 
-        /// <summary>
-        /// Gets/sets the style for the MIN button style.
-        /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use LightMinButtonStyle or DarkMinButtonStyle in WindowButtonCommands to override the style.")]
         public Style WindowMinButtonStyle
         {
             get { return (Style)this.GetValue(WindowMinButtonStyleProperty); }
             set { SetValue(WindowMinButtonStyleProperty, value); }
         }
 
-        /// <summary>
-        /// Gets/sets the style for the MAX button style.
-        /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use LightMaxButtonStyle or DarkMaxButtonStyle in WindowButtonCommands to override the style.")]
         public Style WindowMaxButtonStyle
         {
             get { return (Style)this.GetValue(WindowMaxButtonStyleProperty); }
             set { SetValue(WindowMaxButtonStyleProperty, value); }
         }
 
-        /// <summary>
-        /// Gets/sets the style for the CLOSE button style.
-        /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use LightCloseButtonStyle or DarkCloseButtonStyle in WindowButtonCommands to override the style.")]
         public Style WindowCloseButtonStyle
         {
             get { return (Style)this.GetValue(WindowCloseButtonStyleProperty); }
             set { SetValue(WindowCloseButtonStyleProperty, value); }
+        }
+
+        public static void OnWindowButtonStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue == e.OldValue)
+            {
+                return;
+            }
+
+            var window = (MetroWindow) d;
+            if (window.WindowButtonCommands != null)
+                window.WindowButtonCommands.ApplyTheme();
         }
 
         /// <summary>
@@ -547,6 +557,15 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets/sets the title horizontal alignment.
+        /// </summary>
+        public HorizontalAlignment TitleAlignment
+        {
+            get { return (HorizontalAlignment)GetValue(TitleAlignmentProperty); }
+            set { SetValue(TitleAlignmentProperty, value); }
+        }
+
+        /// <summary>
         /// Gets/sets the brush used for the Window's title bar.
         /// </summary>
         public Brush WindowTitleBrush
@@ -744,7 +763,7 @@ namespace MahApps.Metro.Controls
 
         private void MetroWindow_SizeChanged(object sender, RoutedEventArgs e)
         {
-            // this all works only for CleanWindow style
+            // this all works only for centered title
 
             var titleBarGrid = (Grid)titleBar;
             var titleBarLabel = (Label)titleBarGrid.Children[0];
@@ -915,13 +934,13 @@ namespace MahApps.Metro.Controls
                 titleBarBackground.MouseUp += TitleBarMouseUp;
             }
 
-            // handle mouse events for PART_TitleBar -> MetroWindow and CleanWindow
+            // handle mouse events for PART_TitleBar -> MetroWindow
             if (titleBar != null && titleBar.Visibility == Visibility.Visible)
             {
                 titleBar.MouseDown += TitleBarMouseDown;
                 titleBar.MouseUp += TitleBarMouseUp;
 
-                // special title resizing for CleanWindow title
+                // special title resizing for centered title
                 if (titleBar.GetType() == typeof(Grid))
                 {
                     SizeChanged += MetroWindow_SizeChanged;

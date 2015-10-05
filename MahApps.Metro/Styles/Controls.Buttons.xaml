@@ -146,7 +146,7 @@
                                     Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
-                                 Value="false">
+                                 Value="False">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource GrayBrush7}" />
                             <Setter TargetName="ellipse"
@@ -185,7 +185,7 @@
                         Value=".5" />
             </Trigger>
             <Trigger Property="IsEnabled"
-                     Value="false">
+                     Value="False">
                 <Setter Property="Foreground"
                         Value="#ADADAD" />
             </Trigger>
@@ -208,12 +208,12 @@
     </Style>
 
     <!-- base button style for min, max and close window buttons -->
-    <Style x:Key="MetroBaseWindowButtonStyle"
+    <Style x:Key="BaseMetroWindowButtonStyle"
            TargetType="{x:Type Button}">
-        <Setter Property="Background"
-                Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground"
                 Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
+        <Setter Property="Background"
+                Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
@@ -226,11 +226,11 @@
                     <Grid Background="{TemplateBinding Background}">
                         <ContentPresenter x:Name="contentPresenter"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Margin="{TemplateBinding Padding}"
                                           RecognizesAccessKey="True"
-                                          Opacity="0.75" />
+                                          Opacity="0.5" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
@@ -239,46 +239,40 @@
                                     Property="Opacity"
                                     Value="1" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="False">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Opacity"
-                                    Value=".5" />
-                        </Trigger>
                     </ControlTemplate.Triggers>
-                    
                 </ControlTemplate>
-
             </Setter.Value>
         </Setter>
-        
         <Style.Triggers>
-
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter Property="Background"
                         Value="{DynamicResource SemiTransparentWhiteBrush}" />
             </Trigger>
-            
             <Trigger Property="IsPressed"
                      Value="True">
-                <Setter Property="Background"
-                        Value="{DynamicResource HighlightBrush}" />
                 <Setter Property="Foreground" 
                         Value="White" />
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
             <Trigger Property="IsEnabled"
-                     Value="false">
+                     Value="False">
                 <Setter Property="Foreground"
                         Value="{DynamicResource IdealForegroundDisabledBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
-
-    <!-- default button style for min, max and close window buttons -->
-    <Style x:Key="MetroWindowButtonStyle"
+    
+    <!-- obsolete -->
+    <Style x:Key="MetroBaseWindowButtonStyle"
            TargetType="{x:Type Button}"
-           BasedOn="{StaticResource MetroBaseWindowButtonStyle}">
+           BasedOn="{StaticResource BaseMetroWindowButtonStyle}" />
+
+    <!-- light button style for min, max and close window buttons -->
+    <Style x:Key="LightMetroWindowButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource BaseMetroWindowButtonStyle}">
         <Setter Property="FocusVisualStyle"
                 Value="{x:Null}" />
         <Setter Property="IsTabStop"
@@ -289,6 +283,57 @@
                 Value="34" />
         <Setter Property="Padding"
                 Value="0" />
+    </Style>
+
+    <!-- light button style for close window button (clean style) -->
+    <Style x:Key="LightMetroWindowCloseButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource LightMetroWindowButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource CloseButtonBackgroundBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- dark button style for min, max and close window buttons -->
+    <Style x:Key="DarkMetroWindowButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource LightMetroWindowButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource SemiTransparentGreyBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Foreground" 
+                        Value="White" />
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource DarkIdealForegroundDisabledBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- dark button style for close window button (clean style) -->
+    <Style x:Key="DarkMetroWindowCloseButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource DarkMetroWindowButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource CloseButtonBackgroundBrush}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- style for default button -->
@@ -332,7 +377,7 @@
                         <Border x:Name="DisabledVisualElement"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Background="{DynamicResource ControlsDisabledBrush}"
-                                IsHitTestVisible="false"
+                                IsHitTestVisible="False"
                                 Opacity="0"
                                 CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
                         <ContentPresenter x:Name="contentPresenter"
@@ -460,7 +505,7 @@
                                 Background="{x:Null}" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
-                                   IsHitTestVisible="false"
+                                   IsHitTestVisible="False"
                                    Opacity="0" />
                         <ContentPresenter x:Name="contentPresenter"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -500,7 +545,7 @@
                                     Value="{DynamicResource BlackBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
-                                 Value="true">
+                                 Value="True">
                             <Setter Property="Background"
                                     Value="{DynamicResource BlackBrush}" />
                             <Setter Property="Foreground"
@@ -567,7 +612,7 @@
                                 Background="{x:Null}" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
-                                   IsHitTestVisible="false"
+                                   IsHitTestVisible="False"
                                    Opacity="0" />
                         <ContentPresenter x:Name="contentPresenter"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -607,7 +652,7 @@
                                     Value="{DynamicResource IdealForegroundColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
-                                 Value="true">
+                                 Value="True">
                             <Setter Property="Background"
                                     Value="{DynamicResource BlackBrush}" />
                             <Setter Property="Foreground"
@@ -754,7 +799,7 @@
                         <Border x:Name="DisabledVisualElement"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Background="{DynamicResource ControlsDisabledBrush}"
-                                IsHitTestVisible="false"
+                                IsHitTestVisible="False"
                                 Opacity="0"
                                 CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
                         <ContentPresenter x:Name="contentPresenter"
@@ -1090,25 +1135,25 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsKeyboardFocused"
-                                 Value="true">
+                                 Value="True">
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
                                     Value="Transparent" />
                         </Trigger>
                         <Trigger Property="IsMouseOver"
-                                 Value="true">
+                                 Value="True">
                             <Setter TargetName="Border"
                                     Property="Background"
                                     Value="{DynamicResource GrayBrush8}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
-                                 Value="true">
+                                 Value="True">
                             <Setter TargetName="Border"
                                     Property="Background"
                                     Value="{DynamicResource GrayBrush6}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
-                                 Value="false">
+                                 Value="False">
                             <Setter TargetName="Border"
                                     Property="Background"
                                     Value="{DynamicResource GrayBrush10}" />
