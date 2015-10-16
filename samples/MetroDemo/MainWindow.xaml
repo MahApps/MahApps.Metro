@@ -193,6 +193,8 @@
                               Header="Show ProgressDialog via VM" />
                     <MenuItem Command="{Binding ShowCustomDialogCommand}"
                               Header="Show CustomDialog via VM" />
+                    <MenuItem Command="{Binding ShowCustomInputDialogCommand}"
+                              Header="Show CustomInputDialog via VM" />
                 </MenuItem>
                 <MenuItem Header="Window">
                     <MenuItem IsCheckable="True" Header="ShowInTaskbar"

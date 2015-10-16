@@ -13,6 +13,7 @@ using MetroDemo.Models;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MetroDemo.ExampleViews;
 
 namespace MetroDemo
 {
@@ -339,7 +340,30 @@ namespace MetroDemo
 
             await controller.CloseAsync();
         }
-        
+        private ICommand showCustomInputDialogCommand;
+
+        public ICommand ShowCustomInputDialogCommand
+        {
+            get
+            {
+                return this.showCustomInputDialogCommand ?? (this.showCustomInputDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x => RunCustomInputFromVm()
+                });
+            }
+        }
+
+        private async void RunCustomInputFromVm()
+        {
+            var customDialog = new PersonInputDialog() {};
+
+            var resultingPerson = await _dialogCoordinator.ShowCustomInputAsync<PersonInputDialog>(this, customDialog);
+
+            await TaskEx.Delay(3000);
+
+            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+        }
 
         private ICommand showCustomDialogCommand;
 

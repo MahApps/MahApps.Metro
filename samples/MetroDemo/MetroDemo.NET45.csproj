@@ -106,6 +106,9 @@
     <Compile Include="ExampleViews\OtherExamples.xaml.cs">
       <DependentUpon>OtherExamples.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExampleViews\PersonInputDialog.xaml.cs">
+      <DependentUpon>PersonInputDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleViews\SelectionExamples.xaml.cs">
       <DependentUpon>SelectionExamples.xaml</DependentUpon>
     </Compile>
@@ -174,6 +177,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ExampleViews\OtherExamples.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\PersonInputDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

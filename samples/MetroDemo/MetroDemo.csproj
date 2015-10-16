@@ -104,6 +104,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExampleViews\PersonInputDialog.xaml.cs">
+      <DependentUpon>PersonInputDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleViews\TilesExample.xaml.cs">
       <DependentUpon>TilesExample.xaml</DependentUpon>
     </Compile>
@@ -170,6 +173,10 @@
       <DependentUpon>VSDemo.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
+    <Page Include="ExampleViews\PersonInputDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ExampleViews\TilesExample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
