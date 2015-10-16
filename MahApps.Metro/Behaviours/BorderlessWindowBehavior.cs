@@ -121,12 +121,12 @@ namespace MahApps.Metro.Behaviours
                     // WindowState="Maximized"
                     // IgnoreTaskbarOnMaximize="True"
                     // this only happens if we change this at runtime
-                    var removed = _ModifyStyle(0, Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME);
+                    var removed = _ModifyStyle(Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME, 0);
                     windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
                     this.ForceRedrawWindowFromPropertyChanged();
                     if (removed)
                     {
-                        _ModifyStyle(Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME, 0);
+                        _ModifyStyle(0, Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME);
                     }
                 }
             }
