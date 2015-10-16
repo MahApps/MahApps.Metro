@@ -140,6 +140,53 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
+
+        public static Task<TResult> ShowCustomInputAsync<TResult>(this MetroWindow window, CustomInputDialog<TResult> dialog, MetroDialogSettings settings = null) where TResult : class
+        {
+
+            window.Dispatcher.VerifyAccess();
+            return HandleOverlayOnShow(settings, window).ContinueWith(z => {
+                return (Task<TResult>)window.Dispatcher.Invoke(new Func<Task<TResult>>(() => {
+                    if (settings == null)
+                        settings = window.MetroDialogOptions;
+
+                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                    dialog.SizeChangedHandler = sizeHandler;
+
+                    return dialog.WaitForLoadAsync().ContinueWith(x => {
+                        if (DialogOpened != null)
+                        {
+                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                        }
+
+                        return dialog.WaitForButtonPressAsync().ContinueWith(y => {
+                            //once a button as been clicked, begin removing the dialog.
+
+                            dialog.OnClose();
+
+                            if (DialogClosed != null)
+                            {
+                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
+                            }
+
+                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+                            return closingTask.ContinueWith(a => {
+                                return ((Task)window.Dispatcher.Invoke(new Func<Task>(() => {
+                                    window.SizeChanged -= sizeHandler;
+
+                                    window.RemoveDialog(dialog);
+
+                                    return HandleOverlayOnHide(settings, window);
+                                }))).ContinueWith(y3 => y).Unwrap();
+                            });
+                        }).Unwrap();
+                    }).Unwrap().Unwrap();
+                }));
+            }).Unwrap();
+        }
+
+
+
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>

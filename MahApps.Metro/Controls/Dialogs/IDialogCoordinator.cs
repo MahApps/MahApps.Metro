@@ -81,6 +81,8 @@ namespace MahApps.Metro.Controls.Dialogs
         /// Gets the current shown dialog.
         /// </summary>
         /// <param name="context">Typically this should be the view model, which you register in XAML using <see cref="DialogParticipation.SetRegister"/>.</param>
-        Task<TDialog> GetCurrentDialogAsync<TDialog>(object context) where TDialog : BaseMetroDialog;        
+        Task<TDialog> GetCurrentDialogAsync<TDialog>(object context) where TDialog : BaseMetroDialog;
+
+        Task<TResult> ShowCustomInputAsync<TResult>(object context, CustomInputDialog<TResult> dialog, MetroDialogSettings metroDialogSettings = null) where TResult : class;
     }
 }
