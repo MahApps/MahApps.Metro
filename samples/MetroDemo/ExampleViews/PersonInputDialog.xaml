@@ -1,15 +1,14 @@
 ﻿<Dialog:CustomInputDialog 
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             x:TypeArguments="sys:String"
+             xmlns:local="clr-namespace:MetroDemo.ExampleViews"
+             x:TypeArguments="local:Person"
              x:Class="MetroDemo.ExampleViews.PersonInputDialog"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MetroDemo.ExampleViews"
              xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d">
     <Grid Margin="0 10 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"
@@ -20,15 +19,29 @@
         <TextBlock Grid.Row="0"
                    Margin="0 5 0 0"
                    FontSize="{DynamicResource DialogMessageFontSize}"
-                   Text="{Binding Message, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                   Text="{Binding Message, RelativeSource={RelativeSource AncestorType=local:PersonInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                    TextWrapping="Wrap"
-                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:InputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+                   Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=local:PersonInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
         <TextBox Grid.Row="1"
                  Margin="0 5 0 0"
                  FontSize="{DynamicResource DialogMessageFontSize}"
+                 controls:ControlsHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
+                 controls:TextBoxHelper.SelectAllOnFocus="True"
                  x:Name="PART_TextBox"
-                 Text="{Binding Input, RelativeSource={RelativeSource AncestorType=Dialogs:CustomInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
-                 TextWrapping="Wrap"></TextBox>
+                 Text="{Binding Input, RelativeSource={RelativeSource AncestorType=local:PersonInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                 TextWrapping="Wrap"
+                 Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=local:PersonInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+        <ComboBox 
+                Grid.Row="1"
+            Margin="0 5 0 0"
+            FontSize="{DynamicResource DialogMessageFontSize}"
+            controls:ControlsHelper.FocusBorderBrush="{DynamicResource AccentColorBrush}"
+            controls:TextBoxHelper.SelectAllOnFocus="True"
+            x:Name="PART_Combo"
+            SelectedItem="{Binding SelectedPerson, RelativeSource={RelativeSource AncestorType=local:PersonInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+            ItemsSource="{Binding People, RelativeSource={RelativeSource AncestorType=local:PersonInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+            DisplayMemberPath="Name">
+        </ComboBox>
         <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
@@ -37,13 +50,15 @@
                     Height="35"
                     MinWidth="80"
                     Style="{DynamicResource AccentedDialogSquareButton}"
-                    Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:CustomInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding AffirmativeButtonText, RelativeSource={RelativeSource AncestorType=local:PersonInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Margin="0 0 5 0" />
             <Button x:Name="PART_NegativeButton"
                     Height="35"
                     MinWidth="80"
-                    Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=Dialogs:CustomInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                    Content="{Binding NegativeButtonText, RelativeSource={RelativeSource AncestorType=local:PersonInputDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                     Margin="5 0 5 0" />
         </StackPanel>
     </Grid>
+
+
 </Dialog:CustomInputDialog>

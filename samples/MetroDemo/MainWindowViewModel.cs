@@ -356,13 +356,15 @@ namespace MetroDemo
 
         private async void RunCustomInputFromVm()
         {
-            var customDialog = new PersonInputDialog() {};
+            var customDialog = new PersonInputDialog() {Title = "Select Person"};
 
-            var resultingPerson = await _dialogCoordinator.ShowCustomInputAsync<PersonInputDialog>(this, customDialog);
+            //var resultingPerson = _dialogCoordinator.ShowCustomInputAsync(this, customDialog).Result; //todo: this doesnt work
+            var resultingPerson = await _dialogCoordinator.ShowCustomInputAsync(this, customDialog);
 
-            await TaskEx.Delay(3000);
-
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            if (resultingPerson != null) {
+                await _dialogCoordinator.ShowMessageAsync(this, "YOUR CHOICE",
+                    $"You selected {resultingPerson.Name}, who is aged {resultingPerson.Age}");
+            }
         }
 
         private ICommand showCustomDialogCommand;
