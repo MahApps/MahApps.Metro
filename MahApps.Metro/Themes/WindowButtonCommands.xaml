@@ -61,8 +61,7 @@
                       SnapsToDevicePixels="True"
                       Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
             </Button>
-            <!--Style="{Binding CloseButtonStyle, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowButtonCommands}}}"-->
-
+            
             <Button x:Name="PART_Close"
                     Focusable="False"
                     RenderOptions.EdgeMode="Aliased"
