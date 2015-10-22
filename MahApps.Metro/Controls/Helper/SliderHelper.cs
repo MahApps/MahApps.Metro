@@ -35,8 +35,7 @@
                 UnregisterEvents(slider);
                 if ((MouseWheelState)e.NewValue != MouseWheelState.None)
                 {
-                    slider.Unloaded += OnUnloaded;
-                    slider.PreviewMouseWheel += OnPreviewMouseWheel;
+                    RegisterEvents(slider);
                 }
             }
         }
@@ -79,6 +78,12 @@
         {
             slider.Unloaded -= OnUnloaded;
             slider.PreviewMouseWheel -= OnPreviewMouseWheel;
+        }
+        
+        private static void RegisterEvents(Slider slider)
+        {
+            slider.Unloaded += OnUnloaded;
+            slider.PreviewMouseWheel += OnPreviewMouseWheel;
         }
     }
 }
