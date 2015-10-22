@@ -104,6 +104,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -157,6 +158,12 @@
                 </StackPanel>
             </GroupBox>
         </Grid>
+
+        <StatusBar Grid.Row="2">
+            <StatusBarItem>MahApps.Metro Clean Window</StatusBarItem>
+            <Separator Style="{StaticResource CleanMetroStatusBarSeparator}" />
+            <StatusBarItem>Some stuff</StatusBarItem>
+        </StatusBar>
     </Grid>
 
 </Controls:MetroWindow>
