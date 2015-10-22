@@ -125,8 +125,11 @@
     <Compile Include="Controls\Helper\DataGridRowHelper.cs" />
     <Compile Include="Controls\Helper\ExpanderHelper.cs" />
     <Compile Include="Controls\Helper\GroupBoxHelper.cs" />
+    <Compile Include="Controls\Helper\MouseWheelChange.cs" />
+    <Compile Include="Controls\Helper\MouseWheelState.cs" />
     <Compile Include="Controls\Helper\PasswordBoxHelper.cs" />
     <Compile Include="Controls\Helper\ScrollBarHelper.cs" />
+    <Compile Include="Controls\Helper\SliderHelper.cs" />
     <Compile Include="Controls\Helper\TabControlHelper.cs" />
     <Compile Include="Controls\Helper\TextBoxHelper.cs" />
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
