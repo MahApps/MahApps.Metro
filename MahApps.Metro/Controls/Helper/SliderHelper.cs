@@ -17,27 +17,27 @@
             typeof(SliderHelper),
             new PropertyMetadata(MouseWheelState.None, OnEnableMouseWheelChanged));
         
-        public static MouseWheelChange GetChangeValueBy(DependencyObject element)
+        public static MouseWheelChange GetChangeValueBy(Slider element)
         {
             return (MouseWheelChange)element.GetValue(ChangeValueByProperty);
         }
 
-        public static MouseWheelState GetEnableMouseWheel(DependencyObject element)
+        public static MouseWheelState GetEnableMouseWheel(Slider element)
         {
             return (MouseWheelState)element.GetValue(EnableMouseWheelProperty);
         }
 
         private static void OnEnableMouseWheelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var slider = ((Slider)d);
-            if ((MouseWheelState)e.NewValue != MouseWheelState.None)
-            {
-                slider.Unloaded += OnUnloaded;
-                slider.PreviewMouseWheel += OnPreviewMouseWheel;
-            }
-            else
+            var slider = d as Slider;
+            if (slider != null)
             {
                 UnregisterEvents(slider);
+                if ((MouseWheelState)e.NewValue != MouseWheelState.None)
+                {
+                    slider.Unloaded += OnUnloaded;
+                    slider.PreviewMouseWheel += OnPreviewMouseWheel;
+                }
             }
         }
 
@@ -65,12 +65,12 @@
             UnregisterEvents((Slider)sender);
         }
 
-        public static void SetChangeValueBy(DependencyObject element, MouseWheelChange value)
+        public static void SetChangeValueBy(Slider element, MouseWheelChange value)
         {
             element.SetValue(ChangeValueByProperty, value);
         }
 
-        public static void SetEnableMouseWheel(DependencyObject element, MouseWheelState value)
+        public static void SetEnableMouseWheel(Slider element, MouseWheelState value)
         {
             element.SetValue(EnableMouseWheelProperty, value);
         }
