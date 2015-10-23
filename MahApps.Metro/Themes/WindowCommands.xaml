@@ -213,6 +213,18 @@
                                                SnapsToDevicePixels="True"
                                                Opacity="0.25" />
                                 </StackPanel>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=PART_ContentPresenter, Path=Content.Visibility}"
+                                                 Value="Collapsed">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=PART_ContentPresenter, Path=Content.Visibility}"
+                                                 Value="Hidden">
+                                        <Setter Property="Visibility"
+                                                Value="Collapsed" />
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
