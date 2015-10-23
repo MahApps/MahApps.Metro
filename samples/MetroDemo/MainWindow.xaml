@@ -205,6 +205,12 @@
                     <MenuItem Header="Window with a Border" Click="MenuWindowWithBorderOnClick" />
                     <MenuItem Header="Window with a Glow" Click="MenuWindowWithGlowOnClick" />
                     <MenuItem Header="Window with drop shadow" Click="MenuWindowWithShadowOnClick" />
+                    <Separator />
+                    <MenuItem IsCheckable="True" Header="ShowSeparators (RightWindowCommands)" x:Name="ShowSeparatorsMI"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowSeparators}" />
+                    <MenuItem IsCheckable="True" Header="ShowLastSeparator in (RightWindowCommands)"
+                              IsEnabled="{Binding ElementName=ShowSeparatorsMI, Path=IsChecked, Mode=OneWay}"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowLastSeparator}" />
                 </MenuItem>
             </Menu>
 

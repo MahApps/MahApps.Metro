@@ -211,8 +211,17 @@
                                                Fill="{Binding Foreground, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type Controls:WindowCommands}}}"
                                                IsHitTestVisible="False"
                                                SnapsToDevicePixels="True"
+                                               UseLayoutRounding="True"
                                                Opacity="0.25" />
                                 </StackPanel>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSeparatorVisible"
+                                             Value="False">
+                                        <Setter TargetName="PART_Separator"
+                                                Property="Visibility"
+                                                Value="Collapsed" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
