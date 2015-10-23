@@ -1,5 +1,9 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -157,10 +161,57 @@ namespace MahApps.Metro.Controls
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
             base.PrepareContainerForItemOverride(element, item);
-
+            this.AttachVisibilityHandler(element as WindowCommandsItem, item as UIElement);
             if ((Items.Count > 0) && (ReferenceEquals(item, Items[Items.Count - 1])))
             {
                 ResetSeparators(false);
+            }
+        }
+
+        protected override void ClearContainerForItemOverride(DependencyObject element, object item)
+        {
+            base.ClearContainerForItemOverride(element, item);
+            this.DetachVisibilityHandler(element as WindowCommandsItem);
+            ResetSeparators(false);
+        }
+
+        private void AttachVisibilityHandler(WindowCommandsItem container, UIElement item)
+        {
+            if (container != null)
+            {
+                // hide the container, if there is no UIElement
+                if (null == item)
+                {
+                    container.Visibility = Visibility.Collapsed;
+                    return;
+                }
+
+                container.Visibility = item.Visibility;
+                var isVisibilityNotifier = new PropertyChangeNotifier(item, UIElement.VisibilityProperty);
+                isVisibilityNotifier.ValueChanged += VisibilityPropertyChanged;
+                container.VisibilityPropertyChangeNotifier = isVisibilityNotifier;
+            }
+        }
+
+        private void DetachVisibilityHandler(WindowCommandsItem container)
+        {
+            if (container != null)
+            {
+                container.VisibilityPropertyChangeNotifier = null;
+            }
+        }
+
+        private void VisibilityPropertyChanged(object sender, EventArgs e)
+        {
+            var item = sender as UIElement;
+            if (item != null)
+            {
+                var container = GetWindowCommandsItem(item);
+                if (container != null)
+                {
+                    container.Visibility = item.Visibility;
+                    ResetSeparators();
+                }
             }
         }
 
@@ -172,23 +223,41 @@ namespace MahApps.Metro.Controls
 
         private void ResetSeparators(bool reset = true)
         {
+            if (Items.Count == 0)
+            {
+                return;
+            }
+
+            var windowCommandsItems = this.GetWindowCommandsItems().ToList();
+
             if (reset)
             {
-                for (var i = 0; i < Items.Count - 1; i++)
+                foreach (var windowCommandsItem in windowCommandsItems)
                 {
-                    var container = ItemContainerGenerator.ContainerFromIndex(i) as WindowCommandsItem;
-                    if (container != null)
-                    {
-                        container.IsSeparatorVisible = ShowSeparators;
-                    }
+                    windowCommandsItem.IsSeparatorVisible = ShowSeparators;
                 }
             }
 
-            var lastContainer = ItemContainerGenerator.ContainerFromIndex(Items.Count - 1) as WindowCommandsItem;
+            var lastContainer = windowCommandsItems.LastOrDefault(i => i.IsVisible);
             if (lastContainer != null)
             {
                 lastContainer.IsSeparatorVisible = ShowSeparators && ShowLastSeparator;
             }
+        }
+
+        private WindowCommandsItem GetWindowCommandsItem(object item)
+        {
+            var windowCommandsItem = item as WindowCommandsItem;
+            if (windowCommandsItem != null)
+            {
+                return windowCommandsItem;
+            }
+            return (WindowCommandsItem)this.ItemContainerGenerator.ContainerFromItem(item);
+        }
+
+        private IEnumerable<WindowCommandsItem> GetWindowCommandsItems()
+        {
+            return (from object item in (IEnumerable)this.Items select this.GetWindowCommandsItem(item)).Where(i => i != null);
         }
 
         private void WindowCommands_Loaded(object sender, RoutedEventArgs e)
@@ -233,38 +302,19 @@ namespace MahApps.Metro.Controls
         private const string PART_ContentPresenter = "PART_ContentPresenter";
         private const string PART_Separator = "PART_Separator";
 
-        private UIElement separator;
-        private bool isSeparatorVisible = true;
+        internal PropertyChangeNotifier VisibilityPropertyChangeNotifier { get; set; }
 
+        public static readonly DependencyProperty IsSeparatorVisibleProperty =
+            DependencyProperty.Register("IsSeparatorVisible", typeof(bool), typeof(WindowCommandsItem),
+                                        new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits|FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary>
+        /// Gets or sets the value indicating whether to show the separator.
+        /// </summary>
         public bool IsSeparatorVisible
         {
-            get { return isSeparatorVisible; }
-            set
-            {
-                if (isSeparatorVisible == value)
-                {
-                    return;
-                }
-
-                isSeparatorVisible = value;
-                SetSeparatorVisibility();
-            }
-        }
-
-        private void SetSeparatorVisibility()
-        {
-            if (separator != null)
-            {
-                separator.Visibility = IsSeparatorVisible ? Visibility.Visible : Visibility.Hidden;
-            }
-        }
-
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            separator = Template.FindName(PART_Separator, this) as UIElement;
-            SetSeparatorVisibility();
+            get { return (bool)GetValue(IsSeparatorVisibleProperty); }
+            set { SetValue(IsSeparatorVisibleProperty, value); }
         }
     }
 }
