@@ -7,6 +7,8 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 [![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro/)
 [![Issues](https://img.shields.io/github/issues/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/issues)
 
+[![Gitter](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://gitter.im/MahApps/MahApps.Metro)
+
 ![main demo window](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/main_demo_window.png)
 
 ### Documentation
@@ -32,6 +34,19 @@ Did you stumble upon a bug? Before reporting it to us, please check out the [FAQ
 #### Bug Reports
 
 Please read [this page](https://github.com/MahApps/MahApps.Metro/wiki/About-Bug-Reports) before submitting an issue.
+
+### Contributions
+
+If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request.
+
+### Missing a control?
+
+If you're looking for a control that we don't have, we have some friends who have made MA.M compatible controls. Check them out:
+
+- [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
+- [MahApps.Metro.SimpleChildWindow](https://github.com/punker76/MahApps.Metro.SimpleChildWindow) A simple child window for MahApps.Metro
+- [Dragablz](https://github.com/ButchersBoy/Dragablz) Tearable tab control for WPF, which includes docking, tool windows and MDI. [http://dragablz.net](http://dragablz.net)
+- [MaterialDesignInXamlToolkit](https://github.com/ButchersBoy/MaterialDesignInXamlToolkit) Google Material Design in XAML & WPF, for C# & VB.Net [http://materialdesigninxaml.net](http://materialdesigninxaml.net)
 
 ### Breaking Changes
 
@@ -107,21 +122,6 @@ c:\Users\<USER>\Documents\Visual Studio 2013\
 Now you can choose the templates at the `New Project` dialog.
 
 ![](./docs/new_project_dialog.png)
-
-### Contributions
-
-If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request.
-
-### Chatroom
-
-Drop in on the Gitter room - https://gitter.im/MahApps/MahApps.Metro - if you want to ask a question or discuss something with the team.
-
-### Missing a control?
-
-If you're looking for a control that we don't have, we have some friends who have made MA.M compatible controls. Check them out:
-
-- [Loading indicators](https://github.com/100GPing100/LoadingIndicators.WPF) by [@100GPing100](https://github.com/100GPing100)
-- [Dragablz - TabControl with Chrome style tearing, and docking/tool window/MDI support](https://github.com/ButchersBoy/Dragablz)
 
 ### Licence
 
