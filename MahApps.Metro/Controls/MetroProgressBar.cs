@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
@@ -29,9 +30,14 @@ namespace MahApps.Metro.Controls
             IsIndeterminateProperty.OverrideMetadata(typeof(MetroProgressBar), new FrameworkPropertyMetadata(OnIsIndeterminateChanged));
         }
 
+        public MetroProgressBar()
+        {
+            IsVisibleChanged += VisibleChangedHandler;
+        }
+
         private void VisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
         {
-            //reset Storyboard if Visibility is set to Visible #1300
+            // reset Storyboard if Visibility is set to Visible #1300
             if (IsIndeterminate)
             {
                 ToggleIndeterminate(this, (bool)e.OldValue, (bool)e.NewValue);
@@ -59,7 +65,12 @@ namespace MahApps.Metro.Controls
                     }
                     if (newValue)
                     {
-                        bar.ResetStoryboard(bar.ActualWidth, false);
+                        var resetAction = new Action(() => {
+                                                         bar.InvalidateMeasure();
+                                                         bar.InvalidateArrange();
+                                                         bar.ResetStoryboard(bar.ActualWidth, false);
+                                                     });
+                        bar.Dispatcher.BeginInvoke(DispatcherPriority.Background, resetAction);
                     }
                 }
             }
@@ -176,7 +187,9 @@ namespace MahApps.Metro.Controls
             var templateGrid = GetTemplateChild("ContainingGrid") as FrameworkElement;
             if (templateGrid == null)
             {
-                return null;
+                this.ApplyTemplate();
+                templateGrid = GetTemplateChild("ContainingGrid") as FrameworkElement;
+                if (templateGrid == null) return null;
             }
             var groups = VisualStateManager.GetVisualStateGroups(templateGrid);
             return groups != null
@@ -275,7 +288,6 @@ namespace MahApps.Metro.Controls
             Loaded -= LoadedHandler;
             SizeChangedHandler(null, null);
             SizeChanged += SizeChangedHandler;
-            IsVisibleChanged += VisibleChangedHandler;
         }
 
         protected override void OnInitialized(EventArgs e)
