@@ -11,6 +11,8 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 
 ![main demo window](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/main_demo_window.png)
 
+![main demo window animated](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/main_demo_window.gif)
+
 ## Documentation
 
 Read it here: [http://mahapps.com](http://mahapps.com)
