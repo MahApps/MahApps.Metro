@@ -306,6 +306,10 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             handle = new WindowInteropHelper(AssociatedObject).Handle;
+            if (null == handle)
+            {
+                throw new MahAppsException("Uups, at this point we really need the Handle from the associated object!");
+            }
             hwndSource = HwndSource.FromHwnd(handle);
             if (hwndSource != null)
             {
