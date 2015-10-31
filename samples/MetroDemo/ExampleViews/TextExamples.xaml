@@ -213,9 +213,15 @@
                 <Label Content="NumericUpDown"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
 
-                <CheckBox x:Name="ReadOnlyCheck"
-                          Content="IsReadOnly"
-                          Margin="1" />
+                <UniformGrid Columns="2">
+                    <CheckBox x:Name="ReadOnlyCheck"
+                              Content="IsReadOnly"
+                              Margin="1" />
+                    <CheckBox x:Name="HasDecimalsCheckBox"
+                              Content="HasDecimals"
+                              IsChecked="True"
+                              Margin="1" />
+                </UniformGrid>
 
                 <Label Content='Min="0", Max="10", TextAlignment="Left"' />
                 <Controls:NumericUpDown Value="5" IsEnabled="False"
@@ -223,22 +229,9 @@
                                         TextAlignment="Left"
                                         Minimum="0"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"                                                                                
-                                        Maximum="10" />
-
-                <Label Content='Interval="2"' />
-             
-                <CheckBox x:Name="HasDecimalsCheckBox"
-                          Content="HasDecimals"
-                          IsChecked="True"
-                          Margin="0,7" />
-                
-                <Controls:NumericUpDown Value="5"
-                                        ButtonsAlignment="Left" 
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
-                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        Interval="2" />
-
+                                        Maximum="10" />
+             
                 <Label Content='Interval="5"' />
                 <Controls:NumericUpDown Value="5" IsTabStop="False"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
