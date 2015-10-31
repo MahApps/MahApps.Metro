@@ -140,6 +140,7 @@
     <Compile Include="Controls\MetroProgressBar.cs" />
     <Compile Include="Controls\MetroTabControl.cs" />
     <Compile Include="Controls\MetroTabItem.cs" />
+    <Compile Include="Controls\MetroThumb.cs" />
     <Compile Include="Controls\MetroWindowHelpers.cs" />
     <Compile Include="Controls\MultiFrameImage.cs" />
     <Compile Include="Controls\NumericUpDown.cs" />

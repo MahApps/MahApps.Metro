@@ -248,7 +248,7 @@
                                       Template="{DynamicResource RepeatButtonTemplate}" />
                     </Track.DecreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb Template="{DynamicResource HorizontalThumbTemplate}" />
+                        <Controls:MetroThumb Template="{DynamicResource HorizontalThumbTemplate}" />
                     </Track.Thumb>
                     <Track.IncreaseRepeatButton>
                         <RepeatButton x:Name="HorizontalLargeIncrease"
@@ -519,7 +519,7 @@
                                       Template="{DynamicResource RepeatButtonTemplate}" />
                     </Track.DecreaseRepeatButton>
                     <Track.Thumb>
-                        <Thumb Template="{DynamicResource VerticalThumbTemplate}" />
+                        <Controls:MetroThumb Template="{DynamicResource VerticalThumbTemplate}" />
                     </Track.Thumb>
                     <Track.IncreaseRepeatButton>
                         <RepeatButton x:Name="VerticalLargeIncrease"
