@@ -186,11 +186,11 @@
                                       Style="{StaticResource HorizontalTrackLargeDecrease}" />
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
-                        <controls:MetroTouchThumb x:Name="HorizontalThumb"
-                                                  Height="{DynamicResource HorizontalThumbHeight}"
-                                                  IsTabStop="True"
-                                                  Width="{DynamicResource HorizontalThumbWidth}"
-                                                  Style="{StaticResource HorizontalSliderThumb}" />
+                        <controls:MetroThumb x:Name="HorizontalThumb"
+                                             Height="{DynamicResource HorizontalThumbHeight}"
+                                             IsTabStop="True"
+                                             Width="{DynamicResource HorizontalThumbWidth}"
+                                             Style="{StaticResource HorizontalSliderThumb}" />
                     </Track.Thumb>
                 </Track>
             </Grid>
@@ -397,11 +397,11 @@
                                       Style="{StaticResource VerticalTrackLargeDecrease}" />
                     </Track.IncreaseRepeatButton>
                     <Track.Thumb>
-                        <controls:MetroTouchThumb x:Name="VerticalThumb"
-                                                  Width="{DynamicResource VerticalThumbWidth}"
-                                                  IsTabStop="True"
-                                                  Height="{DynamicResource VerticalThumbHeight}"
-                                                  Style="{StaticResource VerticalSliderThumb}" />
+                        <controls:MetroThumb x:Name="VerticalThumb"
+                                             Width="{DynamicResource VerticalThumbWidth}"
+                                             IsTabStop="True"
+                                             Height="{DynamicResource VerticalThumbHeight}"
+                                             Style="{StaticResource VerticalSliderThumb}" />
                     </Track.Thumb>
                 </Track>
             </Grid>

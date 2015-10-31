@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace MahApps.Metro.Controls
 {
-    public class MetroTouchThumb : Thumb
+    public class MetroThumb : Thumb
     {
         private TouchDevice _currentDevice = null;
 

@@ -99,10 +99,10 @@
                                   Height="{TemplateBinding Slider.Height}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroTouchThumb Height="{TemplateBinding Slider.Height}"
-                                              Width="{TemplateBinding Slider.Height}"
-                                              Style="{StaticResource SliderThumbStyle}"
-                                              Background="{TemplateBinding Slider.BorderBrush}" />
+                    <controls:MetroThumb Height="{TemplateBinding Slider.Height}"
+                                         Width="{TemplateBinding Slider.Height}"
+                                         Style="{StaticResource SliderThumbStyle}"
+                                         Background="{TemplateBinding Slider.BorderBrush}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"
@@ -161,10 +161,10 @@
                                   Height="{TemplateBinding Slider.Height}"/>
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroTouchThumb Height="{TemplateBinding Slider.Width}"
-                                              Width="{TemplateBinding Slider.Width}"
-                                              Style="{StaticResource SliderThumbStyle}"
-                                              Background="{TemplateBinding Slider.BorderBrush}" />
+                    <controls:MetroThumb Height="{TemplateBinding Slider.Width}"
+                                         Width="{TemplateBinding Slider.Width}"
+                                         Style="{StaticResource SliderThumbStyle}"
+                                         Background="{TemplateBinding Slider.BorderBrush}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"

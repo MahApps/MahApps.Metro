@@ -128,7 +128,7 @@
                                   Command="ScrollBar.PageLeftCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroTouchThumb Style="{StaticResource ScrollBarThumb}" />
+                    <controls:MetroThumb Style="{StaticResource ScrollBarThumb}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource ScrollBarPageButton}"
@@ -162,7 +162,7 @@
                                   Command="ScrollBar.PageUpCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <controls:MetroTouchThumb Style="{StaticResource ScrollBarThumb}" />
+                    <controls:MetroThumb Style="{StaticResource ScrollBarThumb}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource ScrollBarPageButton}"
