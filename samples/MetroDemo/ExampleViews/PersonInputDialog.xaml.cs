@@ -52,8 +52,6 @@ namespace MetroDemo.ExampleViews
             });
 
             cleanUpHandlers = () => {
-                PART_TextBox.KeyDown -= affirmativeKeyHandler;
-
                 this.KeyDown -= escapeKeyHandler;
 
                 PART_NegativeButton.Click -= negativeHandler;
@@ -107,8 +105,6 @@ namespace MetroDemo.ExampleViews
 
             PART_NegativeButton.KeyDown += negativeKeyHandler;
             PART_AffirmativeButton.KeyDown += affirmativeKeyHandler;
-
-            PART_TextBox.KeyDown += affirmativeKeyHandler;
 
             this.KeyDown += escapeKeyHandler;
 
