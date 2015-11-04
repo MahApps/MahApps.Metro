@@ -1032,6 +1032,26 @@ namespace MahApps.Metro.Controls
         private void OnTextBoxKeyDown(object sender, KeyEventArgs e)
         {
             _manualChange = true;
+
+            if (e.Key == Key.Decimal || e.Key == Key.OemPeriod)
+            {
+                TextBox textBox = sender as TextBox;
+
+                if (this.Culture != null)
+                {
+                    if (textBox.Text.Contains(this.Culture.NumberFormat.NumberDecimalSeparator) == false)
+                    {
+                        //the control doesn't contai the decimal separator
+                        //so we get the current caret index to insert the current culture decimal separator
+                        var caret = textBox.CaretIndex;
+                        //update the control text
+                        textBox.Text = textBox.Text.Insert(caret, this.Culture.NumberFormat.CurrencyDecimalSeparator);
+                        //move the caret to the correct position
+                        textBox.CaretIndex = caret + 1;
+                    }
+                    e.Handled = true;
+                }
+            }
         }
 
         private void OnTextBoxLostFocus(object sender, RoutedEventArgs e)
