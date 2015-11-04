@@ -19,6 +19,12 @@ Read it here: [http://mahapps.com](http://mahapps.com)
 
 You can help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
 
+## Release Notes
+
+- upcoming [v1.2.0](./docs/release-notes/1.2.0.md)
+- current [v1.1.2](./docs/release-notes/1.1.2.md)
+- all [other](./docs/release-notes/)
+
 ## Icons
 
 MahApps.Metro has also an icon package used from [WindowsIcons](https://github.com/Templarian/WindowsIcons) by [Templarian](https://github.com/Templarian)

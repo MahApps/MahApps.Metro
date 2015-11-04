@@ -147,7 +147,6 @@ namespace MahApps.Metro.Controls
             this.Loaded += WindowCommands_Loaded;
         }
 
-
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new WindowCommandsItem();
@@ -161,16 +160,15 @@ namespace MahApps.Metro.Controls
         protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
         {
             base.PrepareContainerForItemOverride(element, item);
+
             this.AttachVisibilityHandler(element as WindowCommandsItem, item as UIElement);
-            if ((Items.Count > 0) && (ReferenceEquals(item, Items[Items.Count - 1])))
-            {
-                ResetSeparators(false);
-            }
+            ResetSeparators();
         }
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
             base.ClearContainerForItemOverride(element, item);
+
             this.DetachVisibilityHandler(element as WindowCommandsItem);
             ResetSeparators(false);
         }
