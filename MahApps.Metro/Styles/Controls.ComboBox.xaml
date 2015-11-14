@@ -461,31 +461,24 @@
                                           VerticalAlignment="Stretch"
                                           KeyboardNavigation.IsTabStop="False" />
 
-                            <Border x:Name="EditableTextBoxBorder"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                    Visibility="Collapsed"
-                                    BorderBrush="Transparent"
-                                    BorderThickness="1,1,0,1"
-                                    Margin="0,0,1,0"
-                                    Background="{TemplateBinding Background}">
-                                <TextBox x:Name="PART_EditableTextBox"
-                                         Style="{StaticResource EditableTextBoxStyle}"
-                                         HorizontalAlignment="Stretch"
-                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                         HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                         BorderThickness="0"
-                                         Background="{x:Null}"
-                                         Margin="0,0,-1,-2"
-                                         Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                         MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.MaxLength), Mode=OneWay}"
-                                         CharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.CharacterCasing), Mode=OneWay}"
-                                         Foreground="{TemplateBinding Foreground}"
-                                         Focusable="True"
-                                         IsReadOnly="{TemplateBinding IsReadOnly}"
-                                         FontFamily="{TemplateBinding FontFamily}"
-                                         FontSize="{TemplateBinding FontSize}" />
-                            </Border>
+                            <TextBox x:Name="PART_EditableTextBox"
+                                     Style="{StaticResource EditableTextBoxStyle}"
+                                     Visibility="Collapsed"
+                                     HorizontalAlignment="Stretch"
+                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                     BorderThickness="0"
+                                     Background="{x:Null}"
+                                     Margin="1,1,0,-1"
+                                     Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                     MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.MaxLength), Mode=OneWay}"
+                                     CharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.CharacterCasing), Mode=OneWay}"
+                                     Foreground="{TemplateBinding Foreground}"
+                                     Focusable="True"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"
+                                     FontFamily="{TemplateBinding FontFamily}"
+                                     FontSize="{TemplateBinding FontSize}" />
                             <TextBlock x:Name="PART_WatermarkMessage"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        Padding="{TemplateBinding Padding}"
@@ -601,7 +594,7 @@
 
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}"
                                      Value="False">
-                            <Setter TargetName="EditableTextBoxBorder"
+                            <Setter TargetName="PART_EditableTextBox"
                                     Property="Grid.ColumnSpan"
                                     Value="2" />
                             <Setter TargetName="ContentSite"
@@ -615,7 +608,7 @@
                                  Value="True">
                             <Setter Property="IsTabStop"
                                     Value="false" />
-                            <Setter TargetName="EditableTextBoxBorder"
+                            <Setter TargetName="PART_EditableTextBox"
                                     Property="Visibility"
                                     Value="Visible" />
                             <Setter TargetName="ContentSite"
