@@ -86,7 +86,7 @@
                                        Opacity="0.6"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                       Margin="6,2,6,2" />
+                                       Margin="4,2,2,2" />
                             <Grid x:Name="PART_FloatingMessageContainer"
                                   Grid.Column="0"
                                   Grid.ColumnSpan="2"
@@ -336,7 +336,7 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                            <Grid>
+                                            <Grid x:Name="ToggleButtonRootGrid">
                                                 <Border x:Name="Background"
                                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -346,8 +346,8 @@
                                                 <Grid Margin="1">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*" />
-                                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
-                                                        <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                                        <ColumnDefinition Width="{Binding ElementName=ToggleButtonRootGrid, Path=ActualHeight, Mode=OneWay}" />
+                                                        <ColumnDefinition Width="{Binding ElementName=ToggleButtonRootGrid, Path=ActualHeight, Mode=OneWay}" />
                                                     </Grid.ColumnDefinitions>
 
                                                     <Button x:Name="PART_ClearText"
@@ -466,7 +466,7 @@
                                     Visibility="Collapsed"
                                     BorderBrush="Transparent"
                                     BorderThickness="1,1,0,1"
-                                    Margin="0,0,-2,0"
+                                    Margin="0,0,1,0"
                                     Background="{TemplateBinding Background}">
                                 <TextBox x:Name="PART_EditableTextBox"
                                          Style="{StaticResource EditableTextBoxStyle}"
@@ -476,7 +476,7 @@
                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                          BorderThickness="0"
                                          Background="{x:Null}"
-                                         Margin="0,0,0,-2"
+                                         Margin="0,0,-1,-2"
                                          Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                          MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.MaxLength), Mode=OneWay}"
                                          CharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.CharacterCasing), Mode=OneWay}"
@@ -497,9 +497,9 @@
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        FontFamily="{TemplateBinding FontFamily}"
                                        FontSize="{TemplateBinding FontSize}"
-                                       Margin="8,2,4,2" />
+                                       Margin="6,2,6,2" />
                             <Grid x:Name="ContentSite"
-                                  Margin="7 0 0 0">
+                                  Margin="7 0 4 0">
                                 <ContentPresenter ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                                   ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                                   Content="{TemplateBinding SelectionBoxItem}"
@@ -605,6 +605,9 @@
                                     Property="Grid.ColumnSpan"
                                     Value="2" />
                             <Setter TargetName="ContentSite"
+                                    Property="Grid.ColumnSpan"
+                                    Value="2" />
+                            <Setter TargetName="PART_WatermarkMessage"
                                     Property="Grid.ColumnSpan"
                                     Value="2" />
                         </DataTrigger>
