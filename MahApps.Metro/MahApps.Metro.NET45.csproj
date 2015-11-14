@@ -133,6 +133,7 @@
     <Compile Include="Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
+    <Compile Include="Controls\ContentControlEx.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\DialogParticipation.cs" />
     <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />
