@@ -352,7 +352,7 @@
            x:Key="MetroButton">
         <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
                 Value="Upper" />
-        <Setter Property="Controls:ButtonHelper.CornerRadius"
+        <Setter Property="Controls:ControlsHelper.CornerRadius"
                 Value="3" />
         <Setter Property="MinHeight"
                 Value="25" />
@@ -378,19 +378,19 @@
                     <Grid>
                         <Border x:Name="Background"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <Border x:Name="Border"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{x:Null}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <Border x:Name="DisabledVisualElement"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Background="{DynamicResource ControlsDisabledBrush}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <ContentPresenter x:Name="contentPresenter"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           RecognizesAccessKey="True"
@@ -774,7 +774,7 @@
 
     <Style TargetType="ToggleButton"
            x:Key="MetroToggleButton">
-        <Setter Property="Controls:ButtonHelper.CornerRadius"
+        <Setter Property="Controls:ControlsHelper.CornerRadius"
                 Value="3" />
         <Setter Property="Background"
                 Value="{DynamicResource GrayBrush10}" />
@@ -800,19 +800,19 @@
                     <Grid>
                         <Border x:Name="Background"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <Border x:Name="Border"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{x:Null}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <Border x:Name="DisabledVisualElement"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Background="{DynamicResource ControlsDisabledBrush}"
                                 IsHitTestVisible="False"
                                 Opacity="0"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <ContentPresenter x:Name="contentPresenter"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                           RecognizesAccessKey="True"

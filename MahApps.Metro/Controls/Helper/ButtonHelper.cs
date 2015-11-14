@@ -7,7 +7,7 @@ namespace MahApps.Metro.Controls
 {
     public static class ButtonHelper
     {
-        [Obsolete(@"This property will be deleted in the next release. You should use ContentCharacterCasing attached property located at ControlsHelper.")]
+        [Obsolete(@"This property will be deleted in the next release. You should use ContentCharacterCasing attached property located in ControlsHelper.")]
         public static readonly DependencyProperty PreserveTextCaseProperty =
             DependencyProperty.RegisterAttached("PreserveTextCase", typeof(bool), typeof(ButtonHelper),
                                                 new FrameworkPropertyMetadata(
@@ -45,6 +45,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// DependencyProperty for <see cref="CornerRadius" /> property.
         /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use CornerRadius attached property located in ControlsHelper.")]
         public static readonly DependencyProperty CornerRadiusProperty
             = DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(ButtonHelper),
                                                   new FrameworkPropertyMetadata(
@@ -61,12 +62,12 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
         public static CornerRadius GetCornerRadius(UIElement element)
         {
-            return (CornerRadius)element.GetValue(CornerRadiusProperty);
+            return ControlsHelper.GetCornerRadius(element);
         }
 
         public static void SetCornerRadius(UIElement element, CornerRadius value)
         {
-            element.SetValue(CornerRadiusProperty, value);
+            ControlsHelper.SetCornerRadius(element, value);
         }
     }
 }
