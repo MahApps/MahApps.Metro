@@ -175,17 +175,20 @@
                             <DockPanel.Resources>
                                 <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
                             </DockPanel.Resources>
-                            <ContentPresenter x:Name="ContentSite"
-                                              Margin="{TemplateBinding Padding}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                              TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                              TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                              TextElement.Foreground="{TemplateBinding Foreground}"
-                                              ContentSource="Header"
-                                              RecognizesAccessKey="True"
-                                              DockPanel.Dock="Top" />
+                            <Controls:ContentControlEx x:Name="ContentSite"
+                                                       Content="{TemplateBinding Header}"
+                                                       ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                       Foreground="{TemplateBinding Foreground}"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       RecognizesAccessKey="True"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                       DockPanel.Dock="Top" />
                             <Rectangle x:Name="Underline"
                                        Margin="0, 1, 0, 0"
                                        Height="2"

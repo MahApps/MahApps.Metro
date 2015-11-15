@@ -158,14 +158,17 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}" />
 
-                        <ContentPresenter x:Name="HeaderContent"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ContentControlEx x:Name="HeaderContent"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
 
                         <Path x:Name="SortArrow"
                               Visibility="Collapsed"
@@ -191,25 +194,6 @@
                                Grid.Column="1" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Normal">
-                            <Setter TargetName="HeaderContent"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger >
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Upper">
-                            <Setter TargetName="HeaderContent"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Lower">
-                            <Setter TargetName="HeaderContent"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToLowerConverter}}" />
-                        </Trigger>
-
                         <Trigger Property="SortDirection"
                                  Value="{x:Null}">
                             <Setter TargetName="BackgroundBorder"

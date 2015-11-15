@@ -41,7 +41,7 @@ namespace MahApps.Metro.Controls
                 "ContentCharacterCasing",
                 typeof (CharacterCasing),
                 typeof (ControlsHelper),
-                new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure),
+                new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.AffectsMeasure),
                 new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing) value && (CharacterCasing) value <= CharacterCasing.Upper));
 
         /// <summary>

@@ -24,33 +24,19 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter x:Name="contentPresenter"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="True" />
+                        <Controls:ContentControlEx x:Name="contentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Normal">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger >
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Upper">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Lower">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToLowerConverter}}" />
-                        </Trigger>
-
                         <Trigger Property="IsPressed"
                                  Value="True">
                             <Setter Property="Background"
@@ -246,13 +232,18 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid Background="{TemplateBinding Background}">
-                        <ContentPresenter x:Name="contentPresenter"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          Margin="{TemplateBinding Padding}"
-                                          RecognizesAccessKey="True"
-                                          Opacity="0.5" />
+                        <Controls:ContentControlEx x:Name="contentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                   Opacity="0.5"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
@@ -391,34 +382,19 @@
                                 IsHitTestVisible="False"
                                 Opacity="0"
                                 CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
-                        <ContentPresenter x:Name="contentPresenter"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          RecognizesAccessKey="True"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <Controls:ContentControlEx x:Name="contentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Normal">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger >
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Upper">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Lower">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToLowerConverter}}" />
-                        </Trigger>
-
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="Background"
@@ -518,36 +494,20 @@
                                    Fill="{DynamicResource ControlsDisabledBrush}"
                                    IsHitTestVisible="False"
                                    Opacity="0" />
-                        <ContentPresenter x:Name="contentPresenter"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          RecognizesAccessKey="True"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          OpacityMask="{x:Null}" />
+                        <Controls:ContentControlEx x:Name="contentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Normal">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger >
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Upper">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Lower">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToLowerConverter}}" />
-                        </Trigger>
-
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
@@ -625,36 +585,20 @@
                                    Fill="{DynamicResource ControlsDisabledBrush}"
                                    IsHitTestVisible="False"
                                    Opacity="0" />
-                        <ContentPresenter x:Name="contentPresenter"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          RecognizesAccessKey="True"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          OpacityMask="{x:Null}" />
+                        <Controls:ContentControlEx x:Name="contentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Normal">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger >
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Upper">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Lower">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToLowerConverter}}" />
-                        </Trigger>
-
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
@@ -813,34 +757,19 @@
                                 IsHitTestVisible="False"
                                 Opacity="0"
                                 CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
-                        <ContentPresenter x:Name="contentPresenter"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          RecognizesAccessKey="True"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <Controls:ContentControlEx x:Name="contentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Normal">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger >
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Upper">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Lower">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={Converters:ToLowerConverter}}" />
-                        </Trigger>
-
                         <Trigger Property="IsChecked"
                                  Value="True">
                             <Setter TargetName="Border"
@@ -987,14 +916,17 @@
                                 <Rectangle x:Name="PressedRectangle"
                                            Fill="{DynamicResource BlackBrush}"
                                            Opacity="0" />
-
-                                <ContentPresenter x:Name="ContentPresenter"
-                                                  TextBlock.Foreground="{TemplateBinding Foreground}"
-                                                  Content="{TemplateBinding Content}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  Margin="{TemplateBinding Padding}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <Controls:ContentControlEx x:Name="ContentPresenter"
+                                                           Content="{TemplateBinding Content}"
+                                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                           ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                           Padding="{TemplateBinding Padding}"
+                                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                           RecognizesAccessKey="True"
+                                                           ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                             </Grid>
                         </Border>
 
@@ -1097,14 +1029,17 @@
                                 <Rectangle x:Name="PressedRectangle"
                                            Fill="White"
                                            Opacity="0" />
-
-                                <ContentPresenter x:Name="ContentPresenter"
-                                                  TextBlock.Foreground="{TemplateBinding Foreground}"
-                                                  Content="{TemplateBinding Content}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  Margin="{TemplateBinding Padding}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <Controls:ContentControlEx x:Name="ContentPresenter"
+                                                           Content="{TemplateBinding Content}"
+                                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                           ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                           Padding="{TemplateBinding Padding}"
+                                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                           RecognizesAccessKey="True"
+                                                           ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                             </Grid>
                         </Border>
 
