@@ -11,12 +11,11 @@ namespace MahApps.Metro.Controls
         /// Default Value: CharacterCasing.Normal
         /// </summary>
         public static readonly DependencyProperty ContentCharacterCasingProperty =
-            DependencyProperty.Register(
-                "ContentCharacterCasing",
-                typeof(CharacterCasing),
-                typeof(ContentControlEx),
-                new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure),
-                new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper));
+            DependencyProperty.Register("ContentCharacterCasing",
+                                        typeof(CharacterCasing),
+                                        typeof(ContentControlEx),
+                                        new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure),
+                                        new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing)value && (CharacterCasing)value <= CharacterCasing.Upper));
 
         /// <summary> 
         /// Character casing of the Content
@@ -25,6 +24,25 @@ namespace MahApps.Metro.Controls
         {
             get { return (CharacterCasing)GetValue(ContentCharacterCasingProperty); }
             set { SetValue(ContentCharacterCasingProperty, value); }
+        }
+
+        /// <summary>
+        /// The DependencyProperty for the RecognizesAccessKey property. 
+        /// Default Value: false 
+        /// </summary> 
+        public static readonly DependencyProperty RecognizesAccessKeyProperty =
+            DependencyProperty.Register("RecognizesAccessKey",
+                                        typeof(bool),
+                                        typeof(ContentControlEx),
+                                        new FrameworkPropertyMetadata(false));
+
+        /// <summary> 
+        /// Determine if the inner ContentPresenter should use AccessText in its style
+        /// </summary> 
+        public bool RecognizesAccessKey
+        {
+            get { return (bool)GetValue(RecognizesAccessKeyProperty); }
+            set { SetValue(RecognizesAccessKeyProperty, value); }
         }
 
         static ContentControlEx()
