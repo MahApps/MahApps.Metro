@@ -26,5 +26,10 @@ namespace MahApps.Metro.Controls
             get { return (CharacterCasing)GetValue(ContentCharacterCasingProperty); }
             set { SetValue(ContentCharacterCasingProperty, value); }
         }
+
+        static ContentControlEx()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ContentControlEx), new FrameworkPropertyMetadata(typeof(ContentControlEx)));
+        }
     }
 }
