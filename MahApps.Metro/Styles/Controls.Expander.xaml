@@ -68,12 +68,18 @@
                                       Stroke="{TemplateBinding Foreground}"
                                       StrokeThickness="2" />
                             </Grid>
-                            <ContentPresenter Grid.Row="1"
-                                              Margin="0,4,0,0"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Controls:ContentControlEx Grid.Row="1"
+                                                       Margin="0,4,0,0"
+                                                       Content="{TemplateBinding Content}"
+                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       RecognizesAccessKey="True"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -154,12 +160,18 @@
                                       Stroke="{TemplateBinding Foreground}"
                                       StrokeThickness="2" />
                             </Grid>
-                            <ContentPresenter Grid.Column="1"
-                                              Margin="4,0,0,0"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Controls:ContentControlEx Grid.Column="1"
+                                                       Margin="4,0,0,0"
+                                                       Content="{TemplateBinding Content}"
+                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       RecognizesAccessKey="True"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -236,12 +248,18 @@
                                       Stroke="{TemplateBinding Foreground}"
                                       StrokeThickness="2" />
                             </Grid>
-                            <ContentPresenter Grid.Row="1"
-                                              Margin="0,4,0,0"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Controls:ContentControlEx Grid.Row="1"
+                                                       Margin="0,4,0,0"
+                                                       Content="{TemplateBinding Content}"
+                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       RecognizesAccessKey="True"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -307,12 +325,18 @@
                                   SnapsToDevicePixels="false"
                                   Stroke="{TemplateBinding Foreground}"
                                   StrokeThickness="2" />
-                            <ContentPresenter Grid.Column="1"
-                                              Margin="4,0,0,0"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Controls:ContentControlEx Grid.Column="1"
+                                                       Margin="4,0,0,0"
+                                                       Content="{TemplateBinding Content}"
+                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       RecognizesAccessKey="True"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -423,6 +447,7 @@
                                               FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
                                               FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
                                               FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                              Controls:ControlsHelper.ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
                                               Style="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ExpanderHelper.HeaderDownStyle)}">
                                     <ToggleButton.Foreground>
                                         <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
@@ -457,25 +482,6 @@
                         </DockPanel>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Normal">
-                            <Setter TargetName="ToggleSite"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header}" />
-                        </Trigger >
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Upper">
-                            <Setter TargetName="ToggleSite"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={Converters:ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Lower">
-                            <Setter TargetName="ToggleSite"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={Converters:ToLowerConverter}}" />
-                        </Trigger>
-
                         <Trigger Property="IsExpanded"
                                  Value="true">
                             <Setter TargetName="ExpandSite"
