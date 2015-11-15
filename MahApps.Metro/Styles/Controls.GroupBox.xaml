@@ -42,17 +42,19 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 UseLayoutRounding="True"
                                 BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter x:Name="HeaderContent"
-                                              Margin="{TemplateBinding Padding}"
-                                              UseLayoutRounding="False"
-                                              Content="{TemplateBinding Header}"
-                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                              ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                              TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                              TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                              TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                              RecognizesAccessKey="True">
+                            <Controls:ContentControlEx x:Name="HeaderContent"
+                                                       UseLayoutRounding="False"
+                                                       Content="{TemplateBinding Header}"
+                                                       ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                       ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                       FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                       FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                       FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       RecognizesAccessKey="True"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}">
                                 <TextElement.Foreground>
                                     <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
                                         <Binding Mode="OneWay"
@@ -63,7 +65,7 @@
                                                  RelativeSource="{RelativeSource TemplatedParent}" />
                                     </MultiBinding>
                                 </TextElement.Foreground>
-                            </ContentPresenter>
+                            </Controls:ContentControlEx>
                         </Border>
                         <Border Grid.Row="1"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -78,26 +80,6 @@
                                               Cursor="{TemplateBinding Cursor}" />
                         </Border>
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Normal">
-                            <Setter TargetName="HeaderContent"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header}" />
-                        </Trigger >
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Upper">
-                            <Setter TargetName="HeaderContent"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={Converters:ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing"
-                                 Value="Lower">
-                            <Setter TargetName="HeaderContent"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Header, Converter={Converters:ToLowerConverter}}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
