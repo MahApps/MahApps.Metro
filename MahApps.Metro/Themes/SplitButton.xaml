@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <ControlTemplate TargetType="{x:Type local:SplitButton}"
+    <ControlTemplate TargetType="{x:Type Controls:SplitButton}"
                      x:Key="SplitButtonHorizontal">
         <Border x:Name="PART_Border"
                 UseLayoutRounding="True"
@@ -41,16 +41,21 @@
                                           VerticalAlignment="Center"
                                           Content="{TemplateBinding Icon}"
                                           ContentTemplate="{TemplateBinding IconTemplate}" />
-                        <ContentControl x:Name="PART_ButtonContent"
-                                        UseLayoutRounding="False"
-                                        Focusable="False"
-                                        Margin="2"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                        ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                        Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                        ContentTemplate="{TemplateBinding ItemTemplate}" />
+                        <Controls:ContentControlEx x:Name="PART_ButtonContent"
+                                                   Margin="2"
+                                                   UseLayoutRounding="False"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                   ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </StackPanel>
                 </Button>
                 <Button x:Name="PART_Expander"
@@ -114,7 +119,7 @@
         </Border>
     </ControlTemplate>
 
-    <ControlTemplate TargetType="{x:Type local:SplitButton}"
+    <ControlTemplate TargetType="{x:Type Controls:SplitButton}"
                      x:Key="SplitButtonVertical">
         <Border x:Name="PART_Border"
                 UseLayoutRounding="True"
@@ -153,16 +158,21 @@
                                           VerticalAlignment="Center"
                                           Content="{TemplateBinding Icon}"
                                           ContentTemplate="{TemplateBinding IconTemplate}" />
-                        <ContentControl x:Name="PART_ButtonContent"
-                                        UseLayoutRounding="False"
-                                        Focusable="False"
-                                        Margin="2"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        ContentStringFormat="{TemplateBinding ItemStringFormat}"
-                                        ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                        Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                        ContentTemplate="{TemplateBinding ItemTemplate}" />
+                        <Controls:ContentControlEx x:Name="PART_ButtonContent"
+                                                   Margin="2"
+                                                   UseLayoutRounding="False"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Content="{Binding SelectedItem, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                                   ContentStringFormat="{TemplateBinding ItemStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ItemTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </StackPanel>
                 </Button>
                 <Button x:Name="PART_Expander"
@@ -240,7 +250,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:SplitButton}">
+    <Style TargetType="{x:Type Controls:SplitButton}">
         <Setter Property="ButtonStyle"
                 Value="{DynamicResource ButtonSplitStyle}" />
         <Setter Property="ButtonArrowStyle"
