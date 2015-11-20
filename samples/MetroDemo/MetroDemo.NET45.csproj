@@ -151,8 +151,8 @@
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\CustomDialogExampleContent.cs" />
     <Compile Include="Models\Genre.cs" />
-    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\SimpleCommand.cs" />
     <Compile Include="Navigation\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
