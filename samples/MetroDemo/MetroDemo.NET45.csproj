@@ -97,6 +97,9 @@
     <Compile Include="ExampleViews\ColorExample.xaml.cs">
       <DependentUpon>ColorExample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExampleViews\CustomDialogExample.xaml.cs">
+      <DependentUpon>CustomDialogExample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleViews\DataGridExamples.xaml.cs">
       <DependentUpon>DataGridExamples.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,7 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\SimpleCommand.cs" />
     <Compile Include="Navigation\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -163,6 +167,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ExampleViews\ColorExample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\CustomDialogExample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

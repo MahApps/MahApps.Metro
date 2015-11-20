@@ -104,6 +104,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ExampleViews\CustomDialogExample.xaml.cs">
+      <DependentUpon>CustomDialogExample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleViews\TilesExample.xaml.cs">
       <DependentUpon>TilesExample.xaml</DependentUpon>
     </Compile>
@@ -159,6 +162,7 @@
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
     <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Models\SimpleCommand.cs" />
     <Compile Include="Navigation\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -171,6 +175,10 @@
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
+    <Page Include="ExampleViews\CustomDialogExample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ExampleViews\TilesExample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
