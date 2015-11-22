@@ -13,6 +13,7 @@ using MetroDemo.Models;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MetroDemo.ExampleViews;
 
 namespace MetroDemo
 {
@@ -357,13 +358,16 @@ namespace MetroDemo
 
         private async void RunCustomFromVm()
         {
-            var customDialog = new CustomDialog() { Title = "Custom, wait 3 seconds" };
+            var customDialog = new CustomDialog() { Title = "Custom Dialog" };
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
+            var customDialogExampleContent = new CustomDialogExampleContent(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                System.Diagnostics.Debug.WriteLine(instance.FirstName);
+            });
+            customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent};            
 
-            await TaskEx.Delay(3000);
-
-            await _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
         }
 
         public IEnumerable<string> BrushResources { get; private set; }
