@@ -282,6 +282,11 @@ namespace MahApps.Metro.Controls.Dialogs
             get { return (string)GetValue(SecondAuxiliaryButtonTextProperty); }
             set { SetValue(SecondAuxiliaryButtonTextProperty, value); }
         }
+
+        private void OnKeyCopyExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Clipboard.SetDataObject(Message);
+        }
     }
 
     /// <summary>
