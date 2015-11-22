@@ -10,11 +10,15 @@
                 Value="{x:Null}" />
         <Setter Property="BorderBrush"
                 Value="{x:Null}" />
+        <Setter Property="ClipToBounds"
+                Value="True" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:MetroAnimatedTabControl}">
-                    <Grid ClipToBounds="true"
-                          SnapsToDevicePixels="true"
+                    <Grid ClipToBounds="{TemplateBinding ClipToBounds}"
+                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                           KeyboardNavigation.TabNavigation="Local">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition x:Name="ColumnDefinition0" />
@@ -29,7 +33,7 @@
                         </Grid.RowDefinitions>
                         <TabPanel x:Name="HeaderPanel"
                                   Grid.Column="0"
-                                  IsItemsHost="true"
+                                  IsItemsHost="True"
                                   Margin="{TemplateBinding TabStripMargin}"
                                   Grid.Row="0"
                                   KeyboardNavigation.TabIndex="1"
@@ -126,7 +130,7 @@
                                     Value="0" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
-                                 Value="false">
+                                 Value="False">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
                         </Trigger>
