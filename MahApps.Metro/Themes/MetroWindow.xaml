@@ -10,6 +10,19 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
+    <Style TargetType="{x:Type Thumb}"
+           x:Key="InvisibleThumbStyle">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid Background="{TemplateBinding Background}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <ControlTemplate x:Key="WindowTemplateKey"
                      TargetType="{x:Type Controls:MetroWindow}">
         <Grid>
@@ -91,6 +104,12 @@
                             </MultiBinding>
                         </ContentControl.Foreground>
                     </ContentControl>
+
+                    <Thumb Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="5"
+                           Style="{StaticResource InvisibleThumbStyle}"
+                           x:Name="PART_WindowRestoreThumb" />
 
                     <!-- the right window commands -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
@@ -214,6 +233,9 @@
         </ControlTemplate.Resources>
         
         <ControlTemplate.Triggers>
+            <Trigger Property="UseNoneWindowStyle" Value="True">
+                <Setter TargetName="PART_WindowRestoreThumb" Property="Grid.Row" Value="2" />
+            </Trigger>
             <!-- handle active/inactive state -->
             <Trigger Property="IsActive"
                      Value="False">
@@ -364,6 +386,12 @@
                         </Label>
                     </Grid>
 
+                    <Thumb Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="5"
+                           Style="{StaticResource InvisibleThumbStyle}"
+                           x:Name="PART_WindowRestoreThumb" />
+
                     <!-- the right window commands -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
                                       Focusable="False"
@@ -486,6 +514,9 @@
         </ControlTemplate.Resources>
 
         <ControlTemplate.Triggers>
+            <Trigger Property="UseNoneWindowStyle" Value="True">
+                <Setter TargetName="PART_WindowRestoreThumb" Property="Grid.Row" Value="2" />
+            </Trigger>
             <!-- handle active/inactive state -->
             <Trigger Property="IsActive"
                      Value="False">

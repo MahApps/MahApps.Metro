@@ -10,6 +10,7 @@ using MahApps.Metro.Controls.Dialogs;
 using MahApps.Metro.Native;
 using System.Windows.Shapes;
 using System.Collections.Generic;
+using System.Windows.Controls.Primitives;
 
 namespace MahApps.Metro.Controls
 {
@@ -19,6 +20,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_Icon, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleBackground, Type = typeof(UIElement))]
+    [TemplatePart(Name = PART_WindowRestoreThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
@@ -31,6 +33,7 @@ namespace MahApps.Metro.Controls
         private const string PART_Icon = "PART_Icon";
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowTitleBackground = "PART_WindowTitleBackground";
+        private const string PART_WindowRestoreThumb = "PART_WindowRestoreThumb";
         private const string PART_LeftWindowCommands = "PART_LeftWindowCommands";
         private const string PART_RightWindowCommands = "PART_RightWindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
@@ -99,6 +102,7 @@ namespace MahApps.Metro.Controls
         UIElement icon;
         UIElement titleBar;
         UIElement titleBarBackground;
+        Thumb windowRestoreThumb;
         internal ContentPresenter LeftWindowCommandsPresenter;
         internal ContentPresenter RightWindowCommandsPresenter;
         internal WindowButtonCommands WindowButtonCommands;
@@ -890,6 +894,7 @@ namespace MahApps.Metro.Controls
             icon = GetTemplateChild(PART_Icon) as UIElement;
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
+            windowRestoreThumb = GetTemplateChild(PART_WindowRestoreThumb) as Thumb;
 
             this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
         }
@@ -897,6 +902,11 @@ namespace MahApps.Metro.Controls
         private void ClearWindowEvents()
         {
             // clear all event handlers first:
+            if (windowRestoreThumb != null)
+            {
+                windowRestoreThumb.DragDelta -= WindowMoveThumbOnDragDelta;
+                windowRestoreThumb.MouseDoubleClick -= WindowRestoreThumbOnMouseDoubleClick;
+            }
             if (titleBarBackground != null)
             {
                 titleBarBackground.MouseDown -= TitleBarMouseDown;
@@ -927,18 +937,24 @@ namespace MahApps.Metro.Controls
                 icon.MouseDown += IconMouseDown;
             }
 
+            if (windowRestoreThumb != null)
+            {
+                windowRestoreThumb.DragDelta += WindowMoveThumbOnDragDelta;
+                windowRestoreThumb.MouseDoubleClick += WindowRestoreThumbOnMouseDoubleClick;
+            }
+
             // handle mouse events for PART_WindowTitleBackground -> MetroWindow
             if (titleBarBackground != null && titleBarBackground.Visibility == Visibility.Visible)
             {
-                titleBarBackground.MouseDown += TitleBarMouseDown;
-                titleBarBackground.MouseUp += TitleBarMouseUp;
+                //titleBarBackground.MouseDown += TitleBarMouseDown;
+                //titleBarBackground.MouseUp += TitleBarMouseUp;
             }
 
             // handle mouse events for PART_TitleBar -> MetroWindow
             if (titleBar != null && titleBar.Visibility == Visibility.Visible)
             {
-                titleBar.MouseDown += TitleBarMouseDown;
-                titleBar.MouseUp += TitleBarMouseUp;
+                //titleBar.MouseDown += TitleBarMouseDown;
+                //titleBar.MouseUp += TitleBarMouseUp;
 
                 // special title resizing for centered title
                 if (titleBar.GetType() == typeof(Grid))
@@ -949,8 +965,8 @@ namespace MahApps.Metro.Controls
             else
             {
                 // handle mouse events for windows without PART_WindowTitleBackground or PART_TitleBar
-                MouseDown += TitleBarMouseDown;
-                MouseUp += TitleBarMouseUp;
+                //MouseDown += TitleBarMouseDown;
+                //MouseUp += TitleBarMouseUp;
             }
         }
 
@@ -969,23 +985,56 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private void WindowMoveThumbOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
+        {
+            if (!IsWindowDraggable &&
+                (!(Math.Abs(dragDeltaEventArgs.HorizontalChange) > 2) &&
+                 !(Math.Abs(dragDeltaEventArgs.VerticalChange) > 2))) return;
+
+            var windowHandle = new WindowInteropHelper(this).Handle;
+            var cursorPos = Standard.NativeMethods.GetCursorPos();
+            //UnsafeNativeMethods.ReleaseCapture();
+            if (WindowState == WindowState.Maximized)
+            {
+                Top = 2;
+                Left = Math.Max(cursorPos.x - RestoreBounds.Width / 2, 0);
+            }
+            var lParam = (int)(uint)cursorPos.x | (cursorPos.y << 16);
+            Standard.NativeMethods.SendMessage(windowHandle, Standard.WM.LBUTTONUP, (IntPtr)Standard.HT.CAPTION, (IntPtr)lParam);
+            Standard.NativeMethods.SendMessage(windowHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
+        }
+
+        private void WindowRestoreThumbOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            // if UseNoneWindowStyle = true no movement, no maximize please
+            if (mouseButtonEventArgs.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
+            {
+                var mPoint = Mouse.GetPosition(this);
+                var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
+                // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
+                var isMouseOnTitlebar = mPoint.Y <= this.TitlebarHeight && this.TitlebarHeight > 0;
+                if (canResize && isMouseOnTitlebar)
+                {
+                    //UnsafeNativeMethods.ReleaseCapture();
+                    if (this.WindowState == WindowState.Maximized)
+                    {
+                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
+                    }
+                    else
+                    {
+                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
+                    }
+                    mouseButtonEventArgs.Handled = true;
+                }
+            }
+        }
+
         protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
             // if UseNoneWindowStyle = true no movement, no maximize please
             if (e.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
             {
                 var mPoint = Mouse.GetPosition(this);
-
-                if (IsWindowDraggable)
-                {
-                    IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-                    UnsafeNativeMethods.ReleaseCapture();
-                    var wpfPoint = this.PointToScreen(mPoint);
-                    var x = Convert.ToInt16(wpfPoint.X);
-                    var y = Convert.ToInt16(wpfPoint.Y);
-                    var lParam = (int) (uint) x | (y << 16);
-                    UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
-                }
 
                 var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
                 // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
