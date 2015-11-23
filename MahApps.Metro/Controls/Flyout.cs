@@ -61,6 +61,8 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register("AreAnimationsEnabled", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty FocusedElementProperty = DependencyProperty.Register("FocusedElement", typeof(FrameworkElement), typeof(Flyout), new UIPropertyMetadata(null));
         public static readonly DependencyProperty AllowFocusElementProperty = DependencyProperty.Register("AllowFocusElement", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
+        public static readonly DependencyProperty IsAutoCloseEnabledProperty = DependencyProperty.Register("IsAutoCloseEnabled", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false, IsAutoCloseEnabledChanged));
+        public static readonly DependencyProperty AutoCloseIntervalProperty = DependencyProperty.Register("AutoCloseInterval", typeof(long), typeof(Flyout), new FrameworkPropertyMetadata(5000L, AutoCloseIntervalChanged));
 
         internal PropertyChangeNotifier IsOpenPropertyChangeNotifier { get; set; }
         internal PropertyChangeNotifier ThemePropertyChangeNotifier { get; set; }
@@ -199,6 +201,21 @@ namespace MahApps.Metro.Controls
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the flyout should auto close after AutoCloseInterval has passed.
+        /// </summary>
+        public bool IsAutoCloseEnabled
+        {
+            get { return (bool)this.GetValue(IsAutoCloseEnabledProperty); }
+            set { this.SetValue(IsAutoCloseEnabledProperty, value); }
+        }
+
+        public long AutoCloseInterval
+        {
+            get { return (long)this.GetValue(AutoCloseIntervalProperty); }
+            set { this.SetValue(AutoCloseIntervalProperty, value); }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the flyout should try focus an element.
         /// </summary>
         public bool AllowFocusElement
@@ -206,10 +223,20 @@ namespace MahApps.Metro.Controls
             get { return (bool)this.GetValue(AllowFocusElementProperty); }
             set { this.SetValue(AllowFocusElementProperty, value); }
         }
-        
+
         public Flyout()
         {
             this.Loaded += (sender, args) => UpdateFlyoutTheme();
+            this.InitializeAutoCloseTimer();
+        }
+
+        private void InitializeAutoCloseTimer()
+        {
+            this.StopAutoCloseTimer();
+
+            this.autoCloseTimer = new DispatcherTimer();
+            this.autoCloseTimer.Tick += this.AutoCloseTimerCallback;
+            this.autoCloseTimer.Interval = TimeSpan.FromMilliseconds(this.AutoCloseInterval);
         }
 
         private void UpdateFlyoutTheme()
@@ -338,6 +365,10 @@ namespace MahApps.Metro.Controls
                             flyout.Visibility = Visibility.Visible;
                             flyout.ApplyAnimation(flyout.Position, flyout.AnimateOpacity);
                             flyout.TryFocusElement();
+                            if (flyout.IsAutoCloseEnabled)
+                            {
+                                flyout.StartAutoCloseTimer();
+                            }
                         }
                         else
                         {
@@ -351,6 +382,7 @@ namespace MahApps.Metro.Controls
                             {
                                 flyout.Hide();
                             }
+                            flyout.StopAutoCloseTimer();
                         }
                         VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
                     }
@@ -360,12 +392,17 @@ namespace MahApps.Metro.Controls
                         {
                             flyout.Visibility = Visibility.Visible;
                             flyout.TryFocusElement();
+                            if (flyout.IsAutoCloseEnabled)
+                            {
+                                flyout.StartAutoCloseTimer();
+                            }
                         }
                         else
                         {
                             // focus the Flyout itself to avoid nasty FocusVisual painting (it's visible until the Flyout is closed)
                             flyout.Focus();
                             flyout.Hide();
+                            flyout.StopAutoCloseTimer();
                         }
                         VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "HideDirect" : "ShowDirect", true);
                     }
@@ -375,6 +412,74 @@ namespace MahApps.Metro.Controls
             };
 
             flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
+        }
+
+        private static void IsAutoCloseEnabledChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var flyout = (Flyout)dependencyObject;
+
+            Action autoCloseEnabledChangedAction = () => {
+                if (e.NewValue != e.OldValue)
+                {
+                    if ((bool)e.NewValue)
+                    {
+                        if (flyout.IsOpen)
+                        {
+                            flyout.StartAutoCloseTimer();
+                        }
+                    }
+                    else
+                    {
+                        flyout.StopAutoCloseTimer();
+                    }
+                }
+            };
+
+            flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseEnabledChangedAction);
+        }
+
+        private static void AutoCloseIntervalChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var flyout = (Flyout)dependencyObject;
+
+            Action autoCloseIntervalChangedAction = () => { 
+                if (e.NewValue != e.OldValue)
+                {
+                    flyout.InitializeAutoCloseTimer();
+                    if (flyout.IsAutoCloseEnabled && flyout.IsOpen)
+                    {
+                        flyout.StartAutoCloseTimer();
+                    }
+                }
+            };
+
+            flyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, autoCloseIntervalChangedAction);
+        }
+
+        private void StartAutoCloseTimer()
+        {
+            //in case it is already running
+            this.StopAutoCloseTimer();
+            this.autoCloseTimer.Start();
+        }
+
+        private void StopAutoCloseTimer()
+        {
+            if (this.autoCloseTimer.IsEnabled)
+            {
+                this.autoCloseTimer.Stop();
+            }
+        }
+
+        private void AutoCloseTimerCallback(Object sender, EventArgs e)
+        {
+            this.StopAutoCloseTimer();
+
+            //if the flyout is open and autoclose is still enabled then close the flyout
+            if ((this.IsOpen) && (this.IsAutoCloseEnabled))
+            {
+                this.IsOpen = false;
+            }
         }
 
         private void HideStoryboard_Completed(object sender, EventArgs e)
@@ -451,6 +556,7 @@ namespace MahApps.Metro.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Flyout), new FrameworkPropertyMetadata(typeof(Flyout)));
         }
 
+        DispatcherTimer autoCloseTimer;
         Grid root;
         Storyboard hideStoryboard;
         SplineDoubleKeyFrame hideFrame;
