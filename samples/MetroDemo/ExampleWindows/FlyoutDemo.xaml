@@ -308,6 +308,31 @@
                 <TextBlock VerticalAlignment="Center"
                            Text="This is an AppBar" />
             </Controls:Flyout>
+            <Controls:Flyout Header="AutoClose"
+                             Position="Right"
+                             CloseButtonVisibility="Collapsed"
+                             IsAutoCloseEnabled="True"
+                             AutoCloseInterval="6000"
+                             x:Name="AutoCloseFlyout">
+                <StackPanel Margin="10"
+                            Width="400">
+                    <CheckBox IsChecked="{Binding IsAutoCloseEnabled, ElementName=AutoCloseFlyout, Mode=TwoWay}"
+                              Content="AutoClose Enabled"
+                              Margin="4" 
+                              Foreground="{DynamicResource IdealForegroundColorBrush}" />
+                    <Slider Minimum="2000"
+                            Maximum="12000"
+                            TickFrequency="2000"
+                            IsSnapToTickEnabled="True"
+                            Margin="4"
+                            Value="{Binding AutoCloseInterval, ElementName=AutoCloseFlyout, Mode=TwoWay}"/>
+                    <TextBlock Margin="4">
+                        <Run Text="This flyout will auto close after " />
+                        <Run Text="{Binding AutoCloseInterval, ElementName=AutoCloseFlyout, Mode=OneWay}" />
+                        <Run Text=" milliseconds" />
+                    </TextBlock>
+                </StackPanel>
+            </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
 
@@ -365,6 +390,9 @@
             <Button Margin="2"
                     Click="ShowDynamicFlyout"
                     Content="Dynamic" />
+            <Button Margin="2"
+                    Click="ShowAutoCloseFlyout"
+                    Content="AutoClose" />
         </StackPanel>
 
         <AdornerDecorator Grid.Column="1"
@@ -373,7 +401,7 @@
                           MinWidth="100"
                           HorizontalAlignment="Center"
                           VerticalAlignment="Top">
-                <TextBox Controls:TextBoxHelper.Watermark="Number greater than 10"
+            <TextBox Controls:TextBoxHelper.Watermark="Number greater than 10"
                          Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
         </AdornerDecorator>
 
