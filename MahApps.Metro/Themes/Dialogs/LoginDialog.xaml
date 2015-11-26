@@ -26,6 +26,7 @@
                  Controls:TextBoxHelper.SelectAllOnFocus="True"
                  Text="{Binding Username, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  TextWrapping="Wrap"
+                 Visibility="{Binding UsernameVisibility, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
         <PasswordBox Grid.Row="2"
                      Margin="0 5 0 0"

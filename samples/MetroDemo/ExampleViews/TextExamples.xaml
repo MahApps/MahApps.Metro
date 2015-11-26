@@ -224,7 +224,7 @@
                 </UniformGrid>
 
                 <Label Content='Min="0", Max="10", TextAlignment="Left"' />
-                <Controls:NumericUpDown Value="5" IsEnabled="False"
+                <Controls:NumericUpDown Value="5" IsEnabled="True"
                                         x:Name="Test"
                                         TextAlignment="Left"
                                         Minimum="0"
