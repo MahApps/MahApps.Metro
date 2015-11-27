@@ -121,10 +121,10 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
-                            <Grid x:Name="PART_FloatingMessageContainer"
+                            <ContentControl x:Name="PART_FloatingMessageContainer"
                                   Grid.Column="0"
                                   Grid.ColumnSpan="2"
-                                  Height="0"
+                                  MaxHeight="0"
                                   IsHitTestVisible="False"
                                   Margin="5,0"
                                   Visibility="Visible">
@@ -134,12 +134,13 @@
                                            Foreground="{TemplateBinding Foreground}"
                                            Opacity="0.6"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}">
                                     <TextBlock.RenderTransform>
                                         <TranslateTransform />
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
-                            </Grid>
+                            </ContentControl>
                             <Button x:Name="PART_ClearText"
                                     Grid.Column="1"
                                     Grid.RowSpan="2"
@@ -189,49 +190,20 @@
                                     Value="Visible" />
                         </DataTrigger>
 
-                        <!--Sets the MiniMessage visibility (Watermark must not be "" and FloatWatermark must be true)-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText)}"
-                                     Value="False">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}"
+                                           Value="True" />
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" 
+                                           Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                        <!--To override Watermark == ""-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}"
-                                     Value="">
-                            <DataTrigger.EnterActions>
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
                                 <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                        <!--To override TextBoxHelper.UseFloatingWatermark == false-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark)}"
-                                     Value="False">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-
-                        <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="TextWrapping"
-                                           Value="NoWrap" />
-                                <Condition Property="AcceptsReturn"
-                                           Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="PART_ClearText"
-                                    Property="Width"
-                                    Value="{Binding RelativeSource={RelativeSource Self}, Path=ActualHeight, Mode=OneWay}" />
-                        </MultiTrigger>
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
 
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
@@ -444,10 +416,10 @@
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                        Margin="6,2,6,2" />
-                            <Grid x:Name="PART_FloatingMessageContainer"
+                            <ContentControl x:Name="PART_FloatingMessageContainer"
                                   Grid.Column="0"
                                   Grid.ColumnSpan="2"
-                                  Height="0"
+                                  MaxHeight="0"
                                   IsHitTestVisible="False"
                                   Margin="5,0"
                                   Visibility="Visible">
@@ -457,12 +429,13 @@
                                            Foreground="{TemplateBinding Foreground}"
                                            Opacity="0.6"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}">
                                     <TextBlock.RenderTransform>
                                         <TranslateTransform />
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
-                            </Grid>
+                            </ContentControl>
                             <Button x:Name="PART_ClearText"
                                     Grid.Column="1"
                                     Grid.RowSpan="2"
@@ -512,36 +485,20 @@
                                     Value="Visible" />
                         </DataTrigger>
 
-                        <!--Sets the MiniMessage visibility (Watermark must not be "" and FloatWatermark must be true)-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText)}"
-                                     Value="False">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}"
+                                           Value="True" />
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" 
+                                           Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                        <!--To override Watermark == ""-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}"
-                                     Value="">
-                            <DataTrigger.EnterActions>
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
                                 <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                        <!--To override TextBoxHelper.UseFloatingWatermark == false-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark)}"
-                                     Value="False">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
 
                         <!-- multiline textbox cannot bind to actual height so take the fallbach button width -->
                         <MultiTrigger>

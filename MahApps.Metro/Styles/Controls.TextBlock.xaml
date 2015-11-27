@@ -11,4 +11,16 @@
                 Value="{DynamicResource LabelTextBrush}" />-->
     </Style>
 
+    <Style TargetType="{x:Type TextBlock}"
+           x:Key="MetroAutoCollapsingTextBlock"
+           BasedOn="{StaticResource MetroTextBlock}">
+        <Style.Triggers>
+            <Trigger Property="Text"
+                     Value="">
+                <Setter Property="Visibility" 
+                        Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>
