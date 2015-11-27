@@ -246,7 +246,7 @@ namespace MetroDemo
 
         private async void ShowLoginDialogOnlyPassword(object sender, RoutedEventArgs e)
         {
-            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, UsernameVisibility = Visibility.Collapsed });
+            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, ShouldHideUsername = true });
             if (result == null)
             {
                 //User pressed cancel

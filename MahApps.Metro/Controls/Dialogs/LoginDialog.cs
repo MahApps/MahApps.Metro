@@ -10,7 +10,7 @@ namespace MahApps.Metro.Controls.Dialogs
         private const string DefaultUsernameWatermark = "Username...";
         private const string DefaultPasswordWatermark = "Password...";
         private const Visibility DefaultNegativeButtonVisibility = Visibility.Collapsed;
-        private const Visibility DefaultUsernameVisibility = Visibility.Visible;
+        private const bool DefaultShouldHideUsername = false;
         private const bool DefaultEnablePasswordPreview = false;
 
         public LoginDialogSettings()
@@ -18,7 +18,7 @@ namespace MahApps.Metro.Controls.Dialogs
             UsernameWatermark = DefaultUsernameWatermark;
             PasswordWatermark = DefaultPasswordWatermark;
             NegativeButtonVisibility = DefaultNegativeButtonVisibility;
-            UsernameVisibility = DefaultUsernameVisibility;
+            ShouldHideUsername = DefaultShouldHideUsername;
             AffirmativeButtonText = "Login";
             EnablePasswordPreview = DefaultEnablePasswordPreview;
         }
@@ -29,7 +29,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string UsernameWatermark { get; set; }
 
-        public Visibility UsernameVisibility { get; set; }
+        public bool ShouldHideUsername { get; set; }
 
         public string PasswordWatermark { get; set; }
 
@@ -60,7 +60,7 @@ namespace MahApps.Metro.Controls.Dialogs
             UsernameWatermark = settings.UsernameWatermark;
             PasswordWatermark = settings.PasswordWatermark;
             NegativeButtonButtonVisibility = settings.NegativeButtonVisibility;
-            UsernameVisibility = settings.UsernameVisibility;
+            ShouldHideUsername = settings.ShouldHideUsername;
         }
 
         internal Task<LoginDialogData> WaitForButtonPressAsync()
@@ -68,7 +68,7 @@ namespace MahApps.Metro.Controls.Dialogs
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 this.Focus();
-                if (string.IsNullOrEmpty(PART_TextBox.Text) && UsernameVisibility == Visibility.Visible)
+                if (string.IsNullOrEmpty(PART_TextBox.Text) && !ShouldHideUsername)
                 {
                     PART_TextBox.Focus();
                 }
@@ -205,7 +205,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register("AffirmativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("OK"));
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("Cancel"));
         public static readonly DependencyProperty NegativeButtonButtonVisibilityProperty = DependencyProperty.Register("NegativeButtonButtonVisibility", typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Collapsed));
-        public static readonly DependencyProperty UsernameVisibilityProperty = DependencyProperty.Register("UsernameVisibility", typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Visible));
+        public static readonly DependencyProperty ShouldHideUsernameProperty = DependencyProperty.Register("ShouldHideUsername", typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
 
         public string Message
         {
@@ -255,10 +255,10 @@ namespace MahApps.Metro.Controls.Dialogs
             set { SetValue(NegativeButtonButtonVisibilityProperty, value); }
         }
 
-        public Visibility UsernameVisibility
+        public bool ShouldHideUsername
         {
-            get { return (Visibility)GetValue(UsernameVisibilityProperty); }
-            set { SetValue(UsernameVisibilityProperty, value); }
+            get { return (bool)GetValue(ShouldHideUsernameProperty); }
+            set { SetValue(ShouldHideUsernameProperty, value); }
         }
     }
 }
