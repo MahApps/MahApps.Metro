@@ -465,7 +465,7 @@ namespace MahApps.Metro.Controls
 
         private void StopAutoCloseTimer()
         {
-            if (this.autoCloseTimer.IsEnabled)
+            if ((this.autoCloseTimer != null) && (this.autoCloseTimer.IsEnabled))
             {
                 this.autoCloseTimer.Stop();
             }
