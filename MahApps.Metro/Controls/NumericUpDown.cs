@@ -159,7 +159,7 @@ namespace MahApps.Metro.Controls
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
 
-        private static readonly Regex StingFormatHex = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
+        private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
 
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
@@ -889,6 +889,7 @@ namespace MahApps.Metro.Controls
             {
                 nud.InternalSetText(nud.Value);
             }
+            nud.HasDecimals = !RegexStringFormatHexadecimal.IsMatch((string)e.NewValue);
         }
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -940,7 +941,7 @@ namespace MahApps.Metro.Controls
 
         private void FormatValue(double? newValue, CultureInfo culture)
         {
-            var match = StingFormatHex.Match(StringFormat);
+            var match = RegexStringFormatHexadecimal.Match(StringFormat);
             if (match.Success)
             {
                 if (match.Groups["simpleHEX"].Success)
