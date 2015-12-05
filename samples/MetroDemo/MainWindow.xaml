@@ -168,6 +168,8 @@
                               Header="Show LoginDialog" />
                     <MenuItem Click="ShowLoginDialogPasswordPreview"
                               Header="Show Password Preview LoginDialog" />
+                    <MenuItem Click="ShowLoginDialogOnlyPassword"
+                              Header="Show LoginDialog (Only Password)" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
                     <MenuItem Click="ShowLimitedMessageDialog"
