@@ -5,9 +5,6 @@
                          xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
                          xmlns:Behaviors="clr-namespace:MahApps.Metro.Behaviours"
                          x:Class="MahApps.Metro.Controls.Dialogs.LoginDialog">
-    <Dialogs:BaseMetroDialog.Resources>
-        <Converters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter"/>
-    </Dialogs:BaseMetroDialog.Resources>
     <Grid Margin="0 10 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"
@@ -30,7 +27,7 @@
                  Controls:TextBoxHelper.SelectAllOnFocus="True"
                  Text="{Binding Username, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  TextWrapping="Wrap"
-                 Visibility="{Binding ShouldHideUsername, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"
+                 Controls:VisibilityHelper.IsCollapsed="{Binding ShouldHideUsername, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                  Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
         <PasswordBox Grid.Row="2"
                      Margin="0 5 0 0"
