@@ -152,6 +152,7 @@
                           Margin="0, 10, 0, 0"
                           Style="{DynamicResource VirtualisedMetroComboBox}"
                           Controls:TextBoxHelper.Watermark="Autocompletion"
+                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                           DisplayMemberPath="Title"
                           IsEditable="True"
                           ItemsSource="{Binding Albums}"
