@@ -113,6 +113,10 @@
         <Grid x:Name="root"
               Margin="{TemplateBinding Margin}"
               Background="{TemplateBinding Background}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Grid.RenderTransform>
                 <TranslateTransform />
             </Grid.RenderTransform>
@@ -220,9 +224,16 @@
                     </VisualState>
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <AdornerDecorator>
+            <Rectangle x:Name="PART_WindowTitle"
+                       Grid.Row="0"
+                       Height="{Binding TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type Controls:MetroWindow}}}"
+                       HorizontalAlignment="Stretch"
+                       StrokeThickness="0"
+                       Fill="Transparent"/>
+            <AdornerDecorator Grid.Row="1">
                 <DockPanel FocusVisualStyle="{x:Null}"
-                           Focusable="False">
+                           Focusable="False"
+                           Grid.Row="1">
                     <ContentPresenter x:Name="PART_Header"
                                       DockPanel.Dock="Top"
                                       ContentSource="Header"

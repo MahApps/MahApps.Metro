@@ -969,7 +969,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
+        protected internal void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
             // if UseNoneWindowStyle = true no movement, no maximize please
             if (e.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
@@ -1004,7 +1004,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        protected void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
+        protected internal void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
         {
             if (ShowSystemMenuOnRightClick)
             {

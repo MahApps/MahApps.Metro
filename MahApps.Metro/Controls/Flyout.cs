@@ -15,6 +15,7 @@ namespace MahApps.Metro.Controls
     /// <seealso cref="FlyoutsControl"/>
     /// </summary>
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_WindowTitle", Type = typeof(UIElement))]
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
     [TemplatePart(Name = "PART_Content", Type = typeof(ContentPresenter))]
     public class Flyout : ContentControl
@@ -460,6 +461,7 @@ namespace MahApps.Metro.Controls
         SplineDoubleKeyFrame fadeOutFrame;
         ContentPresenter PART_Header;
         ContentPresenter PART_Content;
+        UIElement PART_WindowTitle;
 
         public override void OnApplyTemplate()
         {
@@ -471,7 +473,8 @@ namespace MahApps.Metro.Controls
 
             PART_Header = (ContentPresenter)GetTemplateChild("PART_Header");
             PART_Content = (ContentPresenter)GetTemplateChild("PART_Content");
-            
+            PART_WindowTitle = (UIElement)GetTemplateChild("PART_WindowTitle");
+
             hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
             hideFrame = (SplineDoubleKeyFrame)GetTemplateChild("hideFrame");
             hideFrameY = (SplineDoubleKeyFrame)GetTemplateChild("hideFrameY");
@@ -483,6 +486,8 @@ namespace MahApps.Metro.Controls
                 return;
 
             ApplyAnimation(Position, AnimateOpacity);
+
+            SetParentWindowEvents();
         }
 
         internal void ApplyAnimation(Position position, bool animateOpacity, bool resetShowFrame = true)
@@ -540,6 +545,24 @@ namespace MahApps.Metro.Controls
                         root.RenderTransform = new TranslateTransform(0, root.ActualHeight);
                     break;
             }
+        }
+
+        private void SetParentWindowEvents()
+        {
+            var window = this.TryFindParent<MetroWindow>();
+            if (window != null)
+            {
+                this.ClearParentWindowEvents(window);
+
+                PART_WindowTitle.MouseDown += window.TitleBarMouseDown;
+                PART_WindowTitle.MouseUp += window.TitleBarMouseUp;
+            }
+        }
+
+        protected internal void ClearParentWindowEvents(MetroWindow window)
+        {
+            PART_WindowTitle.MouseDown -= window.TitleBarMouseDown;
+            PART_WindowTitle.MouseUp -= window.TitleBarMouseUp;
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
