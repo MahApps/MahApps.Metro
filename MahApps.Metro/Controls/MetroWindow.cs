@@ -987,14 +987,23 @@ namespace MahApps.Metro.Controls
 
         private void WindowMoveThumbOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
+            // drag only if IsWindowDraggable is set to true
             if (!IsWindowDraggable &&
                 (!(Math.Abs(dragDeltaEventArgs.HorizontalChange) > 2) &&
                  !(Math.Abs(dragDeltaEventArgs.VerticalChange) > 2))) return;
 
             var windowHandle = new WindowInteropHelper(this).Handle;
             var cursorPos = Standard.NativeMethods.GetCursorPos();
-            //UnsafeNativeMethods.ReleaseCapture();
-            if (WindowState == WindowState.Maximized)
+
+            // if the window is maximized dragging is only allowed on title bar (also if not visible)
+            var windowIsMaximized = WindowState == WindowState.Maximized;
+            var isMouseOnTitlebar = cursorPos.y <= this.TitlebarHeight && this.TitlebarHeight > 0;
+            if (!isMouseOnTitlebar && windowIsMaximized)
+            {
+                return;
+            }
+
+            if (windowIsMaximized)
             {
                 Top = 2;
                 Left = Math.Max(cursorPos.x - RestoreBounds.Width / 2, 0);
@@ -1006,16 +1015,15 @@ namespace MahApps.Metro.Controls
 
         private void WindowRestoreThumbOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            // if UseNoneWindowStyle = true no movement, no maximize please
-            if (mouseButtonEventArgs.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
+            // restore/maximize only with left button
+            if (mouseButtonEventArgs.ChangedButton == MouseButton.Left)
             {
-                var mPoint = Mouse.GetPosition(this);
-                var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
                 // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
+                var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
+                var mPoint = Mouse.GetPosition(this);
                 var isMouseOnTitlebar = mPoint.Y <= this.TitlebarHeight && this.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
-                    //UnsafeNativeMethods.ReleaseCapture();
                     if (this.WindowState == WindowState.Maximized)
                     {
                         Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
