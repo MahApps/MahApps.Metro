@@ -908,22 +908,10 @@ namespace MahApps.Metro.Controls
                 windowRestoreThumb.MouseDoubleClick -= WindowRestoreThumbOnMouseDoubleClick;
                 windowRestoreThumb.MouseRightButtonUp -= WindowMenuThumbOnMouseRightButtonUp;
             }
-            if (titleBarBackground != null)
-            {
-                titleBarBackground.MouseDown -= TitleBarMouseDown;
-                titleBarBackground.MouseUp -= TitleBarMouseUp;
-            }
-            if (titleBar != null)
-            {
-                titleBar.MouseDown -= TitleBarMouseDown;
-                titleBar.MouseUp -= TitleBarMouseUp;
-            }
             if (icon != null)
             {
                 icon.MouseDown -= IconMouseDown;
             }
-            MouseDown -= TitleBarMouseDown;
-            MouseUp -= TitleBarMouseUp;
             SizeChanged -= MetroWindow_SizeChanged;
         }
 
@@ -945,30 +933,10 @@ namespace MahApps.Metro.Controls
                 windowRestoreThumb.MouseRightButtonUp += WindowMenuThumbOnMouseRightButtonUp;
             }
 
-            // handle mouse events for PART_WindowTitleBackground -> MetroWindow
-            if (titleBarBackground != null && titleBarBackground.Visibility == Visibility.Visible)
+            // handle size if we have a Grid for the title (e.g. clean window have a centered title)
+            if (titleBar != null && titleBar.GetType() == typeof(Grid))
             {
-                //titleBarBackground.MouseDown += TitleBarMouseDown;
-                //titleBarBackground.MouseUp += TitleBarMouseUp;
-            }
-
-            // handle mouse events for PART_TitleBar -> MetroWindow
-            if (titleBar != null && titleBar.Visibility == Visibility.Visible)
-            {
-                //titleBar.MouseDown += TitleBarMouseDown;
-                //titleBar.MouseUp += TitleBarMouseUp;
-
-                // special title resizing for centered title
-                if (titleBar.GetType() == typeof(Grid))
-                {
-                    SizeChanged += MetroWindow_SizeChanged;
-                }
-            }
-            else
-            {
-                // handle mouse events for windows without PART_WindowTitleBackground or PART_TitleBar
-                //MouseDown += TitleBarMouseDown;
-                //MouseUp += TitleBarMouseUp;
+                SizeChanged += MetroWindow_SizeChanged;
             }
         }
 
@@ -1048,42 +1016,6 @@ namespace MahApps.Metro.Controls
                 if ((mousePos.Y <= this.TitlebarHeight && this.TitlebarHeight > 0) || (this.UseNoneWindowStyle && this.TitlebarHeight <= 0))
                 {
                     ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePos));
-                }
-            }
-        }
-
-        protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            // if UseNoneWindowStyle = true no movement, no maximize please
-            if (e.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
-            {
-                var mPoint = Mouse.GetPosition(this);
-
-                var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
-                // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
-                var isMouseOnTitlebar = mPoint.Y <= this.TitlebarHeight && this.TitlebarHeight > 0;
-                if (e.ClickCount == 2 && canResize && isMouseOnTitlebar)
-                {
-                    if (this.WindowState == WindowState.Maximized)
-                    {
-                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
-                    }
-                    else
-                    {
-                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
-                    }
-                }
-            }
-        }
-
-        protected void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if (ShowSystemMenuOnRightClick)
-            {
-                var mousePosition = e.GetPosition(this);
-                if (e.ChangedButton == MouseButton.Right && (UseNoneWindowStyle || mousePosition.Y <= TitlebarHeight))
-                {
-                    ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePosition));
                 }
             }
         }
