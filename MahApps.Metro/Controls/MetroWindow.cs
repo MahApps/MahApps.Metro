@@ -957,17 +957,32 @@ namespace MahApps.Metro.Controls
 
         private void WindowMoveThumbOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
+            DoWindowMoveThumbOnDragDelta(this, dragDeltaEventArgs);
+        }
+
+        private void WindowRestoreThumbOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            DoWindowRestoreThumbOnMouseDoubleClick(this, mouseButtonEventArgs);
+        }
+
+        private void WindowMenuThumbOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DoWindowMenuThumbOnMouseRightButtonUp(this, e);
+        }
+
+        internal static void DoWindowMoveThumbOnDragDelta(MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
+        {
             // drag only if IsWindowDraggable is set to true
-            if (!IsWindowDraggable &&
+            if (!window.IsWindowDraggable &&
                 (!(Math.Abs(dragDeltaEventArgs.HorizontalChange) > 2) &&
                  !(Math.Abs(dragDeltaEventArgs.VerticalChange) > 2))) return;
 
-            var windowHandle = new WindowInteropHelper(this).Handle;
+            var windowHandle = new WindowInteropHelper(window).Handle;
             var cursorPos = Standard.NativeMethods.GetCursorPos();
 
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
-            var windowIsMaximized = WindowState == WindowState.Maximized;
-            var isMouseOnTitlebar = cursorPos.y <= this.TitlebarHeight && this.TitlebarHeight > 0;
+            var windowIsMaximized = window.WindowState == WindowState.Maximized;
+            var isMouseOnTitlebar = cursorPos.y <= window.TitlebarHeight && window.TitlebarHeight > 0;
             if (!isMouseOnTitlebar && windowIsMaximized)
             {
                 return;
@@ -975,47 +990,47 @@ namespace MahApps.Metro.Controls
 
             if (windowIsMaximized)
             {
-                Top = 2;
-                Left = Math.Max(cursorPos.x - RestoreBounds.Width / 2, 0);
+                window.Top = 2;
+                window.Left = Math.Max(cursorPos.x - window.RestoreBounds.Width / 2, 0);
             }
             var lParam = (int)(uint)cursorPos.x | (cursorPos.y << 16);
             Standard.NativeMethods.SendMessage(windowHandle, Standard.WM.LBUTTONUP, (IntPtr)Standard.HT.CAPTION, (IntPtr)lParam);
             Standard.NativeMethods.SendMessage(windowHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
         }
 
-        private void WindowRestoreThumbOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        internal static void DoWindowRestoreThumbOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
         {
             // restore/maximize only with left button
             if (mouseButtonEventArgs.ChangedButton == MouseButton.Left)
             {
                 // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
-                var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
-                var mousePos = Mouse.GetPosition(this);
-                var isMouseOnTitlebar = mousePos.Y <= this.TitlebarHeight && this.TitlebarHeight > 0;
+                var canResize = window.ResizeMode == ResizeMode.CanResizeWithGrip || window.ResizeMode == ResizeMode.CanResize;
+                var mousePos = Mouse.GetPosition(window);
+                var isMouseOnTitlebar = mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
-                    if (this.WindowState == WindowState.Maximized)
+                    if (window.WindowState == WindowState.Maximized)
                     {
-                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
+                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(window);
                     }
                     else
                     {
-                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
+                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(window);
                     }
                     mouseButtonEventArgs.Handled = true;
                 }
             }
         }
 
-        private void WindowMenuThumbOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        internal static void DoWindowMenuThumbOnMouseRightButtonUp(MetroWindow window, MouseButtonEventArgs e)
         {
-            if (this.ShowSystemMenuOnRightClick)
+            if (window.ShowSystemMenuOnRightClick)
             {
                 // show menu only if mouse pos is on title bar or if we have a window with none style and no title bar
-                var mousePos = e.GetPosition(this);
-                if ((mousePos.Y <= this.TitlebarHeight && this.TitlebarHeight > 0) || (this.UseNoneWindowStyle && this.TitlebarHeight <= 0))
+                var mousePos = e.GetPosition(window);
+                if ((mousePos.Y <= window.TitlebarHeight && window.TitlebarHeight > 0) || (window.UseNoneWindowStyle && window.TitlebarHeight <= 0))
                 {
-                    ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePos));
+                    ShowSystemMenuPhysicalCoordinates(window, window.PointToScreen(mousePos));
                 }
             }
         }
