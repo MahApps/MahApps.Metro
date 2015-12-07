@@ -906,6 +906,7 @@ namespace MahApps.Metro.Controls
             {
                 windowRestoreThumb.DragDelta -= WindowMoveThumbOnDragDelta;
                 windowRestoreThumb.MouseDoubleClick -= WindowRestoreThumbOnMouseDoubleClick;
+                windowRestoreThumb.MouseRightButtonUp -= WindowMenuThumbOnMouseRightButtonUp;
             }
             if (titleBarBackground != null)
             {
@@ -941,6 +942,7 @@ namespace MahApps.Metro.Controls
             {
                 windowRestoreThumb.DragDelta += WindowMoveThumbOnDragDelta;
                 windowRestoreThumb.MouseDoubleClick += WindowRestoreThumbOnMouseDoubleClick;
+                windowRestoreThumb.MouseRightButtonUp += WindowMenuThumbOnMouseRightButtonUp;
             }
 
             // handle mouse events for PART_WindowTitleBackground -> MetroWindow
@@ -1020,8 +1022,8 @@ namespace MahApps.Metro.Controls
             {
                 // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
                 var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
-                var mPoint = Mouse.GetPosition(this);
-                var isMouseOnTitlebar = mPoint.Y <= this.TitlebarHeight && this.TitlebarHeight > 0;
+                var mousePos = Mouse.GetPosition(this);
+                var isMouseOnTitlebar = mousePos.Y <= this.TitlebarHeight && this.TitlebarHeight > 0;
                 if (canResize && isMouseOnTitlebar)
                 {
                     if (this.WindowState == WindowState.Maximized)
@@ -1033,6 +1035,19 @@ namespace MahApps.Metro.Controls
                         Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
                     }
                     mouseButtonEventArgs.Handled = true;
+                }
+            }
+        }
+
+        private void WindowMenuThumbOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.ShowSystemMenuOnRightClick)
+            {
+                // show menu only if mouse pos is on title bar or if we have a window with none style and no title bar
+                var mousePos = e.GetPosition(this);
+                if ((mousePos.Y <= this.TitlebarHeight && this.TitlebarHeight > 0) || (this.UseNoneWindowStyle && this.TitlebarHeight <= 0))
+                {
+                    ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePos));
                 }
             }
         }
