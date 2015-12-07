@@ -234,7 +234,7 @@
         
         <ControlTemplate.Triggers>
             <Trigger Property="UseNoneWindowStyle" Value="True">
-                <Setter TargetName="PART_WindowRestoreThumb" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_WindowRestoreThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <!-- handle active/inactive state -->
             <Trigger Property="IsActive"
@@ -515,7 +515,7 @@
 
         <ControlTemplate.Triggers>
             <Trigger Property="UseNoneWindowStyle" Value="True">
-                <Setter TargetName="PART_WindowRestoreThumb" Property="Grid.Row" Value="2" />
+                <Setter TargetName="PART_WindowRestoreThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <!-- handle active/inactive state -->
             <Trigger Property="IsActive"
