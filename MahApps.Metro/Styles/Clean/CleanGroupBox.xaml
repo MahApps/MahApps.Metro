@@ -21,17 +21,19 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <ContentPresenter Margin="{TemplateBinding Padding}"
-                                          Content="{TemplateBinding Header}"
-                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                          ContentStringFormat="{TemplateBinding HeaderStringFormat}"
-                                          TextElement.Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
-                                          TextElement.FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
-                                          TextElement.FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
-                                          TextElement.FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
-                                          RecognizesAccessKey="True"
-                                          Grid.Row="0" />
+                        <Controls:ContentControlEx Margin="{TemplateBinding Padding}"
+                                                   Content="{TemplateBinding Header}"
+                                                   ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                   ContentStringFormat="{TemplateBinding HeaderStringFormat}"
+                                                   Foreground="{TemplateBinding Controls:GroupBoxHelper.HeaderForeground}"
+                                                   FontSize="{TemplateBinding Controls:ControlsHelper.HeaderFontSize}"
+                                                   FontStretch="{TemplateBinding Controls:ControlsHelper.HeaderFontStretch}"
+                                                   FontWeight="{TemplateBinding Controls:ControlsHelper.HeaderFontWeight}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   RecognizesAccessKey="True"
+                                                   Grid.Row="0"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
 
                         <Grid VerticalAlignment="Stretch"
                               HorizontalAlignment="Stretch"
