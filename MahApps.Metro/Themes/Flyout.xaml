@@ -7,20 +7,8 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Thumb.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-    <Style TargetType="{x:Type Thumb}"
-           x:Key="InvisibleThumbStyle">
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Grid Background="{TemplateBinding Background}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
     <DataTemplate x:Key="HeaderTemplate"
                   x:Shared="False">
@@ -244,7 +232,7 @@
                                       DockPanel.Dock="Bottom" />
                 </DockPanel>
             </AdornerDecorator>
-            <Thumb Style="{StaticResource InvisibleThumbStyle}"
+            <Thumb Style="{StaticResource WindowTitleThumbStyle}"
                    Height="{Binding Path=TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                    VerticalAlignment="Top"
                    x:Name="PART_WindowTitleThumb" />

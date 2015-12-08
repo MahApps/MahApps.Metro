@@ -6,22 +6,10 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Thumb.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
-    <Style TargetType="{x:Type Thumb}"
-           x:Key="InvisibleThumbStyle">
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Grid Background="{TemplateBinding Background}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
     <ControlTemplate x:Key="WindowTemplateKey"
                      TargetType="{x:Type Controls:MetroWindow}">
@@ -108,7 +96,7 @@
                     <Thumb Grid.Row="0"
                            Grid.Column="0"
                            Grid.ColumnSpan="5"
-                           Style="{StaticResource InvisibleThumbStyle}"
+                           Style="{StaticResource WindowTitleThumbStyle}"
                            x:Name="PART_WindowTitleThumb" />
 
                     <!-- the right window commands -->
@@ -389,7 +377,7 @@
                     <Thumb Grid.Row="0"
                            Grid.Column="0"
                            Grid.ColumnSpan="5"
-                           Style="{StaticResource InvisibleThumbStyle}"
+                           Style="{StaticResource WindowTitleThumbStyle}"
                            x:Name="PART_WindowTitleThumb" />
 
                     <!-- the right window commands -->
