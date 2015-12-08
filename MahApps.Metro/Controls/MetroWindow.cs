@@ -973,7 +973,7 @@ namespace MahApps.Metro.Controls
         internal static void DoWindowMoveThumbOnDragDelta(MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
         {
             // drag only if IsWindowDraggable is set to true
-            if (!window.IsWindowDraggable &&
+            if (!window.IsWindowDraggable ||
                 (!(Math.Abs(dragDeltaEventArgs.HorizontalChange) > 2) &&
                  !(Math.Abs(dragDeltaEventArgs.VerticalChange) > 2))) return;
 
