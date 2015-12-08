@@ -6,6 +6,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBlock.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Thumb.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -91,6 +92,12 @@
                             </MultiBinding>
                         </ContentControl.Foreground>
                     </ContentControl>
+
+                    <Thumb Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="5"
+                           Style="{StaticResource WindowTitleThumbStyle}"
+                           x:Name="PART_WindowTitleThumb" />
 
                     <!-- the right window commands -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
@@ -214,6 +221,9 @@
         </ControlTemplate.Resources>
         
         <ControlTemplate.Triggers>
+            <Trigger Property="UseNoneWindowStyle" Value="True">
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+            </Trigger>
             <!-- handle active/inactive state -->
             <Trigger Property="IsActive"
                      Value="False">
@@ -364,6 +374,12 @@
                         </Label>
                     </Grid>
 
+                    <Thumb Grid.Row="0"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="5"
+                           Style="{StaticResource WindowTitleThumbStyle}"
+                           x:Name="PART_WindowTitleThumb" />
+
                     <!-- the right window commands -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
                                       Focusable="False"
@@ -486,6 +502,9 @@
         </ControlTemplate.Resources>
 
         <ControlTemplate.Triggers>
+            <Trigger Property="UseNoneWindowStyle" Value="True">
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+            </Trigger>
             <!-- handle active/inactive state -->
             <Trigger Property="IsActive"
                      Value="False">
