@@ -247,7 +247,7 @@
             <Thumb Style="{StaticResource InvisibleThumbStyle}"
                    Height="{Binding Path=TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                    VerticalAlignment="Top"
-                   x:Name="PART_WindowRestoreThumb" />
+                   x:Name="PART_WindowTitleThumb" />
         </Grid>
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}"

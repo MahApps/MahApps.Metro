@@ -15,7 +15,7 @@ namespace MahApps.Metro.Controls
     /// <seealso cref="FlyoutsControl"/>
     /// </summary>
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_WindowRestoreThumb", Type = typeof(Thumb))]
+    [TemplatePart(Name = "PART_WindowTitleThumb", Type = typeof(Thumb))]
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
     [TemplatePart(Name = "PART_Content", Type = typeof(ContentPresenter))]
     public class Flyout : ContentControl
@@ -468,7 +468,7 @@ namespace MahApps.Metro.Controls
         SplineDoubleKeyFrame fadeOutFrame;
         ContentPresenter PART_Header;
         ContentPresenter PART_Content;
-        Thumb windowRestoreThumb;
+        Thumb windowTitleThumb;
 
         public override void OnApplyTemplate()
         {
@@ -480,17 +480,17 @@ namespace MahApps.Metro.Controls
 
             PART_Header = (ContentPresenter)GetTemplateChild("PART_Header");
             PART_Content = (ContentPresenter)GetTemplateChild("PART_Content");
-            windowRestoreThumb = GetTemplateChild("PART_WindowRestoreThumb") as Thumb;
+            this.windowTitleThumb = GetTemplateChild("PART_WindowTitleThumb") as Thumb;
 
-            if (windowRestoreThumb != null)
+            if (this.windowTitleThumb != null)
             {
-                windowRestoreThumb.DragDelta -= WindowMoveThumbOnDragDelta;
-                windowRestoreThumb.MouseDoubleClick -= WindowRestoreThumbOnMouseDoubleClick;
-                windowRestoreThumb.MouseRightButtonUp -= WindowMenuThumbOnMouseRightButtonUp;
+                this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
 
-                windowRestoreThumb.DragDelta += WindowMoveThumbOnDragDelta;
-                windowRestoreThumb.MouseDoubleClick += WindowRestoreThumbOnMouseDoubleClick;
-                windowRestoreThumb.MouseRightButtonUp += WindowMenuThumbOnMouseRightButtonUp;
+                this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
 
             hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
@@ -508,39 +508,39 @@ namespace MahApps.Metro.Controls
 
         protected internal void CleanUp(FlyoutsControl flyoutsControl)
         {
-            if (windowRestoreThumb != null)
+            if (this.windowTitleThumb != null)
             {
-                windowRestoreThumb.DragDelta -= WindowMoveThumbOnDragDelta;
-                windowRestoreThumb.MouseDoubleClick -= WindowRestoreThumbOnMouseDoubleClick;
-                windowRestoreThumb.MouseRightButtonUp -= WindowMenuThumbOnMouseRightButtonUp;
+                this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
             this.parentWindow = null;
         }
 
-        private void WindowMoveThumbOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
+        private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
             var window = this.ParentWindow;
             if (window != null)
             {
-                MetroWindow.DoWindowMoveThumbOnDragDelta(window, dragDeltaEventArgs);
+                MetroWindow.DoWindowTitleThumbMoveOnDragDelta(window, dragDeltaEventArgs);
             }
         }
 
-        private void WindowRestoreThumbOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var window = this.ParentWindow;
             if (window != null)
             {
-                MetroWindow.DoWindowRestoreThumbOnMouseDoubleClick(window, mouseButtonEventArgs);
+                MetroWindow.DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(window, mouseButtonEventArgs);
             }
         }
 
-        private void WindowMenuThumbOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void WindowTitleThumbSystemMenuOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             var window = this.ParentWindow;
             if (window != null)
             {
-                MetroWindow.DoWindowMenuThumbOnMouseRightButtonUp(window, e);
+                MetroWindow.DoWindowTitleThumbSystemMenuOnMouseRightButtonUp(window, e);
             }
         }
 

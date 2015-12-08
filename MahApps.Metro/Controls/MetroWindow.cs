@@ -20,7 +20,7 @@ namespace MahApps.Metro.Controls
     [TemplatePart(Name = PART_Icon, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_TitleBar, Type = typeof(UIElement))]
     [TemplatePart(Name = PART_WindowTitleBackground, Type = typeof(UIElement))]
-    [TemplatePart(Name = PART_WindowRestoreThumb, Type = typeof(Thumb))]
+    [TemplatePart(Name = PART_WindowTitleThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PART_LeftWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_RightWindowCommands, Type = typeof(WindowCommands))]
     [TemplatePart(Name = PART_WindowButtonCommands, Type = typeof(WindowButtonCommands))]
@@ -33,7 +33,7 @@ namespace MahApps.Metro.Controls
         private const string PART_Icon = "PART_Icon";
         private const string PART_TitleBar = "PART_TitleBar";
         private const string PART_WindowTitleBackground = "PART_WindowTitleBackground";
-        private const string PART_WindowRestoreThumb = "PART_WindowRestoreThumb";
+        private const string PART_WindowTitleThumb = "PART_WindowTitleThumb";
         private const string PART_LeftWindowCommands = "PART_LeftWindowCommands";
         private const string PART_RightWindowCommands = "PART_RightWindowCommands";
         private const string PART_WindowButtonCommands = "PART_WindowButtonCommands";
@@ -102,7 +102,7 @@ namespace MahApps.Metro.Controls
         UIElement icon;
         UIElement titleBar;
         UIElement titleBarBackground;
-        Thumb windowRestoreThumb;
+        Thumb windowTitleThumb;
         internal ContentPresenter LeftWindowCommandsPresenter;
         internal ContentPresenter RightWindowCommandsPresenter;
         internal WindowButtonCommands WindowButtonCommands;
@@ -894,7 +894,7 @@ namespace MahApps.Metro.Controls
             icon = GetTemplateChild(PART_Icon) as UIElement;
             titleBar = GetTemplateChild(PART_TitleBar) as UIElement;
             titleBarBackground = GetTemplateChild(PART_WindowTitleBackground) as UIElement;
-            windowRestoreThumb = GetTemplateChild(PART_WindowRestoreThumb) as Thumb;
+            this.windowTitleThumb = GetTemplateChild(PART_WindowTitleThumb) as Thumb;
 
             this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
         }
@@ -902,11 +902,11 @@ namespace MahApps.Metro.Controls
         private void ClearWindowEvents()
         {
             // clear all event handlers first:
-            if (windowRestoreThumb != null)
+            if (this.windowTitleThumb != null)
             {
-                windowRestoreThumb.DragDelta -= WindowMoveThumbOnDragDelta;
-                windowRestoreThumb.MouseDoubleClick -= WindowRestoreThumbOnMouseDoubleClick;
-                windowRestoreThumb.MouseRightButtonUp -= WindowMenuThumbOnMouseRightButtonUp;
+                this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
             if (icon != null)
             {
@@ -926,11 +926,11 @@ namespace MahApps.Metro.Controls
                 icon.MouseDown += IconMouseDown;
             }
 
-            if (windowRestoreThumb != null)
+            if (this.windowTitleThumb != null)
             {
-                windowRestoreThumb.DragDelta += WindowMoveThumbOnDragDelta;
-                windowRestoreThumb.MouseDoubleClick += WindowRestoreThumbOnMouseDoubleClick;
-                windowRestoreThumb.MouseRightButtonUp += WindowMenuThumbOnMouseRightButtonUp;
+                this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
 
             // handle size if we have a Grid for the title (e.g. clean window have a centered title)
@@ -955,22 +955,22 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private void WindowMoveThumbOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
+        private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
-            DoWindowMoveThumbOnDragDelta(this, dragDeltaEventArgs);
+            DoWindowTitleThumbMoveOnDragDelta(this, dragDeltaEventArgs);
         }
 
-        private void WindowRestoreThumbOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
-            DoWindowRestoreThumbOnMouseDoubleClick(this, mouseButtonEventArgs);
+            DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(this, mouseButtonEventArgs);
         }
 
-        private void WindowMenuThumbOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void WindowTitleThumbSystemMenuOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            DoWindowMenuThumbOnMouseRightButtonUp(this, e);
+            DoWindowTitleThumbSystemMenuOnMouseRightButtonUp(this, e);
         }
 
-        internal static void DoWindowMoveThumbOnDragDelta(MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
+        internal static void DoWindowTitleThumbMoveOnDragDelta(MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
         {
             // drag only if IsWindowDraggable is set to true
             if (!window.IsWindowDraggable ||
@@ -998,7 +998,7 @@ namespace MahApps.Metro.Controls
             Standard.NativeMethods.SendMessage(windowHandle, Standard.WM.SYSCOMMAND, (IntPtr)Standard.SC.MOUSEMOVE, IntPtr.Zero);
         }
 
-        internal static void DoWindowRestoreThumbOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
+        internal static void DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
         {
             // restore/maximize only with left button
             if (mouseButtonEventArgs.ChangedButton == MouseButton.Left)
@@ -1022,7 +1022,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        internal static void DoWindowMenuThumbOnMouseRightButtonUp(MetroWindow window, MouseButtonEventArgs e)
+        internal static void DoWindowTitleThumbSystemMenuOnMouseRightButtonUp(MetroWindow window, MouseButtonEventArgs e)
         {
             if (window.ShowSystemMenuOnRightClick)
             {
