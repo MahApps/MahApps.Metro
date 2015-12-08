@@ -520,7 +520,7 @@ namespace MahApps.Metro.Controls
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
             var window = this.ParentWindow;
-            if (window != null)
+            if (window != null && this.Position != Position.Bottom)
             {
                 MetroWindow.DoWindowTitleThumbMoveOnDragDelta(window, dragDeltaEventArgs);
             }
@@ -529,7 +529,7 @@ namespace MahApps.Metro.Controls
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
         {
             var window = this.ParentWindow;
-            if (window != null)
+            if (window != null && this.Position != Position.Bottom)
             {
                 MetroWindow.DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(window, mouseButtonEventArgs);
             }
@@ -538,7 +538,7 @@ namespace MahApps.Metro.Controls
         private void WindowTitleThumbSystemMenuOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             var window = this.ParentWindow;
-            if (window != null)
+            if (window != null && this.Position != Position.Bottom)
             {
                 MetroWindow.DoWindowTitleThumbSystemMenuOnMouseRightButtonUp(window, e);
             }
