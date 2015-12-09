@@ -92,7 +92,6 @@
     <Compile Include="Controls\IThemeManager.cs" />
     <Compile Include="Services\IServiceLocator.cs" />
     <Compile Include="Services\MefServiceLocator.cs" />
-    <Compile Include="ShellViewModel.cs" />
     <Compile Include="ViewModels\FlyoutBaseViewModel.cs" />
     <Compile Include="ViewModels\Flyouts\Flyout1ViewModel.cs" />
     <Compile Include="ViewModels\Flyouts\Flyout2ViewModel.cs" />
@@ -120,10 +119,6 @@
     <Page Include="Resources\Theme1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ShellView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Flyouts\Flyout1View.xaml">
       <SubType>Designer</SubType>
