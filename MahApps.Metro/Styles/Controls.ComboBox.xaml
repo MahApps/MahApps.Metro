@@ -342,7 +342,7 @@
                                                             Style="{DynamicResource ChromelessButtonStyle}"
                                                             Foreground="{TemplateBinding Foreground}"
                                                             FontFamily="Marlett"
-                                                            Content="r"
+                                                            Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
                                                             Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}"
                                                             Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
                                                             IsTabStop="False" />
@@ -461,6 +461,7 @@
                                      Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                      Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
                                      Controls:TextBoxHelper.HasText="{TemplateBinding Controls:TextBoxHelper.HasText}"
+                                     Controls:TextBoxHelper.ButtonContent="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
                                      MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.MaxLength), Mode=OneWay}"
                                      CharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.CharacterCasing), Mode=OneWay}"
                                      Foreground="{TemplateBinding Foreground}"
