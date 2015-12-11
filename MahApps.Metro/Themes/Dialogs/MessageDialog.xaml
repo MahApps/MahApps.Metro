@@ -1,8 +1,11 @@
 ﻿<Dialogs:BaseMetroDialog xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                          xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs"
-                         x:Class="MahApps.Metro.Controls.Dialogs.MessageDialog"
-                         Loaded="Dialog_Loaded">
+                         x:Class="MahApps.Metro.Controls.Dialogs.MessageDialog">
+    <Dialogs:BaseMetroDialog.CommandBindings>
+        <CommandBinding Command="Copy"
+                        Executed="OnKeyCopyExecuted" />
+    </Dialogs:BaseMetroDialog.CommandBindings>
     <Grid Margin="0 10 0 0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />

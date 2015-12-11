@@ -19,7 +19,7 @@ namespace MetroDemo
         {
             _viewModel = new MainWindowViewModel(DialogCoordinator.Instance);
             DataContext = _viewModel;
-            
+
             InitializeComponent();
 
             flyoutDemo = new FlyoutDemo();
@@ -147,6 +147,7 @@ namespace MetroDemo
         private async void ShowDialogOutside(object sender, RoutedEventArgs e)
         {
             var dialog = (BaseMetroDialog)this.Resources["CustomDialogTest"];
+            dialog.DialogSettings.ColorScheme = MetroDialogOptions.ColorScheme;
             dialog = dialog.ShowDialogExternally();
 
             await TaskEx.Delay(5000);
@@ -200,7 +201,15 @@ namespace MetroDemo
 
             await this.ShowMetroDialogAsync(dialog);
 
+            var textBlock = dialog.FindChild<TextBlock>("MessageTextBlock");
+            textBlock.Text = "A message box will appear in 5 seconds.";
+
             await TaskEx.Delay(5000);
+
+            await this.ShowMessageAsync("Secondary dialog", "This message is shown on top of another.");
+
+            textBlock.Text = "The dialog will close in 2 seconds.";
+            await TaskEx.Delay(2000);
 
             await this.HideMetroDialogAsync(dialog);
         }
@@ -222,7 +231,7 @@ namespace MetroDemo
             await this.HideMetroDialogAsync(dialog);
         }
 
-         private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
+        private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
         {
             LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
             if (result == null)
@@ -234,9 +243,24 @@ namespace MetroDemo
                 MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
             }
         }
+
+        private async void ShowLoginDialogOnlyPassword(object sender, RoutedEventArgs e)
+        {
+            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, ShouldHideUsername = true });
+            if (result == null)
+            {
+                //User pressed cancel
+            }
+            else
+            {
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Password: {0}", result.Password));
+            }
+        }
+
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
             var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");
+            controller.SetIndeterminate();
 
             await TaskEx.Delay(5000);
 
@@ -352,7 +376,7 @@ namespace MetroDemo
             w.Content = new TextBlock() { Text = "MetroWindow with a Border", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.GlowBrush = null;
-            w.BorderBrush = this.FindResource("AccentColorBrush") as Brush;
+            w.SetResourceReference(MetroWindow.BorderBrushProperty, "AccentColorBrush");
             w.Show();
         }
 
@@ -362,7 +386,7 @@ namespace MetroDemo
             w.Content = new TextBlock() { Text = "MetroWindow with a Glow", FontSize = 28, FontWeight = FontWeights.Light, VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center };
             w.BorderThickness = new Thickness(1);
             w.BorderBrush = null;
-            w.GlowBrush = this.FindResource("AccentColorBrush") as SolidColorBrush;
+            w.SetResourceReference(MetroWindow.GlowBrushProperty, "AccentColorBrush");
             w.Show();
         }
 
@@ -374,7 +398,5 @@ namespace MetroDemo
             w.EnableDWMDropShadow = true;
             w.Show();
         }
-
-
     }
 }

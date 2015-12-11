@@ -1,6 +1,20 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+
+    <Style x:Key="MetroValidationPopup"
+           TargetType="{x:Type Controls:CustomValidationPopup}">
+        <Setter Property="HorizontalAlignment"
+                Value="Right" />
+        <Setter Property="HorizontalOffset"
+                Value="0" />
+        <Setter Property="VerticalOffset"
+                Value="0" />
+        <Setter Property="PopupAnimation"
+                Value="Fade" />
+        <Setter Property="Placement"
+                Value="Right" />
+    </Style>
 
     <ControlTemplate x:Key="ValidationErrorTemplate">
         <AdornedElementPlaceholder x:Name="placeholder">
@@ -29,13 +43,8 @@
                     </Grid>
                 </Border>
 
-                <controls:CustomValidationPopup x:Name="ValidationPopup"
+                <Controls:CustomValidationPopup x:Name="ValidationPopup"
                                                 AllowsTransparency="True"
-                                                HorizontalAlignment="Right"
-                                                HorizontalOffset="0"
-                                                VerticalOffset="0"
-                                                PopupAnimation="Fade"
-                                                Placement="Right"
                                                 PlacementTarget="{Binding ElementName=PopupTargetElement, Mode=OneWay}"
                                                 IsOpen="False">
                     <Grid x:Name="Root"
@@ -110,10 +119,10 @@
                                                UseLayoutRounding="False" />
                                 </DataTemplate>
                             </Border.Resources>
-                            <ContentPresenter Content="{Binding CurrentItem}" />
+                            <ItemsControl ItemsSource="{Binding }" />
                         </Border>
                     </Grid>
-                </controls:CustomValidationPopup>
+                </Controls:CustomValidationPopup>
             </Grid>
         </AdornedElementPlaceholder>
 

@@ -10,6 +10,59 @@ namespace MahApps.Metro.Controls
     /// </summary>
     public static class ControlsHelper
     {
+        public static readonly DependencyProperty DisabledVisualElementVisibilityProperty = DependencyProperty.RegisterAttached("DisabledVisualElementVisibility", typeof(Visibility), typeof(ControlsHelper), new FrameworkPropertyMetadata(Visibility.Visible, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsMeasure));
+
+        /// <summary>
+        /// Gets the value to handle the visibility of the DisabledVisualElement in the template.
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(RichTextBox))]
+        [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
+        public static Visibility GetDisabledVisualElementVisibility(UIElement element)
+        {
+            return (Visibility)element.GetValue(DisabledVisualElementVisibilityProperty);
+        }
+
+        /// <summary>
+        /// Sets the value to handle the visibility of the DisabledVisualElement in the template.
+        /// </summary>
+        public static void SetDisabledVisualElementVisibility(UIElement element, Visibility value)
+        {
+            element.SetValue(DisabledVisualElementVisibilityProperty, value);
+        }
+
+        /// <summary>
+        /// The DependencyProperty for the CharacterCasing property.
+        /// Controls whether or not content is converted to upper or lower case
+        /// </summary>
+        public static readonly DependencyProperty ContentCharacterCasingProperty =
+            DependencyProperty.RegisterAttached(
+                "ContentCharacterCasing",
+                typeof (CharacterCasing),
+                typeof (ControlsHelper),
+                new FrameworkPropertyMetadata(CharacterCasing.Normal, FrameworkPropertyMetadataOptions.AffectsMeasure),
+                new ValidateValueCallback(value => CharacterCasing.Normal <= (CharacterCasing) value && (CharacterCasing) value <= CharacterCasing.Upper));
+
+        /// <summary>
+        /// Gets the character casing of the control
+        /// </summary>
+        [AttachedPropertyBrowsableForType(typeof(ContentControl))]
+        [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
+        [AttachedPropertyBrowsableForType(typeof(WindowCommands))]
+        public static CharacterCasing GetContentCharacterCasing(UIElement element)
+        {
+            return (CharacterCasing)element.GetValue(ContentCharacterCasingProperty);
+        }
+
+        /// <summary>
+        /// Sets the character casing of the control
+        /// </summary>
+        public static void SetContentCharacterCasing(UIElement element, CharacterCasing value)
+        {
+            element.SetValue(ContentCharacterCasingProperty, value);
+        }
+
         public static readonly DependencyProperty HeaderFontSizeProperty =
             DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ControlsHelper), new FrameworkPropertyMetadata(26.67, HeaderFontSizePropertyChangedCallback){ Inherits = true});
 
@@ -151,9 +204,35 @@ namespace MahApps.Metro.Controls
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
         [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(Tile))]
         public static Brush GetMouseOverBorderBrush(DependencyObject obj)
         {
             return (Brush)obj.GetValue(MouseOverBorderBrushProperty);
+        }
+
+        /// <summary>
+        /// DependencyProperty for <see cref="CornerRadius" /> property.
+        /// </summary>
+        public static readonly DependencyProperty CornerRadiusProperty
+            = DependencyProperty.RegisterAttached("CornerRadius", typeof(CornerRadius), typeof(ControlsHelper),
+                                                  new FrameworkPropertyMetadata(
+                                                      new CornerRadius(),
+                                                      FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender));
+
+        /// <summary> 
+        /// The CornerRadius property allows users to control the roundness of the button corners independently by 
+        /// setting a radius value for each corner. Radius values that are too large are scaled so that they
+        /// smoothly blend from corner to corner. (Can be used e.g. at MetroButton style)
+        /// Description taken from original Microsoft description :-D
+        /// </summary>
+        public static CornerRadius GetCornerRadius(UIElement element)
+        {
+            return (CornerRadius)element.GetValue(CornerRadiusProperty);
+        }
+
+        public static void SetCornerRadius(UIElement element, CornerRadius value)
+        {
+            element.SetValue(CornerRadiusProperty, value);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,10 +25,12 @@ namespace MahApps.Metro.Controls
         private readonly Func<RECT, double> getWidth;
         private readonly Func<RECT, double> getHeight;
         private const double edgeSize = 20.0;
-        private const double glowSize = 9.0;
+        private const double glowSize = 6.0;
         private IntPtr handle;
         private IntPtr ownerHandle;
         private bool closing = false;
+        private HwndSource hwndSource;
+        private PropertyChangeNotifier resizeModeChangeNotifier;
 
         public GlowWindow(Window owner, GlowDirection direction)
         {
@@ -52,15 +55,17 @@ namespace MahApps.Metro.Controls
             b.Source = owner;
             glow.SetBinding(Glow.BorderThicknessProperty, b);
 
+            glow.Direction = direction;
+
             switch (direction)
             {
                 case GlowDirection.Left:
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Right;
-                    getLeft = (rect) => rect.left - glowSize;
-                    getTop = (rect) => rect.top - owner.BorderThickness.Top;
+                    getLeft = (rect) => rect.left - glowSize + 1;
+                    getTop = (rect) => rect.top - 2;
                     getWidth = (rect) => glowSize;
-                    getHeight = (rect) => rect.Height + owner.BorderThickness.Top + owner.BorderThickness.Bottom;
+                    getHeight = (rect) => rect.Height + 4;
                     getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                                ? HitTestValues.HTTOPLEFT
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
@@ -80,10 +85,10 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Right:
                     glow.Orientation = Orientation.Vertical;
                     glow.HorizontalAlignment = HorizontalAlignment.Left;
-                    getLeft = (rect) => rect.right;
-                    getTop = (rect) => rect.top - owner.BorderThickness.Top;
+                    getLeft = (rect) => rect.right - 1;
+                    getTop = (rect) => rect.top - 2;
                     getWidth = (rect) => glowSize;
-                    getHeight = (rect) => rect.Height + owner.BorderThickness.Top + owner.BorderThickness.Bottom;
+                    getHeight = (rect) => rect.Height + 4;
                     getHitTestValue = p => new Rect(0, 0, ActualWidth, edgeSize).Contains(p)
                                                ? HitTestValues.HTTOPRIGHT
                                                : new Rect(0, ActualHeight - edgeSize, ActualWidth, edgeSize).Contains(p)
@@ -103,9 +108,9 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Top:
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Bottom;
-                    getLeft = (rect) => rect.left - owner.BorderThickness.Left;
-                    getTop = (rect) => rect.top - glowSize;
-                    getWidth = (rect) => rect.Width + owner.BorderThickness.Left + owner.BorderThickness.Right;
+                    getLeft = (rect) => rect.left - 2;
+                    getTop = (rect) => rect.top - glowSize + 1;
+                    getWidth = (rect) => rect.Width + 4;
                     getHeight = (rect) => glowSize;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                                ? HitTestValues.HTTOPLEFT
@@ -128,9 +133,9 @@ namespace MahApps.Metro.Controls
                 case GlowDirection.Bottom:
                     glow.Orientation = Orientation.Horizontal;
                     glow.VerticalAlignment = VerticalAlignment.Top;
-                    getLeft = (rect) => rect.left - owner.BorderThickness.Left;
-                    getTop = (rect) => rect.bottom;
-                    getWidth = (rect) => rect.Width + owner.BorderThickness.Left + owner.BorderThickness.Right;
+                    getLeft = (rect) => rect.left - 2;
+                    getTop = (rect) => rect.bottom - 1;
+                    getWidth = (rect) => rect.Width + 4;
                     getHeight = (rect) => glowSize;
                     getHitTestValue = p => new Rect(0, 0, edgeSize - glowSize, ActualHeight).Contains(p)
                                                ? HitTestValues.HTBOTTOMLEFT
@@ -181,21 +186,43 @@ namespace MahApps.Metro.Controls
         {
             base.OnSourceInitialized(e);
 
-            var source = (HwndSource)PresentationSource.FromVisual(this);
-            WS ws = source.Handle.GetWindowLong();
-            WSEX wsex = source.Handle.GetWindowLongEx();
+            this.hwndSource = (HwndSource)PresentationSource.FromVisual(this);
+            if (hwndSource == null) return;
+            
+            var ws = hwndSource.Handle.GetWindowLong();
+            var wsex = hwndSource.Handle.GetWindowLongEx();
 
             //ws |= WS.POPUP;
             wsex ^= WSEX.APPWINDOW;
             wsex |= WSEX.NOACTIVATE;
-            wsex |= WSEX.TRANSPARENT;
+            if (this.Owner.ResizeMode == ResizeMode.NoResize || this.Owner.ResizeMode == ResizeMode.CanMinimize)
+            {
+                wsex |= WSEX.TRANSPARENT;
+            }
 
-            source.Handle.SetWindowLong(ws);
-            source.Handle.SetWindowLongEx(wsex);
-            source.AddHook(WndProc);
+            hwndSource.Handle.SetWindowLong(ws);
+            hwndSource.Handle.SetWindowLongEx(wsex);
+            hwndSource.AddHook(WndProc);
 
-            handle = source.Handle;
+            handle = hwndSource.Handle;
             ownerHandle = new WindowInteropHelper(Owner).Handle;
+
+            this.resizeModeChangeNotifier = new PropertyChangeNotifier(this.Owner, Window.ResizeModeProperty);
+            this.resizeModeChangeNotifier.ValueChanged += ResizeModeChanged;
+        }
+
+        private void ResizeModeChanged(object sender, EventArgs e)
+        {
+            var wsex = hwndSource.Handle.GetWindowLongEx();
+            if (this.Owner.ResizeMode == ResizeMode.NoResize || this.Owner.ResizeMode == ResizeMode.CanMinimize)
+            {
+                wsex |= WSEX.TRANSPARENT;
+            }
+            else
+            {
+                wsex ^= WSEX.TRANSPARENT;
+            }
+            hwndSource.Handle.SetWindowLongEx(wsex);
         }
 
         public void Update()

@@ -58,6 +58,7 @@
 
     <SolidColorBrush x:Key="TransparentWhiteBrush" Color="#00FFFFFF"/>
     <SolidColorBrush x:Key="SemiTransparentWhiteBrush" Color="#55FFFFFF"/>
+    <SolidColorBrush x:Key="SemiTransparentGreyBrush" Color="#40808080"/>
     <SolidColorBrush x:Key="ControlsDisabledBrush" Color="#A5FFFFFF" />
 
     <SolidColorBrush x:Key="AccentColorBrush" Color="{DynamicResource AccentColor}"/>
@@ -117,6 +118,10 @@
     <SolidColorBrush x:Key="FlatButtonPressedBackgroundBrush" Color="#222222" options:Freeze="True" />
     <SolidColorBrush x:Key="FlatButtonPressedForegroundBrush" Color="White" options:Freeze="True" />
 
+    <SolidColorBrush x:Key="DarkIdealForegroundDisabledBrush" Color="#ADADAD" options:Freeze="True" />
+    <SolidColorBrush x:Key="CleanWindowCloseButtonBackgroundBrush" Color="#EB2F2F" options:Freeze="True" />
+    <SolidColorBrush x:Key="CleanWindowCloseButtonPressedBackgroundBrush" Color="#7C0000" options:Freeze="True" />
+
     <!-- CONTROL VALIDATION BRUSHES -->
     <SolidColorBrush x:Key="ControlsValidationBrush" Color="#FFDB000C" options:Freeze="True" />
     <SolidColorBrush x:Key="ValidationBrush1" Color="#052A2E31" options:Freeze="True" />
@@ -163,4 +168,14 @@
 
     <Color x:Key="MenuShadowColor">#FF000000</Color>
 
+    <Color x:Key="IdealForegroundColor">Black</Color>
+
+    <!-- DataGrid brushes -->
+    <SolidColorBrush x:Key="MetroDataGrid.HighlightBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.DisabledHighlightBrush" Color="{StaticResource Gray7}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.HighlightTextBrush" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.MouseOverHighlightBrush" Color="{StaticResource AccentColor3}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.FocusBorderBrush" Color="{StaticResource AccentColor}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.InactiveSelectionHighlightBrush" Color="{StaticResource AccentColor2}" options:Freeze="True" />
+    <SolidColorBrush x:Key="MetroDataGrid.InactiveSelectionHighlightTextBrush" Color="{StaticResource IdealForegroundColor}" options:Freeze="True" />
 </ResourceDictionary>

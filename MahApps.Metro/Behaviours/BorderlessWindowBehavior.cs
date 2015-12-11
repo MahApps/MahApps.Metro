@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
@@ -26,7 +27,11 @@ namespace MahApps.Metro.Behaviours
         {
             windowChrome = new WindowChrome
             {
-                ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness, 
+#if NET4_5
+                ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness, 
+#else
+                ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness,
+#endif
                 CaptionHeight = 0, 
                 CornerRadius = new CornerRadius(0), 
                 GlassFrameThickness = new Thickness(0), 
@@ -116,28 +121,39 @@ namespace MahApps.Metro.Behaviours
                     // WindowState="Maximized"
                     // IgnoreTaskbarOnMaximize="True"
                     // this only happens if we change this at runtime
-                    var removed = _ModifyStyle(0, Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME);
+                    var removed = _ModifyStyle(Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME, 0);
                     windowChrome.IgnoreTaskbarOnMaximize = metroWindow.IgnoreTaskbarOnMaximize;
                     this.ForceRedrawWindowFromPropertyChanged();
                     if (removed)
                     {
-                        _ModifyStyle(Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME, 0);
+                        _ModifyStyle(0, Standard.WS.MAXIMIZEBOX | Standard.WS.MINIMIZEBOX | Standard.WS.THICKFRAME);
                     }
                 }
             }
         }
 
+        /// <summary>Add and remove a native WindowStyle from the HWND.</summary>
+        /// <param name="removeStyle">The styles to be removed.  These can be bitwise combined.</param>
+        /// <param name="addStyle">The styles to be added.  These can be bitwise combined.</param>
+        /// <returns>Whether the styles of the HWND were modified as a result of this call.</returns>
+        /// <SecurityNote>
+        ///   Critical : Calls critical methods
+        /// </SecurityNote>
+        [SecurityCritical]
         private bool _ModifyStyle(Standard.WS removeStyle, Standard.WS addStyle)
         {
             if (this.handle == IntPtr.Zero)
             {
                 return false;
             }
-            var dwStyle = (Standard.WS)Standard.NativeMethods.GetWindowLongPtr(this.handle, Standard.GWL.STYLE).ToInt32();
+            var intPtr = Standard.NativeMethods.GetWindowLongPtr(this.handle, Standard.GWL.STYLE);
+            var dwStyle = (Standard.WS)(Environment.Is64BitProcess ? intPtr.ToInt64() : intPtr.ToInt32());
             var dwNewStyle = (dwStyle & ~removeStyle) | addStyle;
-            if (dwStyle == dwNewStyle) {
+            if (dwStyle == dwNewStyle)
+            {
                 return false;
             }
+
             Standard.NativeMethods.SetWindowLongPtr(this.handle, Standard.GWL.STYLE, new IntPtr((int)dwNewStyle));
             return true;
         }
@@ -255,7 +271,11 @@ namespace MahApps.Metro.Behaviours
             else
             {
                 // note (punker76): check this, maybe we doesn't need this anymore
+#if NET4_5
+                windowChrome.ResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
+#else
                 windowChrome.ResizeBorderThickness = SystemParameters2.Current.WindowResizeBorderThickness;
+#endif
                 if (!enableDWMDropShadow)
                 {
                     AssociatedObject.BorderThickness = savedBorderThickness.GetValueOrDefault(new Thickness(0));
@@ -286,19 +306,28 @@ namespace MahApps.Metro.Behaviours
         private void AssociatedObject_SourceInitialized(object sender, EventArgs e)
         {
             handle = new WindowInteropHelper(AssociatedObject).Handle;
+            if (null == handle)
+            {
+                throw new MahAppsException("Uups, at this point we really need the Handle from the associated object!");
+            }
             hwndSource = HwndSource.FromHwnd(handle);
             if (hwndSource != null)
             {
                 hwndSource.AddHook(WindowProc);
             }
 
-            // handle size to content (thanks @lynnx)
-            var sizeToContent = AssociatedObject.SizeToContent;
-            var snapsToDevicePixels = AssociatedObject.SnapsToDevicePixels;
-            AssociatedObject.SnapsToDevicePixels = true;
-            AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
-            AssociatedObject.SizeToContent = sizeToContent;
-            AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
+            if (AssociatedObject.ResizeMode != ResizeMode.NoResize)
+            {
+                // handle size to content (thanks @lynnx).
+                // This is necessary when ResizeMode != NoResize. Without this workaround,
+                // black bars appear at the right and bottom edge of the window.
+                var sizeToContent = AssociatedObject.SizeToContent;
+                var snapsToDevicePixels = AssociatedObject.SnapsToDevicePixels;
+                AssociatedObject.SnapsToDevicePixels = true;
+                AssociatedObject.SizeToContent = sizeToContent == SizeToContent.WidthAndHeight ? SizeToContent.Height : SizeToContent.Manual;
+                AssociatedObject.SizeToContent = sizeToContent;
+                AssociatedObject.SnapsToDevicePixels = snapsToDevicePixels;
+            }
         }
 
         private void AssociatedObject_Loaded(object sender, RoutedEventArgs e)

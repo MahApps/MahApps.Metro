@@ -6,35 +6,43 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="{x:Type Controls:MetroWindow}"
-           BasedOn="{StaticResource {x:Type Controls:MetroWindow}}"
-           x:Key="VSWindowStyleKey">
+    <Style x:Key="VSWindowStyleKey"
+           TargetType="{x:Type Controls:MetroWindow}">
         <Setter Property="ShowTitleBar"
                 Value="True" />
         <Setter Property="GlowBrush"
                 Value="{DynamicResource WindowGlowBrush}" />
         <Setter Property="TitleForeground"
                 Value="{DynamicResource WindowTitleForeground}" />
-        <Setter Property="WindowMinButtonStyle"
-                Value="{DynamicResource VSWindowButtonStyle}" />
-        <Setter Property="WindowMaxButtonStyle"
-                Value="{DynamicResource VSWindowButtonStyle}" />
-        <Setter Property="WindowCloseButtonStyle"
-                Value="{DynamicResource VSWindowButtonStyle}" />
     </Style>
 
-    <Style x:Key="VSWindowButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource MetroWindowButtonStyle}">
-
-        <Setter Property="Foreground" Value="{DynamicResource Foreground}" />
-
+    <Style x:Key="VSWindowButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource LightMetroWindowButtonStyle}">
         <Style.Triggers>
-
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="{DynamicResource BackgroundSelected}" />
-                <Setter Property="Foreground" Value="White" />
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource BlackColorBrush}" />
+                <Setter Property="Background"
+                        Value="{DynamicResource BackgroundSelected}" />
             </Trigger>
-
         </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Controls:WindowButtonCommands}">
+        <Setter Property="LightMinButtonStyle"
+                Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="LightMaxButtonStyle"
+                Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="LightCloseButtonStyle"
+                Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="DarkMinButtonStyle"
+                Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="DarkMaxButtonStyle"
+                Value="{StaticResource VSWindowButtonStyle}" />
+        <Setter Property="DarkCloseButtonStyle"
+                Value="{StaticResource VSWindowButtonStyle}" />
     </Style>
 
 </ResourceDictionary>

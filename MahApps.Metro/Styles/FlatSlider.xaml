@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
     <Style x:Key="SliderButtonStyle"
            TargetType="{x:Type RepeatButton}">
         <Setter Property="SnapsToDevicePixels"
@@ -98,10 +99,10 @@
                                   Height="{TemplateBinding Slider.Height}" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Height="{TemplateBinding Slider.Height}"
-                           Width="{TemplateBinding Slider.Height}"
-                           Style="{StaticResource SliderThumbStyle}"
-                           Background="{TemplateBinding Slider.BorderBrush}" />
+                    <controls:MetroThumb Height="{TemplateBinding Slider.Height}"
+                                         Width="{TemplateBinding Slider.Height}"
+                                         Style="{StaticResource SliderThumbStyle}"
+                                         Background="{TemplateBinding Slider.BorderBrush}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"
@@ -160,10 +161,10 @@
                                   Height="{TemplateBinding Slider.Height}"/>
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Height="{TemplateBinding Slider.Width}"
-                           Width="{TemplateBinding Slider.Width}"
-                           Style="{StaticResource SliderThumbStyle}"
-                           Background="{TemplateBinding Slider.BorderBrush}" />
+                    <controls:MetroThumb Height="{TemplateBinding Slider.Width}"
+                                         Width="{TemplateBinding Slider.Width}"
+                                         Style="{StaticResource SliderThumbStyle}"
+                                         Background="{TemplateBinding Slider.BorderBrush}" />
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{StaticResource SliderButtonStyle}"

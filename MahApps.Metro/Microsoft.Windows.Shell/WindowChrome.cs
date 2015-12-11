@@ -11,7 +11,7 @@ namespace Microsoft.Windows.Shell
     using System.Windows.Data;
     using Standard;
 
-    internal enum ResizeGripDirection
+    public enum ResizeGripDirection
     {
         None,
         TopLeft,
@@ -26,7 +26,7 @@ namespace Microsoft.Windows.Shell
     }
 
     [Flags]
-    internal enum SacrificialEdge
+    public enum SacrificialEdge
     {
         None = 0,
         Left = 1,
@@ -35,13 +35,9 @@ namespace Microsoft.Windows.Shell
         Bottom = 8,
 
         Office = Left | Right | Bottom,
-
-        // Don't use "All" - Handling WM_NCCALCSIZE with a client rect shrunk in all directions implicitly creates a 
-        // normal sized caption area that doesn't actually properly participate with the rest of the implementation...
-        // All = Left | Top | Right | Bottom,
     }
 
-    internal class WindowChrome : Freezable
+    public class WindowChrome : Freezable
     {
         private struct _SystemParameterBoundProperty
         {
@@ -361,8 +357,12 @@ namespace Microsoft.Windows.Shell
                     bp.DependencyProperty,
                     new Binding
                     {
+#if NET4_5
+                        Path = new PropertyPath("(SystemParameters." + bp.SystemParameterPropertyName + ")"),
+#else
                         Source = SystemParameters2.Current,
                         Path = new PropertyPath(bp.SystemParameterPropertyName),
+#endif
                         Mode = BindingMode.OneWay,
                         UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
                     });

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:models="clr-namespace:MetroDemo.Models"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -23,6 +24,7 @@
         <TabItem Header="List/GridView">
             <UniformGrid Rows="2">
                 <ListView Margin="5"
+                          Style="{StaticResource VirtualisedMetroListView}"
                           BorderThickness="0"
                           ItemsSource="{Binding Artists}"
                           SelectedIndex="0">
@@ -36,6 +38,7 @@
                     </ListView.View>
                 </ListView>
                 <ListView Margin="5"
+                          Style="{StaticResource VirtualisedMetroListView}"
                           BorderThickness="0"
                           IsEnabled="False"
                           ItemsSource="{Binding Artists}"
@@ -53,24 +56,18 @@
         </TabItem>
         <TabItem Header="TreeView">
             <UniformGrid Rows="2">
-                <TreeView>
-                    <TreeViewItem Header="Item 1">
-                        <TreeViewItem Header="Item 1.1">
-                            <TreeViewItem Header="Item 1.1.1" />
-                            <TreeViewItem Header="Item 1.1.2" />
-                        </TreeViewItem>
-                        <TreeViewItem Header="Item 1.2" />
-                        <TreeViewItem Header="Item 1.3" />
-                    </TreeViewItem>
-                    <TreeViewItem Header="Item 22" />
-                    <TreeViewItem Header="Item 3">
-                        <TreeViewItem Header="Item 3.1">
-                            <TreeViewItem Header="Item 3.1.1" />
-                            <TreeViewItem Header="Item 3.1.2" />
-                        </TreeViewItem>
-                        <TreeViewItem Header="Item 3.2" />
-                        <TreeViewItem Header="Item 3.3" />
-                    </TreeViewItem>
+                <TreeView ItemsSource="{Binding Artists}"
+                          Style="{StaticResource VirtualisedMetroTreeView}">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Albums}">
+                            <TextBlock Text="{Binding Name}" />
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Title}" />
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
                 </TreeView>
                 <TreeView IsEnabled="False">
                     <TreeViewItem Header="Item 1">
@@ -100,11 +97,13 @@
         <TabItem Header="ListBox">
             <UniformGrid Columns="2"
                          Rows="2">
-                <ListBox ItemsSource="{Binding Artists}"
+                <ListBox Style="{StaticResource VirtualisedMetroListBox}"
+                         ItemsSource="{Binding Artists}"
                          DisplayMemberPath="Name"
                          Margin="1"
                          SelectedIndex="0" />
-                <ListBox ItemsSource="{Binding Albums}"
+                <ListBox Style="{StaticResource VirtualisedMetroListBox}"
+                         ItemsSource="{Binding Albums}"
                          DisplayMemberPath="Title"
                          Margin="1"
                          IsEnabled="False"
@@ -131,6 +130,7 @@
                         HorizontalAlignment="Left">
                 <ComboBox Width="200"
                           Controls:TextBoxHelper.ClearTextButton="True"
+                          Controls:TextBoxHelper.Watermark="Please select an item..."
                           Margin="0, 10, 0, 0"
                           SelectedIndex="0">
                     <ComboBoxItem Content="Item 1" />
@@ -152,6 +152,7 @@
                           Margin="0, 10, 0, 0"
                           Style="{DynamicResource VirtualisedMetroComboBox}"
                           Controls:TextBoxHelper.Watermark="Autocompletion"
+                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                           DisplayMemberPath="Title"
                           IsEditable="True"
                           ItemsSource="{Binding Albums}"

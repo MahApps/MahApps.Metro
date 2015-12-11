@@ -55,7 +55,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
+    <Prefer32Bit>false</Prefer32Bit>
     <OutputPath>bin\NET45\Release\</OutputPath>
     <IntermediateOutputPath>obj\NET45\Release\</IntermediateOutputPath>
   </PropertyGroup>
@@ -97,6 +97,9 @@
     <Compile Include="ExampleViews\ColorExample.xaml.cs">
       <DependentUpon>ColorExample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExampleViews\CustomDialogExample.xaml.cs">
+      <DependentUpon>CustomDialogExample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExampleViews\DataGridExamples.xaml.cs">
       <DependentUpon>DataGridExamples.xaml</DependentUpon>
     </Compile>
@@ -117,6 +120,9 @@
     </Compile>
     <Compile Include="ExampleViews\TextExamples.xaml.cs">
       <DependentUpon>TextExamples.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExampleViews\TilesExample.xaml.cs">
+      <DependentUpon>TilesExample.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExampleWindows\CleanWindowDemo.xaml.cs">
       <DependentUpon>CleanWindowDemo.xaml</DependentUpon>
@@ -145,6 +151,7 @@
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Models\Album.cs" />
     <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\CustomDialogExampleContent.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\SimpleCommand.cs" />
     <Compile Include="Navigation\HomePage.xaml.cs">
@@ -153,11 +160,17 @@
     <Compile Include="Navigation\InterestingPage.xaml.cs">
       <DependentUpon>InterestingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ValueConverter\AlbumPriceIsTooMuchConverter.cs" />
     <Page Include="ExampleViews\ButtonsExample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="ExampleViews\ColorExample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\CustomDialogExample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -188,6 +201,10 @@
     <Page Include="ExampleViews\TextExamples.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExampleViews\TilesExample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ExampleWindows\CleanWindowDemo.xaml">
       <Generator>MSBuild:Compile</Generator>

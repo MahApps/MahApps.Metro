@@ -233,8 +233,6 @@ namespace MahApps.Metro.Controls
             {
                 if (ContentTemplateSelector != null)
                     CurrentContentPresentationSite.ContentTemplate = ContentTemplateSelector.SelectTemplate(Content, this);
-                else
-                    CurrentContentPresentationSite.ContentTemplate = ContentTemplate;
 
                 CurrentContentPresentationSite.Content = Content;
             }

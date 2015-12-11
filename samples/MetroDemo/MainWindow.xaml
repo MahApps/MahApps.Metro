@@ -15,14 +15,13 @@
                       ShowTitleBar="True"
                       WindowStartupLocation="CenterScreen"
                       GlowBrush="{DynamicResource AccentColorBrush}"
-                      NonActiveGlowBrush="Red"
+                      NonActiveGlowBrush="#CDFF0000"
                       mc:Ignorable="d"
                       d:DesignHeight="600"
                       d:DesignWidth="800"
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
                       Closing="MetroWindow_Closing"
-                      Dialog:DialogParticipation.Register="{Binding}"
-                      >
+                      Dialog:DialogParticipation.Register="{Binding}">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -67,9 +66,9 @@
             </Style>
 
             <Dialog:CustomDialog x:Key="CustomDialogTest"
-                                 Title="This dialog allows arbitrary content. It will close in 5 seconds."
+                                 Title="This dialog allows arbitrary content."
                                  x:Name="CustomTestDialog">
-                <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentColorBrush}" />
+                <TextBlock Height="200" x:Name="MessageTextBlock" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentColorBrush}" />
             </Dialog:CustomDialog>
 
             <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
@@ -106,7 +105,7 @@
     </Controls:MetroWindow.LeftWindowCommands>
 
     <Controls:MetroWindow.RightWindowCommands>
-        <Controls:WindowCommands>
+        <Controls:WindowCommands ShowLastSeparator="False">
             <Button Click="LaunchSizeToContentDemo"
                     ToolTip="SizeToContent demo"
                     Content="STC" />
@@ -169,6 +168,8 @@
                               Header="Show LoginDialog" />
                     <MenuItem Click="ShowLoginDialogPasswordPreview"
                               Header="Show Password Preview LoginDialog" />
+                    <MenuItem Click="ShowLoginDialogOnlyPassword"
+                              Header="Show LoginDialog (Only Password)" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
                     <MenuItem Click="ShowLimitedMessageDialog"
@@ -206,6 +207,12 @@
                     <MenuItem Header="Window with a Border" Click="MenuWindowWithBorderOnClick" />
                     <MenuItem Header="Window with a Glow" Click="MenuWindowWithGlowOnClick" />
                     <MenuItem Header="Window with drop shadow" Click="MenuWindowWithShadowOnClick" />
+                    <Separator />
+                    <MenuItem IsCheckable="True" Header="ShowSeparators (RightWindowCommands)" x:Name="ShowSeparatorsMI"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowSeparators}" />
+                    <MenuItem IsCheckable="True" Header="ShowLastSeparator in (RightWindowCommands)"
+                              IsEnabled="{Binding ElementName=ShowSeparatorsMI, Path=IsChecked, Mode=OneWay}"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowLastSeparator}" />
                 </MenuItem>
             </Menu>
 
@@ -230,6 +237,9 @@
                 </TabItem>
                 <TabItem Header="datagrid">
                     <exampleViews:DataGridExamples DataContext="{Binding}" />
+                </TabItem>
+                <TabItem Header="tiles">
+                    <exampleViews:TilesExample DataContext="{Binding}" />
                 </TabItem>
                 <TabItem Header="colors">
                     <exampleViews:ColorExample DataContext="{Binding}" />

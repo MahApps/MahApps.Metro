@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace MahApps.Metro.Controls
 {
@@ -21,6 +21,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.Register("EllipseOffset", typeof(double), typeof(MetroProgressBar),
                                         new PropertyMetadata(default(double)));
 
+        private readonly object lockme = new object();
         private Storyboard indeterminateStoryboard;
 
         static MetroProgressBar()
@@ -31,33 +32,46 @@ namespace MahApps.Metro.Controls
 
         public MetroProgressBar()
         {
-            SizeChanged += SizeChangedHandler;
             IsVisibleChanged += VisibleChangedHandler;
         }
 
-        void VisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
+        private void VisibleChangedHandler(object sender, DependencyPropertyChangedEventArgs e)
         {
-            //reset Storyboard if Visibility is set to Visible #1300
-            if (e.NewValue is bool && (bool)e.NewValue)
+            // reset Storyboard if Visibility is set to Visible #1300
+            if (IsIndeterminate)
             {
-                ResetStoryboard(ActualWidth);
+                ToggleIndeterminate(this, (bool)e.OldValue, (bool)e.NewValue);
             }
         }
 
         private static void OnIsIndeterminateChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            var bar = dependencyObject as MetroProgressBar;
-            if (bar != null && e.NewValue != e.OldValue)
+            ToggleIndeterminate(dependencyObject as MetroProgressBar, (bool)e.OldValue, (bool)e.NewValue);
+        }
+
+        private static void ToggleIndeterminate(MetroProgressBar bar, bool oldValue, bool newValue)
+        {
+            if (bar != null && newValue != oldValue)
             {
                 var indeterminateState = bar.GetIndeterminate();
                 var containingObject = bar.GetTemplateChild("ContainingGrid") as FrameworkElement;
                 if (indeterminateState != null && containingObject != null)
                 {
-                    if (indeterminateState.Storyboard != null)
+                    if (oldValue && indeterminateState.Storyboard != null)
                     {
+                        // remove the previous storyboard from the Grid #1855
                         indeterminateState.Storyboard.Stop(containingObject);
+                        indeterminateState.Storyboard.Remove(containingObject);
                     }
-                    bar.ResetStoryboard(bar.ActualWidth);
+                    if (newValue)
+                    {
+                        var resetAction = new Action(() => {
+                                                         bar.InvalidateMeasure();
+                                                         bar.InvalidateArrange();
+                                                         bar.ResetStoryboard(bar.ActualWidth, false);
+                                                     });
+                        bar.Dispatcher.BeginInvoke(DispatcherPriority.Background, resetAction);
+                    }
                 }
             }
         }
@@ -82,37 +96,41 @@ namespace MahApps.Metro.Controls
 
         private void SizeChangedHandler(object sender, SizeChangedEventArgs e)
         {
-            double actualWidth = ActualWidth;
-            MetroProgressBar bar = this;
-            if (this.Visibility == Visibility.Visible)
+            var actualWidth = ActualWidth;
+            var bar = this;
+            if (this.Visibility == Visibility.Visible && this.IsIndeterminate)
             {
-                bar.ResetStoryboard(actualWidth);
+                bar.ResetStoryboard(actualWidth, true);
             }
         }
 
-        private void ResetStoryboard(double width)
+        private void ResetStoryboard(double width, bool removeOldStoryboard)
         {
-            lock (this)
+            if (!this.IsIndeterminate)
+            {
+                return;
+            }
+            lock (this.lockme)
             {
                 //perform calculations
-                double containerAnimStart = CalcContainerAnimStart(width);
-                double containerAnimEnd = CalcContainerAnimEnd(width);
-                double ellipseAnimWell = CalcEllipseAnimWell(width);
-                double ellipseAnimEnd = CalcEllipseAnimEnd(width);
+                var containerAnimStart = CalcContainerAnimStart(width);
+                var containerAnimEnd = CalcContainerAnimEnd(width);
+                var ellipseAnimWell = CalcEllipseAnimWell(width);
+                var ellipseAnimEnd = CalcEllipseAnimEnd(width);
                 //reset the main double animation
                 try
                 {
-                    VisualState indeterminate = GetIndeterminate();
+                    var indeterminate = GetIndeterminate();
 
                     if (indeterminate != null && this.indeterminateStoryboard != null)
                     {
-                        Storyboard newStoryboard = this.indeterminateStoryboard.Clone();
-                        Timeline doubleAnim = newStoryboard.Children.First(t => t.Name == "MainDoubleAnim");
+                        var newStoryboard = this.indeterminateStoryboard.Clone();
+                        var doubleAnim = newStoryboard.Children.First(t => t.Name == "MainDoubleAnim");
                         doubleAnim.SetValue(DoubleAnimation.FromProperty, containerAnimStart);
                         doubleAnim.SetValue(DoubleAnimation.ToProperty, containerAnimEnd);
 
                         var namesOfElements = new[] { "E1", "E2", "E3", "E4", "E5" };
-                        foreach (string elemName in namesOfElements)
+                        foreach (var elemName in namesOfElements)
                         {
                             var doubleAnimParent = (DoubleAnimationUsingKeyFrames)newStoryboard.Children.First(t => t.Name == elemName + "Anim");
                             DoubleKeyFrame first, second, third;
@@ -142,7 +160,7 @@ namespace MahApps.Metro.Controls
 
                         var containingGrid = (FrameworkElement)GetTemplateChild("ContainingGrid");
 
-                        if (indeterminate.Storyboard != null)
+                        if (removeOldStoryboard && indeterminate.Storyboard != null)
                         {
                             // remove the previous storyboard from the Grid #1855
                             indeterminate.Storyboard.Stop(containingGrid);
@@ -150,11 +168,6 @@ namespace MahApps.Metro.Controls
                         }
 
                         indeterminate.Storyboard = newStoryboard;
-
-                        if (!IsIndeterminate)
-                        {
-                            return;
-                        }
 
                         if (indeterminate.Storyboard != null)
                         {
@@ -174,16 +187,17 @@ namespace MahApps.Metro.Controls
             var templateGrid = GetTemplateChild("ContainingGrid") as FrameworkElement;
             if (templateGrid == null)
             {
-                return null;
+                this.ApplyTemplate();
+                templateGrid = GetTemplateChild("ContainingGrid") as FrameworkElement;
+                if (templateGrid == null) return null;
             }
-            IList groups = VisualStateManager.GetVisualStateGroups(templateGrid);
+            var groups = VisualStateManager.GetVisualStateGroups(templateGrid);
             return groups != null
-                       ? groups.Cast<VisualStateGroup>()
-                               .SelectMany(@group => @group.States.Cast<VisualState>())
-                               .FirstOrDefault(state => state.Name == "Indeterminate")
-                       : null;
+                ? groups.Cast<VisualStateGroup>()
+                        .SelectMany(@group => @group.States.Cast<VisualState>())
+                        .FirstOrDefault(state => state.Name == "Indeterminate")
+                : null;
         }
-
 
         private void SetEllipseDiameter(double width)
         {
@@ -220,20 +234,28 @@ namespace MahApps.Metro.Controls
         private double CalcContainerAnimStart(double width)
         {
             if (width <= 180)
+            {
                 return -34;
+            }
             if (width <= 280)
+            {
                 return -50.5;
+            }
 
             return -63;
         }
 
         private double CalcContainerAnimEnd(double width)
         {
-            double firstPart = 0.4352 * width;
+            var firstPart = 0.4352 * width;
             if (width <= 180)
+            {
                 return firstPart - 25.731;
+            }
             if (width <= 280)
+            {
                 return firstPart + 27.84;
+            }
 
             return firstPart + 58.862;
         }
@@ -248,12 +270,24 @@ namespace MahApps.Metro.Controls
             return width * 2.0 / 3.0;
         }
 
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            indeterminateStoryboard = this.TryFindResource("IndeterminateStoryboard") as Storyboard;
+
+            lock (this.lockme)
+            {
+                this.indeterminateStoryboard = this.TryFindResource("IndeterminateStoryboard") as Storyboard;
+            }
+
+            Loaded -= LoadedHandler;
+            Loaded += LoadedHandler;
+        }
+
+        private void LoadedHandler(object sender, RoutedEventArgs routedEventArgs)
+        {
+            Loaded -= LoadedHandler;
             SizeChangedHandler(null, null);
+            SizeChanged += SizeChangedHandler;
         }
 
         protected override void OnInitialized(EventArgs e)
@@ -263,9 +297,13 @@ namespace MahApps.Metro.Controls
             // Update the Ellipse properties to their default values
             // only if they haven't been user-set.
             if (EllipseDiameter.Equals(0))
+            {
                 SetEllipseDiameter(ActualWidth);
+            }
             if (EllipseOffset.Equals(0))
+            {
                 SetEllipseOffset(ActualWidth);
+            }
         }
     }
 }
