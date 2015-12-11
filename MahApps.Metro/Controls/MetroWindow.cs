@@ -982,7 +982,7 @@ namespace MahApps.Metro.Controls
 
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;
-            var isMouseOnTitlebar = cursorPos.y <= window.TitlebarHeight && window.TitlebarHeight > 0;
+            var isMouseOnTitlebar = Mouse.GetPosition(window.windowTitleThumb).Y <= window.TitlebarHeight && window.TitlebarHeight > 0;
             if (!isMouseOnTitlebar && windowIsMaximized)
             {
                 return;
