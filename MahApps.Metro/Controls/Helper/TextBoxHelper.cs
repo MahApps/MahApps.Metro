@@ -41,9 +41,13 @@ namespace MahApps.Metro.Controls
 
         private static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
 
-        private static readonly Func<NumericUpDown, int> NumericUpDownTextLength = n => n.Value.HasValue ? 1 : 0;
-        private static readonly Func<PasswordBox, int> PasswordBoxTextLength = n => n.Password.Length;
-        private static readonly Func<TextBox, int> TextBoxTextLength = n => n.Text.Length;
+        private static readonly Func<NumericUpDown, int> NumericUpDownTextLength = control => control.Value.HasValue ? 1 : 0;
+        private static readonly Func<PasswordBox, int> PasswordBoxTextLength = control => control.Password.Length;
+        private static readonly Func<TextBox, int> TextBoxTextLength = control => control.Text.Length;
+
+        private static readonly Func<NumericUpDown, Action> NumericUpDownFocus = control => control.SelectAll;
+        private static readonly Func<PasswordBox, Action> PasswordBoxFocus = control => control.SelectAll;
+        private static readonly Func<TextBox, Action> TextBoxFocus = control => control.SelectAll;
 
         /// <summary>
         /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
@@ -285,38 +289,30 @@ namespace MahApps.Metro.Controls
         {
             SetTextLength(sender as PasswordBox, PasswordBoxTextLength);
         }
-
         private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            var txtBox = sender as TextBox;
-            if (txtBox == null)
-                return;
-            if (GetSelectAllOnFocus(txtBox))
-            {
-                txtBox.Dispatcher.BeginInvoke((Action)(txtBox.SelectAll));
-            }
+            ControlGotFocus(sender as TextBox, TextBoxFocus);
         }
         private static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
         {
-            var numericUpDown = sender as NumericUpDown;
-            if (numericUpDown == null)
-                return;
-            if (GetSelectAllOnFocus(numericUpDown))
-            {
-                numericUpDown.Dispatcher.BeginInvoke((Action)(numericUpDown.SelectAll));
-            }
+            ControlGotFocus(sender as NumericUpDown, NumericUpDownFocus);
         }
 
         private static void PasswordGotFocus(object sender, RoutedEventArgs e)
         {
-            var passBox = sender as PasswordBox;
-            if (passBox == null)
-                return;
-            if (GetSelectAllOnFocus(passBox))
+            ControlGotFocus(sender as PasswordBox, PasswordBoxFocus);
+        }
+        private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, Action> funcSelectAll) where TDependencyObject : DependencyObject
+        {
+            if (sender != null)
             {
-                passBox.Dispatcher.BeginInvoke((Action)(passBox.SelectAll));
+                if (GetSelectAllOnFocus(sender))
+                {
+                    sender.Dispatcher.BeginInvoke(funcSelectAll, sender);
+                }
             }
         }
+
 
         public static bool GetClearTextButton(DependencyObject d)
         {
