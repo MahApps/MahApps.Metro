@@ -471,22 +471,22 @@ namespace MahApps.Metro.Controls
             if (textbox != null)
             {
                 // only one loaded event
-                textbox.Loaded -= TextBoxLoaded;
-                textbox.Loaded += TextBoxLoaded;
+                textbox.Loaded -= TextChanged;
+                textbox.Loaded += TextChanged;
                 if (textbox.IsLoaded)
                 {
-                    TextBoxLoaded(textbox, new RoutedEventArgs());
+                    TextChanged(textbox, new RoutedEventArgs());
                 }
             }
             var passbox = d as PasswordBox;
             if (passbox != null)
             {
                 // only one loaded event
-                passbox.Loaded -= PassBoxLoaded;
-                passbox.Loaded += PassBoxLoaded;
+                passbox.Loaded -= PasswordChanged;
+                passbox.Loaded += PasswordChanged;
                 if (passbox.IsLoaded)
                 {
-                    PassBoxLoaded(passbox, new RoutedEventArgs());
+                    PasswordChanged(passbox, new RoutedEventArgs());
                 }
             }
             var combobox = d as ComboBox;
@@ -508,24 +508,6 @@ namespace MahApps.Metro.Controls
             if (comboBox != null)
             {
                 comboBox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(comboBox.Text) || comboBox.SelectedItem != null);
-            }
-        }
-
-        static void PassBoxLoaded(object sender, RoutedEventArgs e)
-        {
-            var passbox = sender as PasswordBox;
-            if (passbox != null)
-            {
-                passbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(passbox.Password));
-            }
-        }
-
-        static void TextBoxLoaded(object sender, RoutedEventArgs e)
-        {
-            var textbox = sender as TextBox;
-            if (textbox != null)
-            {
-                textbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(textbox.Text));
             }
         }
     }
