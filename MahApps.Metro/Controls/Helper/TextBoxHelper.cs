@@ -289,10 +289,12 @@ namespace MahApps.Metro.Controls
         {
             SetTextLength(sender as PasswordBox, PasswordBoxTextLength);
         }
+
         private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
             ControlGotFocus(sender as TextBox, TextBoxFocus);
         }
+
         private static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
         {
             ControlGotFocus(sender as NumericUpDown, NumericUpDownFocus);
@@ -302,6 +304,7 @@ namespace MahApps.Metro.Controls
         {
             ControlGotFocus(sender as PasswordBox, PasswordBoxFocus);
         }
+
         private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, Action> funcSelectAll) where TDependencyObject : DependencyObject
         {
             if (sender != null)
@@ -312,7 +315,6 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
-
 
         public static bool GetClearTextButton(DependencyObject d)
         {
@@ -357,8 +359,6 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(IsClearTextButtonBehaviorEnabledProperty, value);
         }
-
-        
 
         public static ICommand GetButtonCommand(DependencyObject d)
         {
