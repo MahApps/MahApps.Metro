@@ -250,7 +250,23 @@ namespace MahApps.Metro.Controls
             {
                 var numericUpDown = d as NumericUpDown;
                 numericUpDown.SelectAllOnFocus = (bool)e.NewValue;
+                if ((bool)e.NewValue)
+                {
+                    numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
+                }
+                else
+                {
+                    numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
+                }
             }
+        }
+
+        private static void OnNumericUpDownValueChaged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        {
+            var numericUpDown = sender as NumericUpDown;
+            if (numericUpDown == null)
+                return;
+            SetTextLength(numericUpDown, numericUpDown.Value.HasValue ? 1 : 0);
         }
 
         static void TextChanged(object sender, TextChangedEventArgs e)
