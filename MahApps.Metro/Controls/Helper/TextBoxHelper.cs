@@ -41,14 +41,6 @@ namespace MahApps.Metro.Controls
 
         private static readonly DependencyProperty IsSpellCheckContextMenuEnabledProperty = DependencyProperty.RegisterAttached("IsSpellCheckContextMenuEnabled", typeof(bool), typeof(TextBoxHelper), new FrameworkPropertyMetadata(false, UseSpellCheckContextMenuChanged));
 
-        private static readonly Func<NumericUpDown, int> NumericUpDownTextLength = control => control.Value.HasValue ? 1 : 0;
-        private static readonly Func<PasswordBox, int> PasswordBoxTextLength = control => control.Password.Length;
-        private static readonly Func<TextBox, int> TextBoxTextLength = control => control.Text.Length;
-
-        private static readonly Func<NumericUpDown, Action> NumericUpDownFocus = control => control.SelectAll;
-        private static readonly Func<PasswordBox, Action> PasswordBoxFocus = control => control.SelectAll;
-        private static readonly Func<TextBox, Action> TextBoxFocus = control => control.SelectAll;
-
         /// <summary>
         /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
         /// </summary>
@@ -265,11 +257,6 @@ namespace MahApps.Metro.Controls
             }
         }
 
-        private static void OnNumericUpDownValueChaged(object sender, RoutedEventArgs e)
-        {
-            SetTextLength(sender as NumericUpDown, NumericUpDownTextLength);
-        }
-
         private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength) where TDependencyObject : DependencyObject
         {
             if (sender != null)
@@ -282,27 +269,32 @@ namespace MahApps.Metro.Controls
 
         private static void TextChanged(object sender, RoutedEventArgs e)
         {
-            SetTextLength(sender as TextBox, TextBoxTextLength);
+            SetTextLength(sender as TextBox, textBox => textBox.Text.Length);
+        }
+
+        private static void OnNumericUpDownValueChaged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as NumericUpDown, numericUpDown => numericUpDown.Value.HasValue ? 1 : 0);
         }
 
         private static void PasswordChanged(object sender, RoutedEventArgs e)
         {
-            SetTextLength(sender as PasswordBox, PasswordBoxTextLength);
+            SetTextLength(sender as PasswordBox, passwordBox => passwordBox.Password.Length);
         }
 
         private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            ControlGotFocus(sender as TextBox, TextBoxFocus);
+            ControlGotFocus(sender as TextBox, textBox => textBox.SelectAll);
         }
 
         private static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
         {
-            ControlGotFocus(sender as NumericUpDown, NumericUpDownFocus);
+            ControlGotFocus(sender as NumericUpDown, numericUpDown => numericUpDown.SelectAll);
         }
 
         private static void PasswordGotFocus(object sender, RoutedEventArgs e)
         {
-            ControlGotFocus(sender as PasswordBox, PasswordBoxFocus);
+            ControlGotFocus(sender as PasswordBox, passwordBox => passwordBox.SelectAll);
         }
 
         private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, Action> funcSelectAll) where TDependencyObject : DependencyObject
