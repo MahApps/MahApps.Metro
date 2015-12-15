@@ -354,7 +354,7 @@ namespace MahApps.Metro.Controls.Dialogs
             MaximumBodyHeight = Double.NaN;
 
             DefaultText = "";
-
+            DefaultButtonFocus = MessageDialogResult.Negative;
             CancellationToken = CancellationToken.None;
         }
 
@@ -398,6 +398,11 @@ namespace MahApps.Metro.Controls.Dialogs
         /// </summary>
         public double MaximumBodyHeight { get; set; }
 
+        /// <summary>
+        /// Gets or sets which button should be focused by default
+        /// </summary>
+        public MessageDialogResult DefaultButtonFocus { get; set; }
+        
         /// <summary>
         /// Gets/sets the token to cancel the dialog.
         /// </summary>
