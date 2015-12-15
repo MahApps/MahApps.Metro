@@ -26,7 +26,8 @@
                     FontFamily="Segoe UI Symbol"
                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     FontSize="16"
-                    VerticalAlignment="Bottom">
+                    VerticalAlignment="Bottom"
+                    IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonIsCancel}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"

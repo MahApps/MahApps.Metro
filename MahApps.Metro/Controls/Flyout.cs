@@ -58,6 +58,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
+        public static readonly DependencyProperty CloseButtonIsCancelProperty = DependencyProperty.Register("CloseButtonIsCancel", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register("TitleVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register("AreAnimationsEnabled", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty FocusedElementProperty = DependencyProperty.Register("FocusedElement", typeof(FrameworkElement), typeof(Flyout), new UIPropertyMetadata(null));
@@ -88,6 +89,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (Visibility)GetValue(CloseButtonVisibilityProperty); }
             set { SetValue(CloseButtonVisibilityProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets if the close button is a cancel button in this flyout.
+        /// </summary>
+        public bool CloseButtonIsCancel
+        {
+            get { return (bool)GetValue(CloseButtonIsCancelProperty); }
+            set { SetValue(CloseButtonIsCancelProperty, value); }
         }
 
         /// <summary>
