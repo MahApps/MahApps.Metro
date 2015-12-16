@@ -72,7 +72,7 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Grid x:Name="PART_FloatingMessageContainer"
+                            <ContentControl x:Name="PART_FloatingMessageContainer"
                                   Grid.Column="0"
                                   Height="0"
                                   IsHitTestVisible="False"
@@ -89,7 +89,7 @@
                                         <TranslateTransform />
                                     </TextBlock.RenderTransform>
                                 </TextBlock>
-                            </Grid>
+                            </ContentControl>
                             <TextBox x:Name="PART_TextBox"
                                      Grid.Row="1"
                                      Grid.Column="0"
@@ -159,36 +159,21 @@
                                 Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <!--Sets the MiniMessage visibility (Watermark must not be "" and FloatWatermark must be true)-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText)}"
-                                     Value="False">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}"
+                                           Value="True" />
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" 
+                                           Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                        <!--To override Watermark == ""-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.Watermark)}"
-                                     Value="">
-                            <DataTrigger.EnterActions>
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
                                 <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                        <!--To override TextBoxHelper.UseFloatingWatermark == false-->
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.UseFloatingWatermark)}"
-                                     Value="False">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+                        
                         <Trigger Property="ButtonsAlignment"
                                  Value="Left">
                             <Setter TargetName="PART_TextBox"
