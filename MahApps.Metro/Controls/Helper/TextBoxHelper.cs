@@ -251,8 +251,8 @@ namespace MahApps.Metro.Controls
                 }
                 else
                 {
-                    numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
-                    numericUpDown.GotFocus += NumericUpDownGotFocus;
+                    numericUpDown.ValueChanged -= OnNumericUpDownValueChaged;
+                    numericUpDown.GotFocus -= NumericUpDownGotFocus;
                 }
             }
         }
