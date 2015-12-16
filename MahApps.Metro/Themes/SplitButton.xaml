@@ -306,6 +306,11 @@
                 <Setter Property="BorderBrush"
                         Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="Opacity"
+                        Value=".55"/>
+            </Trigger>
         </Style.Triggers>
     </Style>
 
