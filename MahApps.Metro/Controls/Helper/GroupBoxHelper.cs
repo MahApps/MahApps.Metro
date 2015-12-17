@@ -4,11 +4,14 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     public static class GroupBoxHelper
     {
         public static readonly DependencyProperty HeaderForegroundProperty =
             DependencyProperty.RegisterAttached("HeaderForeground", typeof(Brush), typeof(GroupBoxHelper), new UIPropertyMetadata(Brushes.White));
 
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(GroupBox))]
         public static Brush GetHeaderForeground(UIElement element)
         {

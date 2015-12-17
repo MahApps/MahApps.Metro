@@ -9,6 +9,8 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     /// <summary>
     /// A helper class that provides various attached properties for the TextBox control.
     /// </summary>
@@ -44,6 +46,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Indicates if a TextBox or RichTextBox should use SpellCheck context menu
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         public static bool GetIsSpellCheckContextMenuEnabled(UIElement element)
         {
@@ -147,7 +150,8 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(IsWaitingForDataProperty, value);
         }
-        
+
+        [Category(AppName.MahApps)]
         public static bool GetIsWaitingForData(DependencyObject obj)
         {
             return (bool)obj.GetValue(IsWaitingForDataProperty);
@@ -158,6 +162,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(SelectAllOnFocusProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static bool GetSelectAllOnFocus(DependencyObject obj)
         {
             return (bool)obj.GetValue(SelectAllOnFocusProperty);
@@ -168,6 +173,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(IsMonitoringProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static string GetWatermark(DependencyObject obj)
         {
             return (string)obj.GetValue(WatermarkProperty);
@@ -178,6 +184,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(WatermarkProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static bool GetUseFloatingWatermark(DependencyObject obj)
         {
             return (bool)obj.GetValue(UseFloatingWatermarkProperty);
@@ -197,6 +204,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets if the attached TextBox has text.
         /// </summary>
+        [Category(AppName.MahApps)]
         public static bool GetHasText(DependencyObject obj)
         {
             return (bool)obj.GetValue(HasTextProperty);
@@ -291,6 +299,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        [Category(AppName.MahApps)]
         public static bool GetClearTextButton(DependencyObject d)
         {
             return (bool)d.GetValue(ClearTextButtonProperty);
@@ -304,6 +313,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the buttons placement variant.
         /// </summary>
+        [Category(AppName.MahApps)]
         public static ButtonsAlignment GetButtonsAlignment(DependencyObject d)
         {
             return (ButtonsAlignment)d.GetValue(ButtonsAlignmentProperty);
@@ -320,6 +330,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the clear text button behavior.
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Button))]
         public static bool GetIsClearTextButtonBehaviorEnabled(Button d)
         {
@@ -335,8 +346,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(IsClearTextButtonBehaviorEnabledProperty, value);
         }
 
-        
-
+        [Category(AppName.MahApps)]
         public static ICommand GetButtonCommand(DependencyObject d)
         {
             return (ICommand)d.GetValue(ButtonCommandProperty);
@@ -347,6 +357,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonCommandProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static object GetButtonCommandParameter(DependencyObject d)
         {
             return (object)d.GetValue(ButtonCommandParameterProperty);
@@ -357,6 +368,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonCommandParameterProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static object GetButtonContent(DependencyObject d)
         {
             return (object)d.GetValue(ButtonContentProperty);
@@ -367,6 +379,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonContentProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static ControlTemplate GetButtonTemplate(DependencyObject d)
         {
             return (ControlTemplate)d.GetValue(ButtonTemplateProperty);
@@ -377,6 +390,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(ButtonTemplateProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static FontFamily GetButtonFontFamily(DependencyObject d)
         {
             return (FontFamily)d.GetValue(ButtonFontFamilyProperty);

@@ -3,6 +3,8 @@ using System.Windows.Interactivity;
 
 namespace MahApps.Metro.Behaviours
 {
+    using System.ComponentModel;
+
     public class StylizedBehaviors
     {
         private static readonly DependencyProperty OriginalBehaviorProperty = DependencyProperty.RegisterAttached(@"OriginalBehaviorInternal", typeof(Behavior), typeof(StylizedBehaviors), new UIPropertyMetadata(null));
@@ -12,6 +14,8 @@ namespace MahApps.Metro.Behaviours
             typeof(StylizedBehaviorCollection),
             typeof(StylizedBehaviors),
             new FrameworkPropertyMetadata(null, OnPropertyChanged));
+        
+        [Category(AppName.MahApps)]
         public static StylizedBehaviorCollection GetBehaviors(DependencyObject uie)
         {
             return (StylizedBehaviorCollection)uie.GetValue(BehaviorsProperty);
@@ -21,6 +25,7 @@ namespace MahApps.Metro.Behaviours
         {
             uie.SetValue(BehaviorsProperty, value);
         }
+        
         private static Behavior GetOriginalBehavior(DependencyObject obj)
         {
             return obj.GetValue(OriginalBehaviorProperty) as Behavior;

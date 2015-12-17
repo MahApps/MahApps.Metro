@@ -2,6 +2,8 @@
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     public static class ScrollBarHelper
     {
         /// <summary>
@@ -11,6 +13,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("VerticalScrollBarOnLeftSide", typeof(bool), typeof(ScrollBarHelper),
                                                 new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
+        [Category(AppName.MahApps)]
         public static bool GetVerticalScrollBarOnLeftSide(DependencyObject obj)
         {
             return (bool)obj.GetValue(VerticalScrollBarOnLeftSideProperty);

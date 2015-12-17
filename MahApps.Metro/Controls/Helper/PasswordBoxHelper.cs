@@ -1,5 +1,6 @@
 ﻿namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -17,11 +18,13 @@
 
         #region Public Methods and Operators
 
+        [Category(AppName.MahApps)]
         public static object GetCapsLockIcon(PasswordBox element)
         {
             return element.GetValue(CapsLockIconProperty);
         }
 
+        [Category(AppName.MahApps)]
         public static object CapsLockWarningToolTipText(PasswordBox element)
         {
             return element.GetValue(CapsLockWarningToolTipProperty);

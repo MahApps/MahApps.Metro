@@ -3,6 +3,8 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     /// <summary>
     /// A helper class that provides various attached properties for the ComboBox control.
     /// <see cref="ComboBox"/>
@@ -29,6 +31,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(EnableVirtualizationWithGroupingProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static bool GetEnableVirtualizationWithGrouping(DependencyObject obj)
         {
             return (bool)obj.GetValue(EnableVirtualizationWithGroupingProperty);
@@ -44,6 +47,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the Maximum number of characters the TextBox can accept.
         /// </summary>
+        [Category(AppName.MahApps)]
         public static int GetMaxLength(UIElement obj)
         {
             return (int)obj.GetValue(MaxLengthProperty);
@@ -67,6 +71,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the Character casing of the TextBox.
         /// </summary>
+        [Category(AppName.MahApps)]
         public static CharacterCasing GetCharacterCasing(UIElement obj)
         {
             return (CharacterCasing)obj.GetValue(CharacterCasingProperty);

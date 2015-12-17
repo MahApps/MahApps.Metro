@@ -5,6 +5,8 @@ using System.Windows.Media;
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     /// <summary>
     /// A helper class that provides various controls.
     /// </summary>
@@ -15,6 +17,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the value to handle the visibility of the DisabledVisualElement in the template.
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         [AttachedPropertyBrowsableForType(typeof(RichTextBox))]
@@ -47,6 +50,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the character casing of the control
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(ContentControl))]
         [AttachedPropertyBrowsableForType(typeof(DropDownButton))]
         [AttachedPropertyBrowsableForType(typeof(WindowCommands))]
@@ -100,6 +104,7 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
         [AttachedPropertyBrowsableForType(typeof(GroupBox))]
@@ -116,6 +121,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderFontStretchProperty =
             DependencyProperty.RegisterAttached("HeaderFontStretch", typeof(FontStretch), typeof(ControlsHelper), new UIPropertyMetadata(FontStretches.Normal));
 
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
         [AttachedPropertyBrowsableForType(typeof(GroupBox))]
@@ -132,6 +138,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty HeaderFontWeightProperty =
             DependencyProperty.RegisterAttached("HeaderFontWeight", typeof(FontWeight), typeof(ControlsHelper), new UIPropertyMetadata(FontWeights.Normal));
 
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(MetroTabItem))]
         [AttachedPropertyBrowsableForType(typeof(TabItem))]
         [AttachedPropertyBrowsableForType(typeof(GroupBox))]
@@ -154,6 +161,7 @@ namespace MahApps.Metro.Controls
             DependencyProperty.RegisterAttached("ButtonWidth", typeof(double), typeof(ControlsHelper),
                                                 new FrameworkPropertyMetadata(22d, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.Inherits));
 
+        [Category(AppName.MahApps)]
         public static double GetButtonWidth(DependencyObject obj)
         {
             return (double)obj.GetValue(ButtonWidthProperty);
@@ -178,6 +186,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the brush used to draw the focus border.
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
@@ -199,6 +208,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the brush used to draw the mouse over brush.
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBox))]
         [AttachedPropertyBrowsableForType(typeof(CheckBox))]
         [AttachedPropertyBrowsableForType(typeof(RadioButton))]
@@ -225,6 +235,7 @@ namespace MahApps.Metro.Controls
         /// smoothly blend from corner to corner. (Can be used e.g. at MetroButton style)
         /// Description taken from original Microsoft description :-D
         /// </summary>
+        [Category(AppName.MahApps)]
         public static CornerRadius GetCornerRadius(UIElement element)
         {
             return (CornerRadius)element.GetValue(CornerRadiusProperty);

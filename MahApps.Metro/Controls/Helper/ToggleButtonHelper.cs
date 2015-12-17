@@ -4,6 +4,8 @@ using System.Windows.Controls.Primitives;
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     public static class ToggleButtonHelper
     {
         /// <summary>
@@ -21,6 +23,7 @@ namespace MahApps.Metro.Controls
         /// LeftToRight means content left and button right and RightToLeft vise versa
         /// </summary>
         [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
+        [Category(AppName.MahApps)]
         public static FlowDirection GetContentDirection(UIElement element)
         {
             return (FlowDirection)element.GetValue(ContentDirectionProperty);

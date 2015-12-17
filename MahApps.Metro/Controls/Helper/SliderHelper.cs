@@ -1,5 +1,6 @@
 ﻿namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -16,12 +17,14 @@
             typeof(MouseWheelState),
             typeof(SliderHelper),
             new PropertyMetadata(MouseWheelState.None, OnEnableMouseWheelChanged));
-        
+
+        [Category(AppName.MahApps)]
         public static MouseWheelChange GetChangeValueBy(Slider element)
         {
             return (MouseWheelChange)element.GetValue(ChangeValueByProperty);
         }
 
+        [Category(AppName.MahApps)]
         public static MouseWheelState GetEnableMouseWheel(Slider element)
         {
             return (MouseWheelState)element.GetValue(EnableMouseWheelProperty);

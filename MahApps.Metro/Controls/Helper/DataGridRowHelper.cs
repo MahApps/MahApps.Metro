@@ -3,6 +3,8 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     public static class DataGridRowHelper
     {
         public static readonly DependencyProperty SelectionUnitProperty = DependencyProperty.RegisterAttached("SelectionUnit", typeof(DataGridSelectionUnit), typeof(DataGridRowHelper), new FrameworkPropertyMetadata(DataGridSelectionUnit.FullRow));
@@ -10,6 +12,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets the value to define the DataGridRow selection behavior.
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(DataGridRow))]
         public static DataGridSelectionUnit GetSelectionUnit(UIElement element)
         {
