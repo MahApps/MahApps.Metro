@@ -25,7 +25,7 @@
         }
 
         [Category(AppName.MahApps)]
-        public static object CapsLockWarningToolTipText(PasswordBox element)
+        public static object GetCapsLockWarningToolTip(PasswordBox element)
         {
             return element.GetValue(CapsLockWarningToolTipProperty);
         }
