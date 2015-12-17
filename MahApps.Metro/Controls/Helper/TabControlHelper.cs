@@ -15,6 +15,7 @@ namespace MahApps.Metro.Controls
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TabControl))]
+        [AttachedPropertyBrowsableForType(typeof(TabItem))]
         public static bool GetIsUnderlined(UIElement element)
         {
             return (bool)element.GetValue(IsUnderlinedProperty);

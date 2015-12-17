@@ -19,12 +19,14 @@
             new PropertyMetadata(MouseWheelState.None, OnEnableMouseWheelChanged));
 
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Slider))]
         public static MouseWheelChange GetChangeValueBy(Slider element)
         {
             return (MouseWheelChange)element.GetValue(ChangeValueByProperty);
         }
 
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(Slider))]
         public static MouseWheelState GetEnableMouseWheel(Slider element)
         {
             return (MouseWheelState)element.GetValue(EnableMouseWheelProperty);

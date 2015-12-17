@@ -152,6 +152,8 @@ namespace MahApps.Metro.Controls
         }
 
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static bool GetIsWaitingForData(DependencyObject obj)
         {
             return (bool)obj.GetValue(IsWaitingForDataProperty);
@@ -162,7 +164,6 @@ namespace MahApps.Metro.Controls
             obj.SetValue(SelectAllOnFocusProperty, value);
         }
 
-        [Category(AppName.MahApps)]
         public static bool GetSelectAllOnFocus(DependencyObject obj)
         {
             return (bool)obj.GetValue(SelectAllOnFocusProperty);
@@ -174,6 +175,10 @@ namespace MahApps.Metro.Controls
         }
 
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
         public static string GetWatermark(DependencyObject obj)
         {
             return (string)obj.GetValue(WatermarkProperty);
@@ -185,6 +190,9 @@ namespace MahApps.Metro.Controls
         }
 
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
         public static bool GetUseFloatingWatermark(DependencyObject obj)
         {
             return (bool)obj.GetValue(UseFloatingWatermarkProperty);
@@ -205,6 +213,10 @@ namespace MahApps.Metro.Controls
         /// Gets if the attached TextBox has text.
         /// </summary>
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
+        [AttachedPropertyBrowsableForType(typeof(ComboBox))]
+        [AttachedPropertyBrowsableForType(typeof(DatePicker))]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static bool GetHasText(DependencyObject obj)
         {
             return (bool)obj.GetValue(HasTextProperty);

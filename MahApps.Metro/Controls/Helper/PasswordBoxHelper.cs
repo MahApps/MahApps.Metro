@@ -19,12 +19,14 @@
         #region Public Methods and Operators
 
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static object GetCapsLockIcon(PasswordBox element)
         {
             return element.GetValue(CapsLockIconProperty);
         }
 
         [Category(AppName.MahApps)]
+        [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
         public static object GetCapsLockWarningToolTip(PasswordBox element)
         {
             return element.GetValue(CapsLockWarningToolTipProperty);

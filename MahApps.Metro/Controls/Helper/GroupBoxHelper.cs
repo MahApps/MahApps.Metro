@@ -13,6 +13,7 @@ namespace MahApps.Metro.Controls
 
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(GroupBox))]
+        [AttachedPropertyBrowsableForType(typeof(Expander))]
         public static Brush GetHeaderForeground(UIElement element)
         {
             return (Brush)element.GetValue(HeaderForegroundProperty);

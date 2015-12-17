@@ -6,6 +6,7 @@ using System.Windows.Media;
 namespace MahApps.Metro.Controls
 {
     using System.ComponentModel;
+    using System.Windows.Controls.Primitives;
 
     /// <summary>
     /// A helper class that provides various controls.
@@ -18,9 +19,8 @@ namespace MahApps.Metro.Controls
         /// Gets the value to handle the visibility of the DisabledVisualElement in the template.
         /// </summary>
         [Category(AppName.MahApps)]
-        [AttachedPropertyBrowsableForType(typeof(TextBox))]
+        [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
-        [AttachedPropertyBrowsableForType(typeof(RichTextBox))]
         [AttachedPropertyBrowsableForType(typeof(NumericUpDown))]
         public static Visibility GetDisabledVisualElementVisibility(UIElement element)
         {
