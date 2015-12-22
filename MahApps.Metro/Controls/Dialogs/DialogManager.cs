@@ -485,7 +485,7 @@ namespace MahApps.Metro.Controls.Dialogs
                         element = null;
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException(nameof(icon), icon, null);
+                        throw new ArgumentOutOfRangeException("icon", icon, null);
                 }
                 metroDialog.Icon = element;
             }
