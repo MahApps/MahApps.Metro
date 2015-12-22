@@ -2,6 +2,8 @@
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     public static class VisibilityHelper
     {
         public static readonly DependencyProperty IsVisibleProperty
@@ -29,6 +31,7 @@ namespace MahApps.Metro.Controls
             element.SetValue(IsVisibleProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static bool? GetIsVisible(DependencyObject element)
         {
             return (bool?)element.GetValue(IsVisibleProperty);
@@ -59,6 +62,7 @@ namespace MahApps.Metro.Controls
             element.SetValue(IsCollapsedProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static bool? GetIsCollapsed(DependencyObject element)
         {
             return (bool?)element.GetValue(IsCollapsedProperty);
@@ -89,6 +93,7 @@ namespace MahApps.Metro.Controls
             element.SetValue(IsHiddenProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static bool? GetIsHidden(DependencyObject element)
         {
             return (bool?)element.GetValue(IsHiddenProperty);

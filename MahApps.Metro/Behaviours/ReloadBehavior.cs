@@ -7,11 +7,14 @@ using MahApps.Metro.Controls;
 
 namespace MahApps.Metro.Behaviours
 {
+    using System.ComponentModel;
+
     public static class ReloadBehavior
     {
         public static DependencyProperty OnDataContextChangedProperty =
             DependencyProperty.RegisterAttached("OnDataContextChanged", typeof(bool), typeof(ReloadBehavior), new PropertyMetadata(OnDataContextChanged));
 
+        [Category(AppName.MahApps)]
         public static bool GetOnDataContextChanged(MetroContentControl element)
         {
             return (bool)element.GetValue(OnDataContextChangedProperty);
@@ -35,6 +38,7 @@ namespace MahApps.Metro.Behaviours
         public static DependencyProperty OnSelectedTabChangedProperty =
             DependencyProperty.RegisterAttached("OnSelectedTabChanged", typeof(bool), typeof(ReloadBehavior), new PropertyMetadata(OnSelectedTabChanged));
 
+        [Category(AppName.MahApps)]
         public static bool GetOnSelectedTabChanged(ContentControl element)
         {
             return (bool)element.GetValue(OnDataContextChangedProperty);
@@ -102,6 +106,7 @@ namespace MahApps.Metro.Behaviours
             element.SetValue(MetroContentControlProperty, value);
         }
 
+        [Category(AppName.MahApps)]
         public static ContentControl GetMetroContentControl(UIElement element)
         {
             return (ContentControl)element.GetValue(MetroContentControlProperty);
