@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -8,6 +7,8 @@ using System.Windows.Media.Animation;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
+    using System.ComponentModel;
+
     /// <summary>
     /// The base class for dialogs.
     ///
@@ -19,6 +20,8 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty TitleProperty = DependencyProperty.Register("Title", typeof(string), typeof(BaseMetroDialog), new PropertyMetadata(default(string)));
         public static readonly DependencyProperty DialogTopProperty = DependencyProperty.Register("DialogTop", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
         public static readonly DependencyProperty DialogBottomProperty = DependencyProperty.Register("DialogBottom", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(null));
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(object), typeof(BaseMetroDialog), new PropertyMetadata(default(object)));
+        public static readonly DependencyProperty IconTemplateProperty = DependencyProperty.Register("IconTemplate", typeof(DataTemplate), typeof(BaseMetroDialog), new PropertyMetadata(default(DataTemplate)));
 
         public MetroDialogSettings DialogSettings { get; private set; }
 
@@ -29,6 +32,26 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the dialogs's icon.
+        /// </summary>
+        [Bindable(true)]
+        [Category("Appearance")]
+        public object Icon
+        {
+            get { return GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the data template used to display the content of the <see cref="Icon"/>. 
+        /// </summary>
+        public DataTemplate IconTemplate
+        {
+            get { return (DataTemplate)GetValue(IconTemplateProperty); }
+            set { SetValue(IconTemplateProperty, value); }
         }
 
         /// <summary>
@@ -422,5 +445,18 @@ namespace MahApps.Metro.Controls.Dialogs
         Theme = 0,
         Accented = 1,
         Inverted = 2
+    }
+
+    /// <summary>
+    /// An enum representing the icon for a <see cref="BaseMetroDialog"/>.
+    /// </summary>
+    public enum MessageDialogIcon
+    {
+        None,
+        Error,
+        Hand,
+        Information,
+        Question,
+        Warning,
     }
 }

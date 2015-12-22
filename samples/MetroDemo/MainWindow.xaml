@@ -170,6 +170,8 @@
                               Header="Show Password Preview LoginDialog" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
+                    <MenuItem Click="ShowMessageDialogWithIcons"
+                              Header="Show MessageDialog with Icon" />
                     <MenuItem Click="ShowLimitedMessageDialog"
                               Header="Show MessageDialog (Limited Size)" />
                     <MenuItem Click="ShowProgressDialog"

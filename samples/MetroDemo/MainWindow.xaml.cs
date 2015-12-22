@@ -155,6 +155,11 @@ namespace MetroDemo
             await dialog.RequestCloseAsync();
         }
 
+        private async void ShowMessageDialogWithIcons(object sender, RoutedEventArgs e)
+        {
+            await this.ShowMessageAsync("This is a MessageDialog with an icon", "Left you see the ERROR icon.", MessageDialogIcon.Error);
+        }
+
         private async void ShowMessageDialog(object sender, RoutedEventArgs e)
         {
             // This demo runs on .Net 4.0, but we're using the Microsoft.Bcl.Async package so we have async/await support

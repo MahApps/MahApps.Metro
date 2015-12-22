@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace MahApps.Metro.Controls.Dialogs
 {
@@ -140,6 +139,13 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
+
+
+        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogIcon icon, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
+        {
+            return ShowMessageAsync(window, title, message, style, settings, icon);
+        }
+
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -148,8 +154,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="style">The type of buttons to use.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
+        /// <param name="icon">Optional icon.</param>
         /// <returns>A task promising the result of which button was pressed.</returns>
-        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null)
+        public static Task<MessageDialogResult> ShowMessageAsync(this MetroWindow window, string title, string message, MessageDialogStyle style = MessageDialogStyle.Affirmative, MetroDialogSettings settings = null, object icon = null)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -166,8 +173,9 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         Message = message,
                         Title = title,
-                        ButtonStyle = style
+                        ButtonStyle = style,
                     };
+                    SetIcon(dialog, icon);
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
@@ -447,6 +455,43 @@ namespace MahApps.Metro.Controls.Dialogs
             else
             {
                 window.metroInactiveDialogContainer.Children.Remove(dialog);
+            }
+        }
+
+        private static void SetIcon(BaseMetroDialog metroDialog, object icon)
+        {
+            if (icon is MessageDialogIcon)
+            {
+                MessageDialogIcon i = (MessageDialogIcon)icon;
+                UIElement element;
+                switch (i)
+                {
+                    case MessageDialogIcon.Information:
+                        element = metroDialog.Resources["appbar_warning_circle"] as UIElement;
+                        break;
+                    case MessageDialogIcon.Warning:
+                        element = metroDialog.Resources["appbar_warning"] as UIElement;
+                        break;
+                    case MessageDialogIcon.Hand:
+                        element = metroDialog.Resources["appbar_cursor_hand"] as UIElement;
+                        break;
+                    case MessageDialogIcon.Question:
+                        element = metroDialog.Resources["appbar_question"] as UIElement;
+                        break;
+                    case MessageDialogIcon.Error:
+                        element = metroDialog.Resources["appbar_stop"] as UIElement;
+                        break;
+                    case MessageDialogIcon.None:
+                        element = null;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(icon), icon, null);
+                }
+                metroDialog.Icon = element;
+            }
+            else
+            {
+                metroDialog.Icon = icon;
             }
         }
 
