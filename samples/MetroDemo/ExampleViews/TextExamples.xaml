@@ -246,10 +246,11 @@
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"                                        
                                         Speedup="false" />
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
-                                        Controls:TextBoxHelper.Watermark="Speedup when long pressed after 500ms"
+                                        Controls:TextBoxHelper.Watermark="Speedup when pressed after 1000ms"
+                                        Controls:TextBoxHelper.UseFloatingWatermark="True"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        Delay="500"
+                                        Delay="1000"
                                         Speedup="true" />
 
                 <Label Margin="{StaticResource ControlMargin}"
@@ -272,7 +273,7 @@
                     <TextBox Grid.Column="1"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              VerticalAlignment="Center"
-                             Text="{Binding ElementName=StringFormatNumUpDown, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                             Text="{Binding ElementName=StringFormatNumUpDown, Path=StringFormat, Mode=TwoWay, UpdateSourceTrigger=LostFocus, NotifyOnValidationError=True}" />
                 </Grid>
                 <Grid Margin="{StaticResource ControlMargin}">
                     <Grid.ColumnDefinitions>

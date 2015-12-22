@@ -5,6 +5,7 @@ namespace MahApps.Metro.Controls
     using System.Globalization;
     using System.Linq;
     using System.Reflection;
+    using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
@@ -157,7 +158,9 @@ namespace MahApps.Metro.Controls
             typeof(bool), 
             typeof(NumericUpDown),
             new FrameworkPropertyMetadata(true, OnHasDecimalsChanged));
-        
+
+        private static readonly Regex RegexStringFormatHexadecimal = new Regex(@"^(?<complexHEX>.*{\d:X\d+}.*)?(?<simpleHEX>X\d+)?$", RegexOptions.Compiled);
+
         private const double DefaultInterval = 1d;
         private const int DefaultDelay = 500;
         private const string ElementNumericDown = "PART_NumericDown";
@@ -855,6 +858,7 @@ namespace MahApps.Metro.Controls
             var numericUpDown = (NumericUpDown)d;
 
             numericUpDown.CoerceValue(ValueProperty);
+            numericUpDown.Value = (double?)CoerceValue(numericUpDown, numericUpDown.Value);
             numericUpDown.OnMaximumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -865,6 +869,7 @@ namespace MahApps.Metro.Controls
 
             numericUpDown.CoerceValue(ValueProperty);
             numericUpDown.CoerceValue(MaximumProperty);
+            numericUpDown.Value = (double?)CoerceValue(numericUpDown, numericUpDown.Value);
             numericUpDown.OnMinimumChanged((double)e.OldValue, (double)e.NewValue);
             numericUpDown.EnableDisableUpDown();
         }
@@ -886,6 +891,7 @@ namespace MahApps.Metro.Controls
             {
                 nud.InternalSetText(nud.Value);
             }
+            nud.HasDecimals = !RegexStringFormatHexadecimal.IsMatch((string)e.NewValue);
         }
 
         private static void OnValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -924,19 +930,43 @@ namespace MahApps.Metro.Controls
             {
                 _valueTextBox.Text = newValue.Value.ToString(culture);
             }
-            else if (!StringFormat.Contains("{")) 
-            {
-                // then we may have a StringFormat of e.g. "N0"
-                _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
-            }
             else
             {
-                _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
+                FormatValue(newValue, culture);
             }
 
             if ((bool)GetValue(TextBoxHelper.IsMonitoringProperty))
             {
                 SetValue(TextBoxHelper.TextLengthProperty, _valueTextBox.Text.Length);
+            }
+        }
+
+        private void FormatValue(double? newValue, CultureInfo culture)
+        {
+            var match = RegexStringFormatHexadecimal.Match(StringFormat);
+            if (match.Success)
+            {
+                if (match.Groups["simpleHEX"].Success)
+                {
+                    // HEX DOES SUPPORT INT ONLY.
+                    _valueTextBox.Text = ((int)newValue.Value).ToString(match.Groups["simpleHEX"].Value, culture);
+                }
+                else if (match.Groups["complexHEX"].Success)
+                {
+                    _valueTextBox.Text = string.Format(culture, match.Groups["complexHEX"].Value, (int)newValue.Value);
+                }
+            }
+            else
+            {
+                if (!StringFormat.Contains("{"))
+                {
+                    // then we may have a StringFormat of e.g. "N0"
+                    _valueTextBox.Text = newValue.Value.ToString(StringFormat, culture);
+                }
+                else
+                {
+                    _valueTextBox.Text = string.Format(culture, StringFormat, newValue.Value);
+                }
             }
         }
 

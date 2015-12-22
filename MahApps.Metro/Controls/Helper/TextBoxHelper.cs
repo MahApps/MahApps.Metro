@@ -150,7 +150,7 @@ namespace MahApps.Metro.Controls
         {
             obj.SetValue(IsWaitingForDataProperty, value);
         }
-
+        
         [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(TextBoxBase))]
         [AttachedPropertyBrowsableForType(typeof(PasswordBox))]
@@ -203,12 +203,6 @@ namespace MahApps.Metro.Controls
             obj.SetValue(UseFloatingWatermarkProperty, value);
         }
 
-        private static void SetTextLength(DependencyObject obj, int value)
-        {
-            obj.SetValue(TextLengthProperty, value);
-            obj.SetValue(HasTextProperty, value >= 1);
-        }
-
         /// <summary>
         /// Gets if the attached TextBox has text.
         /// </summary>
@@ -227,7 +221,7 @@ namespace MahApps.Metro.Controls
             obj.SetValue(HasTextProperty, value);
         }
 
-        static void OnIsMonitoringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnIsMonitoringChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is TextBox)
             {
@@ -270,44 +264,67 @@ namespace MahApps.Metro.Controls
             {
                 var numericUpDown = d as NumericUpDown;
                 numericUpDown.SelectAllOnFocus = (bool)e.NewValue;
+                if ((bool)e.NewValue)
+                {
+                    numericUpDown.ValueChanged += OnNumericUpDownValueChaged;
+                    numericUpDown.GotFocus += NumericUpDownGotFocus;
+            }
+                else
+                {
+                    numericUpDown.ValueChanged -= OnNumericUpDownValueChaged;
+                    numericUpDown.GotFocus -= NumericUpDownGotFocus;
+        }
             }
         }
 
-        static void TextChanged(object sender, TextChangedEventArgs e)
+        private static void SetTextLength<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, int> funcTextLength) where TDependencyObject : DependencyObject
         {
-            var txtBox = sender as TextBox;
-            if (txtBox == null)
-                return;
-            SetTextLength(txtBox, txtBox.Text.Length);
-        }
-
-        static void PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            var passBox = sender as PasswordBox;
-            if (passBox == null)
-                return;
-            SetTextLength(passBox, passBox.Password.Length);
-        }
-
-        static void TextBoxGotFocus(object sender, RoutedEventArgs e)
-        {
-            var txtBox = sender as TextBox;
-            if (txtBox == null)
-                return;
-            if (GetSelectAllOnFocus(txtBox))
+            if (sender != null)
             {
-                txtBox.Dispatcher.BeginInvoke((Action)(txtBox.SelectAll));
+                var value = funcTextLength(sender);
+                sender.SetValue(TextLengthProperty, value);
+                sender.SetValue(HasTextProperty, value >= 1);
+        }
+        }
+
+        private static void TextChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as TextBox, textBox => textBox.Text.Length);
+        }
+
+        private static void OnNumericUpDownValueChaged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as NumericUpDown, numericUpDown => numericUpDown.Value.HasValue ? 1 : 0);
+        }
+
+        private static void PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            SetTextLength(sender as PasswordBox, passwordBox => passwordBox.Password.Length);
+        }
+
+        private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            ControlGotFocus(sender as TextBox, textBox => textBox.SelectAll);
+        }
+
+        private static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
+            {
+            ControlGotFocus(sender as NumericUpDown, numericUpDown => numericUpDown.SelectAll);
             }
+
+        private static void PasswordGotFocus(object sender, RoutedEventArgs e)
+        {
+            ControlGotFocus(sender as PasswordBox, passwordBox => passwordBox.SelectAll);
         }
 
-        static void PasswordGotFocus(object sender, RoutedEventArgs e)
+        private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, Action> funcSelectAll) where TDependencyObject : DependencyObject
         {
-            var passBox = sender as PasswordBox;
-            if (passBox == null)
-                return;
-            if (GetSelectAllOnFocus(passBox))
+            if (sender != null)
+        {
+                if (GetSelectAllOnFocus(sender))
             {
-                passBox.Dispatcher.BeginInvoke((Action)(passBox.SelectAll));
+                    sender.Dispatcher.BeginInvoke(funcSelectAll, sender);
+                }
             }
         }
 
@@ -470,22 +487,22 @@ namespace MahApps.Metro.Controls
             if (textbox != null)
             {
                 // only one loaded event
-                textbox.Loaded -= TextBoxLoaded;
-                textbox.Loaded += TextBoxLoaded;
+                textbox.Loaded -= TextChanged;
+                textbox.Loaded += TextChanged;
                 if (textbox.IsLoaded)
                 {
-                    TextBoxLoaded(textbox, new RoutedEventArgs());
+                    TextChanged(textbox, new RoutedEventArgs());
                 }
             }
             var passbox = d as PasswordBox;
             if (passbox != null)
             {
                 // only one loaded event
-                passbox.Loaded -= PassBoxLoaded;
-                passbox.Loaded += PassBoxLoaded;
+                passbox.Loaded -= PasswordChanged;
+                passbox.Loaded += PasswordChanged;
                 if (passbox.IsLoaded)
                 {
-                    PassBoxLoaded(passbox, new RoutedEventArgs());
+                    PasswordChanged(passbox, new RoutedEventArgs());
                 }
             }
             var combobox = d as ComboBox;
@@ -507,24 +524,6 @@ namespace MahApps.Metro.Controls
             if (comboBox != null)
             {
                 comboBox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(comboBox.Text) || comboBox.SelectedItem != null);
-            }
-        }
-
-        static void PassBoxLoaded(object sender, RoutedEventArgs e)
-        {
-            var passbox = sender as PasswordBox;
-            if (passbox != null)
-            {
-                passbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(passbox.Password));
-            }
-        }
-
-        static void TextBoxLoaded(object sender, RoutedEventArgs e)
-        {
-            var textbox = sender as TextBox;
-            if (textbox != null)
-            {
-                textbox.SetValue(HasTextProperty, !string.IsNullOrWhiteSpace(textbox.Text));
             }
         }
     }
