@@ -69,23 +69,14 @@
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <ContentControl x:Name="PART_FloatingMessageContainer"
-                                  Grid.Column="0"
-                                  MaxHeight="0"
-                                  IsHitTestVisible="False"
-                                  Margin="5,0"
-                                  Visibility="Visible">
+                                            Style="{DynamicResource FloatingMessageContainerStyle}"
+                                            Grid.Column="0">
                                 <TextBlock x:Name="PART_FloatingMessage"
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
-                                           FontSize="{DynamicResource FloatingWatermarkFontSize}"
                                            Foreground="{TemplateBinding Foreground}"
-                                           Opacity="0.6"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}">
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform />
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
+                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}" />
                             </ContentControl>
                             <TextBox x:Name="PART_TextBox"
                                      Grid.Row="1"

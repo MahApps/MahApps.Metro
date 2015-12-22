@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+                    xmlns:controls="clr-namespace:MahApps.Metro.Controls">
 
     <!-- note: default style for textblock is now in MetroWindow !!! -->
     <!-- never ever make a default style for TextBlock in App.xaml !!!  -->
@@ -14,6 +14,13 @@
     <Style TargetType="{x:Type TextBlock}"
            x:Key="MetroAutoCollapsingTextBlock"
            BasedOn="{StaticResource MetroTextBlock}">
+        <Setter Property="FontSize" Value="{DynamicResource FloatingWatermarkFontSize}" />
+        <Setter Property="Opacity" Value="0.6" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TranslateTransform />
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
             <Trigger Property="Text"
                      Value="">
