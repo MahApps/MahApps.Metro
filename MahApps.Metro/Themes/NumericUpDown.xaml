@@ -49,11 +49,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">
-                    <Grid Height="{TemplateBinding Height}"
-                          MinHeight="{TemplateBinding MinHeight}"
-                          MaxHeight="{TemplateBinding MaxHeight}"
-                          Margin="{TemplateBinding Padding}"
-                          Background="{TemplateBinding Background}">
+                    <Grid Background="{TemplateBinding Background}">
                         <Border x:Name="Base"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -74,7 +70,7 @@
                             </Grid.RowDefinitions>
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                   Grid.Column="0"
-                                  Height="0"
+                                  MaxHeight="0"
                                   IsHitTestVisible="False"
                                   Margin="5,0"
                                   Visibility="Visible">
@@ -84,7 +80,8 @@
                                            Foreground="{TemplateBinding Foreground}"
                                            Opacity="0.6"
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}">
                                     <TextBlock.RenderTransform>
                                         <TranslateTransform />
                                     </TextBlock.RenderTransform>
