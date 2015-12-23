@@ -13,6 +13,8 @@ using System.Windows.Interactivity;
 
 namespace MahApps.Metro.Behaviours
 {
+    using System.ComponentModel;
+
     public class PasswordBoxBindingBehavior : Behavior<PasswordBox>
     {
         #region Fields
@@ -23,6 +25,7 @@ namespace MahApps.Metro.Behaviours
 
         #region DependencyProperty - Password ("string")
 
+        [Category(AppName.MahApps)]
         public static string GetPassword(DependencyObject dpo)
         {
             return (string)dpo.GetValue(PasswordProperty);
