@@ -49,16 +49,16 @@ namespace MetroDemo
                 var fullScreen = (bool)e.NewValue;
                 if (fullScreen)
                 {
+                    metroWindow.WindowState = WindowState.Maximized;
                     metroWindow.UseNoneWindowStyle = true;
                     metroWindow.IgnoreTaskbarOnMaximize = true;
-                    metroWindow.WindowState = WindowState.Maximized;
                 }
                 else
                 {
+                    metroWindow.WindowState = WindowState.Normal;
                     metroWindow.UseNoneWindowStyle = false;
                     metroWindow.ShowTitleBar = true; // <-- this must be set to true
                     metroWindow.IgnoreTaskbarOnMaximize = false;
-                    metroWindow.WindowState = WindowState.Normal;
                 }
             }
         }
