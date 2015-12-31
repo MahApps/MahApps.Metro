@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
     <id>MahApps.Metro</id>
-    <version>1.1.2.0</version>
+    <version>1.2.0.0</version>
     <title>MahApps.Metro</title>
     <authors>Paul Jenkins; Jake Ginnivan; Brendan Forster (shiftkey); Alex Mitchell (Amrykid); Dennis Daume (flagbug); Jan Karger (punker76)</authors>
     <owners>Paul Jenkins; Jake Ginnivan</owners>
