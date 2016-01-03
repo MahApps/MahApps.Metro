@@ -18,6 +18,18 @@ namespace MahApps.Metro.Tests
         }
 
         [Fact]
+        public async Task WindowCommandsShouldHaveTheParentWindow()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
+
+            Assert.Equal(window, window.LeftWindowCommands.ParentWindow);
+            Assert.Equal(window, window.RightWindowCommands.ParentWindow);
+            Assert.Equal(window, window.FindChild<WindowButtonCommands>("PART_WindowButtonCommands").ParentWindow);
+        }
+
+        [Fact]
         public async Task ShowsRightWindowCommandsOnTopByDefault()
         {
             await TestHost.SwitchToAppThread();
@@ -33,7 +45,7 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
-            var icon = window.GetPart<ContentControl>("PART_Icon");
+            var icon = window.FindChild<ContentControl>("PART_Icon");
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
         }
@@ -44,7 +56,7 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.ShowIconOnTitleBar = false);
-            var icon = window.GetPart<ContentControl>("PART_Icon");
+            var icon = window.FindChild<ContentControl>("PART_Icon");
 
             Assert.Equal(Visibility.Collapsed, icon.Visibility);
         }
@@ -55,7 +67,7 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>(w => w.ShowTitleBar = false);
-            var icon = window.GetPart<ContentControl>("PART_Icon");
+            var icon = window.FindChild<ContentControl>("PART_Icon");
 
             Assert.Equal(Visibility.Collapsed, icon.Visibility);
         }
@@ -69,7 +81,7 @@ namespace MahApps.Metro.Tests
                                                                                          w.IconOverlayBehavior = WindowCommandsOverlayBehavior.HiddenTitleBar;
                                                                                          w.ShowTitleBar = false;
                                                                                      });
-            var icon = window.GetPart<ContentControl>("PART_Icon");
+            var icon = window.FindChild<ContentControl>("PART_Icon");
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
         }
@@ -80,7 +92,7 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
-            var icon = window.GetPart<ContentControl>("PART_Icon");
+            var icon = window.FindChild<ContentControl>("PART_Icon");
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
 
@@ -97,7 +109,7 @@ namespace MahApps.Metro.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<MetroWindow>();
             window.IconOverlayBehavior = WindowCommandsOverlayBehavior.HiddenTitleBar;
             window.ShowTitleBar = false;
-            var icon = window.GetPart<ContentControl>("PART_Icon");
+            var icon = window.FindChild<ContentControl>("PART_Icon");
 
             Assert.Equal(Visibility.Visible, icon.Visibility);
         }
@@ -105,7 +117,7 @@ namespace MahApps.Metro.Tests
 
         private Button GetButton(MetroWindow window, string buttonName)
         {
-            var windowButtonCommands = window.GetPart<WindowButtonCommands>("PART_WindowButtonCommands");
+            var windowButtonCommands = window.FindChild<WindowButtonCommands>("PART_WindowButtonCommands");
             Assert.NotNull(windowButtonCommands);
 
             var button = windowButtonCommands.Template.FindName(buttonName, windowButtonCommands) as Button;

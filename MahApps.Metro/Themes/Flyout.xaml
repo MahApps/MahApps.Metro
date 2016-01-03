@@ -7,6 +7,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Thumb.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate x:Key="HeaderTemplate"
@@ -25,7 +26,8 @@
                     FontFamily="Segoe UI Symbol"
                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     FontSize="16"
-                    VerticalAlignment="Bottom">
+                    VerticalAlignment="Bottom"
+                    IsCancel="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:Flyout}}, Path=CloseButtonIsCancel}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <Actions:SetFlyoutOpenAction TargetObject="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}}"
@@ -231,6 +233,10 @@
                                       DockPanel.Dock="Bottom" />
                 </DockPanel>
             </AdornerDecorator>
+            <Thumb Style="{StaticResource WindowTitleThumbStyle}"
+                   Height="{Binding Path=TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                   VerticalAlignment="Top"
+                   x:Name="PART_WindowTitleThumb" />
         </Grid>
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}"

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -15,6 +15,7 @@ namespace MahApps.Metro.Controls
     /// <seealso cref="FlyoutsControl"/>
     /// </summary>
     [TemplatePart(Name = "PART_BackButton", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_WindowTitleThumb", Type = typeof(Thumb))]
     [TemplatePart(Name = "PART_Header", Type = typeof(ContentPresenter))]
     [TemplatePart(Name = "PART_Content", Type = typeof(ContentPresenter))]
     public class Flyout : ContentControl
@@ -57,6 +58,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ThemeProperty = DependencyProperty.Register("Theme", typeof(FlyoutTheme), typeof(Flyout), new FrameworkPropertyMetadata(FlyoutTheme.Dark, ThemeChanged));
         public static readonly DependencyProperty ExternalCloseButtonProperty = DependencyProperty.Register("ExternalCloseButton", typeof(MouseButton), typeof(Flyout), new PropertyMetadata(MouseButton.Left));
         public static readonly DependencyProperty CloseButtonVisibilityProperty = DependencyProperty.Register("CloseButtonVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
+        public static readonly DependencyProperty CloseButtonIsCancelProperty = DependencyProperty.Register("CloseButtonIsCancel", typeof(bool), typeof(Flyout), new FrameworkPropertyMetadata(false));
         public static readonly DependencyProperty TitleVisibilityProperty = DependencyProperty.Register("TitleVisibility", typeof(Visibility), typeof(Flyout), new FrameworkPropertyMetadata(Visibility.Visible));
         public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register("AreAnimationsEnabled", typeof(bool), typeof(Flyout), new PropertyMetadata(true));
         public static readonly DependencyProperty FocusedElementProperty = DependencyProperty.Register("FocusedElement", typeof(FrameworkElement), typeof(Flyout), new UIPropertyMetadata(null));
@@ -87,6 +89,15 @@ namespace MahApps.Metro.Controls
         {
             get { return (Visibility)GetValue(CloseButtonVisibilityProperty); }
             set { SetValue(CloseButtonVisibilityProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets if the close button is a cancel button in this flyout.
+        /// </summary>
+        public bool CloseButtonIsCancel
+        {
+            get { return (bool)GetValue(CloseButtonIsCancelProperty); }
+            set { SetValue(CloseButtonIsCancelProperty, value); }
         }
 
         /// <summary>
@@ -212,6 +223,13 @@ namespace MahApps.Metro.Controls
             this.Loaded += (sender, args) => UpdateFlyoutTheme();
         }
 
+        private MetroWindow parentWindow;
+
+        private MetroWindow ParentWindow
+        {
+            get { return this.parentWindow ?? (this.parentWindow = this.TryFindParent<MetroWindow>()); }
+        }
+
         private void UpdateFlyoutTheme()
         {
             var flyoutsControl = this.TryFindParent<FlyoutsControl>();
@@ -221,7 +239,7 @@ namespace MahApps.Metro.Controls
                 this.Visibility = flyoutsControl != null ? Visibility.Collapsed : Visibility.Visible;
             }
 
-            var window = this.TryFindParent<MetroWindow>();
+            var window = this.ParentWindow;
             if (window != null)
             {
                 var windowTheme = DetectTheme(this);
@@ -282,7 +300,7 @@ namespace MahApps.Metro.Controls
                 return null;
 
             // first look for owner
-            var window = flyout.TryFindParent<MetroWindow>();
+            var window = flyout.ParentWindow;
             var theme = window != null ? ThemeManager.DetectAppStyle(window) : null;
             if (theme != null && theme.Item2 != null)
                 return theme;
@@ -460,6 +478,7 @@ namespace MahApps.Metro.Controls
         SplineDoubleKeyFrame fadeOutFrame;
         ContentPresenter PART_Header;
         ContentPresenter PART_Content;
+        Thumb windowTitleThumb;
 
         public override void OnApplyTemplate()
         {
@@ -471,7 +490,19 @@ namespace MahApps.Metro.Controls
 
             PART_Header = (ContentPresenter)GetTemplateChild("PART_Header");
             PART_Content = (ContentPresenter)GetTemplateChild("PART_Content");
-            
+            this.windowTitleThumb = GetTemplateChild("PART_WindowTitleThumb") as Thumb;
+
+            if (this.windowTitleThumb != null)
+            {
+                this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+
+                this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
+                this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
+
             hideStoryboard = (Storyboard)GetTemplateChild("HideStoryboard");
             hideFrame = (SplineDoubleKeyFrame)GetTemplateChild("hideFrame");
             hideFrameY = (SplineDoubleKeyFrame)GetTemplateChild("hideFrameY");
@@ -483,6 +514,44 @@ namespace MahApps.Metro.Controls
                 return;
 
             ApplyAnimation(Position, AnimateOpacity);
+        }
+
+        protected internal void CleanUp(FlyoutsControl flyoutsControl)
+        {
+            if (this.windowTitleThumb != null)
+            {
+                this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
+                this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
+                this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
+            }
+            this.parentWindow = null;
+        }
+
+        private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
+        {
+            var window = this.ParentWindow;
+            if (window != null && this.Position != Position.Bottom)
+            {
+                MetroWindow.DoWindowTitleThumbMoveOnDragDelta(window, dragDeltaEventArgs);
+            }
+        }
+
+        private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            var window = this.ParentWindow;
+            if (window != null && this.Position != Position.Bottom)
+            {
+                MetroWindow.DoWindowTitleThumbChangeWindowStateOnMouseDoubleClick(window, mouseButtonEventArgs);
+            }
+        }
+
+        private void WindowTitleThumbSystemMenuOnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var window = this.ParentWindow;
+            if (window != null && this.Position != Position.Bottom)
+            {
+                MetroWindow.DoWindowTitleThumbSystemMenuOnMouseRightButtonUp(window, e);
+            }
         }
 
         internal void ApplyAnimation(Position position, bool animateOpacity, bool resetShowFrame = true)

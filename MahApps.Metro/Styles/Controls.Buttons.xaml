@@ -1,10 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
-
-    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
-    <Converters:ToLowerConverter x:Key="ToLowerConverter" />
 
     <Style x:Key="MetroFlatButton"
            TargetType="{x:Type Button}">
@@ -22,14 +18,22 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="Border"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                             Margin="0"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          RecognizesAccessKey="True" />
+                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed"
@@ -103,7 +107,7 @@
                                  Margin="4"
                                  Stroke="{TemplateBinding BorderBrush}"
                                  StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
-                        <ContentPresenter x:Name="content"
+                        <ContentPresenter x:Name="PART_ContentPresenter"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
                                           RecognizesAccessKey="True"
@@ -149,7 +153,7 @@
                                     Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
-                                 Value="false">
+                                 Value="False">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource GrayBrush7}" />
                             <Setter TargetName="ellipse"
@@ -166,7 +170,7 @@
     <ControlTemplate x:Key="ChromelessButtonTemplate"
                      TargetType="{x:Type ButtonBase}">
         <Grid Background="{TemplateBinding Background}">
-            <ContentPresenter x:Name="contentPresenter"
+            <ContentPresenter x:Name="PART_ContentPresenter"
                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                               Margin="{TemplateBinding Padding}"
                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -177,18 +181,18 @@
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver"
                      Value="True">
-                <Setter TargetName="contentPresenter"
+                <Setter TargetName="PART_ContentPresenter"
                         Property="Opacity"
                         Value="1" />
             </Trigger>
             <Trigger Property="IsMouseOver"
                      Value="False">
-                <Setter TargetName="contentPresenter"
+                <Setter TargetName="PART_ContentPresenter"
                         Property="Opacity"
                         Value=".5" />
             </Trigger>
             <Trigger Property="IsEnabled"
-                     Value="false">
+                     Value="False">
                 <Setter Property="Foreground"
                         Value="#ADADAD" />
             </Trigger>
@@ -211,12 +215,12 @@
     </Style>
 
     <!-- base button style for min, max and close window buttons -->
-    <Style x:Key="MetroBaseWindowButtonStyle"
+    <Style x:Key="BaseMetroWindowButtonStyle"
            TargetType="{x:Type Button}">
-        <Setter Property="Background"
-                Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="Foreground"
                 Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
+        <Setter Property="Background"
+                Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="VerticalContentAlignment"
@@ -227,58 +231,56 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid Background="{TemplateBinding Background}">
-                        <ContentPresenter x:Name="contentPresenter"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          RecognizesAccessKey="True"
-                                          Opacity="0.75" />
+                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}"
+                                                   Opacity="0.5"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
-                            <Setter TargetName="contentPresenter"
+                            <Setter TargetName="PART_ContentPresenter"
                                     Property="Opacity"
                                     Value="1" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="False">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Opacity"
-                                    Value=".5" />
-                        </Trigger>
                     </ControlTemplate.Triggers>
-                    
                 </ControlTemplate>
-
             </Setter.Value>
         </Setter>
-        
         <Style.Triggers>
-
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter Property="Background"
                         Value="{DynamicResource SemiTransparentWhiteBrush}" />
             </Trigger>
-            
             <Trigger Property="IsPressed"
                      Value="True">
-                <Setter Property="Background"
-                        Value="{DynamicResource HighlightBrush}" />
                 <Setter Property="Foreground" 
                         Value="White" />
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush}" />
             </Trigger>
             <Trigger Property="IsEnabled"
-                     Value="false">
+                     Value="False">
                 <Setter Property="Foreground"
                         Value="{DynamicResource IdealForegroundDisabledBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>
-
-    <!-- default button style for min, max and close window buttons -->
+    
+    <!-- obsolete -->
+    <Style x:Key="MetroBaseWindowButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource BaseMetroWindowButtonStyle}" />
+    <!-- obsolete -->
     <Style x:Key="MetroWindowButtonStyle"
            TargetType="{x:Type Button}"
            BasedOn="{StaticResource MetroBaseWindowButtonStyle}">
@@ -294,10 +296,53 @@
                 Value="0" />
     </Style>
 
+    <!-- light button style for min, max and close window buttons -->
+    <Style x:Key="LightMetroWindowButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource BaseMetroWindowButtonStyle}">
+        <Setter Property="FocusVisualStyle"
+                Value="{x:Null}" />
+        <Setter Property="IsTabStop"
+                Value="False" />
+        <Setter Property="Width"
+                Value="34" />
+        <Setter Property="MaxHeight"
+                Value="34" />
+        <Setter Property="Padding"
+                Value="0" />
+    </Style>
+
+    <!-- dark button style for min, max and close window buttons -->
+    <Style x:Key="DarkMetroWindowButtonStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource LightMetroWindowButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{DynamicResource SemiTransparentGreyBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Foreground" 
+                        Value="White" />
+                <Setter Property="Background"
+                        Value="{DynamicResource AccentColorBrush}" />
+            </Trigger>
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource DarkIdealForegroundDisabledBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- style for default button -->
     <Style TargetType="{x:Type Button}"
            x:Key="MetroButton">
-        <Setter Property="Controls:ButtonHelper.CornerRadius"
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
+                Value="Upper" />
+        <Setter Property="Controls:ControlsHelper.CornerRadius"
                 Value="3" />
         <Setter Property="MinHeight"
                 Value="25" />
@@ -323,40 +368,32 @@
                     <Grid>
                         <Border x:Name="Background"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <Border x:Name="Border"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{x:Null}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <Border x:Name="DisabledVisualElement"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Background="{DynamicResource ControlsDisabledBrush}"
-                                IsHitTestVisible="false"
+                                IsHitTestVisible="False"
                                 Opacity="0"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
-                        <ContentPresenter x:Name="contentPresenter"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          RecognizesAccessKey="True"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
+                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="False">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="True">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger >
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter TargetName="Background"
@@ -383,7 +420,7 @@
                             <Setter TargetName="DisabledVisualElement"
                                     Property="Opacity"
                                     Value="0.7" />
-                            <Setter TargetName="contentPresenter"
+                            <Setter TargetName="PART_ContentPresenter"
                                     Property="Opacity"
                                     Value="0.3" />
                         </Trigger>
@@ -395,6 +432,8 @@
 
     <Style x:Key="SquareButtonStyle"
            TargetType="{x:Type Button}">
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
+                Value="Lower" />
         <Setter Property="MinHeight"
                 Value="25" />
         <Setter Property="FontFamily"
@@ -428,7 +467,7 @@
                                                                   Value="0.7" />
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="contentPresenter">
+                                                                       Storyboard.TargetName="PART_ContentPresenter">
                                             <EasingDoubleKeyFrame KeyTime="0"
                                                                   Value="0.3" />
                                         </DoubleAnimationUsingKeyFrames>
@@ -452,31 +491,22 @@
                                 Background="{x:Null}" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
-                                   IsHitTestVisible="false"
+                                   IsHitTestVisible="False"
                                    Opacity="0" />
-                        <ContentPresenter x:Name="contentPresenter"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          RecognizesAccessKey="True"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          OpacityMask="{x:Null}" />
+                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="False">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToLowerConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="True">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
@@ -485,7 +515,7 @@
                                     Value="{DynamicResource BlackBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
-                                 Value="true">
+                                 Value="True">
                             <Setter Property="Background"
                                     Value="{DynamicResource BlackBrush}" />
                             <Setter Property="Foreground"
@@ -528,7 +558,7 @@
                                                                   Value="0.7" />
                                         </DoubleAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="contentPresenter">
+                                                                       Storyboard.TargetName="PART_ContentPresenter">
                                             <EasingDoubleKeyFrame KeyTime="0"
                                                                   Value="0.3" />
                                         </DoubleAnimationUsingKeyFrames>
@@ -552,31 +582,22 @@
                                 Background="{x:Null}" />
                         <Rectangle x:Name="DisabledVisualElement"
                                    Fill="{DynamicResource ControlsDisabledBrush}"
-                                   IsHitTestVisible="false"
+                                   IsHitTestVisible="False"
                                    Opacity="0" />
-                        <ContentPresenter x:Name="contentPresenter"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          RecognizesAccessKey="True"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          OpacityMask="{x:Null}" />
+                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Grid>
 
                     <ControlTemplate.Triggers>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="False">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content, Converter={StaticResource ToLowerConverter}}" />
-                        </Trigger>
-                        <Trigger Property="Controls:ButtonHelper.PreserveTextCase"
-                                 Value="True">
-                            <Setter TargetName="contentPresenter"
-                                    Property="Content"
-                                    Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content}" />
-                        </Trigger>
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
@@ -585,7 +606,7 @@
                                     Value="{DynamicResource IdealForegroundColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed"
-                                 Value="true">
+                                 Value="True">
                             <Setter Property="Background"
                                     Value="{DynamicResource BlackBrush}" />
                             <Setter Property="Foreground"
@@ -605,6 +626,8 @@
                 Value="Transparent" />
         <Setter Property="BorderThickness"
                 Value="2" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource GrayBrush3}" />
         <Setter Property="HorizontalContentAlignment"
                 Value="Center" />
         <Setter Property="Foreground"
@@ -627,9 +650,10 @@
                                  StrokeThickness="0" />
                         <Ellipse x:Name="ellipse"
                                  Margin="4"
-                                 Stroke="#ADADAD"
+                                 Stroke="{TemplateBinding BorderBrush}"
                                  StrokeThickness="{Binding RelativeSource={x:Static RelativeSource.TemplatedParent}, Path=BorderThickness.Left}" />
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           Margin="{TemplateBinding Padding}"
                                           RecognizesAccessKey="True"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
@@ -676,12 +700,15 @@
                                  Value="False">
                             <Setter TargetName="ellipse"
                                     Property="Opacity"
-                                    Value=".5" />
+                                    Value="0.7" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="False">
                             <Setter Property="Foreground"
                                     Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="ellipse"
+                                    Property="Opacity"
+                                    Value="0.3" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -691,7 +718,7 @@
 
     <Style TargetType="ToggleButton"
            x:Key="MetroToggleButton">
-        <Setter Property="Controls:ButtonHelper.CornerRadius"
+        <Setter Property="Controls:ControlsHelper.CornerRadius"
                 Value="3" />
         <Setter Property="Background"
                 Value="{DynamicResource GrayBrush10}" />
@@ -717,26 +744,30 @@
                     <Grid>
                         <Border x:Name="Background"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <Border x:Name="Border"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Background="{x:Null}"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
                         <Border x:Name="DisabledVisualElement"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 Background="{DynamicResource ControlsDisabledBrush}"
-                                IsHitTestVisible="false"
+                                IsHitTestVisible="False"
                                 Opacity="0"
-                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ButtonHelper.CornerRadius), Mode=OneWay}" />
-                        <ContentPresenter x:Name="contentPresenter"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          RecognizesAccessKey="True"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}" />
+                        <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked"
@@ -793,7 +824,7 @@
                             <Setter TargetName="DisabledVisualElement"
                                     Property="Opacity"
                                     Value="0.7" />
-                            <Setter TargetName="contentPresenter"
+                            <Setter TargetName="PART_ContentPresenter"
                                     Property="Opacity"
                                     Value="0.3" />
                         </Trigger>
@@ -885,14 +916,17 @@
                                 <Rectangle x:Name="PressedRectangle"
                                            Fill="{DynamicResource BlackBrush}"
                                            Opacity="0" />
-
-                                <ContentPresenter x:Name="ContentPresenter"
-                                                  TextBlock.Foreground="{TemplateBinding Foreground}"
-                                                  Content="{TemplateBinding Content}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  Margin="{TemplateBinding Padding}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                           Content="{TemplateBinding Content}"
+                                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                           ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                           Padding="{TemplateBinding Padding}"
+                                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                           RecognizesAccessKey="True"
+                                                           ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                             </Grid>
                         </Border>
 
@@ -995,14 +1029,17 @@
                                 <Rectangle x:Name="PressedRectangle"
                                            Fill="White"
                                            Opacity="0" />
-
-                                <ContentPresenter x:Name="ContentPresenter"
-                                                  TextBlock.Foreground="{TemplateBinding Foreground}"
-                                                  Content="{TemplateBinding Content}"
-                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                  Margin="{TemplateBinding Padding}"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                <Controls:ContentControlEx x:Name="PART_ContentPresenter"
+                                                           Content="{TemplateBinding Content}"
+                                                           ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                           ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                           ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                           HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                           Padding="{TemplateBinding Padding}"
+                                                           VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                           RecognizesAccessKey="True"
+                                                           ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
                             </Grid>
                         </Border>
 
@@ -1033,4 +1070,81 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="ButtonDropDownStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+        <Setter Property="Background"
+                Value="{DynamicResource WhiteColorBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource BlackColorBrush}" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Padding"
+                Value="2" />
+        <Setter Property="SnapsToDevicePixels"
+                Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Border"
+                            CornerRadius="0"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused"
+                                 Value="True">
+                            <Setter TargetName="Border"
+                                    Property="BorderBrush"
+                                    Value="Transparent" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush8}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush6}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Border"
+                                    Property="Background"
+                                    Value="{DynamicResource GrayBrush10}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ButtonSplitStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource ButtonDropDownStyle}">
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalAlignment"
+                Value="Stretch" />
+    </Style>
+    <Style x:Key="ButtonSplitArrowStyle"
+           TargetType="{x:Type Button}"
+           BasedOn="{StaticResource ButtonSplitStyle}">
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+    </Style>
+
 </ResourceDictionary>

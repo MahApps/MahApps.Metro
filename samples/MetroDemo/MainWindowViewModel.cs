@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel;
+using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -10,6 +13,7 @@ using MetroDemo.Models;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using MetroDemo.ExampleViews;
 
 namespace MetroDemo
 {
@@ -46,11 +50,13 @@ namespace MetroDemo
 
     public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
+        private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
         private bool _animateOnPositionChange = true;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IDialogCoordinator dialogCoordinator)
         {
+            _dialogCoordinator = dialogCoordinator;
             SampleData.Seed();
 
             // create accent color menu items for the demo
@@ -83,6 +89,8 @@ namespace MetroDemo
 
 
             BrushResources = FindBrushResources();
+
+            CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).ToList();
         }
 
         public string Title { get; set; }
@@ -91,6 +99,7 @@ namespace MetroDemo
         public List<Artist> Artists { get; set; }
         public List<AccentColorMenuData> AccentColors { get; set; }
         public List<AppThemeMenuData> AppThemes { get; set; }
+        public List<CultureInfo> CultureInfos { get; set; }
 
         public int? IntegerGreater10Property
         {
@@ -254,6 +263,111 @@ namespace MetroDemo
         public ICommand NeverCloseTabCommand
         {
             get { return this.neverCloseTabCommand ?? (this.neverCloseTabCommand = new SimpleCommand { CanExecuteDelegate = x => false }); }
+        }
+
+
+        private ICommand showInputDialogCommand;
+
+        public ICommand ShowInputDialogCommand
+        {
+            get
+            {
+                return this.showInputDialogCommand ?? (this.showInputDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x =>
+                    {
+                        _dialogCoordinator.ShowInputAsync(this, "From a VM", "This dialog was shown from a VM, without knowledge of Window").ContinueWith(t => Console.WriteLine(t.Result));
+                    }
+                });
+            }
+        }
+
+        private ICommand showLoginDialogCommand;
+
+        public ICommand ShowLoginDialogCommand
+        {
+            get
+            {
+                return this.showLoginDialogCommand ?? (this.showLoginDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x =>
+                    {
+                        _dialogCoordinator.ShowLoginAsync(this, "Login from a VM", "This login dialog was shown from a VM, so you can be all MVVM.").ContinueWith(t => Console.WriteLine(t.Result));
+                    }
+                });
+            }
+        }
+
+        private ICommand showMessageDialogCommand;
+
+        public ICommand ShowMessageDialogCommand
+        {
+            get
+            {
+                return this.showMessageDialogCommand ?? (this.showMessageDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x =>
+                    {
+                        _dialogCoordinator.ShowMessageAsync(this, "Message from VM", "MVVM based messages!").ContinueWith(t => Console.WriteLine(t.Result));
+                    }
+                });
+            }
+        }
+
+        private ICommand showProgressDialogCommand;
+
+        public ICommand ShowProgressDialogCommand
+        {
+            get
+            {
+                return this.showProgressDialogCommand ?? (this.showProgressDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x => RunProgressFromVm()
+                });
+            }
+        }
+
+        private async void RunProgressFromVm()
+        {
+            var controller = await _dialogCoordinator.ShowProgressAsync(this, "Progress from VM", "Progressing all the things, wait 3 seconds");
+            controller.SetIndeterminate();
+
+            await TaskEx.Delay(3000);
+
+            await controller.CloseAsync();
+        }
+        
+
+        private ICommand showCustomDialogCommand;
+
+        public ICommand ShowCustomDialogCommand
+        {
+            get
+            {
+                return this.showCustomDialogCommand ?? (this.showCustomDialogCommand = new SimpleCommand
+                {
+                    CanExecuteDelegate = x => true,
+                    ExecuteDelegate = x => RunCustomFromVm()                    
+                });
+            }
+        }
+
+        private async void RunCustomFromVm()
+        {
+            var customDialog = new CustomDialog() { Title = "Custom Dialog" };
+
+            var customDialogExampleContent = new CustomDialogExampleContent(instance =>
+            {
+                _dialogCoordinator.HideMetroDialogAsync(this, customDialog);
+                System.Diagnostics.Debug.WriteLine(instance.FirstName);
+            });
+            customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent};            
+
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
         }
 
         public IEnumerable<string> BrushResources { get; private set; }

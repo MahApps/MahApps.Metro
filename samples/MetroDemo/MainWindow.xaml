@@ -15,12 +15,20 @@
                       ShowTitleBar="True"
                       WindowStartupLocation="CenterScreen"
                       GlowBrush="{DynamicResource AccentColorBrush}"
-                      NonActiveGlowBrush="Red"
+                      NonActiveGlowBrush="#CDFF0000"
                       mc:Ignorable="d"
                       d:DesignHeight="600"
                       d:DesignWidth="800"
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
-                      Closing="MetroWindow_Closing">
+                      Closing="MetroWindow_Closing"                      
+                      Dialog:DialogParticipation.Register="{Binding}">    
+    <!-- 
+    if using DialogParticipation on Windows which open/close frequently you will get a
+    memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded 
+    event, as so:
+       
+        DialogParticipation.SetRegister(this, null);
+    -->    
 
     <Window.Resources>
         <ResourceDictionary>
@@ -65,9 +73,23 @@
             </Style>
 
             <Dialog:CustomDialog x:Key="CustomDialogTest"
-                                 Title="This dialog allows arbitrary content. It will close in 5 seconds."
+                                 Title="This dialog allows arbitrary content."
                                  x:Name="CustomTestDialog">
-                <TextBlock Height="30" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentBrush}" />
+                <TextBlock Height="200" x:Name="MessageTextBlock" Text="{Binding Artists[0].Name}" Foreground="{DynamicResource AccentColorBrush}" />
+            </Dialog:CustomDialog>
+
+            <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
+                                 Title="Custom Dialog which is awaitable"
+                                 x:Name="CustomCloseDialogTest">
+                
+                <StackPanel>
+                    <TextBlock Height="30" Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below." 
+                               TextWrapping="Wrap"
+                               Foreground="{DynamicResource AccentColorBrush}" />
+                    <Button Content="Close Me!" Click="CloseCustomDialog"/>
+                </StackPanel>
+
+                
             </Dialog:CustomDialog>
 
         </ResourceDictionary>
@@ -90,7 +112,7 @@
     </Controls:MetroWindow.LeftWindowCommands>
 
     <Controls:MetroWindow.RightWindowCommands>
-        <Controls:WindowCommands>
+        <Controls:WindowCommands ShowLastSeparator="False">
             <Button Click="LaunchSizeToContentDemo"
                     ToolTip="SizeToContent demo"
                     Content="STC" />
@@ -144,12 +166,17 @@
                 <MenuItem Header="Dialogs">
                     <MenuItem Header="Use Accent?"
                               x:Name="UseAccentForDialogsMenuItem"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=UseAccentForDialogs}"
                               IsCheckable="True" />
                     <Separator />
                     <MenuItem Click="ShowInputDialog"
                               Header="Show InputDialog" />
                     <MenuItem Click="ShowLoginDialog"
                               Header="Show LoginDialog" />
+                    <MenuItem Click="ShowLoginDialogPasswordPreview"
+                              Header="Show Password Preview LoginDialog" />
+                    <MenuItem Click="ShowLoginDialogOnlyPassword"
+                              Header="Show LoginDialog (Only Password)" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
                     <MenuItem Click="ShowLimitedMessageDialog"
@@ -160,8 +187,23 @@
                               Header="Show CustomDialog" />
                     <MenuItem Click="ShowDialogOutside"
                               Header="Show CustomDialog Externally" />
+                    <MenuItem Click="ShowAwaitCustomDialog"
+                              Header="Await CustomDialog" />
+                    <Separator />
+                    <MenuItem Command="{Binding ShowInputDialogCommand}"
+                              Header="Show InputDialog via VM" />
+                    <MenuItem Command="{Binding ShowLoginDialogCommand}"
+                              Header="Show LoginDialog via VM" />
+                    <MenuItem Command="{Binding ShowMessageDialogCommand}"
+                              Header="Show MessageDialog via VM" />
+                    <MenuItem Command="{Binding ShowProgressDialogCommand}"
+                              Header="Show ProgressDialog via VM" />
+                    <MenuItem Command="{Binding ShowCustomDialogCommand}"
+                              Header="Show CustomDialog via VM" />
                 </MenuItem>
                 <MenuItem Header="Window">
+                    <MenuItem IsCheckable="True" Header="ShowInTaskbar"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=ShowInTaskbar}" />
                     <MenuItem IsCheckable="True" Header="Topmost"
                               IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=Topmost}" />
                     <MenuItem IsCheckable="True" Header="Ignore taskbar on maximize"
@@ -172,6 +214,12 @@
                     <MenuItem Header="Window with a Border" Click="MenuWindowWithBorderOnClick" />
                     <MenuItem Header="Window with a Glow" Click="MenuWindowWithGlowOnClick" />
                     <MenuItem Header="Window with drop shadow" Click="MenuWindowWithShadowOnClick" />
+                    <Separator />
+                    <MenuItem IsCheckable="True" Header="ShowSeparators (RightWindowCommands)" x:Name="ShowSeparatorsMI"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowSeparators}" />
+                    <MenuItem IsCheckable="True" Header="ShowLastSeparator in (RightWindowCommands)"
+                              IsEnabled="{Binding ElementName=ShowSeparatorsMI, Path=IsChecked, Mode=OneWay}"
+                              IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}, Path=RightWindowCommands.ShowLastSeparator}" />
                 </MenuItem>
             </Menu>
 
@@ -196,6 +244,9 @@
                 </TabItem>
                 <TabItem Header="datagrid">
                     <exampleViews:DataGridExamples DataContext="{Binding}" />
+                </TabItem>
+                <TabItem Header="tiles">
+                    <exampleViews:TilesExample DataContext="{Binding}" />
                 </TabItem>
                 <TabItem Header="colors">
                     <exampleViews:ColorExample DataContext="{Binding}" />

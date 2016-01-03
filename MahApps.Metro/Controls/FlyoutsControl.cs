@@ -58,6 +58,12 @@ namespace MahApps.Metro.Controls
             this.AttachHandlers((Flyout)element);
         }
 
+        protected override void ClearContainerForItemOverride(DependencyObject element, object item)
+        {
+            ((Flyout) element).CleanUp(this);
+            base.ClearContainerForItemOverride(element, item);
+        }
+
         private void AttachHandlers(Flyout flyout)
         {
             var isOpenNotifier = new PropertyChangeNotifier(flyout, Flyout.IsOpenProperty);

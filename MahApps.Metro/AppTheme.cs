@@ -4,10 +4,15 @@ using System.Windows;
 
 namespace MahApps.Metro
 {
+    internal class AppName
+    {
+        public const string MahApps = "MahApps.Metro";
+    }
+
     /// <summary>
     /// Represents the background theme of the application.
     /// </summary>
-    [DebuggerDisplay("apptheme={Name}, theme={Theme}, res={Resources.Source}")]
+    [DebuggerDisplay("apptheme={Name}, res={Resources.Source}")]
     public class AppTheme
     {
         /// <summary>
@@ -22,11 +27,8 @@ namespace MahApps.Metro
 
         public AppTheme(string name, Uri resourceAddress)
         {
-            if(name == null)
-                throw new ArgumentException("name");
-
-            if(resourceAddress == null)
-                throw new ArgumentNullException("resourceAddress");
+            if (name == null) throw new ArgumentException("name");
+            if (resourceAddress == null) throw new ArgumentNullException("resourceAddress");
 
             this.Name = name;
             this.Resources = new ResourceDictionary {Source = resourceAddress};

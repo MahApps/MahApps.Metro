@@ -32,7 +32,7 @@ namespace Caliburn.Metro.Demo.ViewModels
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            this.DisplayName = "Caliburn.Metro.Demo";
+            this.DisplayName = "Caliburn Metro Demo";
             this.flyouts.Add(new Flyout1ViewModel());
             this.flyouts.Add(new Flyout2ViewModel());
             this.flyouts.Add(new Flyout3ViewModel());

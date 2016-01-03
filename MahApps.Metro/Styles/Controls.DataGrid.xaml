@@ -7,7 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.CheckBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Converters:ToUpperConverter x:Key="ToUpperConverter" />
+    <BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />
 
     <Style x:Key="MetroDataGridCheckBox"
            TargetType="CheckBox"
@@ -116,6 +116,10 @@
 
     <Style x:Key="MetroDataGridColumnHeader"
            TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
+                Value="Upper" />
+        <Setter Property="FontWeight"
+                Value="SemiBold" />
         <Setter Property="SnapsToDevicePixels"
                 Value="True" />
         <Setter Property="MinWidth"
@@ -154,14 +158,17 @@
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}" />
 
-                        <ContentPresenter x:Name="HeaderContent"
-                                          Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Controls:ContentControlEx x:Name="HeaderContent"
+                                                   Content="{TemplateBinding Content}"
+                                                   ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                   ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                   ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                   HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                   Padding="{TemplateBinding Padding}"
+                                                   VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                   RecognizesAccessKey="True"
+                                                   ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ContentCharacterCasing)}" />
 
                         <Path x:Name="SortArrow"
                               Visibility="Collapsed"
@@ -241,14 +248,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <TextBlock FontWeight="SemiBold"
-                               Text="{Binding Converter={StaticResource ToUpperConverter}}" />
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
     <Style x:Key="MetroDataGridRowHeader"
@@ -275,9 +274,15 @@
                                 Padding="{TemplateBinding Padding}"
                                 Margin="{TemplateBinding Margin}"
                                 SnapsToDevicePixels="True">
-                            <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <ContentPresenter RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                                <Control SnapsToDevicePixels="false"
+                                         Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
+                                         Visibility="{Binding (Validation.HasError), Converter={StaticResource bool2VisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
+                            </StackPanel>
                         </Border>
                         <Thumb x:Name="PART_TopHeaderGripper"
                                VerticalContentAlignment="Top"
@@ -307,8 +312,6 @@
            TargetType="{x:Type DataGridCell}">
         <Setter Property="Controls:DataGridCellHelper.SaveDataGrid"
                 Value="True" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
@@ -340,138 +343,288 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
+
+            <!-- IsSelected -->
             <Trigger Property="IsSelected"
                      Value="True">
                 <Setter Property="Foreground"
-                        Value="{DynamicResource AccentSelectedColorBrush}" />
+                        Value="{DynamicResource MetroDataGrid.HighlightTextBrush}" />
             </Trigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
-                               Value="True" />
                     <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
                                Value="Cell" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
-                        Value="{DynamicResource AccentColorBrush}" />
+                        Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
-                               Value="True" />
-                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
-                               Value="False" />
                     <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
                                Value="CellOrRowHeader" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
-                        Value="{DynamicResource AccentColorBrush}" />
+                        Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
             </MultiDataTrigger>
+
+            <!-- IsKeyboardFocusWithin -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
-                               Value="True" />
                     <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
                                Value="Cell" />
+                    <Condition Binding="{Binding Path=IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
                 </MultiDataTrigger.Conditions>
-                <Setter Property="Background"
-                        Value="{DynamicResource AccentColorBrush3}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.FocusBorderBrush}" />
             </MultiDataTrigger>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
-                               Value="True" />
-                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
-                               Value="False" />
                     <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
                                Value="CellOrRowHeader" />
+                    <Condition Binding="{Binding Path=IsKeyboardFocusWithin, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.FocusBorderBrush}" />
+            </MultiDataTrigger>
+
+            <!-- IsSelected and Selector.IsSelectionActive -->
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsSelected"
+                               Value="true" />
+                    <Condition Property="Selector.IsSelectionActive"
+                               Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Foreground"
+                        Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightTextBrush}" />
+            </MultiTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
+                               Value="Cell" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
+                    <Condition Binding="{Binding Path=(Selector.IsSelectionActive), RelativeSource={RelativeSource Self}}"
+                               Value="false" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
-                        Value="{DynamicResource AccentColorBrush3}" />
+                        Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
             </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
+                               Value="CellOrRowHeader" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
+                    <Condition Binding="{Binding Path=(Selector.IsSelectionActive), RelativeSource={RelativeSource Self}}"
+                               Value="false" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
+            </MultiDataTrigger>
+
+            <!-- IsMouseOver -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
+                               Value="Cell" />
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
+                               Value="CellOrRowHeader" />
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
+            </MultiDataTrigger>
+
+            <!-- IsEnabled -->
             <Trigger Property="IsEnabled"
                      Value="False">
                 <Setter Property="Foreground"
-                        Value="{DynamicResource GrayBrush7}" />
+                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
             </Trigger>
+
+            <!-- IsEnabled and IsSelected -->
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsEnabled"
-                               Value="False" />
+                               Value="false" />
                     <Condition Property="IsSelected"
-                               Value="True" />
+                               Value="true" />
                 </MultiTrigger.Conditions>
                 <Setter Property="Foreground"
-                        Value="{DynamicResource AccentSelectedColorBrush}" />
+                        Value="{DynamicResource MetroDataGrid.HighlightTextBrush}" />
             </MultiTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
+                               Value="Cell" />
+                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}"
+                               Value="false" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(Controls:DataGridCellHelper.DataGrid).SelectionUnit, RelativeSource={RelativeSource Self}}"
+                               Value="CellOrRowHeader" />
+                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}"
+                               Value="false" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
+            </MultiDataTrigger>
+
         </Style.Triggers>
     </Style>
+
+    <ControlTemplate x:Key="DefaultRowValidationErrorTemplate">
+        <Grid VerticalAlignment="Center"
+              Margin="2 0 2 0"
+              DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}}, Path=(Validation.Errors).CurrentItem}"
+              ToolTip="{Binding RelativeSource={RelativeSource Self}, Path=DataContext.ErrorContent}">
+            <Path Height="20"
+                  Width="20"
+                  Stretch="Uniform"
+                  Fill="{DynamicResource ControlsValidationBrush}"
+                  Data="m 31.630585,39.233818 24.6309,-24.6308 c 0.6183,-0.6184 1.6208,-0.6184 2.2392,0 l 24.6308,24.6308 c 0.6184,0.6184 0.6184,1.6209 0,2.2392 l -24.6308,24.6309 c -0.6183,0.6183 -1.6209,0.6183 -2.2392,0 l -24.6309,-24.6309 c -0.6183,-0.6183 -0.6183,-1.6208 0,-2.2392 z" />
+            <Path Height="10"
+                  Width="10"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Stretch="Uniform"
+                  Fill="{DynamicResource ValidationTextBrush}"
+                  Data="m 53.781741,31.196677 c -2.237724,0 -4.0625,1.824776 -4.0625,4.0625 0,2.237724 1.824776,4.0625 4.0625,4.0625 2.237724,0 4.0625,-1.824776 4.0625,-4.0625 0,-2.237724 -1.824776,-4.0625 -4.0625,-4.0625 z m -4.09375,-21.375 0.03125,0.53125 1.21875,19.46875 5.6875,0 1.25,-20 -8.1875,0 z" />
+        </Grid>
+    </ControlTemplate>
 
     <!--____________________ Metro RowStyle ____________________-->
     <!-- Don't set the MinHeight or Height property, use the MinRowHeight or RowHeight property on DataGrid style! -->
     <Style x:Key="MetroDataGridRow"
            TargetType="{x:Type DataGridRow}">
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Controls:DataGridRowHelper.SelectionUnit"
+                Value="{Binding Path=SelectionUnit, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
         <Setter Property="Margin"
                 Value="0,0,0,0" />
+        <Setter Property="Validation.ErrorTemplate"
+                Value="{x:Null}" />
+        <Setter Property="ValidationErrorTemplate"
+                Value="{StaticResource DefaultRowValidationErrorTemplate}" />
         <Style.Triggers>
-            <Trigger Property="IsSelected"
-                     Value="True">
-                <Setter Property="Background"
-                        Value="{DynamicResource AccentColorBrush}" />
-                <Setter Property="Foreground"
-                        Value="{DynamicResource AccentSelectedColorBrush}" />
-            </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsSelected"
-                               Value="True" />
-                    <Condition Property="Selector.IsSelectionActive"
-                               Value="True" />
-                </MultiTrigger.Conditions>
-                <Setter Property="Background"
-                        Value="{DynamicResource AccentColorBrush2}" />
-            </MultiTrigger>
+
+            <!-- IsSelected -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
-                               Value="True" />
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
                                Value="FullRow" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
-                        Value="{DynamicResource AccentColorBrush3}" />
+                        Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource MetroDataGrid.HighlightTextBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.HighlightBrush}" />
             </MultiDataTrigger>
+
+            <!-- IsSelected and Selector.IsSelectionActive -->
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
-                               Value="True" />
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
+                               Value="FullRow" />
                     <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
-                               Value="True" />
-                    <Condition Binding="{Binding Path=SelectionUnit, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
-                               Value="CellOrRowHeader" />
+                               Value="true" />
+                    <Condition Binding="{Binding Path=(Selector.IsSelectionActive), RelativeSource={RelativeSource Self}}"
+                               Value="false" />
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
-                        Value="{DynamicResource AccentColorBrush3}" />
+                        Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightBrush}" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource MetroDataGrid.InactiveSelectionHighlightTextBrush}" />
             </MultiDataTrigger>
-            <Trigger Property="IsEnabled"
-                     Value="False">
-                <Setter Property="Foreground"
-                        Value="{DynamicResource GrayBrush7}" />
-            </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsEnabled"
-                               Value="False" />
-                    <Condition Property="IsSelected"
-                               Value="True" />
-                </MultiTrigger.Conditions>
+
+            <!-- IsMouseOver -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
+                               Value="FullRow" />
+                    <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Background"
-                        Value="{DynamicResource GrayBrush7}" />
+                        Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.MouseOverHighlightBrush}" />
+            </MultiDataTrigger>
+
+            <!-- IsEnabled -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
+                               Value="FullRow" />
+                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}"
+                               Value="false" />
+                </MultiDataTrigger.Conditions>
                 <Setter Property="Foreground"
-                        Value="{DynamicResource AccentSelectedColorBrush}" />
-            </MultiTrigger>
+                        Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+            </MultiDataTrigger>
+
+            <!-- IsEnabled and IsSelected -->
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding Path=(Controls:DataGridRowHelper.SelectionUnit), RelativeSource={RelativeSource Self}}"
+                               Value="FullRow" />
+                    <Condition Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}"
+                               Value="false" />
+                    <Condition Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource Self}}"
+                               Value="true" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Foreground"
+                        Value="{DynamicResource MetroDataGrid.HighlightTextBrush}" />
+                <Setter Property="Background"
+                        Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
+                <Setter Property="BorderBrush"
+                        Value="{DynamicResource MetroDataGrid.DisabledHighlightBrush}" />
+            </MultiDataTrigger>
+
         </Style.Triggers>
     </Style>
 
@@ -651,26 +804,6 @@
                 <Setter Property="Background"
                         Value="{DynamicResource AccentColorBrush2}" />
             </MultiDataTrigger>
-            <Trigger Property="IsSelected"
-                     Value="True">
-                <Setter Property="Foreground"
-                        Value="{DynamicResource AccentSelectedColorBrush}" />
-            </Trigger>
-            <Trigger Property="IsEnabled"
-                     Value="False">
-                <Setter Property="Foreground"
-                        Value="{DynamicResource GrayBrush7}" />
-            </Trigger>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsEnabled"
-                               Value="False" />
-                    <Condition Property="IsSelected"
-                               Value="True" />
-                </MultiTrigger.Conditions>
-                <Setter Property="Foreground"
-                        Value="{DynamicResource AccentSelectedColorBrush}" />
-            </MultiTrigger>
         </Style.Triggers>
     </Style>
 

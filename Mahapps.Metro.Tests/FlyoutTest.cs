@@ -148,7 +148,7 @@ namespace MahApps.Metro.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
             window.RightFlyout.IsOpen = true;
 
-            int windowCommandsZIndex = Panel.GetZIndex(window.WindowButtonCommands);
+            int windowCommandsZIndex = Panel.GetZIndex(window.FindChild<WindowButtonCommands>("PART_WindowButtonCommands"));
             int flyoutindex = Panel.GetZIndex(window.RightFlyout);
 
             Assert.True(windowCommandsZIndex > flyoutindex);

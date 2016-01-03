@@ -10,22 +10,32 @@ namespace MahApps.Metro.Controls.Dialogs
         private const string DefaultUsernameWatermark = "Username...";
         private const string DefaultPasswordWatermark = "Password...";
         private const Visibility DefaultNegativeButtonVisibility = Visibility.Collapsed;
+        private const bool DefaultShouldHideUsername = false;
+        private const bool DefaultEnablePasswordPreview = false;
 
         public LoginDialogSettings()
         {
             UsernameWatermark = DefaultUsernameWatermark;
             PasswordWatermark = DefaultPasswordWatermark;
             NegativeButtonVisibility = DefaultNegativeButtonVisibility;
+            ShouldHideUsername = DefaultShouldHideUsername;
             AffirmativeButtonText = "Login";
+            EnablePasswordPreview = DefaultEnablePasswordPreview;
         }
 
         public string InitialUsername { get; set; }
 
+        public string InitialPassword { get; set; }
+
         public string UsernameWatermark { get; set; }
+
+        public bool ShouldHideUsername { get; set; }
 
         public string PasswordWatermark { get; set; }
 
         public Visibility NegativeButtonVisibility { get; set; }
+
+        public bool EnablePasswordPreview { get; set; }
     }
 
     public class LoginDialogData
@@ -46,17 +56,19 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             InitializeComponent();
             Username = settings.InitialUsername;
+            Password = settings.InitialPassword;
             UsernameWatermark = settings.UsernameWatermark;
             PasswordWatermark = settings.PasswordWatermark;
             NegativeButtonButtonVisibility = settings.NegativeButtonVisibility;
+            ShouldHideUsername = settings.ShouldHideUsername;
         }
 
         internal Task<LoginDialogData> WaitForButtonPressAsync()
         {
-            Dispatcher.BeginInvoke(new Action(() => 
+            Dispatcher.BeginInvoke(new Action(() =>
             {
                 this.Focus();
-                if (string.IsNullOrEmpty(PART_TextBox.Text))
+                if (string.IsNullOrEmpty(PART_TextBox.Text) && !ShouldHideUsername)
                 {
                     PART_TextBox.Focus();
                 }
@@ -76,7 +88,15 @@ namespace MahApps.Metro.Controls.Dialogs
 
             KeyEventHandler escapeKeyHandler = null;
 
-            Action cleanUpHandlers = () => {
+            Action cleanUpHandlers = null;
+
+            var cancellationTokenRegistration = DialogSettings.CancellationToken.Register(() =>
+            {
+                cleanUpHandlers();
+                tcs.TrySetResult(null);
+            });
+
+            cleanUpHandlers = () => {
                 PART_TextBox.KeyDown -= affirmativeKeyHandler;
                 PART_TextBox2.KeyDown -= affirmativeKeyHandler;
 
@@ -87,9 +107,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
                 PART_NegativeButton.KeyDown -= negativeKeyHandler;
                 PART_AffirmativeButton.KeyDown -= affirmativeKeyHandler;
+
+                cancellationTokenRegistration.Dispose();
             };
 
-            escapeKeyHandler = (sender, e) => 
+            escapeKeyHandler = (sender, e) =>
             {
                 if (e.Key == Key.Escape)
                 {
@@ -99,7 +121,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
             };
 
-            negativeKeyHandler = (sender, e) => 
+            negativeKeyHandler = (sender, e) =>
             {
                 if (e.Key == Key.Enter)
                 {
@@ -109,7 +131,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
             };
 
-            affirmativeKeyHandler = (sender, e) => 
+            affirmativeKeyHandler = (sender, e) =>
             {
                 if (e.Key == Key.Enter)
                 {
@@ -118,7 +140,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 }
             };
 
-            negativeHandler = (sender, e) => 
+            negativeHandler = (sender, e) =>
             {
                 cleanUpHandlers();
 
@@ -127,7 +149,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 e.Handled = true;
             };
 
-            affirmativeHandler = (sender, e) => 
+            affirmativeHandler = (sender, e) =>
             {
                 cleanUpHandlers();
 
@@ -150,8 +172,18 @@ namespace MahApps.Metro.Controls.Dialogs
             return tcs.Task;
         }
 
-        private void Dialog_Loaded(object sender, RoutedEventArgs e)
+        protected override void OnLoaded()
         {
+            var settings = this.DialogSettings as LoginDialogSettings;
+            if (settings != null && settings.EnablePasswordPreview)
+            {
+                var win8MetroPasswordStyle = this.FindResource("Win8MetroPasswordBox") as Style;
+                if (win8MetroPasswordStyle != null)
+                {
+                    PART_TextBox2.Style = win8MetroPasswordStyle;
+                }
+            }
+
             this.AffirmativeButtonText = this.DialogSettings.AffirmativeButtonText;
             this.NegativeButtonText = this.DialogSettings.NegativeButtonText;
 
@@ -173,6 +205,7 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty AffirmativeButtonTextProperty = DependencyProperty.Register("AffirmativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("OK"));
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("Cancel"));
         public static readonly DependencyProperty NegativeButtonButtonVisibilityProperty = DependencyProperty.Register("NegativeButtonButtonVisibility", typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Collapsed));
+        public static readonly DependencyProperty ShouldHideUsernameProperty = DependencyProperty.Register("ShouldHideUsername", typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
 
         public string Message
         {
@@ -220,6 +253,12 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (Visibility)GetValue(NegativeButtonButtonVisibilityProperty); }
             set { SetValue(NegativeButtonButtonVisibilityProperty, value); }
+        }
+
+        public bool ShouldHideUsername
+        {
+            get { return (bool)GetValue(ShouldHideUsernameProperty); }
+            set { SetValue(ShouldHideUsernameProperty, value); }
         }
     }
 }

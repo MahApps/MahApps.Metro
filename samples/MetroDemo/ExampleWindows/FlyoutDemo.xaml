@@ -6,6 +6,7 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:metroDemo="clr-namespace:MetroDemo"
                       xmlns:exampleWindows="clr-namespace:MetroDemo.ExampleWindows"
+                      xmlns:converters="http://metro.mahapps.com/winfx/xaml/shared"
                       Title="Flyouts Demo"
                       MinWidth="700"
                       Width="700"
@@ -55,7 +56,7 @@
 
     <Controls:MetroWindow.TitleTemplate>
         <DataTemplate>
-            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={StaticResource ToUpperConverter}}"
+            <TextBlock Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Converter={converters:ToUpperConverter}}"
                        TextTrimming="CharacterEllipsis"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Center"
@@ -146,7 +147,8 @@
             <Controls:Flyout Header="New Goodness"
                              Position="Right"
                              AnimateOpacity="True"
-                             Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth, Mode=OneWay}">
+                             Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth, Mode=OneWay}"
+                             CloseButtonIsCancel="True">
                 <StackPanel Orientation="Vertical"
                             Margin="10">
                     <Button Content="create" />

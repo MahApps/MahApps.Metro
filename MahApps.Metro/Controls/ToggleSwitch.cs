@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using MahApps.Metro.Converters;
 
@@ -29,16 +30,34 @@ namespace MahApps.Metro.Controls
         private const string SwitchPart = "Switch";
 
         private ToggleButton _toggleButton;
-        private bool _wasContentSet;
 
         public static readonly DependencyProperty OnLabelProperty = DependencyProperty.Register("OnLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("On"));
         public static readonly DependencyProperty OffLabelProperty = DependencyProperty.Register("OffLabel", typeof(string), typeof(ToggleSwitch), new PropertyMetadata("Off"));
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register("Header", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
         public static readonly DependencyProperty HeaderTemplateProperty = DependencyProperty.Register("HeaderTemplate", typeof(DataTemplate), typeof(ToggleSwitch), new PropertyMetadata(null));
-        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), null);
+
+        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
+        public static readonly DependencyProperty SwitchForegroundProperty = DependencyProperty.Register("SwitchForeground", typeof(Brush), typeof(ToggleSwitch), new PropertyMetadata(null, (o, e) => ((ToggleSwitch)o).OnSwitchBrush = e.NewValue as Brush));
+        public static readonly DependencyProperty OnSwitchBrushProperty = DependencyProperty.Register("OnSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty OffSwitchBrushProperty = DependencyProperty.Register("OffSwitchBrush", typeof(Brush), typeof(ToggleSwitch), null);
+
+        public static readonly DependencyProperty ThumbIndicatorBrushProperty = DependencyProperty.Register("ThumbIndicatorBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty ThumbIndicatorDisabledBrushProperty = DependencyProperty.Register("ThumbIndicatorDisabledBrush", typeof(Brush), typeof(ToggleSwitch), null);
+        public static readonly DependencyProperty ThumbIndicatorWidthProperty = DependencyProperty.Register("ThumbIndicatorWidth", typeof(double), typeof(ToggleSwitch), new PropertyMetadata(13d));
+
         public static readonly DependencyProperty IsCheckedProperty = DependencyProperty.Register("IsChecked", typeof(bool?), typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnIsCheckedChanged));
+
+        public static readonly DependencyProperty CheckChangedCommandProperty = DependencyProperty.Register("CheckChangedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty CheckedCommandProperty = DependencyProperty.Register("CheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty UnCheckedCommandProperty = DependencyProperty.Register("UnCheckedCommand", typeof(ICommand), typeof(ToggleSwitch), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty CheckChangedCommandParameterProperty = DependencyProperty.Register("CheckChangedCommandParameter", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty CheckedCommandParameterProperty = DependencyProperty.Register("CheckedCommandParameter", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+        public static readonly DependencyProperty UnCheckedCommandParameterProperty = DependencyProperty.Register("UnCheckedCommandParameter", typeof(object), typeof(ToggleSwitch), new PropertyMetadata(null));
+
         // LeftToRight means content left and button right and RightToLeft vise versa
         public static readonly DependencyProperty ContentDirectionProperty = DependencyProperty.Register("ContentDirection", typeof(FlowDirection), typeof(ToggleSwitch), new PropertyMetadata(FlowDirection.LeftToRight));
+        public static readonly DependencyProperty ToggleSwitchButtonStyleProperty = DependencyProperty.Register("ToggleSwitchButtonStyle", typeof(Style), typeof(ToggleSwitch), new FrameworkPropertyMetadata(default(Style), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         public event EventHandler<RoutedEventArgs> Checked;
         public event EventHandler<RoutedEventArgs> Unchecked;
@@ -84,21 +103,74 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Gets/sets the brush used for the switch's foreground.
         /// </summary>
+        [Obsolete(@"This property will be deleted in the next release. You should use OnSwitchBrush and OffSwitchBrush to change the switch's brushes.")]
         public Brush SwitchForeground
         {
             get { return (Brush)GetValue(SwitchForegroundProperty); }
-            set
-            {
-                SetValue(SwitchForegroundProperty, value);
-            }
+            set { SetValue(SwitchForegroundProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the on-switch's foreground.
+        /// </summary>
+        public Brush OnSwitchBrush
+        {
+            get { return (Brush)GetValue(OnSwitchBrushProperty); }
+            set { SetValue(OnSwitchBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the off-switch's foreground.
+        /// </summary>
+        public Brush OffSwitchBrush
+        {
+            get { return (Brush)GetValue(OffSwitchBrushProperty); }
+            set { SetValue(OffSwitchBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator.
+        /// </summary>
+        public Brush ThumbIndicatorBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorBrushProperty); }
+            set { SetValue(ThumbIndicatorBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the brush used for the thumb indicator.
+        /// </summary>
+        public Brush ThumbIndicatorDisabledBrush
+        {
+            get { return (Brush)GetValue(ThumbIndicatorDisabledBrushProperty); }
+            set { SetValue(ThumbIndicatorDisabledBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the width of the thumb indicator.
+        /// </summary>
+        public double ThumbIndicatorWidth
+        {
+            get { return (double)GetValue(ThumbIndicatorWidthProperty); }
+            set { SetValue(ThumbIndicatorWidthProperty, value); }
         }
 
         /// <summary>
         /// Gets/sets the control's content flow direction.
         /// </summary>
-        public FlowDirection ContentDirection {
+        public FlowDirection ContentDirection
+        {
             get { return (FlowDirection)GetValue(ContentDirectionProperty); }
             set { SetValue(ContentDirectionProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the control's toggle switch button style.
+        /// </summary>
+        public Style ToggleSwitchButtonStyle
+        {
+            get { return (Style)GetValue(ToggleSwitchButtonStyleProperty); }
+            set { SetValue(ToggleSwitchButtonStyleProperty, value); }
         }
 
         /// <summary>
@@ -109,6 +181,60 @@ namespace MahApps.Metro.Controls
         {
             get { return (bool?)GetValue(IsCheckedProperty); }
             set { SetValue(IsCheckedProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command which will be executed if the IsChecked property was changed.
+        /// </summary>
+        public ICommand CheckChangedCommand
+        {
+            get { return (ICommand)GetValue(CheckChangedCommandProperty); }
+            set { SetValue(CheckChangedCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command which will be executed if the checked event of the control is fired.
+        /// </summary>
+        public ICommand CheckedCommand
+        {
+            get { return (ICommand)GetValue(CheckedCommandProperty); }
+            set { SetValue(CheckedCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command which will be executed if the checked event of the control is fired.
+        /// </summary>
+        public ICommand UnCheckedCommand
+        {
+            get { return (ICommand)GetValue(UnCheckedCommandProperty); }
+            set { SetValue(UnCheckedCommandProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command parameter which will be passed by the CheckChangedCommand.
+        /// </summary>
+        public object CheckChangedCommandParameter
+        {
+            get { return (object)GetValue(CheckChangedCommandParameterProperty); }
+            set { SetValue(CheckChangedCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command parameter which will be passed by the CheckedCommand.
+        /// </summary>
+        public object CheckedCommandParameter
+        {
+            get { return (object)GetValue(CheckedCommandParameterProperty); }
+            set { SetValue(CheckedCommandParameterProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets/sets the command parameter which will be passed by the UnCheckedCommand.
+        /// </summary>
+        public object UnCheckedCommandParameter
+        {
+            get { return (object)GetValue(UnCheckedCommandParameterProperty); }
+            set { SetValue(UnCheckedCommandParameterProperty, value); }
         }
 
         /// <summary>
@@ -124,9 +250,20 @@ namespace MahApps.Metro.Controls
                 var oldValue = (bool?)e.OldValue;
                 var newValue = (bool?)e.NewValue;
 
-                if (oldValue != newValue && toggleSwitch.IsCheckedChanged != null)
+                if (oldValue != newValue)
                 {
-                    toggleSwitch.IsCheckedChanged(toggleSwitch, EventArgs.Empty);
+                    var command = toggleSwitch.CheckChangedCommand;
+                    var commandParameter = toggleSwitch.CheckChangedCommandParameter ?? toggleSwitch;
+                    if (command != null && command.CanExecute(commandParameter))
+                    {
+                        command.Execute(commandParameter);
+                    }
+
+                    var eh = toggleSwitch.IsCheckedChanged;
+                    if (eh != null)
+                    {
+                        eh(toggleSwitch, EventArgs.Empty);
+                    }
                 }
             }
         }
@@ -136,18 +273,13 @@ namespace MahApps.Metro.Controls
             DefaultStyleKey = typeof(ToggleSwitch);
 
             PreviewKeyUp += ToggleSwitch_PreviewKeyUp;
+            MouseUp += (sender, args) => Keyboard.Focus(this);
         }
 
         void ToggleSwitch_PreviewKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Space && e.OriginalSource == sender)
-                IsChecked = !IsChecked;       
-        }
-
-        private void SetDefaultContent()
-        {
-            Binding binding = new Binding("IsChecked") { Source = this, Converter = new OffOnConverter(), ConverterParameter = this };
-            SetBinding(ContentProperty, binding);
+                IsChecked = !IsChecked;
         }
 
         private void ChangeVisualState(bool useTransitions)
@@ -155,20 +287,9 @@ namespace MahApps.Metro.Controls
             VisualStateManager.GoToState(this, IsEnabled ? NormalState : DisabledState, useTransitions);
         }
 
-        protected override void OnContentChanged(object oldContent, object newContent)
-        {
-            base.OnContentChanged(oldContent, newContent);
-            _wasContentSet = true;
-        }
-
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-
-            if (!_wasContentSet && GetBindingExpression(ContentProperty) == null)
-            {
-                SetDefaultContent();
-            }
 
             if (_toggleButton != null)
             {
@@ -179,6 +300,8 @@ namespace MahApps.Metro.Controls
                 BindingOperations.ClearBinding(_toggleButton, ToggleButton.IsCheckedProperty);
 
                 _toggleButton.IsEnabledChanged -= IsEnabledHandler;
+
+                _toggleButton.PreviewMouseUp -= this.ToggleButtonPreviewMouseUp;
             }
             _toggleButton = GetTemplateChild(SwitchPart) as ToggleButton;
             if (_toggleButton != null)
@@ -191,8 +314,15 @@ namespace MahApps.Metro.Controls
                 _toggleButton.SetBinding(ToggleButton.IsCheckedProperty, binding);
 
                 _toggleButton.IsEnabledChanged += IsEnabledHandler;
+
+                _toggleButton.PreviewMouseUp += this.ToggleButtonPreviewMouseUp;
             }
             ChangeVisualState(false);
+        }
+
+        private void ToggleButtonPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Keyboard.Focus(this);
         }
 
         private void IsEnabledHandler(object sender, DependencyPropertyChangedEventArgs e)
@@ -202,11 +332,25 @@ namespace MahApps.Metro.Controls
 
         private void CheckedHandler(object sender, RoutedEventArgs e)
         {
+            var command = this.CheckedCommand;
+            var commandParameter = this.CheckedCommandParameter ?? this;
+            if (command != null && command.CanExecute(commandParameter))
+            {
+                command.Execute(commandParameter);
+            }
+            
             SafeRaise.Raise(Checked, this, e);
         }
 
         private void UncheckedHandler(object sender, RoutedEventArgs e)
         {
+            var command = this.UnCheckedCommand;
+            var commandParameter = this.UnCheckedCommandParameter ?? this;
+            if (command != null && command.CanExecute(commandParameter))
+            {
+                command.Execute(commandParameter);
+            }
+
             SafeRaise.Raise(Unchecked, this, e);
         }
 
