@@ -234,7 +234,7 @@
                 </DockPanel>
             </AdornerDecorator>
             <Thumb Style="{StaticResource WindowTitleThumbStyle}"
-                   Height="{Binding Path=TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                   Height="{Binding Path=TitleBarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
                    VerticalAlignment="Top"
                    x:Name="PART_WindowTitleThumb" />
         </Grid>
