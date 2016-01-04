@@ -176,6 +176,11 @@
 
         protected override void OnSelectedDatesChanged(SelectionChangedEventArgs e)
         {
+            if (e.AddedItems != null)
+            {
+                var dt = ((DateTime)e.AddedItems[0]);
+                SetHourPartValues(dt.TimeOfDay);
+            }
             SetDatePartValues();
         }
 
