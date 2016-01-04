@@ -103,8 +103,7 @@
         <system:Int32>59</system:Int32>
     </x:Array>
 
-    <Style TargetType="{x:Type controls:DateTimePicker}"
-           BasedOn="{StaticResource MetroCalendar}">
+    <Style TargetType="{x:Type controls:DateTimePicker}">
         <Style.Setters>
             <Setter Property="Background"
                     Value="{DynamicResource ControlBackgroundBrush}" />

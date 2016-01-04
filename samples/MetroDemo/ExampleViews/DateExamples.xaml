@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -21,6 +23,7 @@
     <AdornerDecorator>
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
@@ -55,7 +58,31 @@
                 <Calendar Margin="5"
                           IsEnabled="False" />
             </StackPanel>
+            
+            <StackPanel VerticalAlignment="Top"
+                        Grid.Row="0"
+                        Grid.Column="2">
+                <Label Content="DateTimePicker"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+                <Label Content="Language: en: SelectedDate=CurrentTime" />
+                <Controls:DateTimePicker SelectedDate="{Binding Path=CurrentTime}" Language="en" PickerVisibility="All" HandVisibility="All">
+                    <i:Interaction.Behaviors>
+                        <MetroDemo:DateTimeNowBehavior />
+                    </i:Interaction.Behaviors>
+                </Controls:DateTimePicker>
+                <Label Content="Language: de"></Label>
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="de" />
+                <Label Content="Language: ru"></Label>
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="ru" />
+                <Label Content="Language: zh"></Label>
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="zh" />
+                <Label Content="Language: ar"></Label>
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="ar" />
+            </StackPanel>
         </Grid>
     </AdornerDecorator>
 
 </UserControl>
+
+
+
