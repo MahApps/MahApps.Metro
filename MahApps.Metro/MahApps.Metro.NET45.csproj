@@ -132,8 +132,11 @@
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
+    <Compile Include="Controls\AmPmComparer.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
+    <Compile Include="Controls\DatePartVisibility.cs" />
+    <Compile Include="Controls\DateTimePicker.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\DialogParticipation.cs" />
     <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />
@@ -170,6 +173,7 @@
     <Compile Include="Controls\Helper\MouseWheelState.cs" />
     <Compile Include="Controls\Helper\SliderHelper.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
+    <Compile Include="Converters\PartToDegreeConverter.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroNavigationWindow.cs" />
@@ -548,6 +552,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\VS\Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\DateTimePicker.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
