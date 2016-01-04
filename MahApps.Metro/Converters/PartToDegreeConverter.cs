@@ -10,6 +10,10 @@
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value is int)
+            {
+                return 360 / TotalParts * (int)value;
+            }
             return 360 / TotalParts * (double)value;
         }
 

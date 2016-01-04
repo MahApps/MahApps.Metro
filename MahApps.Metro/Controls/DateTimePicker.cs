@@ -170,6 +170,8 @@
 
             SetDefaultTimeOfDayValues();
             SubscribeToEvents();
+
+            SetDatePartValues();
         }
 
         protected override void OnSelectedDatesChanged(SelectionChangedEventArgs e)
