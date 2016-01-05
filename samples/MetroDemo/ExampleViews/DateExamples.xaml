@@ -65,19 +65,19 @@
                 <Label Content="DateTimePicker"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <Label Content="Language: en: SelectedDate=CurrentTime" />
-                <Controls:DateTimePicker SelectedDate="{Binding Path=CurrentTime}" Language="en" PickerVisibility="All" HandVisibility="All">
+                <Controls:DateTimePicker Language="en" PickerVisibility="All" HandVisibility="All" IsReadOnly="True">
                     <i:Interaction.Behaviors>
                         <MetroDemo:DateTimeNowBehavior />
                     </i:Interaction.Behaviors>
                 </Controls:DateTimePicker>
-                <Label Content="Language: de"></Label>
+                <Label Content="Language: de" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="de" />
-                <Label Content="Language: ru"></Label>
+                <Label Content="Language: ru" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="ru" />
-                <Label Content="Language: zh"></Label>
-                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="zh" />
-                <Label Content="Language: ar"></Label>
-                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="ar" />
+                <Label Content="Language: zh (IsEnabled=false)" />
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="zh" IsEnabled="False"/>
+                <Label Content="Language: ar (IsReadOnly=true)" />
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="ar" IsReadOnly="True"/>
             </StackPanel>
         </Grid>
     </AdornerDecorator>
