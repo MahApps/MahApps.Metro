@@ -4,9 +4,9 @@
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:converters1="clr-namespace:MahApps.Metro.Converters">
     <converters1:ClockDegreeConverter x:Key="ClockDegreeConverter"
-                                    TotalParts="60" />
+                                      TotalParts="60" />
     <converters1:ClockDegreeConverter x:Key="HourDegreeConverter"
-                                    TotalParts="12" />
+                                      TotalParts="12" />
 
     <DataTemplate x:Key="FiveMinuteIndicator">
         <StackPanel Orientation="Horizontal"
@@ -21,6 +21,7 @@
                        Fill="{DynamicResource AccentColorBrush3}" />
         </StackPanel>
     </DataTemplate>
+    
     <DataTemplate x:Key="MinuteIndicator">
         <StackPanel Orientation="Horizontal"
                     Height="57"
@@ -210,12 +211,12 @@
                                                     <RowDefinition Height="*" />
                                                 </Grid.RowDefinitions>
                                                 <Calendar x:Name="PART_Calendar"
-                                                              Grid.RowSpan="2"
-                                                              BorderBrush="Transparent"
-                                                              SelectionMode="SingleDate"
-                                                              Margin="2,0"
-                                                              Language="{TemplateBinding Language}"
-                                                              Background="{TemplateBinding Background}"/>
+                                                          Grid.RowSpan="2"
+                                                          BorderBrush="Transparent"
+                                                          SelectionMode="SingleDate"
+                                                          Margin="2,0"
+                                                          Language="{TemplateBinding Language}"
+                                                          Background="{TemplateBinding Background}" />
                                                 <Border Margin="0,5,5,0"
                                                         Grid.Row="0"
                                                         Grid.Column="1"
@@ -360,11 +361,11 @@
                             </Trigger>
                             <Trigger Property="IsReadOnly"
                                      Value="True">
-                                <Setter TargetName="PART_Calendar" 
-                                        Property="IsHitTestVisible" 
+                                <Setter TargetName="PART_Calendar"
+                                        Property="IsHitTestVisible"
                                         Value="False" />
-                                <Setter TargetName="PART_ClockPartSelectorsHolder" 
-                                        Property="IsHitTestVisible" 
+                                <Setter TargetName="PART_ClockPartSelectorsHolder"
+                                        Property="IsHitTestVisible"
                                         Value="False" />
                             </Trigger>
                             <Trigger SourceName="PART_Button"

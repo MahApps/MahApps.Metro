@@ -59,31 +59,35 @@
                 <Calendar Margin="5"
                           IsEnabled="False" />
             </StackPanel>
-            
+
             <StackPanel VerticalAlignment="Top"
                         Grid.Row="0"
                         Grid.Column="2">
                 <Label Content="DateTimePicker"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <Label Content="Language: en: SelectedDate=CurrentTime" />
-                <Controls:DateTimePicker Language="en" PickerVisibility="All" HandVisibility="All" IsReadOnly="True">
+                <Controls:DateTimePicker Language="en"
+                                         PickerVisibility="All"
+                                         HandVisibility="All"
+                                         IsReadOnly="True">
                     <i:Interaction.Behaviors>
                         <behaviors:DateTimeNowBehavior />
                     </i:Interaction.Behaviors>
                 </Controls:DateTimePicker>
                 <Label Content="Language: de" />
-                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="de" />
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
+                                         Language="de" />
                 <Label Content="Language: ru" />
-                <Controls:DateTimePicker Language="ru" DisplayDateStart="{x:Static system:DateTime.Now}" />
+                <Controls:DateTimePicker Language="ru"
+                                         DisplayDateStart="{x:Static system:DateTime.Now}" />
                 <Label Content="Language: zh (IsEnabled=false)" />
-                <Controls:DateTimePicker Language="zh" IsEnabled="False"/>
+                <Controls:DateTimePicker Language="zh"
+                                         IsEnabled="False" />
                 <Label Content="Language: ar (IsReadOnly=true)" />
-                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}" Language="ar" IsReadOnly="True"/>
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
+                                         Language="ar"
+                                         IsReadOnly="True" />
             </StackPanel>
         </Grid>
     </AdornerDecorator>
-
 </UserControl>
-
-
-
