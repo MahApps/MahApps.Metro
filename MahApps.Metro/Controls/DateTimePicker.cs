@@ -31,8 +31,8 @@
             typeof(DatePartVisibility),
             typeof(DateTimePicker),
             new PropertyMetadata(DatePartVisibility.All, OnPickerVisibilityChanged));
-        public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
@@ -47,6 +47,7 @@
             typeof(ICollection<int>),
             typeof(DateTimePicker),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 24).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
+        public static readonly RoutedEvent SelectedDateChangedEvent = DatePicker.SelectedDateChangedEvent.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
             typeof(ICollection<int>),
@@ -85,6 +86,12 @@
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
+        }
+
+        public event EventHandler<SelectionChangedEventArgs> SelectedDateChanged
+        {
+            add { AddHandler(SelectedDateChangedEvent, value); }
+            remove { RemoveHandler(SelectedDateChangedEvent, value); }
         }
 
         public DateTime? DisplayDate
@@ -239,6 +246,11 @@
             SetDefaultTimeOfDayValues();
             SubscribeToEvents();
             SetDatePartValues();
+        }
+
+        protected virtual void OnSelectedDateChanged()
+        {
+            RaiseEvent(new RoutedEventArgs(SelectedDateChangedEvent));
         }
 
         private static object CoerceSourceHours(DependencyObject d, object basevalue)
@@ -412,6 +424,7 @@
                 SetDefaultTimeOfDayValues();
             }
             SetDatePartValues();
+            OnSelectedDateChanged();
         }
 
         private void OnSelectedDatesChanged(object sender, SelectionChangedEventArgs e)
