@@ -107,6 +107,7 @@
     <Compile Include="ExampleViews\CustomDialogExample.xaml.cs">
       <DependentUpon>CustomDialogExample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Behaviors\DateTimeNowBehavior.cs" />
     <Compile Include="ExampleViews\TilesExample.xaml.cs">
       <DependentUpon>TilesExample.xaml</DependentUpon>
     </Compile>
