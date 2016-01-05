@@ -21,33 +21,33 @@
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
     public class DateTimePicker : Control
     {
+        public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty HandVisibilityProperty = DependencyProperty.Register(
             "HandVisibility",
             typeof(DatePartVisibility),
             typeof(DateTimePicker),
             new PropertyMetadata(DatePartVisibility.All, OnHandVisibilityChanged));
-        public static readonly DependencyProperty PickerVisibilityProperty = DependencyProperty.Register(
-            "PickerVisibility",
-            typeof(DatePartVisibility),
-            typeof(DateTimePicker),
-            new PropertyMetadata(DatePartVisibility.All, OnPickerVisibilityChanged));
-        public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
-        public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
             "IsReadOnly",
             typeof(bool),
             typeof(DateTimePicker),
             new PropertyMetadata(default(bool)));
         public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty PickerVisibilityProperty = DependencyProperty.Register(
+            "PickerVisibility",
+            typeof(DatePartVisibility),
+            typeof(DateTimePicker),
+            new PropertyMetadata(DatePartVisibility.All, OnPickerVisibilityChanged));
+        public static readonly RoutedEvent SelectedDateChangedEvent = DatePicker.SelectedDateChangedEvent.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new PropertyMetadata(OnSelectedDateChanged));
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
             "SourceHours",
             typeof(ICollection<int>),
             typeof(DateTimePicker),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 24).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
-        public static readonly RoutedEvent SelectedDateChangedEvent = DatePicker.SelectedDateChangedEvent.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
             typeof(ICollection<int>),
