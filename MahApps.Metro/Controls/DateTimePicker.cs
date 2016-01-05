@@ -35,6 +35,11 @@
             typeof(ICollection<int>),
             typeof(DateTimePicker),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 24).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
+            "IsReadOnly", 
+            typeof(bool), 
+            typeof(DateTimePicker), 
+            new PropertyMetadata(default(bool)));
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
             typeof(ICollection<int>),
@@ -89,6 +94,12 @@
             get { return string.IsNullOrEmpty(SpecificCultureInfo.DateTimeFormat.AMDesignator); }
         }
 
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
         /// <summary>
         ///     Gets or sets the visible time-part-selectors.
         /// </summary>
@@ -104,7 +115,8 @@
         ///     Gets or sets the source that is available for selecting the hours.
         /// </summary>
         /// <remarks>
-        ///     The default is a list of interger from 0 to 23 if <see cref="IsMilitaryTime" /> is false or a list of interger from 1 to 12 otherwise.
+        ///     The default is a list of interger from 0 to 23 if <see cref="IsMilitaryTime" /> is false or a list of interger from
+        ///     1 to 12 otherwise.
         /// </remarks>
         [Category("Common")]
         public ICollection<int> SourceHours
@@ -170,7 +182,6 @@
 
             SetDefaultTimeOfDayValues();
             SubscribeToEvents();
-
             SetDatePartValues();
         }
 
@@ -217,7 +228,7 @@
                 selector.SelectedValue = 0;
             }
         }
-        
+
         private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, DatePartVisibility visibility)
         {
             if (partHours != null)

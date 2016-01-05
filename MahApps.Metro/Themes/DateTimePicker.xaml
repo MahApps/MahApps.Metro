@@ -199,6 +199,7 @@
                                            Placement="Bottom"
                                            StaysOpen="False">
                                         <Border BorderThickness="1"
+                                                x:Name="PART_PopupContainer"
                                                 BorderBrush="{DynamicResource ControlBorderBrush}">
                                             <Grid Background="{DynamicResource ControlBackgroundBrush}">
                                                 <Grid.ColumnDefinitions>
@@ -354,6 +355,12 @@
                                 <Setter TargetName="DisabledVisualElement"
                                         Property="Opacity"
                                         Value="0.6" />
+                            </Trigger>
+                            <Trigger Property="IsReadOnly"
+                                     Value="True">
+                                <Setter TargetName="PART_PopupContainer" 
+                                        Property="IsHitTestVisible" 
+                                        Value="False" />
                             </Trigger>
                             <Trigger SourceName="PART_Button"
                                      Property="IsMouseOver"
