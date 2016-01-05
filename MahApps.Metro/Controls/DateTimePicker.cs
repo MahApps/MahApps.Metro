@@ -9,6 +9,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
+    using System.Windows.Data;
 
     [TemplatePart(Name = ElementButton, Type = typeof(Button))]
     [TemplatePart(Name = ElementHourHand, Type = typeof(UIElement))]
@@ -18,7 +19,7 @@
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementHourPicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
-    public class DateTimePicker : System.Windows.Controls.Calendar
+    public class DateTimePicker : Control
     {
         public static readonly DependencyProperty HandVisibilityProperty = DependencyProperty.Register(
             "HandVisibility",
@@ -30,16 +31,22 @@
             typeof(DatePartVisibility),
             typeof(DateTimePicker),
             new PropertyMetadata(DatePartVisibility.All, OnPickerVisibilityChanged));
+        public static readonly DependencyProperty DisplayDateProperty = DatePicker.DisplayDateProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty DisplayDateEndProperty = DatePicker.DisplayDateEndProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty DisplayDateStartProperty = DatePicker.DisplayDateStartProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
+            "IsReadOnly",
+            typeof(bool),
+            typeof(DateTimePicker),
+            new PropertyMetadata(default(bool)));
+        public static readonly DependencyProperty IsTodayHighlightedProperty = DatePicker.IsTodayHighlightedProperty.AddOwner(typeof(DateTimePicker));
+        public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new PropertyMetadata(OnSelectedDateChanged));
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
             "SourceHours",
             typeof(ICollection<int>),
             typeof(DateTimePicker),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 24).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
-        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
-            "IsReadOnly", 
-            typeof(bool), 
-            typeof(DateTimePicker), 
-            new PropertyMetadata(default(bool)));
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
             typeof(ICollection<int>),
@@ -52,6 +59,7 @@
             new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
+        private const string ElementCalendar = "PART_Calendar";
         private const string ElementHourHand = "PART_HourHand";
         private const string ElementHourPicker = "PART_HourPicker";
         private const string ElementMinuteHand = "PART_MinuteHand";
@@ -61,6 +69,7 @@
         private const string ElementSecondPicker = "PART_SecondPicker";
         private Selector _ampmSwitcher;
         private Button _button;
+        private System.Windows.Controls.Calendar _calendar;
         private UIElement _hourHand;
         private Selector _hourInput;
         private UIElement _minuteHand;
@@ -76,6 +85,30 @@
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
+        }
+
+        public DateTime? DisplayDate
+        {
+            get { return (DateTime?)GetValue(DisplayDateProperty); }
+            set { SetValue(DisplayDateProperty, value); }
+        }
+
+        public DateTime? DisplayDateEnd
+        {
+            get { return (DateTime?)GetValue(DisplayDateEndProperty); }
+            set { SetValue(DisplayDateEndProperty, value); }
+        }
+
+        public DateTime? DisplayDateStart
+        {
+            get { return (DateTime?)GetValue(DisplayDateStartProperty); }
+            set { SetValue(DisplayDateStartProperty, value); }
+        }
+
+        public DayOfWeek FirstDayOfWeek
+        {
+            get { return (DayOfWeek)GetValue(FirstDayOfWeekProperty); }
+            set { SetValue(FirstDayOfWeekProperty, value); }
         }
 
         /// <summary>
@@ -100,6 +133,12 @@
             set { SetValue(IsReadOnlyProperty, value); }
         }
 
+        public bool IsTodayHighlighted
+        {
+            get { return (bool)GetValue(IsTodayHighlightedProperty); }
+            set { SetValue(IsTodayHighlightedProperty, value); }
+        }
+
         /// <summary>
         ///     Gets or sets the visible time-part-selectors.
         /// </summary>
@@ -109,6 +148,12 @@
         {
             get { return (DatePartVisibility)GetValue(PickerVisibilityProperty); }
             set { SetValue(PickerVisibilityProperty, value); }
+        }
+
+        public DateTime? SelectedDate
+        {
+            get { return (DateTime?)GetValue(SelectedDateProperty); }
+            set { SetValue(SelectedDateProperty, value); }
         }
 
         /// <summary>
@@ -169,6 +214,7 @@
             _ampmSwitcher = GetTemplateChild(ElementAmPmSwitcher) as Selector;
             _minuteHand = GetTemplateChild(ElementMinuteHand) as FrameworkElement;
             _secondHand = GetTemplateChild(ElementSecondHand) as FrameworkElement;
+            _calendar = GetTemplateChild(ElementCalendar) as System.Windows.Controls.Calendar;
 
             if (_ampmSwitcher != null)
             {
@@ -176,22 +222,22 @@
                 _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.AMDesignator);
                 _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.PMDesignator);
             }
+            if (_calendar != null)
+            {
+                _calendar.SetBinding(System.Windows.Controls.Calendar.DisplayDateProperty, GetBinding(DisplayDateProperty));
+                _calendar.SetBinding(System.Windows.Controls.Calendar.DisplayDateStartProperty, GetBinding(DisplayDateStartProperty));
+                _calendar.SetBinding(System.Windows.Controls.Calendar.DisplayDateEndProperty, GetBinding(DisplayDateEndProperty));
+                _calendar.SetBinding(System.Windows.Controls.Calendar.FirstDayOfWeekProperty, GetBinding(FirstDayOfWeekProperty));
+                _calendar.SetBinding(System.Windows.Controls.Calendar.IsTodayHighlightedProperty, GetBinding(IsTodayHighlightedProperty));
+                _calendar.SetBinding(FlowDirectionProperty, GetBinding(FlowDirectionProperty));
+                _calendar.SelectedDatesChanged += OnSelectedDatesChanged;
+            }
 
             SetHandVisibility(HandVisibility);
             SetPickerVisibility(PickerVisibility);
 
             SetDefaultTimeOfDayValues();
             SubscribeToEvents();
-            SetDatePartValues();
-        }
-
-        protected override void OnSelectedDatesChanged(SelectionChangedEventArgs e)
-        {
-            if (e.AddedItems != null)
-            {
-                var dt = ((DateTime)e.AddedItems[0]);
-                SetHourPartValues(dt.TimeOfDay);
-            }
             SetDatePartValues();
         }
 
@@ -219,6 +265,13 @@
         private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DateTimePicker)d)?.SetPickerVisibility((DatePartVisibility)e.NewValue);
+        }
+
+        private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var dateTimePicker = (DateTimePicker)d;
+            var dt = (DateTime?)e.NewValue;
+            dateTimePicker.OnSelectedDateChanged(dt);
         }
 
         private static void SetDefaultTimeOfDayValue(Selector selector)
@@ -290,6 +343,11 @@
             return 0;
         }
 
+        private Binding GetBinding(DependencyProperty property)
+        {
+            return new Binding(property.Name) { Source = this };
+        }
+
         private DateTime GetCorrectDateTime()
         {
             return SelectedDate.GetValueOrDefault(DateTime.Today).Date + GetTimeOfDay();
@@ -341,6 +399,29 @@
         {
             _timeOfDayChanged = true;
             SetDatePartValues();
+        }
+
+        private void OnSelectedDateChanged(DateTime? toDate)
+        {
+            if (toDate.HasValue)
+            {
+                SetHourPartValues(toDate.Value.TimeOfDay);
+            }
+            else
+            {
+                SetDefaultTimeOfDayValues();
+            }
+            SetDatePartValues();
+        }
+
+        private void OnSelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems != null)
+            {
+                var dt = (DateTime)e.AddedItems[0];
+                dt = dt.Add(GetTimeOfDay());
+                SelectedDate = dt;
+            }
         }
 
         private void SetDatePartValues()

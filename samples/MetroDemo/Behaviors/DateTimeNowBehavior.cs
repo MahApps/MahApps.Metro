@@ -1,4 +1,4 @@
-﻿namespace MetroDemo
+﻿namespace MetroDemo.Behaviors
 {
     using System;
     using System.Windows.Interactivity;

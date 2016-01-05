@@ -4,7 +4,8 @@
     using System.Globalization;
     using System.Windows.Data;
 
-    public class PartToDegreeConverter : IValueConverter
+    [ValueConversion(typeof(double), typeof(double))]
+    public class ClockDegreeConverter : IValueConverter
     {
         public double TotalParts { get; set; }
 

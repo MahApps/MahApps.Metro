@@ -3,9 +3,9 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:converters1="clr-namespace:MahApps.Metro.Converters">
-    <converters1:PartToDegreeConverter x:Key="ClockDegreeConverter"
+    <converters1:ClockDegreeConverter x:Key="ClockDegreeConverter"
                                     TotalParts="60" />
-    <converters1:PartToDegreeConverter x:Key="HourDegreeConverter"
+    <converters1:ClockDegreeConverter x:Key="HourDegreeConverter"
                                     TotalParts="12" />
 
     <DataTemplate x:Key="FiveMinuteIndicator">
@@ -135,8 +135,6 @@
                     Value="{DynamicResource ValidationErrorTemplate}" />
             <Setter Property="controls:TextBoxHelper.Watermark"
                     Value="Select a date" />
-            <Setter Property="SelectionMode"
-                    Value="SingleDate" />
             <Setter Property="HandVisibility"
                     Value="HourMinute" />
             <Setter Property="PickerVisibility"
@@ -159,6 +157,7 @@
                                                        controls:TextBoxHelper.Watermark="{TemplateBinding controls:TextBoxHelper.Watermark}" />
                                     <Button x:Name="PART_Button"
                                             Style="{DynamicResource ChromelessButtonStyle}"
+                                            IsTabStop="False"
                                             Grid.Column="1">
                                         <Path Stretch="Uniform"
                                               Fill="{Binding ElementName=PART_Button, Path=Foreground, Mode=OneWay}"
@@ -210,14 +209,13 @@
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="*" />
                                                 </Grid.RowDefinitions>
-                                                <CalendarItem x:Name="PART_CalendarItem"
+                                                <Calendar x:Name="PART_Calendar"
                                                               Grid.RowSpan="2"
                                                               BorderBrush="Transparent"
+                                                              SelectionMode="SingleDate"
                                                               Margin="2,0"
                                                               Language="{TemplateBinding Language}"
-                                                              Background="{TemplateBinding Background}"
-                                                              Style="{TemplateBinding CalendarItemStyle}" />
-
+                                                              Background="{TemplateBinding Background}"/>
                                                 <Border Margin="0,5,5,0"
                                                         Grid.Row="0"
                                                         Grid.Column="1"
@@ -255,7 +253,8 @@
                                                             <Rectangle.RenderTransform>
                                                                 <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.TotalHours,
                                                                                                  RelativeSource={RelativeSource TemplatedParent},
-                                                                                                 Converter={StaticResource HourDegreeConverter}}" />
+                                                                                                 Converter={StaticResource HourDegreeConverter},
+                                                                                                 Mode=OneWay}" />
                                                             </Rectangle.RenderTransform>
                                                         </Rectangle>
                                                         <Rectangle x:Name="PART_MinuteHand"
@@ -268,7 +267,8 @@
                                                             <Rectangle.RenderTransform>
                                                                 <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.TotalMinutes,
                                                                                                  RelativeSource={RelativeSource TemplatedParent},
-                                                                                                 Converter={StaticResource ClockDegreeConverter}}" />
+                                                                                                 Converter={StaticResource ClockDegreeConverter},
+                                                                                                 Mode=OneWay}" />
                                                             </Rectangle.RenderTransform>
                                                         </Rectangle>
                                                         <Rectangle Canvas.Left="0.75"
@@ -284,7 +284,8 @@
                                                             <Rectangle.RenderTransform>
                                                                 <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.Seconds,
                                                                                                  RelativeSource={RelativeSource TemplatedParent},
-                                                                                                 Converter={StaticResource ClockDegreeConverter}}" />
+                                                                                                 Converter={StaticResource ClockDegreeConverter},
+                                                                                                 Mode=OneWay}" />
                                                             </Rectangle.RenderTransform>
                                                         </Rectangle>
                                                         <Ellipse Height="6"
@@ -294,7 +295,8 @@
                                                                  Fill="{DynamicResource BlackColorBrush}" />
                                                     </Canvas>
                                                 </Border>
-                                                <Grid Grid.Row="1"
+                                                <Grid x:Name="PART_ClockPartSelectorsHolder"
+                                                      Grid.Row="1"
                                                       Grid.Column="1"
                                                       Margin="0,0,5,5"
                                                       HorizontalAlignment="Center"
@@ -358,7 +360,10 @@
                             </Trigger>
                             <Trigger Property="IsReadOnly"
                                      Value="True">
-                                <Setter TargetName="PART_PopupContainer" 
+                                <Setter TargetName="PART_Calendar" 
+                                        Property="IsHitTestVisible" 
+                                        Value="False" />
+                                <Setter TargetName="PART_ClockPartSelectorsHolder" 
                                         Property="IsHitTestVisible" 
                                         Value="False" />
                             </Trigger>
