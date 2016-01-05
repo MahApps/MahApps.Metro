@@ -271,12 +271,12 @@
 
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((DateTimePicker)d)?.SetHandVisibility((DatePartVisibility)e.NewValue);
+            ((DateTimePicker)d).SetHandVisibility((DatePartVisibility)e.NewValue);
         }
 
         private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((DateTimePicker)d)?.SetPickerVisibility((DatePartVisibility)e.NewValue);
+            ((DateTimePicker)d).SetPickerVisibility((DatePartVisibility)e.NewValue);
         }
 
         private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
