@@ -132,13 +132,13 @@
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
-    <Compile Include="Controls\AmPmComparer.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
     <Compile Include="Controls\DatePartVisibility.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\DialogParticipation.cs" />
     <Compile Include="Controls\Dialogs\IDialogCoordinator.cs" />
+    <Compile Include="Controls\Helper\AmPmComparer.cs" />
     <Compile Include="Controls\Helper\ButtonHelper.cs" />
     <Compile Include="Controls\ClosingWindowEventHandlerArgs.cs" />
     <Compile Include="Controls\Helper\ComboBoxHelper.cs" />
@@ -168,7 +168,7 @@
     <Compile Include="Controls\Helper\DataGridRowHelper.cs" />
     <Compile Include="Controls\Helper\ExpanderHelper.cs" />
     <Compile Include="Controls\Helper\GroupBoxHelper.cs" />
-    <Compile Include="Converters\PartToDegreeConverter.cs" />
+    <Compile Include="Converters\ClockDegreeConverter.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
     <Compile Include="Controls\MetroNavigationWindow.cs" />

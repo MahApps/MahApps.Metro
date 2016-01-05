@@ -2,7 +2,7 @@ namespace MahApps.Metro.Controls
 {
     using System.Collections.Generic;
 
-    public class AmPmComparer : IComparer<int>
+    internal class AmPmComparer : IComparer<int>
     {
         public int Compare(int x, int y)
         {
