@@ -12,15 +12,14 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 [![Downloads](https://img.shields.io/nuget/dt/MahApps.Metro.svg?style=flat-square)](http://www.nuget.org/packages/MahApps.Metro/)
 [![Issues](https://img.shields.io/github/issues/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/issues)
 
-![main demo window](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/main_demo_window.png)
+![main demo window](./docs/main_demo_window.png)
 
-![main demo window animated](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/main_demo_window.gif)
+![main demo window animated](./docs/main_demo_window.gif)
 
 ## Documentation
 
-Read it here: [http://mahapps.com](http://mahapps.com)
-
-You can help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
+You can read the documentaion on the web site: [http://mahapps.com](http://mahapps.com)  
+You can also help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
 
 ## Release Notes
 
@@ -88,8 +87,9 @@ Or, how to create a simple `MahApps.Metro` Application and a Window...
                       Height="600"
                       Width="800">
   <Grid>
-    <!-- now your content -->
-  
+
+    <!-- your content -->
+
   </Grid>
 </controls:MetroWindow>
 ```
@@ -107,10 +107,10 @@ namespace WpfApplication
 }
 ```
 
-## Supporting
+## Awesome tools which MahApps can use
 
-[![TeamCity](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/icon_TeamCity.png)](https://www.jetbrains.com/teamcity/)
-[![Resharper](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/icon_ReSharper.png)](https://www.jetbrains.com/resharper/)
+[![TeamCity](./docs/icon_TeamCity.png)](https://www.jetbrains.com/teamcity/)
+[![Resharper](./docs/icon_ReSharper.png)](https://www.jetbrains.com/resharper/)
 
 ## Visual Studio Templates
 
@@ -121,7 +121,7 @@ MahApps.Metro have 4 simple templates to start with the awesome MahApps.Metro li
 * Visual Basic WPF MahApps.Metro Application (.NET45)
 * Window MahApps.Metro (WPF)
 
-Download this [Templates.zip](https://github.com/MahApps/MahApps.Metro/raw/master/Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
+Download this [Templates.zip](./Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
 
 ```
 c:\Users\<USER>\Documents\Visual Studio 2013\
@@ -134,7 +134,7 @@ Now you can choose the templates at the `New Project` dialog.
 ## Breaking Changes
 
 * For version [0.11.3.1](https://github.com/MahApps/MahApps.Metro/wiki/Breaking-Changes-or-WTF-is-happening-with-the-ALPHA-version)
-* For version [0.14 to 1.0.0](https://github.com/MahApps/MahApps.Metro/blob/master/docs/v1.0-Migration-Guide.md)
+* For version [0.14 to 1.0.0](./docs/v1.0-Migration-Guide.md)
 
 ## Licence
 
