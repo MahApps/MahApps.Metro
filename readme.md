@@ -18,7 +18,7 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 
 ## Documentation
 
-You can read the documentaion on the web site: [http://mahapps.com](http://mahapps.com)  
+You can read the documentation on the web site: [http://mahapps.com](http://mahapps.com)  
 You can also help keep the documentation up to date by submitting a pull request on the  [mahapps.github.com](https://github.com/MahApps/mahapps.github.com) repository. If you're unfamiliar with GitHub Pages, the help guides [here](https://help.github.com/pages/) are a good place to start.
 
 ## Release Notes
