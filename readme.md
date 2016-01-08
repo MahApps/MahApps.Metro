@@ -5,6 +5,7 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 [![Gitter](https://img.shields.io/badge/Gitter-Join%20Chat-green.svg?style=flat-square)](https://gitter.im/MahApps/MahApps.Metro)
 
 [![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetro.svg?style=flat-square&&label=TeamCity%20dev)]()
+[![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroMaster.svg?style=flat-square&&label=TeamCity%20rel)]()
 [![TeamCity](https://img.shields.io/teamcity/http/builds.brendanforster.com/s/MahApps_MahAppsMetroPullRequests.svg?style=flat-square&&label=TeamCity%20PRs)]()
 
 [![Release](https://img.shields.io/github/release/MahApps/MahApps.Metro.svg?style=flat-square)](https://github.com/MahApps/MahApps.Metro/releases/latest)
@@ -23,8 +24,7 @@ You can help keep the documentation up to date by submitting a pull request on t
 
 ## Release Notes
 
-- upcoming [v1.2.0](./docs/release-notes/1.2.0.md)
-- current [v1.1.2](./docs/release-notes/1.1.2.md)
+- current [v1.2.0](./docs/release-notes/1.2.0.md)
 - all [other](./docs/release-notes/)
 
 ## Icons
@@ -106,6 +106,11 @@ namespace WpfApplication
   }
 }
 ```
+
+## Supporting
+
+[![TeamCity](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/icon_TeamCity.png)](https://www.jetbrains.com/teamcity/)
+[![Resharper](https://raw.githubusercontent.com/MahApps/MahApps.Metro/master/docs/icon_ReSharper.png)](https://www.jetbrains.com/resharper/)
 
 ## Visual Studio Templates
 
