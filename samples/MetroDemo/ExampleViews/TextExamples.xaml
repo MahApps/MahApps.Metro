@@ -118,6 +118,9 @@
                          Controls:TextBoxHelper.Watermark="Number smaller than 10"
                          IsEnabled="False"
                          Text="{Binding IntegerGreater10Property, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
+                <TextBox Margin="{StaticResource ControlMargin}"
+                         Controls:TextBoxHelper.SelectAllOnFocus="True"
+                         Text="Select all on focus" />
             </StackPanel>
 
             <StackPanel Grid.Column="1"
@@ -205,6 +208,12 @@
                              Controls:TextBoxHelper.ClearTextButton="True"
                              IsEnabled="False"
                              Password="Password" />
+
+                <Label Content="Select all on focus" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.SelectAllOnFocus="True"
+                             Password="Password"
+                             ToolTip="Select all on focus"/>
             </StackPanel>
 
             <StackPanel Grid.Column="3"
@@ -297,6 +306,14 @@
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         Interval=".1"
                                         StringFormat="0,000.00" />
+
+                <Label Content="Select all on focus" />
+                <Controls:NumericUpDown Value="500" IsTabStop="False"
+                                        IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
+                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"                                        
+                                        Controls:TextBoxHelper.SelectAllOnFocus="True"
+                                        ButtonsAlignment="Left"
+                                        Interval="5" />
             </StackPanel>
         </Grid>
     </AdornerDecorator>
