@@ -90,14 +90,15 @@
                                     Foreground="{TemplateBinding Foreground}"
                                     Text="{TemplateBinding Title}"
                                     TextWrapping="Wrap" />
-                        <ContentPresenter Grid.Row="1"
-                                          Grid.Column="1"
-                                          Content="{TemplateBinding Content}" />
                         <ContentPresenter Grid.Column="0"
                                           Grid.Row="1"
                                           HorizontalAlignment="Right"
                                           ContentTemplate="{TemplateBinding IconTemplate}"
+                                          Margin="10,0"
                                           Content="{TemplateBinding Icon}" />
+                        <ContentPresenter Grid.Row="1"
+                                          Grid.Column="1"
+                                          Content="{TemplateBinding Content}" />
 
                     </Grid>
                     <ContentPresenter Grid.Row="2"
