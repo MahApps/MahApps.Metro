@@ -48,9 +48,9 @@ namespace MahApps.Metro.Controls.Dialogs
 
     public class LoginDialogData
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public bool Remember { get; set; }
+        public string Username { get; internal set; }
+        public string Password { get; internal set; }
+        public bool ShouldRemember { get; internal set; }
     }
 
     public partial class LoginDialog : BaseMetroDialog
@@ -147,7 +147,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 if (e.Key == Key.Enter)
                 {
                     cleanUpHandlers();
-                    tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password, Remember = RememberCheckBoxChecked });
+                    tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password, ShouldRemember = RememberCheckBoxChecked });
                 }
             };
 
@@ -164,7 +164,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 cleanUpHandlers();
 
-                tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password, Remember = RememberCheckBoxChecked });
+                tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password, ShouldRemember = RememberCheckBoxChecked });
 
                 e.Handled = true;
             };

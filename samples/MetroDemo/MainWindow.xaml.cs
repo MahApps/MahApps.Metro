@@ -266,7 +266,7 @@ namespace MetroDemo
             }
             else
             {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}\nRemember: {2}", result.Username, result.Password, result.Remember));
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}\nShouldRemember: {2}", result.Username, result.Password, result.ShouldRemember));
             }
         }
 
