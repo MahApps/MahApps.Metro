@@ -314,9 +314,11 @@ namespace MahApps.Metro.Controls.Dialogs
 
         /// <summary>
         /// Adds a Metro Dialog instance to the specified window and makes it visible asynchronously.
-        /// If you want to wait until the user has closed the dialog, use <see cref="ShowMetroDialogAsyncAwaitable"/>
         /// <para>You have to close the resulting dialog yourself with <see cref="HideMetroDialogAsync"/>.</para>
         /// </summary>
+        /// <remarks>
+        /// If you want to wait until the user has closed the dialog, use the await keyword when calling this method or call any <see cref="Task.ContinueWith(Action{Task})">Task.ContinueWith(...)</see> overload.
+        /// </remarks>
         /// <param name="window">The owning window of the dialog.</param>
         /// <param name="dialog">The dialog instance itself.</param>
         /// <param name="settings">An optional pre-defined settings instance.</param>
