@@ -304,26 +304,26 @@ namespace MahApps.Metro.Controls
 
         private static void TextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            ControlGotFocus(sender as TextBox, textBox => textBox.SelectAll);
+            ControlGotFocus(sender as TextBox, textBox => textBox.SelectAll());
         }
 
         private static void NumericUpDownGotFocus(object sender, RoutedEventArgs e)
-            {
-            ControlGotFocus(sender as NumericUpDown, numericUpDown => numericUpDown.SelectAll);
-            }
+        {
+            ControlGotFocus(sender as NumericUpDown, numericUpDown => numericUpDown.SelectAll());
+        }
 
         private static void PasswordGotFocus(object sender, RoutedEventArgs e)
         {
-            ControlGotFocus(sender as PasswordBox, passwordBox => passwordBox.SelectAll);
+            ControlGotFocus(sender as PasswordBox, passwordBox => passwordBox.SelectAll());
         }
 
-        private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Func<TDependencyObject, Action> funcSelectAll) where TDependencyObject : DependencyObject
+        private static void ControlGotFocus<TDependencyObject>(TDependencyObject sender, Action<TDependencyObject> action) where TDependencyObject : DependencyObject
         {
             if (sender != null)
-        {
-                if (GetSelectAllOnFocus(sender))
             {
-                    sender.Dispatcher.BeginInvoke(funcSelectAll, sender);
+                if (GetSelectAllOnFocus(sender))
+                {
+                    sender.Dispatcher.BeginInvoke(action, sender);
                 }
             }
         }
