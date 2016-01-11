@@ -462,32 +462,7 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             if (icon is MessageDialogIcon)
             {
-                MessageDialogIcon i = (MessageDialogIcon)icon;
-                UIElement element;
-                switch (i)
-                {
-                    case MessageDialogIcon.Information:
-                        element = metroDialog.Resources["appbar_warning_circle"] as UIElement;
-                        break;
-                    case MessageDialogIcon.Warning:
-                        element = metroDialog.Resources["appbar_warning"] as UIElement;
-                        break;
-                    case MessageDialogIcon.Hand:
-                        element = metroDialog.Resources["appbar_cursor_hand"] as UIElement;
-                        break;
-                    case MessageDialogIcon.Question:
-                        element = metroDialog.Resources["appbar_question"] as UIElement;
-                        break;
-                    case MessageDialogIcon.Error:
-                        element = metroDialog.Resources["appbar_stop"] as UIElement;
-                        break;
-                    case MessageDialogIcon.None:
-                        element = null;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException("icon", icon, null);
-                }
-                metroDialog.Icon = element;
+                metroDialog.Icon = metroDialog.Resources[(MessageDialogIcon)icon];
             }
             else
             {
