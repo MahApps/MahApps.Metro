@@ -26,7 +26,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="200" />
             </Grid.ColumnDefinitions>
 
             <StackPanel VerticalAlignment="Top">
@@ -61,11 +61,13 @@
 
             <StackPanel VerticalAlignment="Top"
                         Grid.Row="0"
+                        Margin="0,0,20,0"
                         Orientation="Vertical"
                         Grid.Column="2">
-                <Label Content="DateTimePicker"
+                <Label Content="DateTime picker"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
-                <Label Content="Language: en: SelectedDate=CurrentTime IsReadOnly=True" />
+                <TextBlock Text="Language: en: SelectedDate=CurrentTime IsReadOnly=True"
+                           TextWrapping="Wrap" />
                 <Controls:DateTimePicker Language="en"
                                          PickerVisibility="All"
                                          HandVisibility="All"
@@ -74,26 +76,31 @@
                         <behaviors:DateTimeNowBehavior />
                     </i:Interaction.Behaviors>
                 </Controls:DateTimePicker>
-                <Label Content="Language: de" />
+                <TextBlock Text="Language: de" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          Language="de" />
-                <Label Content="Language: ru DisplayDateStart=Now" />
+                <TextBlock Text="Language: ru DisplayDateStart=Now"
+                           TextWrapping="Wrap" />
                 <Controls:DateTimePicker Language="ru"
                                          DisplayDateStart="{x:Static system:DateTime.Now}" />
-                <Label Content="Language: zh (IsEnabled=false)" />
+                <TextBlock Text="Language: zh (IsEnabled=false)"
+                           TextWrapping="Wrap" />
                 <Controls:DateTimePicker Language="zh"
                                          IsEnabled="False" />
-                <Label Content="Language: ar (IsReadOnly=true)" />
+                <TextBlock Text="Language: ar (IsReadOnly=true)"
+                           TextWrapping="Wrap" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          Language="ar"
                                          IsReadOnly="True" />
-                <Label Content="Orientation=Vertical" />
+                <TextBlock Text="Orientation=Vertical"
+                           TextWrapping="Wrap" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          Orientation="Vertical" />
-                <Label Content="IsClockVisible=False" />
+                <TextBlock Text="IsClockVisible=False"
+                           TextWrapping="Wrap" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          IsClockVisible="False" />
-                
+
             </StackPanel>
         </Grid>
     </AdornerDecorator>
