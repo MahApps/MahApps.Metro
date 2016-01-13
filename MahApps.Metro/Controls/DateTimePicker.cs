@@ -47,6 +47,11 @@
             typeof(ICollection<int>),
             typeof(DateTimePicker),
             new FrameworkPropertyMetadata(Enumerable.Range(0, 24).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSourceHours));
+        public static readonly DependencyProperty OrientationProperty = DependencyProperty.Register(
+            "Orientation",
+            typeof(Orientation),
+            typeof(DateTimePicker),
+            new PropertyMetadata(Orientation.Horizontal));
         public static readonly RoutedEvent SelectedDateChangedEvent = DatePicker.SelectedDateChangedEvent.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
@@ -144,6 +149,17 @@
         {
             get { return (bool)GetValue(IsTodayHighlightedProperty); }
             set { SetValue(IsTodayHighlightedProperty, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value that indicates the dimension by which calendar and clock are stacked.
+        /// </summary>
+        /// <returns>The <see cref="System.Windows.Controls.Orientation" /> of the calendar and clock.</returns>
+        [Category("Layout")]
+        public Orientation Orientation
+        {
+            get { return (Orientation)GetValue(OrientationProperty); }
+            set { SetValue(OrientationProperty, value); }
         }
 
         /// <summary>

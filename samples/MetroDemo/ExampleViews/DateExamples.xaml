@@ -62,6 +62,7 @@
 
             <StackPanel VerticalAlignment="Top"
                         Grid.Row="0"
+                        Orientation="Vertical"
                         Grid.Column="2">
                 <Label Content="DateTimePicker"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
@@ -70,9 +71,9 @@
                                          PickerVisibility="All"
                                          HandVisibility="All"
                                          IsReadOnly="True">
-                    <i:Interaction.Behaviors>
+                    <!--<i:Interaction.Behaviors>
                         <behaviors:DateTimeNowBehavior />
-                    </i:Interaction.Behaviors>
+                    </i:Interaction.Behaviors>-->
                 </Controls:DateTimePicker>
                 <Label Content="Language: de" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
@@ -87,6 +88,10 @@
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          Language="ar"
                                          IsReadOnly="True" />
+                <Label Content="Orientation=Opendirec" />
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
+                                         Orientation="Vertical" />
+                
             </StackPanel>
         </Grid>
     </AdornerDecorator>

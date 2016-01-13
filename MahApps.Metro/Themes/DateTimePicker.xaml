@@ -21,7 +21,7 @@
                        Fill="{DynamicResource AccentColorBrush3}" />
         </StackPanel>
     </DataTemplate>
-    
+
     <DataTemplate x:Key="MinuteIndicator">
         <StackPanel Orientation="Horizontal"
                     Height="57"
@@ -201,134 +201,131 @@
                                         <Border BorderThickness="1"
                                                 x:Name="PART_PopupContainer"
                                                 BorderBrush="{DynamicResource ControlBorderBrush}">
-                                            <Grid Background="{DynamicResource ControlBackgroundBrush}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition Height="*" />
-                                                </Grid.RowDefinitions>
+                                            <StackPanel Orientation="{TemplateBinding Orientation}"
+                                                        Background="{DynamicResource ControlBackgroundBrush}">
                                                 <Calendar x:Name="PART_Calendar"
-                                                          Grid.RowSpan="2"
                                                           BorderBrush="Transparent"
                                                           SelectionMode="SingleDate"
                                                           Margin="2,0"
                                                           Language="{TemplateBinding Language}"
                                                           Background="{TemplateBinding Background}" />
-                                                <Border Margin="0,5,5,0"
-                                                        Grid.Row="0"
-                                                        Grid.Column="1"
-                                                        HorizontalAlignment="Center"
-                                                        BorderThickness="2"
-                                                        BorderBrush="{DynamicResource AccentColorBrush}"
-                                                        CornerRadius="75"
-                                                        Height="120"
-                                                        Width="120">
-                                                    <Canvas HorizontalAlignment="Center">
-                                                        <ItemsControl ItemTemplate="{StaticResource FiveMinuteIndicator}"
-                                                                      ItemsSource="{StaticResource FiveMinuteKeys}">
-                                                            <ItemsControl.ItemsPanel>
-                                                                <ItemsPanelTemplate>
-                                                                    <Canvas IsItemsHost="True" />
-                                                                </ItemsPanelTemplate>
-                                                            </ItemsControl.ItemsPanel>
-                                                        </ItemsControl>
-                                                        <ItemsControl ItemTemplate="{StaticResource MinuteIndicator}"
-                                                                      ItemsSource="{StaticResource MinuteKeys}">
-                                                            <ItemsControl.ItemsPanel>
-                                                                <ItemsPanelTemplate>
-                                                                    <Canvas IsItemsHost="True" />
-                                                                </ItemsPanelTemplate>
-                                                            </ItemsControl.ItemsPanel>
-                                                        </ItemsControl>
+                                                <Grid VerticalAlignment="Center">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Border Margin="0,5,5,0"
+                                                            Grid.Row="0"
+                                                            HorizontalAlignment="Center"
+                                                            BorderThickness="2"
+                                                            BorderBrush="{DynamicResource AccentColorBrush}"
+                                                            CornerRadius="75"
+                                                            Height="120"
+                                                            Width="120">
+                                                        <Canvas HorizontalAlignment="Center">
+                                                            <ItemsControl ItemTemplate="{StaticResource FiveMinuteIndicator}"
+                                                                          ItemsSource="{StaticResource FiveMinuteKeys}">
+                                                                <ItemsControl.ItemsPanel>
+                                                                    <ItemsPanelTemplate>
+                                                                        <Canvas IsItemsHost="True" />
+                                                                    </ItemsPanelTemplate>
+                                                                </ItemsControl.ItemsPanel>
+                                                            </ItemsControl>
+                                                            <ItemsControl ItemTemplate="{StaticResource MinuteIndicator}"
+                                                                          ItemsSource="{StaticResource MinuteKeys}">
+                                                                <ItemsControl.ItemsPanel>
+                                                                    <ItemsPanelTemplate>
+                                                                        <Canvas IsItemsHost="True" />
+                                                                    </ItemsPanelTemplate>
+                                                                </ItemsControl.ItemsPanel>
+                                                            </ItemsControl>
 
-                                                        <Rectangle Canvas.Top="27"
-                                                                   x:Name="PART_HourHand"
-                                                                   HorizontalAlignment="Center"
-                                                                   Width="2"
-                                                                   Fill="{DynamicResource BlackColorBrush}"
-                                                                   Height="30"
-                                                                   RenderTransformOrigin=".5,1">
-                                                            <Rectangle.RenderTransform>
-                                                                <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.TotalHours,
+                                                            <Rectangle Canvas.Top="27"
+                                                                       x:Name="PART_HourHand"
+                                                                       HorizontalAlignment="Center"
+                                                                       Width="2"
+                                                                       Fill="{DynamicResource BlackColorBrush}"
+                                                                       Height="30"
+                                                                       RenderTransformOrigin=".5,1">
+                                                                <Rectangle.RenderTransform>
+                                                                    <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.TotalHours,
                                                                                                  RelativeSource={RelativeSource TemplatedParent},
                                                                                                  Converter={StaticResource HourDegreeConverter},
                                                                                                  Mode=OneWay}" />
-                                                            </Rectangle.RenderTransform>
-                                                        </Rectangle>
-                                                        <Rectangle x:Name="PART_MinuteHand"
-                                                                   Canvas.Top="6"
-                                                                   HorizontalAlignment="Center"
-                                                                   Width="2"
-                                                                   Fill="{DynamicResource BlackColorBrush}"
-                                                                   RenderTransformOrigin=".5,1"
-                                                                   Height="51">
-                                                            <Rectangle.RenderTransform>
-                                                                <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.TotalMinutes,
+                                                                </Rectangle.RenderTransform>
+                                                            </Rectangle>
+                                                            <Rectangle x:Name="PART_MinuteHand"
+                                                                       Canvas.Top="6"
+                                                                       HorizontalAlignment="Center"
+                                                                       Width="2"
+                                                                       Fill="{DynamicResource BlackColorBrush}"
+                                                                       RenderTransformOrigin=".5,1"
+                                                                       Height="51">
+                                                                <Rectangle.RenderTransform>
+                                                                    <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.TotalMinutes,
                                                                                                  RelativeSource={RelativeSource TemplatedParent},
                                                                                                  Converter={StaticResource ClockDegreeConverter},
                                                                                                  Mode=OneWay}" />
-                                                            </Rectangle.RenderTransform>
-                                                        </Rectangle>
-                                                        <Rectangle Canvas.Left="0.75"
-                                                                   x:Name="PART_SecondHand"
-                                                                   Canvas.Top="6"
-                                                                   Margin="0,5,0,0"
-                                                                   Opacity=".25"
-                                                                   HorizontalAlignment="Center"
-                                                                   Width=".6"
-                                                                   Fill="{DynamicResource BlackColorBrush}"
-                                                                   Height="61"
-                                                                   RenderTransformOrigin=".5,.75">
-                                                            <Rectangle.RenderTransform>
-                                                                <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.Seconds,
+                                                                </Rectangle.RenderTransform>
+                                                            </Rectangle>
+                                                            <Rectangle Canvas.Left="0.75"
+                                                                       x:Name="PART_SecondHand"
+                                                                       Canvas.Top="6"
+                                                                       Margin="0,5,0,0"
+                                                                       Opacity=".25"
+                                                                       HorizontalAlignment="Center"
+                                                                       Width=".6"
+                                                                       Fill="{DynamicResource BlackColorBrush}"
+                                                                       Height="61"
+                                                                       RenderTransformOrigin=".5,.75">
+                                                                <Rectangle.RenderTransform>
+                                                                    <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.Seconds,
                                                                                                  RelativeSource={RelativeSource TemplatedParent},
                                                                                                  Converter={StaticResource ClockDegreeConverter},
                                                                                                  Mode=OneWay}" />
-                                                            </Rectangle.RenderTransform>
-                                                        </Rectangle>
-                                                        <Ellipse Height="6"
-                                                                 Width="6"
-                                                                 Canvas.Left="-2"
-                                                                 Canvas.Top="54"
-                                                                 Fill="{DynamicResource BlackColorBrush}" />
-                                                    </Canvas>
-                                                </Border>
-                                                <Grid x:Name="PART_ClockPartSelectorsHolder"
-                                                      Grid.Row="1"
-                                                      Grid.Column="1"
-                                                      Margin="0,0,5,5"
-                                                      HorizontalAlignment="Center"
-                                                      VerticalAlignment="Center">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <ComboBox Grid.Column="0"
-                                                              x:Name="PART_HourPicker"
-                                                              ItemsSource="{TemplateBinding SourceHours}" />
-                                                    <Label Grid.Column="1"
-                                                           Visibility="{Binding Path=Visibility, ElementName=PART_MinutePicker}"
-                                                           Content=":" />
-                                                    <ComboBox Grid.Column="2"
-                                                              x:Name="PART_MinutePicker"
-                                                              ItemsSource="{TemplateBinding SourceMinutes}" />
-                                                    <Label Grid.Column="3"
-                                                           Visibility="{Binding Path=Visibility, ElementName=PART_SecondPicker}"
-                                                           Content=":" />
-                                                    <ComboBox Grid.Column="4"
-                                                              x:Name="PART_SecondPicker"
-                                                              ItemsSource="{TemplateBinding SourceSeconds}" />
-                                                    <ComboBox Grid.Column="5"
-                                                              x:Name="PART_AmPmSwitcher" />
+                                                                </Rectangle.RenderTransform>
+                                                            </Rectangle>
+                                                            <Ellipse Height="6"
+                                                                     Width="6"
+                                                                     Canvas.Left="-2"
+                                                                     Canvas.Top="54"
+                                                                     Fill="{DynamicResource BlackColorBrush}" />
+                                                        </Canvas>
+                                                    </Border>
+                                                    <Grid x:Name="PART_ClockPartSelectorsHolder"
+                                                          Grid.Row="1"
+                                                          Margin="5"
+                                                          HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <ComboBox Grid.Column="0"
+                                                                  x:Name="PART_HourPicker"
+                                                                  ItemsSource="{TemplateBinding SourceHours}" />
+                                                        <Label Grid.Column="1"
+                                                               Visibility="{Binding Path=Visibility, ElementName=PART_MinutePicker}"
+                                                               Content=":" />
+                                                        <ComboBox Grid.Column="2"
+                                                                  x:Name="PART_MinutePicker"
+                                                                  ItemsSource="{TemplateBinding SourceMinutes}" />
+                                                        <Label Grid.Column="3"
+                                                               Visibility="{Binding Path=Visibility, ElementName=PART_SecondPicker}"
+                                                               Content=":" />
+                                                        <ComboBox Grid.Column="4"
+                                                                  x:Name="PART_SecondPicker"
+                                                                  ItemsSource="{TemplateBinding SourceSeconds}" />
+                                                        <ComboBox Grid.Column="5"
+                                                                  x:Name="PART_AmPmSwitcher" />
+                                                    </Grid>
                                                 </Grid>
-                                            </Grid>
+                                            </StackPanel>
+
                                         </Border>
                                     </Popup>
                                 </Grid>
