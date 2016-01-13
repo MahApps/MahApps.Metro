@@ -216,6 +216,7 @@
                                                     </Grid.RowDefinitions>
                                                     <Border Margin="0,5,5,0"
                                                             Grid.Row="0"
+                                                            x:Name="PART_Clock"
                                                             HorizontalAlignment="Center"
                                                             BorderThickness="2"
                                                             BorderBrush="{DynamicResource AccentColorBrush}"
@@ -384,6 +385,12 @@
                                 <Setter TargetName="PART_Button"
                                         Property="Foreground"
                                         Value="{DynamicResource WhiteBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsClockVisible"
+                                     Value="False">
+                                <Setter TargetName="PART_Clock"
+                                        Property="Visibility"
+                                        Value="Collapsed" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

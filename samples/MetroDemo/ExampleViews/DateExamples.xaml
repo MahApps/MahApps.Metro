@@ -91,6 +91,10 @@
                 <Label Content="Orientation=Opendirec" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          Orientation="Vertical" />
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
+                                         IsClockVisible="False" />
+                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
+                                         IsClockVisible="False" />
                 
             </StackPanel>
         </Grid>

@@ -51,18 +51,23 @@
             "Orientation",
             typeof(Orientation),
             typeof(DateTimePicker),
-            new PropertyMetadata(Orientation.Horizontal));
+            new PropertyMetadata(Orientation.Horizontal, null, CoerceOrientation));
         public static readonly RoutedEvent SelectedDateChangedEvent = DatePicker.SelectedDateChangedEvent.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty SourceMinutesProperty = DependencyProperty.Register(
             "SourceMinutes",
             typeof(ICollection<int>),
             typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
         public static readonly DependencyProperty SourceSecondsProperty = DependencyProperty.Register(
             "SourceSeconds",
             typeof(ICollection<int>),
             typeof(DateTimePicker),
-            new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+            new FrameworkPropertyMetadata(Enumerable.Range(0, 60).ToList(), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, null, CoerceSource60));
+        public static readonly DependencyProperty IsClockVisibleProperty = DependencyProperty.Register(
+            "IsClockVisible",
+            typeof(bool),
+            typeof(DateTimePicker),
+            new PropertyMetadata(true, OnClockVisibilityChanged));
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
         private const string ElementCalendar = "PART_Calendar";
@@ -97,6 +102,13 @@
         {
             add { AddHandler(SelectedDateChangedEvent, value); }
             remove { RemoveHandler(SelectedDateChangedEvent, value); }
+        }
+
+        [Category("Appearance")]
+        public bool IsClockVisible
+        {
+            get { return (bool)GetValue(IsClockVisibleProperty); }
+            set { SetValue(IsClockVisibleProperty, value); }
         }
 
         public DateTime? DisplayDate
@@ -262,11 +274,35 @@
             SetDefaultTimeOfDayValues();
             SubscribeToEvents();
             SetDatePartValues();
+
+            if (!IsMilitaryTime)
+            {
+                CoerceValue(SourceHoursProperty);
+            }
         }
 
         protected virtual void OnSelectedDateChanged()
         {
             RaiseEvent(new RoutedEventArgs(SelectedDateChangedEvent));
+        }
+
+        private static object CoerceOrientation(DependencyObject d, object basevalue)
+        {
+            if (((DateTimePicker)d).IsClockVisible)
+            {
+                return basevalue;
+            }
+            return Orientation.Vertical;
+        }
+
+        private static object CoerceSource60(DependencyObject d, object basevalue)
+        {
+            var list = basevalue as ICollection<int>;
+            if (list != null)
+            {
+                return list.Where(i => i >= 0 && i < 60);
+            }
+            return null;
         }
 
         private static object CoerceSourceHours(DependencyObject d, object basevalue)
@@ -283,6 +319,11 @@
         private static bool IsValueSelected(Selector selector)
         {
             return selector != null && selector.SelectedItem != null;
+        }
+
+        private static void OnClockVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            d.CoerceValue(OrientationProperty);
         }
 
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
