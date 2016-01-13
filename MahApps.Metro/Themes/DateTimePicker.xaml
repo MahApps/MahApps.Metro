@@ -249,7 +249,9 @@
                                                                        Height="30"
                                                                        RenderTransformOrigin=".5,1">
                                                                 <Rectangle.RenderTransform>
-                                                                    <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.TotalHours,
+                                                                    <!--It is important to set the binding to DisplayDate otherwise the degree of the 
+                                                                        clock-hand is not computed if the user selects the time before selecting the date-->
+                                                                    <RotateTransform Angle="{Binding Path=DisplayDate.TimeOfDay.TotalHours,
                                                                                                  RelativeSource={RelativeSource TemplatedParent},
                                                                                                  Converter={StaticResource HourDegreeConverter},
                                                                                                  Mode=OneWay}" />
@@ -263,7 +265,9 @@
                                                                        RenderTransformOrigin=".5,1"
                                                                        Height="51">
                                                                 <Rectangle.RenderTransform>
-                                                                    <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.TotalMinutes,
+                                                                    <!--It is important to set the binding to DisplayDate otherwise the degree of the 
+                                                                        clock-hand is not computed if the user selects the time before selecting the date-->
+                                                                    <RotateTransform Angle="{Binding Path=DisplayDate.TimeOfDay.TotalMinutes,
                                                                                                  RelativeSource={RelativeSource TemplatedParent},
                                                                                                  Converter={StaticResource ClockDegreeConverter},
                                                                                                  Mode=OneWay}" />
@@ -280,7 +284,9 @@
                                                                        Height="61"
                                                                        RenderTransformOrigin=".5,.75">
                                                                 <Rectangle.RenderTransform>
-                                                                    <RotateTransform Angle="{Binding Path=SelectedDate.TimeOfDay.Seconds,
+                                                                    <!--It is important to set the binding to DisplayDate otherwise the degree of the 
+                                                                        clock-hand is not computed if the user selects the time before selecting the date-->
+                                                                    <RotateTransform Angle="{Binding Path=DisplayDate.TimeOfDay.Seconds,
                                                                                                  RelativeSource={RelativeSource TemplatedParent},
                                                                                                  Converter={StaticResource ClockDegreeConverter},
                                                                                                  Mode=OneWay}" />
