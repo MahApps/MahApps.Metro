@@ -602,6 +602,10 @@
             {
                 SelectedDate = DisplayDate;
             }
+            else if (SelectedDate == null && _popup != null && _popup.IsOpen)
+            {
+                SelectedDate = DisplayDate;
+            }
 
             SetHourPartValues(dateTime.TimeOfDay);
         }
