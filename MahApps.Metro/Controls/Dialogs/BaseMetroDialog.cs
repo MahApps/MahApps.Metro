@@ -284,8 +284,8 @@ namespace MahApps.Metro.Controls.Dialogs
             return Task.Factory.StartNew(() => { });
         }
 
-        internal protected virtual void OnShown() { }
-        internal protected virtual void OnClose()
+        protected internal virtual void OnShown() { }
+        protected internal virtual void OnClose()
         {
             if (ParentDialogWindow != null) //this is only set when a dialog is shown (externally) in it's OWN window.
                 ParentDialogWindow.Close();
@@ -295,7 +295,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// A last chance virtual method for stopping an external dialog from closing.
         /// </summary>
         /// <returns></returns>
-        internal protected virtual bool OnRequestClose()
+        protected internal virtual bool OnRequestClose()
         {
             return true; //allow the dialog to close.
         }
