@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:behaviors="clr-namespace:MetroDemo.Behaviors"
+             xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -67,15 +67,15 @@
                 <Label Content="DateTime picker"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
 
-                <TextBlock Text="SelectedDate=CurrentTime"
-                           TextWrapping="Wrap" />
-                <Controls:DateTimePicker>
-                    <i:Interaction.Behaviors>
-                        <behaviors:DateTimeNowBehavior />
-                    </i:Interaction.Behaviors>
-                </Controls:DateTimePicker>
+                <GroupBox Header="Current time">
+                    <Controls:DateTimePicker>
+                        <i:Interaction.Behaviors>
+                            <behaviors:DateTimeNowBehavior />
+                        </i:Interaction.Behaviors>
+                    </Controls:DateTimePicker>
+                </GroupBox>
 
-                <GroupBox Header="Try it yourself" Margin="0">
+                <GroupBox Header="Try it yourself">
                     <StackPanel>
                         <CheckBox Name="DateTimePickerIsEnabled"
                                   Content="IsEnabled"
@@ -129,6 +129,7 @@
                                   VerticalAlignment="Center"
                                   SelectedItem="{Binding ElementName=DateTimePicker, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                         <Controls:DateTimePicker Name="DateTimePicker"
+                                                 Culture="{x:Static globalization:CultureInfo.CurrentUICulture}"
                                                  PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
                                                  HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"

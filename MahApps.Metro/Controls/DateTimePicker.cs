@@ -340,7 +340,6 @@
             _secondHand = GetTemplateChild(ElementSecondHand) as FrameworkElement;
             _calendar = GetTemplateChild(ElementCalendar) as System.Windows.Controls.Calendar;
 
-            ApplyCulture();
             if (_calendar != null)
             {
                 _calendar.SetBinding(System.Windows.Controls.Calendar.DisplayDateProperty, GetBinding(DisplayDateProperty));
@@ -357,7 +356,7 @@
 
             SetDefaultTimeOfDayValues();
             SubscribeToEvents();
-            SetDatePartValues();
+            ApplyCulture();
 
             if (!IsMilitaryTime)
             {
@@ -465,6 +464,7 @@
                 _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.AMDesignator);
                 _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.PMDesignator);
             }
+            SetDatePartValues();
         }
 
         /// <summary>
