@@ -143,7 +143,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type controls:DateTimePicker}">
-                        <Grid>
+                        <Grid Background="{TemplateBinding Background}" >
                             <Border x:Name="Base"
                                     BorderThickness="1"
                                     BorderBrush="{DynamicResource ControlBorderBrush}">
@@ -207,8 +207,7 @@
                                                           BorderBrush="Transparent"
                                                           SelectionMode="SingleDate"
                                                           Margin="2,0"
-                                                          Language="{TemplateBinding Language}"
-                                                          Background="{TemplateBinding Background}" />
+                                                          Language="{TemplateBinding Language}"/>
                                                 <Grid VerticalAlignment="Center">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="Auto" />

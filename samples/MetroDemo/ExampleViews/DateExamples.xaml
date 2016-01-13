@@ -70,9 +70,9 @@
                 <TextBlock Text="SelectedDate=CurrentTime"
                            TextWrapping="Wrap" />
                 <Controls:DateTimePicker>
-                    <!--<i:Interaction.Behaviors>
+                    <i:Interaction.Behaviors>
                         <behaviors:DateTimeNowBehavior />
-                    </i:Interaction.Behaviors>-->
+                    </i:Interaction.Behaviors>
                 </Controls:DateTimePicker>
 
                 <GroupBox Header="Try it yourself" Margin="0">
