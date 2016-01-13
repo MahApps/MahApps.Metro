@@ -72,6 +72,11 @@
             typeof(bool),
             typeof(DateTimePicker),
             new PropertyMetadata(true, OnClockVisibilityChanged));
+        public static readonly DependencyProperty CultureProperty = DependencyProperty.Register(
+            "Culture",
+            typeof(CultureInfo),
+            typeof(DateTimePicker),
+            new PropertyMetadata(null, OnCultureChanged));
         private const string ElementAmPmSwitcher = "PART_AmPmSwitcher";
         private const string ElementButton = "PART_Button";
         private const string ElementCalendar = "PART_Calendar";
@@ -114,6 +119,17 @@
         {
             add { AddHandler(SelectedDateChangedEvent, value); }
             remove { RemoveHandler(SelectedDateChangedEvent, value); }
+        }
+
+        /// <summary>
+        ///     Gets or sets a value indicating the culture to be used in string formatting operations.
+        /// </summary>
+        [Category("Behavior")]
+        [DefaultValue(null)]
+        public CultureInfo Culture
+        {
+            get { return (CultureInfo)GetValue(CultureProperty); }
+            set { SetValue(CultureProperty, value); }
         }
 
         /// <summary>
@@ -306,7 +322,7 @@
 
         private CultureInfo SpecificCultureInfo
         {
-            get { return Language.GetSpecificCulture(); }
+            get { return Culture ?? Language.GetSpecificCulture(); }
         }
 
         public override void OnApplyTemplate()
@@ -324,12 +340,7 @@
             _secondHand = GetTemplateChild(ElementSecondHand) as FrameworkElement;
             _calendar = GetTemplateChild(ElementCalendar) as System.Windows.Controls.Calendar;
 
-            if (_ampmSwitcher != null)
-            {
-                _ampmSwitcher.Visibility = IsMilitaryTime ? Visibility.Collapsed : Visibility.Visible;
-                _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.AMDesignator);
-                _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.PMDesignator);
-            }
+            ApplyCulture();
             if (_calendar != null)
             {
                 _calendar.SetBinding(System.Windows.Controls.Calendar.DisplayDateProperty, GetBinding(DisplayDateProperty));
@@ -399,6 +410,11 @@
             d.CoerceValue(OrientationProperty);
         }
 
+        private static void OnCultureChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((DateTimePicker)d).ApplyCulture();
+        }
+
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DateTimePicker)d).SetHandVisibility((DatePartVisibility)e.NewValue);
@@ -437,6 +453,17 @@
             if (partSeconds != null)
             {
                 partSeconds.Visibility = visibility.HasFlag(DatePartVisibility.Second) ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private void ApplyCulture()
+        {
+            if (_ampmSwitcher != null)
+            {
+                _ampmSwitcher.Visibility = IsMilitaryTime ? Visibility.Collapsed : Visibility.Visible;
+                _ampmSwitcher.Items.Clear();
+                _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.AMDesignator);
+                _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.PMDesignator);
             }
         }
 
