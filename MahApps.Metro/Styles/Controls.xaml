@@ -33,6 +33,8 @@
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="FloatingMessageContainerStyle" TargetType="{x:Type ContentControl}">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="MaxHeight" Value="0" />
         <Setter Property="IsHitTestVisible" Value="False" />
         <Setter Property="Margin" Value="5 0" />
