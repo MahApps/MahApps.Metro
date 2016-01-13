@@ -26,7 +26,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="250" />
             </Grid.ColumnDefinitions>
 
             <StackPanel VerticalAlignment="Top">
@@ -129,7 +129,7 @@
                                   VerticalAlignment="Center"
                                   SelectedItem="{Binding ElementName=DateTimePicker, Path=Culture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}" />
                         <Controls:DateTimePicker Name="DateTimePicker"
-                                                 Culture="{x:Static globalization:CultureInfo.CurrentUICulture}"
+                                                 Culture="{x:Static globalization:CultureInfo.CurrentCulture}"
                                                  PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
                                                  HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"

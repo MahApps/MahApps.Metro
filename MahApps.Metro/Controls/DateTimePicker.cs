@@ -10,6 +10,7 @@
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Data;
+    using System.Windows.Markup;
 
     /// <summary>
     ///     Represents a control that allows the user to select a date and a time.
@@ -105,11 +106,7 @@
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
-        }
-
-        public DateTimePicker()
-        {
-            FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
+            LanguageProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(OnLanguageChanged));
         }
 
         /// <summary>
@@ -419,6 +416,11 @@
             ((DateTimePicker)d).SetHandVisibility((DatePartVisibility)e.NewValue);
         }
 
+        private static void OnLanguageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((DateTimePicker)d).ApplyCulture();
+        }
+
         private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DateTimePicker)d).SetPickerVisibility((DatePartVisibility)e.NewValue);
@@ -464,7 +466,13 @@
                 _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.AMDesignator);
                 _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.PMDesignator);
             }
+            if (_calendar != null)
+            {
+                _calendar.Language = XmlLanguage.GetLanguage(SpecificCultureInfo.IetfLanguageTag);
+            }
             SetDatePartValues();
+
+            FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
         }
 
         /// <summary>
