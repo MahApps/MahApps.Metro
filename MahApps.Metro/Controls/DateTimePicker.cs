@@ -11,6 +11,9 @@
     using System.Windows.Controls.Primitives;
     using System.Windows.Data;
 
+    /// <summary>
+    ///     Represents a control that allows the user to select a date and a time.
+    /// </summary>
     [TemplatePart(Name = ElementButton, Type = typeof(Button))]
     [TemplatePart(Name = ElementHourHand, Type = typeof(UIElement))]
     [TemplatePart(Name = ElementMinuteHand, Type = typeof(UIElement))]
@@ -19,6 +22,7 @@
     [TemplatePart(Name = ElementMinutePicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementHourPicker, Type = typeof(Selector))]
     [TemplatePart(Name = ElementAmPmSwitcher, Type = typeof(Selector))]
+    [DefaultEvent("SelectedDateChanged")]
     public class DateTimePicker : Control
     {
         public static readonly DependencyProperty HandVisibilityProperty = DependencyProperty.Register(
@@ -98,37 +102,59 @@
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
         }
 
+        public DateTimePicker()
+        {
+            FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
+        }
+
+        /// <summary>
+        ///     Occurs when the <see cref="SelectedDate" /> property is changed.
+        /// </summary>
         public event EventHandler<SelectionChangedEventArgs> SelectedDateChanged
         {
             add { AddHandler(SelectedDateChangedEvent, value); }
             remove { RemoveHandler(SelectedDateChangedEvent, value); }
         }
 
-        [Category("Appearance")]
-        public bool IsClockVisible
-        {
-            get { return (bool)GetValue(IsClockVisibleProperty); }
-            set { SetValue(IsClockVisibleProperty, value); }
-        }
-
+        /// <summary>
+        ///     Gets or sets the date to display
+        /// </summary>
+        /// <returns>
+        ///     The date to display. The default is <see cref="DateTime.Today" />.
+        /// </returns>
         public DateTime? DisplayDate
         {
             get { return (DateTime?)GetValue(DisplayDateProperty); }
             set { SetValue(DisplayDateProperty, value); }
         }
 
+        /// <summary>
+        ///     Gets or sets the last date to be displayed.
+        /// </summary>
+        /// <returns>The last date to display.</returns>
         public DateTime? DisplayDateEnd
         {
             get { return (DateTime?)GetValue(DisplayDateEndProperty); }
             set { SetValue(DisplayDateEndProperty, value); }
         }
 
+        /// <summary>
+        ///     Gets or sets the first date to be displayed.
+        /// </summary>
+        /// <returns>The first date to display.</returns>
         public DateTime? DisplayDateStart
         {
             get { return (DateTime?)GetValue(DisplayDateStartProperty); }
             set { SetValue(DisplayDateStartProperty, value); }
         }
 
+        /// <summary>
+        ///     Gets or sets the day that is considered the beginning of the week.
+        /// </summary>
+        /// <returns>
+        ///     A <see cref="DayOfWeek" /> that represents the beginning of the week. The default is the
+        ///     <see cref="System.Globalization.DateTimeFormatInfo.FirstDayOfWeek" /> that is determined by the current culture.
+        /// </returns>
         public DayOfWeek FirstDayOfWeek
         {
             get { return (DayOfWeek)GetValue(FirstDayOfWeekProperty); }
@@ -136,8 +162,11 @@
         }
 
         /// <summary>
-        ///     Gets or sets the visible clock hands.
+        ///     Gets or sets a value indicating the visibility of the clock hands in the user interface (UI).
         /// </summary>
+        /// <returns>
+        ///     The visibility definition of the clock hands. The default is <see cref="DatePartVisibility.All" />.
+        /// </returns>
         [Category("Appearance")]
         [DefaultValue(DatePartVisibility.All)]
         public DatePartVisibility HandVisibility
@@ -146,17 +175,46 @@
             set { SetValue(HandVisibilityProperty, value); }
         }
 
+        /// <summary>
+        ///     Gets or sets a value indicating whether the clock of this control is visible in the user interface (UI). This is a
+        ///     dependency property.
+        /// </summary>
+        /// <remarks>
+        ///     If this value is set to false then <see cref="Orientation" /> is set to
+        ///     <see cref="System.Windows.Controls.Orientation.Vertical" />
+        /// </remarks>
+        /// <returns>
+        ///     true if the clock is visible; otherwise, false. The default value is true.
+        /// </returns>
+        [Category("Appearance")]
+        public bool IsClockVisible
+        {
+            get { return (bool)GetValue(IsClockVisibleProperty); }
+            set { SetValue(IsClockVisibleProperty, value); }
+        }
+
         public bool IsMilitaryTime
         {
             get { return string.IsNullOrEmpty(SpecificCultureInfo.DateTimeFormat.AMDesignator); }
         }
 
+        /// <summary>
+        ///     Gets or sets a value that enables visible-only mode, in which the contents of the <see cref="DateTimePicker" /> are
+        ///     visible but not editable.
+        /// </summary>
+        /// <returns>
+        ///     true if the <see cref="DateTimePicker" /> is read-only; otherwise, false. The default is false.
+        /// </returns>
         public bool IsReadOnly
         {
             get { return (bool)GetValue(IsReadOnlyProperty); }
             set { SetValue(IsReadOnlyProperty, value); }
         }
 
+        /// <summary>
+        ///     Gets or sets a value that indicates whether the current date will be highlighted.
+        /// </summary>
+        /// <returns>true if the current date is highlighted; otherwise, false. The default is true. </returns>
         public bool IsTodayHighlighted
         {
             get { return (bool)GetValue(IsTodayHighlightedProperty); }
@@ -166,7 +224,10 @@
         /// <summary>
         ///     Gets or sets a value that indicates the dimension by which calendar and clock are stacked.
         /// </summary>
-        /// <returns>The <see cref="System.Windows.Controls.Orientation" /> of the calendar and clock.</returns>
+        /// <returns>
+        ///     The <see cref="System.Windows.Controls.Orientation" /> of the calendar and clock. The default is
+        ///     <see cref="System.Windows.Controls.Orientation.Horizontal" />.
+        /// </returns>
         [Category("Layout")]
         public Orientation Orientation
         {
@@ -175,8 +236,11 @@
         }
 
         /// <summary>
-        ///     Gets or sets the visible time-part-selectors.
+        ///     Gets or sets a value indicating the visibility of the selectable date-time-parts in the user interface (UI).
         /// </summary>
+        /// <returns>
+        ///     visibility definition of the selectable date-time-parts. The default is <see cref="DatePartVisibility.All" />.
+        /// </returns>
         [Category("Appearance")]
         [DefaultValue(DatePartVisibility.All)]
         public DatePartVisibility PickerVisibility
@@ -185,6 +249,12 @@
             set { SetValue(PickerVisibilityProperty, value); }
         }
 
+        /// <summary>
+        ///     Gets or sets the currently selected date.
+        /// </summary>
+        /// <returns>
+        ///     The date currently selected. The default is null.
+        /// </returns>
         public DateTime? SelectedDate
         {
             get { return (DateTime?)GetValue(SelectedDateProperty); }
@@ -192,12 +262,13 @@
         }
 
         /// <summary>
-        ///     Gets or sets the source that is available for selecting the hours.
+        ///     Gets or sets a collection used to generate the content for selecting the hours.
         /// </summary>
-        /// <remarks>
-        ///     The default is a list of interger from 0 to 23 if <see cref="IsMilitaryTime" /> is false or a list of interger from
-        ///     1 to 12 otherwise.
-        /// </remarks>
+        /// <returns>
+        ///     A collection that is used to generate the content for selecting the hours. The default is a list of interger from 0
+        ///     to 23 if <see cref="IsMilitaryTime" /> is false or a list of interger from
+        ///     1 to 12 otherwise..
+        /// </returns>
         [Category("Common")]
         public ICollection<int> SourceHours
         {
@@ -206,11 +277,12 @@
         }
 
         /// <summary>
-        ///     Gets or sets the source that is available for selecting the minutes.
+        ///     Gets or sets a collection used to generate the content for selecting the minutes.
         /// </summary>
-        /// <remarks>
-        ///     The default is a list of int from 0 to 59.
-        /// </remarks>
+        /// <returns>
+        ///     A collection that is used to generate the content for selecting the minutes. The default is a list of int from
+        ///     0 to 59.
+        /// </returns>
         [Category("Common")]
         public ICollection<int> SourceMinutes
         {
@@ -219,11 +291,12 @@
         }
 
         /// <summary>
-        ///     Gets or sets the source that is available for selecting the seconds.
+        ///     Gets or sets a collection used to generate the content for selecting the seconds.
         /// </summary>
-        /// <remarks>
-        ///     The default is a list of int from 0 to 59.
-        /// </remarks>
+        /// <returns>
+        ///     A collection that is used to generate the content for selecting the minutes. The default is a list of int from
+        ///     0 to 59.
+        /// </returns>
         [Category("Common")]
         public ICollection<int> SourceSeconds
         {

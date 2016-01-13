@@ -32,7 +32,6 @@
             <StackPanel VerticalAlignment="Top">
                 <Label Content="Date picker"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
-
                 <DatePicker Margin="0, 10, 0, 0"
                             Width="150"
                             HorizontalAlignment="Center"
@@ -66,19 +65,19 @@
                         Grid.Column="2">
                 <Label Content="DateTimePicker"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
-                <Label Content="Language: en: SelectedDate=CurrentTime" />
+                <Label Content="Language: en: SelectedDate=CurrentTime IsReadOnly=True" />
                 <Controls:DateTimePicker Language="en"
                                          PickerVisibility="All"
                                          HandVisibility="All"
                                          IsReadOnly="True">
-                    <!--<i:Interaction.Behaviors>
+                    <i:Interaction.Behaviors>
                         <behaviors:DateTimeNowBehavior />
-                    </i:Interaction.Behaviors>-->
+                    </i:Interaction.Behaviors>
                 </Controls:DateTimePicker>
                 <Label Content="Language: de" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          Language="de" />
-                <Label Content="Language: ru" />
+                <Label Content="Language: ru DisplayDateStart=Now" />
                 <Controls:DateTimePicker Language="ru"
                                          DisplayDateStart="{x:Static system:DateTime.Now}" />
                 <Label Content="Language: zh (IsEnabled=false)" />
@@ -88,11 +87,10 @@
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          Language="ar"
                                          IsReadOnly="True" />
-                <Label Content="Orientation=Opendirec" />
+                <Label Content="Orientation=Vertical" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          Orientation="Vertical" />
-                <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
-                                         IsClockVisible="False" />
+                <Label Content="IsClockVisible=False" />
                 <Controls:DateTimePicker SelectedDate="{x:Static system:DateTime.Now}"
                                          IsClockVisible="False" />
                 
