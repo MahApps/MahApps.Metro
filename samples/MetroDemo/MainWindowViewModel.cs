@@ -444,7 +444,14 @@ namespace MetroDemo
                 if (_hotKey != value)
                 {
                     _hotKey = value;
-                    HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+                    if (_hotKey != null && _hotKey.Key != Key.None)
+                    {
+                        HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+                    }
+                    else
+                    {
+                        HotkeyManager.Current.Remove("demo");
+                    }
                     RaisePropertyChanged("HotKey");
                 }
             }

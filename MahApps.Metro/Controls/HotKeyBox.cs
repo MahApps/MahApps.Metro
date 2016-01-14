@@ -90,7 +90,11 @@ namespace MahApps.Metro.Controls {
             e.Handled = true;
 
             var currentModifierKeys = GetCurrentModifierKeys();
-            if (currentModifierKeys != ModifierKeys.None || !AreModifierKeysRequired)
+            if (currentModifierKeys == ModifierKeys.None && key == Key.Back)
+            {
+                HotKey = null;
+            }
+            else if (currentModifierKeys != ModifierKeys.None || !AreModifierKeysRequired)
             {
                 HotKey = new HotKey(key, currentModifierKeys);
             }
@@ -121,7 +125,7 @@ namespace MahApps.Metro.Controls {
             }
 
             var hotkey = HotKey;
-            if (hotkey.Key == Key.None) {
+            if (hotkey == null || hotkey.Key == Key.None) {
                 _textBox.Text = string.Empty;
                 return;
             }
