@@ -27,6 +27,15 @@ namespace MahApps.Metro.Controls {
             ctrl.UpdateText();
         }
 
+        public static readonly DependencyProperty AreModifierKeysRequiredProperty = DependencyProperty.Register(
+            "AreModifierKeysRequired", typeof(bool), typeof(HotKeyBox), new PropertyMetadata(default(bool)));
+
+        public bool AreModifierKeysRequired
+        {
+            get { return (bool) GetValue(AreModifierKeysRequiredProperty); }
+            set { SetValue(AreModifierKeysRequiredProperty, value); }
+        }
+
         private TextBox _textBox;
 
         static HotKeyBox() {
@@ -79,7 +88,13 @@ namespace MahApps.Metro.Controls {
             }
 
             e.Handled = true;
-            HotKey = new HotKey(key, GetCurrentModifierKeys());
+
+            var currentModifierKeys = GetCurrentModifierKeys();
+            if (currentModifierKeys != ModifierKeys.None || !AreModifierKeysRequired)
+            {
+                HotKey = new HotKey(key, currentModifierKeys);
+            }
+
             UpdateText();
         }
 

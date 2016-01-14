@@ -180,7 +180,11 @@
                 <Label Content="HotKeyBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
-                                    HotKey="{Binding HotKey}"/>
+                                    HotKey="{Binding HotKey}"
+                                    AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"/>
+                <CheckBox Margin="{StaticResource ControlMargin}"
+                          x:Name="ModifierKeysRequired"
+                          Content="Require modifier keys"/>
             </StackPanel>
 
             <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"
@@ -331,7 +335,3 @@
     </AdornerDecorator>
 
 </UserControl>
-
-
-
-
