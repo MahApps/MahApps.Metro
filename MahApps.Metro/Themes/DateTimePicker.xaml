@@ -143,7 +143,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type controls:DateTimePicker}">
-                        <Grid Background="{TemplateBinding Background}" >
+                        <Grid Background="{TemplateBinding Background}">
                             <Border x:Name="Base"
                                     BorderThickness="1"
                                     BorderBrush="{DynamicResource ControlBorderBrush}">
@@ -152,7 +152,6 @@
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
                                     </Grid.ColumnDefinitions>
-
                                     <DatePickerTextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}"
                                                        VerticalAlignment="Center"
                                                        Language="{Binding Path=Language, ElementName=PART_Calendar, Mode=OneWay}"
@@ -207,7 +206,7 @@
                                                 <Calendar x:Name="PART_Calendar"
                                                           BorderBrush="Transparent"
                                                           SelectionMode="SingleDate"
-                                                          Margin="2,0"/>
+                                                          Margin="2,0" />
                                                 <Grid VerticalAlignment="Center">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="Auto" />
@@ -274,7 +273,7 @@
                                                                        Margin="0,5,0,0"
                                                                        Opacity=".25"
                                                                        HorizontalAlignment="Center"
-                                                                       Width=".6"
+                                                                       Width="1"
                                                                        Fill="{DynamicResource BlackColorBrush}"
                                                                        Height="61"
                                                                        RenderTransformOrigin=".5,.75">
