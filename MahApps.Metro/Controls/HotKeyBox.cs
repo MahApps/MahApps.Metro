@@ -8,7 +8,8 @@ using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls {
     [TemplatePart(Name = PART_TextBox, Type = typeof(TextBox))]
-    public class HotKeyBox : Control {
+    public class HotKeyBox : Control
+    {
         private const string PART_TextBox = "PART_TextBox";
 
         public static readonly DependencyProperty HotKeyProperty = DependencyProperty.Register(
@@ -38,15 +39,18 @@ namespace MahApps.Metro.Controls {
 
         private TextBox _textBox;
 
-        static HotKeyBox() {
+        static HotKeyBox()
+        {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(HotKeyBox), new FrameworkPropertyMetadata(typeof(HotKeyBox)));
         }
 
-        public override void OnApplyTemplate() {
+        public override void OnApplyTemplate()
+        {
             base.OnApplyTemplate();
 
             _textBox = Template.FindName(PART_TextBox, this) as TextBox;
-            if (_textBox != null) {
+            if (_textBox != null)
+            {
                 _textBox.PreviewKeyDown += TextBoxOnPreviewKeyDown2;
                 _textBox.GotFocus += TextBoxOnGotFocus;
                 _textBox.LostFocus += TextBoxOnLostFocus;
@@ -60,7 +64,8 @@ namespace MahApps.Metro.Controls {
             ComponentDispatcher.ThreadPreprocessMessage += ComponentDispatcherOnThreadPreprocessMessage;
         }
 
-        private void ComponentDispatcherOnThreadPreprocessMessage(ref MSG msg, ref bool handled) {
+        private void ComponentDispatcherOnThreadPreprocessMessage(ref MSG msg, ref bool handled)
+        {
             if (msg.message == Constants.WM_HOTKEY)
             {
                 // swallow all hotkeys, so our control can catch the key strokes
@@ -73,9 +78,11 @@ namespace MahApps.Metro.Controls {
             ComponentDispatcher.ThreadPreprocessMessage -= ComponentDispatcherOnThreadPreprocessMessage;
         }
 
-        private void TextBoxOnPreviewKeyDown2(object sender, KeyEventArgs e) {
-            var key = (e.Key == Key.System ? e.SystemKey : e.Key);
-            switch (key) {
+        private void TextBoxOnPreviewKeyDown2(object sender, KeyEventArgs e)
+        {
+            var key = e.Key == Key.System ? e.SystemKey : e.Key;
+            switch (key)
+            {
                 case Key.Tab:
                 case Key.LeftShift:
                 case Key.RightShift:
@@ -103,30 +110,38 @@ namespace MahApps.Metro.Controls {
             UpdateText();
         }
 
-        private static ModifierKeys GetCurrentModifierKeys() {
+        private static ModifierKeys GetCurrentModifierKeys()
+        {
             var modifier = ModifierKeys.None;
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)) {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
                 modifier |= ModifierKeys.Control;
             }
-            if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt)) {
+            if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+            {
                 modifier |= ModifierKeys.Alt;
             }
-            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)) {
+            if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
+            {
                 modifier |= ModifierKeys.Shift;
             }
-            if (Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin)) {
+            if (Keyboard.IsKeyDown(Key.LWin) || Keyboard.IsKeyDown(Key.RWin))
+            {
                 modifier |= ModifierKeys.Windows;
             }
             return modifier;
         }
 
-        private void UpdateText() {
-            if (_textBox == null) {
+        private void UpdateText()
+        {
+            if (_textBox == null)
+            {
                 return;
             }
 
             var hotkey = HotKey;
-            if (hotkey == null || hotkey.Key == Key.None) {
+            if (hotkey == null || hotkey.Key == Key.None)
+            {
                 _textBox.Text = string.Empty;
                 return;
             }
@@ -174,7 +189,8 @@ namespace MahApps.Metro.Controls {
             return _key == other._key && _modifierKeys == other._modifierKeys;
         }
 
-        public override string ToString() {
+        public override string ToString()
+        {
             var sb = new StringBuilder();
             if ((_modifierKeys & ModifierKeys.Alt) == ModifierKeys.Alt)
             {
