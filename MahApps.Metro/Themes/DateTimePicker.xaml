@@ -155,6 +155,7 @@
 
                                     <DatePickerTextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}"
                                                        VerticalAlignment="Center"
+                                                       Language="{Binding Path=Language, ElementName=PART_Calendar, Mode=OneWay}"
                                                        controls:TextBoxHelper.Watermark="{TemplateBinding controls:TextBoxHelper.Watermark}" />
                                     <Button x:Name="PART_Button"
                                             Style="{DynamicResource ChromelessButtonStyle}"
