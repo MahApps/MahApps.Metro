@@ -50,6 +50,7 @@ namespace MahApps.Metro.Controls {
                 _textBox.PreviewKeyDown += TextBoxOnPreviewKeyDown2;
                 _textBox.GotFocus += TextBoxOnGotFocus;
                 _textBox.LostFocus += TextBoxOnLostFocus;
+                _textBox.TextChanged += (sender, args) => _textBox.SelectionStart = _textBox.Text.Length;
                 UpdateText();
             }
         }
