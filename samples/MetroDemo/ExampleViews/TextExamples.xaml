@@ -29,8 +29,12 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="0"
+            <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="TextBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
@@ -121,11 +125,9 @@
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.SelectAllOnFocus="True"
                          Text="Select all on focus" />
-                <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
-                                    HotKey="{Binding HotKey}"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="1"
+            <StackPanel Grid.Column="1" Grid.Row="0"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="RichTextBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
@@ -173,7 +175,15 @@
                 </RichTextBox>
             </StackPanel>
 
-            <StackPanel Grid.Column="2"
+            <StackPanel Grid.Column="1" Grid.Row="1"
+                        Margin="{StaticResource ColumnMargin}">
+                <Label Content="HotKeyBox"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+                <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
+                                    HotKey="{Binding HotKey}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="PasswordBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
@@ -218,7 +228,7 @@
                              ToolTip="Select all on focus"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="3"
+            <StackPanel Grid.Column="3" Grid.Row="0" Grid.RowSpan="2"
                         Grid.IsSharedSizeScope="True"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="NumericUpDown"
@@ -321,4 +331,7 @@
     </AdornerDecorator>
 
 </UserControl>
+
+
+
 
