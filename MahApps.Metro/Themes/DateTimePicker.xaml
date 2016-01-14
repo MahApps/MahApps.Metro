@@ -154,6 +154,7 @@
                                     </Grid.ColumnDefinitions>
                                     <DatePickerTextBox Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}"
                                                        VerticalAlignment="Center"
+                                                       IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                                                        Language="{Binding Path=Language, ElementName=PART_Calendar, Mode=OneWay}"
                                                        controls:TextBoxHelper.Watermark="{TemplateBinding controls:TextBoxHelper.Watermark}" />
                                     <Button x:Name="PART_Button"
