@@ -106,7 +106,7 @@
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(typeof(DateTimePicker)));
             VerticalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(VerticalAlignment.Center));
             HorizontalContentAlignmentProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
-            LanguageProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(OnLanguageChanged));
+            LanguageProperty.OverrideMetadata(typeof(DateTimePicker), new FrameworkPropertyMetadata(OnCultureChanged));
         }
 
         /// <summary>
@@ -409,11 +409,6 @@
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((DateTimePicker)d).SetHandVisibility((DatePartVisibility)e.NewValue);
-        }
-
-        private static void OnLanguageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            ((DateTimePicker)d).ApplyCulture();
         }
 
         private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
