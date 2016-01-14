@@ -4,6 +4,9 @@
     using System.Globalization;
     using System.Windows.Data;
 
+    /// <summary>
+    /// Converts a double representing either hour/minute/second to the corresponding angle.
+    /// </summary>
     [ValueConversion(typeof(double), typeof(double))]
     public class ClockDegreeConverter : IValueConverter
     {
@@ -20,7 +23,7 @@
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new InvalidOperationException();
         }
     }
 }

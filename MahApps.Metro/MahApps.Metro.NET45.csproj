@@ -134,7 +134,7 @@
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
-    <Compile Include="Controls\DatePartVisibility.cs" />
+    <Compile Include="Controls\TimePartVisibility.cs" />
     <Compile Include="Controls\DateTimePicker.cs" />
     <Compile Include="Controls\Dialogs\DialogCoordinator.cs" />
     <Compile Include="Controls\Dialogs\DialogParticipation.cs" />

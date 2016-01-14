@@ -37,9 +37,9 @@
         public static readonly DependencyProperty FirstDayOfWeekProperty = DatePicker.FirstDayOfWeekProperty.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty HandVisibilityProperty = DependencyProperty.Register(
             "HandVisibility",
-            typeof(DatePartVisibility),
+            typeof(TimePartVisibility),
             typeof(DateTimePicker),
-            new PropertyMetadata(DatePartVisibility.All, OnHandVisibilityChanged));
+            new PropertyMetadata(TimePartVisibility.All, OnHandVisibilityChanged));
         public static readonly DependencyProperty IsClockVisibleProperty = DependencyProperty.Register(
             "IsClockVisible",
             typeof(bool),
@@ -59,9 +59,9 @@
             new PropertyMetadata(Orientation.Horizontal, null, CoerceOrientation));
         public static readonly DependencyProperty PickerVisibilityProperty = DependencyProperty.Register(
             "PickerVisibility",
-            typeof(DatePartVisibility),
+            typeof(TimePartVisibility),
             typeof(DateTimePicker),
-            new PropertyMetadata(DatePartVisibility.All, OnPickerVisibilityChanged));
+            new PropertyMetadata(TimePartVisibility.All, OnPickerVisibilityChanged));
         public static readonly RoutedEvent SelectedDateChangedEvent = DatePicker.SelectedDateChangedEvent.AddOwner(typeof(DateTimePicker));
         public static readonly DependencyProperty SelectedDateProperty = DatePicker.SelectedDateProperty.AddOwner(typeof(DateTimePicker), new PropertyMetadata(OnSelectedDateChanged));
         public static readonly DependencyProperty SourceHoursProperty = DependencyProperty.Register(
@@ -190,13 +190,13 @@
         ///     Gets or sets a value indicating the visibility of the clock hands in the user interface (UI).
         /// </summary>
         /// <returns>
-        ///     The visibility definition of the clock hands. The default is <see cref="DatePartVisibility.All" />.
+        ///     The visibility definition of the clock hands. The default is <see cref="TimePartVisibility.All" />.
         /// </returns>
         [Category("Appearance")]
-        [DefaultValue(DatePartVisibility.All)]
-        public DatePartVisibility HandVisibility
+        [DefaultValue(TimePartVisibility.All)]
+        public TimePartVisibility HandVisibility
         {
-            get { return (DatePartVisibility)GetValue(HandVisibilityProperty); }
+            get { return (TimePartVisibility)GetValue(HandVisibilityProperty); }
             set { SetValue(HandVisibilityProperty, value); }
         }
 
@@ -229,6 +229,10 @@
             set { SetValue(IsDropDownOpenProperty, value); }
         }
 
+        /// <summary>
+        /// Gets a value that indicates if the <see cref="DateTimeFormatInfo.AMDesignator"/> that is specified by the <see cref="CultureInfo"/> 
+        /// set by the <see cref="Culture"/> (<see cref="FrameworkElement.Language"/> if null) has not a value.
+        /// </summary>
         public bool IsMilitaryTime
         {
             get { return string.IsNullOrEmpty(SpecificCultureInfo.DateTimeFormat.AMDesignator); }
@@ -275,13 +279,13 @@
         ///     Gets or sets a value indicating the visibility of the selectable date-time-parts in the user interface (UI).
         /// </summary>
         /// <returns>
-        ///     visibility definition of the selectable date-time-parts. The default is <see cref="DatePartVisibility.All" />.
+        ///     visibility definition of the selectable date-time-parts. The default is <see cref="TimePartVisibility.All" />.
         /// </returns>
         [Category("Appearance")]
-        [DefaultValue(DatePartVisibility.All)]
-        public DatePartVisibility PickerVisibility
+        [DefaultValue(TimePartVisibility.All)]
+        public TimePartVisibility PickerVisibility
         {
-            get { return (DatePartVisibility)GetValue(PickerVisibilityProperty); }
+            get { return (TimePartVisibility)GetValue(PickerVisibilityProperty); }
             set { SetValue(PickerVisibilityProperty, value); }
         }
 
@@ -441,7 +445,7 @@
 
         private static void OnHandVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((DateTimePicker)d).SetHandVisibility((DatePartVisibility)e.NewValue);
+            ((DateTimePicker)d).SetHandVisibility((TimePartVisibility)e.NewValue);
         }
 
         private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -458,7 +462,7 @@
 
         private static void OnPickerVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((DateTimePicker)d).SetPickerVisibility((DatePartVisibility)e.NewValue);
+            ((DateTimePicker)d).SetPickerVisibility((TimePartVisibility)e.NewValue);
         }
 
         private static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -479,19 +483,19 @@
             }
         }
 
-        private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, DatePartVisibility visibility)
+        private static void SetVisibility(UIElement partHours, UIElement partMinutes, UIElement partSeconds, TimePartVisibility visibility)
         {
             if (partHours != null)
             {
-                partHours.Visibility = visibility.HasFlag(DatePartVisibility.Hour) ? Visibility.Visible : Visibility.Collapsed;
+                partHours.Visibility = visibility.HasFlag(TimePartVisibility.Hour) ? Visibility.Visible : Visibility.Collapsed;
             }
             if (partMinutes != null)
             {
-                partMinutes.Visibility = visibility.HasFlag(DatePartVisibility.Minute) ? Visibility.Visible : Visibility.Collapsed;
+                partMinutes.Visibility = visibility.HasFlag(TimePartVisibility.Minute) ? Visibility.Visible : Visibility.Collapsed;
             }
             if (partSeconds != null)
             {
-                partSeconds.Visibility = visibility.HasFlag(DatePartVisibility.Second) ? Visibility.Visible : Visibility.Collapsed;
+                partSeconds.Visibility = visibility.HasFlag(TimePartVisibility.Second) ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
@@ -678,7 +682,7 @@
         {
             if (_ampmSwitcher != null)
             {
-                if (!PickerVisibility.HasFlag(DatePartVisibility.Hour))
+                if (!PickerVisibility.HasFlag(TimePartVisibility.Hour))
                 {
                     _ampmSwitcher.Visibility = Visibility.Collapsed;
                 }
@@ -707,7 +711,7 @@
             SetDefaultTimeOfDayValue(_ampmSwitcher);
         }
 
-        private void SetHandVisibility(DatePartVisibility visibility)
+        private void SetHandVisibility(TimePartVisibility visibility)
         {
             SetVisibility(_hourHand, _minuteHand, _secondHand, visibility);
         }
@@ -745,7 +749,7 @@
             _deactivateRangeBaseEvent = false;
         }
 
-        private void SetPickerVisibility(DatePartVisibility visibility)
+        private void SetPickerVisibility(TimePartVisibility visibility)
         {
             SetVisibility(_hourInput, _minuteInput, _secondInput, visibility);
             SetAmPmVisibility();

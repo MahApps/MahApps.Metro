@@ -32,6 +32,7 @@
             <StackPanel VerticalAlignment="Top">
                 <Label Content="Date picker"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
+
                 <DatePicker Margin="0, 10, 0, 0"
                             Width="150"
                             HorizontalAlignment="Center"
@@ -116,14 +117,14 @@
                             <ComboBox Name="DateTimePickerPickerVisibility"
                                       Grid.Column="1"
                                       Grid.Row="1"
-                                      SelectedItem="{x:Static Controls:DatePartVisibility.All}">
+                                      SelectedItem="{x:Static Controls:TimePartVisibility.All}">
                                 <ComboBox.ItemsSource>
-                                    <x:Array Type="Controls:DatePartVisibility">
-                                        <Controls:DatePartVisibility>All</Controls:DatePartVisibility>
-                                        <Controls:DatePartVisibility>HourMinute</Controls:DatePartVisibility>
-                                        <Controls:DatePartVisibility>Hour</Controls:DatePartVisibility>
-                                        <Controls:DatePartVisibility>Minute</Controls:DatePartVisibility>
-                                        <Controls:DatePartVisibility>Second</Controls:DatePartVisibility>
+                                    <x:Array Type="Controls:TimePartVisibility">
+                                        <Controls:TimePartVisibility>All</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>HourMinute</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Hour</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Minute</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Second</Controls:TimePartVisibility>
                                     </x:Array>
                                 </ComboBox.ItemsSource>
                             </ComboBox>
@@ -133,18 +134,17 @@
                             <ComboBox Name="DateTimePickerHandVisibility"
                                       Grid.Column="1"
                                       Grid.Row="2"
-                                      SelectedItem="{x:Static Controls:DatePartVisibility.All}">
+                                      SelectedItem="{x:Static Controls:TimePartVisibility.All}">
                                 <ComboBox.ItemsSource>
-                                    <x:Array Type="Controls:DatePartVisibility">
-                                        <Controls:DatePartVisibility>All</Controls:DatePartVisibility>
-                                        <Controls:DatePartVisibility>HourMinute</Controls:DatePartVisibility>
-                                        <Controls:DatePartVisibility>Hour</Controls:DatePartVisibility>
-                                        <Controls:DatePartVisibility>Minute</Controls:DatePartVisibility>
-                                        <Controls:DatePartVisibility>Second</Controls:DatePartVisibility>
+                                    <x:Array Type="Controls:TimePartVisibility">
+                                        <Controls:TimePartVisibility>All</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>HourMinute</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Hour</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Minute</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Second</Controls:TimePartVisibility>
                                     </x:Array>
                                 </ComboBox.ItemsSource>
                             </ComboBox>
-
                             <Label Content="CultureInfo"
                                    Grid.Column="0"
                                    Grid.Row="3" />
@@ -156,16 +156,13 @@
                                       VerticalAlignment="Center"
                                       Name="DateTimePickerCulture" />
                         </Grid>
-
-                        <Controls:DateTimePicker Name="DateTimePicker"
-                                                 Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                        <Controls:DateTimePicker Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                                                  PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
                                                  HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
                                                  IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
                                                  IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
                                                  Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
                                                  IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}" />
-
                         <GroupBox Header="Current time">
                             <Controls:DateTimePicker Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                                                      PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
@@ -179,11 +176,10 @@
                                 </i:Interaction.Behaviors>
                             </Controls:DateTimePicker>
                         </GroupBox>
-
                     </StackPanel>
                 </GroupBox>
-
             </StackPanel>
         </Grid>
     </AdornerDecorator>
+
 </UserControl>
