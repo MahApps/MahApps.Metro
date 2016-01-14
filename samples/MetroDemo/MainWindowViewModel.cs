@@ -244,6 +244,11 @@ namespace MetroDemo
                     return "No date given!";
                 }
 
+                if (columnName == "HotKey" && this.HotKey != null && this.HotKey.Key == Key.D && this.HotKey.ModifierKeys == ModifierKeys.Shift)
+                {
+                    return "SHIFT-D is not allowed";
+                }
+
                 return null;
             }
         }
