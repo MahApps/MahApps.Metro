@@ -354,11 +354,6 @@
             SetDefaultTimeOfDayValues();
             SubscribeToEvents();
             ApplyCulture();
-
-            if (!IsMilitaryTime)
-            {
-                CoerceValue(SourceHoursProperty);
-            }
         }
 
         protected virtual void OnSelectedDateChanged()
@@ -472,6 +467,7 @@
             }
             SetDatePartValues();
 
+            CoerceValue(SourceHoursProperty);
             FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
         }
 
