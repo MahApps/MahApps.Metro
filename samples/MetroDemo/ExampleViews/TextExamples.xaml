@@ -121,6 +121,8 @@
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.SelectAllOnFocus="True"
                          Text="Select all on focus" />
+                <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
+                                    HotKey="{Binding HotKey}"/>
             </StackPanel>
 
             <StackPanel Grid.Column="1"
@@ -223,9 +225,9 @@
                        Style="{DynamicResource DescriptionHeaderStyle}" />
 
                 <UniformGrid Columns="2">
-                    <CheckBox x:Name="ReadOnlyCheck"
-                              Content="IsReadOnly"
-                              Margin="1" />
+                <CheckBox x:Name="ReadOnlyCheck"
+                          Content="IsReadOnly"
+                          Margin="1" />
                     <CheckBox x:Name="HasDecimalsCheckBox"
                               Content="HasDecimals"
                               IsChecked="True"
@@ -240,7 +242,7 @@
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Maximum="10" />
-             
+
                 <Label Content='Interval="5"' />
                 <Controls:NumericUpDown Value="5" IsTabStop="False"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
@@ -319,3 +321,4 @@
     </AdornerDecorator>
 
 </UserControl>
+

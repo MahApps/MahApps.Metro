@@ -14,6 +14,8 @@ using System.Windows.Input;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleViews;
+using NHotkey;
+using NHotkey.Wpf;
 
 namespace MetroDemo
 {
@@ -48,7 +50,7 @@ namespace MetroDemo
         }
     }
 
-    public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo
+    public class MainWindowViewModel : INotifyPropertyChanged, IDataErrorInfo, IDisposable
     {
         private readonly IDialogCoordinator _dialogCoordinator;
         int? _integerGreater10Property;
@@ -91,6 +93,13 @@ namespace MetroDemo
             BrushResources = FindBrushResources();
 
             CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).ToList();
+
+            HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+        }
+
+        public void Dispose()
+        {
+            HotkeyManager.Current.Remove("demo");
         }
 
         public string Title { get; set; }
@@ -367,7 +376,7 @@ namespace MetroDemo
             });
             customDialog.Content = new CustomDialogExample { DataContext = customDialogExampleContent};            
 
-            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);            
+            await _dialogCoordinator.ShowMetroDialogAsync(this, customDialog);
         }
 
         public IEnumerable<string> BrushResources { get; private set; }
@@ -423,6 +432,29 @@ namespace MetroDemo
             {
                 return TemplateOne;
             }
+        }
+
+        private HotKey _hotKey = new HotKey(Key.Home, ModifierKeys.Control | ModifierKeys.Shift);
+
+        public HotKey HotKey
+        {
+            get { return _hotKey; }
+            set
+            {
+                if (_hotKey != value)
+                {
+                    _hotKey = value;
+                    HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+                    RaisePropertyChanged("HotKey");
+                }
+            }
+        }
+
+        private async Task OnHotKey(object sender, HotkeyEventArgs e)
+        {
+            await ((MetroWindow)Application.Current.MainWindow).ShowMessageAsync(
+                "Hotkey pressed",
+                "You pressed the hotkey '" + HotKey + "' registered with the name '" + e.Name + "'");
         }
     }
 }
