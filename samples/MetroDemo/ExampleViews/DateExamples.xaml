@@ -85,49 +85,78 @@
                         <CheckBox Name="DateTimePickerIsClockVisible"
                                   Content="IsClockVisible"
                                   IsChecked="True" />
-                        <Label Content="Orientation" />
-                        <ComboBox Name="DateTimePickerOrientation"
-                                  SelectedItem="{x:Static Orientation.Horizontal}">
-                            <ComboBox.ItemsSource>
-                                <x:Array Type="Orientation">
-                                    <Orientation>Vertical</Orientation>
-                                    <Orientation>Horizontal</Orientation>
-                                </x:Array>
-                            </ComboBox.ItemsSource>
-                        </ComboBox>
-                        <Label Content="PickerVisibility" />
-                        <ComboBox Name="DateTimePickerPickerVisibility"
-                                  SelectedItem="{x:Static Controls:DatePartVisibility.All}">
-                            <ComboBox.ItemsSource>
-                                <x:Array Type="Controls:DatePartVisibility">
-                                    <Controls:DatePartVisibility>All</Controls:DatePartVisibility>
-                                    <Controls:DatePartVisibility>HourMinute</Controls:DatePartVisibility>
-                                    <Controls:DatePartVisibility>Hour</Controls:DatePartVisibility>
-                                    <Controls:DatePartVisibility>Minute</Controls:DatePartVisibility>
-                                    <Controls:DatePartVisibility>Second</Controls:DatePartVisibility>
-                                </x:Array>
-                            </ComboBox.ItemsSource>
-                        </ComboBox>
-                        <Label Content="HandVisibility" />
-                        <ComboBox Name="DateTimePickerHandVisibility"
-                                  SelectedItem="{x:Static Controls:DatePartVisibility.All}">
-                            <ComboBox.ItemsSource>
-                                <x:Array Type="Controls:DatePartVisibility">
-                                    <Controls:DatePartVisibility>All</Controls:DatePartVisibility>
-                                    <Controls:DatePartVisibility>HourMinute</Controls:DatePartVisibility>
-                                    <Controls:DatePartVisibility>Hour</Controls:DatePartVisibility>
-                                    <Controls:DatePartVisibility>Minute</Controls:DatePartVisibility>
-                                    <Controls:DatePartVisibility>Second</Controls:DatePartVisibility>
-                                </x:Array>
-                            </ComboBox.ItemsSource>
-                        </ComboBox>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Orientation"
+                                   Grid.Column="0"
+                                   Grid.Row="0" />
+                            <ComboBox Name="DateTimePickerOrientation"
+                                      Grid.Column="1"
+                                      Grid.Row="0"
+                                      SelectedItem="{x:Static Orientation.Horizontal}">
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="Orientation">
+                                        <Orientation>Vertical</Orientation>
+                                        <Orientation>Horizontal</Orientation>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                            <Label Content="PickerVisibility"
+                                   Grid.Column="0"
+                                   Grid.Row="1" />
+                            <ComboBox Name="DateTimePickerPickerVisibility"
+                                      Grid.Column="1"
+                                      Grid.Row="1"
+                                      SelectedItem="{x:Static Controls:DatePartVisibility.All}">
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="Controls:DatePartVisibility">
+                                        <Controls:DatePartVisibility>All</Controls:DatePartVisibility>
+                                        <Controls:DatePartVisibility>HourMinute</Controls:DatePartVisibility>
+                                        <Controls:DatePartVisibility>Hour</Controls:DatePartVisibility>
+                                        <Controls:DatePartVisibility>Minute</Controls:DatePartVisibility>
+                                        <Controls:DatePartVisibility>Second</Controls:DatePartVisibility>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                            <Label Content="HandVisibility"
+                                   Grid.Column="0"
+                                   Grid.Row="2" />
+                            <ComboBox Name="DateTimePickerHandVisibility"
+                                      Grid.Column="1"
+                                      Grid.Row="2"
+                                      SelectedItem="{x:Static Controls:DatePartVisibility.All}">
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="Controls:DatePartVisibility">
+                                        <Controls:DatePartVisibility>All</Controls:DatePartVisibility>
+                                        <Controls:DatePartVisibility>HourMinute</Controls:DatePartVisibility>
+                                        <Controls:DatePartVisibility>Hour</Controls:DatePartVisibility>
+                                        <Controls:DatePartVisibility>Minute</Controls:DatePartVisibility>
+                                        <Controls:DatePartVisibility>Second</Controls:DatePartVisibility>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
 
-                        <Label Content="CultureInfo" />
-                        <ComboBox Controls:TextBoxHelper.ClearTextButton="True"
-                                  ItemsSource="{Binding CultureInfos, Mode=OneWay}"
-                                  DisplayMemberPath="DisplayName"
-                                  VerticalAlignment="Center"
-                                  Name="DateTimePickerCulture" />
+                            <Label Content="CultureInfo"
+                                   Grid.Column="0"
+                                   Grid.Row="3" />
+                            <ComboBox Controls:TextBoxHelper.ClearTextButton="True"
+                                      Grid.Column="1"
+                                      Grid.Row="3"
+                                      ItemsSource="{Binding CultureInfos, Mode=OneWay}"
+                                      DisplayMemberPath="DisplayName"
+                                      VerticalAlignment="Center"
+                                      Name="DateTimePickerCulture" />
+                        </Grid>
+
                         <Controls:DateTimePicker Name="DateTimePicker"
                                                  Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
                                                  PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"

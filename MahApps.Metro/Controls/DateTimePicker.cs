@@ -92,6 +92,7 @@
         private Selector _ampmSwitcher;
         private Button _button;
         private System.Windows.Controls.Calendar _calendar;
+        private bool _deactivateRangeBaseEvent;
         private UIElement _hourHand;
         private Selector _hourInput;
         private UIElement _minuteHand;
@@ -471,7 +472,10 @@
         {
             if (selector != null)
             {
-                selector.SelectedValue = 0;
+                if (selector.SelectedValue == null)
+                {
+                    selector.SelectedIndex = 0;
+                }
             }
         }
 
@@ -510,21 +514,33 @@
 
         private void ApplyCulture()
         {
+            _deactivateRangeBaseEvent = true;
             if (_ampmSwitcher != null)
             {
                 _ampmSwitcher.Items.Clear();
-                _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.AMDesignator);
-                _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.PMDesignator);
+                if (!string.IsNullOrEmpty(SpecificCultureInfo.DateTimeFormat.AMDesignator))
+                {
+                    _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.AMDesignator);
+                }
+                if (!string.IsNullOrEmpty(SpecificCultureInfo.DateTimeFormat.PMDesignator))
+                {
+                    _ampmSwitcher.Items.Add(SpecificCultureInfo.DateTimeFormat.PMDesignator);
+                }
             }
             if (_calendar != null)
             {
                 _calendar.Language = XmlLanguage.GetLanguage(SpecificCultureInfo.IetfLanguageTag);
             }
-            SetDatePartValues();
             SetAmPmVisibility();
 
             CoerceValue(SourceHoursProperty);
             FirstDayOfWeek = SpecificCultureInfo.DateTimeFormat.FirstDayOfWeek;
+            if (SelectedDate.HasValue)
+            {
+                SetHourPartValues(SelectedDate.Value.TimeOfDay);
+            }
+            SetDefaultTimeOfDayValues();
+            _deactivateRangeBaseEvent = false;
         }
 
         /// <summary>
@@ -627,6 +643,10 @@
 
         private void OnRangeBaseValueChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (_deactivateRangeBaseEvent)
+            {
+                return;
+            }
             _timeOfDayChanged = true;
             SetDatePartValues();
         }
@@ -641,7 +661,6 @@
             {
                 SetDefaultTimeOfDayValues();
             }
-            SetDatePartValues();
             OnSelectedDateChanged();
         }
 
@@ -674,16 +693,10 @@
         {
             var dateTime = GetCorrectDateTime();
             DisplayDate = dateTime != DateTime.MinValue ? dateTime : DateTime.Today;
-            if (SelectedDate != null)
+            if (SelectedDate != DisplayDate || _popup != null && _popup.IsOpen)
             {
                 SelectedDate = DisplayDate;
             }
-            else if (SelectedDate == null && _popup != null && _popup.IsOpen)
-            {
-                SelectedDate = DisplayDate;
-            }
-
-            SetHourPartValues(dateTime.TimeOfDay);
         }
 
         private void SetDefaultTimeOfDayValues()
@@ -691,6 +704,7 @@
             SetDefaultTimeOfDayValue(_hourInput);
             SetDefaultTimeOfDayValue(_minuteInput);
             SetDefaultTimeOfDayValue(_secondInput);
+            SetDefaultTimeOfDayValue(_ampmSwitcher);
         }
 
         private void SetHandVisibility(DatePartVisibility visibility)
@@ -700,6 +714,7 @@
 
         private void SetHourPartValues(TimeSpan timeOfDay)
         {
+            _deactivateRangeBaseEvent = true;
             if (_hourInput != null)
             {
                 if (!IsMilitaryTime)
@@ -727,6 +742,7 @@
             {
                 _secondInput.SelectedValue = timeOfDay.Seconds;
             }
+            _deactivateRangeBaseEvent = false;
         }
 
         private void SetPickerVisibility(DatePartVisibility visibility)
