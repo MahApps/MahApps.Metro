@@ -180,6 +180,7 @@
                 <Label Content="HotKeyBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
                 <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
+                                    Watermark="Enter hot key"
                                     HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
                                     AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"/>
                 <TextBlock Margin="{StaticResource ControlMargin}"

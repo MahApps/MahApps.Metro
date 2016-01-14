@@ -26,7 +26,8 @@
                              FontFamily="{TemplateBinding FontFamily}"
                              FontSize="{TemplateBinding FontSize}"
                              Foreground="{TemplateBinding Foreground}"
-                             Padding="{TemplateBinding Padding}" />
+                             Padding="{TemplateBinding Padding}"
+                             Controls:TextBoxHelper.Watermark="{TemplateBinding Watermark}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

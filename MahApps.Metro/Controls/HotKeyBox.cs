@@ -37,6 +37,15 @@ namespace MahApps.Metro.Controls {
             set { SetValue(AreModifierKeysRequiredProperty, value); }
         }
 
+        public static readonly DependencyProperty WatermarkProperty = DependencyProperty.Register(
+            "Watermark", typeof(string), typeof(HotKeyBox), new PropertyMetadata(default(string)));
+
+        public string Watermark
+        {
+            get { return (string) GetValue(WatermarkProperty); }
+            set { SetValue(WatermarkProperty, value); }
+        }
+
         private TextBox _textBox;
 
         static HotKeyBox()
@@ -46,6 +55,14 @@ namespace MahApps.Metro.Controls {
 
         public override void OnApplyTemplate()
         {
+            if (_textBox != null)
+            {
+                _textBox.PreviewKeyDown -= TextBoxOnPreviewKeyDown2;
+                _textBox.GotFocus -= TextBoxOnGotFocus;
+                _textBox.LostFocus -= TextBoxOnLostFocus;
+                _textBox.TextChanged -= TextBoxOnTextChanged;
+            }
+
             base.OnApplyTemplate();
 
             _textBox = Template.FindName(PART_TextBox, this) as TextBox;
@@ -54,9 +71,14 @@ namespace MahApps.Metro.Controls {
                 _textBox.PreviewKeyDown += TextBoxOnPreviewKeyDown2;
                 _textBox.GotFocus += TextBoxOnGotFocus;
                 _textBox.LostFocus += TextBoxOnLostFocus;
-                _textBox.TextChanged += (sender, args) => _textBox.SelectionStart = _textBox.Text.Length;
+                _textBox.TextChanged += TextBoxOnTextChanged;
                 UpdateText();
             }
+        }
+
+        private void TextBoxOnTextChanged(object sender, TextChangedEventArgs args)
+        {
+            _textBox.SelectionStart = _textBox.Text.Length;
         }
 
         private void TextBoxOnGotFocus(object sender, RoutedEventArgs routedEventArgs)
