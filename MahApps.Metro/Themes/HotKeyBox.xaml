@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
+                    xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
+                    xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
     <Style TargetType="{x:Type Controls:HotKeyBox}">
         <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
@@ -27,7 +28,19 @@
                              FontSize="{TemplateBinding FontSize}"
                              Foreground="{TemplateBinding Foreground}"
                              Padding="{TemplateBinding Padding}"
+                             Text="{TemplateBinding Text}"
                              Controls:TextBoxHelper.Watermark="{TemplateBinding Watermark}"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal">
+                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper">
+                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Converter={Converters:ToUpperConverter}, Mode=OneWay}" />
+                        </Trigger>
+                        <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Lower">
+                            <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Converter={Converters:ToLowerConverter}, Mode=OneWay}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

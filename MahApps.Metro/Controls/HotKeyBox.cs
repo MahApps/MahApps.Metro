@@ -46,6 +46,17 @@ namespace MahApps.Metro.Controls {
             set { SetValue(WatermarkProperty, value); }
         }
 
+        private static readonly DependencyPropertyKey TextPropertyKey = DependencyProperty.RegisterReadOnly(
+            "Text", typeof(string), typeof(HotKeyBox), new PropertyMetadata(default(string)));
+
+        public static readonly DependencyProperty TextProperty = TextPropertyKey.DependencyProperty;
+
+        public string Text
+        {
+            get { return (string) GetValue(TextProperty); }
+            private set { SetValue(TextPropertyKey, value); }
+        }
+
         private TextBox _textBox;
 
         static HotKeyBox()
@@ -154,21 +165,9 @@ namespace MahApps.Metro.Controls {
             return modifier;
         }
 
-        private void UpdateText()
-        {
-            if (_textBox == null)
-            {
-                return;
-            }
-
+        private void UpdateText() {
             var hotkey = HotKey;
-            if (hotkey == null || hotkey.Key == Key.None)
-            {
-                _textBox.Text = string.Empty;
-                return;
-            }
-
-            _textBox.Text = hotkey.ToString();
+            Text = hotkey == null || hotkey.Key == Key.None ? string.Empty : hotkey.ToString();
         }
     }
 

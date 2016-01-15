@@ -182,6 +182,7 @@
                 <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
                                     Watermark="Enter hot key"
                                     HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                    Controls:ControlsHelper.ContentCharacterCasing="Upper"
                                     AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"/>
                 <TextBlock Margin="{StaticResource ControlMargin}"
                            Text="Try SHIFT+D to demonstrate validation"
@@ -264,7 +265,7 @@
                 <Label Content='Interval="5"' />
                 <Controls:NumericUpDown Value="5" IsTabStop="False"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"                                        
+                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
                                         ButtonsAlignment="Left"
                                         Interval="5" />
@@ -272,7 +273,7 @@
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.Watermark="No Speedup when long pressed"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"                                        
+                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Speedup="false" />
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.Watermark="Speedup when pressed after 1000ms"
@@ -330,7 +331,7 @@
                 <Label Content="Select all on focus" />
                 <Controls:NumericUpDown Value="500" IsTabStop="False"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"                                        
+                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Controls:TextBoxHelper.SelectAllOnFocus="True"
                                         ButtonsAlignment="Left"
                                         Interval="5" />
