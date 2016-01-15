@@ -165,7 +165,8 @@ namespace MahApps.Metro.Controls {
             return modifier;
         }
 
-        private void UpdateText() {
+        private void UpdateText()
+        {
             var hotkey = HotKey;
             Text = hotkey == null || hotkey.Key == Key.None ? string.Empty : hotkey.ToString();
         }
