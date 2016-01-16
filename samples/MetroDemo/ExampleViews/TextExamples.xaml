@@ -29,8 +29,12 @@
                 <ColumnDefinition />
                 <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-            <StackPanel Grid.Column="0"
+            <StackPanel Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="TextBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
@@ -123,7 +127,7 @@
                          Text="Select all on focus" />
             </StackPanel>
 
-            <StackPanel Grid.Column="1"
+            <StackPanel Grid.Column="1" Grid.Row="0"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="RichTextBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
@@ -171,7 +175,24 @@
                 </RichTextBox>
             </StackPanel>
 
-            <StackPanel Grid.Column="2"
+            <StackPanel Grid.Column="1" Grid.Row="1"
+                        Margin="{StaticResource ColumnMargin}">
+                <Label Content="HotKeyBox"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+                <Controls:HotKeyBox Margin="{StaticResource ControlMargin}"
+                                    Watermark="Enter hot key"
+                                    HotKey="{Binding HotKey, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True}"
+                                    Controls:ControlsHelper.ContentCharacterCasing="Upper"
+                                    AreModifierKeysRequired="{Binding ElementName=ModifierKeysRequired, Path=IsChecked}"/>
+                <TextBlock Margin="{StaticResource ControlMargin}"
+                           Text="Try SHIFT+D to demonstrate validation"
+                           Foreground="{DynamicResource DarkIdealForegroundDisabledBrush}"/>
+                <CheckBox Margin="{StaticResource ControlMargin}"
+                          x:Name="ModifierKeysRequired"
+                          Content="Require modifier keys"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="PasswordBox"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
@@ -216,16 +237,16 @@
                              ToolTip="Select all on focus"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="3"
+            <StackPanel Grid.Column="3" Grid.Row="0" Grid.RowSpan="2"
                         Grid.IsSharedSizeScope="True"
                         Margin="{StaticResource ColumnMargin}">
                 <Label Content="NumericUpDown"
                        Style="{DynamicResource DescriptionHeaderStyle}" />
 
                 <UniformGrid Columns="2">
-                    <CheckBox x:Name="ReadOnlyCheck"
-                              Content="IsReadOnly"
-                              Margin="1" />
+                <CheckBox x:Name="ReadOnlyCheck"
+                          Content="IsReadOnly"
+                          Margin="1" />
                     <CheckBox x:Name="HasDecimalsCheckBox"
                               Content="HasDecimals"
                               IsChecked="True"
@@ -240,11 +261,11 @@
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
                                         HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Maximum="10" />
-             
+
                 <Label Content='Interval="5"' />
                 <Controls:NumericUpDown Value="5" IsTabStop="False"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"                                        
+                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Controls:TextBoxHelper.ClearTextButton="True"
                                         ButtonsAlignment="Left"
                                         Interval="5" />
@@ -252,7 +273,7 @@
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.Watermark="No Speedup when long pressed"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"                                        
+                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Speedup="false" />
                 <Controls:NumericUpDown Margin="{StaticResource ControlMargin}"
                                         Controls:TextBoxHelper.Watermark="Speedup when pressed after 1000ms"
@@ -310,7 +331,7 @@
                 <Label Content="Select all on focus" />
                 <Controls:NumericUpDown Value="500" IsTabStop="False"
                                         IsReadOnly="{Binding ElementName=ReadOnlyCheck, Path=IsChecked, Mode=TwoWay}"
-                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"                                        
+                                        HasDecimals="{Binding ElementName=HasDecimalsCheckBox, Path=IsChecked, Mode=TwoWay}"
                                         Controls:TextBoxHelper.SelectAllOnFocus="True"
                                         ButtonsAlignment="Left"
                                         Interval="5" />
@@ -319,3 +340,4 @@
     </AdornerDecorator>
 
 </UserControl>
+

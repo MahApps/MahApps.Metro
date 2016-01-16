@@ -167,5 +167,17 @@ namespace MahApps.Metro.Native
         public const int WM_MOVE = 0x0003;
 
         public const uint TOPMOST_FLAGS = SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOSIZE | SWP_NOMOVE | SWP_NOREDRAW | SWP_NOSENDCHANGING;
+
+        public const int WM_HOTKEY = 0x0312;
+        public const int VK_SHIFT = 0x10;
+        public const int VK_CONTROL = 0x11;
+        public const int VK_MENU = 0x12;
+
+        /* used by UnsafeNativeMethods.MapVirtualKey */
+        public const uint MAPVK_VK_TO_VSC = 0x00;
+        public const uint MAPVK_VSC_TO_VK = 0x01;
+        public const uint MAPVK_VK_TO_CHAR = 0x02;
+        public const uint MAPVK_VSC_TO_VK_EX = 0x03;
+        public const uint MAPVK_VK_TO_VSC_EX = 0x04;
     }
 }
