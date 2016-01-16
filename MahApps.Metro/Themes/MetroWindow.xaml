@@ -93,11 +93,11 @@
                         </ContentControl.Foreground>
                     </ContentControl>
 
-                    <Thumb Grid.Row="0"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="5"
-                           Style="{StaticResource WindowTitleThumbStyle}"
-                           x:Name="PART_WindowTitleThumb" />
+                    <Controls:MetroThumb Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}"
+                                         x:Name="PART_WindowTitleThumb" />
 
                     <!-- the right window commands -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
@@ -374,11 +374,11 @@
                         </Label>
                     </Grid>
 
-                    <Thumb Grid.Row="0"
-                           Grid.Column="0"
-                           Grid.ColumnSpan="5"
-                           Style="{StaticResource WindowTitleThumbStyle}"
-                           x:Name="PART_WindowTitleThumb" />
+                    <Controls:MetroThumb Grid.Row="0"
+                                         Grid.Column="0"
+                                         Grid.ColumnSpan="5"
+                                         Style="{StaticResource WindowTitleThumbStyle}"
+                                         x:Name="PART_WindowTitleThumb" />
 
                     <!-- the right window commands -->
                     <ContentPresenter x:Name="PART_RightWindowCommands"
