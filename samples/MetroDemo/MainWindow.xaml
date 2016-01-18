@@ -20,15 +20,15 @@
                       d:DesignHeight="600"
                       d:DesignWidth="800"
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
-                      Closing="MetroWindow_Closing"
-                      Dialog:DialogParticipation.Register="{Binding}">
-    <!--
+                      Closing="MetroWindow_Closing"                      
+                      Dialog:DialogParticipation.Register="{Binding}">    
+    <!-- 
     if using DialogParticipation on Windows which open/close frequently you will get a
-    memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded
+    memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded 
     event, as so:
-
+       
         DialogParticipation.SetRegister(this, null);
-    -->
+    -->    
 
     <Window.Resources>
         <ResourceDictionary>
@@ -81,15 +81,15 @@
             <Dialog:CustomDialog x:Key="CustomCloseDialogTest"
                                  Title="Custom Dialog which is awaitable"
                                  x:Name="CustomCloseDialogTest">
-
+                
                 <StackPanel>
-                    <TextBlock Height="30" Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below."
+                    <TextBlock Height="30" Text="This dialog allows arbitrary content. You have to close it yourself by clicking the close button below." 
                                TextWrapping="Wrap"
                                Foreground="{DynamicResource AccentColorBrush}" />
                     <Button Content="Close Me!" Click="CloseCustomDialog"/>
                 </StackPanel>
 
-
+                
             </Dialog:CustomDialog>
 
         </ResourceDictionary>
@@ -177,8 +177,6 @@
                               Header="Show Password Preview LoginDialog" />
                     <MenuItem Click="ShowLoginDialogOnlyPassword"
                               Header="Show LoginDialog (Only Password)" />
-                    <MenuItem Click="ShowLoginDialogWithRememberCheckBox"
-                              Header="Show LoginDialog (With Remember CheckBox)" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
                     <MenuItem Click="ShowLimitedMessageDialog"
@@ -257,7 +255,7 @@
                     <exampleViews:OtherExamples DataContext="{Binding}" />
                 </TabItem>
             </Controls:MetroAnimatedSingleRowTabControl>
-
+            
             <StatusBar Grid.Row="2">
                 <StatusBarItem>MahApps.Metro DEMO Application</StatusBarItem>
                 <Separator Style="{StaticResource MetroStatusBarSeparator}" />

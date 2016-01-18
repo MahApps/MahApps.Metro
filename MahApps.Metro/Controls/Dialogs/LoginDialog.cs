@@ -12,8 +12,6 @@ namespace MahApps.Metro.Controls.Dialogs
         private const Visibility DefaultNegativeButtonVisibility = Visibility.Collapsed;
         private const bool DefaultShouldHideUsername = false;
         private const bool DefaultEnablePasswordPreview = false;
-        private const Visibility DefaultRememberCheckBoxVisibility = Visibility.Collapsed;
-        private const string DefaultRememberCheckBoxText = "Remember";
 
         public LoginDialogSettings()
         {
@@ -23,8 +21,6 @@ namespace MahApps.Metro.Controls.Dialogs
             ShouldHideUsername = DefaultShouldHideUsername;
             AffirmativeButtonText = "Login";
             EnablePasswordPreview = DefaultEnablePasswordPreview;
-            RememberCheckBoxVisibility = DefaultRememberCheckBoxVisibility;
-            RememberCheckBoxText = DefaultRememberCheckBoxText;
         }
 
         public string InitialUsername { get; set; }
@@ -40,17 +36,12 @@ namespace MahApps.Metro.Controls.Dialogs
         public Visibility NegativeButtonVisibility { get; set; }
 
         public bool EnablePasswordPreview { get; set; }
-
-        public Visibility RememberCheckBoxVisibility { get; set; }
-
-        public string RememberCheckBoxText { get; set; }
     }
 
     public class LoginDialogData
     {
-        public string Username { get; internal set; }
-        public string Password { get; internal set; }
-        public bool ShouldRemember { get; internal set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 
     public partial class LoginDialog : BaseMetroDialog
@@ -70,8 +61,6 @@ namespace MahApps.Metro.Controls.Dialogs
             PasswordWatermark = settings.PasswordWatermark;
             NegativeButtonButtonVisibility = settings.NegativeButtonVisibility;
             ShouldHideUsername = settings.ShouldHideUsername;
-            RememberCheckBoxVisibility = settings.RememberCheckBoxVisibility;
-            RememberCheckBoxText = settings.RememberCheckBoxText;
         }
 
         internal Task<LoginDialogData> WaitForButtonPressAsync()
@@ -147,7 +136,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 if (e.Key == Key.Enter)
                 {
                     cleanUpHandlers();
-                    tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password, ShouldRemember = RememberCheckBoxChecked });
+                    tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password });
                 }
             };
 
@@ -164,7 +153,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 cleanUpHandlers();
 
-                tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password, ShouldRemember = RememberCheckBoxChecked });
+                tcs.TrySetResult(new LoginDialogData { Username = Username, Password = PART_TextBox2.Password });
 
                 e.Handled = true;
             };
@@ -217,9 +206,6 @@ namespace MahApps.Metro.Controls.Dialogs
         public static readonly DependencyProperty NegativeButtonTextProperty = DependencyProperty.Register("NegativeButtonText", typeof(string), typeof(LoginDialog), new PropertyMetadata("Cancel"));
         public static readonly DependencyProperty NegativeButtonButtonVisibilityProperty = DependencyProperty.Register("NegativeButtonButtonVisibility", typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Collapsed));
         public static readonly DependencyProperty ShouldHideUsernameProperty = DependencyProperty.Register("ShouldHideUsername", typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
-        public static readonly DependencyProperty RememberCheckBoxVisibilityProperty = DependencyProperty.Register("RememberCheckBoxVisibility", typeof(Visibility), typeof(LoginDialog), new PropertyMetadata(Visibility.Collapsed));
-        public static readonly DependencyProperty RememberCheckBoxTextProperty = DependencyProperty.Register("RememberCheckBoxText", typeof(string), typeof(LoginDialog), new PropertyMetadata("Remember"));
-        public static readonly DependencyProperty RememberCheckBoxCheckedProperty = DependencyProperty.Register("RememberCheckBoxChecked", typeof(bool), typeof(LoginDialog), new PropertyMetadata(false));
 
         public string Message
         {
@@ -273,24 +259,6 @@ namespace MahApps.Metro.Controls.Dialogs
         {
             get { return (bool)GetValue(ShouldHideUsernameProperty); }
             set { SetValue(ShouldHideUsernameProperty, value); }
-        }
-
-        public Visibility RememberCheckBoxVisibility
-        {
-            get { return (Visibility)GetValue(RememberCheckBoxVisibilityProperty); }
-            set { SetValue(RememberCheckBoxVisibilityProperty, value); }
-        }
-
-        public string RememberCheckBoxText
-        {
-            get { return (string)GetValue(RememberCheckBoxTextProperty); }
-            set { SetValue(RememberCheckBoxTextProperty, value); }
-        }
-
-        public bool RememberCheckBoxChecked
-        {
-            get { return (bool)GetValue(RememberCheckBoxCheckedProperty); }
-            set { SetValue(RememberCheckBoxCheckedProperty, value); }
         }
     }
 }

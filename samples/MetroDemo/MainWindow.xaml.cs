@@ -260,19 +260,6 @@ namespace MetroDemo
             }
         }
 
-        private async void ShowLoginDialogWithRememberCheckBox(object sender, RoutedEventArgs e)
-        {
-            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, RememberCheckBoxVisibility = Visibility.Visible });
-            if (result == null)
-            {
-                //User pressed cancel
-            }
-            else
-            {
-                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}\nShouldRemember: {2}", result.Username, result.Password, result.ShouldRemember));
-            }
-        }
-
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
             var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");
