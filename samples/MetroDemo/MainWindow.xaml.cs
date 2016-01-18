@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleWindows;
@@ -30,10 +31,6 @@ namespace MetroDemo
                     if (!e.Cancel && flyoutDemo != null)
                     {
                         flyoutDemo.Dispose();
-                    }
-                    if (!e.Cancel)
-                    {
-                        _viewModel.Dispose();
                     }
                 };
         }
