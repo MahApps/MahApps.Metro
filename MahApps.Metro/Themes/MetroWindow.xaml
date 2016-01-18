@@ -37,7 +37,7 @@
                                Focusable="False"
                                UseLayoutRounding="True"
                                Fill="{TemplateBinding WindowTitleBrush}"
-                               Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                               Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                Grid.Column="0"
                                Grid.ColumnSpan="5"
@@ -53,8 +53,8 @@
                                     ContentTemplate="{TemplateBinding IconTemplate}"
                                     HorizontalContentAlignment="Stretch"
                                     VerticalContentAlignment="Stretch"
-                                    MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!-- the left window commands -->
@@ -66,7 +66,7 @@
                                       Grid.Column="1"
                                       Grid.RowSpan="2"
                                       VerticalAlignment="Top"
-                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!-- the title bar -->
@@ -79,7 +79,7 @@
                                     HorizontalAlignment="{TemplateBinding TitleAlignment}"
                                     HorizontalContentAlignment="Stretch"
                                     VerticalContentAlignment="Stretch"
-                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                     Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <ContentControl.Foreground>
                             <MultiBinding Converter="{x:Static Converters:BackgroundToForegroundConverter.Instance}">
@@ -108,7 +108,7 @@
                                       Grid.Column="3"
                                       Grid.RowSpan="2"
                                       VerticalAlignment="Top"
-                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!-- the window button commands -->
@@ -120,7 +120,7 @@
                                                    Grid.RowSpan="2"
                                                    VerticalAlignment="Top"
                                                    UseLayoutRounding="True"
-                                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                                                   Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
                     <!-- the main window content -->
                     <Controls:MetroContentControl Grid.Row="1"
@@ -312,7 +312,7 @@
                                Focusable="False"
                                UseLayoutRounding="True"
                                Fill="{TemplateBinding WindowTitleBrush}"
-                               Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                               Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}"
                                Grid.Column="0"
                                Grid.ColumnSpan="5"
@@ -328,8 +328,8 @@
                                     ContentTemplate="{TemplateBinding IconTemplate}"
                                     HorizontalContentAlignment="Stretch"
                                     VerticalContentAlignment="Stretch"
-                                    MinWidth="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                    Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    MinWidth="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                    Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                     Visibility="{TemplateBinding ShowIconOnTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!-- the left window commands -->
@@ -341,7 +341,7 @@
                                       Grid.Column="1"
                                       Grid.RowSpan="2"
                                       VerticalAlignment="Top"
-                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!-- the title bar -->
@@ -350,7 +350,7 @@
                           Grid.Row="0"
                           Grid.Column="0"
                           Grid.ColumnSpan="5"
-                          Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                          Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                           Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <!-- this element is used so that everything still responds to drag -->
                         <Label HorizontalContentAlignment="Center"
@@ -389,7 +389,7 @@
                                       Grid.Column="3"
                                       Grid.RowSpan="2"
                                       VerticalAlignment="Top"
-                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!-- the window button commands -->
@@ -401,7 +401,7 @@
                                                    Grid.RowSpan="2"
                                                    VerticalAlignment="Top"
                                                    UseLayoutRounding="True"
-                                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+                                                   Height="{Binding TitleBarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
 
                     <!-- the main window content -->
                     <Controls:MetroContentControl Grid.Row="1"
