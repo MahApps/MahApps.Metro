@@ -1,0 +1,5 @@
+[bugtraq]
+    url = https://github.com/MahApps/MahApps.Metro/issues/%BUGID%
+    logfilterregex = "((#\\d+)+)"
+    loglinkregex = #\\d+
+    logregex = \\d+
