@@ -1,6 +1,6 @@
 [bugtraq "issues"]
     url = https://github.com/MahApps/MahApps.Metro/issues/%BUGID%
-    logfilterregex = "((#\\d+)+)"
+    logfilterregex = "([^C](#\\d+)+)"
     logregex = \\d+
     
 [bugtraq "users"]
