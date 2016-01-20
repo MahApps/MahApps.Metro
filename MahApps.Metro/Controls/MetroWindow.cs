@@ -980,6 +980,9 @@ namespace MahApps.Metro.Controls
             var windowHandle = new WindowInteropHelper(window).Handle;
             var cursorPos = Standard.NativeMethods.GetCursorPos();
 
+            // for the touch usage
+            UnsafeNativeMethods.ReleaseCapture();
+
             // if the window is maximized dragging is only allowed on title bar (also if not visible)
             var windowIsMaximized = window.WindowState == WindowState.Maximized;
             var isMouseOnTitlebar = Mouse.GetPosition(window.windowTitleThumb).Y <= window.TitlebarHeight && window.TitlebarHeight > 0;

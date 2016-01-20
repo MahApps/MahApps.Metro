@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using MetroDemo.ExampleWindows;
@@ -31,6 +30,10 @@ namespace MetroDemo
                     if (!e.Cancel && flyoutDemo != null)
                     {
                         flyoutDemo.Dispose();
+                    }
+                    if (!e.Cancel)
+                    {
+                        _viewModel.Dispose();
                     }
                 };
         }
@@ -254,6 +257,19 @@ namespace MetroDemo
             else
             {
                 MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Password: {0}", result.Password));
+            }
+        }
+
+        private async void ShowLoginDialogWithRememberCheckBox(object sender, RoutedEventArgs e)
+        {
+            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, RememberCheckBoxVisibility = Visibility.Visible });
+            if (result == null)
+            {
+                //User pressed cancel
+            }
+            else
+            {
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}\nShouldRemember: {2}", result.Username, result.Password, result.ShouldRemember));
             }
         }
 

@@ -30,6 +30,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/TransitioningContentControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowButtonCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/WindowCommands.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/HotKeyBox.xaml" />
 
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Themes/Dialogs/BaseMetroDialog.xaml" />
     </ResourceDictionary.MergedDictionaries>
