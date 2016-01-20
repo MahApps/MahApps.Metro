@@ -1008,8 +1008,6 @@ namespace MahApps.Metro.Controls
 
             if (windowIsMaximized)
             {
-                // maybe the WindowChrome does this hack already for us
-                window.WindowState = WindowState.Normal;
                 window.Top = 2;
                 window.Left = Math.Max(cursorPos.x - window.RestoreBounds.Width / 2, 0);
             }
