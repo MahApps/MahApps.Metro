@@ -11,3 +11,8 @@
 [bugtraq "commitId"]
     url = https://github.com/MahApps/MahApps.Metro/commit/%BUGID%
     logregex = [0-9a-f]{6,32}
+    
+[bugtraq "version"]
+    url = https://github.com/MahApps/MahApps.Metro/releases/tag/%BUGID%
+    loglinkregex = v[0-9]+.[0-9]+.[0-9]+
+    logregex = [0-9]+.[0-9]+.[0-9]+
