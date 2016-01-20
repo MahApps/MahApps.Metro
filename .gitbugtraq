@@ -7,3 +7,7 @@
     url = https://github.com/%BUGID%
     loglinkregex = @\\w+
     logregex = \\w+
+    
+[bugtraq "commitId"]
+    url = https://github.com/MahApps/MahApps.Metro/commit/%BUGID%
+    logregex = [0-9a-f]{6,32}
