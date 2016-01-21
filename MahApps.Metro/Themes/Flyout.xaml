@@ -233,10 +233,10 @@
                                       DockPanel.Dock="Bottom" />
                 </DockPanel>
             </AdornerDecorator>
-            <Thumb Style="{StaticResource WindowTitleThumbStyle}"
-                   Height="{Binding Path=TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
-                   VerticalAlignment="Top"
-                   x:Name="PART_WindowTitleThumb" />
+            <Controls:MetroThumb Style="{StaticResource WindowTitleThumbStyle}"
+                                 Height="{Binding Path=TitlebarHeight, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}"
+                                 VerticalAlignment="Top"
+                                 x:Name="PART_WindowTitleThumb" />
         </Grid>
         <ControlTemplate.Triggers>
             <DataTrigger Binding="{Binding Position, RelativeSource={RelativeSource Self}}"
@@ -256,6 +256,9 @@
                 <Setter TargetName="PART_Content"
                         Property="DockPanel.Dock"
                         Value="Right" />
+                <Setter TargetName="PART_WindowTitleThumb"
+                        Property="Visibility"
+                        Value="Collapsed" />
             </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>

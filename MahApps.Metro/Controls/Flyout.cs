@@ -494,10 +494,12 @@ namespace MahApps.Metro.Controls
 
             if (this.windowTitleThumb != null)
             {
+                this.windowTitleThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
 
+                this.windowTitleThumb.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
@@ -520,11 +522,21 @@ namespace MahApps.Metro.Controls
         {
             if (this.windowTitleThumb != null)
             {
+                this.windowTitleThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
             }
             this.parentWindow = null;
+        }
+
+        private void WindowTitleThumbOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var window = this.ParentWindow;
+            if (window != null && this.Position != Position.Bottom)
+            {
+                MetroWindow.DoWindowTitleThumbOnPreviewMouseLeftButtonUp(window, e);
+            }
         }
 
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
