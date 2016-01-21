@@ -224,6 +224,9 @@
             <Trigger Property="UseNoneWindowStyle" Value="True">
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
+            <Trigger Property="ShowTitleBar" Value="False">
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+            </Trigger>
             <!-- handle active/inactive state -->
             <Trigger Property="IsActive"
                      Value="False">
@@ -503,6 +506,9 @@
 
         <ControlTemplate.Triggers>
             <Trigger Property="UseNoneWindowStyle" Value="True">
+                <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
+            </Trigger>
+            <Trigger Property="ShowTitleBar" Value="False">
                 <Setter TargetName="PART_WindowTitleThumb" Property="Grid.RowSpan" Value="2" />
             </Trigger>
             <!-- handle active/inactive state -->
