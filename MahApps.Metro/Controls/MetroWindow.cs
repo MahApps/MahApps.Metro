@@ -901,11 +901,23 @@ namespace MahApps.Metro.Controls
             this.SetVisibiltyForAllTitleElements(this.TitlebarHeight > 0);
         }
 
+        protected IntPtr CriticalHandle
+        {
+            get
+            {
+                var value = typeof(Window)
+                    .GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)
+                    .GetValue(this, new object[0]);
+                return (IntPtr)value;
+            }
+        }
+
         private void ClearWindowEvents()
         {
             // clear all event handlers first:
             if (this.windowTitleThumb != null)
             {
+                this.windowTitleThumb.PreviewMouseLeftButtonUp -= WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta -= this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick -= this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp -= this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
@@ -930,6 +942,7 @@ namespace MahApps.Metro.Controls
 
             if (this.windowTitleThumb != null)
             {
+                this.windowTitleThumb.PreviewMouseLeftButtonUp += WindowTitleThumbOnPreviewMouseLeftButtonUp;
                 this.windowTitleThumb.DragDelta += this.WindowTitleThumbMoveOnDragDelta;
                 this.windowTitleThumb.MouseDoubleClick += this.WindowTitleThumbChangeWindowStateOnMouseDoubleClick;
                 this.windowTitleThumb.MouseRightButtonUp += this.WindowTitleThumbSystemMenuOnMouseRightButtonUp;
@@ -957,20 +970,14 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        private void WindowTitleThumbOnPreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            DoWindowTitleThumbOnPreviewMouseLeftButtonUp(this, e);
+        }
+
         private void WindowTitleThumbMoveOnDragDelta(object sender, DragDeltaEventArgs dragDeltaEventArgs)
         {
             DoWindowTitleThumbMoveOnDragDelta(this, dragDeltaEventArgs);
-        }
-
-        protected IntPtr CriticalHandle
-        {
-            get
-            {
-                var value = typeof(Window)
-                    .GetProperty("CriticalHandle", BindingFlags.NonPublic | BindingFlags.Instance)
-                    .GetValue(this, new object[0]);
-                return (IntPtr)value;
-            }
         }
 
         private void WindowTitleThumbChangeWindowStateOnMouseDoubleClick(object sender, MouseButtonEventArgs mouseButtonEventArgs)
@@ -983,12 +990,19 @@ namespace MahApps.Metro.Controls
             DoWindowTitleThumbSystemMenuOnMouseRightButtonUp(this, e);
         }
 
+        internal static void DoWindowTitleThumbOnPreviewMouseLeftButtonUp(MetroWindow window, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            Mouse.Capture(null);
+        }
+
         internal static void DoWindowTitleThumbMoveOnDragDelta(MetroWindow window, DragDeltaEventArgs dragDeltaEventArgs)
         {
             // drag only if IsWindowDraggable is set to true
             if (!window.IsWindowDraggable ||
                 (!(Math.Abs(dragDeltaEventArgs.HorizontalChange) > 2) && !(Math.Abs(dragDeltaEventArgs.VerticalChange) > 2)))
+            {
                 return;
+            }
 
             // tage from DragMove internal code
             window.VerifyAccess();
@@ -1006,10 +1020,19 @@ namespace MahApps.Metro.Controls
             // for the touch usage
             UnsafeNativeMethods.ReleaseCapture();
 
-            if (windowIsMaximized)
-            {
+            if (windowIsMaximized) {
                 window.Top = 2;
                 window.Left = Math.Max(cursorPos.x - window.RestoreBounds.Width / 2, 0);
+                EventHandler windowOnStateChanged = null;
+                windowOnStateChanged = (sender, args) =>
+                {
+                    window.StateChanged -= windowOnStateChanged;
+                    if (window.WindowState == WindowState.Normal)
+                    {
+                        Mouse.Capture(window.windowTitleThumb, CaptureMode.Element);
+                    }
+                };
+                window.StateChanged += windowOnStateChanged;
             }
 
             var criticalHandle = window.CriticalHandle;
