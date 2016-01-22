@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0"
                    Margin="0 5 0 0"
@@ -37,7 +38,14 @@
                      Controls:TextBoxHelper.Watermark="{Binding PasswordWatermark, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
                      Controls:TextBoxHelper.SelectAllOnFocus="True"
                      Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
-        <StackPanel Grid.Row="3"
+        <CheckBox Grid.Row="3"
+                  Margin="0 5 0 0"
+                  FontSize="{DynamicResource DialogMessageFontSize}"
+                  x:Name="PART_RememberCheckBox"
+                  Visibility="{Binding RememberCheckBoxVisibility, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                  Content="{Binding RememberCheckBoxText, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}"
+                  IsChecked="{Binding RememberCheckBoxChecked, RelativeSource={RelativeSource AncestorType=Dialogs:LoginDialog, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged}" />
+        <StackPanel Grid.Row="4"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Height="85">

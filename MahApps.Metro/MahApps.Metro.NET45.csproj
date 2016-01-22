@@ -169,6 +169,7 @@
     <Compile Include="Controls\Helper\MouseWheelChange.cs" />
     <Compile Include="Controls\Helper\MouseWheelState.cs" />
     <Compile Include="Controls\Helper\SliderHelper.cs" />
+    <Compile Include="Controls\HotKeyBox.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
@@ -590,6 +591,10 @@
     <Page Include="Themes\Glow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\HotKeyBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MetroAnimatedSingleRowTabControl.xaml">
       <Generator>MSBuild:Compile</Generator>
