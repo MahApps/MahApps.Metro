@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:MetroDemo.Behaviors"
+             xmlns:globalization="clr-namespace:System.Globalization;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -23,6 +26,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition Width="250" />
             </Grid.ColumnDefinitions>
 
             <StackPanel VerticalAlignment="Top">
@@ -54,6 +58,126 @@
                 <Calendar Margin="5" />
                 <Calendar Margin="5"
                           IsEnabled="False" />
+            </StackPanel>
+
+            <StackPanel VerticalAlignment="Top"
+                        Grid.Row="0"
+                        Margin="0,0,20,0"
+                        Orientation="Vertical"
+                        Grid.Column="2">
+                <Label Content="DateTime picker"
+                       Style="{DynamicResource DescriptionHeaderStyle}" />
+
+                <GroupBox Header="Current time">
+                    <Controls:DateTimePicker>
+                        <i:Interaction.Behaviors>
+                            <behaviors:DateTimeNowBehavior />
+                        </i:Interaction.Behaviors>
+                    </Controls:DateTimePicker>
+                </GroupBox>
+
+                <GroupBox Header="Try it yourself">
+                    <StackPanel>
+                        <CheckBox Name="DateTimePickerIsEnabled"
+                                  Content="IsEnabled"
+                                  IsChecked="True" />
+                        <CheckBox Name="DateTimePickerIsReadOnly"
+                                  Content="IsReadOnly" />
+                        <CheckBox Name="DateTimePickerIsClockVisible"
+                                  Content="IsClockVisible"
+                                  IsChecked="True" />
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="Orientation"
+                                   Grid.Column="0"
+                                   Grid.Row="0" />
+                            <ComboBox Name="DateTimePickerOrientation"
+                                      Grid.Column="1"
+                                      Grid.Row="0"
+                                      SelectedItem="{x:Static Orientation.Horizontal}">
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="Orientation">
+                                        <Orientation>Vertical</Orientation>
+                                        <Orientation>Horizontal</Orientation>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                            <Label Content="PickerVisibility"
+                                   Grid.Column="0"
+                                   Grid.Row="1" />
+                            <ComboBox Name="DateTimePickerPickerVisibility"
+                                      Grid.Column="1"
+                                      Grid.Row="1"
+                                      SelectedItem="{x:Static Controls:TimePartVisibility.All}">
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="Controls:TimePartVisibility">
+                                        <Controls:TimePartVisibility>All</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>HourMinute</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Hour</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Minute</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Second</Controls:TimePartVisibility>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                            <Label Content="HandVisibility"
+                                   Grid.Column="0"
+                                   Grid.Row="2" />
+                            <ComboBox Name="DateTimePickerHandVisibility"
+                                      Grid.Column="1"
+                                      Grid.Row="2"
+                                      SelectedItem="{x:Static Controls:TimePartVisibility.All}">
+                                <ComboBox.ItemsSource>
+                                    <x:Array Type="Controls:TimePartVisibility">
+                                        <Controls:TimePartVisibility>All</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>HourMinute</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Hour</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Minute</Controls:TimePartVisibility>
+                                        <Controls:TimePartVisibility>Second</Controls:TimePartVisibility>
+                                    </x:Array>
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                            <Label Content="CultureInfo"
+                                   Grid.Column="0"
+                                   Grid.Row="3" />
+                            <ComboBox Controls:TextBoxHelper.ClearTextButton="True"
+                                      Grid.Column="1"
+                                      Grid.Row="3"
+                                      ItemsSource="{Binding CultureInfos, Mode=OneWay}"
+                                      DisplayMemberPath="DisplayName"
+                                      VerticalAlignment="Center"
+                                      Name="DateTimePickerCulture" />
+                        </Grid>
+                        <Controls:DateTimePicker Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                                                 PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                                 HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
+                                                 IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                                 IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
+                                                 Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
+                                                 IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}" />
+                        <GroupBox Header="Current time">
+                            <Controls:DateTimePicker Culture="{Binding Path=SelectedItem, ElementName=DateTimePickerCulture, TargetNullValue={x:Static globalization:CultureInfo.CurrentCulture}}"
+                                                     PickerVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerPickerVisibility, Mode=TwoWay}"
+                                                     HandVisibility="{Binding Path=SelectedItem, ElementName=DateTimePickerHandVisibility, Mode=TwoWay}"
+                                                     IsEnabled="{Binding Path=IsChecked, ElementName=DateTimePickerIsEnabled, Mode=TwoWay}"
+                                                     IsReadOnly="{Binding Path=IsChecked, ElementName=DateTimePickerIsReadOnly, Mode=TwoWay}"
+                                                     Orientation="{Binding Path=SelectedItem, ElementName=DateTimePickerOrientation, Mode=TwoWay}"
+                                                     IsClockVisible="{Binding Path=IsChecked, ElementName=DateTimePickerIsClockVisible, Mode=TwoWay}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:DateTimeNowBehavior />
+                                </i:Interaction.Behaviors>
+                            </Controls:DateTimePicker>
+                        </GroupBox>
+                    </StackPanel>
+                </GroupBox>
             </StackPanel>
         </Grid>
     </AdornerDecorator>
