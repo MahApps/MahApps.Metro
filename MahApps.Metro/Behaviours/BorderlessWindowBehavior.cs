@@ -2,6 +2,7 @@
 using System.Security;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Interactivity;
 using System.Windows.Interop;
 using MahApps.Metro.Controls;
@@ -340,6 +341,7 @@ namespace MahApps.Metro.Behaviours
 
             window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_Icon");
             window.SetIsHitTestVisibleInChromeProperty<UIElement>("PART_TitleBar");
+            window.SetIsHitTestVisibleInChromeProperty<Thumb>("PART_WindowTitleThumb");
             window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_LeftWindowCommands");
             window.SetIsHitTestVisibleInChromeProperty<ContentPresenter>("PART_RightWindowCommands");
             window.SetIsHitTestVisibleInChromeProperty<ContentControl>("PART_WindowButtonCommands");

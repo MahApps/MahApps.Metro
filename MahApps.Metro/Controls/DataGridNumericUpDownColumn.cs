@@ -18,7 +18,6 @@ namespace MahApps.Metro.Controls
         private string stringFormat = (string)NumericUpDown.StringFormatProperty.DefaultMetadata.DefaultValue;
         private bool hideUpDownButtons = (bool)NumericUpDown.HideUpDownButtonsProperty.DefaultMetadata.DefaultValue;
         private double upDownButtonsWidth = (double)NumericUpDown.UpDownButtonsWidthProperty.DefaultMetadata.DefaultValue;
-        private Binding foregroundBinding;
 
         static DataGridNumericUpDownColumn()
         {
@@ -117,25 +116,12 @@ namespace MahApps.Metro.Controls
             if (numericUpDown == null)
             {
                 numericUpDown = new NumericUpDown();
-                // create binding to cell foreground to get changed brush from selection
-                foregroundBinding = new Binding("Foreground") { Source = cell, Mode = BindingMode.OneWay };
             }
 
             SyncProperties(numericUpDown);
 
             ApplyStyle(isEditing, true, numericUpDown);
             ApplyBinding(Binding, numericUpDown, NumericUpDown.ValueProperty);
-
-            if (!isEditing && Equals(this.Foreground, SystemColors.ControlTextBrush))
-            {
-                // bind to cell foreground to get changed brush from selection
-                ApplyBinding(foregroundBinding, numericUpDown, Control.ForegroundProperty);
-            }
-            else
-            {
-                // no foreground change for editing
-                BindingOperations.ClearBinding(numericUpDown, Control.ForegroundProperty);
-            }
 
             numericUpDown.Minimum = Minimum;
             numericUpDown.Maximum = Maximum;

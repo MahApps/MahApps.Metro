@@ -4,6 +4,8 @@ using System.Windows.Controls;
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     public class DataGridCellHelper
     {
         public static readonly DependencyProperty SaveDataGridProperty =
@@ -48,6 +50,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Save the DataGrid.
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
         public static bool GetSaveDataGrid(UIElement element)
         {
@@ -66,6 +69,7 @@ namespace MahApps.Metro.Controls
         /// <summary>
         /// Get the DataGrid.
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(DataGridCell))]
         public static DataGrid GetDataGrid(UIElement element)
         {

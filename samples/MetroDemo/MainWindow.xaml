@@ -20,8 +20,15 @@
                       d:DesignHeight="600"
                       d:DesignWidth="800"
                       d:DataContext="{d:DesignInstance MetroDemo:MainWindowViewModel}"
-                      Closing="MetroWindow_Closing"
-                      Dialog:DialogParticipation.Register="{Binding}">
+                      Closing="MetroWindow_Closing"                      
+                      Dialog:DialogParticipation.Register="{Binding}">    
+    <!-- 
+    if using DialogParticipation on Windows which open/close frequently you will get a
+    memory leak unless you unregister.  The easiest way to do this is in your Closing/Unloaded 
+    event, as so:
+       
+        DialogParticipation.SetRegister(this, null);
+    -->    
 
     <Window.Resources>
         <ResourceDictionary>
@@ -168,6 +175,8 @@
                               Header="Show LoginDialog" />
                     <MenuItem Click="ShowLoginDialogPasswordPreview"
                               Header="Show Password Preview LoginDialog" />
+                    <MenuItem Click="ShowLoginDialogOnlyPassword"
+                              Header="Show LoginDialog (Only Password)" />
                     <MenuItem Click="ShowMessageDialog"
                               Header="Show MessageDialog" />
                     <MenuItem Click="ShowLimitedMessageDialog"

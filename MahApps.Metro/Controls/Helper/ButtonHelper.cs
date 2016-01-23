@@ -5,6 +5,8 @@ using System.Windows.Controls.Primitives;
 
 namespace MahApps.Metro.Controls
 {
+    using System.ComponentModel;
+
     public static class ButtonHelper
     {
         [Obsolete(@"This property will be deleted in the next release. You should use ContentCharacterCasing attached property located in ControlsHelper.")]
@@ -31,6 +33,7 @@ namespace MahApps.Metro.Controls
         /// Overrides the text case behavior for certain buttons.
         /// When set to <c>true</c>, the text case will be preserved and won't be changed to upper or lower case.
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Button))]
         public static bool GetPreserveTextCase(UIElement element)
         {
@@ -58,6 +61,7 @@ namespace MahApps.Metro.Controls
         /// smoothly blend from corner to corner. (Can be used e.g. at MetroButton style)
         /// Description taken from original Microsoft description :-D
         /// </summary>
+        [Category(AppName.MahApps)]
         [AttachedPropertyBrowsableForType(typeof(Button))]
         [AttachedPropertyBrowsableForType(typeof(ToggleButton))]
         public static CornerRadius GetCornerRadius(UIElement element)

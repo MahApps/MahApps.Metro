@@ -4,7 +4,7 @@
                     xmlns:converters="clr-namespace:MahApps.Metro.Converters">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/Colors.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Shared.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <converters:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter" />
@@ -49,11 +49,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:NumericUpDown}">
-                    <Grid Height="{TemplateBinding Height}"
-                          MinHeight="{TemplateBinding MinHeight}"
-                          MaxHeight="{TemplateBinding MaxHeight}"
-                          Margin="{TemplateBinding Padding}"
-                          Background="{TemplateBinding Background}">
+                    <Grid Background="{TemplateBinding Background}">
                         <Border x:Name="Base"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -68,8 +64,23 @@
                                 <ColumnDefinition x:Name="PART_NumericDownColumn"
                                                   Width="Auto" />
                             </Grid.ColumnDefinitions>
-
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <ContentControl x:Name="PART_FloatingMessageContainer"
+                                            Style="{DynamicResource FloatingMessageContainerStyle}"
+                                            Grid.Column="0">
+                                <TextBlock x:Name="PART_FloatingMessage"
+                                           Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                           Style="{DynamicResource MetroAutoCollapsingTextBlock}" />
+                            </ContentControl>
                             <TextBox x:Name="PART_TextBox"
+                                     Grid.Row="1"
+                                     Grid.Column="0"
                                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                      Controls:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
@@ -94,6 +105,7 @@
                                      Controls:TextBoxHelper.ButtonsAlignment="{TemplateBinding ButtonsAlignment}" />
                             <RepeatButton x:Name="PART_NumericUp"
                                           Grid.Column="1"
+                                          Grid.RowSpan="2"
                                           Margin="2,2,0,2"
                                           Delay="{TemplateBinding Delay}"
                                           Foreground="{TemplateBinding Foreground}"
@@ -109,6 +121,7 @@
                             </RepeatButton>
                             <RepeatButton x:Name="PART_NumericDown"
                                           Grid.Column="2"
+                                          Grid.RowSpan="2"
                                           Margin="0,2,2,2"
                                           VerticalContentAlignment="Center"
                                           Delay="{TemplateBinding Delay}"
@@ -134,6 +147,21 @@
                                 Opacity="0" />
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.UseFloatingWatermark), RelativeSource={RelativeSource Self}}"
+                                           Value="True" />
+                                <Condition Binding="{Binding Path=(Controls:TextBoxHelper.HasText), RelativeSource={RelativeSource Self}}" 
+                                           Value="True"/>
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource ShowFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.EnterActions>
+                            <MultiDataTrigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource HideFloatingMessageStoryboard}" />
+                            </MultiDataTrigger.ExitActions>
+                        </MultiDataTrigger>
+                        
                         <Trigger Property="ButtonsAlignment"
                                  Value="Left">
                             <Setter TargetName="PART_TextBox"
@@ -234,7 +262,14 @@
                             <Setter TargetName="Base"
                                     Property="BorderBrush"
                                     Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
+                            <Setter TargetName="PART_FloatingMessage"
+                                    Property="Foreground"
+                                    Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="PART_FloatingMessage"
+                                    Property="Opacity"
+                                    Value="1" />
                         </Trigger>
+                        
 
                         <Trigger Property="HideUpDownButtons"
                                  Value="True">

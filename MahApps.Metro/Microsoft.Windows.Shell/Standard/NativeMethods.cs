@@ -1160,6 +1160,7 @@
     {
         SIZE = 0xF000,
         MOVE = 0xF010,
+        MOUSEMOVE = 0xF012,
         MINIMIZE = 0xF020,
         MAXIMIZE = 0xF030,
         NEXTWINDOW = 0xF040,

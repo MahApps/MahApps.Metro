@@ -147,7 +147,8 @@
             <Controls:Flyout Header="New Goodness"
                              Position="Right"
                              AnimateOpacity="True"
-                             Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth, Mode=OneWay}">
+                             Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Controls:MetroWindow}, Path=ActualWidth, Mode=OneWay}"
+                             CloseButtonIsCancel="True">
                 <StackPanel Orientation="Vertical"
                             Margin="10">
                     <Button Content="create" />

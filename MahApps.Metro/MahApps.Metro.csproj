@@ -134,6 +134,7 @@
     <Compile Include="Controls\Helper\TabControlHelper.cs" />
     <Compile Include="Controls\Helper\TextBoxHelper.cs" />
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
+    <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
@@ -592,6 +593,10 @@
     <Page Include="Themes\SplitButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Thumb.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Tile.xaml">
       <SubType>Designer</SubType>

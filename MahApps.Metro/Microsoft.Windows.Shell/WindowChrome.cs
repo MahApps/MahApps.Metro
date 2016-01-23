@@ -6,9 +6,11 @@ namespace Microsoft.Windows.Shell
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Windows;
     using System.Windows.Data;
+    using MahApps.Metro;
     using Standard;
 
     public enum ResizeGripDirection
@@ -86,6 +88,7 @@ namespace Microsoft.Windows.Shell
             chromeWorker.SetWindowChrome(newChrome);
         }
 
+        [Category(AppName.MahApps)]
         [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static WindowChrome GetWindowChrome(Window window)
@@ -108,6 +111,7 @@ namespace Microsoft.Windows.Shell
             typeof(WindowChrome),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
 
+        [Category(AppName.MahApps)]
         [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static bool GetIsHitTestVisibleInChrome(IInputElement inputElement)
@@ -140,6 +144,7 @@ namespace Microsoft.Windows.Shell
             typeof(WindowChrome),
             new FrameworkPropertyMetadata(ResizeGripDirection.None, FrameworkPropertyMetadataOptions.Inherits));
 
+        [Category(AppName.MahApps)]
         [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
         public static ResizeGripDirection GetResizeGripDirection(IInputElement inputElement)

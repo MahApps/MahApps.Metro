@@ -6,8 +6,6 @@
              xmlns:metroDemo="clr-namespace:MetroDemo"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
              d:DataContext="{d:DesignInstance metroDemo:MainWindowViewModel}">
 
     <UserControl.Resources>
@@ -30,6 +28,15 @@
                    TargetType="Controls:Tile">
                 <Setter Property="Width"
                         Value="147" />
+                <Setter Property="Height"
+                        Value="125" />
+                <Setter Property="TitleFontSize"
+                        Value="10" />
+            </Style>
+            <Style x:Key="BigTileStyle"
+                   TargetType="Controls:Tile">
+                <Setter Property="Width"
+                        Value="300" />
                 <Setter Property="Height"
                         Value="125" />
                 <Setter Property="TitleFontSize"
@@ -85,14 +92,15 @@
                 <Controls:Tile Title="People"
                                Style="{StaticResource LargeTileStyle}"
                                Background="#D2691E" />
-                <Controls:Tile Title="Weather"
-                               Style="{StaticResource LargeTileStyle}"
-                               Background="#1E90FF" />
+                <Controls:Tile Title="People (disabled)"
+                               IsEnabled="False"
+                               Style="{StaticResource SmallTileStyle}"
+                               Background="#D2691E" />
                 <Controls:Tile Title="Weather"
                                Style="{StaticResource SmallTileStyle}"
                                Background="#1E90FF" />
                 <Controls:Tile Title="Store"
-                               Style="{StaticResource SmallTileStyle}"
+                               Style="{StaticResource LargeTileStyle}"
                                Background="Green" />
             </WrapPanel>
         </Grid>

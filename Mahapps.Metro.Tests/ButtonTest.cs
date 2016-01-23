@@ -14,7 +14,7 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<ButtonWindow>();
-            var presenter = window.DefaultButton.FindChild<ContentPresenter>("contentPresenter");
+            var presenter = window.DefaultButton.FindChild<ContentPresenter>("PART_ContentPresenter");
 
             Assert.Equal("SOMETEXT", presenter.Content);
         }
@@ -28,7 +28,7 @@ namespace MahApps.Metro.Tests
 
             Button defaultButton = window.DefaultButton;
             ButtonHelper.SetPreserveTextCase(defaultButton, true);
-            var presenter = defaultButton.FindChild<ContentPresenter>("contentPresenter");
+            var presenter = defaultButton.FindChild<ContentPresenter>("PART_ContentPresenter");
 
             Assert.Equal("SomeText", presenter.Content); 
         }
@@ -41,7 +41,7 @@ namespace MahApps.Metro.Tests
             var window = await WindowHelpers.CreateInvisibleWindowAsync<ButtonWindow>();
 
             Button defaultButton = window.DefaultButton;
-            var presenter = defaultButton.FindChild<ContentPresenter>("contentPresenter");
+            var presenter = defaultButton.FindChild<ContentPresenter>("PART_ContentPresenter");
 
             ControlsHelper.SetContentCharacterCasing(defaultButton, CharacterCasing.Normal);
             Assert.Equal("SomeText", presenter.Content); 
@@ -59,7 +59,7 @@ namespace MahApps.Metro.Tests
             await TestHost.SwitchToAppThread();
 
             var window = await WindowHelpers.CreateInvisibleWindowAsync<ButtonWindow>();
-            var presenter = window.SquareButton.FindChild<ContentPresenter>("contentPresenter");
+            var presenter = window.SquareButton.FindChild<ContentPresenter>("PART_ContentPresenter");
 
             Assert.Equal("sometext", presenter.Content);
         }
@@ -73,7 +73,7 @@ namespace MahApps.Metro.Tests
 
             Button defaultButton = window.SquareButton;
             ControlsHelper.SetContentCharacterCasing(defaultButton, CharacterCasing.Normal);
-            var presenter = defaultButton.FindChild<ContentPresenter>("contentPresenter");
+            var presenter = defaultButton.FindChild<ContentPresenter>("PART_ContentPresenter");
 
             Assert.Equal("SomeText", presenter.Content);
         }

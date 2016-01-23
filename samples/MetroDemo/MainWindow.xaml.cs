@@ -49,16 +49,16 @@ namespace MetroDemo
                 var fullScreen = (bool)e.NewValue;
                 if (fullScreen)
                 {
+                    metroWindow.WindowState = WindowState.Maximized;
                     metroWindow.UseNoneWindowStyle = true;
                     metroWindow.IgnoreTaskbarOnMaximize = true;
-                    metroWindow.WindowState = WindowState.Maximized;
                 }
                 else
                 {
+                    metroWindow.WindowState = WindowState.Normal;
                     metroWindow.UseNoneWindowStyle = false;
                     metroWindow.ShowTitleBar = true; // <-- this must be set to true
                     metroWindow.IgnoreTaskbarOnMaximize = false;
-                    metroWindow.WindowState = WindowState.Normal;
                 }
             }
         }
@@ -231,7 +231,7 @@ namespace MetroDemo
             await this.HideMetroDialogAsync(dialog);
         }
 
-         private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
+        private async void ShowLoginDialogPasswordPreview(object sender, RoutedEventArgs e)
         {
             LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your credentials", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, InitialUsername = "MahApps", EnablePasswordPreview = true });
             if (result == null)
@@ -243,6 +243,20 @@ namespace MetroDemo
                 MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Username: {0}\nPassword: {1}", result.Username, result.Password));
             }
         }
+
+        private async void ShowLoginDialogOnlyPassword(object sender, RoutedEventArgs e)
+        {
+            LoginDialogData result = await this.ShowLoginAsync("Authentication", "Enter your password", new LoginDialogSettings { ColorScheme = this.MetroDialogOptions.ColorScheme, ShouldHideUsername = true });
+            if (result == null)
+            {
+                //User pressed cancel
+            }
+            else
+            {
+                MessageDialogResult messageResult = await this.ShowMessageAsync("Authentication Information", String.Format("Password: {0}", result.Password));
+            }
+        }
+
         private async void ShowProgressDialog(object sender, RoutedEventArgs e)
         {
             var controller = await this.ShowProgressAsync("Please wait...", "We are baking some cupcakes!");

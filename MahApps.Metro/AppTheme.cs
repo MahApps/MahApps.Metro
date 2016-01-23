@@ -4,6 +4,11 @@ using System.Windows;
 
 namespace MahApps.Metro
 {
+    internal class AppName
+    {
+        public const string MahApps = "MahApps.Metro";
+    }
+
     /// <summary>
     /// Represents the background theme of the application.
     /// </summary>

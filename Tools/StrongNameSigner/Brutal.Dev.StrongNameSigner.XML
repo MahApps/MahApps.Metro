@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Brutal.Dev.StrongNameSigner</name>
+    </assembly>
+    <members>
+        <member name="T:Brutal.Dev.StrongNameSigner.AssemblyInfo">
+            <summary>
+            Expose .NET assembly information.
+            </summary>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.AssemblyInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Brutal.Dev.StrongNameSigner.AssemblyInfo"/> class.
+            </summary>
+        </member>
+        <member name="P:Brutal.Dev.StrongNameSigner.AssemblyInfo.FilePath">
+            <summary>
+            Gets the full file path of the assembly.
+            </summary>
+            <value>
+            The full file path of the assembly.
+            </value>
+        </member>
+        <member name="P:Brutal.Dev.StrongNameSigner.AssemblyInfo.DotNetVersion">
+            <summary>
+            Gets the .NET version that this assembly was built for, this will be the version of the CLR that is targeted.
+            </summary>
+            <value>
+            The .NET version of the CLR this assembly will use.
+            </value>
+        </member>
+        <member name="P:Brutal.Dev.StrongNameSigner.AssemblyInfo.IsSigned">
+            <summary>
+            Gets a value indicating whether this assembly is strong-name signed.
+            </summary>
+            <value>
+              <c>true</c> if the assembly is strong-name signed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Brutal.Dev.StrongNameSigner.AssemblyInfo.Is32BitPreferred">
+            <summary>
+            Gets a value indicating whether this assembly was built with the 32-bit preferred setting (.NET 4.5).
+            </summary>
+            <value>
+              <c>true</c> if 32-bit is preferred; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Brutal.Dev.StrongNameSigner.AssemblyInfo.Is32BitOnly">
+            <summary>
+            Gets a value indicating whether this assembly specifically targets the x86 platform.
+            </summary>
+            <value>
+              <c>true</c> if assembly targets x86; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Brutal.Dev.StrongNameSigner.AssemblyInfo.Is64BitOnly">
+            <summary>
+            Gets a value indicating whether this assembly specifically targets the x64 platform.
+            </summary>
+            <value>
+              <c>true</c> if assembly targets x64; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Brutal.Dev.StrongNameSigner.AssemblyInfo.IsManagedAssembly">
+            <summary>
+            Gets a value indicating whether this a .NET managed assembly (IL only).
+            </summary>
+            <value>
+              <c>true</c> if the assembly is managed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Brutal.Dev.StrongNameSigner.AssemblyInfo.IsAnyCpu">
+            <summary>
+            Gets a value indicating whether this assembly targets the any CPU platform.
+            </summary>
+            <value>
+              <c>true</c> if assembly targets any CPU; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:Brutal.Dev.StrongNameSigner.SigningHelper">
+            <summary>
+            Static helper class for easily getting assembly information and strong-name signing .NET assemblies.
+            </summary>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.GenerateStrongNameKeyPair">
+            <summary>
+            Generates a 1024 bit the strong-name key pair that can be written to an SNK file.
+            </summary>
+            <returns>A strong-name key pair array.</returns>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.SignAssembly(System.String)">
+            <summary>
+            Signs the assembly at the specified path.
+            </summary>
+            <param name="assemblyPath">The path to the assembly you want to strong-name sign.</param>
+            <returns>The assembly information of the new strong-name signed assembly.</returns>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.SignAssembly(System.String,System.String)">
+            <summary>
+            Signs the assembly at the specified path with your own strong-name key file.
+            </summary>
+            <param name="assemblyPath">The path to the assembly you want to strong-name sign.</param>
+            <param name="keyPath">The path to the strong-name key file you want to use (.snk or.pfx).</param>
+            <returns>The assembly information of the new strong-name signed assembly.</returns>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.SignAssembly(System.String,System.String,System.String)">
+            <summary>
+            Signs the assembly at the specified path with your own strong-name key file.
+            </summary>
+            <param name="assemblyPath">The path to the assembly you want to strong-name sign.</param>
+            <param name="keyPath">The path to the strong-name key file you want to use (.snk or .pfx).</param>
+            <param name="outputPath">The directory path where the strong-name signed assembly will be copied to.</param>
+            <returns>The assembly information of the new strong-name signed assembly.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            assemblyPath parameter was not provided.
+            </exception>
+            <exception cref="T:System.IO.FileNotFoundException">
+            Could not find provided assembly file.
+            or
+            Could not find provided strong-name key file.
+            </exception>
+            <exception cref="T:System.BadImageFormatException">
+            The file is not a .NET managed assembly.
+            </exception>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.SignAssembly(System.String,System.String,System.String,System.String,System.String[])">
+            <summary>
+            Signs the assembly at the specified path with your own strong-name key file.
+            </summary>
+            <param name="assemblyPath">The path to the assembly you want to strong-name sign.</param>
+            <param name="keyPath">The path to the strong-name key file you want to use (.snk or .pfx).</param>
+            <param name="outputPath">The directory path where the strong-name signed assembly will be copied to.</param>
+            <param name="keyFilePassword">The password for the provided strong-name key file.</param>
+            <param name="probingPaths">Additional paths to probe for references.</param>
+            <returns>
+            The assembly information of the new strong-name signed assembly.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">assemblyPath parameter was not provided.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">Could not find provided assembly file.
+            or
+            Could not find provided strong-name key file.</exception>
+            <exception cref="T:System.BadImageFormatException">The file is not a .NET managed assembly.</exception>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.GetAssemblyInfo(System.String,System.String[])">
+            <summary>
+            Gets .NET assembly information.
+            </summary>
+            <param name="assemblyPath">The path to an assembly you want to get information from.</param>
+            <param name="probingPaths">Additional paths to probe for references.</param>
+            <returns>
+            The assembly information.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">assemblyPath parameter was not provided.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">Could not find provided assembly file.</exception>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.FixAssemblyReference(System.String,System.String)">
+            <summary>
+            Fixes an assembly reference.
+            </summary>
+            <param name="assemblyPath">The path to the assembly you want to fix a reference for.</param>    
+            <param name="referenceAssemblyPath">The path to the reference assembly path you want to fix in the first assembly.</param>
+            <returns><c>true</c> if an assembly reference was found and fixed, <c>false</c> if no reference was found.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            assemblyPath was not provided.
+            or
+            referenceAssemblyPath was not provided.
+            </exception>
+            <exception cref="T:System.IO.FileNotFoundException">
+            Could not find provided assembly file.
+            or
+            Could not find provided reference assembly file.
+            </exception>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.FixAssemblyReference(System.String,System.String,System.String,System.String,System.String[])">
+            <summary>
+            Fixes an assembly reference.
+            </summary>
+            <param name="assemblyPath">The path to the assembly you want to fix a reference for.</param>
+            <param name="referenceAssemblyPath">The path to the reference assembly path you want to fix in the first assembly.</param>
+            <param name="keyPath">The path to the strong-name key file you want to use (.snk or .pfx).</param>
+            <param name="keyFilePassword">The password for the provided strong-name key file.</param>
+            <param name="probingPaths">Additional paths to probe for references.</param>
+            <returns>
+              <c>true</c> if an assembly reference was found and fixed, <c>false</c> if no reference was found.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">assemblyPath was not provided.
+            or
+            referenceAssemblyPath was not provided.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">Could not find provided assembly file.
+            or
+            Could not find provided reference assembly file.</exception>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.RemoveInvalidFriendAssemblies(System.String)">
+            <summary>
+            Removes any friend assembly references (InternalsVisibleTo attributes) that do not have public keys.
+            </summary>
+            <param name="assemblyPath">The path to the assembly you want to remove friend references from.</param>
+            <returns><c>true</c> if any invalid friend references were found and fixed, <c>false</c> if no invalid friend references was found.</returns>
+            <exception cref="T:System.ArgumentNullException">
+            assemblyPath was not provided.
+            </exception>
+            <exception cref="T:System.IO.FileNotFoundException">
+            Could not find provided assembly file.
+            </exception>
+        </member>
+        <member name="M:Brutal.Dev.StrongNameSigner.SigningHelper.RemoveInvalidFriendAssemblies(System.String,System.String,System.String,System.String[])">
+            <summary>
+            Removes any friend assembly references (InternalsVisibleTo attributes) that do not have public keys.
+            </summary>
+            <param name="assemblyPath">The path to the assembly you want to remove friend references from.</param>
+            <param name="keyPath">The path to the strong-name key file you want to use (.snk or .pfx).</param>
+            <param name="keyFilePassword">The password for the provided strong-name key file.</param>
+            <param name="probingPaths">Additional paths to probe for references.</param>
+            <returns>
+              <c>true</c> if any invalid friend references were found and fixed, <c>false</c> if no invalid friend references was found.
+            </returns>
+            <exception cref="T:System.ArgumentNullException">assemblyPath was not provided.</exception>
+            <exception cref="T:System.IO.FileNotFoundException">Could not find provided assembly file.</exception>
+        </member>
+    </members>
+</doc>

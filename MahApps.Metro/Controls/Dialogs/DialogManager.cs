@@ -278,7 +278,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static Task HandleOverlayOnHide(MetroDialogSettings settings, MetroWindow window)
         {
-            if (window.metroActiveDialogContainer.Children.Count == 0)
+            if (!window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().Any())
             {
                 return (settings == null || settings.AnimateHide ? window.HideOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.HideOverlay))));
             }
@@ -292,7 +292,7 @@ namespace MahApps.Metro.Controls.Dialogs
 
         private static Task HandleOverlayOnShow(MetroDialogSettings settings, MetroWindow window)
         {
-            if (window.metroActiveDialogContainer.Children.Count == 0)
+            if (!window.metroActiveDialogContainer.Children.OfType<BaseMetroDialog>().Any())
             {
                 return (settings == null || settings.AnimateShow ? window.ShowOverlayAsync() : Task.Factory.StartNew(() => window.Dispatcher.Invoke(new Action(window.ShowOverlay))));
             }
