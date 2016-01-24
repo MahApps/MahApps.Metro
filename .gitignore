@@ -129,7 +129,7 @@ publish/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
-# TODO: Comment the next line if you want to checkin your web deploy settings 
+# TODO: Comment the next line if you want to checkin your web deploy settings
 # but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
 *.publishproj
@@ -142,6 +142,8 @@ publish/
 !**/packages/build/
 # If using the old MSBuild-Integrated Package Restore, uncomment this:
 #!**/packages/repositories.config
+# scriptcs
+**/scriptcs_packages/*
 
 # Windows Azure Build Output
 csx/
