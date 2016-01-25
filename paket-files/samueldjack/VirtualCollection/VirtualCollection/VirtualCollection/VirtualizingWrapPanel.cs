@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 
 namespace VirtualCollection.VirtualCollection
 {
@@ -53,9 +55,9 @@ namespace VirtualCollection.VirtualCollection
 
         public VirtualizingWrapPanel()
         {
-            if (!DesignerProperties.IsInDesignTool)
+            if (!DesignerProperties.GetIsInDesignMode(this))
             {
-                Dispatcher.BeginInvoke(Initialize);
+                Dispatcher.BeginInvoke(new Action(Initialize));
             }
         }
 
@@ -178,7 +180,7 @@ namespace VirtualCollection.VirtualCollection
 
         private void RecycleItems(ItemLayoutInfo layoutInfo)
         {
-            foreach (var child in Children)
+            foreach (var child in Children.OfType<UIElement>())
             {
                 var virtualItemIndex = GetVirtualItemIndex(child);
 
@@ -197,7 +199,7 @@ namespace VirtualCollection.VirtualCollection
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            foreach (var child in Children)
+            foreach (var child in Children.OfType<UIElement>())
             {
                 child.Arrange(_childLayouts[child]);
             }
@@ -368,6 +370,11 @@ namespace VirtualCollection.VirtualCollection
 
             InvalidateScrollInfo();
             InvalidateMeasure();
+        }
+
+        public Rect MakeVisible(Visual visual, Rect rectangle)
+        {
+            return new Rect();
         }
 
         public Rect MakeVisible(UIElement visual, Rect rectangle)
