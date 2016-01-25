@@ -6,13 +6,10 @@ namespace MahApps.Metro
     /// This code is auto generated. Do not amend.
     /// ******************************************
 
-    internal static class PackIconModernDataFactory
+    internal static class PackIconMaterialDataFactory
     {
-        internal static IDictionary<PackIconModernKind, string> Create()
+        internal static IDictionary<PackIconMaterialKind, string> Create() => new Dictionary<PackIconMaterialKind, string>
         {
-            return new Dictionary<PackIconModernKind, string>
-                   {
-                   };
-        }
+        };
     }
 }

@@ -8,11 +8,8 @@ namespace MahApps.Metro
 
     internal static class PackIconModernDataFactory
     {
-        internal static IDictionary<PackIconModernKind, string> Create()
+        internal static IDictionary<PackIconModernKind, string> Create() => new Dictionary<PackIconModernKind, string>
         {
-            return new Dictionary<PackIconModernKind, string>
-                   {
-                   };
-        }
+        };
     }
 }
