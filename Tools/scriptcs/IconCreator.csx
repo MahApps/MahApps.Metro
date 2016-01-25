@@ -48,14 +48,24 @@ public class IconConverter
     private IEnumerable<Tuple<string, string>> GetNameDataPairs(string sourceData)
     {
         var jObject = JObject.Parse(sourceData);
-        return jObject["icons"].Select(t => new Tuple<string, string>(t["name"].ToString().Underscore().Pascalize(), t["data"].ToString()));
+        return jObject["icons"].Select(t => new Tuple<string, string>(GetName(t["name"].ToString()), t["data"].ToString()));
     }
 
     private IEnumerable<Tuple<string, string>> GetNameDataOldModernPairs(string sourceData)
     {
         var jToken = JToken.Parse(sourceData);
         return jToken.Children()
-                     .Select(t => new Tuple<string, string>(t["name"].ToString().Replace(".", "_"), GetSvgData(t["name"].ToString().Replace(".", "_"), t["svg"].ToString())));
+                     .Select(t => new Tuple<string, string>(GetName(t["name"].ToString()).Replace(".", "_"), GetSvgData(GetName(t["name"].ToString()).Replace(".", "_"), t["svg"].ToString())));
+    }
+
+    private string GetName(string name)
+    {
+        name = name.Underscore().Pascalize();
+        if (name.Length > 0 && Char.IsNumber(name[0]))
+        {
+            return '_' + name;
+        }
+        return name;
     }
 
     private string GetSvgData(string name, string svg)

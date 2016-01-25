@@ -8,8 +8,8 @@
     /// List of available icons for use with <see cref="PackIcon" />.
     /// </summary>
     /// <remarks>
-    /// All icons sourced from Material Design Icons Font - <see cref="http://modernuiicons.com/"/> - in accordance of
-    /// <see cref="https://github.com/Templarian/WindowsIcons/blob/master/WindowsPhone/license.txt"/>.
+    /// All icons sourced from Material Design Icons Font - <see><cref>http://modernuiicons.com</cref></see> - in accordance of
+    /// <see><cref>https://github.com/Templarian/WindowsIcons/blob/master/WindowsPhone/license.txt</cref></see>.
     /// </remarks>
     public enum PackIconModernKind
     {

@@ -8,15 +8,15 @@
     /// List of available icons for use with <see cref="PackIcon" />.
     /// </summary>
     /// <remarks>
-    /// All icons sourced from Material Design Icons Font - <see cref="http://modernuiicons.com/"/> - in accordance of
-    /// <see cref="https://github.com/Templarian/WindowsIcons/blob/master/WindowsPhone/license.txt"/>.
+    /// All icons sourced from Material Design Icons Font - <see><cref>http://modernuiicons.com</cref></see> - in accordance of
+    /// <see><cref>https://github.com/Templarian/WindowsIcons/blob/master/WindowsPhone/license.txt</cref></see>.
     /// </remarks>
     public enum PackIconModernKind
     {
-        3d3ds,
-        3dCollada,
-        3dObj,
-        3dX,
+        _3d3ds,
+        _3dCollada,
+        _3dObj,
+        _3dX,
         Acorn,
         Add,
         AddMultiple,
