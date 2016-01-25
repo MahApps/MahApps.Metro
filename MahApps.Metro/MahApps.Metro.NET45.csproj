@@ -138,8 +138,10 @@
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
+    <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialKind.cs" />
+    <Compile Include="Controls\IconPacks\PackIconModern.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernKind.cs" />
     <Compile Include="Controls\TimePartVisibility.cs" />

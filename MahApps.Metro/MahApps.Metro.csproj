@@ -142,8 +142,10 @@
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\HotKeyBox.cs" />
+    <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialKind.cs" />
+    <Compile Include="Controls\IconPacks\PackIconModern.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconModernKind.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
