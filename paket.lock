@@ -1,0 +1,8 @@
+
+GITHUB
+  remote: ControlzEx/ControlzEx
+  specs:
+    src/ControlzEx/PackIconBase.cs (8f91b7af7c55b87a302bacacdc7c9957c329f5e2)
+  remote: samueldjack/VirtualCollection
+  specs:
+    VirtualCollection/VirtualCollection/VirtualizingWrapPanel.cs (bbce670015b1a0af6332ea3ecfd20b28384573c9)
