@@ -17,6 +17,13 @@
                       mc:Ignorable="d">
 
     <Grid>
+        <Grid.Resources>
+            <Style BasedOn="{StaticResource {x:Type controls:TransitioningContentControl}}" TargetType="{x:Type controls:TransitioningContentControl}">
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Auto" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+            </Style>
+        </Grid.Resources>
+
         <controls:MetroAnimatedTabControl>
             <TabItem Header="Material">
                 <Grid>
