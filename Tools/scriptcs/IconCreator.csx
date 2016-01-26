@@ -19,12 +19,10 @@ public class IconConverter
     {
         Console.WriteLine("Downloading Material Design icon data...");
         var nameDataMaterialPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/38EF63D0-4744-11E4-B3CF-842B2B6CFE1B")).ToList();
-        CheckForCorrectData(nameDataMaterialPairs);
         Console.WriteLine("Items: " + nameDataMaterialPairs.Count);
 
         Console.WriteLine("Downloading Modern UI icon data...");
         var nameDataModernPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/DFFB9B7E-C30A-11E5-A4E9-842B2B6CFE1B")).ToList();
-        CheckForCorrectData(nameDataModernPairs);
         //var nameDataModernPairs = GetNameDataOldModernPairs(GetSourceData("http://modernuiicons.com/icons/package")).ToList();
         Console.WriteLine("Items: " + nameDataModernPairs.Count);
 
@@ -45,20 +43,31 @@ public class IconConverter
         Console.WriteLine("Done!");
     }
 
-    private void CheckForCorrectData(IEnumerable<Tuple<string, string>> nameDataPairs)
-    {
-        var emptyDataPairs = nameDataPairs.Where(t => string.IsNullOrEmpty(t.Item2)).ToList();
-        foreach (var dataPair in emptyDataPairs)
-        {
-            Console.WriteLine("Uuuups, found empty data part for: '{0}'", dataPair.Item1);
-        }
-    }
-
     private IEnumerable<Tuple<string, string>> GetNameDataPairs(string sourceData)
     {
         var jObject = JObject.Parse(sourceData);
-        return jObject["icons"].Select(t => new Tuple<string, string>(GetName(t["name"].ToString()),
-                                                                      t["data"].ToString().Trim()));
+        return jObject["icons"].Select(t => GetNameDataPair(GetName(t["name"].ToString()), t["data"].ToString().Trim()));
+    }
+
+    private Tuple<string, string> GetNameDataPair(string name, string data)
+    {
+        if (string.IsNullOrEmpty(data))
+        {
+            Console.Write("Uuuups, found empty data part for: '{0}'", name);
+            if (name == "ControlStop") data = "M0,0 L28.5,0 L28.5,28.5 L0,28.5 z";
+            else if (name == "DebugStop") data = "M0,0 L28,0 L28,28 L0,28 z";
+            else if (name == "MoonFull") data = "M44.3278,22.1639 C44.3278,34.404684 34.404684,44.3278 22.1639,44.3278 C9.923116,44.3278 0,34.404684 0,22.1639 C0,9.923116 9.923116,0 22.1639,0 C34.404684,0 44.3278,9.923116 44.3278,22.1639 z";
+            if (string.IsNullOrEmpty(data))
+            {
+                Console.Write(" ...and can not be used!!!");
+            }
+            else
+            {
+                Console.Write(" ...and can set to '{0}'", data);
+            }
+            Console.WriteLine();
+        }
+        return new Tuple<string, string>(name, data);
     }
 
     private IEnumerable<Tuple<string, string>> GetNameDataOldModernPairs(string sourceData)
