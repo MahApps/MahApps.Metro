@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace ControlzEx
 {
@@ -59,6 +61,7 @@ namespace ControlzEx
         /// <summary>
         /// Gets the icon path data for the current <see cref="Kind"/>.
         /// </summary>
+        [TypeConverter(typeof(GeometryConverter))]
         public string Data
         {
             get { return (string)GetValue(DataProperty); }

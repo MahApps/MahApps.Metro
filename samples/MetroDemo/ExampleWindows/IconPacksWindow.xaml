@@ -5,7 +5,7 @@
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
-                      xmlns:virtualCollection="clr-namespace:VirtualCollection.VirtualCollection"
+                      xmlns:virtualizing="clr-namespace:MetroDemo.Virtualizing"
                       Title="IconPacks"
                       Width="800"
                       Height="600"
@@ -17,7 +17,6 @@
                       mc:Ignorable="d">
 
     <Grid>
-
         <controls:MetroAnimatedTabControl>
             <TabItem Header="Material">
                 <Grid>
@@ -44,9 +43,7 @@
                              Style="{DynamicResource VirtualisedMetroListBox}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <virtualCollection:VirtualizingWrapPanel IsItemsHost="True"
-                                                                         ItemHeight="84"
-                                                                         ItemWidth="84" />
+                                <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
@@ -85,7 +82,7 @@
                                  FontWeight="Bold"
                                  GotFocus="TextBoxOnGotFocus"
                                  IsReadOnly="True"
-                                 Text="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay, StringFormat='&lt;metro:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
+                                 Text="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, StringFormat='&lt;metro:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
                         <StackPanel Grid.Column="1"
                                     Margin="5"
                                     HorizontalAlignment="Right"
@@ -100,7 +97,7 @@
                                                         VerticalAlignment="Center"
                                                         BorderBrush="{DynamicResource AccentColorBrush}"
                                                         BorderThickness="1"
-                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -112,7 +109,7 @@
                                                         VerticalAlignment="Center"
                                                         BorderBrush="{DynamicResource AccentColorBrush}"
                                                         BorderThickness="1"
-                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -124,7 +121,7 @@
                                                         VerticalAlignment="Center"
                                                         BorderBrush="{DynamicResource AccentColorBrush}"
                                                         BorderThickness="1"
-                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -136,7 +133,7 @@
                                                         VerticalAlignment="Center"
                                                         BorderBrush="{DynamicResource AccentColorBrush}"
                                                         BorderThickness="1"
-                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
                             </DockPanel>
                         </StackPanel>
                     </Grid>
@@ -168,9 +165,7 @@
                              Style="{DynamicResource VirtualisedMetroListBox}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <virtualCollection:VirtualizingWrapPanel IsItemsHost="True"
-                                                                         ItemHeight="84"
-                                                                         ItemWidth="84" />
+                                <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
                             </ItemsPanelTemplate>
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
@@ -209,7 +204,7 @@
                                  FontWeight="Bold"
                                  GotFocus="TextBoxOnGotFocus"
                                  IsReadOnly="True"
-                                 Text="{Binding ElementName=PackIconModernKindListBox, Path=SelectedItem, Mode=OneWay, StringFormat='&lt;metro:PackIconModern Kind=&quot;{0}&quot; \/&gt;'}" />
+                                 Text="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, StringFormat='&lt;metro:PackIconModern Kind=&quot;{0}&quot; \/&gt;'}" />
                         <StackPanel Grid.Column="1"
                                     Margin="5"
                                     HorizontalAlignment="Right"
@@ -224,7 +219,7 @@
                                                       VerticalAlignment="Center"
                                                       BorderBrush="{DynamicResource AccentColorBrush}"
                                                       BorderThickness="1"
-                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -236,7 +231,7 @@
                                                       VerticalAlignment="Center"
                                                       BorderBrush="{DynamicResource AccentColorBrush}"
                                                       BorderThickness="1"
-                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -248,7 +243,7 @@
                                                       VerticalAlignment="Center"
                                                       BorderBrush="{DynamicResource AccentColorBrush}"
                                                       BorderThickness="1"
-                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -260,7 +255,7 @@
                                                       VerticalAlignment="Center"
                                                       BorderBrush="{DynamicResource AccentColorBrush}"
                                                       BorderThickness="1"
-                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
                             </DockPanel>
                         </StackPanel>
                     </Grid>

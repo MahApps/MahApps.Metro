@@ -95,7 +95,7 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Viewbox Margin="{TemplateBinding Padding}">
                             <Canvas Width="24" Height="24">
-                                <Path Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}}"
+                                <Path Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Fill="{TemplateBinding Foreground}"
                                       SnapsToDevicePixels="False"
                                       UseLayoutRounding="True" />
@@ -125,7 +125,7 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Viewbox Margin="{TemplateBinding Padding}">
                             <Canvas Width="76" Height="76">
-                                <Path Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}}"
+                                <Path Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                       Fill="{TemplateBinding Foreground}"
                                       SnapsToDevicePixels="False"
                                       UseLayoutRounding="True" />
