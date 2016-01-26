@@ -121,7 +121,11 @@ namespace MetroDemo
 
         private void LaunchIcons(object sender, RoutedEventArgs e)
         {
+#if NET4_5
+            new IconPacksWindow().Show();
+#else
             new IconsWindow().Show();
+#endif
         }
 
         private Window cleanWindowDemo;

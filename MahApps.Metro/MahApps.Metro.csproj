@@ -67,6 +67,10 @@
     <AssemblyOriginatorKeyFile>mahapps.metro.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\paket-files\ControlzEx\ControlzEx\src\ControlzEx\PackIconBase.cs">
+      <Paket>True</Paket>
+      <Link>ControlzEx/PackIconBase.cs</Link>
+    </Compile>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -138,6 +142,12 @@
     <Compile Include="Controls\Helper\ToggleButtonHelper.cs" />
     <Compile Include="Controls\Helper\VisibilityHelper.cs" />
     <Compile Include="Controls\HotKeyBox.cs" />
+    <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />
+    <Compile Include="Controls\IconPacks\PackIconMaterialDataFactory.cs" />
+    <Compile Include="Controls\IconPacks\PackIconMaterialKind.cs" />
+    <Compile Include="Controls\IconPacks\PackIconModern.cs" />
+    <Compile Include="Controls\IconPacks\PackIconModernDataFactory.cs" />
+    <Compile Include="Controls\IconPacks\PackIconModernKind.cs" />
     <Compile Include="Controls\LayoutInvalidationCatcher.cs" />
     <Compile Include="Controls\MetroAnimatedSingleRowTabControl.cs" />
     <Compile Include="Controls\MetroAnimatedTabControl.cs" />
