@@ -23,7 +23,7 @@ public class IconConverter
 
         Console.WriteLine("Downloading Modern UI icon data...");
         var nameDataModernPairs = GetNameDataPairs(GetSourceData("https://materialdesignicons.com/api/package/DFFB9B7E-C30A-11E5-A4E9-842B2B6CFE1B")).ToList();
-        //var nameDataModernPairs = GetNameDataOldModernPairs(GetSourceData("http://modernuiicons.com/icons/package")).ToList();
+        var nameDataOldModernPairs = GetNameDataOldModernPairs(GetSourceData("http://modernuiicons.com/icons/package")).ToList();
         Console.WriteLine("Items: " + nameDataModernPairs.Count);
 
         Console.WriteLine("Updating PackIconMaterialKind...");
@@ -51,7 +51,7 @@ public class IconConverter
 
     private Tuple<string, string> GetNameDataPair(string name, string data)
     {
-        if (string.IsNullOrEmpty(data))
+        /*if (string.IsNullOrEmpty(data))
         {
             Console.Write("Uuuups, found empty data part for: '{0}'", name);
             if (name == "ControlStop") data = "M0,0 L28.5,0 L28.5,28.5 L0,28.5 z";
@@ -66,7 +66,7 @@ public class IconConverter
                 Console.Write(" ...and can set to '{0}'", data);
             }
             Console.WriteLine();
-        }
+        }*/
         return new Tuple<string, string>(name, data);
     }
 
@@ -74,8 +74,8 @@ public class IconConverter
     {
         var jToken = JToken.Parse(sourceData);
         return jToken.Children()
-                     .Select(t => new Tuple<string, string>(GetName(t["name"].ToString()).Replace(".", "").Underscore().Pascalize(),
-                                                            GetSvgData(GetName(t["name"].ToString()).Replace(".", "").Underscore().Pascalize(), t["svg"].ToString())));
+                     .Select(t => new Tuple<string, string>(GetName(t["name"].ToString()).Replace(".", "-").Underscore().Pascalize(),
+                                                            GetSvgData(GetName(t["name"].ToString()).Replace(".", "-").Underscore().Pascalize(), t["svg"].ToString())));
     }
 
     private string GetName(string name)
@@ -92,9 +92,7 @@ public class IconConverter
 
     private string GetSvgData(string name, string svg)
     {
-        //var split = svg.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
         svg = string.Format("<svg>{0}</svg>", svg);
-        //svg = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + svg.Trim('?');
         //Console.WriteLine("Try get data for {0}...", name);
         //Console.WriteLine(svg);
 
@@ -110,9 +108,19 @@ public class IconConverter
         var xmlDoc = XDocument.Load(ms);
         var elements = xmlDoc.Element("svg").Elements().ToList();
         if (elements.Count > 1)
-          Console.WriteLine("TODO, handle all {0} path data entries for {1}", elements.Count, name);
+        {
+            Console.WriteLine("Uuuups, can not use path data for {0}", name);
+            return string.Empty;
+        }
+
         var data = (string)(elements.First().Attribute("d"));
-        //Console.WriteLine("Data {0}", data);
+        if (string.IsNullOrEmpty(data))
+        {
+            Console.WriteLine("Uuuups, can not use path data for {0}", name);
+            //Console.WriteLine("Data {0}", data);
+            return string.Empty;
+        }
+
         return data;
     }
 
