@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 
@@ -20,8 +21,7 @@ namespace MetroDemo.ExampleWindows
             set { SetValue(MaterialKindsProperty, value); }
         }
 
-        public static readonly DependencyProperty ModernKindsProperty = DependencyProperty.Register(
-                                                        "ModernKinds", typeof(IEnumerable<PackIconModernKind>), typeof(IconPacksWindow), new PropertyMetadata(default(IEnumerable<PackIconModernKind>)));
+        public static readonly DependencyProperty ModernKindsProperty = DependencyProperty.Register("ModernKinds", typeof(IEnumerable<PackIconModernKind>), typeof(IconPacksWindow), new PropertyMetadata(default(IEnumerable<PackIconModernKind>)));
 
         public IEnumerable<PackIconModernKind> ModernKinds
         {
@@ -57,6 +57,12 @@ namespace MetroDemo.ExampleWindows
         private void HyperlinkModernOnClick(object sender, RoutedEventArgs e)
         {
             System.Diagnostics.Process.Start("http://modernuiicons.com/");
+        }
+
+        private void TextBoxOnGotFocus(object sender, RoutedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            textBox.Dispatcher.BeginInvoke(new Action(textBox.SelectAll));
         }
     }
 }

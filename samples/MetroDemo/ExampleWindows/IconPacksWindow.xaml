@@ -30,9 +30,9 @@
                     <StackPanel>
                         <TextBlock Margin="5"
                                    FontSize="{DynamicResource SubHeaderFontSize}"
-                                   Text="Material Design Icons collection by Austin Andrews" />
+                                   Text="Material Design Icons collection" />
                         <TextBlock Margin="10" FontSize="{DynamicResource NormalFontSize}">
-                            For more information on Material Design Icons see the official website:
+                            For more information see the official website:
                             <Hyperlink Click="HyperlinkMaterialOnClick">materialdesignicons.com</Hyperlink>
                         </TextBlock>
                     </StackPanel>
@@ -56,20 +56,82 @@
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            Background="Transparent"
-                                           ToolTip="{Binding }">
+                                           ToolTip="{Binding Mode=OneWay}">
                                     <TextBlock HorizontalAlignment="Center"
                                                DockPanel.Dock="Bottom"
-                                               Text="{Binding }"
+                                               Text="{Binding Mode=OneWay}"
                                                TextTrimming="CharacterEllipsis" />
                                     <metro:PackIconMaterial Width="32"
                                                             Height="32"
                                                             HorizontalAlignment="Center"
                                                             VerticalAlignment="Center"
-                                                            Kind="{Binding }" />
+                                                            Kind="{Binding Mode=OneWay}" />
                                 </DockPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+
+                    <Grid Grid.Row="2" Background="{DynamicResource AccentColorBrush4}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0"
+                                 MinWidth="500"
+                                 Margin="5"
+                                 VerticalAlignment="Center"
+                                 BorderThickness="0"
+                                 FontFamily="Courier New"
+                                 FontWeight="Bold"
+                                 IsReadOnly="True"
+                                 GotFocus="TextBoxOnGotFocus"
+                                 Text="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay, StringFormat='&lt;metro:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
+                        <StackPanel Grid.Column="1"
+                                    Margin="5"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal">
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="16x16" />
+                                <metro:PackIconMaterial Width="16"
+                                                        Height="16"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                            </DockPanel>
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="24x24" />
+                                <metro:PackIconMaterial Width="24"
+                                                        Height="24"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                            </DockPanel>
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="48x48" />
+                                <metro:PackIconMaterial Width="48"
+                                                        Height="48"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                            </DockPanel>
+                            <DockPanel Margin="5" Background="Transparent">
+                                <TextBlock HorizontalAlignment="Center"
+                                           DockPanel.Dock="Bottom"
+                                           Text="76x76" />
+                                <metro:PackIconMaterial Width="76"
+                                                        Height="76"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedItem, Mode=OneWay}" />
+                            </DockPanel>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </TabItem>
 
@@ -84,9 +146,9 @@
                     <StackPanel>
                         <TextBlock Margin="5"
                                    FontSize="{DynamicResource SubHeaderFontSize}"
-                                   Text="Modern UI Icons collection by Austin Andrews" />
+                                   Text="Modern UI Icons collection" />
                         <TextBlock Margin="10" FontSize="{DynamicResource NormalFontSize}">
-                            For more information on Modern UI Icons see the official website:
+                            For more information see the official website:
                             <Hyperlink Click="HyperlinkModernOnClick">modernuiicons.com</Hyperlink>
                         </TextBlock>
                     </StackPanel>
