@@ -16,7 +16,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the LoginDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static Task<LoginDialogData> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings settings = null)
+        public static Task<LoginDialogData> ShowLoginAsync(this MetroWindow window, string title, string message, LoginDialogSettings settings = null, object icon = null)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -32,7 +32,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     LoginDialog dialog = new LoginDialog(window, settings)
                     {
                         Title = title,
-                        Message = message
+                        Message = message,
+                        Icon = icon
                     };
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
@@ -83,7 +84,7 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message contained within the MessageDialog.</param>
         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
-        public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null)
+        public static Task<string> ShowInputAsync(this MetroWindow window, string title, string message, MetroDialogSettings settings = null, object icon = null)
         {
             window.Dispatcher.VerifyAccess();
             return HandleOverlayOnShow(settings, window).ContinueWith(z =>
@@ -98,7 +99,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         Title = title,
                         Message = message,
-                        Input = settings.DefaultText
+                        Input = settings.DefaultText,
+                        Icon = icon
                     };
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
@@ -174,8 +176,8 @@ namespace MahApps.Metro.Controls.Dialogs
                         Message = message,
                         Title = title,
                         ButtonStyle = style,
+                        Icon = icon
                     };
-                    SetIcon(dialog, icon);
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
@@ -224,8 +226,9 @@ namespace MahApps.Metro.Controls.Dialogs
         /// <param name="message">The message within the ProgressDialog.</param>
         /// <param name="isCancelable">Determines if the cancel button is visible.</param>
         /// <param name="settings">Optional Settings that override the global metro dialog settings.</param>
+        /// <param name="icon"></param>
         /// <returns>A task promising the instance of ProgressDialogController for this operation.</returns>
-        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null)
+        public static Task<ProgressDialogController> ShowProgressAsync(this MetroWindow window, string title, string message, bool isCancelable = false, MetroDialogSettings settings = null, object icon = null)
         {
             window.Dispatcher.VerifyAccess();
 
@@ -237,7 +240,8 @@ namespace MahApps.Metro.Controls.Dialogs
                     {
                         Message = message,
                         Title = title,
-                        IsCancelable = isCancelable
+                        IsCancelable = isCancelable,
+                        Icon = icon
                     };
 
                     if (settings == null)
@@ -457,18 +461,6 @@ namespace MahApps.Metro.Controls.Dialogs
             else
             {
                 window.metroInactiveDialogContainer.Children.Remove(dialog);
-            }
-        }
-
-        private static void SetIcon(BaseMetroDialog metroDialog, object icon)
-        {
-            if (icon is MessageDialogIcon)
-            {
-                metroDialog.Icon = metroDialog.Resources[(MessageDialogIcon)icon];
-            }
-            else
-            {
-                metroDialog.Icon = icon;
             }
         }
 
