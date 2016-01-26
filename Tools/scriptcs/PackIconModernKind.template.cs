@@ -5,10 +5,10 @@
     /// ******************************************
 
     /// <summary>
-    /// List of available icons for use with <see cref="PackIcon" />.
+    /// List of available icons for use with <see cref="PackIconModern" />.
     /// </summary>
     /// <remarks>
-    /// All icons sourced from Material Design Icons Font - <see><cref>http://modernuiicons.com</cref></see> - in accordance of
+    /// All icons sourced from Modern UI Icons Font - <see><cref>http://modernuiicons.com</cref></see> - in accordance of
     /// <see><cref>https://github.com/Templarian/WindowsIcons/blob/master/WindowsPhone/license.txt</cref></see>.
     /// </remarks>
     public enum PackIconModernKind

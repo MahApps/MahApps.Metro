@@ -5,7 +5,7 @@
     /// ******************************************
 
     /// <summary>
-    /// List of available icons for use with <see cref="PackIcon" />.
+    /// List of available icons for use with <see cref="PackIconMaterial" />.
     /// </summary>
     /// <remarks>
     /// All icons sourced from Material Design Icons Font - <see><cref>https://materialdesignicons.com</cref></see> - in accordance of
@@ -52,6 +52,7 @@
         Alert,
         AlertBox,
         AlertCircle,
+        AlertCircleOutline,
         AlertOctagon,
         AlertOutline,
         Alpha,
@@ -1149,8 +1150,10 @@
         RotateLeftVariant,
         RotateRight,
         RotateRightVariant,
+        RoundedCorner,
         RouterWireless,
         Routes,
+        Rowing,
         Rss,
         RssBox,
         Ruler,
