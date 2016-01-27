@@ -220,6 +220,9 @@ namespace MahApps.Metro.Controls
             set { this.SetValue(IsAutoCloseEnabledProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets the time in milliseconds when the flyout should auto close.
+        /// </summary>
         public long AutoCloseInterval
         {
             get { return (long)this.GetValue(AutoCloseIntervalProperty); }
