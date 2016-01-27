@@ -177,5 +177,10 @@ namespace MetroDemo.ExampleWindows
 
             flyout.IsOpen = true;
         }
+
+        private void ShowAutoCloseFlyout(object sender, RoutedEventArgs e)
+        {
+            this.ToggleFlyout(12);
+        }
     }
 }
