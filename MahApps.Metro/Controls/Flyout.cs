@@ -392,6 +392,7 @@ namespace MahApps.Metro.Controls
                         {
                             // focus the Flyout itself to avoid nasty FocusVisual painting (it's visible until the Flyout is closed)
                             flyout.Focus();
+                            flyout.StopAutoCloseTimer();
                             if (flyout.hideStoryboard != null)
                             {
                                 flyout.hideStoryboard.Completed += flyout.HideStoryboard_Completed;
@@ -400,7 +401,6 @@ namespace MahApps.Metro.Controls
                             {
                                 flyout.Hide();
                             }
-                            flyout.StopAutoCloseTimer();
                         }
                         VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "Hide" : "Show", true);
                     }
@@ -419,8 +419,8 @@ namespace MahApps.Metro.Controls
                         {
                             // focus the Flyout itself to avoid nasty FocusVisual painting (it's visible until the Flyout is closed)
                             flyout.Focus();
-                            flyout.Hide();
                             flyout.StopAutoCloseTimer();
+                            flyout.Hide();
                         }
                         VisualStateManager.GoToState(flyout, (bool)e.NewValue == false ? "HideDirect" : "ShowDirect", true);
                     }
@@ -478,7 +478,10 @@ namespace MahApps.Metro.Controls
         {
             //in case it is already running
             this.StopAutoCloseTimer();
-            this.autoCloseTimer.Start();
+            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
+            {
+                this.autoCloseTimer.Start();
+            }
         }
 
         private void StopAutoCloseTimer()
