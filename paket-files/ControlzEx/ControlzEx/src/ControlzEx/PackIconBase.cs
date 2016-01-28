@@ -26,7 +26,7 @@ namespace ControlzEx
         /// </param>
         protected PackIconBase(Func<IDictionary<TKind, string>> dataIndexFactory)
         {
-            if (dataIndexFactory == null) throw new ArgumentNullException("dataIndexFactory");
+            if (dataIndexFactory == null) throw new ArgumentNullException(nameof(dataIndexFactory));
 
             if (_dataIndex == null)
                 _dataIndex = new Lazy<IDictionary<TKind, string>>(dataIndexFactory);
