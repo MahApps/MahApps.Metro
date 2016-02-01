@@ -139,6 +139,68 @@ namespace MahApps.Metro.Controls.Dialogs
                     }).Unwrap().Unwrap();
                 }));
             }).Unwrap();
+        }/// <summary>
+         /// Creates a Selector inside of the current window.
+         /// </summary>
+         /// <param name="window">The MetroWindow</param>
+         /// <param name="title">The title of the MessageDialog.</param>
+         /// <param name="message">The message contained within the MessageDialog.</param>
+         /// <param name="settings">Optional settings that override the global metro dialog settings.</param>
+         /// <returns>The text that was entered or null (Nothing in Visual Basic) if the user cancelled the operation.</returns>
+        public static Task<string> ShowSelectorAsync(this MetroWindow window, string title, string message, SelectorDialogSettings settings)
+        {
+            window.Dispatcher.VerifyAccess();
+            return HandleOverlayOnShow(settings, window).ContinueWith(z =>
+            {
+                return (Task<string>)window.Dispatcher.Invoke(new Func<Task<string>>(() =>
+                {
+                    if (settings == null)
+                        settings = new SelectorDialogSettings();
+
+                    //create the dialog control
+                    var dialog = new SelectorDialog(window, settings)
+                    {
+                        Title = title,
+                        Message = message
+                    };
+
+                    SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
+                    dialog.SizeChangedHandler = sizeHandler;
+
+                    return dialog.WaitForLoadAsync().ContinueWith(x =>
+                    {
+                        if (DialogOpened != null)
+                        {
+                            window.Dispatcher.BeginInvoke(new Action(() => DialogOpened(window, new DialogStateChangedEventArgs())));
+                        }
+
+                        return dialog.WaitForButtonPressAsync().ContinueWith(y =>
+                        {
+                            //once a button as been clicked, begin removing the dialog.
+
+                            dialog.OnClose();
+
+                            if (DialogClosed != null)
+                            {
+                                window.Dispatcher.BeginInvoke(new Action(() => DialogClosed(window, new DialogStateChangedEventArgs())));
+                            }
+
+                            Task closingTask = (Task)window.Dispatcher.Invoke(new Func<Task>(() => dialog._WaitForCloseAsync()));
+                            return closingTask.ContinueWith(a =>
+                            {
+                                return ((Task)window.Dispatcher.Invoke(new Func<Task>(() =>
+                                {
+                                    window.SizeChanged -= sizeHandler;
+
+                                    window.RemoveDialog(dialog);
+
+                                    return HandleOverlayOnHide(settings, window);
+                                }))).ContinueWith(y3 => y).Unwrap();
+                            });
+                        }).Unwrap();
+                    }).Unwrap().Unwrap();
+                }));
+            }).Unwrap();
         }
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
