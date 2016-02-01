@@ -166,8 +166,8 @@ namespace MahApps.Metro.Controls.Dialogs
 
         public string SelectedItem
         {
-            get { return (string)GetValue(InputProperty); }
-            set { SetValue(InputProperty, value); }
+            get { return (string)GetValue(SelectedItemProperty); }
+            set { SetValue(SelectedItemProperty, value); }
         }
 
         public string AffirmativeButtonText
