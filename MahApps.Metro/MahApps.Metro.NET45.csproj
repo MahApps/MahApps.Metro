@@ -138,6 +138,7 @@
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
+    <Compile Include="Controls\Dialogs\SelectorDialog.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialDataFactory.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterialKind.cs" />
@@ -587,6 +588,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Dialogs\ProgressDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Dialogs\SelectorDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

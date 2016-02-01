@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -321,6 +322,16 @@ namespace MetroDemo
                 return;
 
             await this.ShowMessageAsync("Hello", "Hello " + result + "!");
+        }
+
+        private async void ShowSelectorDialog(object sender, RoutedEventArgs e)
+        {
+            var result = await this.ShowSelectorAsync("Hello", "How Old Are You", new SelectorDialogSettings {ItemList = new List<string> {"0-18","18-30","30-50","50+"} });
+
+            if (result == null) //user pressed cancel
+                return;
+
+            await this.ShowMessageAsync("Thanks", "You Selected " + result + "!");
         }
 
         private async void ShowLoginDialog(object sender, RoutedEventArgs e)

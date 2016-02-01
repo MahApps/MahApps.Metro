@@ -171,6 +171,8 @@
                     <Separator />
                     <MenuItem Click="ShowInputDialog"
                               Header="Show InputDialog" />
+                    <MenuItem Click="ShowSelectorDialog"
+                              Header="Show SelectorDialog" />
                     <MenuItem Click="ShowLoginDialog"
                               Header="Show LoginDialog" />
                     <MenuItem Click="ShowLoginDialogPasswordPreview"
