@@ -2,14 +2,14 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      x:Name="View"
                       Title="Icons"
-                      WindowStartupLocation="CenterScreen"
-                      BorderThickness="1"
+                      Height="500"
                       BorderBrush="{DynamicResource AccentColorBrush}"
+                      BorderThickness="1"
                       ResizeMode="CanResizeWithGrip"
                       SizeToContent="Width"
-                      Height="500"
-                      x:Name="View">
+                      WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -21,14 +21,13 @@
 
     <Grid>
         <ListBox x:Name="IconsListBox"
-                 ItemsSource="{Binding ElementName=View, Path=AllIcons, IsAsync=True}"
                  HorizontalAlignment="Center"
+                 ItemsSource="{Binding ElementName=View, Path=AllIcons, IsAsync=True}"
                  Style="{DynamicResource VirtualisedMetroListBox}">
 
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="4"
-                                 IsItemsHost="True" />
+                    <UniformGrid Columns="4" IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
 
@@ -41,12 +40,10 @@
                                        Margin="2"
                                        HorizontalAlignment="Center">
                                 <Rectangle.Fill>
-                                    <VisualBrush Stretch="Uniform"
-                                                 Visual="{Binding Path=Visual}" />
+                                    <VisualBrush Stretch="Uniform" Visual="{Binding Path=Visual}" />
                                 </Rectangle.Fill>
                             </Rectangle>
-                            <TextBlock HorizontalAlignment="Center"
-                                       Text="{Binding Path=Name}" />
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding Path=Name}" />
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
