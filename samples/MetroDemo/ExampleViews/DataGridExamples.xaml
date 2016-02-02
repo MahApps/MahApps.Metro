@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="MetroDemo.ExampleViews.DataGridExamples"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:MetroDemo="clr-namespace:MetroDemo"
-             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:ValueConverter="clr-namespace:MetroDemo.ValueConverter"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -17,21 +17,18 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <x:Array x:Key="DataGridSelectionUnitArray"
-                     Type="DataGridSelectionUnit">
+            <x:Array x:Key="DataGridSelectionUnitArray" Type="DataGridSelectionUnit">
                 <DataGridSelectionUnit>FullRow</DataGridSelectionUnit>
                 <DataGridSelectionUnit>CellOrRowHeader</DataGridSelectionUnit>
                 <DataGridSelectionUnit>Cell</DataGridSelectionUnit>
             </x:Array>
-            <x:Array x:Key="DataGridGridLinesVisibilityArray"
-                     Type="DataGridGridLinesVisibility">
+            <x:Array x:Key="DataGridGridLinesVisibilityArray" Type="DataGridGridLinesVisibility">
                 <DataGridGridLinesVisibility>All</DataGridGridLinesVisibility>
                 <DataGridGridLinesVisibility>Horizontal</DataGridGridLinesVisibility>
                 <DataGridGridLinesVisibility>Vertical</DataGridGridLinesVisibility>
                 <DataGridGridLinesVisibility>None</DataGridGridLinesVisibility>
             </x:Array>
-            <x:Array x:Key="DataGridHeadersVisibilityArray"
-                     Type="DataGridHeadersVisibility">
+            <x:Array x:Key="DataGridHeadersVisibilityArray" Type="DataGridHeadersVisibility">
                 <DataGridHeadersVisibility>All</DataGridHeadersVisibility>
                 <DataGridHeadersVisibility>Row</DataGridHeadersVisibility>
                 <DataGridHeadersVisibility>Column</DataGridHeadersVisibility>
@@ -39,11 +36,9 @@
             </x:Array>
 
             <ControlTemplate x:Key="ConfigDataTemplate">
-                <Grid d:DataContext="{d:DesignInstance DataGrid}"
-                      Grid.IsSharedSizeScope="True">
+                <Grid Grid.IsSharedSizeScope="True" d:DataContext="{d:DesignInstance DataGrid}">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"
-                                          SharedSizeGroup="labels" />
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="labels" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -53,54 +48,54 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Column="0"
-                               Grid.Row="0"
-                               VerticalAlignment="Center"
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
                                Margin="2"
+                               VerticalAlignment="Center"
                                Text="IsEnabled" />
-                    <CheckBox Grid.Column="1"
-                              Grid.Row="0"
-                              VerticalAlignment="Center"
-                              HorizontalAlignment="Left"
+                    <CheckBox Grid.Row="0"
+                              Grid.Column="1"
                               Margin="2"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
                               IsChecked="{Binding IsEnabled}" />
 
-                    <TextBlock Grid.Column="0"
-                               Grid.Row="1"
-                               VerticalAlignment="Center"
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
                                Margin="2"
+                               VerticalAlignment="Center"
                                Text="SelectionUnit" />
-                    <ComboBox Grid.Column="1"
-                              Grid.Row="1"
-                              VerticalAlignment="Center"
-                              Margin="2"
+                    <ComboBox Grid.Row="1"
+                              Grid.Column="1"
                               Width="100"
+                              Margin="2"
+                              VerticalAlignment="Center"
                               ItemsSource="{StaticResource DataGridSelectionUnitArray}"
                               SelectedValue="{Binding SelectionUnit}" />
 
-                    <TextBlock Grid.Column="0"
-                               Grid.Row="2"
-                               VerticalAlignment="Center"
+                    <TextBlock Grid.Row="2"
+                               Grid.Column="0"
                                Margin="2"
+                               VerticalAlignment="Center"
                                Text="GridLines" />
-                    <ComboBox Grid.Column="1"
-                              Grid.Row="2"
-                              VerticalAlignment="Center"
-                              Margin="2"
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="1"
                               Width="100"
+                              Margin="2"
+                              VerticalAlignment="Center"
                               ItemsSource="{StaticResource DataGridGridLinesVisibilityArray}"
                               SelectedValue="{Binding GridLinesVisibility}" />
 
-                    <TextBlock Grid.Column="0"
-                               Grid.Row="3"
-                               VerticalAlignment="Center"
+                    <TextBlock Grid.Row="3"
+                               Grid.Column="0"
                                Margin="2"
+                               VerticalAlignment="Center"
                                Text="Headers" />
-                    <ComboBox Grid.Column="1"
-                              Grid.Row="3"
-                              VerticalAlignment="Center"
-                              Margin="2"
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="1"
                               Width="100"
+                              Margin="2"
+                              VerticalAlignment="Center"
                               ItemsSource="{StaticResource DataGridHeadersVisibilityArray}"
                               SelectedValue="{Binding HeadersVisibility}" />
                 </Grid>
@@ -111,8 +106,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid RenderOptions.ClearTypeHint="Enabled"
-          TextOptions.TextFormattingMode="Display">
+    <Grid RenderOptions.ClearTypeHint="Enabled" TextOptions.TextFormattingMode="Display">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -123,123 +117,106 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <ContentControl Grid.Column="0"
-                        Grid.Row="1"
-                        Margin="10,5,5,5"
-                        Template="{StaticResource ConfigDataTemplate}"
-                        DataContext="{Binding ElementName=MetroDataGrid}" />
-        <Label Grid.Column="0"
+        <Label Grid.Row="0"
+               Grid.Column="0"
                Grid.ColumnSpan="2"
-               Grid.Row="0"
-               Content="Metro Style"
                HorizontalAlignment="Left"
+               Content="Metro Style"
                Style="{DynamicResource DescriptionHeaderStyle}" />
+
+        <ContentControl Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="10,5,5,5"
+                        DataContext="{Binding ElementName=MetroDataGrid}"
+                        Template="{StaticResource ConfigDataTemplate}" />
         <DataGrid x:Name="MetroDataGrid"
-                  Grid.Column="1"
                   Grid.Row="1"
-                  RenderOptions.ClearTypeHint="Enabled"
-                  TextOptions.TextFormattingMode="Display"
-                  HeadersVisibility="All"
+                  Grid.Column="1"
                   Margin="5"
-                  SelectionUnit="FullRow"
+                  AutoGenerateColumns="False"
+                  HeadersVisibility="All"
                   ItemsSource="{Binding Path=Albums}"
-                  AutoGenerateColumns="False">
+                  RenderOptions.ClearTypeHint="Enabled"
+                  SelectionUnit="FullRow"
+                  TextOptions.TextFormattingMode="Display">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
-                                        Header="IsSelected"
-                                        Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}" />
-                <DataGridTextColumn Header="Title"
-                                    Binding="{Binding Title}" />
-                <DataGridTextColumn Header="Artist"
-                                    Binding="{Binding Artist.Name}" />
-                <DataGridTextColumn Header="Genre"
-                                    Binding="{Binding Genre.Name}" />
-                <controls:DataGridNumericUpDownColumn Header="Price"
-                                                      Binding="{Binding Price}"
-                                                      StringFormat="C"
-                                                      Minimum="0" />
+                                        ElementStyle="{DynamicResource MetroDataGridCheckBox}"
+                                        Header="IsSelected" />
+                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
+                <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
+                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
+                <controls:DataGridNumericUpDownColumn Binding="{Binding Price}"
+                                                      Header="Price"
+                                                      Minimum="0"
+                                                      StringFormat="C" />
             </DataGrid.Columns>
             <DataGrid.Style>
-                <Style BasedOn="{StaticResource MetroDataGrid}"
-                       TargetType="{x:Type DataGrid}">
-                    <Setter Property="AlternatingRowBackground"
-                            Value="{DynamicResource GrayBrush10}" />
+                <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="{x:Type DataGrid}">
+                    <Setter Property="AlternatingRowBackground" Value="{DynamicResource GrayBrush10}" />
                 </Style>
             </DataGrid.Style>
             <DataGrid.RowStyle>
-                <Style BasedOn="{StaticResource MetroDataGridRow}"
-                       TargetType="{x:Type DataGridRow}">
+                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}"
-                                     Value="True">
-                            <Setter Property="Background"
-                                    Value="#FF8B8B" />
-                            <Setter Property="Foreground"
-                                    Value="Red" />
+                        <DataTrigger Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}" Value="True">
+                            <Setter Property="Background" Value="#FF8B8B" />
+                            <Setter Property="Foreground" Value="Red" />
                         </DataTrigger>
-                        <!-- IsMouseOver -->
+                        <!--  IsMouseOver  -->
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
-                                <Condition Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}"
-                                           Value="True" />
-                                <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}"
-                                           Value="true" />
+                                <Condition Binding="{Binding Price, Mode=OneWay, Converter={StaticResource AlbumPriceIsTooMuchConverter}}" Value="True" />
+                                <Condition Binding="{Binding Path=IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true" />
                             </MultiDataTrigger.Conditions>
-                            <Setter Property="Background"
-                                    Value="#FFBDBD" />
+                            <Setter Property="Background" Value="#FFBDBD" />
                         </MultiDataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.RowValidationRules>
-                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True"
-                                                                    ValidationStep="CommittedValue" />
-                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True"
-                                                                    ValidationStep="UpdatedValue" />
+                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="CommittedValue" />
+                <ValueConverter:AlbumPriceIsReallyTooMuchValidation ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
             </DataGrid.RowValidationRules>
         </DataGrid>
-
-        <ContentControl Grid.Column="0"
-                        Grid.Row="3"
-                        Margin="10,5,5,5"
-                        Template="{StaticResource ConfigDataTemplate}"
-                        DataContext="{Binding ElementName=AzureDataGrid}" />
-        <Label Grid.Column="0"
+        <Label Grid.Row="2"
+               Grid.Column="0"
                Grid.ColumnSpan="2"
-               Grid.Row="2"
-               Content="Azure Style"
                HorizontalAlignment="Left"
+               Content="Azure Style"
                Style="{DynamicResource DescriptionHeaderStyle}" />
+
+        <ContentControl Grid.Row="3"
+                        Grid.Column="0"
+                        Margin="10,5,5,5"
+                        DataContext="{Binding ElementName=AzureDataGrid}"
+                        Template="{StaticResource ConfigDataTemplate}" />
         <DataGrid x:Name="AzureDataGrid"
-                  Grid.Column="1"
                   Grid.Row="3"
-                  RenderOptions.ClearTypeHint="Enabled"
-                  TextOptions.TextFormattingMode="Display"
+                  Grid.Column="1"
                   Margin="5"
+                  AutoGenerateColumns="False"
                   ItemsSource="{Binding Path=Albums}"
+                  RenderOptions.ClearTypeHint="Enabled"
                   Style="{DynamicResource AzureDataGrid}"
-                  AutoGenerateColumns="False">
+                  TextOptions.TextFormattingMode="Display">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Title"
-                                    Binding="{Binding Title}" />
-                <DataGridTextColumn Header="Artist"
-                                    Binding="{Binding Artist.Name}" />
-                <DataGridTextColumn Header="Genre"
-                                    Binding="{Binding Genre.Name}" />
+                <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
+                <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
+                <DataGridTextColumn Binding="{Binding Genre.Name}" Header="Genre" />
                 <DataGridTemplateColumn Header="Price">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <controls:MetroProgressBar x:Name="PriceProgressBar"
-                                                       Value="{Binding Price}"
-                                                       Minimum="0"
-                                                       Maximum="20"
-                                                       Foreground="{DynamicResource AccentColorBrush}"
-                                                       Background="Transparent"
-                                                       VerticalAlignment="Center"
                                                        Height="20"
-                                                       Margin="5 2" />
+                                                       Margin="5 2"
+                                                       VerticalAlignment="Center"
+                                                       Background="Transparent"
+                                                       Foreground="{DynamicResource AccentColorBrush}"
+                                                       Maximum="20"
+                                                       Minimum="0"
+                                                       Value="{Binding Price}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
