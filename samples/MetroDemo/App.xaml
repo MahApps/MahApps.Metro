@@ -15,18 +15,13 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <Style x:Key="DescriptionHeaderStyle"
-                   TargetType="Label">
-                <Setter Property="FontSize"
-                        Value="22" />
-                <Setter Property="HorizontalAlignment"
-                        Value="Center" />
+            <Style x:Key="DescriptionHeaderStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="22" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
 
-            <Style TargetType="{x:Type controls:CustomValidationPopup}"
-                   BasedOn="{StaticResource MetroValidationPopup}">
-                <Setter Property="CloseOnMouseLeftButtonDown"
-                        Value="False" />
+            <Style BasedOn="{StaticResource MetroValidationPopup}" TargetType="{x:Type controls:CustomValidationPopup}">
+                <Setter Property="CloseOnMouseLeftButtonDown" Value="False" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>
