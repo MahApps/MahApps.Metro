@@ -10,18 +10,16 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0"
-                    Orientation="Horizontal">
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
             <Button x:Name="PART_BackButton"
-                    DockPanel.Dock="Left"
-                    Style="{DynamicResource MetroCircleButtonStyle}"
-                    Height="40"
                     Width="40"
+                    Height="40"
+                    VerticalAlignment="Bottom"
+                    Style="{DynamicResource MetroCircleButtonStyle}"
                     FontFamily="Segoe UI Symbol"
                     FontSize="16"
-                    VerticalAlignment="Bottom">
-                <Rectangle Width="20"
-                           Height="15">
+                    DockPanel.Dock="Left">
+                <Rectangle Width="20" Height="15">
                     <Rectangle.Fill>
                         <VisualBrush Stretch="Fill">
                             <VisualBrush.Visual>
@@ -29,13 +27,13 @@
                                         Height="48"
                                         Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
                                         UseLayoutRounding="False">
-                                    <Path Width="25"
-                                          Height="18"
-                                          Canvas.Left="12"
+                                    <Path Canvas.Left="12"
                                           Canvas.Top="15"
-                                          Stretch="Fill"
+                                          Width="25"
+                                          Height="18"
                                           Fill="{DynamicResource BlackBrush}"
-                                          Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z " />
+                                          Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z "
+                                          Stretch="Fill" />
                                 </Canvas>
                             </VisualBrush.Visual>
                         </VisualBrush>
@@ -46,17 +44,16 @@
                 </Button.LayoutTransform>
             </Button>
             <Button x:Name="PART_ForwardButton"
-                    DockPanel.Dock="Right"
-                    Style="{DynamicResource MetroCircleButtonStyle}"
-                    Height="40"
                     Width="40"
+                    Height="40"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Style="{DynamicResource MetroCircleButtonStyle}"
                     FontFamily="Segoe UI Symbol"
                     FontSize="16"
-                    VerticalAlignment="Bottom"
-                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right"
                     IsEnabled="False">
-                <Rectangle Width="20"
-                           Height="15">
+                <Rectangle Width="20" Height="15">
                     <Rectangle.Fill>
                         <VisualBrush Stretch="Fill">
                             <VisualBrush.Visual>
@@ -64,30 +61,29 @@
                                         Height="48"
                                         Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
                                         UseLayoutRounding="False">
-                                    <Path Width="25"
-                                          Height="18"
-                                          Canvas.Left="12"
+                                    <Path Canvas.Left="12"
                                           Canvas.Top="15"
-                                          Stretch="Fill"
+                                          Width="25"
+                                          Height="18"
                                           Fill="{DynamicResource BlackBrush}"
-                                          Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z " />
+                                          Data="F1 M 12,22L 12,26L 28.25,26L 21,33L 27.5,33L 37,24L 27.5,15L 21,15L 28.25,22L 12,22 Z "
+                                          Stretch="Fill" />
                                 </Canvas>
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Rectangle.Fill>
                 </Rectangle>
             </Button>
-            <Label FontSize="25"
-                   x:Name="PART_Title"
-                   Margin="0 5 0 0" />
+            <Label x:Name="PART_Title"
+                   Margin="0 5 0 0"
+                   FontSize="25" />
         </StackPanel>
 
         <Grid Grid.Row="1">
-            <ContentPresenter Panel.ZIndex="1"
-                              Content="{Binding OverlayContent, RelativeSource={RelativeSource AncestorType=Controls:MetroNavigationWindow,Mode=FindAncestor}}" />
+            <ContentPresenter Panel.ZIndex="1" Content="{Binding OverlayContent, RelativeSource={RelativeSource AncestorType=Controls:MetroNavigationWindow, Mode=FindAncestor}}" />
             <Frame x:Name="PART_Frame"
-                   NavigationUIVisibility="Hidden"
-                   Margin="3 0 3 0" />
+                   Margin="3 0 3 0"
+                   NavigationUIVisibility="Hidden" />
         </Grid>
     </Grid>
 </Controls:MetroWindow>
