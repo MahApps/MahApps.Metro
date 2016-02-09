@@ -2,14 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="CleanWindowCommandsStyleKey"
-           TargetType="{x:Type Controls:WindowCommands}">
-        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing"
-                Value="Upper" />
-        <Setter Property="ShowLastSeparator"
-                Value="False" />
-        <Setter Property="SeparatorHeight"
-                Value="11" />
+    <Style x:Key="CleanWindowCommandsStyleKey" TargetType="{x:Type Controls:WindowCommands}">
+        <Setter Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Upper" />
+        <Setter Property="SeparatorHeight" Value="11" />
+        <Setter Property="ShowLastSeparator" Value="False" />
     </Style>
 
 </ResourceDictionary>

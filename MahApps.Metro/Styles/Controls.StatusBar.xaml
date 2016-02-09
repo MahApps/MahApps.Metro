@@ -2,33 +2,26 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
-    <Style x:Key="MetroStatusBarItem"
-           TargetType="{x:Type StatusBarItem}">
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource IdealForegroundColorBrush}" />
-        <Setter Property="Padding"
-                Value="3" />
-        <Setter Property="HorizontalContentAlignment"
-                Value="Left" />
-        <Setter Property="VerticalContentAlignment"
-                Value="Center" />
+    <Style x:Key="MetroStatusBarItem" TargetType="{x:Type StatusBarItem}">
+        <Setter Property="BorderBrush" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="3" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type StatusBarItem}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
+                    <Border Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource GrayBrush2}" />
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource GrayBrush2}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -36,69 +29,52 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MetroStatusBarSeparator"
-           TargetType="{x:Type Separator}">
-        <Setter Property="Background"
-                Value="{DynamicResource IdealForegroundColorBrush}" />
-        <Setter Property="MinWidth"
-                Value="1" />
-        <Setter Property="MinHeight"
-                Value="1" />
+    <Style x:Key="MetroStatusBarSeparator" TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="MinHeight" Value="1" />
+        <Setter Property="MinWidth" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Separator}">
-                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
                             SnapsToDevicePixels="True" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style x:Key="MetroStatusBar"
-           TargetType="{x:Type StatusBar}">
-        <Setter Property="Background"
-                Value="{Binding Path=WindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource IdealForegroundColorBrush}" />
-        <Setter Property="FontFamily"
-                Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
-        <Setter Property="FontSize"
-                Value="{DynamicResource StatusBarFontSize}" />
-        <Setter Property="FontStyle"
-                Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
-        <Setter Property="FontWeight"
-                Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
+    <Style x:Key="MetroStatusBar" TargetType="{x:Type StatusBar}">
+        <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
+        <Setter Property="Background" Value="{Binding Path=WindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+        <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
+        <Setter Property="FontSize" Value="{DynamicResource StatusBarFontSize}" />
+        <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
+        <Setter Property="FontWeight" Value="{DynamicResource {x:Static SystemFonts.StatusFontWeightKey}}" />
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource MetroStatusBarItem}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type StatusBar}">
                     <Border Name="Border"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                         <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource GrayBrush9}" />
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush9}" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}"
-                                     Value="False">
-                            <Setter Property="Background"
-                                    Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=IsActive}" Value="False">
+                            <Setter Property="Background" Value="{Binding Path=NonActiveWindowTitleBrush, Mode=OneWay, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Controls:MetroWindow}}}" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="ItemContainerStyle"
-                Value="{DynamicResource MetroStatusBarItem}" />
     </Style>
 
 </ResourceDictionary>

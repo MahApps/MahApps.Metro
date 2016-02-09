@@ -7,7 +7,7 @@
     <FontFamily x:Key="ContentFontFamily">Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="ToggleSwitchFontFamily">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
     <FontFamily x:Key="ToggleSwitchHeaderFontFamily">Segoe UI Semibold, Segoe UI, Lucida Sans Unicode, Verdana</FontFamily>
-    
+
     <System:Double x:Key="HeaderFontSize">40</System:Double>
     <System:Double x:Key="SubHeaderFontSize">29.333</System:Double>
     <System:Double x:Key="WindowTitleFontSize">16</System:Double>

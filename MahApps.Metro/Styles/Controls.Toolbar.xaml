@@ -2,82 +2,54 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Controls.TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <!--Style for toolbar buttons-->
-    <Style x:Key="ToolBarButtonBaseStyle"
-           TargetType="{x:Type ButtonBase}">
+    <!--  Style for toolbar buttons  -->
+    <Style x:Key="ToolBarButtonBaseStyle" TargetType="{x:Type ButtonBase}">
         <Style.Resources>
-            <!--Disabled all images placed inside a button - most common scenario-->
+            <!--  Disabled all images placed inside a button - most common scenario  -->
             <Style TargetType="Image">
                 <Style.Triggers>
-                    <Trigger Property="IsEnabled"
-                             Value="False">
-                        <Setter Property="Opacity"
-                                Value="0.5" />
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" Value="0.5" />
                     </Trigger>
                 </Style.Triggers>
             </Style>
         </Style.Resources>
-        <Setter Property="SnapsToDevicePixels"
-                Value="true" />
-        <Setter Property="OverridesDefaultStyle"
-                Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ButtonBase}">
                     <Border x:Name="Border"
-                            BorderThickness="1"
                             Background="{DynamicResource TransparentWhiteBrush}"
-                            BorderBrush="{DynamicResource TransparentWhiteBrush}">
+                            BorderBrush="{DynamicResource TransparentWhiteBrush}"
+                            BorderThickness="1">
                         <ContentPresenter Margin="2"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           RecognizesAccessKey="True" />
                     </Border>
-
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsKeyboardFocused"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush7}" />
-                            <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource GrayBrush7}" />
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush7}" />
-                            <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource GrayBrush7}" />
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
                         </Trigger>
-                        <Trigger Property="IsPressed"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource AccentColorBrush}" />
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
-                        <Trigger Property="CheckBox.IsChecked"
-                                 Value="true">
-                            <Setter TargetName="Border"
-                                    Property="Background"
-                                    Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource AccentColorBrush}" />
+                        <Trigger Property="CheckBox.IsChecked" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource MenuItemDisabledBrush}" />
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource MenuItemDisabledBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -85,7 +57,7 @@
         </Setter>
     </Style>
 
-    <!--Style for all types of regular buttons-->
+    <!--  Style for all types of regular buttons  -->
     <Style x:Key="{x:Static ToolBar.ButtonStyleKey}"
            BasedOn="{StaticResource ToolBarButtonBaseStyle}"
            TargetType="{x:Type Button}" />
@@ -99,32 +71,29 @@
            BasedOn="{StaticResource ToolBarButtonBaseStyle}"
            TargetType="{x:Type RadioButton}" />
 
-    <!--Style for text box inside a toolbar if needed-->
+    <!--  Style for text box inside a toolbar if needed  -->
     <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}"
-           TargetType="{x:Type TextBox}"
-           BasedOn="{StaticResource MetroTextBox}" />
+           BasedOn="{StaticResource MetroTextBox}"
+           TargetType="{x:Type TextBox}" />
 
-    <!--Style the toolbar thumb-->
-    <Style x:Key="ToolBarThumbStyle"
-           TargetType="{x:Type Thumb}">
-        <Setter Property="OverridesDefaultStyle"
-                Value="true" />
-        <Setter Property="Cursor"
-                Value="SizeAll" />
+    <!--  Style the toolbar thumb  -->
+    <Style x:Key="ToolBarThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="Cursor" Value="SizeAll" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border Background="Transparent"
-                            SnapsToDevicePixels="True"
-                            Margin="0,3,0,3">
+                    <Border Margin="0 3 0 3"
+                            Background="Transparent"
+                            SnapsToDevicePixels="True">
                         <Rectangle Width="4.9">
                             <Rectangle.Fill>
-                                <!--Brush similar to visual studio, can be improved-->
-                                <DrawingBrush ViewportUnits="Absolute"
+                                <!--  Brush similar to visual studio, can be improved  -->
+                                <DrawingBrush TileMode="Tile"
+                                              Viewbox="0,0,5,4"
                                               ViewboxUnits="Absolute"
                                               Viewport="0,0,5,4"
-                                              Viewbox="0,0,5,4"
-                                              TileMode="Tile">
+                                              ViewportUnits="Absolute">
                                     <DrawingBrush.Drawing>
                                         <GeometryDrawing Brush="{DynamicResource GrayBrush3}">
                                             <GeometryDrawing.Geometry>
@@ -147,78 +116,50 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ToolBarOverflowButtonStyle"
-           TargetType="{x:Type ToggleButton}">
-        <Setter Property="OverridesDefaultStyle"
-                Value="true" />
+    <Style x:Key="ToolBarOverflowButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Name="Bd"
-                            CornerRadius="0,3,3,0"
                             Background="Transparent"
+                            CornerRadius="0,3,3,0"
                             SnapsToDevicePixels="true">
                         <Grid>
-                            <!--Overflow button similar to visual studio-->
+                            <!--  Overflow button similar to visual studio  -->
                             <Rectangle Name="Rectangle"
-                                       Height="1"
                                        Width="6"
-                                       Fill="{DynamicResource BlackBrush}"
+                                       Height="1"
+                                       Margin="2 8"
                                        VerticalAlignment="Bottom"
-                                       Margin="2,8" />
+                                       Fill="{DynamicResource BlackBrush}" />
                             <Path Name="Arrow"
-                                  Fill="{DynamicResource BlackBrush}"
+                                  Margin="2 3"
                                   VerticalAlignment="Bottom"
-                                  Margin="2,3"
+                                  Fill="{DynamicResource BlackBrush}"
                                   Data="M 0 0 L 6 0 3 3 Z" />
                             <ContentPresenter />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver"
-                                 Value="true">
-                            <Setter TargetName="Bd"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush7}" />
-                            <Setter TargetName="Arrow"
-                                    Property="Fill"
-                                    Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Rectangle"
-                                    Property="Fill"
-                                    Value="{DynamicResource AccentColorBrush}" />
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
-                        <Trigger Property="IsKeyboardFocused"
-                                 Value="true">
-                            <Setter TargetName="Bd"
-                                    Property="Background"
-                                    Value="{DynamicResource GrayBrush7}" />
-                            <Setter TargetName="Arrow"
-                                    Property="Fill"
-                                    Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Rectangle"
-                                    Property="Fill"
-                                    Value="{DynamicResource AccentColorBrush}" />
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource GrayBrush7}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
-                        <Trigger Property="IsChecked"
-                                 Value="true">
-                            <Setter TargetName="Bd"
-                                    Property="Background"
-                                    Value="{DynamicResource AccentColorBrush}" />
-                            <Setter TargetName="Arrow"
-                                    Property="Fill"
-                                    Value="{DynamicResource BlackBrush}" />
-                            <Setter TargetName="Rectangle"
-                                    Property="Fill"
-                                    Value="{DynamicResource BlackBrush}" />
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource BlackBrush}" />
+                            <Setter TargetName="Bd" Property="Background" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource BlackBrush}" />
                         </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter TargetName="Arrow"
-                                    Property="Fill"
-                                    Value="{DynamicResource TransparentWhiteBrush}" />
-                            <Setter TargetName="Rectangle"
-                                    Property="Fill"
-                                    Value="{DynamicResource TransparentWhiteBrush}" />
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource TransparentWhiteBrush}" />
+                            <Setter TargetName="Rectangle" Property="Fill" Value="{DynamicResource TransparentWhiteBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -226,71 +167,61 @@
         </Setter>
     </Style>
 
-    <!--Style the toolbar-->
-    <Style x:Key="{x:Type ToolBar}"
-           TargetType="{x:Type ToolBar}">
-        <Setter Property="SnapsToDevicePixels"
-                Value="true" />
-        <Setter Property="OverridesDefaultStyle"
-                Value="true" />
+    <!--  Style the toolbar  -->
+    <Style x:Key="{x:Type ToolBar}" TargetType="{x:Type ToolBar}">
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToolBar}">
                     <Border x:Name="Border"
-                            CornerRadius="2"
-                            BorderThickness="1"
                             Background="{DynamicResource TransparentWhiteBrush}"
-                            BorderBrush="{DynamicResource TransparentWhiteBrush}">
+                            BorderBrush="{DynamicResource TransparentWhiteBrush}"
+                            BorderThickness="1"
+                            CornerRadius="2">
                         <DockPanel>
-                            <ToggleButton DockPanel.Dock="Right"
-                                          IsEnabled="{TemplateBinding HasOverflowItems}"
-                                          Style="{StaticResource ToolBarOverflowButtonStyle}"
-                                          IsChecked="{Binding Path=IsOverflowOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
-                                          ClickMode="Press">
+                            <ToggleButton Style="{StaticResource ToolBarOverflowButtonStyle}"
+                                          ClickMode="Press"
+                                          DockPanel.Dock="Right"
+                                          IsChecked="{Binding Path=IsOverflowOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          IsEnabled="{TemplateBinding HasOverflowItems}">
                                 <Popup x:Name="OverflowPopup"
                                        AllowsTransparency="true"
-                                       Placement="Bottom"
-                                       IsOpen="{Binding Path=IsOverflowOpen,RelativeSource={RelativeSource TemplatedParent}}"
-                                       StaysOpen="false"
                                        Focusable="false"
-                                       PopupAnimation="Slide">
+                                       IsOpen="{Binding Path=IsOverflowOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                       Placement="Bottom"
+                                       PopupAnimation="Slide"
+                                       StaysOpen="false">
                                     <Border x:Name="DropDownBorder"
                                             Background="{DynamicResource ControlBackgroundBrush}"
-                                            BorderThickness="1"
-                                            BorderBrush="{DynamicResource ControlBorderBrush}">
+                                            BorderBrush="{DynamicResource ControlBorderBrush}"
+                                            BorderThickness="1">
                                         <ToolBarOverflowPanel x:Name="PART_ToolBarOverflowPanel"
                                                               Margin="2"
-                                                              WrapWidth="200"
-                                                              Focusable="true"
                                                               FocusVisualStyle="{x:Null}"
+                                                              Focusable="true"
+                                                              KeyboardNavigation.DirectionalNavigation="Cycle"
                                                               KeyboardNavigation.TabNavigation="Cycle"
-                                                              KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                                              WrapWidth="200" />
                                     </Border>
                                 </Popup>
                             </ToggleButton>
 
                             <Thumb x:Name="ToolBarThumb"
-                                   Style="{StaticResource ToolBarThumbStyle}"
-                                   Width="10" />
+                                   Width="10"
+                                   Style="{StaticResource ToolBarThumbStyle}" />
 
                             <ToolBarPanel x:Name="PART_ToolBarPanel"
-                                          IsItemsHost="true"
-                                          Margin="0,1,2,2" />
+                                          Margin="0 1 2 2"
+                                          IsItemsHost="true" />
                         </DockPanel>
                     </Border>
-
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsOverflowOpen"
-                                 Value="true">
-                            <Setter TargetName="ToolBarThumb"
-                                    Property="IsEnabled"
-                                    Value="false" />
+                        <Trigger Property="IsOverflowOpen" Value="true">
+                            <Setter TargetName="ToolBarThumb" Property="IsEnabled" Value="false" />
                         </Trigger>
-                        <Trigger Property="ToolBarTray.IsLocked"
-                                 Value="true">
-                            <Setter TargetName="ToolBarThumb"
-                                    Property="Visibility"
-                                    Value="Collapsed" />
+                        <Trigger Property="ToolBarTray.IsLocked" Value="true">
+                            <Setter TargetName="ToolBarThumb" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -298,11 +229,9 @@
         </Setter>
     </Style>
 
-    <!--Style the toolbar tray-->
-    <Style x:Key="{x:Type ToolBarTray}"
-           TargetType="{x:Type ToolBarTray}">
-        <Setter Property="Background"
-                Value="{DynamicResource WindowBackgroundBrush}" />
+    <!--  Style the toolbar tray  -->
+    <Style x:Key="{x:Type ToolBarTray}" TargetType="{x:Type ToolBarTray}">
+        <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
     </Style>
 
 </ResourceDictionary>
