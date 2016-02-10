@@ -79,10 +79,11 @@
     <Style TargetType="{x:Type metro:PackIconMaterial}">
         <Setter Property="Height" Value="16" />
         <Setter Property="Width" Value="16" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="FlowDirection" Value="LeftToRight" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Padding" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="False" />
         <Setter Property="UseLayoutRounding" Value="False" />
         <Setter Property="Template">
@@ -93,14 +94,16 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Viewbox Margin="{TemplateBinding Padding}">
-                            <Canvas Width="24" Height="24">
-                                <Path Fill="{TemplateBinding Foreground}"
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <Viewbox Margin="{TemplateBinding Padding}">
+                                <Canvas Width="24" Height="24">
+                                    <Path Fill="{TemplateBinding Foreground}"
                                       Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      SnapsToDevicePixels="False"
+                                      SnapsToDevicePixels="True"
                                       UseLayoutRounding="True" />
-                            </Canvas>
-                        </Viewbox>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -110,6 +113,8 @@
     <Style TargetType="{x:Type metro:PackIconModern}">
         <Setter Property="Height" Value="16" />
         <Setter Property="Width" Value="16" />
+        <Setter Property="Padding" Value="-2" />
+        <Setter Property="FlowDirection" Value="LeftToRight" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="IsTabStop" Value="False" />
@@ -123,14 +128,16 @@
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                        <Viewbox Margin="{TemplateBinding Padding}">
-                            <Canvas Width="76" Height="76">
-                                <Path Fill="{TemplateBinding Foreground}"
+                        <Grid Margin="{TemplateBinding BorderThickness}">
+                            <Viewbox Margin="{TemplateBinding Padding}">
+                                <Canvas Width="76" Height="76">
+                                    <Path Fill="{TemplateBinding Foreground}"
                                       Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      SnapsToDevicePixels="False"
+                                      SnapsToDevicePixels="True"
                                       UseLayoutRounding="True" />
-                            </Canvas>
-                        </Viewbox>
+                                </Canvas>
+                            </Viewbox>
+                        </Grid>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
