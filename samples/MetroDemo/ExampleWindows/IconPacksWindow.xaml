@@ -80,16 +80,23 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0"
-                                 MinWidth="500"
-                                 Margin="5"
-                                 VerticalAlignment="Center"
-                                 BorderThickness="0"
-                                 FontFamily="Courier New"
-                                 FontWeight="Bold"
-                                 GotFocus="TextBoxOnGotFocus"
-                                 IsReadOnly="True"
-                                 Text="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, StringFormat='&lt;metro:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
+
+                        <StackPanel Grid.Column="0"
+                                    Width="450"
+                                    Orientation="Vertical"
+                                    VerticalAlignment="Center">
+                            <TextBox x:Name="MaterialFilterTextBox"
+                                     controls:TextBoxHelper.Watermark="Filter by..."
+                                     controls:TextBoxHelper.UseFloatingWatermark="True"
+                                     Margin="8 2"
+                                     Style="{DynamicResource SearchMetroTextBox}" />
+                            <TextBox Margin="8 2"
+                                     FontFamily="Consolas"
+                                     GotFocus="TextBoxOnGotFocus"
+                                     IsReadOnly="True"
+                                     Text="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, StringFormat='&lt;metro:PackIconMaterial Kind=&quot;{0}&quot; \/&gt;'}" />
+                        </StackPanel>
+
                         <StackPanel Grid.Column="1"
                                     Margin="5"
                                     HorizontalAlignment="Right"
@@ -202,16 +209,23 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0"
-                                 MinWidth="500"
-                                 Margin="5"
-                                 VerticalAlignment="Center"
-                                 BorderThickness="0"
-                                 FontFamily="Courier New"
-                                 FontWeight="Bold"
-                                 GotFocus="TextBoxOnGotFocus"
-                                 IsReadOnly="True"
-                                 Text="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, StringFormat='&lt;metro:PackIconModern Kind=&quot;{0}&quot; \/&gt;'}" />
+
+                        <StackPanel Grid.Column="0"
+                                    Width="450"
+                                    Orientation="Vertical"
+                                    VerticalAlignment="Center">
+                            <TextBox x:Name="ModernFilterTextBox"
+                                     controls:TextBoxHelper.Watermark="Filter by..."
+                                     controls:TextBoxHelper.UseFloatingWatermark="True"
+                                     Margin="8 2"
+                                     Style="{DynamicResource SearchMetroTextBox}" />
+                            <TextBox Margin="8 2"
+                                     FontFamily="Consolas"
+                                     GotFocus="TextBoxOnGotFocus"
+                                     IsReadOnly="True"
+                                     Text="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, StringFormat='&lt;metro:PackIconModern Kind=&quot;{0}&quot; \/&gt;'}" />
+                        </StackPanel>
+
                         <StackPanel Grid.Column="1"
                                     Margin="5"
                                     HorizontalAlignment="Right"
