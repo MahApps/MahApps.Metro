@@ -14,6 +14,8 @@ A toolkit for creating metro-style WPF applications. Lots of goodness out-of-the
 
 ![main demo window](./docs/main_demo_window.png)
 
+![iconpacks](https://cloud.githubusercontent.com/assets/658431/13028849/7a25dbea-d27b-11e5-9059-0e672e5e2268.gif)
+
 ![main demo window animated](./docs/main_demo_window.gif)
 
 ## Documentation
@@ -23,28 +25,40 @@ You can also help keep the documentation up to date by submitting a pull request
 
 ## Release Notes
 
-- current [v1.2.0](./docs/release-notes/1.2.0.md)
+- current [v1.2.4](./docs/release-notes/1.2.4.md)
 - all [other](./docs/release-notes/)
 
 ## Icons
 
-MahApps.Metro has also an icon package used from [WindowsIcons](https://github.com/Templarian/WindowsIcons) by [Templarian](https://github.com/Templarian)
+MahApps.Metro has a [Material](<https://materialdesignicons.com/>) and [Modern](http://modernuiicons.com/) Icon pack for better usage (currently only available via pre-release).
 
-You can download the Nuget package [here](https://www.nuget.org/packages/MahApps.Metro.Resources)
+```xml
+<metro:PackIconMaterial Kind="EmoticonCool" />
+```
 
-## Styles
+```xml
+<metro:PackIconModern Kind="FuturamaFry" />
+```
 
-`CheckBox` and `RadioButton` styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
+You can still download the old resources via [Nuget package](https://www.nuget.org/packages/MahApps.Metro.Resources).
 
 ## Contributing to this project
 
 Did you stumble upon a bug? Before reporting it to us, please check out the [FAQ](https://github.com/MahApps/MahApps.Metro/wiki/FAQ) to see if it is actually a bug. If you can not find anything related to your issue, feel free to report it to us in the issue tracker.
 
-If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request. Anyone and everyone is welcome to contribute. Please take a moment to review the [guidelines for contributing](CONTRIBUTING.md).
+If you've improved MahApps.Metro and think that other people would enjoy it, submit a pull request. Anyone and everyone is welcome to contribute.
+
+Please take a moment to review the [guidelines for contributing](CONTRIBUTING.md).
 
 * [Bug reports](CONTRIBUTING.md#bugs)
 * [Feature requests](CONTRIBUTING.md#features)
 * [Pull requests](CONTRIBUTING.md#pull-requests)
+
+You need [Visual Studio 2015 Community Edition](<https://www.visualstudio.com/>) to build the solution (comes with [#2330](https://github.com/MahApps/MahApps.Metro/pull/2330)), so we can use the new C# 6 features. You can use the [dev-vc2013](<https://github.com/MahApps/MahApps.Metro/tree/dev-vc2013>) branch if you still have the Visual Studio 2013, but no new feature or fix will be added in this branch by me™.
+
+## Styles
+
+`CheckBox` and `RadioButton` styles adapted from styles created by [Brian Lagunas of Infragistics](http://brianlagunas.com/free-metro-light-and-dark-themes-for-wpf-and-silverlight-microsoft-controls/).
 
 ## Missing a control?
 
@@ -124,7 +138,7 @@ MahApps.Metro have 4 simple templates to start with the awesome MahApps.Metro li
 Download this [Templates.zip](./Visual%20Studio%20Templates/Templates.zip) (templates are created with VS 2013) and extract it to your user template folder:
 
 ```
-c:\Users\<USER>\Documents\Visual Studio 2013\
+c:\Users\<USER>\Documents\Visual Studio 201x\
 ```
 
 Now you can choose the templates at the `New Project` dialog.
