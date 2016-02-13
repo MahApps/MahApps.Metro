@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using JetBrains.Annotations;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
@@ -42,21 +44,68 @@ namespace MetroDemo.ExampleWindows
 
     public class IconPacksViewModel : INotifyPropertyChanged
     {
+        private ICollectionView materialCVS;
+        private ICollectionView modernCVS;
+
         public IconPacksViewModel()
         {
         }
 
         public void Initialize()
         {
-            ModernKinds = new Lazy<IEnumerable<PackIconModernKind>>(
-                () => Enum.GetValues(typeof(PackIconModernKind)).OfType<PackIconModernKind>()
-                          .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList()
-                ).Value;
+            MaterialKinds = new ObservableCollection<PackIconMaterialKind>(
+                Enum.GetValues(typeof(PackIconMaterialKind)).OfType<PackIconMaterialKind>()
+                    .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList());
+            materialCVS = CollectionViewSource.GetDefaultView(MaterialKinds);
+            materialCVS.Filter = o => FilterMaterialKinds((PackIconMaterialKind)o);
 
-            MaterialKinds = new Lazy<IEnumerable<PackIconMaterialKind>>(
-                () => Enum.GetValues(typeof(PackIconMaterialKind)).OfType<PackIconMaterialKind>()
-                          .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList()
-                ).Value;
+            ModernKinds = new ObservableCollection<PackIconModernKind>(
+                Enum.GetValues(typeof(PackIconModernKind)).OfType<PackIconModernKind>()
+                    .OrderBy(k => k.ToString(), StringComparer.InvariantCultureIgnoreCase).ToList());
+            modernCVS = CollectionViewSource.GetDefaultView(ModernKinds);
+            modernCVS.Filter = o => FilterModernKindss((PackIconModernKind)o);
+        }
+
+        private bool FilterMaterialKinds(PackIconMaterialKind packIconMaterialKind)
+        {
+            return string.IsNullOrWhiteSpace(MaterialFilterTerm) || packIconMaterialKind.ToString().IndexOf(MaterialFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
+        }
+
+        private bool FilterModernKindss(PackIconModernKind packIconModernKind)
+        {
+            return string.IsNullOrWhiteSpace(ModernFilterTerm) || packIconModernKind.ToString().IndexOf(ModernFilterTerm, StringComparison.CurrentCultureIgnoreCase) >= 0;
+        }
+
+        private string materialFilterTerm;
+
+        public string MaterialFilterTerm
+        {
+            get { return this.materialFilterTerm; }
+            set
+            {
+                if (Equals(value, this.MaterialFilterTerm)) {
+                    return;
+                }
+                this.materialFilterTerm = value;
+                this.OnPropertyChanged();
+                this.materialCVS.Refresh();
+            }
+        }
+
+        private string modernFilterTerm;
+
+        public string ModernFilterTerm
+        {
+            get { return this.modernFilterTerm; }
+            set
+            {
+                if (Equals(value, this.ModernFilterTerm)) {
+                    return;
+                }
+                this.modernFilterTerm = value;
+                this.OnPropertyChanged();
+                this.modernCVS.Refresh();
+            }
         }
 
         private IEnumerable<PackIconModernKind> _modernKinds;
@@ -66,7 +115,9 @@ namespace MetroDemo.ExampleWindows
             get { return _modernKinds; }
             set
             {
-                if (Equals(value, _modernKinds)) return;
+                if (Equals(value, _modernKinds)) {
+                    return;
+                }
                 _modernKinds = value;
                 OnPropertyChanged();
             }
@@ -79,7 +130,9 @@ namespace MetroDemo.ExampleWindows
             get { return _materialKinds; }
             set
             {
-                if (Equals(value, _materialKinds)) return;
+                if (Equals(value, _materialKinds)) {
+                    return;
+                }
                 _materialKinds = value;
                 OnPropertyChanged();
             }

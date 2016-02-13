@@ -98,9 +98,9 @@
                             <Viewbox Margin="{TemplateBinding Padding}">
                                 <Canvas Width="24" Height="24">
                                     <Path Fill="{TemplateBinding Foreground}"
-                                      Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      SnapsToDevicePixels="True"
-                                      UseLayoutRounding="True" />
+                                          Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
+                                          SnapsToDevicePixels="True"
+                                          UseLayoutRounding="True" />
                                 </Canvas>
                             </Viewbox>
                         </Grid>
@@ -132,9 +132,9 @@
                             <Viewbox Margin="{TemplateBinding Padding}">
                                 <Canvas Width="76" Height="76">
                                     <Path Fill="{TemplateBinding Foreground}"
-                                      Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                      SnapsToDevicePixels="True"
-                                      UseLayoutRounding="True" />
+                                          Data="{Binding Data, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}"
+                                          SnapsToDevicePixels="True"
+                                          UseLayoutRounding="True" />
                                 </Canvas>
                             </Viewbox>
                         </Grid>

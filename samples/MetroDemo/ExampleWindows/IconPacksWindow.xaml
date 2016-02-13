@@ -2,7 +2,9 @@
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:converters="http://metro.mahapps.com/winfx/xaml/shared"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:exampleWindows="clr-namespace:MetroDemo.ExampleWindows"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:metro="clr-namespace:MahApps.Metro;assembly=MahApps.Metro"
                       xmlns:virtualizing="clr-namespace:MetroDemo.Virtualizing"
@@ -14,7 +16,9 @@
                       ResizeMode="CanResizeWithGrip"
                       TextOptions.TextFormattingMode="Ideal"
                       TextOptions.TextRenderingMode="Auto"
-                      mc:Ignorable="d">
+                      WindowStartupLocation="CenterScreen"
+                      mc:Ignorable="d"
+                      d:DataContext="{d:DesignInstance exampleWindows:IconPacksViewModel}">
 
     <Grid>
         <Grid.Resources>
@@ -46,8 +50,8 @@
                     <ListBox x:Name="PackIconMaterialKindListBox"
                              Grid.Row="1"
                              Margin="0 8 0 0"
-                             ItemsSource="{Binding MaterialKinds}"
-                             Style="{DynamicResource VirtualisedMetroListBox}">
+                             Style="{DynamicResource VirtualisedMetroListBox}"
+                             ItemsSource="{Binding MaterialKinds}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
@@ -83,13 +87,14 @@
 
                         <StackPanel Grid.Column="0"
                                     Width="450"
-                                    Orientation="Vertical"
-                                    VerticalAlignment="Center">
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
                             <TextBox x:Name="MaterialFilterTextBox"
-                                     controls:TextBoxHelper.Watermark="Filter by..."
-                                     controls:TextBoxHelper.UseFloatingWatermark="True"
                                      Margin="8 2"
-                                     Style="{DynamicResource SearchMetroTextBox}" />
+                                     controls:TextBoxHelper.ClearTextButton="True"
+                                     controls:TextBoxHelper.UseFloatingWatermark="True"
+                                     controls:TextBoxHelper.Watermark="Filter by..."
+                                     Text="{Binding MaterialFilterTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=300}" />
                             <TextBox Margin="8 2"
                                      FontFamily="Consolas"
                                      GotFocus="TextBoxOnGotFocus"
@@ -111,7 +116,7 @@
                                                         VerticalAlignment="Center"
                                                         BorderBrush="{DynamicResource AccentColorBrush}"
                                                         BorderThickness="1"
-                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -123,7 +128,7 @@
                                                         VerticalAlignment="Center"
                                                         BorderBrush="{DynamicResource AccentColorBrush}"
                                                         BorderThickness="1"
-                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -135,7 +140,7 @@
                                                         VerticalAlignment="Center"
                                                         BorderBrush="{DynamicResource AccentColorBrush}"
                                                         BorderThickness="1"
-                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -147,7 +152,7 @@
                                                         VerticalAlignment="Center"
                                                         BorderBrush="{DynamicResource AccentColorBrush}"
                                                         BorderThickness="1"
-                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+                                                        Kind="{Binding ElementName=PackIconMaterialKindListBox, Path=SelectedValue, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                         </StackPanel>
                     </Grid>
@@ -175,8 +180,8 @@
                     <ListBox x:Name="PackIconModernKindListBox"
                              Grid.Row="1"
                              Margin="0 8 0 0"
-                             ItemsSource="{Binding ModernKinds}"
-                             Style="{DynamicResource VirtualisedMetroListBox}">
+                             Style="{DynamicResource VirtualisedMetroListBox}"
+                             ItemsSource="{Binding ModernKinds}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <virtualizing:VirtualizingTilePanel ChildSize="84" IsItemsHost="True" />
@@ -212,13 +217,14 @@
 
                         <StackPanel Grid.Column="0"
                                     Width="450"
-                                    Orientation="Vertical"
-                                    VerticalAlignment="Center">
+                                    VerticalAlignment="Center"
+                                    Orientation="Vertical">
                             <TextBox x:Name="ModernFilterTextBox"
-                                     controls:TextBoxHelper.Watermark="Filter by..."
-                                     controls:TextBoxHelper.UseFloatingWatermark="True"
                                      Margin="8 2"
-                                     Style="{DynamicResource SearchMetroTextBox}" />
+                                     controls:TextBoxHelper.ClearTextButton="True"
+                                     controls:TextBoxHelper.UseFloatingWatermark="True"
+                                     controls:TextBoxHelper.Watermark="Filter by..."
+                                     Text="{Binding ModernFilterTerm, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=300}" />
                             <TextBox Margin="8 2"
                                      FontFamily="Consolas"
                                      GotFocus="TextBoxOnGotFocus"
@@ -240,7 +246,7 @@
                                                       VerticalAlignment="Center"
                                                       BorderBrush="{DynamicResource AccentColorBrush}"
                                                       BorderThickness="1"
-                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -252,7 +258,7 @@
                                                       VerticalAlignment="Center"
                                                       BorderBrush="{DynamicResource AccentColorBrush}"
                                                       BorderThickness="1"
-                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -264,7 +270,7 @@
                                                       VerticalAlignment="Center"
                                                       BorderBrush="{DynamicResource AccentColorBrush}"
                                                       BorderThickness="1"
-                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                             <DockPanel Margin="5" Background="Transparent">
                                 <TextBlock HorizontalAlignment="Center"
@@ -276,7 +282,7 @@
                                                       VerticalAlignment="Center"
                                                       BorderBrush="{DynamicResource AccentColorBrush}"
                                                       BorderThickness="1"
-                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, FallbackValue={x:Static DependencyProperty.UnsetValue}}" />
+                                                      Kind="{Binding ElementName=PackIconModernKindListBox, Path=SelectedValue, Mode=OneWay, Converter={converters:NullToUnsetValueConverter}}" />
                             </DockPanel>
                         </StackPanel>
                     </Grid>
