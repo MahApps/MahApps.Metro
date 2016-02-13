@@ -152,6 +152,10 @@ namespace MetroDemo.Virtualizing
         {
             switch (args.Action)
             {
+                case NotifyCollectionChangedAction.Reset:
+                    RemoveInternalChildRange(args.Position.Index, args.ItemUICount);
+                    this.SetVerticalOffset(0);
+                    break;
                 case NotifyCollectionChangedAction.Remove:
                 case NotifyCollectionChangedAction.Replace:
                 case NotifyCollectionChangedAction.Move:

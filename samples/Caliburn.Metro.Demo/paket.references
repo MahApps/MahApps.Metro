@@ -1,0 +1,5 @@
+Microsoft.Bcl redirects: on
+Microsoft.Bcl.Async
+Microsoft.Bcl.Build
+Caliburn.Micro
+Caliburn.Micro.Core

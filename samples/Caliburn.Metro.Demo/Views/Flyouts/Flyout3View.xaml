@@ -4,10 +4,10 @@
              xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             Width="250"
              mc:Ignorable="d"
-             Width="250">
+             d:DesignHeight="300"
+             d:DesignWidth="300">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -15,17 +15,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <!-- for testing -->
-            <SolidColorBrush x:Key="ListViewBackground"
-                             Color="Transparent" />
+            <!--  for testing  -->
+            <SolidColorBrush x:Key="ListViewBackground" Color="Transparent" />
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <StackPanel Orientation="Vertical"
-                Margin="10">
+    <StackPanel Margin="10" Orientation="Vertical">
 
-        <Slider Style="{StaticResource FlatSlider}"
-                Margin="5"
+        <Slider Margin="5"
+                Style="{StaticResource FlatSlider}"
                 Value="50" />
 
         <ListView x:Name="Artists"
@@ -36,10 +34,8 @@
                   SelectedIndex="0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ArtistId}"
-                                    Header="ID" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}"
-                                    Header="artist" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ArtistId}" Header="ID" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="artist" />
                 </GridView>
             </ListView.View>
         </ListView>

@@ -4,8 +4,8 @@
                       xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="SizeToContent Demo"
                       GlowBrush="{DynamicResource AccentColorBrush}"
-                      WindowStartupLocation="CenterOwner"
-                      SizeToContent="WidthAndHeight">
+                      SizeToContent="WidthAndHeight"
+                      WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,8 +20,7 @@
               Height="40"
               Background="White">
             <Grid.OpacityMask>
-                <VisualBrush Stretch="Uniform"
-                             Visual="{DynamicResource appbar_smiley_happy}" />
+                <VisualBrush Stretch="Uniform" Visual="{DynamicResource appbar_smiley_happy}" />
             </Grid.OpacityMask>
         </Grid>
     </Grid>

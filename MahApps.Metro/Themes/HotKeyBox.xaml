@@ -2,34 +2,34 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls"
                     xmlns:Converters="clr-namespace:MahApps.Metro.Converters">
+
     <Style TargetType="{x:Type Controls:HotKeyBox}">
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="MinHeight" Value="26" />
-        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
+        <Setter Property="MinHeight" Value="26" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Validation.ErrorTemplate" Value="{DynamicResource ValidationErrorTemplate}" />
-
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Controls:HotKeyBox}">
                     <TextBox x:Name="PART_TextBox"
                              MinHeight="{TemplateBinding MinHeight}"
+                             Padding="{TemplateBinding Padding}"
                              Background="{TemplateBinding Background}"
+                             Foreground="{TemplateBinding Foreground}"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
                              FontFamily="{TemplateBinding FontFamily}"
                              FontSize="{TemplateBinding FontSize}"
-                             Foreground="{TemplateBinding Foreground}"
-                             Padding="{TemplateBinding Padding}"
-                             Text="{TemplateBinding Text}"
-                             Controls:TextBoxHelper.Watermark="{TemplateBinding Watermark}"/>
+                             Controls:TextBoxHelper.Watermark="{TemplateBinding Watermark}"
+                             Text="{TemplateBinding Text}" />
                     <ControlTemplate.Triggers>
                         <Trigger Property="Controls:ControlsHelper.ContentCharacterCasing" Value="Normal">
                             <Setter TargetName="PART_TextBox" Property="Text" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Text, Mode=OneWay}" />

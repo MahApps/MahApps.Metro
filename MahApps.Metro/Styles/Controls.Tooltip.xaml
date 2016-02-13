@@ -1,33 +1,33 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!--Tooltip Style-->
-    <Style x:Key="MetroToolTip"
-           TargetType="ToolTip">
-        <Setter Property="Background"
-                Value="{DynamicResource ControlBackgroundBrush}" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Padding"
-                Value="3,1,3,1" />
-        <Setter Property="BorderThickness"
-                Value="1" />
-        <Setter Property="BorderBrush"
-                Value="{DynamicResource GrayBrush7}" />
+    <!--  Tooltip Style  -->
+    <Style x:Key="MetroToolTip" TargetType="ToolTip">
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush7}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Padding" Value="3 1 3 1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToolTip">
                     <Border x:Name="Root"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            Background="{TemplateBinding Background}"
-                            Padding="{TemplateBinding Padding}"
-                            Effect="{DynamicResource DropShadowBrush}"
-                            Opacity="0">
+                            Opacity="0"
+                            Effect="{DynamicResource DropShadowBrush}">
                         <Border.Resources>
                             <Storyboard x:Key="Visible State" />
                             <Storyboard x:Key="Normal State" />
                         </Border.Resources>
+                        <ContentPresenter Margin="{TemplateBinding Padding}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Cursor="{TemplateBinding Cursor}"
+                                          TextElement.FontSize="{DynamicResource ContentFontSize}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="OpenStates">
                                 <VisualStateGroup.Transitions>
@@ -37,30 +37,20 @@
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Closed">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="Root">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4"
-                                                                  Value="0" />
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Open">
                                     <Storyboard>
-                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                       Storyboard.TargetName="Root">
-                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3"
-                                                                  Value="1" />
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Root" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
                                         </DoubleAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"
-                                          TextElement.FontSize="{DynamicResource ContentFontSize}"
-                                          Cursor="{TemplateBinding Cursor}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          Content="{TemplateBinding Content}"
-                                          Margin="{TemplateBinding Padding}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

@@ -10,13 +10,13 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/VS/TextBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
-    
-    <Style TargetType="Button" BasedOn="{StaticResource StandardButton}" />
-    <Style TargetType="ListBox" BasedOn="{StaticResource StandardListBox}" />
-    <Style TargetType="MenuItem" BasedOn="{StaticResource StandardMenuItem}" />
-    <Style TargetType="Menu" BasedOn="{StaticResource StandardMenu}" />
-    <Style TargetType="ScrollBar" BasedOn="{StaticResource StandardScrollBar}" />
-    <Style TargetType="TabControl" BasedOn="{StaticResource StandardTabControl}" />
-    <Style TargetType="TextBox" BasedOn="{StaticResource StandardTextBox}" />
+
+    <Style BasedOn="{StaticResource StandardButton}" TargetType="Button" />
+    <Style BasedOn="{StaticResource StandardListBox}" TargetType="ListBox" />
+    <Style BasedOn="{StaticResource StandardMenuItem}" TargetType="MenuItem" />
+    <Style BasedOn="{StaticResource StandardMenu}" TargetType="Menu" />
+    <Style BasedOn="{StaticResource StandardScrollBar}" TargetType="ScrollBar" />
+    <Style BasedOn="{StaticResource StandardTabControl}" TargetType="TabControl" />
+    <Style BasedOn="{StaticResource StandardTextBox}" TargetType="TextBox" />
 
 </ResourceDictionary>

@@ -227,6 +227,7 @@
     <Compile Include="Controls\TreeHelper.cs" />
     <Compile Include="Controls\VisualStates.cs" />
     <Compile Include="Controls\WindowCommands.cs" />
+    <Compile Include="Converters\NullToUnsetValueConverter.cs" />
     <Compile Include="Converters\ResizeModeMinMaxButtonVisibilityConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Converters\ThicknessBindingConverter.cs" />
@@ -790,4 +791,16 @@
   </Target>
   -->
   <Target Name="AfterCompile" />
+  <Import Project="..\.paket\paket.targets" />
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
+      <ItemGroup>
+        <Reference Include="JetBrains.Annotations">
+          <HintPath>..\packages\JetBrains.Annotations\lib\net20\JetBrains.Annotations.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>
