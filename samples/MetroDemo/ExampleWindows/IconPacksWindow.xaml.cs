@@ -7,9 +7,12 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using JetBrains.Annotations;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
+using MetroDemo.Models;
 
 namespace MetroDemo.ExampleWindows
 {
@@ -123,6 +126,21 @@ namespace MetroDemo.ExampleWindows
             }
         }
 
+        private PackIconModernKind selectedModernKind;
+
+        public PackIconModernKind SelectedModernKind
+        {
+            get { return this.selectedModernKind; }
+            set
+            {
+                if (Equals(value, this.SelectedModernKind)) {
+                    return;
+                }
+                this.selectedModernKind = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         private IEnumerable<PackIconMaterialKind> _materialKinds;
 
         public IEnumerable<PackIconMaterialKind> MaterialKinds
@@ -135,6 +153,36 @@ namespace MetroDemo.ExampleWindows
                 }
                 _materialKinds = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private PackIconMaterialKind selectedMaterialKind;
+
+        public PackIconMaterialKind SelectedMaterialKind
+        {
+            get { return this.selectedMaterialKind; }
+            set
+            {
+                if (Equals(value, this.SelectedMaterialKind)) {
+                    return;
+                }
+                this.selectedMaterialKind = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private ICommand copyToClipboard;
+
+        public ICommand CopyToClipboard
+        {
+            get
+            {
+                return this.copyToClipboard ?? (this.copyToClipboard =
+                    new SimpleCommand
+                    {
+                        CanExecuteDelegate = x => (x is TextBox),
+                        ExecuteDelegate = x => ((TextBox)x).Dispatcher.BeginInvoke(new Action(() => Clipboard.SetDataObject(((TextBox)x).Text)))
+                    });
             }
         }
 
