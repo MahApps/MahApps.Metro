@@ -4,16 +4,15 @@ using System.Windows.Interactivity;
 namespace MahApps.Metro.Behaviours
 {
     using System.ComponentModel;
+    using System.Windows.Threading;
 
     public class StylizedBehaviors
     {
-        private static readonly DependencyProperty OriginalBehaviorProperty = DependencyProperty.RegisterAttached(@"OriginalBehaviorInternal", typeof(Behavior), typeof(StylizedBehaviors), new UIPropertyMetadata(null));
-
-        public static readonly DependencyProperty BehaviorsProperty = DependencyProperty.RegisterAttached(
-            @"Behaviors",
-            typeof(StylizedBehaviorCollection),
-            typeof(StylizedBehaviors),
-            new FrameworkPropertyMetadata(null, OnPropertyChanged));
+        public static readonly DependencyProperty BehaviorsProperty
+            = DependencyProperty.RegisterAttached("Behaviors",
+                                                  typeof(StylizedBehaviorCollection),
+                                                  typeof(StylizedBehaviors),
+                                                  new FrameworkPropertyMetadata(null, OnPropertyChanged));
         
         [Category(AppName.MahApps)]
         public static StylizedBehaviorCollection GetBehaviors(DependencyObject uie)
@@ -26,66 +25,30 @@ namespace MahApps.Metro.Behaviours
             uie.SetValue(BehaviorsProperty, value);
         }
         
-        private static Behavior GetOriginalBehavior(DependencyObject obj)
-        {
-            return obj.GetValue(OriginalBehaviorProperty) as Behavior;
-        }
-
-        private static int GetIndexOf(BehaviorCollection itemBehaviors, Behavior behavior)
-        {
-            int index = -1;
-
-            Behavior orignalBehavior = GetOriginalBehavior(behavior);
-
-            for (int i = 0; i < itemBehaviors.Count; i++)
-            {
-                Behavior currentBehavior = itemBehaviors[i];
-
-                if (currentBehavior == behavior
-                    || currentBehavior == orignalBehavior)
-                {
-                    index = i;
-                    break;
-                }
-
-                Behavior currentOrignalBehavior = GetOriginalBehavior(currentBehavior);
-
-                if (currentOrignalBehavior == behavior
-                    || currentOrignalBehavior == orignalBehavior)
-                {
-                    index = i;
-                    break;
-                }
-            }
-
-            return index;
-        }
-
         private static void OnPropertyChanged(DependencyObject dpo, DependencyPropertyChangedEventArgs e)
         {
-            var uie = dpo as UIElement;
-
+            var uie = dpo as FrameworkElement;
             if (uie == null)
+            {
+                return;
+            }
+
+            var newBehaviors = e.NewValue as StylizedBehaviorCollection;
+            var oldBehaviors = e.OldValue as StylizedBehaviorCollection;
+            if (newBehaviors == oldBehaviors)
             {
                 return;
             }
 
             BehaviorCollection itemBehaviors = Interaction.GetBehaviors(uie);
 
-            var newBehaviors = e.NewValue as StylizedBehaviorCollection;
-            var oldBehaviors = e.OldValue as StylizedBehaviorCollection;
-
-            if (newBehaviors == oldBehaviors)
-            {
-                return;
-            }
+            uie.Unloaded -= FrameworkElementUnloaded;
 
             if (oldBehaviors != null)
             {
                 foreach (var behavior in oldBehaviors)
                 {
                     int index = GetIndexOf(itemBehaviors, behavior);
-
                     if (index >= 0)
                     {
                         itemBehaviors.RemoveAt(index);
@@ -98,7 +61,6 @@ namespace MahApps.Metro.Behaviours
                 foreach (var behavior in newBehaviors)
                 {
                     int index = GetIndexOf(itemBehaviors, behavior);
-
                     if (index < 0)
                     {
                         var clone = (Behavior)behavior.Clone();
@@ -107,6 +69,84 @@ namespace MahApps.Metro.Behaviours
                     }
                 }
             }
+
+            if (itemBehaviors.Count > 0)
+            {
+                uie.Unloaded += FrameworkElementUnloaded;
+            }
+            uie.Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
+
+        private static void Dispatcher_ShutdownStarted(object sender, System.EventArgs e)
+        {
+            var s = "";
+        }
+
+        private static void FrameworkElementUnloaded(object sender, RoutedEventArgs e)
+        {
+            // BehaviorCollection doesn't call Detach, so we do this
+            var uie = sender as FrameworkElement;
+            if (uie == null)
+            {
+                return;
+            }
+            BehaviorCollection itemBehaviors = Interaction.GetBehaviors(uie);
+            foreach (var behavior in itemBehaviors) {
+                behavior.Detach();
+            }
+            uie.Loaded += FrameworkElementLoaded;
+        }
+
+        private static void FrameworkElementLoaded(object sender, RoutedEventArgs e)
+        {
+            var uie = sender as FrameworkElement;
+            if (uie == null)
+            {
+                return;
+            }
+            uie.Loaded -= FrameworkElementLoaded;
+            BehaviorCollection itemBehaviors = Interaction.GetBehaviors(uie);
+            foreach (var behavior in itemBehaviors)
+            {
+                behavior.Attach(uie);
+            }
+        }
+
+        private static int GetIndexOf(BehaviorCollection itemBehaviors, Behavior behavior)
+        {
+            int index = -1;
+
+            Behavior orignalBehavior = GetOriginalBehavior(behavior);
+
+            for (int i = 0; i < itemBehaviors.Count; i++)
+            {
+                Behavior currentBehavior = itemBehaviors[i];
+                if (currentBehavior == behavior || currentBehavior == orignalBehavior)
+                {
+                    index = i;
+                    break;
+                }
+
+                Behavior currentOrignalBehavior = GetOriginalBehavior(currentBehavior);
+                if (currentOrignalBehavior == behavior || currentOrignalBehavior == orignalBehavior)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
+
+        private static readonly DependencyProperty OriginalBehaviorProperty
+            = DependencyProperty.RegisterAttached("OriginalBehaviorInternal",
+                                                  typeof(Behavior),
+                                                  typeof(StylizedBehaviors),
+                                                  new UIPropertyMetadata(null));
+
+        private static Behavior GetOriginalBehavior(DependencyObject obj)
+        {
+            return obj.GetValue(OriginalBehaviorProperty) as Behavior;
         }
 
         private static void SetOriginalBehavior(DependencyObject obj, Behavior value)
