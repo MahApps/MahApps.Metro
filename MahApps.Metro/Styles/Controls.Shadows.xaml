@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
+
+    <DropShadowEffect x:Key="DropShadowBrush"
+                      Opacity="0.3"
+                      po:Freeze="True"
+                      BlurRadius="6"
+                      Direction="330"
+                      ShadowDepth="0" />
+
+    <DropShadowEffect x:Key="WaitingForDataDropShadowEffect"
+                      Opacity="0"
+                      po:Freeze="True"
+                      x:Shared="False"
+                      BlurRadius="8" Direction="360"
+                      ShadowDepth="0"
+                      Color="{DynamicResource BlackColor}" />
+
+
+</ResourceDictionary>
