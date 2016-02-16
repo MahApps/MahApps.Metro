@@ -42,6 +42,10 @@
         <Setter Property="Visibility" Value="Visible" />
     </Style>
 
+    <Style x:Key="WaitingForDataEffectGridStyle" TargetType="{x:Type Grid}">
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
     <Style x:Key="MetroToggleSwitchButton" TargetType="{x:Type Controls:ToggleSwitchButton}" BasedOn="{StaticResource {x:Type Controls:ToggleSwitchButton}}" />
     <Style x:Key="MetroToggleSwitch" TargetType="{x:Type Controls:ToggleSwitch}" BasedOn="{StaticResource {x:Type Controls:ToggleSwitch}}" />
 
