@@ -175,6 +175,16 @@
                              Controls:TextBoxHelper.Watermark="Password"
                              Password="Password" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Style="{StaticResource Win8MetroPasswordBox}"
+                             Controls:TextBoxHelper.Watermark="Win8"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Password="Win8" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Controls:TextBoxHelper.IsWaitingForData="True"
+                             Style="{StaticResource MetroButtonRevealedPasswordBox}"
+                             Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
