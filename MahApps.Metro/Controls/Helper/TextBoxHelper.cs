@@ -453,11 +453,10 @@ namespace MahApps.Metro.Controls
             }
 
             var command = GetButtonCommand(parent);
-            if (command != null && command.CanExecute(parent))
+            var commandParameter = GetButtonCommandParameter(parent) ?? parent;
+            if (command != null && command.CanExecute(commandParameter))
             {
-                var commandParameter = GetButtonCommandParameter(parent);
-
-                command.Execute(commandParameter ?? parent);
+                command.Execute(commandParameter);
             }
 
             if (GetClearTextButton(parent))
