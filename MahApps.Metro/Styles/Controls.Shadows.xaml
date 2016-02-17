@@ -9,13 +9,4 @@
                       Direction="330"
                       ShadowDepth="0" />
 
-    <DropShadowEffect x:Key="WaitingForDataDropShadowEffect"
-                      Opacity="0"
-                      po:Freeze="True"
-                      x:Shared="False"
-                      BlurRadius="8" Direction="360"
-                      ShadowDepth="0"
-                      Color="{DynamicResource BlackColor}" />
-
-
 </ResourceDictionary>
