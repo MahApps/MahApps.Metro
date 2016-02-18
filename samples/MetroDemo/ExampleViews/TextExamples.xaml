@@ -180,8 +180,9 @@
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Password="Win8" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             Controls:TextBoxHelper.IsWaitingForData="True"
                              Style="{StaticResource MetroButtonRevealedPasswordBox}"
+                             Controls:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText), Mode=OneWay}"
+                             Controls:TextBoxHelper.IsWaitingForData="True"
                              Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
                              Controls:TextBoxHelper.UseFloatingWatermark="True" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
