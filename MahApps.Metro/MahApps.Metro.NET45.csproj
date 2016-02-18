@@ -718,6 +718,11 @@
       <SubType>Designer</SubType>
       <DependentUpon>Controls.xaml</DependentUpon>
     </Page>
+    <Page Include="Styles\Controls.Shadows.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <DependentUpon>Controls.xaml</DependentUpon>
+    </Page>
     <Page Include="Styles\Controls.Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

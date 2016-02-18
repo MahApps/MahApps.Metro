@@ -108,8 +108,6 @@
         <GradientStop Color="{DynamicResource AccentColor3}" Offset="1"/>
     </LinearGradientBrush>
 
-    <DropShadowEffect x:Key="DropShadowBrush" Direction="330" Opacity="0.3" ShadowDepth="0" BlurRadius="6"/>
-
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource WhiteColor}" />
     <SolidColorBrush x:Key="SeperatorBrush" Color="#FFC4C4C5"/>
 

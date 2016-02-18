@@ -25,9 +25,9 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="1.5*" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -174,6 +174,17 @@
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.Watermark="Password"
                              Password="Password" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Style="{StaticResource Win8MetroPasswordBox}"
+                             Controls:TextBoxHelper.Watermark="Win8"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True"
+                             Password="Win8" />
+                <PasswordBox Margin="{StaticResource ControlMargin}"
+                             Style="{StaticResource MetroButtonRevealedPasswordBox}"
+                             Controls:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText), Mode=OneWay}"
+                             Controls:TextBoxHelper.IsWaitingForData="True"
+                             Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
+                             Controls:TextBoxHelper.UseFloatingWatermark="True" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
                              Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"
                              Controls:TextBoxHelper.ClearTextButton="True"

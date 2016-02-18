@@ -61,6 +61,16 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
+                        <AdornerDecorator>
+                            <AdornerDecorator.CacheMode>
+                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </AdornerDecorator.CacheMode>
+                            <Border x:Name="PART_WaitingForDataEffectGrid"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </AdornerDecorator>
                         <Border x:Name="Base"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -103,6 +113,7 @@
                                        Visibility="Collapsed" />
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Column="0"
+                                            Grid.Row="0"
                                             Grid.ColumnSpan="2"
                                             Style="{DynamicResource FloatingMessageContainerStyle}">
                                 <TextBlock x:Name="PART_FloatingMessage"
@@ -113,6 +124,7 @@
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
                             </ContentControl>
                             <Button x:Name="PART_ClearText"
+                                    Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
                                     Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
@@ -215,8 +227,12 @@
                             </Trigger.ExitActions>
                         </Trigger>
 
-                        <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="True">
-                            <Setter TargetName="Base" Property="Effect">
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsVisible" Value="True" />
+                                <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect">
                                 <Setter.Value>
                                     <DropShadowEffect Opacity="0"
                                                       BlurRadius="10"
@@ -224,22 +240,12 @@
                                                       Color="{DynamicResource BlackColor}" />
                                 </Setter.Value>
                             </Setter>
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation AutoReverse="True"
-                                                         Duration="00:00:02"
-                                                         From="0"
-                                                         RepeatBehavior="Forever"
-                                                         Storyboard.TargetName="Base"
-                                                         Storyboard.TargetProperty="(Effect).Opacity"
-                                                         To="1" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                        </Trigger>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
+                            </MultiTrigger.EnterActions>
+                        </MultiTrigger>
                         <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
-                            <Setter TargetName="Base" Property="Effect" Value="{x:Null}" />
+                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -282,6 +288,16 @@
                         </Storyboard>
                     </ControlTemplate.Resources>
                     <Grid>
+                        <AdornerDecorator>
+                            <AdornerDecorator.CacheMode>
+                                <BitmapCache EnableClearType="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </AdornerDecorator.CacheMode>
+                            <Border x:Name="PART_WaitingForDataEffectGrid"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </AdornerDecorator>
                         <Border x:Name="Base"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
@@ -411,6 +427,27 @@
                         <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
                             <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource BlackBrush}" />
                             <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource WhiteBrush}" />
+                        </Trigger>
+                        
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsVisible" Value="True" />
+                                <Condition Property="Controls:TextBoxHelper.IsWaitingForData" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Opacity="0"
+                                                      BlurRadius="10"
+                                                      ShadowDepth="0"
+                                                      Color="{DynamicResource BlackColor}" />
+                                </Setter.Value>
+                            </Setter>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource WaitingForDataStoryboard}" />
+                            </MultiTrigger.EnterActions>
+                        </MultiTrigger>
+                        <Trigger Property="Controls:TextBoxHelper.IsWaitingForData" Value="False">
+                            <Setter TargetName="PART_WaitingForDataEffectGrid" Property="Effect" Value="{x:Null}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
