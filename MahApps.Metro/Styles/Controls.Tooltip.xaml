@@ -59,7 +59,6 @@
                                           TextElement.FontSize="{DynamicResource ContentFontSize}"
                                           Cursor="{TemplateBinding Cursor}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
                                           Content="{TemplateBinding Content}"
                                           Margin="{TemplateBinding Padding}" />
                     </Border>
