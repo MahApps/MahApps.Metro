@@ -9,7 +9,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
-        <Setter Property="Padding" Value="3 1 3 1" />
+        <Setter Property="Padding" Value="3 2" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
