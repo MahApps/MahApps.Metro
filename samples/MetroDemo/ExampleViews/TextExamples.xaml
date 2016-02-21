@@ -44,6 +44,7 @@
                          Text="Enabled" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.IsWaitingForData="True"
+                         Controls:TextBoxHelper.ClearTextButton="True"
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.Watermark="Watermark"
                          ToolTip="Default alignment" />
@@ -74,7 +75,8 @@
                         <Style BasedOn="{StaticResource SearchMetroTextBox}" TargetType="{x:Type TextBox}">
                             <Style.Triggers>
                                 <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
-                                    <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource ChromelessButtonTemplate}" />
+                                    <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
+                                    <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

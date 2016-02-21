@@ -50,19 +50,14 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         <Grid x:Name="PART_InnerGrid" Margin="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition x:Name="ButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition x:Name="ButtonRow" Height="*" />
                             </Grid.RowDefinitions>
 
-                            <Border x:Name="ReadOnlyVisualElement"
-                                    Grid.Row="1"
-                                    Grid.ColumnSpan="2"
-                                    Background="{x:Null}"
-                                    Opacity="0" />
                             <ScrollViewer x:Name="PART_ContentHost"
                                           Grid.Row="1"
                                           Grid.Column="0"
@@ -85,6 +80,7 @@
                                        Visibility="Collapsed" />
                             <ContentControl x:Name="PART_FloatingMessageContainer"
                                             Grid.Column="0"
+                                            Grid.Row="0"
                                             Grid.ColumnSpan="2"
                                             Style="{DynamicResource FloatingMessageContainerStyle}">
                                 <TextBlock x:Name="PART_FloatingMessage"
@@ -95,14 +91,17 @@
                                            Text="{TemplateBinding Controls:TextBoxHelper.Watermark}" />
                             </ContentControl>
                             <Button x:Name="PART_ClearText"
+                                    Grid.Row="0"
                                     Grid.RowSpan="2"
                                     Grid.Column="1"
+                                    Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
                                     Style="{DynamicResource ChromelessButtonStyle}"
                                     Foreground="{TemplateBinding Foreground}"
                                     FontFamily="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonFontFamily), Mode=OneWay}"
                                     FontSize="16"
                                     Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
                                     Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
+                                    ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContentTemplate), Mode=OneWay}"
                                     IsTabStop="False"
                                     Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Grid>
@@ -125,15 +124,6 @@
                             </MultiDataTrigger.ExitActions>
                         </MultiDataTrigger>
 
-                        <!--  multiline textbox cannot bind to actual height so take the fallbach button width  -->
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="TextWrapping" Value="NoWrap" />
-                                <Condition Property="AcceptsReturn" Value="False" />
-                            </MultiTrigger.Conditions>
-                            <Setter TargetName="ButtonColumn" Property="Width" Value="{Binding ElementName=ButtonRow, Path=ActualHeight, Mode=OneWay}" />
-                        </MultiTrigger>
-
                         <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.ClearTextButton)}" Value="False">
                             <Setter TargetName="PART_ContentHost" Property="Grid.ColumnSpan" Value="2" />
                             <Setter TargetName="PART_Message" Property="Grid.ColumnSpan" Value="2" />
@@ -143,7 +133,6 @@
                         </Trigger>
                         <Trigger Property="IsReadOnly" Value="True">
                             <Setter TargetName="PART_ClearText" Property="IsEnabled" Value="False" />
-                            <Setter TargetName="ReadOnlyVisualElement" Property="Opacity" Value="1" />
                         </Trigger>
                         <Trigger Property="IsFocused" Value="True">
                             <Setter TargetName="Base" Property="BorderBrush" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.FocusBorderBrush)}" />
@@ -266,6 +255,7 @@
                                                             FontSize="16"
                                                             Controls:TextBoxHelper.IsClearTextButtonBehaviorEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
                                                             Content="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
+                                                            ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContentTemplate), Mode=OneWay}"
                                                             IsTabStop="False"
                                                             Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
                                                     <Rectangle x:Name="BtnArrowBackground"
@@ -341,6 +331,7 @@
                                      FontFamily="{TemplateBinding FontFamily}"
                                      FontSize="{TemplateBinding FontSize}"
                                      Controls:TextBoxHelper.ButtonContent="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
+                                     Controls:TextBoxHelper.ButtonContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContentTemplate), Mode=OneWay}"
                                      Controls:TextBoxHelper.HasText="{TemplateBinding Controls:TextBoxHelper.HasText}"
                                      Controls:TextBoxHelper.UseFloatingWatermark="{TemplateBinding Controls:TextBoxHelper.UseFloatingWatermark}"
                                      Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
