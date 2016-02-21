@@ -242,13 +242,14 @@
 
                                                 <Grid Margin="1">
                                                     <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*" />
-                                                        <ColumnDefinition Width="{Binding ElementName=ToggleButtonRootGrid, Path=ActualHeight, Mode=OneWay}" />
-                                                        <ColumnDefinition Width="{Binding ElementName=ToggleButtonRootGrid, Path=ActualHeight, Mode=OneWay}" />
+                                                        <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                                        <ColumnDefinition x:Name="ButtonColumn" Width="Auto" />
+                                                        <ColumnDefinition x:Name="ToggleButtonColumn" Width="Auto" />
                                                     </Grid.ColumnDefinitions>
 
                                                     <Button x:Name="PART_ClearText"
                                                             Grid.Column="1"
+                                                            Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
                                                             Style="{DynamicResource ChromelessButtonStyle}"
                                                             Foreground="{TemplateBinding Foreground}"
                                                             FontFamily="Marlett"
@@ -258,28 +259,28 @@
                                                             ContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContentTemplate), Mode=OneWay}"
                                                             IsTabStop="False"
                                                             Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ComboBox}}, Path=(Controls:TextBoxHelper.ClearTextButton), Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                                    <Rectangle x:Name="BtnArrowBackground"
-                                                               Grid.Column="2"
-                                                               Fill="Transparent"
-                                                               StrokeThickness="0" />
-                                                    <Path x:Name="BtnArrow"
+                                                    <Grid x:Name="BtnArrowBackground"
                                                           Grid.Column="2"
-                                                          Width="8"
-                                                          Height="4"
-                                                          HorizontalAlignment="Center"
-                                                          Fill="{DynamicResource GrayBrush1}"
-                                                          Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
-                                                          IsHitTestVisible="false"
-                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                          Stretch="Uniform" />
+                                                          Background="Transparent"
+                                                          Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}">
+                                                        <Path x:Name="BtnArrow"
+                                                              Width="8"
+                                                              Height="4"
+                                                              HorizontalAlignment="Center"
+                                                              Fill="{DynamicResource GrayBrush1}"
+                                                              Data="F1 M 301.14,-189.041L 311.57,-189.041L 306.355,-182.942L 301.14,-189.041 Z "
+                                                              IsHitTestVisible="false"
+                                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                              Stretch="Uniform" />
+                                                    </Grid>
                                                 </Grid>
                                             </Grid>
                                             <ControlTemplate.Triggers>
                                                 <Trigger SourceName="BtnArrowBackground" Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="BtnArrowBackground" Property="Fill" Value="{DynamicResource GrayBrush5}" />
+                                                    <Setter TargetName="BtnArrowBackground" Property="Background" Value="{DynamicResource GrayBrush5}" />
                                                 </Trigger>
                                                 <Trigger SourceName="PART_ClearText" Property="IsMouseOver" Value="True">
-                                                    <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource GrayBrush8}" />
+                                                    <Setter TargetName="PART_ClearText" Property="Background" Value="{DynamicResource GrayBrush5}" />
                                                     <Setter TargetName="PART_ClearText" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
                                                 </Trigger>
                                                 <Trigger SourceName="PART_ClearText" Property="IsPressed" Value="True">
@@ -300,9 +301,9 @@
                         </Grid.Resources>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
-                                <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
+                                <ColumnDefinition x:Name="TextColumn" Width="*" />
+                                <ColumnDefinition x:Name="ButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
+                                <ColumnDefinition x:Name="ToggleButtonColumn" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}" />
                             </Grid.ColumnDefinitions>
 
                             <ToggleButton x:Name="PART_DropDownToggle"
@@ -314,12 +315,17 @@
                                           Foreground="{TemplateBinding Foreground}"
                                           BorderBrush="{TemplateBinding BorderBrush}"
                                           BorderThickness="{TemplateBinding BorderThickness}"
+                                          Controls:ControlsHelper.ButtonWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.ButtonWidth), Mode=OneWay}"
+                                          Controls:TextBoxHelper.ButtonContent="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContent), Mode=OneWay}"
+                                          Controls:TextBoxHelper.ButtonContentTemplate="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ButtonContentTemplate), Mode=OneWay}"
+                                          Controls:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:TextBoxHelper.ClearTextButton), Mode=OneWay}"
                                           Controls:ControlsHelper.CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ControlsHelper.CornerRadius), Mode=OneWay}"
                                           IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           KeyboardNavigation.IsTabStop="False"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
 
-                            <TextBox x:Name="PART_EditableTextBox"
+                            <TextBox Grid.Column="0"
+                                     x:Name="PART_EditableTextBox"
                                      Margin="1,1,0,-1"
                                      HorizontalAlignment="Stretch"
                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -341,7 +347,8 @@
                                      MaxLength="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Controls:ComboBoxHelper.MaxLength), Mode=OneWay}"
                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                      Visibility="Collapsed" />
-                            <TextBlock x:Name="PART_WatermarkMessage"
+                            <TextBlock Grid.Column="0"
+                                       x:Name="PART_WatermarkMessage"
                                        Margin="6,2,6,2"
                                        Padding="{TemplateBinding Padding}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -353,7 +360,8 @@
                                        IsHitTestVisible="False"
                                        Text="{TemplateBinding Controls:TextBoxHelper.Watermark}"
                                        Visibility="Collapsed" />
-                            <Grid x:Name="ContentSite" Margin="7 0 4 0">
+                            <Grid Grid.Column="0"
+                                  x:Name="ContentSite" Margin="7 0 4 0">
                                 <ContentPresenter Margin="{TemplateBinding Padding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

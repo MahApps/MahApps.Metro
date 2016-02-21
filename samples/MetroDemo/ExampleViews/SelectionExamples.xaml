@@ -131,6 +131,8 @@
                 <ComboBox Width="200"
                           Margin="0, 10, 0, 0"
                           Controls:TextBoxHelper.ClearTextButton="True"
+                          Controls:TextBoxHelper.Watermark="Editable..."
+                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                           IsEditable="True"
                           SelectedIndex="0">
                     <ComboBoxItem Content="Item 1" />
