@@ -1,13 +1,15 @@
-#What steps will reproduce the issue?
+## What steps will reproduce this issue?
 
 _Write problem description here_
 
-#Expected outcome
+### Expected outcome
 
 _Write expected outcome here_
 
 ---
-##Environment:
+### Environment
 
-- MahApps.Metro __v ?.?.?__.
-- OS:
+- MahApps.Metro __v?.?.?__
+- Windows __??__
+- Visual Studio __20xx__
+- .NET Framework __?.?__
