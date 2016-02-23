@@ -89,7 +89,11 @@ namespace MahApps.Metro.Behaviours
         /// </remarks>
         protected override void OnDetaching()
         {
-            this.AssociatedObject.PasswordChanged -= PasswordBoxPasswordChanged;
+            // it seems, it was already detached, or never attached
+            if (this.AssociatedObject != null)
+            {
+                this.AssociatedObject.PasswordChanged -= PasswordBoxPasswordChanged;
+            }
             base.OnDetaching();
         }
 
