@@ -7,9 +7,11 @@
                       mc:Ignorable="d"
                       d:DesignHeight="300"
                       d:DesignWidth="300">
-    <controls:WindowCommands>
-        <Button Content="Test" />
-    </controls:WindowCommands>
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Content="Test" />
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout x:Name="DefaultFlyout" />
@@ -27,4 +29,16 @@
                              Position="Right" />
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
+    <Grid>
+        <Image Width="200">
+            <Image.Source>
+                <BitmapImage UriSource="mahapps.metro.logo2.ico" />
+            </Image.Source>
+        </Image>
+
+        <controls:Flyout x:Name="FlyoutOnGrid"
+                         Width="200"
+                         Header="FlyoutOnGrid"
+                         Position="Right" />
+    </Grid>
 </controls:MetroWindow>
