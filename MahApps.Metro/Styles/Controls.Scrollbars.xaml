@@ -32,6 +32,46 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="Margin" Value="1" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Width" Value="{DynamicResource HorizontalScrollBarRepeatButtonWidth}" />
+        <Setter Property="Height" Value="{DynamicResource VerticalScrollBarRepeatButtonHeight}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Viewbox x:Name="ArrowBox"
+                             Stretch="UniformToFill"
+                             Width="{TemplateBinding Width}"
+                             Height="{TemplateBinding Height}"
+                             Margin="0"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             SnapsToDevicePixels="True"
+                             TextOptions.TextFormattingMode="Ideal"
+                             TextOptions.TextRenderingMode="Auto"
+                             UseLayoutRounding="True">
+                        <TextBlock x:Name="Arrow"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource GrayBrush1}"
+                                   FontFamily="Marlett"
+                                   Text="{TemplateBinding Content}"
+                                   TextAlignment="Center" />
+                    </Viewbox>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ArrowBox" Property="Opacity" Value="0.5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Arrow" Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Arrow" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="MetroScrollBarRepeatButtonLargeStyle" TargetType="{x:Type RepeatButton}">
@@ -39,6 +79,8 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Interval" Value="50" />
         <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -96,96 +138,6 @@
     <!--  fugging Scrollbars  -->
     <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
         <Grid x:Name="Root">
-            <Grid.Resources>
-                <ControlTemplate x:Key="HorizontalIncrementTemplate" TargetType="RepeatButton">
-                    <Grid x:Name="Root">
-                        <Path Width="6"
-                              Height="10"
-                              Fill="{DynamicResource GrayBrush1}"
-                              Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
-                              Stretch="Uniform" />
-                        <Path x:Name="HoverPath"
-                              Width="6"
-                              Height="10"
-                              Margin="1 1 0 0"
-                              Fill="{DynamicResource BlackBrush}"
-                              Opacity="0"
-                              Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
-                              Stretch="Uniform"
-                              UseLayoutRounding="False" />
-                        <Path x:Name="Blur"
-                              Width="6"
-                              Height="10"
-                              Margin="1 1 0 0"
-                              Fill="{DynamicResource BlackBrush}"
-                              Opacity="0"
-                              Data="F1 M 511.047,352.682L 511.047,342.252L 517.145,347.467L 511.047,352.682 Z "
-                              Stretch="Uniform"
-                              UseLayoutRounding="False">
-                            <Path.Effect>
-                                <BlurEffect />
-                            </Path.Effect>
-                        </Path>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" Storyboard="{StaticResource MetroScrollBarMouseOverStoryboard}" />
-                                <VisualState x:Name="Pressed" />
-                                <VisualState x:Name="Disabled" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Root" Property="Opacity" Value="0.5" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-                <ControlTemplate x:Key="HorizontalDecrementTemplate" TargetType="RepeatButton">
-                    <Grid x:Name="Root">
-                        <Path Width="6"
-                              Height="10"
-                              Fill="{DynamicResource GrayBrush1}"
-                              Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
-                              Stretch="Uniform" />
-                        <Path x:Name="HoverPath"
-                              Width="6"
-                              Height="10"
-                              Margin="0 1 0 0"
-                              Fill="{DynamicResource BlackBrush}"
-                              Opacity="0"
-                              Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
-                              Stretch="Uniform"
-                              UseLayoutRounding="False" />
-                        <Path x:Name="Blur"
-                              Width="6"
-                              Height="10"
-                              Margin="0 1 0 0"
-                              Fill="{DynamicResource BlackBrush}"
-                              Opacity="0"
-                              Data="F1 M 110.692,342.252L 110.692,352.682L 104.594,347.467L 110.692,342.252 Z "
-                              Stretch="Uniform"
-                              UseLayoutRounding="False">
-                            <Path.Effect>
-                                <BlurEffect />
-                            </Path.Effect>
-                        </Path>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" Storyboard="{StaticResource MetroScrollBarMouseOverStoryboard}" />
-                                <VisualState x:Name="Pressed" />
-                                <VisualState x:Name="Disabled" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Root" Property="Opacity" Value="0.5" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Grid.Resources>
             <Grid x:Name="HorizontalRoot" Height="{TemplateBinding Height}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -197,7 +149,7 @@
                               Width="{DynamicResource HorizontalScrollBarRepeatButtonWidth}"
                               Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                               Command="ScrollBar.LineLeftCommand"
-                              Template="{DynamicResource HorizontalDecrementTemplate}" />
+                              Content="3" />
                 <Track x:Name="PART_Track"
                        Grid.Column="1"
                        IsDirectionReversed="False">
@@ -220,7 +172,7 @@
                               Width="{DynamicResource HorizontalScrollBarRepeatButtonWidth}"
                               Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                               Command="ScrollBar.LineRightCommand"
-                              Template="{DynamicResource HorizontalIncrementTemplate}" />
+                              Content="4" />
             </Grid>
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="CommonStates">
@@ -240,98 +192,6 @@
 
     <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
         <Grid x:Name="Root">
-            <Grid.Resources>
-                <ControlTemplate x:Key="VerticalIncrementTemplate" TargetType="RepeatButton">
-                    <Grid x:Name="Root">
-                        <Path Width="10"
-                              Height="6"
-                              Margin="0.5 0 0.5 0"
-                              Fill="{DynamicResource GrayBrush1}"
-                              Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
-                              Stretch="Uniform" />
-                        <Path x:Name="HoverPath"
-                              Width="10"
-                              Height="6"
-                              Margin="0.5 0 0.5 0"
-                              Fill="{DynamicResource BlackBrush}"
-                              Opacity="0"
-                              Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
-                              Stretch="Uniform"
-                              UseLayoutRounding="False" />
-                        <Path x:Name="Blur"
-                              Width="10"
-                              Height="6"
-                              Margin="0.5 0 0.5 0"
-                              Fill="{DynamicResource BlackBrush}"
-                              Opacity="0"
-                              Data="F1 M 531.107,321.943L 541.537,321.943L 536.322,328.042L 531.107,321.943 Z "
-                              Stretch="Uniform"
-                              UseLayoutRounding="False">
-                            <Path.Effect>
-                                <BlurEffect />
-                            </Path.Effect>
-                        </Path>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" Storyboard="{StaticResource MetroScrollBarMouseOverStoryboard}" />
-                                <VisualState x:Name="Pressed" />
-                                <VisualState x:Name="Disabled" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Root" Property="Opacity" Value="0.5" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-                <ControlTemplate x:Key="VerticalDecrementTemplate" TargetType="RepeatButton">
-                    <Grid x:Name="Root">
-                        <Path Width="10"
-                              Height="6"
-                              Margin="0.5 0 0.5 0"
-                              Fill="{DynamicResource GrayBrush1}"
-                              Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
-                              Stretch="Uniform" />
-                        <Path x:Name="HoverPath"
-                              Width="10"
-                              Height="6"
-                              Margin="0.5 0 0.5 0"
-                              Fill="{DynamicResource BlackBrush}"
-                              Opacity="0"
-                              Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
-                              Stretch="Uniform"
-                              UseLayoutRounding="False" />
-                        <Path x:Name="Blur"
-                              Width="10"
-                              Height="6"
-                              Margin="0.5 0 0.5 0"
-                              Fill="{DynamicResource BlackBrush}"
-                              Opacity="0"
-                              Data="F1 M 541.537,173.589L 531.107,173.589L 536.322,167.49L 541.537,173.589 Z "
-                              Stretch="Uniform"
-                              UseLayoutRounding="False">
-                            <Path.Effect>
-                                <BlurEffect />
-                            </Path.Effect>
-                        </Path>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver" Storyboard="{StaticResource MetroScrollBarMouseOverStoryboard}" />
-                                <VisualState x:Name="Pressed" />
-                                <VisualState x:Name="Disabled" />
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="Root" Property="Opacity" Value="0.5" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Grid.Resources>
             <Grid x:Name="VerticalRoot" Width="{TemplateBinding Width}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -343,7 +203,7 @@
                               Height="{DynamicResource VerticalScrollBarRepeatButtonHeight}"
                               Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                               Command="ScrollBar.LineUpCommand"
-                              Template="{DynamicResource VerticalDecrementTemplate}" />
+                              Content="5" />
                 <Track x:Name="PART_Track"
                        Grid.Row="1"
                        IsDirectionReversed="true">
@@ -369,7 +229,7 @@
                               Height="{DynamicResource VerticalScrollBarRepeatButtonHeight}"
                               Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                               Command="ScrollBar.LineDownCommand"
-                              Template="{DynamicResource VerticalIncrementTemplate}" />
+                              Content="6" />
             </Grid>
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="CommonStates">
