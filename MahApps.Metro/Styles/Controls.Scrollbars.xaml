@@ -4,24 +4,15 @@
                     xmlns:System="clr-namespace:System;assembly=mscorlib"
                     xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options">
 
-    <Storyboard x:Key="MetroScrollBarMouseOverStoryboard" po:Freeze="True">
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="HoverPath" Storyboard.TargetProperty="(UIElement.Opacity)">
-            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1" />
-        </DoubleAnimationUsingKeyFrames>
-        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Blur" Storyboard.TargetProperty="(UIElement.Opacity)">
-            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.5" />
-        </DoubleAnimationUsingKeyFrames>
-    </Storyboard>
-
     <Storyboard x:Key="MetroScrollBarThumbMouseOverStoryboard" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MouseOverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.6" />
+            <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.6" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
     <Storyboard x:Key="MetroScrollBarThumbPressedStoryboard" po:Freeze="True">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PressedRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-            <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="0.8" />
+            <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.8" />
         </DoubleAnimationUsingKeyFrames>
     </Storyboard>
 
@@ -37,34 +28,33 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Viewbox x:Name="ArrowBox"
-                             Width="{TemplateBinding Width}"
-                             Height="{TemplateBinding Height}"
-                             Margin="0"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"
-                             SnapsToDevicePixels="True"
-                             Stretch="UniformToFill"
-                             TextOptions.TextFormattingMode="Ideal"
-                             TextOptions.TextRenderingMode="Auto"
-                             UseLayoutRounding="True">
-                        <TextBlock x:Name="Arrow"
-                                   HorizontalAlignment="Center"
-                                   VerticalAlignment="Center"
-                                   Foreground="{DynamicResource GrayBrush1}"
-                                   FontFamily="Marlett"
-                                   Text="{TemplateBinding Content}"
-                                   TextAlignment="Center" />
-                    </Viewbox>
+                    <Grid Width="{TemplateBinding Width}"
+                          Height="{TemplateBinding Height}"
+                          Background="{TemplateBinding Background}">
+                        <Viewbox x:Name="ArrowBox"
+                                 Margin="{TemplateBinding Margin}"
+                                 SnapsToDevicePixels="True"
+                                 Stretch="Uniform"
+                                 UseLayoutRounding="True">
+                            <Path x:Name="Arrow"
+                                  Width="256"
+                                  Height="256"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Fill="{DynamicResource GrayBrush3}"
+                                  Data="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content, Mode=OneWay}"
+                                  Stretch="Uniform" />
+                        </Viewbox>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="ArrowBox" Property="Opacity" Value="0.5" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Arrow" Property="Foreground" Value="{DynamicResource GrayBrush3}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource GrayBrush1}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Arrow" Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource AccentColorBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -143,10 +133,9 @@
             </Grid.ColumnDefinitions>
             <RepeatButton x:Name="HorizontalSmallDecrease"
                           Grid.Column="0"
-                          Width="{DynamicResource HorizontalScrollBarRepeatButtonWidth}"
                           Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                           Command="ScrollBar.LineLeftCommand"
-                          Content="3" />
+                          Content="M54,14.9765625L54,74.9765625 24,44.9765625 54,14.9765625z" />
             <Track x:Name="PART_Track"
                    Grid.Column="1"
                    IsDirectionReversed="False">
@@ -166,10 +155,9 @@
             </Track>
             <RepeatButton x:Name="HorizontalSmallIncrease"
                           Grid.Column="2"
-                          Width="{DynamicResource HorizontalScrollBarRepeatButtonWidth}"
                           Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                           Command="ScrollBar.LineRightCommand"
-                          Content="4" />
+                          Content="M192,79.875L352,239.875 192,399.875 192,79.875z" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">
@@ -187,10 +175,9 @@
             </Grid.RowDefinitions>
             <RepeatButton x:Name="VerticalSmallDecrease"
                           Grid.Row="0"
-                          Height="{DynamicResource VerticalScrollBarRepeatButtonHeight}"
                           Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                           Command="ScrollBar.LineUpCommand"
-                          Content="5" />
+                          Content="M240.125,160L400.125,320 80.125,320 240.125,160z" />
             <Track x:Name="PART_Track"
                    Grid.Row="1"
                    IsDirectionReversed="True">
@@ -213,10 +200,9 @@
             </Track>
             <RepeatButton x:Name="VerticalSmallIncrease"
                           Grid.Row="2"
-                          Height="{DynamicResource VerticalScrollBarRepeatButtonHeight}"
                           Style="{DynamicResource MetroScrollBarRepeatButtonSmallStyle}"
                           Command="ScrollBar.LineDownCommand"
-                          Content="6" />
+                          Content="M80.125,192L400.125,192 240.125,352 80.125,192z" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">
