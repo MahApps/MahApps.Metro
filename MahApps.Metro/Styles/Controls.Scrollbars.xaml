@@ -79,8 +79,6 @@
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Interval" Value="50" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
