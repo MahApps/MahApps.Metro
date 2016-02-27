@@ -3,6 +3,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.ComboBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Style for toolbar buttons  -->
@@ -75,6 +76,10 @@
     <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}"
            BasedOn="{StaticResource MetroTextBox}"
            TargetType="{x:Type TextBox}" />
+
+    <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}"
+           BasedOn="{StaticResource MetroComboBox}"
+           TargetType="{x:Type ComboBox}" />
 
     <!--  Style the toolbar thumb  -->
     <Style x:Key="ToolBarThumbStyle" TargetType="{x:Type Thumb}">

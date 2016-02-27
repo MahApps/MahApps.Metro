@@ -6,6 +6,8 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             TextOptions.TextFormattingMode="Display"
+             TextOptions.TextRenderingMode="ClearType"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="800"
@@ -106,7 +108,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid RenderOptions.ClearTypeHint="Enabled" TextOptions.TextFormattingMode="Display">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -136,9 +138,7 @@
                   AutoGenerateColumns="False"
                   HeadersVisibility="All"
                   ItemsSource="{Binding Path=Albums}"
-                  RenderOptions.ClearTypeHint="Enabled"
-                  SelectionUnit="FullRow"
-                  TextOptions.TextFormattingMode="Display">
+                  SelectionUnit="FullRow">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=IsSelected, Mode=OneWay}"
                                         EditingElementStyle="{DynamicResource MetroDataGridCheckBox}"
@@ -198,9 +198,7 @@
                   Margin="5"
                   AutoGenerateColumns="False"
                   ItemsSource="{Binding Path=Albums}"
-                  RenderOptions.ClearTypeHint="Enabled"
-                  Style="{DynamicResource AzureDataGrid}"
-                  TextOptions.TextFormattingMode="Display">
+                  Style="{DynamicResource AzureDataGrid}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Title}" Header="Title" />
                 <DataGridTextColumn Binding="{Binding Artist.Name}" Header="Artist" />
