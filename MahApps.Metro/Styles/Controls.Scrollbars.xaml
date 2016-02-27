@@ -193,7 +193,7 @@
                           Content="5" />
             <Track x:Name="PART_Track"
                    Grid.Row="1"
-                   IsDirectionReversed="true">
+                   IsDirectionReversed="True">
                 <Track.Resources>
                     <System:Double x:Key="{x:Static SystemParameters.VerticalScrollBarButtonHeightKey}">50</System:Double>
                 </Track.Resources>
@@ -227,7 +227,7 @@
 
     <!--  Style for overall  ScrollBar  -->
     <Style x:Key="MetroScrollBar" TargetType="{x:Type ScrollBar}">
-        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
