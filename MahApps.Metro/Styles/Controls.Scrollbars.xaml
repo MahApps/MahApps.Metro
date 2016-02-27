@@ -173,7 +173,7 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter TargetName="VerticalRoot" Property="Opacity" Value="0.5" />
+                <Setter TargetName="HorizontalRoot" Property="Opacity" Value="0.5" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
