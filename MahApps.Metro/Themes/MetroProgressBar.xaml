@@ -281,7 +281,6 @@
                             <Setter TargetName="ContainingGrid" Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
