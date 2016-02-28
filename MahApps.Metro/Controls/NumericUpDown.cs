@@ -1161,7 +1161,7 @@ namespace MahApps.Metro.Controls
 
             var text = e.SourceDataObject.GetData(DataFormats.Text) as string;
 
-            string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart));
+            string newText = string.Concat(textPresent.Substring(0, textBox.SelectionStart), text, textPresent.Substring(textBox.SelectionStart + textBox.SelectionLength));
             double number;
             if (!ValidateText(newText, out number))
             {

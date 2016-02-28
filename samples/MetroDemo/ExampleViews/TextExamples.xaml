@@ -25,9 +25,9 @@
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="1.5*" />
                 <ColumnDefinition />
-                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -44,6 +44,7 @@
                          Text="Enabled" />
                 <TextBox Margin="{StaticResource ControlMargin}"
                          Controls:TextBoxHelper.IsWaitingForData="True"
+                         Controls:TextBoxHelper.ClearTextButton="True"
                          Controls:TextBoxHelper.UseFloatingWatermark="True"
                          Controls:TextBoxHelper.Watermark="Watermark"
                          ToolTip="Default alignment" />
@@ -74,7 +75,8 @@
                         <Style BasedOn="{StaticResource SearchMetroTextBox}" TargetType="{x:Type TextBox}">
                             <Style.Triggers>
                                 <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
-                                    <Setter Property="Controls:TextBoxHelper.ButtonTemplate" Value="{DynamicResource ChromelessButtonTemplate}" />
+                                    <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
+                                    <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -180,8 +182,9 @@
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Password="Win8" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"
-                             Controls:TextBoxHelper.IsWaitingForData="True"
                              Style="{StaticResource MetroButtonRevealedPasswordBox}"
+                             Controls:TextBoxHelper.ClearTextButton="{Binding RelativeSource={RelativeSource Self}, Path=(Controls:TextBoxHelper.HasText), Mode=OneWay}"
+                             Controls:TextBoxHelper.IsWaitingForData="True"
                              Controls:TextBoxHelper.Watermark="Revealed PasswordBox"
                              Controls:TextBoxHelper.UseFloatingWatermark="True" />
                 <PasswordBox Margin="{StaticResource ControlMargin}"

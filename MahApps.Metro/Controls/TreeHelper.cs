@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 namespace MahApps.Metro.Controls
 {
@@ -146,7 +147,7 @@ namespace MahApps.Metro.Controls
                     }
 
                     //recurse tree
-                    foreach (T descendant in FindChildren<T>(child))
+                    foreach (T descendant in FindChildren<T>(child, forceUsingTheVisualTreeHelper))
                     {
                         yield return descendant;
                     }
@@ -176,7 +177,7 @@ namespace MahApps.Metro.Controls
                     if (depObj != null) yield return (DependencyObject)obj;
                 }
             }
-            else
+            else if (parent is Visual || parent is Visual3D)
             {
                 //use the visual tree per default
                 int count = VisualTreeHelper.GetChildrenCount(parent);

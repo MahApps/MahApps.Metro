@@ -3,8 +3,6 @@
                     xmlns:Controls="clr-namespace:MahApps.Metro.Controls">
 
     <Style TargetType="Controls:TransitioningContentControl">
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
-        <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

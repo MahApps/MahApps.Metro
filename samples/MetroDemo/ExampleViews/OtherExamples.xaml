@@ -15,6 +15,14 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!--  better results for the examples  -->
+            <Style BasedOn="{StaticResource {x:Type Controls:TransitioningContentControl}}" TargetType="{x:Type Controls:TransitioningContentControl}">
+                <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+            </Style>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -29,16 +37,16 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel>
-            <Label Content="Transitions" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="Transitions" />
             <Controls:TransitioningContentControl x:Name="transitioning"
                                                   Width="250"
                                                   Height="50"
-                                                  Margin="0, 10, 0, 0"
+                                                  Margin="0 10 0 0"
                                                   Transition="Down" />
             <Controls:TransitioningContentControl x:Name="customTransitioning"
                                                   Width="250"
                                                   Height="50"
-                                                  Margin="0, 10, 0, 0"
+                                                  Margin="0 10 0 0"
                                                   Transition="Custom">
                 <Controls:TransitioningContentControl.CustomVisualStates>
                     <VisualState x:Name="CustomTransition">
@@ -62,7 +70,7 @@
             <Controls:TransitioningContentControl x:Name="SecondcustomTransitioning"
                                                   Width="250"
                                                   Height="50"
-                                                  Margin="0, 10, 0, 0"
+                                                  Margin="0 10 0 0"
                                                   CustomVisualStatesName="SecondCustomTransition"
                                                   Transition="Custom">
                 <Controls:TransitioningContentControl.CustomVisualStates>
@@ -93,7 +101,7 @@
         <StackPanel Grid.Row="0"
                     Grid.RowSpan="2"
                     Grid.Column="2">
-            <Label Content="FlipView" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="FlipView" />
             <StackPanel Height="20"
                         Margin="0 0 0 5"
                         Orientation="Horizontal">
@@ -110,7 +118,7 @@
                           IsChecked="True" />
             </StackPanel>
             <Controls:FlipView Height="200"
-                               Margin="0, 0, 10, 0"
+                               Margin="0 0 10 0"
                                IsBannerEnabled="{Binding ElementName=ShowBannerCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                MouseOverGlowEnabled="{Binding ElementName=ShowMouseOverCheckBox, Path=IsChecked, UpdateSourceTrigger=PropertyChanged}"
                                SelectionChanged="FlipView_SelectionChanged">
@@ -118,7 +126,7 @@
                     <Grid Background="#2E8DEF">
                         <Rectangle Width="50"
                                    Height="50"
-                                   Margin="0, 0, 10, 0">
+                                   Margin="0 0 10 0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_cupcake}" />
                             </Rectangle.Fill>
@@ -127,7 +135,7 @@
                     <Grid Background="#00A600">
                         <Rectangle Width="50"
                                    Height="50"
-                                   Margin="0, 0, 10, 0">
+                                   Margin="0 0 10 0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_xbox}" />
                             </Rectangle.Fill>
@@ -136,7 +144,7 @@
                     <Grid Background="#BF1E4B">
                         <Rectangle Width="50"
                                    Height="50"
-                                   Margin="0, 0, 10, 0">
+                                   Margin="0 0 10 0">
                             <Rectangle.Fill>
                                 <VisualBrush Visual="{StaticResource appbar_chess_horse}" />
                             </Rectangle.Fill>
@@ -145,10 +153,10 @@
                 </Controls:FlipView.Items>
             </Controls:FlipView>
 
-            <Separator Margin="0,5" />
+            <Separator Margin="0 5" />
 
             <Controls:FlipView Height="400"
-                               Margin="0, 0, 10, 0"
+                               Margin="0 0 10 0"
                                BannerText="Databound Items"
                                IsBannerEnabled="True"
                                ItemTemplateSelector="{Binding FlipViewTemplateSelector, UpdateSourceTrigger=PropertyChanged}"
@@ -157,7 +165,7 @@
         <Grid Grid.Row="1"
               Grid.Column="0"
               Grid.ColumnSpan="2">
-            <Label Content="Context menu" Style="{DynamicResource DescriptionHeaderStyle}" />
+            <Label Style="{DynamicResource DescriptionHeaderStyle}" Content="Context menu" />
             <Label HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    HorizontalContentAlignment="Center"

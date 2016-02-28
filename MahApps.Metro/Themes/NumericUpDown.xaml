@@ -14,6 +14,8 @@
         <Setter Property="Background" Value="{DynamicResource ControlBackgroundBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxBorderBrush}" />
         <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="UpDownButtonsWidth" Value="22" />
+        <Setter Property="Controls:ControlsHelper.ButtonWidth" Value="22" />
         <Setter Property="Controls:ControlsHelper.FocusBorderBrush" Value="{DynamicResource TextBoxFocusBorderBrush}" />
         <Setter Property="Controls:ControlsHelper.MouseOverBorderBrush" Value="{DynamicResource TextBoxMouseOverBorderBrush}" />
         <Setter Property="Controls:TextBoxHelper.IsMonitoring" Value="True" />
@@ -60,6 +62,7 @@
                             <TextBox x:Name="PART_TextBox"
                                      Grid.Row="1"
                                      Grid.Column="0"
+                                     Margin="0 0 -2 0"
                                      MinWidth="20"
                                      MinHeight="{TemplateBinding MinHeight}"
                                      HorizontalAlignment="Stretch"
@@ -71,6 +74,10 @@
                                      FontFamily="{TemplateBinding FontFamily}"
                                      FontSize="{TemplateBinding FontSize}"
                                      Controls:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
+                                     Controls:ControlsHelper.ButtonWidth="{TemplateBinding Controls:ControlsHelper.ButtonWidth}"
+                                     Controls:TextBoxHelper.ButtonContent="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
+                                     Controls:TextBoxHelper.ButtonContentTemplate="{TemplateBinding Controls:TextBoxHelper.ButtonContentTemplate}"
+                                     Controls:TextBoxHelper.ButtonFontFamily="{TemplateBinding Controls:TextBoxHelper.ButtonFontFamily}"
                                      Controls:TextBoxHelper.ButtonsAlignment="{TemplateBinding ButtonsAlignment}"
                                      Controls:TextBoxHelper.ClearTextButton="{TemplateBinding Controls:TextBoxHelper.ClearTextButton}"
                                      Controls:TextBoxHelper.Watermark="{TemplateBinding Controls:TextBoxHelper.Watermark}"
@@ -86,7 +93,7 @@
                                           Grid.RowSpan="2"
                                           Grid.Column="1"
                                           Width="{TemplateBinding UpDownButtonsWidth}"
-                                          Margin="2 2 0 2"
+                                          Margin="0 2 0 2"
                                           Style="{DynamicResource ChromelessButtonStyle}"
                                           Foreground="{TemplateBinding Foreground}"
                                           Delay="{TemplateBinding Delay}"
@@ -141,12 +148,13 @@
 
                         <Trigger Property="ButtonsAlignment" Value="Left">
                             <Setter TargetName="PART_NumericDown" Property="Grid.Column" Value="1" />
-                            <Setter TargetName="PART_NumericDown" Property="Margin" Value="0 2 2 2" />
+                            <Setter TargetName="PART_NumericDown" Property="Margin" Value="0 2 0 2" />
                             <Setter TargetName="PART_NumericDownColumn" Property="Width" Value="*" />
                             <Setter TargetName="PART_NumericUp" Property="Grid.Column" Value="0" />
                             <Setter TargetName="PART_NumericUp" Property="Margin" Value="2 2 0 2" />
                             <Setter TargetName="PART_NumericUpColumn" Property="Width" Value="Auto" />
                             <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="2" />
+                            <Setter TargetName="PART_TextBox" Property="Margin" Value="-2 0 0 0" />
                             <Setter TargetName="PART_TextBoxColumn" Property="Width" Value="Auto" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">

@@ -159,7 +159,7 @@
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="1" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Template" Value="{StaticResource ChromelessButtonTemplate}" />
     </Style>
 

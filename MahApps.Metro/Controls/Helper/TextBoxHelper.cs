@@ -33,6 +33,7 @@ namespace MahApps.Metro.Controls
         public static readonly DependencyProperty ButtonCommandProperty = DependencyProperty.RegisterAttached("ButtonCommand", typeof(ICommand), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null, ButtonCommandOrClearTextChanged));
         public static readonly DependencyProperty ButtonCommandParameterProperty = DependencyProperty.RegisterAttached("ButtonCommandParameter", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonContentProperty = DependencyProperty.RegisterAttached("ButtonContent", typeof(object), typeof(TextBoxHelper), new FrameworkPropertyMetadata("r"));
+        public static readonly DependencyProperty ButtonContentTemplateProperty = DependencyProperty.RegisterAttached("ButtonContentTemplate", typeof(DataTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata((DataTemplate)null));
         public static readonly DependencyProperty ButtonTemplateProperty = DependencyProperty.RegisterAttached("ButtonTemplate", typeof(ControlTemplate), typeof(TextBoxHelper), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty ButtonFontFamilyProperty = DependencyProperty.RegisterAttached("ButtonFontFamily", typeof(FontFamily), typeof(TextBoxHelper), new FrameworkPropertyMetadata((new FontFamilyConverter()).ConvertFromString("Marlett")));
         
@@ -406,6 +407,20 @@ namespace MahApps.Metro.Controls
         public static void SetButtonContent(DependencyObject obj, object value)
         {
             obj.SetValue(ButtonContentProperty, value);
+        }
+
+        /// <summary> 
+        /// ButtonContentTemplate is the template used to display the content of the ClearText button. 
+        /// </summary>
+        [Category(AppName.MahApps)]
+        public static DataTemplate GetButtonContentTemplate(DependencyObject d)
+        {
+            return (DataTemplate)d.GetValue(ButtonContentTemplateProperty);
+        }
+
+        public static void SetButtonContentTemplate(DependencyObject obj, DataTemplate value)
+        {
+            obj.SetValue(ButtonContentTemplateProperty, value);
         }
 
         [Category(AppName.MahApps)]

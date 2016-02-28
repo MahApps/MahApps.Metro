@@ -5,7 +5,7 @@
     <System:Double x:Key="MetroScrollBarHeight">14</System:Double>
     <System:Double x:Key="MetroScrollBarWidth">14</System:Double>
 
-    <System:Double x:Key="HorizontalScrollBarRepeatButtonWidth">16</System:Double>
-    <System:Double x:Key="VerticalScrollBarRepeatButtonHeight">16</System:Double>
+    <System:Double x:Key="HorizontalScrollBarRepeatButtonWidth">14</System:Double>
+    <System:Double x:Key="VerticalScrollBarRepeatButtonHeight">14</System:Double>
 
 </ResourceDictionary>

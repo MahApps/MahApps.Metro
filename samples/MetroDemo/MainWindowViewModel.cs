@@ -94,7 +94,14 @@ namespace MetroDemo
 
             CultureInfos = CultureInfo.GetCultures(CultureTypes.InstalledWin32Cultures).ToList();
 
-            HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+            try
+            {
+                HotkeyManager.Current.AddOrReplace("demo", HotKey.Key, HotKey.ModifierKeys, (sender, e) => OnHotKey(sender, e));
+            }
+            catch (HotkeyAlreadyRegisteredException exception)
+            {
+                System.Diagnostics.Trace.TraceWarning("Uups, the hotkey {0} is already registered!", exception.Name);
+            }
         }
 
         public void Dispose()

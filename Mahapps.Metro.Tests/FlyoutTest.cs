@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,7 +7,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using ExposedObject;
 using MahApps.Metro.Tests.TestHelpers;
-using MahApps.Metro;
 using MahApps.Metro.Controls;
 using Xunit;
 
@@ -171,6 +171,20 @@ namespace MahApps.Metro.Tests
 
             // IsOpen fires IsOpenChangedEvent with DispatcherPriority.Background
             window.RightFlyout.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() => Assert.True(eventRaised)));
+        }
+
+        [Fact]
+        public async Task FindFlyoutWithFindChildren()
+        {
+            await TestHost.SwitchToAppThread();
+
+            var window = await WindowHelpers.CreateInvisibleWindowAsync<FlyoutWindow>();
+
+            Assert.DoesNotThrow(() => {
+                                    var flyouts = (window.Content as DependencyObject).FindChildren<Flyout>(true);
+                                    var flyoutOnGrid = flyouts.FirstOrDefault(f => f.Name == "FlyoutOnGrid");
+                                    Assert.NotNull(flyoutOnGrid);
+                                });
         }
 
         public class ColorTest
