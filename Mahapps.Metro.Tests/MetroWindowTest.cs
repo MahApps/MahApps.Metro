@@ -26,7 +26,7 @@ namespace MahApps.Metro.Tests
 
             Assert.Equal(window, window.LeftWindowCommands.ParentWindow);
             Assert.Equal(window, window.RightWindowCommands.ParentWindow);
-            Assert.Equal(window, window.FindChild<WindowButtonCommands>("PART_WindowButtonCommands").ParentWindow);
+            Assert.Equal(window, window.WindowButtonCommands.ParentWindow);
         }
 
         [Fact]
@@ -117,7 +117,7 @@ namespace MahApps.Metro.Tests
 
         private Button GetButton(MetroWindow window, string buttonName)
         {
-            var windowButtonCommands = window.FindChild<WindowButtonCommands>("PART_WindowButtonCommands");
+            var windowButtonCommands = window.WindowButtonCommands;
             Assert.NotNull(windowButtonCommands);
 
             var button = windowButtonCommands.Template.FindName(buttonName, windowButtonCommands) as Button;
