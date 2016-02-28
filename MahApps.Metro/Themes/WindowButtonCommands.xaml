@@ -96,7 +96,7 @@
         <Setter Property="LightMaxButtonStyle" Value="{StaticResource LightMetroWindowButtonStyle}" />
         <Setter Property="LightMinButtonStyle" Value="{StaticResource LightMetroWindowButtonStyle}" />
         <Setter Property="Template" Value="{StaticResource WindowButtonCommandsTemplate}" />
-        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}" Value="True">
                 <Setter Property="Foreground" Value="{DynamicResource IdealForegroundColorBrush}" />
