@@ -66,10 +66,10 @@ namespace MahApps.Metro.Controls
                     if (newValue)
                     {
                         var resetAction = new Action(() => {
-                                                         bar.InvalidateMeasure();
-                                                         bar.InvalidateArrange();
-                                                         bar.ResetStoryboard(bar.ActualWidth, false);
-                                                     });
+                            bar.InvalidateMeasure();
+                            bar.InvalidateArrange();
+                            bar.ResetStoryboard(bar.ActualWidth, false);
+                        });
                         bar.Dispatcher.BeginInvoke(DispatcherPriority.Background, resetAction);
                     }
                 }
