@@ -271,6 +271,16 @@
                         <Trigger Property="IsIndeterminate" Value="False">
                             <Setter TargetName="DeterminateRoot" Property="Opacity" Value="1" />
                         </Trigger>
+                        <Trigger Property="Orientation" Value="Vertical">
+                            <Setter TargetName="ContainingGrid" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="270" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="ContainingGrid" Property="Width" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Height}"/>
+                            <Setter TargetName="ContainingGrid" Property="Height" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Width}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
