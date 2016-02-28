@@ -104,6 +104,17 @@ namespace MahApps.Metro.Controls
             }
         }
 
+        //protected override Size MeasureOverride(Size constraint)
+        //{
+        //    if (this.Orientation == Orientation.Vertical)
+        //    {
+        //        return new Size(constraint.Height, constraint.Width);
+        //    }
+        //    (this.GetTemplateChild("ContainingGrid") as FrameworkElement).Measure(constraint);
+        //    return this.DesiredSize;
+
+        //}
+
         private void ResetStoryboard(double width, bool removeOldStoryboard)
         {
             if (!this.IsIndeterminate)
@@ -181,6 +192,8 @@ namespace MahApps.Metro.Controls
                 }
             }
         }
+
+        
 
         private VisualState GetIndeterminate()
         {

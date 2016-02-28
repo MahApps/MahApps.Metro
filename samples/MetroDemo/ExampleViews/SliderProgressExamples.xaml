@@ -172,18 +172,22 @@
                          Value="100" />
 
             <Label Content="MetroProgressBar" Style="{DynamicResource DescriptionHeaderStyle}" />
-            <Controls:MetroProgressBar Width="200"
+            <DockPanel>
+                <StackPanel>
+                    <Controls:MetroProgressBar Width="200"
                                        Margin="0, 10, 0, 0"
                                        Foreground="{DynamicResource AccentColorBrush}"
                                        Maximum="100"
                                        Minimum="0"
                                        Value="{Binding ElementName=horizSlider, Path=Value}" />
-            <CheckBox Width="200"
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+                        <CheckBox Width="200"
                       Margin="0, 10, 0, 0"
                       Content="IsIndeterminate"
                       IsChecked="{Binding ElementName=IsIndeterminatePB, Path=IsIndeterminate, UpdateSourceTrigger=PropertyChanged}"
                       Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}" />
-            <Controls:MetroProgressBar x:Name="IsIndeterminatePB"
+                        <Controls:MetroProgressBar x:Name="IsIndeterminatePB"
                                        Width="200"
                                        Margin="0, 10, 0, 0"
                                        Foreground="{DynamicResource AccentColorBrush}"
@@ -192,6 +196,36 @@
                                        Minimum="0"
                                        Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
                                        Value="{Binding ElementName=horizSlider, Path=Value}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                        <Controls:MetroProgressBar
+                                       Height="100"
+                                       Margin="0, 10, 0, 0"
+                                       Foreground="{DynamicResource AccentColorBrush}"
+                                       Maximum="100"
+                                       Minimum="0"
+                                       Orientation="Vertical"
+                                       Value="{Binding ElementName=horizSlider, Path=Value}" />
+                        <Controls:MetroProgressBar x:Name="IsIndeterminatePBVertical"
+                                       Height="100"
+                                       Margin="0, 10, 0, 0"
+                                       Foreground="{DynamicResource AccentColorBrush}"
+                                       IsIndeterminate="True"
+                                       Maximum="100"
+                                       Orientation="Vertical"
+                                       Minimum="0"
+                                       Visibility="{Binding MagicToggleButtonIsChecked, Converter={StaticResource BoolToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}"
+                                       Value="{Binding ElementName=horizSlider, Path=Value}" />
+
+
+
+                    </StackPanel>
+                </StackPanel>
+            </DockPanel>
+           
+          
+           
+           
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <Label Content="ProgressRing" Style="{DynamicResource DescriptionHeaderStyle}" />
