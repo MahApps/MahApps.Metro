@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using MahApps.Metro.Native;
 
 namespace MahApps.Metro.Controls
@@ -116,58 +117,58 @@ namespace MahApps.Metro.Controls
             ((WindowButtonCommands)d).ApplyTheme();
         }
 
+        public static readonly DependencyProperty MinimizeProperty =
+            DependencyProperty.Register("Minimize", typeof(string), typeof(WindowButtonCommands),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the minimize button tooltip.
+        /// </summary>
         public string Minimize
         {
-            get
-            {
-                if (string.IsNullOrEmpty(minimize))
-                {
-                    minimize = GetCaption(900);
-                }
-                return minimize;
-            }
+            get { return (string)GetValue(MinimizeProperty); }
+            set { SetValue(MinimizeProperty, value); }
         }
 
+        public static readonly DependencyProperty MaximizeProperty =
+            DependencyProperty.Register("Maximize", typeof(string), typeof(WindowButtonCommands),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the maximize button tooltip.
+        /// </summary>
         public string Maximize
         {
-            get
-            {
-                if (string.IsNullOrEmpty(maximize))
-                {
-                    maximize = GetCaption(901);
-                }
-                return maximize;
-            }
+            get { return (string)GetValue(MaximizeProperty); }
+            set { SetValue(MaximizeProperty, value); }
         }
 
+        public static readonly DependencyProperty CloseProperty =
+            DependencyProperty.Register("Close", typeof(string), typeof(WindowButtonCommands),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the close button tooltip.
+        /// </summary>
         public string Close
         {
-            get
-            {
-                if (string.IsNullOrEmpty(closeText))
-                {
-                    closeText = GetCaption(905);
-                }
-                return closeText;
-            }
+            get { return (string)GetValue(CloseProperty); }
+            set { SetValue(CloseProperty, value); }
         }
 
+        public static readonly DependencyProperty RestoreProperty =
+            DependencyProperty.Register("Restore", typeof(string), typeof(WindowButtonCommands),
+                                        new PropertyMetadata(null));
+
+        /// <summary>
+        /// Gets or sets the restore button tooltip.
+        /// </summary>
         public string Restore
         {
-            get
-            {
-                if (string.IsNullOrEmpty(restore))
-                {
-                    restore = GetCaption(903);
-                }
-                return restore;
-            }
+            get { return (string)GetValue(RestoreProperty); }
+            set { SetValue(RestoreProperty, value); }
         }
 
-        private static string minimize;
-        private static string maximize;
-        private static string closeText;
-        private static string restore;
         private Button min;
         private Button max;
         private Button close;
@@ -180,17 +181,25 @@ namespace MahApps.Metro.Controls
 
         public WindowButtonCommands()
         {
-            this.Loaded += WindowButtonCommands_Loaded;
-        }
-
-        private void WindowButtonCommands_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.Loaded -= WindowButtonCommands_Loaded;
-            var parentWindow = this.ParentWindow;
-            if (null == parentWindow)
-            {
-                this.ParentWindow = this.TryFindParent<MetroWindow>();
-            }
+            this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded,
+                                        new Action(() => {
+                                                       if (string.IsNullOrWhiteSpace(this.Minimize))
+                                                       {
+                                                           this.Minimize = GetCaption(900);
+                                                       }
+                                                       if (string.IsNullOrWhiteSpace(this.Maximize))
+                                                       {
+                                                           this.Maximize = GetCaption(901);
+                                                       }
+                                                       if (string.IsNullOrWhiteSpace(this.Close))
+                                                       {
+                                                           this.Close = GetCaption(905);
+                                                       }
+                                                       if (string.IsNullOrWhiteSpace(this.Restore))
+                                                       {
+                                                           this.Restore = GetCaption(903);
+                                                       }
+                                                   }));
         }
 
         private string GetCaption(int id)
