@@ -62,7 +62,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Row="0"
-                                       FontSize="{DynamicResource DialogTitleFontSize}"
+                                       FontSize="{TemplateBinding DialogTitleFontSize}"
                                        Foreground="{TemplateBinding Foreground}"
                                        Text="{TemplateBinding Title}"
                                        TextWrapping="Wrap" />

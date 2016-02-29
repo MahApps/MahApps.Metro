@@ -25,9 +25,6 @@
 
     <System:Double x:Key="StatusBarFontSize">12</System:Double>
 
-    <System:Double x:Key="DialogTitleFontSize">26</System:Double>
-    <System:Double x:Key="DialogMessageFontSize">15</System:Double>
-
     <System:Double x:Key="FlyoutHeaderFontSize">20</System:Double>
 
     <System:Double x:Key="ToggleSwitchFontSize">14.667</System:Double>
