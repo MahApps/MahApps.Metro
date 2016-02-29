@@ -73,6 +73,7 @@
                                      BorderThickness="0"
                                      FontFamily="{TemplateBinding FontFamily}"
                                      FontSize="{TemplateBinding FontSize}"
+                                     AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name,  StringFormat='PART_TextBox{0}' , Mode=OneWay }"
                                      Controls:ControlsHelper.DisabledVisualElementVisibility="Collapsed"
                                      Controls:ControlsHelper.ButtonWidth="{TemplateBinding Controls:ControlsHelper.ButtonWidth}"
                                      Controls:TextBoxHelper.ButtonContent="{TemplateBinding Controls:TextBoxHelper.ButtonContent}"
@@ -95,6 +96,7 @@
                                           Width="{TemplateBinding UpDownButtonsWidth}"
                                           Margin="0 2 0 2"
                                           Style="{DynamicResource ChromelessButtonStyle}"
+                                          AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name,  StringFormat='PART_NumericUp{0}' , Mode=OneWay }"
                                           Foreground="{TemplateBinding Foreground}"
                                           Delay="{TemplateBinding Delay}"
                                           IsTabStop="False">
@@ -110,6 +112,7 @@
                                           Grid.Column="2"
                                           Width="{TemplateBinding UpDownButtonsWidth}"
                                           Margin="0 2 2 2"
+                                          AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name,  StringFormat='PART_NumericDown{0}' , Mode=OneWay }"
                                           VerticalContentAlignment="Center"
                                           Style="{DynamicResource ChromelessButtonStyle}"
                                           Foreground="{TemplateBinding Foreground}"
