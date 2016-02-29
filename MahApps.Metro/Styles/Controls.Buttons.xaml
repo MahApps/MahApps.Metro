@@ -223,6 +223,7 @@
     <!--  light button style for min, max and close window buttons  -->
     <Style x:Key="LightMetroWindowButtonStyle" BasedOn="{StaticResource BaseMetroWindowButtonStyle}" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Focusable" Value="False" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="MaxHeight" Value="34" />
         <Setter Property="Padding" Value="0" />
