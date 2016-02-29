@@ -25,6 +25,8 @@ namespace MahApps.Metro.Controls
 
         public static readonly DependencyProperty EllipseOffsetProperty = DependencyProperty.Register("EllipseOffset", typeof(Thickness), typeof(ProgressRing), new PropertyMetadata(default(Thickness)));
 
+        public static readonly DependencyProperty EllipseDiameterScaleProperty = DependencyProperty.Register("EllipseDiameterScale", typeof(double), typeof(ProgressRing), new PropertyMetadata(1D));
+
         private List<Action> _deferredActions = new List<Action>();
 
         static ProgressRing()
@@ -65,6 +67,12 @@ namespace MahApps.Metro.Controls
             private set { SetValue(EllipseDiameterProperty, value); }
         }
 
+        public double EllipseDiameterScale
+        {
+            get { return (double)GetValue(EllipseDiameterScaleProperty); }
+            set { SetValue(EllipseDiameterScaleProperty, value); }
+        }
+
         public Thickness EllipseOffset
         {
             get { return (Thickness)GetValue(EllipseOffsetProperty); }
@@ -97,6 +105,7 @@ namespace MahApps.Metro.Controls
 
             var action = new Action(() =>
             {
+
                 ring.SetEllipseDiameter(
                     (double) dependencyPropertyChangedEventArgs.NewValue);
                 ring.SetEllipseOffset(
@@ -118,7 +127,7 @@ namespace MahApps.Metro.Controls
 
         private void SetEllipseDiameter(double width)
         {
-            EllipseDiameter = width / 8;
+            EllipseDiameter =(width / 8)*EllipseDiameterScale;
         }
 
         private void SetEllipseOffset(double width)
