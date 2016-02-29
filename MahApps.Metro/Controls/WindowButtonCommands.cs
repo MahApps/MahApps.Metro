@@ -220,7 +220,7 @@ namespace MahApps.Metro.Controls
             if (close != null)
             {
                 // TODO: Delete this if statement once WindowCloseButtonStyle property is deleted from MetroWindow!
-                if ((ParentWindow != null) && (ParentWindow.WindowCloseButtonStyle != null))
+                if (ParentWindow?.WindowCloseButtonStyle != null)
                 {
                     close.Style = ParentWindow.WindowCloseButtonStyle;
                 }
@@ -232,7 +232,7 @@ namespace MahApps.Metro.Controls
             if (max != null)
             {
                 // TODO: Delete this if statement once WindowMaxButtonStyle property is deleted from MetroWindow!
-                if ((ParentWindow != null) && (ParentWindow.WindowMaxButtonStyle != null))
+                if (ParentWindow?.WindowMaxButtonStyle != null)
                 {
                     max.Style = ParentWindow.WindowMaxButtonStyle;
                 }
@@ -244,7 +244,7 @@ namespace MahApps.Metro.Controls
             if (min != null)
             {
                 // TODO: Delete this if statement once WindowMinButtonStyle property is deleted from MetroWindow!
-                if ((ParentWindow != null) && (ParentWindow.WindowMinButtonStyle != null))
+                if (ParentWindow?.WindowMinButtonStyle != null)
                 {
                     min.Style = ParentWindow.WindowMinButtonStyle;
                 }
