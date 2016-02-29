@@ -111,15 +111,16 @@
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the window button commands  -->
-                    <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
-                                                   Grid.Row="0"
-                                                   Grid.RowSpan="2"
-                                                   Grid.Column="4"
-                                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                   VerticalAlignment="Top"
-                                                   Panel.ZIndex="1"
-                                                   Focusable="False"
-                                                   UseLayoutRounding="True" />
+                    <ContentPresenter x:Name="PART_WindowButtonCommands"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      Grid.Column="4"
+                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      VerticalAlignment="Top"
+                                      Panel.ZIndex="1"
+                                      Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Focusable="False"
+                                      UseLayoutRounding="True" />
 
                     <!--  the main window content  -->
                     <Controls:MetroContentControl Grid.Row="1"
@@ -370,15 +371,16 @@
                                       Visibility="{TemplateBinding ShowTitleBar, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                     <!--  the window button commands  -->
-                    <Controls:WindowButtonCommands x:Name="PART_WindowButtonCommands"
-                                                   Grid.Row="0"
-                                                   Grid.RowSpan="2"
-                                                   Grid.Column="4"
-                                                   Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
-                                                   VerticalAlignment="Top"
-                                                   Panel.ZIndex="1"
-                                                   Focusable="False"
-                                                   UseLayoutRounding="True" />
+                    <ContentPresenter x:Name="PART_WindowButtonCommands"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="2"
+                                      Grid.Column="4"
+                                      Height="{Binding TitlebarHeight, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      VerticalAlignment="Top"
+                                      Panel.ZIndex="1"
+                                      Content="{Binding WindowButtonCommands, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                                      Focusable="False"
+                                      UseLayoutRounding="True" />
 
                     <!--  the main window content  -->
                     <Controls:MetroContentControl Grid.Row="1"
