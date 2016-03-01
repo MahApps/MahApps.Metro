@@ -7,6 +7,7 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
+<<<<<<< HEAD
     <ControlTemplate x:Key="WindowButtonCommandsTemplate" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
@@ -179,6 +180,9 @@
             </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
+=======
+
+>>>>>>> refs/remotes/MahApps/develop
 
     <Style TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
@@ -191,7 +195,7 @@
         <Setter Property="LightCloseButtonStyle" Value="{StaticResource LightMetroWindowButtonStyle}" />
         <Setter Property="LightMaxButtonStyle" Value="{StaticResource LightMetroWindowButtonStyle}" />
         <Setter Property="LightMinButtonStyle" Value="{StaticResource LightMetroWindowButtonStyle}" />
-        <Setter Property="Template" Value="{StaticResource WindowButtonCommandsTemplate}" />
+        <Setter Property="Template" Value="{DynamicResource WindowButtonCommandsTemplate}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ParentWindow.ShowTitleBar, RelativeSource={RelativeSource Self}}" Value="True">
