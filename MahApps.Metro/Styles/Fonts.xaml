@@ -19,7 +19,6 @@
     <System:Double x:Key="FloatingWatermarkFontSize">10</System:Double>
 
     <System:Double x:Key="TooltipFontSize">12</System:Double>
-
     <System:Double x:Key="MenuFontSize">14</System:Double>
     <System:Double x:Key="ContextMenuFontSize">14</System:Double>
 

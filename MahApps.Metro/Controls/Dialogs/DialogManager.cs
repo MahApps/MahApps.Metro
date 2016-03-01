@@ -24,10 +24,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 return (Task<LoginDialogData>)window.Dispatcher.Invoke(new Func<Task<LoginDialogData>>(() =>
                 {
-                    if (settings == null)
-                    {
-                        settings = new LoginDialogSettings();
-                    }
+                    settings = settings ?? new LoginDialogSettings();
 
                     //create the dialog control
                     LoginDialog dialog = new LoginDialog(window, settings)
@@ -35,6 +32,8 @@ namespace MahApps.Metro.Controls.Dialogs
                         Title = title,
                         Message = message
                     };
+
+                    SetDialogFontSizes(settings, dialog);
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
@@ -91,16 +90,17 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 return (Task<string>)window.Dispatcher.Invoke(new Func<Task<string>>(() =>
                 {
-                    if (settings == null)
-                        settings = window.MetroDialogOptions;
+                    settings = settings ?? window.MetroDialogOptions;
 
                     //create the dialog control
                     var dialog = new InputDialog(window, settings)
                     {
                         Title = title,
                         Message = message,
-                        Input = settings.DefaultText
+                        Input = settings.DefaultText,
                     };
+
+                    SetDialogFontSizes(settings, dialog);
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
@@ -140,6 +140,7 @@ namespace MahApps.Metro.Controls.Dialogs
                 }));
             }).Unwrap();
         }
+       
         /// <summary>
         /// Creates a MessageDialog inside of the current window.
         /// </summary>
@@ -156,10 +157,7 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 return (Task<MessageDialogResult>)window.Dispatcher.Invoke(new Func<Task<MessageDialogResult>>(() =>
                 {
-                    if (settings == null)
-                    {
-                        settings = window.MetroDialogOptions;
-                    }
+                    settings = settings ?? window.MetroDialogOptions;
 
                     //create the dialog control
                     var dialog = new MessageDialog(window, settings)
@@ -168,6 +166,8 @@ namespace MahApps.Metro.Controls.Dialogs
                         Title = title,
                         ButtonStyle = style
                     };
+
+                    SetDialogFontSizes(settings, dialog);
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
@@ -225,19 +225,18 @@ namespace MahApps.Metro.Controls.Dialogs
             {
                 return ((Task<ProgressDialogController>)window.Dispatcher.Invoke(new Func<Task<ProgressDialogController>>(() =>
                 {
+                    settings = settings ?? window.MetroDialogOptions;
+
+                    //create the dialog control
                     var dialog = new ProgressDialog(window)
                     {
                         Message = message,
+                        NegativeButtonText = settings.NegativeButtonText,
                         Title = title,
                         IsCancelable = isCancelable
                     };
 
-                    if (settings == null)
-                    {
-                        settings = window.MetroDialogOptions;
-                    }
-
-                    dialog.NegativeButtonText = settings.NegativeButtonText;
+                    SetDialogFontSizes(settings, dialog);
 
                     SizeChangedEventHandler sizeHandler = SetupAndOpenDialog(window, dialog);
                     dialog.SizeChangedHandler = sizeHandler;
@@ -512,6 +511,22 @@ namespace MahApps.Metro.Controls.Dialogs
             win.Closed += closedHandler;
 
             return win;
+        }
+
+        private static void SetDialogFontSizes(MetroDialogSettings settings, BaseMetroDialog dialog)
+        {
+            if (settings == null)
+            {
+                return;
+            }
+            if (!double.IsNaN(settings.DialogTitleFontSize))
+            {
+                dialog.DialogTitleFontSize = settings.DialogTitleFontSize;
+            }
+            if (!double.IsNaN(settings.DialogMessageFontSize))
+            {
+                dialog.DialogMessageFontSize = settings.DialogMessageFontSize;
+            }
         }
 
         public static event EventHandler<DialogStateChangedEventArgs> DialogOpened;
