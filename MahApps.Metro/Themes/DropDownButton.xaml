@@ -23,6 +23,8 @@
                     <ContentControl x:Name="PART_ButtonContent"
                                     MinWidth="20"
                                     Margin="3"
+                                    AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
+                                    AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -97,6 +99,8 @@
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="Stretch"
                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
+                                    AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                     ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                     ContentTemplate="{TemplateBinding ItemTemplate}" />
@@ -138,6 +142,8 @@
                                  ItemTemplate="{TemplateBinding ItemTemplate}"
                                  ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                  ItemsSource="{TemplateBinding ItemsSource}"
+                                 AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, StringFormat={}{0}PART_Menu, Mode=OneTime}"
+                                 AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, StringFormat={}{0}PART_Menu, Mode=OneTime}"
                                  StaysOpen="False" />
                 </Button.ContextMenu>
             </Button>
@@ -195,7 +201,9 @@
                                 CommandParameter="{TemplateBinding CommandParameter}"
                                 CommandTarget="{TemplateBinding CommandTarget}"
                                 FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name}"
+                                AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name}" >
                             <DockPanel x:Name="PART_Content"
                                        Focusable="False"
                                        LastChildFill="True">
@@ -268,6 +276,8 @@
                                              ItemTemplate="{TemplateBinding ItemTemplate}"
                                              ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                              ItemsSource="{TemplateBinding ItemsSource}"
+                                             AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, StringFormat={}{0}PART_Menu}"
+                                             AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, StringFormat={}{0}PART_Menu}"
                                              StaysOpen="False" />
                             </Button.ContextMenu>
                         </Button>

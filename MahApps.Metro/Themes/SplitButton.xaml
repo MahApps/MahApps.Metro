@@ -29,6 +29,8 @@
                         CommandParameter="{TemplateBinding CommandParameter}"
                         CommandTarget="{TemplateBinding CommandTarget}"
                         FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
+                        AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name}"
+                        AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name}" 
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <StackPanel HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -64,6 +66,8 @@
                         Background="{TemplateBinding Background}"
                         Foreground="{TemplateBinding Foreground}"
                         BorderBrush="{TemplateBinding BorderBrush}"
+                        AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
+                        AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
                         FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
                     <Rectangle x:Name="PART_Rectangle"
@@ -101,6 +105,8 @@
                        StaysOpen="True">
                     <ListBox x:Name="PART_ListBox"
                              Style="{TemplateBinding ListBoxStyle}"
+                             AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name,  StringFormat={}{0}PART_ListBox , Mode=OneTime }"
+                             AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name,  StringFormat={}{0}PART_ListBox , Mode=OneTime }"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
                              DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
@@ -217,6 +223,8 @@
                        StaysOpen="True">
                     <ListBox x:Name="PART_ListBox"
                              Style="{TemplateBinding ListBoxStyle}"
+                             AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name,  StringFormat={}{0}PART_ListBox , Mode=OneTime }"
+                             AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name,  StringFormat={}{0}PART_ListBox , Mode=OneTime }"
                              BorderBrush="{TemplateBinding BorderBrush}"
                              BorderThickness="{TemplateBinding BorderThickness}"
                              DisplayMemberPath="{TemplateBinding DisplayMemberPath}"

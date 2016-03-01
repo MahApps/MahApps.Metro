@@ -69,7 +69,9 @@
                                 </Rectangle.RenderTransform>
                             </Rectangle>
                         </Grid>
-                        <Thumb x:Name="PART_DraggingThumb">
+                        <Thumb x:Name="PART_DraggingThumb"
+                               AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name}"
+                               AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name}">
                             <Thumb.Template>
                                 <ControlTemplate>
                                     <Rectangle Fill="Transparent" />
