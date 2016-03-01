@@ -136,6 +136,7 @@
     <Compile Include="Behaviours\StylizedBehaviorCollection.cs" />
     <Compile Include="Behaviours\TabControlSelectFirstVisibleTabBehavior.cs" />
     <Compile Include="Behaviours\WindowsSettingBehaviour.cs" />
+    <Compile Include="Controls\Helper\AutomationHelper.cs" />
     <Compile Include="Controls\ButtonsAlignment.cs" />
     <Compile Include="Controls\ContentControlEx.cs" />
     <Compile Include="Controls\IconPacks\PackIconMaterial.cs" />

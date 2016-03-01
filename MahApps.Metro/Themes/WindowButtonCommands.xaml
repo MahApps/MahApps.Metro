@@ -10,6 +10,7 @@
     <ControlTemplate x:Key="WindowButtonCommandsTemplate" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Min"
                     Focusable="False"
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
@@ -31,6 +32,7 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Max"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Max"
                     Focusable="False"
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}">
@@ -56,6 +58,7 @@
                       SnapsToDevicePixels="True" />
             </Button>
             <Button x:Name="PART_Close"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Close"
                     Focusable="False"
                     IsEnabled="{Binding IsCloseButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     RenderOptions.EdgeMode="Aliased"
@@ -86,6 +89,7 @@
     <ControlTemplate x:Key="Win10WindowButtonCommandsTemplate" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Min"
                     Focusable="False"
                     IsEnabled="{Binding IsMinButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Minimize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -113,6 +117,7 @@
                       Stretch="Uniform" />
             </Button>
             <Button x:Name="PART_Max"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Max"
                     Focusable="False"
                     IsEnabled="{Binding IsMaxRestoreButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Maximize, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
@@ -142,6 +147,7 @@
                       Stretch="Uniform" />
             </Button>
             <Button x:Name="PART_Close"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Close"
                     Focusable="False"
                     IsEnabled="{Binding IsCloseButtonEnabled, RelativeSource={RelativeSource AncestorType={x:Type Controls:MetroWindow}}}"
                     ToolTip="{Binding Close, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"

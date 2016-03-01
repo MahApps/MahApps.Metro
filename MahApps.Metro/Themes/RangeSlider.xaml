@@ -8,6 +8,7 @@
                     VerticalAlignment="Center"
                     Orientation="Vertical">
             <TickBar Name="PART_TopTick"
+                     controls:AutomationHelper.DefaultAutomationId="PART_TopTick"
                      Height="4"
                      Margin="5 0 5 2"
                      Fill="{TemplateBinding Foreground}"
@@ -23,11 +24,13 @@
                         Orientation="Horizontal">
                 <RepeatButton Name="PART_LeftEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
                 <Thumb Name="PART_LeftThumb"
+                       controls:AutomationHelper.DefaultAutomationId="PART_LeftThumb"
                        Width="{DynamicResource HorizontalThumbWidth}"
                        Height="{DynamicResource HorizontalThumbHeight}"
                        Style="{DynamicResource HorizontalSliderThumb}"
                        Cursor="Arrow" />
                 <Thumb Name="PART_MiddleThumb"
+                       controls:AutomationHelper.DefaultAutomationId="PART_MiddleThumb"
                        MinWidth="{TemplateBinding MinRangeWidth}"
                        Cursor="Hand">
                     <Thumb.Style>
@@ -45,6 +48,7 @@
                     </Thumb.Style>
                 </Thumb>
                 <Thumb Name="PART_RightThumb"
+                       controls:AutomationHelper.DefaultAutomationId="PART_RightThumb"
                        Width="{DynamicResource HorizontalThumbWidth}"
                        Height="{DynamicResource HorizontalThumbHeight}"
                        Style="{DynamicResource HorizontalSliderThumb}"
@@ -52,6 +56,7 @@
                 <RepeatButton Name="PART_RightEdge" Style="{DynamicResource HorizontalTrackLargeDecrease}" />
             </StackPanel>
             <TickBar Name="PART_BottomTick"
+                     controls:AutomationHelper.DefaultAutomationId="PART_BottomTick"
                      Height="4"
                      Margin="5 2 5 0"
                      Fill="{TemplateBinding Foreground}"
@@ -81,6 +86,7 @@
                     VerticalAlignment="Stretch"
                     Orientation="Horizontal">
             <TickBar Name="PART_TopTick"
+                     controls:AutomationHelper.DefaultAutomationId="PART_TopTick"
                      Width="4"
                      Margin="0 5 2 5"
                      Fill="{TemplateBinding Foreground}"
@@ -98,12 +104,14 @@
                               VerticalAlignment="Stretch"
                               Style="{DynamicResource VerticalTrackLargeDecrease}" />
                 <Thumb Name="PART_RightThumb"
+                       controls:AutomationHelper.DefaultAutomationId="PART_RightThumb"
                        Width="{DynamicResource VerticalThumbWidth}"
                        Height="{DynamicResource VerticalThumbHeight}"
                        Style="{DynamicResource VerticalSliderThumb}"
                        Cursor="Arrow" />
 
                 <Thumb Name="PART_MiddleThumb"
+                       controls:AutomationHelper.DefaultAutomationId="PART_MiddleThumb"
                        MinHeight="{TemplateBinding MinRangeWidth}"
                        Cursor="Hand">
                     <Thumb.Style>
@@ -122,6 +130,7 @@
                 </Thumb>
 
                 <Thumb Name="PART_LeftThumb"
+                       controls:AutomationHelper.DefaultAutomationId="PART_LeftThumb"
                        Width="{DynamicResource VerticalThumbWidth}"
                        Height="{DynamicResource VerticalThumbHeight}"
                        Style="{DynamicResource VerticalSliderThumb}"
@@ -131,6 +140,7 @@
                               Style="{DynamicResource VerticalTrackLargeDecrease}" />
             </StackPanel>
             <TickBar Name="PART_BottomTick"
+                     controls:AutomationHelper.DefaultAutomationId="PART_BottomTick"
                      Width="4"
                      Margin="2 5 0 5"
                      Fill="{TemplateBinding Foreground}"

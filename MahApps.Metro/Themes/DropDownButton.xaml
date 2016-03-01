@@ -23,8 +23,7 @@
                     <ContentControl x:Name="PART_ButtonContent"
                                     MinWidth="20"
                                     Margin="3"
-                                    AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
-                                    AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
+                                    Controls:AutomationHelper.DefaultAutomationId="PART_ButtonContent"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -59,6 +58,7 @@
                 </StackPanel>
                 <Button.ContextMenu>
                     <ContextMenu x:Name="PART_Menu"
+                                 Controls:AutomationHelper.DefaultAutomationId="PART_Menu"
                                  MinWidth="{TemplateBinding ActualWidth}"
                                  DisplayMemberPath="{TemplateBinding DisplayMemberPath}"
                                  IsOpen="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -83,6 +83,7 @@
             <Button x:Name="PART_Button"
                     Width="{TemplateBinding Width}"
                     Style="{TemplateBinding ButtonStyle}"
+                    Controls:AutomationHelper.DefaultAutomationId="PART_Button"
                     Background="{TemplateBinding Background}"
                     Foreground="{TemplateBinding Foreground}"
                     Command="{TemplateBinding Command}"
@@ -99,8 +100,6 @@
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     VerticalAlignment="Stretch"
                                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
-                                    AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, Mode=OneTime}"
                                     Content="{Binding Content, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                     ContentStringFormat="{TemplateBinding ItemStringFormat}"
                                     ContentTemplate="{TemplateBinding ItemTemplate}" />
@@ -142,8 +141,7 @@
                                  ItemTemplate="{TemplateBinding ItemTemplate}"
                                  ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                  ItemsSource="{TemplateBinding ItemsSource}"
-                                 AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, StringFormat={}{0}PART_Menu, Mode=OneTime}"
-                                 AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, StringFormat={}{0}PART_Menu, Mode=OneTime}"
+                                 Controls:AutomationHelper.DefaultAutomationId="PART_Menu"
                                  StaysOpen="False" />
                 </Button.ContextMenu>
             </Button>
@@ -202,8 +200,7 @@
                                 CommandTarget="{TemplateBinding CommandTarget}"
                                 FocusVisualStyle="{TemplateBinding FocusVisualStyle}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name}"
-                                AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name}" >
+                                Controls:AutomationHelper.DefaultAutomationId="PART_Button">
                             <DockPanel x:Name="PART_Content"
                                        Focusable="False"
                                        LastChildFill="True">
@@ -276,8 +273,7 @@
                                              ItemTemplate="{TemplateBinding ItemTemplate}"
                                              ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}"
                                              ItemsSource="{TemplateBinding ItemsSource}"
-                                             AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, StringFormat={}{0}PART_Menu}"
-                                             AutomationProperties.Name="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name, StringFormat={}{0}PART_Menu}"
+                                             Controls:AutomationHelper.DefaultAutomationId="PART_Menu"
                                              StaysOpen="False" />
                             </Button.ContextMenu>
                         </Button>

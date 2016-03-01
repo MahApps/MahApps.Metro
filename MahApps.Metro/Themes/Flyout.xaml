@@ -20,7 +20,7 @@
                     Height="40"
                     VerticalAlignment="Bottom"
                     Style="{DynamicResource MetroCircleButtonStyle}"
-                     AutomationProperties.AutomationId="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Name,  StringFormat='nav{0}' , Mode=OneWay }"
+                    Controls:AutomationHelper.DefaultAutomationId="nav" 
                     Foreground="{Binding RelativeSource={RelativeSource AncestorType={x:Type Controls:Flyout}}, Path=Foreground}"
                     FontFamily="Segoe UI Symbol"
                     FontSize="16"
@@ -57,6 +57,7 @@
                 </Rectangle>
             </Button>
             <TextBlock x:Name="PART_BackButton"
+                       Controls:AutomationHelper.DefaultAutomationId="PART_BackButton" 
                        Margin="15 0 0 0"
                        VerticalAlignment="Center"
                        FontSize="{StaticResource FlyoutHeaderFontSize}"

@@ -132,12 +132,14 @@
                                     <ColumnDefinition Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight, Mode=OneWay}" />
                                 </Grid.ColumnDefinitions>
                                 <DatePickerTextBox VerticalAlignment="Center"
+                                                   controls:AutomationHelper.DefaultAutomationId="DatePickerTextBox"
                                                    controls:TextBoxHelper.Watermark="{TemplateBinding controls:TextBoxHelper.Watermark}"
                                                    IsReadOnly="{Binding Path=IsReadOnly, RelativeSource={RelativeSource TemplatedParent}}"
                                                    Language="{Binding Path=Language, ElementName=PART_Calendar, Mode=OneWay}"
                                                    Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource TemplatedParent}}" />
                                 <Button x:Name="PART_Button"
                                         Grid.Column="1"
+                                        controls:AutomationHelper.DefaultAutomationId="PART_Button"
                                         Style="{DynamicResource ChromelessButtonStyle}"
                                         IsTabStop="False">
                                     <Path Fill="{Binding ElementName=PART_Button, Path=Foreground, Mode=OneWay}"
@@ -175,6 +177,7 @@
                                 <Popup x:Name="PART_Popup"
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
+                                       controls:AutomationHelper.DefaultAutomationId="PART_Popup"
                                        Placement="Bottom"
                                        PlacementTarget="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                        StaysOpen="False">
@@ -184,6 +187,7 @@
                                         <StackPanel Background="{DynamicResource ControlBackgroundBrush}" Orientation="{TemplateBinding Orientation}">
                                             <Calendar x:Name="PART_Calendar"
                                                       Margin="2 0"
+                                                      controls:AutomationHelper.DefaultAutomationId="PART_Calendar"
                                                       BorderBrush="Transparent"
                                                       SelectionMode="SingleDate" />
                                             <Grid VerticalAlignment="Center">
@@ -192,6 +196,7 @@
                                                     <RowDefinition Height="*" />
                                                 </Grid.RowDefinitions>
                                                 <Border x:Name="PART_Clock"
+                                                        controls:AutomationHelper.DefaultAutomationId="PART_Clock"
                                                         Grid.Row="0"
                                                         Width="120"
                                                         Height="120"
@@ -273,21 +278,25 @@
                                                         <ColumnDefinition Width="Auto" />
                                                     </Grid.ColumnDefinitions>
                                                     <ComboBox x:Name="PART_HourPicker"
+                                                              controls:AutomationHelper.DefaultAutomationId="PART_HourPicker"
                                                               Grid.Column="0"
                                                               ItemsSource="{TemplateBinding SourceHours}" />
                                                     <Label Grid.Column="1"
                                                            Content=":"
                                                            Visibility="{Binding Path=Visibility, ElementName=PART_MinutePicker}" />
                                                     <ComboBox x:Name="PART_MinutePicker"
+                                                              controls:AutomationHelper.DefaultAutomationId="PART_MinutePicker"
                                                               Grid.Column="2"
                                                               ItemsSource="{TemplateBinding SourceMinutes}" />
                                                     <Label Grid.Column="3"
                                                            Content=":"
                                                            Visibility="{Binding Path=Visibility, ElementName=PART_SecondPicker}" />
                                                     <ComboBox x:Name="PART_SecondPicker"
+                                                              controls:AutomationHelper.DefaultAutomationId="PART_SecondPicker"
                                                               Grid.Column="4"
                                                               ItemsSource="{TemplateBinding SourceSeconds}" />
-                                                    <ComboBox x:Name="PART_AmPmSwitcher" Grid.Column="5" />
+                                                    <ComboBox x:Name="PART_AmPmSwitcher" Grid.Column="5"
+                                                              controls:AutomationHelper.DefaultAutomationId="PART_AmPmSwitcher"/>
                                                 </Grid>
                                             </Grid>
                                         </StackPanel>
