@@ -7,7 +7,6 @@
         <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.Buttons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-<<<<<<< HEAD
     <ControlTemplate x:Key="WindowButtonCommandsTemplate" TargetType="{x:Type Controls:WindowButtonCommands}">
         <StackPanel Orientation="Horizontal">
             <Button x:Name="PART_Min"
@@ -180,9 +179,6 @@
             </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-=======
-
->>>>>>> refs/remotes/MahApps/develop
 
     <Style TargetType="{x:Type Controls:WindowButtonCommands}">
         <Setter Property="Background" Value="{DynamicResource TransparentWhiteBrush}" />
